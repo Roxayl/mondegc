@@ -28,17 +28,17 @@ $row_geometries = mysql_fetch_assoc($geometries);
 ?>
 
 <!-- Modal Header-->
-<!-- Boutons cachés -->
+<!-- Boutons cachï¿½s -->
 
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
   <h3 id="myModalLabel">Balance des ressources issues de la carte</h3>
 </div>
 <div class="modal-body corps-page">
   <?php do { 
 		$surface = $row_geometries['mesure'];
 		$typeZone = $row_geometries['ch_geo_type'];
-		ressourcesGeometrie($surface, $typeZone, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population);
+		ressourcesGeometrie($surface, $typeZone, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population, $emploi);
 		$tot_budget = $tot_budget + $budget;
 		$tot_industrie = $tot_industrie + $industrie;
 		$tot_commerce = $tot_commerce + $commerce;
@@ -48,6 +48,7 @@ $row_geometries = mysql_fetch_assoc($geometries);
 		$tot_environnement = $tot_environnement + $environnement;
 		$tot_education = $tot_education + $education;
 		$tot_population = $tot_population + $population;
+		$tot_emploi = $tot_emploi + $emploi;
 		?>
   <div class="row-fluid">
     <div class="titre-gris">

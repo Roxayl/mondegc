@@ -54,7 +54,7 @@ $row_geometries = mysql_fetch_assoc($geometries);
      do { 
 		$surface = $row_geometries['mesure'];
 		$typeZone = $row_geometries['ch_geo_type'];
-		ressourcesGeometrie($surface, $typeZone, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population);
+		ressourcesGeometrie($surface, $typeZone, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population, $emploi);
 		$tot_budget = $tot_budget*10000 + $budget;
 		$tot_industrie = $tot_industrie + $industrie;
 		$tot_commerce = $tot_commerce + $commerce;
@@ -64,10 +64,11 @@ $row_geometries = mysql_fetch_assoc($geometries);
 		$tot_environnement = $tot_environnement + $environnement;
 		$tot_education = $tot_education + $education;
 		$tot_population = $tot_population + $population;
+		$tot_emploi = $tot_emploi + $emploi;
 		 } while ($row_geometries = mysql_fetch_assoc($geometries));
 
 //Enregistrement du total des ressources de la carte.
-$updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_carte=%s, ch_pay_commerce_carte=%s, ch_pay_agriculture_carte=%s, ch_pay_tourisme_carte=%s, ch_pay_recherche_carte=%s, ch_pay_environnement_carte=%s, ch_pay_education_carte=%s, ch_pay_population_carte=%s WHERE ch_pay_id=%s",
+$updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_carte=%s, ch_pay_commerce_carte=%s, ch_pay_agriculture_carte=%s, ch_pay_tourisme_carte=%s, ch_pay_recherche_carte=%s, ch_pay_environnement_carte=%s, ch_pay_education_carte=%s, ch_pay_population_carte=%s, ch_pay_emploi_carte=%s WHERE ch_pay_id=%s",
                        GetSQLValueString($tot_budget, "int"),
 					   GetSQLValueString($tot_industrie, "int"),
 					   GetSQLValueString($tot_commerce, "int"),
@@ -77,6 +78,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
                        GetSQLValueString($tot_environnement, "int"),
                        GetSQLValueString($tot_education, "int"),
                        GetSQLValueString($tot_population, "int"),
+                       GetSQLValueString($tot_emploi, "int"),
 					   GetSQLValueString($colname_paysID, "int"));
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
@@ -125,10 +127,11 @@ $row_geometries = mysql_fetch_assoc($geometries);
 		$tot_environnement = $tot_environnement + $environnement;
 		$tot_education = $tot_education + $education;
 		$tot_population = $tot_population + $population;
+		$tot_emploi = $tot_emploi + $emploi;
 		 } while ($row_geometries = mysql_fetch_assoc($geometries));
 
 //Enregistrement du total des ressources de la carte.
-$updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_carte=%s, ch_pay_commerce_carte=%s, ch_pay_agriculture_carte=%s, ch_pay_tourisme_carte=%s, ch_pay_recherche_carte=%s, ch_pay_environnement_carte=%s, ch_pay_education_carte=%s, ch_pay_population_carte=%s WHERE ch_pay_id=%s",
+$updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_carte=%s, ch_pay_commerce_carte=%s, ch_pay_agriculture_carte=%s, ch_pay_tourisme_carte=%s, ch_pay_recherche_carte=%s, ch_pay_environnement_carte=%s, ch_pay_education_carte=%s, ch_pay_population_carte=%s, ch_pay_emploi_carte=%s WHERE ch_pay_id=%s",
                        GetSQLValueString($tot_budget, "int"),
 					   GetSQLValueString($tot_industrie, "int"),
 					   GetSQLValueString($tot_commerce, "int"),
@@ -138,6 +141,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
                        GetSQLValueString($tot_environnement, "int"),
                        GetSQLValueString($tot_education, "int"),
                        GetSQLValueString($tot_population, "int"),
+                       GetSQLValueString($tot_emploi, "int"),
 					   GetSQLValueString($paysid, "int"));
 
   mysql_select_db($database_maconnexion, $maconnexion);

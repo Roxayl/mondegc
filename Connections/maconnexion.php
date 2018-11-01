@@ -749,7 +749,7 @@ function tailleVilles($population, &$sizeicon){
 }
 
 if (!function_exists("ressourcesGeometrie")) {
-function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$commerce, &$agriculture, &$tourisme, &$recherche, &$environnement, &$education, &$label, &$population){
+function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$commerce, &$agriculture, &$tourisme, &$recherche, &$environnement, &$education, &$label, &$population, &$emploi = 0){
 			if ( $typeZone == "urbaine" ){
 				$label = "Zone urbaine";
 				$budget = $surface*-1;
@@ -772,6 +772,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*0.004;
 				$education = $surface*0.0015;
 				$population = $surface*0;
+				$emploi = $surface*0.0001;
 			} elseif ( $typeZone == "peche intensive" ){
 				$label = "Zone de peche intensive";
 				$budget = $surface*0.020;
@@ -783,6 +784,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.003;
 				$education = $surface*0;
 				$population = $surface*0;
+				$emploi = $surface*0.5;
 			} elseif ( $typeZone == "peche traditionnelle" ){
 				$label = "Zone de peche traditionnelle";
 				$budget = $surface*0.014;
@@ -794,6 +796,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.001;
 				$education = $surface*0;
 				$population = $surface*0;
+				$emploi = $surface*4;
 			} elseif ( $typeZone == "megapole" ){
 				$label = "Zone megapole";
 				$budget = $surface*-2;
@@ -805,6 +808,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.003;
 				$education = $surface*0.04;
 				$population = $surface*500;
+				$emploi = $surface*1000;
             } elseif ( $typeZone == "periurbaine" ){
 				$label = "Zone periurbaine";
 				$budget = $surface*-0.25;
@@ -816,6 +820,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.0075;
 				$education = $surface*0;
 				$population = $surface*25;
+				$emploi = $surface*250;
             } elseif ( $typeZone == "industrielle" ){
 				$label = "Zone industrielle";
 				$budget = $surface*-3.5;
@@ -827,6 +832,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.4;
 				$education = $surface*0;
 				$population = $surface*50;
+				$emploi = $surface*400;
             } elseif ( $typeZone == "maraichere" ) {
 				$label = "Zone mara&icirc;chere";
 				$budget = $surface*0.028;
@@ -838,6 +844,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.002;
 				$education = $surface*0;
 				$population = $surface*2;
+				$emploi = $surface*2;
 			} elseif ( $typeZone == "cerealiere" ) {
 				$label = "Zone c&eacute;reali&egrave;re";
 				$budget = $surface*0.028;
@@ -849,6 +856,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.002;
 				$education = $surface*0;
 				$population = $surface*2;
+				$emploi = $surface*2;
 			} elseif ( $typeZone == "elevage" ) {
 				$label = "Zone d'&eacute;levage";
 				$budget = $surface*0.028;
@@ -860,6 +868,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.002;
 				$education = $surface*0;
 				$population = $surface*2;
+				$emploi = $surface*4;
 			} elseif ( $typeZone == "prairies" ){
 				$label = "Prairies";
 				$budget = $surface*-0.001;
@@ -871,6 +880,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*0.00625;
 				$education = $surface*0.0005;
 				$population = $surface*0.5;
+				$emploi = $surface*2;
 			} elseif ( $typeZone == "forestiere" ){
 				$label = "Zone foresti&egrave;re";
 				$budget = $surface*0.001;
@@ -882,6 +892,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*0.002;
 				$education = $surface*0.0007;
 				$population = $surface*0.1;
+				$emploi = $surface*1;
 			} elseif ( $typeZone == "protegee" ){
 				$label = "Zone foresti&egrave;re prot&eacute;g&eacute;e";
 				$budget = $surface*-0.04;
@@ -893,6 +904,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*0.004;
 				$education = $surface*0.0015;
 				$population = $surface*0.01;
+				$emploi = $surface*0.01;
 			} elseif ( $typeZone == "marecageuse" ){
 				$label = "Zone mar&eacute;cageuse";
 				$budget = $surface*0;
@@ -904,6 +916,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*0.002;
 				$education = $surface*0.001;
 				$population = $surface*0.01;
+				$emploi = $surface*0.001;
 			} elseif ( $typeZone == "lagunaire" ){
 				$label = "Zone lagunaire";
 				$budget = $surface*0;
@@ -915,6 +928,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*0.005;
 				$education = $surface*0.001;
 				$population = $surface*2;
+				$emploi = $surface*10;
 			} elseif ( $typeZone == "lgv" ){
 				$label = "Lignes &agrave; Grande Vitesse";
 				$budget = $surface*-1.5;

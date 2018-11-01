@@ -191,7 +191,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 			$typeZone = $row_ZonesPays['ch_geo_type'];
 			$surface = $row_ZonesPays['ch_geo_mesure'];
 			styleZones($typeZone, $fillcolor, $fillOpacity, $strokeWidth, $strokeColor, $strokeOpacity, $Trait);
-			ressourcesGeometrie($surface, $typeZone, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population);
+			ressourcesGeometrie($surface, $typeZone, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population, $emploi);
 			?>
 			var polygonFeature= format.read("<?php echo $row_ZonesPays['ch_geo_wkt']; ?>");
 			polygonFeature.attributes = {
@@ -248,7 +248,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 			$typeVoie = $row_VoiesPays['ch_geo_type'];
 			$surface = $row_VoiesPays['ch_geo_mesure'];
 			styleVoies($typeVoie, $couleurTrait, $epaisseurTrait, $Trait);
-			ressourcesGeometrie($surface, $typeVoie, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population);
+			ressourcesGeometrie($surface, $typeVoie, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population, $emploi);
 			?>
 			
 			var polygonFeature= format.read("<?php echo $row_VoiesPays['ch_geo_wkt']; ?>");
