@@ -15,7 +15,7 @@ $username_maconnexion = "mgvx_monde";
 $password_maconnexion = "NewMonde";*/
 
 
-$maconnexion = mysql_pconnect($hostname_maconnexion, $username_maconnexion, $password_maconnexion) or trigger_error(mysql_error(),E_USER_ERROR); 
+$maconnexion = @mysql_pconnect($hostname_maconnexion, $username_maconnexion, $password_maconnexion) or trigger_error(mysql_error(),E_USER_ERROR);
 mysql_select_db($database_maconnexion);
 
 //Protection  données envoyées

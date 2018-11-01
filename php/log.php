@@ -8,7 +8,7 @@ if (!isset($_SESSION)) {
 }
 
 // *** Recherche de sessions.
-$clefSession = $_COOKIE['Session_mondeGC'];
+$clefSession = isset($_COOKIE['Session_mondeGC']) ? $_COOKIE['Session_mondeGC'] : NULL;
 if ($clefSession != NULL and $clefSession != "") {
 mysql_select_db($database_maconnexion, $maconnexion);
 $Session_user_query=sprintf("SELECT ch_users_session_dispatch_sessionID, ch_use_session_id, ch_use_session_connect, ch_use_id, ch_use_login, ch_use_paysID, ch_use_statut, ch_use_acces, ch_use_last_log, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users_dispatch_session INNER JOIN users_session ON ch_users_session_dispatch_sessionID = ch_use_session_id INNER JOIN users ON ch_use_session_user_ID = ch_use_id WHERE ch_users_session_dispatch_Key =%s",GetSQLValueString($clefSession, "text"));
@@ -182,7 +182,7 @@ if ($loginFoundUser) {
 
 
   //Booleen for display or not connection menu 
-if ($_SESSION['connect']) {
+if (isset($_SESSION['connect']) && $_SESSION['connect']) {
     $_SESSION['menu_connexion'] = 'hidden';
 	$_SESSION['menu_gestion'] = 'show';
   }
@@ -313,19 +313,29 @@ $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error())
 $row_geometries = mysql_fetch_assoc($geometries);
 
 //Calcul total des ressources de la carte.
+
+    $tot_budget = 0;
+    $tot_industrie = 0;
+    $tot_commerce = 0;
+    $tot_agriculture = 0;
+    $tot_tourisme = 0;
+    $tot_recherche = 0;
+    $tot_environnement = 0;
+    $tot_education = 0;
+    $tot_population = 0;
      do { 
 		$surface = $row_geometries['mesure'];
 		$typeZone = $row_geometries['ch_geo_type'];
 		ressourcesGeometrie($surface, $typeZone, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population);
-		$tot_budget = $tot_budget + $budget;
-		$tot_industrie = $tot_industrie + $industrie;
-		$tot_commerce = $tot_commerce + $commerce;
-		$tot_agriculture = $tot_agriculture + $agriculture;
-		$tot_tourisme = $tot_tourisme + $tourisme;
-		$tot_recherche = $tot_recherche + $recherche;
-		$tot_environnement = $tot_environnement + $environnement;
-		$tot_education = $tot_education + $education;
-		$tot_population = $tot_population + $population;
+		$tot_budget += $budget;
+		$tot_industrie += $industrie;
+		$tot_commerce += $commerce;
+		$tot_agriculture += $agriculture;
+		$tot_tourisme += $tourisme;
+		$tot_recherche += $recherche;
+		$tot_environnement += $environnement;
+		$tot_education += $education;
+		$tot_population += $population;
 		 } while ($row_geometries = mysql_fetch_assoc($geometries));
 
 //Enregistrement du total des ressources de la carte.

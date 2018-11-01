@@ -1,6 +1,7 @@
 <?php 
 require_once('Connections/maconnexion.php');
-session_start();
+if(!isset($_SESSION))
+    session_start();
 // *** Connexion communique categorie pays
 $maxRows_LastCommunique = 20;
 $pageNum_LastCommunique = 0;

@@ -60,7 +60,7 @@ $queryString_communiques = sprintf("&totalRows_communiques=%d%s", $totalRows_com
         <td><!-- Button to trigger modal -->
           
           <div class="text-center">
-          <?php if ($row_communiques['ch_com_user_id'] == $_SESSION['user_ID']) { ?>
+          <?php if (isset($_SESSION['user_id']) && $row_communiques['ch_com_user_id'] == $_SESSION['user_ID']) { ?>
   <a class="btn btn-primary pull-right" href="php/partage-communique.php?com_id=<?php echo $row_communiques['ch_com_ID']; ?>" data-toggle="modal" data-target="#myModal" title="Poster sur le forum"><i class="icon-share icon-white"></i></a>
   <?php } ?>
           <a class="btn btn-primary" href="php/communique-modal.php?com_id=<?php echo $row_communiques['ch_com_ID']; ?>" data-toggle="modal" data-target="#myModal">Lire</a>

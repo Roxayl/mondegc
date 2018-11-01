@@ -6,7 +6,7 @@
   <div>
     <ul class="pull-left liens-rapides">
       <li><a href="back/Haut-Conseil.php">Haut-Conseil</a></li>
-      <?php if ($_SESSION['connect']) {?>
+      <?php if (isset($_SESSION['connect']) && $_SESSION['connect']) {?>
       <li><a href="<?php echo $logoutAction ?>">D&eacute;connexion</a></li>
       <?php } else { ?>
       <li><a href="connexion.php">Connexion</a></li>
