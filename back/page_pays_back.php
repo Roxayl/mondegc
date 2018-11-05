@@ -43,6 +43,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
 	if ($_POST['ch_pay_emplacement'] >= 18 and $_POST['ch_pay_emplacement'] < 24 ){ $ch_pay_continent = "Volcania";}
 	if ($_POST['ch_pay_emplacement'] >= 24 and $_POST['ch_pay_emplacement'] <= 27 ){ $ch_pay_continent = "Aldesyl";}
 	if ($_POST['ch_pay_emplacement'] >= 27 and $_POST['ch_pay_emplacement'] <= 42 ){ $ch_pay_continent = "Philicie";}
+	if( $_POST['ch_pay_emplacement'] >= 42 and $_POST['ch_pay_emplacement'] <= 56 ){ $ch_pay_continent = "Aldesyl";}
 	
   $updateSQL = sprintf("UPDATE pays SET ch_pay_label=%s, ch_pay_publication=%s, ch_pay_continent=%s, ch_pay_emplacement=%s, ch_pay_lien_forum=%s, ch_pay_nom=%s, ch_pay_devise=%s, ch_pay_lien_imgheader=%s, ch_pay_lien_imgdrapeau=%s, ch_pay_date=%s, ch_pay_mis_jour=%s, ch_pay_nb_update=%s, ch_pay_forme_etat=%s, ch_pay_capitale=%s, ch_pay_langue_officielle=%s, ch_pay_monnaie=%s, ch_pay_header_presentation=%s, ch_pay_text_presentation=%s, ch_pay_header_geographie=%s, ch_pay_text_geographie=%s, ch_pay_header_politique=%s, ch_pay_text_politique=%s, ch_pay_header_histoire=%s, ch_pay_text_histoire=%s, ch_pay_header_economie=%s, ch_pay_text_economie=%s, ch_pay_header_transport=%s, ch_pay_text_transport=%s, ch_pay_header_sport=%s, ch_pay_text_sport=%s, ch_pay_header_culture=%s, ch_pay_text_culture=%s, ch_pay_header_patrimoine=%s, ch_pay_text_patrimoine=%s WHERE ch_pay_id=%s",
                        GetSQLValueString($_POST['ch_pay_label'], "text"),
@@ -435,7 +436,7 @@ img.olTileImage {
                       <h3>Modifier l'emplacement :</h3>
                       <div id="spryradio2">
                         <select name="ch_pay_emplacement" id="ch_pay_emplacement">
-                          <?php for ($nb_emplacement = 1; $nb_emplacement <= 42; $nb_emplacement++) {?>
+                          <?php for ($nb_emplacement = 1; $nb_emplacement <= 56; $nb_emplacement++) {?>
                           <option value="<?php echo $nb_emplacement ?>"<?php if (!(strcmp("$nb_emplacement", $row_InfoGenerale['ch_pay_emplacement']))) {echo "selected=\"selected\"";} ?>> N°<?php echo $nb_emplacement ?></option>
                           <?php }?>
                         </select>

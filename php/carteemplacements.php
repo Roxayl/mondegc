@@ -128,187 +128,257 @@ switch ($emplacement) // placement des markers selon la variable d'emplacement
     
     case 6: 
         $x="43.9";
-		$y="35.1";
+		$y="36.1";
     break;
-    
-    case 7: 
+
+    case 7:
         $x="86.83";
 		$y="48.17";
     break;
-	
-	case 8: 
+
+	case 8:
         $x="72.77";
 		$y="43.95";
     break;
-	
-	case 9: 
+
+	case 9:
         $x="130.07";
 		$y="46.76";
     break;
-	
-	case 10: 
+
+	case 10:
         $x="99.49";
 		$y="61.18";
     break;
-	
-	case 11: 
+
+	case 11:
         $x="156.44";
 		$y="11.25";
     break;
-    
-    case 12: 
+
+    case 12:
         $x="126.56";
 		$y="-6.67";
     break;
-    
-    case 13: 
+
+    case 13:
         $x="153.98";
 		$y="-12";
     break;
-    
-    case 14: 
+
+    case 14:
         $x="98";
 		$y="-30";
     break;
-    
-    case 15: 
-        $x="109";
+
+    case 15:
+        $x="114";
 		$y="-44";
     break;
-    
-    case 16: 
+
+    case 16:
         $x="93.5";
 		$y="-44.5";
     break;
-    
-    case 17: 
+
+    case 17:
         $x="77.34";
 		$y="-40.22";
     break;
-	
-	case 18: 
+
+	case 18:
         $x="59.06";
 		$y="-34";
     break;
-	
-	case 19: 
+
+	case 19:
         $x="53.433";
 		$y="-26";
     break;
-	
-	case 20: 
+
+	case 20:
         $x="37.26";
 		$y="-24";
     break;
-	
-	case 21: 
+
+	case 21:
         $x="28.82";
 		$y="-33";
     break;
-    
-    case 22: 
+
+    case 22:
         $x="39";
 		$y="-43";
     break;
-    
-    case 23: 
+
+    case 23:
         $x="54.5";
 		$y="-45.5";
     break;
-    
-    case 24: 
+
+    case 24:
         $x="6.5";
 		$y="-34.5";
     break;
-    
-    case 25: 
-        $x="-32.7";
-		$y="-29.3";
+
+    case 25:
+        $x="-31";
+		$y="-46";
     break;
-    
-    case 26: 
-        $x="-31.11";
-		$y="1";
+
+    case 26:
+        $x="-13";
+		$y="-46";
     break;
-    
-    case 27: 
+
+    case 27:
         $x="-96";
 		$y="-33";
     break;
-	
-	case 28: 
+
+	case 28:
         $x="-107";
 		$y="-16.5";
     break;
-	
-	case 29: 
+
+	case 29:
         $x="-119";
 		$y="-44.5";
     break;
-	
-	case 30: 
+
+	case 30:
         $x="-139";
 		$y="-41.5";
     break;
-	
-	case 31: 
+
+	case 31:
         $x="-125";
 		$y="-32";
     break;
-    
-    case 32: 
+
+    case 32:
         $x="-116";
 		$y="-31";
     break;
-    
-    case 33: 
+
+    case 33:
         $x="-138.5";
 		$y="-4.5";
     break;
-    
-    case 34: 
+
+    case 34:
         $x="-137";
 		$y="20";
     break;
-    
-    case 35: 
+
+    case 35:
         $x="-121.5";
 		$y="15.5";
     break;
-    
-    case 36: 
-        $x="-110";
+
+    case 36:
+        $x="-100";
 		$y="28.5";
     break;
-    
-    case 37: 
+
+    case 37:
         $x="-160";
 		$y="27.5";
     break;
-	
-	case 38: 
+
+	case 38:
         $x="-123.5";
 		$y="39";
     break;
-	
-	case 39: 
+
+	case 39:
         $x="-129";
 		$y="52.5";
     break;
-	
-	case 40: 
+
+	case 40:
         $x="-142.5";
 		$y="49.5";
     break;
-	
-	case 41: 
+
+	case 41:
         $x="-138";
 		$y="35";
     break;
-	
-	case 42: 
+
+	case 42:
         $x="-122";
 		$y="-15";
+    break;
+
+    case 43:
+        $x="-14";
+        $y="-48";
+    break;
+
+    case 44:
+        $x="-21";
+        $y="-30";
+    break;
+
+    case 45:
+        $x="-11";
+        $y="-14";
+    break;
+
+    case 46:
+        $x="-37";
+        $y="-36";
+    break;
+
+    case 47:
+        $x="-41";
+        $y="-30";
+    break;
+
+    case 48:
+        $x="-36";
+        $y="-26";
+    break;
+
+    case 49:
+        $x="-32";
+        $y="-19";
+    break;
+
+    case 50:
+        $x="-46";
+        $y="-21";
+    break;
+
+    case 51:
+        $x="-39";
+        $y="-13";
+    break;
+
+    case 52:
+        $x="-27";
+        $y="-12";
+    break;
+
+    case 53:
+        $x="-30";
+        $y="-7";
+    break;
+
+    case 54:
+        $x="-20";
+        $y="-6";
+    break;
+
+    case 55:
+        $x="-35";
+        $y="3";
+    break;
+
+    case 56:
+        $x="-18";
+        $y="-60";
     break;
     
     default:
