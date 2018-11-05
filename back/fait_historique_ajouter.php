@@ -81,7 +81,7 @@ $totalRows_users = mysql_num_rows($users);
 <link href="../SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
-<link href="../assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/GenerationCity.css" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -144,9 +144,9 @@ img.olTileImage {
       <!-- Debut formulaire -->
       <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_fait_hist" Id="ajout_fait_his">
         <div class="alert alert-success">
-          <button type="button" class="close" data-dismiss="alert">×</button>
+          <button type="button" class="close" data-dismiss="alert">ï¿½</button>
           Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; un fait historique. Les faits historiques construisent l'histoire de votre pays. Veillez a ce qu'elle soit coh&eacute;rente avec les pays qui vous entourent. La gestions de l'histoire du Monde GC est confi&eacute;e &agrave; <a href="../histoire.php" title="lien vers la page consacr&eacute;e &agrave; l'Institut">l'Institut G&eacute;c&eacute;en d'Histoire</a></div>
-        <!-- Bouton cachés -->
+        <!-- Bouton cachï¿½s -->
         <input name="ch_his_paysID" type="hidden" value="<?php echo $paysID; ?>" >
         <input name="ch_his_label" type="hidden" value="fait_histo">
         <input name="ch_his_personnage" type="hidden" value="1">
@@ -192,7 +192,7 @@ img.olTileImage {
         </div>
         <!-- DATE 2-->
         <div class="control-group periode" style="display:none">
-          <label class="control-label" for="ch_his_date_fait2">Date de fin <a href="#" rel="clickover" title="Date de fin de l'&eacute;v&eacute;nement" data-content="Choisissez une date de fin de votre fait historique s'il s'est &eacute;coul&eacute; sur une période"><i class="icon-info-sign"></i></a></label>
+          <label class="control-label" for="ch_his_date_fait2">Date de fin <a href="#" rel="clickover" title="Date de fin de l'&eacute;v&eacute;nement" data-content="Choisissez une date de fin de votre fait historique s'il s'est &eacute;coul&eacute; sur une pï¿½riode"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
             <div class="input-append date" id="dpYears2" data-date="<?php echo $now; ?>" data-date-format="yyyy-mm-dd" data-date-viewmode="years">
               <input class="span6" type="text" value="<?php echo $now; ?>" id="ch_his_date_fait2" name="ch_his_date_fait2"  readonly>

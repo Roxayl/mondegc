@@ -6,7 +6,7 @@ require_once('Connections/maconnexion.php');
 //Connexion et deconnexion
 include('php/log.php');
 
-//requete liste communiqués
+//requete liste communiquï¿½s
 
 $maxRows_communiquesPays = 10;
 $pageNum_communiquesPays = 0;
@@ -60,6 +60,7 @@ $queryString_communiquesPays = sprintf("&totalRows_communiquesPays=%d%s", $total
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="assets/css/bootstrap-modal.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>

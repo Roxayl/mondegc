@@ -13,7 +13,7 @@ header('Location: ../connexion.php');
 exit();
 }
 
-//Récupération variables
+//Rï¿½cupï¿½ration variables
 $colname_pays = $_SESSION['paysID'];
 if (isset($_POST['paysID'])) {
   $colname_pays = $_POST['paysID'];
@@ -36,7 +36,7 @@ if (isset($_POST['paysID'])) {
 <link href="../SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
-<link href="../assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/GenerationCity.css" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -92,8 +92,8 @@ $totalRows_drapeau = mysql_num_rows($drapeau);
       
       <!-- Debut formulaire -->
       <div class="well well-large"> 
-        <!-- Image de contrôle drapeau --> 
-        <img src="<?php echo $row_drapeau['ch_pay_lien_imgdrapeau']; ?>" alt="Drapeau du pays n°<?php echo $row_drapeau['ch_pay_id']; ?>" title="drapeau <?php echo $row_drapeau['ch_pay_nom']; ?>">
+        <!-- Image de contrï¿½le drapeau --> 
+        <img src="<?php echo $row_drapeau['ch_pay_lien_imgdrapeau']; ?>" alt="Drapeau du pays nï¿½<?php echo $row_drapeau['ch_pay_id']; ?>" title="drapeau <?php echo $row_drapeau['ch_pay_nom']; ?>">
         <p>&nbsp;</p>
         <p>Drapeau du pays <?php echo $row_drapeau['ch_pay_nom']; ?>
         <p>&nbsp;</p>

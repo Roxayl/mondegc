@@ -22,6 +22,7 @@ $totalRows_HautConseil = mysql_num_rows($HautConseil);
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -60,7 +61,7 @@ $totalRows_HautConseil = mysql_num_rows($HautConseil);
     </div>
     <div class="span5 align-left">
     <h2>Qu'est-ce que le Haut-Conseil&nbsp;?</h2>
-    <p>Le haut-conseil est un espace dédi&eacute; &agrave; la gestion du projet d'un point de vue international. Il s'agit d'un conseil de sages dont la mission est de dévellopper le monde GC. Les membres sont nommés par leurs pairs.</p>
+    <p>Le haut-conseil est un espace dï¿½di&eacute; &agrave; la gestion du projet d'un point de vue international. Il s'agit d'un conseil de sages dont la mission est de dï¿½vellopper le monde GC. Les membres sont nommï¿½s par leurs pairs.</p>
      <h5>Les membres du Haut-Conseil sont&nbsp;:</h5>
 	 <?php do { ?>
      <?php if ($row_HautConseil['ch_use_statut']==30) { ?>

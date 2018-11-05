@@ -150,8 +150,8 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 <html>
 <head>
 	<meta http-equiv="content-type" content="text/html" charset="utf-8" />
-	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,700i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
 	<link href="assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 	<link href="../forum/new/MondeGCiframe.css" rel="stylesheet" type="text/css">
 	<title>Monde GC</title>
 </head>

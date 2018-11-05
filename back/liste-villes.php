@@ -52,7 +52,7 @@ $totalPages_listvilles = ceil($totalRows_listvilles/$maxRows_listvilles)-1;
 <meta name="author" content="">
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
 <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
-<link href="../assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/GenerationCity.css" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -121,7 +121,7 @@ $totalPages_listvilles = ceil($totalRows_listvilles/$maxRows_listvilles)-1;
               <td><?php echo $row_listvilles['ch_vil_nom']; ?></td>
               <td><?php echo $row_listvilles['ch_use_login']; ?></td>
               <td><?php echo $row_listvilles['ch_vil_population']; ?></td>
-              <td><?php echo date("d/m/Y à G:i:s", strtotime($row_listvilles['ch_vil_mis_jour'])); ?></td>
+              <td><?php echo date("d/m/Y ï¿½ G:i:s", strtotime($row_listvilles['ch_vil_mis_jour'])); ?></td>
               <td><form action="ville_modifier.php" method="post">
                   <input name="ville-ID" type="hidden" value="<?php echo $row_listvilles['ch_vil_ID']; ?>">
                   <button class="btn" type="submit" title="modifier la ville"><i class="icon-pencil"></i></button>

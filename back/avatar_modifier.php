@@ -13,7 +13,7 @@ header('Location: ../connexion.php');
 exit();
 }
 
-//Récupération variables
+//Rï¿½cupï¿½ration variables
 $colname_user = $_SESSION['user_ID'];
 if (isset($_POST['userID'])) {
   $colname_user = $_POST['userID'];
@@ -36,7 +36,7 @@ if (isset($_POST['userID'])) {
 <link href="../SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
-<link href="../assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/GenerationCity.css" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -92,7 +92,7 @@ $totalRows_avatar = mysql_num_rows($avatar);
       
       <!-- Debut formulaire -->
       <div class="well well-large"> 
-        <!-- Image de contrôle drapeau --> 
+        <!-- Image de contrï¿½le drapeau --> 
         <img src="<?php echo $row_avatar['ch_use_lien_imgpersonnage']; ?>" alt="avatar <?php echo $row_avatar['ch_use_nom_dirigeant']; ?>" title="drapeau <?php echo $row_avatar['ch_use_nom_dirigeant']; ?>>">
         <p>&nbsp;</p>
         <p><?php echo $row_avatar['ch_use_predicat_dirigeant']; ?> <?php echo $row_avatar['ch_use_nom_dirigeant']; ?> <?php echo $row_avatar['ch_use_prenom_dirigeant']; ?>

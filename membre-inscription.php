@@ -83,6 +83,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
 <link href="SpryAssets/SpryValidationConfirm.css" rel="stylesheet" type="text/css">
 <link href="SpryAssets/SpryValidationSelect.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -123,11 +124,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
         <h1>Inscription dans le Monde GC</h1>
       </div>
       <div class="alert alert-success">
-        <button type="button" class="close" data-dismiss="alert">×</button>
+        <button type="button" class="close" data-dismiss="alert">ï¿½</button>
         <p>Bienvenue dans le Monde GC <?php echo $row_user_prov['ch_use_prov_login']; ?>. Compl&eacute;tez votre profil afin de finaliser votre inscription.</p>
       </div>
       <form action="<?php echo $editFormAction; ?>" name="InfoUser" method="POST" class="form-horizontal" id="InfoHeader">
-        <!-- Boutons cachés -->
+        <!-- Boutons cachï¿½s -->
         <?php 
 		$now= date("Y-m-d G:i:s");?>
         <input name="ch_use_date" type="hidden" value="<?php echo $now; ?>">
@@ -136,7 +137,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
         <input name="ch_use_paysID" type="hidden" value="<?php echo $row_user_prov['ch_use_prov_paysID']; ?>">
         <input name="ch_use_acces" type="hidden" value="1">
         
-        <!-- Informations Générales
+        <!-- Informations Gï¿½nï¿½rales
         ================================================== -->
         <h3>Informations Profil</h3>
         <!-- Nom user -->
@@ -183,7 +184,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
         <br>
         <!-- Predicat -->
         <div class="control-group">
-          <label class="control-label" for="ch_use_predicat_dirigeant">Pr&eacute;dicat <a href="#" rel="clickover" title="Pr&eacute;dicat" data-content="Lorsque votre dirigeant sera nomm&eacute;, notamment lors des c&eacute;r&eacute;monies protocolaires, sp&eacute;cifiez quelle appellation doit être utilis&eacute;e. Le pr&eacute;dicat pr&eacute;c&egrave;de le nom et le pr&eacute;nom"><i class="icon-info-sign"></i></a></label>
+          <label class="control-label" for="ch_use_predicat_dirigeant">Pr&eacute;dicat <a href="#" rel="clickover" title="Pr&eacute;dicat" data-content="Lorsque votre dirigeant sera nomm&eacute;, notamment lors des c&eacute;r&eacute;monies protocolaires, sp&eacute;cifiez quelle appellation doit ï¿½tre utilis&eacute;e. Le pr&eacute;dicat pr&eacute;c&egrave;de le nom et le pr&eacute;nom"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
             <select name="ch_use_predicat_dirigeant" id="ch_use_predicat_dirigeant" class="input-xlarge">
               <option value="">aucun</option>
@@ -193,29 +194,29 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
               <option value="L'Incorrigible">L'Incorrigible</option>
               <option value="L'Intraitable">L'Intraitable</option>
               <option value="Le Terrible">Le Terrible</option>
-              <option value="Le Très honorable">Le Tr&egrave;s honorable</option>
+              <option value="Le Trï¿½s honorable">Le Tr&egrave;s honorable</option>
               <option value="Madame">Madame</option>
               <option value="Mademoiselle">Mademoiselle</option>
               <option value="Messire">Messire</option>
               <option value="Monseigneur">Monseigneur</option>
               <option value="Monsieur">Monsieur</option>
               <option value="Notre Guide">Notre Guide</option>
-              <option value="Notre Guide suprême">Notre Guide supr&ecirc;me</option>
+              <option value="Notre Guide suprï¿½me">Notre Guide supr&ecirc;me</option>
               <option value="Notre Grandeur">Notre Grandeur</option>
-              <option value="Sa Grâce">Sa Gr&acirc;ce</option>
+              <option value="Sa Grï¿½ce">Sa Gr&acirc;ce</option>
               <option value="Sa Haute Excellence">Sa Haute Excellence</option>
               <option value="Sa Haute Naissance">Sa Haute Naissance</option>
-              <option value="Sa Majesté">Sa Majest&eacute;</option>
-              <option value="Sa Majesté impériale">Sa Majest&eacute; imp&eacute;riale</option>
-              <option value="Sa Sainteté">Sa Saintet&eacute;</option>
+              <option value="Sa Majestï¿½">Sa Majest&eacute;</option>
+              <option value="Sa Majestï¿½ impï¿½riale">Sa Majest&eacute; imp&eacute;riale</option>
+              <option value="Sa Saintetï¿½">Sa Saintet&eacute;</option>
               <option value="Son Altesse">Son Altesse</option>
               <option value="Son Altesse illustrissime">Son Altesse illustrissime</option>
-              <option value="Son Altesse impériale">Son Altesse imp&eacute;riale</option>
+              <option value="Son Altesse impï¿½riale">Son Altesse imp&eacute;riale</option>
               <option value="Son Altesse royale">Son Altesse royale</option>
-              <option value="Son Altesse sérénissime">Son Altesse s&eacute;r&eacute;nissime</option>
+              <option value="Son Altesse sï¿½rï¿½nissime">Son Altesse s&eacute;r&eacute;nissime</option>
               <option value="Son illustrissime Luminescence">Son illustrissime Luminescence</option>
               <option value="Son Excellence">Son Excellence</option>
-              <option value="Son éminence">Son &eacute;minence </option>
+              <option value="Son ï¿½minence">Son &eacute;minence </option>
             </select>
           </div>
         </div>

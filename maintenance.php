@@ -7,7 +7,7 @@ include('php/log.php');
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "OubliIdentifiant")) {
 
-  $mail = $_POST['ch_use_mail']; // Déclaration de l'adresse de destination.
+  $mail = $_POST['ch_use_mail']; // Dï¿½claration de l'adresse de destination.
 
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_Compare_mail = "SELECT ch_use_id, ch_use_login, ch_use_password, ch_use_mail, ch_use_paysID, ch_use_statut FROM users WHERE ch_use_mail='$mail'";
@@ -22,17 +22,17 @@ if ( $row_Compare_mail ) {
 	$characts   .= '1234567890'; 
 	$code_aleatoire      = ''; 
 
-	for($i=0;$i < 10;$i++)    //10 est le nombre de caractères
+	for($i=0;$i < 10;$i++)    //10 est le nombre de caractï¿½res
 	{ 
         $code_aleatoire .= substr($characts,rand()%(strlen($characts)),1); 
 	}
 
 
-  $mail = $row_Compare_mail['ch_use_mail'] ; // Déclaration de l'adresse de destination.
-  $login = $row_Compare_mail['ch_use_login']; // Déclaration du login.
-  $clef = $code_aleatoire; // Déclaration de la clef d'activation.
-  $paysID = $row_Compare_mail['ch_use_paysID']; // Déclaration de l'emplacement.
-  $statut = $row_Compare_mail['ch_use_statut']; // Déclaration de l'adresse de destination.
+  $mail = $row_Compare_mail['ch_use_mail'] ; // Dï¿½claration de l'adresse de destination.
+  $login = $row_Compare_mail['ch_use_login']; // Dï¿½claration du login.
+  $clef = $code_aleatoire; // Dï¿½claration de la clef d'activation.
+  $paysID = $row_Compare_mail['ch_use_paysID']; // Dï¿½claration de l'emplacement.
+  $statut = $row_Compare_mail['ch_use_statut']; // Dï¿½claration de l'adresse de destination.
 
   $insertSQL = sprintf("INSERT INTO users_provisoire (ch_use_prov_login, ch_use_prov_clef, ch_use_prov_mail, ch_use_prov_paysID, ch_use_prov_statut) VALUES (%s, %s, %s, %s, %s)",
                        GetSQLValueString($login, "text"),
@@ -59,29 +59,29 @@ else
 {
 	$passage_ligne = "\n";
 }
-//=====Déclaration des messages au format texte et au format HTML.
+//=====Dï¿½claration des messages au format texte et au format HTML.
 $message_txt = "Cher membre de G&eacute;n&eacute;ration City. Vous avez demand&eacute; &agrave; modifier vos identifiants personnels. Si cette demande n'est pas de votre fait, ne cliquez pas sur le lien et contactez imm&eacute;diatement un administrateur de G&eacute;n&eacute;ration City. Si vous souhaitez modifier vos identifiants, cliquez sur le lien ci-dessous : http://www.generation-city.com/monde/membre-identifiants.php?&amp;login=$login&amp;clef=$clef . Nous vous remercions de l'inter&ecirc;t que vous portez &agrave; notre site. l'&eacute;quipe de G&eacute;n&eacute;ration City";
 $message_html = "<html><head></head><body><b>Cher membre de G&eacute;n&eacute;ration city</b>,<br><br> Vous avez demand&eacute; &agrave; modifier vos identifiants personnels. Si cette demande n'est pas de votre fait, ne cliquez pas sur le lien et contactez imm&eacute;diatement un administrateur de G&eacute;n&eacute;ration City.<br>
 Si vous souhaitez modifier vos identifiants, cliquez sur le lien ci-dessous :<br>
 <a href='http://www.generation-city.com/monde/membre-identifiants.php?&amp;login=$login&amp;clef=$clef'>http://www.generation-city.com/monde/membre-identifiants.php?&amp;login=$login&amp;clef=$clef</a><br><br>Nous vous remercions de l'inter&ecirc;t que vous portez &agrave; notre site.<br>Bienvenue dans le Monde GC.<br><br><br><em><i>L'&eacute;quipe de G&eacute;n&eacute;ration City</i></em></body></html>";
 //==========
 
-//=====Création de la boundary
+//=====Crï¿½ation de la boundary
 $boundary = "-----=".md5(rand());
 //==========
 
-//=====Définition du sujet.
+//=====Dï¿½finition du sujet.
 $sujet = "Modification indentifiants site Monde GC";
 //=========
 
-//=====Création du header de l'e-mail.
+//=====Crï¿½ation du header de l'e-mail.
 $header = "From: \"Generation City\"<monde@generation-city.com>".$passage_ligne;
 $header.= "Reply-to: \"Generation City\"<monde@generation-city.com>".$passage_ligne;
 $header.= "MIME-Version: 1.0".$passage_ligne;
 $header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
 //==========
 
-//=====Création du message.
+//=====Crï¿½ation du message.
 $message = $passage_ligne."--".$boundary.$passage_ligne;
 //=====Ajout du message au format texte.
 $message.= "Content-Type: text/plain; charset=\"ISO-8859-1\"".$passage_ligne;
@@ -127,6 +127,7 @@ $mailSuccess = true;
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -188,7 +189,7 @@ $mailSuccess = true;
     <p>&nbsp;</p>
       <div class="well">
       <p>Une mise &agrave; jour est en train d'&ecirc;tre effectu&eacute;e.  Seuls les administrateurs peuvent se connecter. Le site sera de nouveau acc&eacute;ssible le plus rapidement possible. 
-      Nous annoncerons la r&eacute;-ouverture du site sur le <a href="http://www.forum-gc.com/" title="Lien vers le forum">forum de Génération City </a></p>
+      Nous annoncerons la r&eacute;-ouverture du site sur le <a href="http://www.forum-gc.com/" title="Lien vers le forum">forum de Gï¿½nï¿½ration City </a></p>
       </div>
       </section>
       </div>

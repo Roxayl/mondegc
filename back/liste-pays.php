@@ -55,7 +55,7 @@ $totalPages_ListPays = ceil($totalRows_ListPays/$maxRows_ListPays)-1;
 <meta name="author" content="">
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
 <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
-<link href="../assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/GenerationCity.css" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -123,11 +123,11 @@ $totalPages_ListPays = ceil($totalRows_ListPays/$maxRows_ListPays)-1;
               <td><img src="../assets/img/statutpays<?php echo $row_ListPays['ch_pay_publication']; ?>.png" alt="Statut"></td>
               <td><img src="<?php echo $row_ListPays['ch_pay_lien_imgdrapeau']; ?>" width="75px"></td>
               <td><?php echo $row_ListPays['ch_pay_nom']; ?></td>
-              <td>N°<?php echo $row_ListPays['ch_pay_emplacement']; ?> <img class="pull-right" src="../Carto/Emplacements/emplacement<?php echo $row_ListPays['ch_pay_emplacement']; ?>.jpg" width="50px"></td>
+              <td>Nï¿½<?php echo $row_ListPays['ch_pay_emplacement']; ?> <img class="pull-right" src="../Carto/Emplacements/emplacement<?php echo $row_ListPays['ch_pay_emplacement']; ?>.jpg" width="50px"></td>
               <td><?php echo $row_ListPays['ch_pay_continent']; ?></td>
               <td><img src="<?php echo $row_ListPays['ch_use_lien_imgpersonnage']; ?>" width="50px">
                 <p><?php echo $row_ListPays['ch_use_login']; ?></p></td>
-              <td><?php echo date("d/m/Y à G:i:s", strtotime($row_ListPays['ch_pay_mis_jour'])); ?></td>
+              <td><?php echo date("d/m/Y ï¿½ G:i:s", strtotime($row_ListPays['ch_pay_mis_jour'])); ?></td>
               <td><form action="page_pays_back.php" method="post">
                   <input name="paysID" type="hidden" value="<?php echo $row_ListPays['ch_pay_id']; ?>">
                   <button class="btn" type="submit" title="modifier le pays"><i class="icon-pencil"></i></button>

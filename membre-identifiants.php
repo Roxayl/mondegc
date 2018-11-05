@@ -79,6 +79,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
 <link href="SpryAssets/SpryValidationPassword.css" rel="stylesheet" type="text/css">
 <link href="SpryAssets/SpryValidationConfirm.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -120,12 +121,12 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
         <h1>Changement identifiants</h1>
       </div>
       <div class="alert alert-success">
-        <button type="button" class="close" data-dismiss="alert">×</button>
+        <button type="button" class="close" data-dismiss="alert">ï¿½</button>
         <p>Cher <?php echo $row_user_prov['ch_use_prov_login']; ?>, entrez un nouveau mot de passe afin d'acc&eacute;der &agrave; votre compte.</p>
       </div>
       <form action="<?php echo $editFormAction; ?>" name="InfoUser" method="POST" class="form-horizontal" id="InfoHeader">
         <input name="ch_use_id" type="hidden" value="<?php echo $row_UserID['ch_use_id']; ?>">
-        <!-- Informations Générales
+        <!-- Informations Gï¿½nï¿½rales
         ================================================== -->
         <h3>Informations Profil</h3>
         <!-- Nom user -->

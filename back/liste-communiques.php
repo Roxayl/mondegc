@@ -52,7 +52,7 @@ $totalPages_listcommuniques = ceil($totalRows_listcommuniques/$maxRows_listcommu
 <meta name="author" content="">
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
 <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
-<link href="../assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/GenerationCity.css" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -128,7 +128,7 @@ $totalPages_listcommuniques = ceil($totalRows_listcommuniques/$maxRows_listcommu
                 </td>
               <td><img src="<?php echo $row_listcommuniques['ch_use_lien_imgpersonnage']; ?>" width="50px">
                 <p><?php echo $row_listcommuniques['ch_use_login']; ?></p></td>
-              <td><?php echo date("d/m/Y à G:i:s", strtotime($row_listcommuniques['ch_com_date_mis_jour'])); ?></td>
+              <td><?php echo date("d/m/Y ï¿½ G:i:s", strtotime($row_listcommuniques['ch_com_date_mis_jour'])); ?></td>
               <td><form action="communique_modifier.php" method="post">
                   <input name="com_id" type="hidden" value="<?php echo $row_listcommuniques['ch_com_ID']; ?>">
                   <button class="btn" type="submit" title="modifier le communiqu&eacute;"><i class="icon-pencil"></i></button>

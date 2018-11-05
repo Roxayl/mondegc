@@ -97,6 +97,7 @@ $totalRows_listePays = mysql_num_rows($listePays);
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- TemplateEndEditable -->
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -251,7 +252,7 @@ div.olControlPanel {
               <h3>R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</h3>
             </div>
             <div class="span4">
-              <p>La RFGC est un pays communautaire ouvert à tous, il est divisé en régions</p>
+              <p>La RFGC est un pays communautaire ouvert ï¿½ tous, il est divisï¿½ en rï¿½gions</p>
               <p>Nombre de villes&nbsp;: <strong> <?php echo $nbvilles_RFGC; ?> </strong></p>
               <p>Population&nbsp;: <strong>
                 <?php $nbhabitant_francais = number_format($nbhabitants_RFGC, 0, ',', ' '); echo $nbhabitant_francais; ?>

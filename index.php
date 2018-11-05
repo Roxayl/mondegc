@@ -29,6 +29,7 @@ $_SESSION['an']=true;
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- TemplateEndEditable -->
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -69,7 +70,7 @@ $_SESSION['an']=true;
   <div class="container">
     <div class="header">
       <h1>Bienvenue sur le site du Monde de Génération City</h1>
-      <p><em>Le Monde GC rassemble une communaut&eacute; de joueurs du site G&eacute;n&eacute;ration City qui ont souhait&eacute;s s'unir pour construire leur propre monde et d&eacute;velopper <a href="participer.php#faq">une nouvelle expérience de jeu</a>.</em></p>
+      <p><em>Le Monde GC rassemble une communaut&eacute; de joueurs du site G&eacute;n&eacute;ration City qui ont souhait&eacute; s'unir pour construire leur propre monde et d&eacute;velopper <a href="participer.php#faq">une nouvelle expérience de jeu</a>.</em></p>
     </div>
     <div class="Master-link">
       <p class="hidden-phone">Débutez l'exploration&nbsp;:</p>
