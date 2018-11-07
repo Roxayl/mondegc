@@ -847,7 +847,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*0.004;
 				$education = $surface*0.0015;
 				$population = $surface*0;
-				$emploi = $surface*0.0001;
+				$emploi = $surface*0.001;
 			} elseif ( $typeZone == "peche intensive" ){
 				$label = "Zone de peche intensive";
 				$budget = $surface*0.020;
@@ -859,7 +859,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.003;
 				$education = $surface*0;
 				$population = $surface*0;
-				$emploi = $surface*0.5;
+				$emploi = $surface*0.001;
 			} elseif ( $typeZone == "peche traditionnelle" ){
 				$label = "Zone de peche traditionnelle";
 				$budget = $surface*0.014;
@@ -871,7 +871,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.001;
 				$education = $surface*0;
 				$population = $surface*0;
-				$emploi = $surface*4;
+				$emploi = $surface*1;
 			} elseif ( $typeZone == "megapole" ){
 				$label = "Zone megapole";
 				$budget = $surface*-2;
@@ -895,7 +895,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.0075;
 				$education = $surface*0;
 				$population = $surface*25;
-				$emploi = $surface*250;
+				$emploi = $surface*30;
             } elseif ( $typeZone == "industrielle" ){
 				$label = "Zone industrielle";
 				$budget = $surface*-3.5;
@@ -907,7 +907,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.4;
 				$education = $surface*0;
 				$population = $surface*50;
-				$emploi = $surface*400;
+				$emploi = $surface*100;
             } elseif ( $typeZone == "maraichere" ) {
 				$label = "Zone mara&icirc;chere";
 				$budget = $surface*0.028;
@@ -919,7 +919,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.002;
 				$education = $surface*0;
 				$population = $surface*2;
-				$emploi = $surface*2;
+				$emploi = $surface*1.5;
 			} elseif ( $typeZone == "cerealiere" ) {
 				$label = "Zone c&eacute;reali&egrave;re";
 				$budget = $surface*0.028;
@@ -931,7 +931,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.002;
 				$education = $surface*0;
 				$population = $surface*2;
-				$emploi = $surface*2;
+				$emploi = $surface*1.5;
 			} elseif ( $typeZone == "elevage" ) {
 				$label = "Zone d'&eacute;levage";
 				$budget = $surface*0.028;
@@ -943,7 +943,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.002;
 				$education = $surface*0;
 				$population = $surface*2;
-				$emploi = $surface*4;
+				$emploi = $surface*1.5;
 			} elseif ( $typeZone == "prairies" ){
 				$label = "Prairies";
 				$budget = $surface*-0.001;
@@ -955,7 +955,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*0.00625;
 				$education = $surface*0.0005;
 				$population = $surface*0.5;
-				$emploi = $surface*2;
+				$emploi = $surface*1.5;
 			} elseif ( $typeZone == "forestiere" ){
 				$label = "Zone foresti&egrave;re";
 				$budget = $surface*0.001;
@@ -967,7 +967,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*0.002;
 				$education = $surface*0.0007;
 				$population = $surface*0.1;
-				$emploi = $surface*1;
+				$emploi = $surface*0.5;
 			} elseif ( $typeZone == "protegee" ){
 				$label = "Zone foresti&egrave;re prot&eacute;g&eacute;e";
 				$budget = $surface*-0.04;
@@ -1003,7 +1003,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*0.005;
 				$education = $surface*0.001;
 				$population = $surface*2;
-				$emploi = $surface*10;
+				$emploi = $surface*3;
 			} elseif ( $typeZone == "lgv" ){
 				$label = "Lignes &agrave; Grande Vitesse";
 				$budget = $surface*-1.5;

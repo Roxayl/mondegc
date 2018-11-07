@@ -295,7 +295,7 @@ init();
               <p><strong>Population urbaine <a href="#" rel="clickover" title="Population urbaine" data-content="La population urbaine est la somme des populations issues des villes cr&eacute;es dans les jeux"><i class="icon-info-sign"></i></a> &nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($population_pays, 0, ',', ' '); echo $population_pays_francais ?> habitants</p>
               <p><strong>Population rurale <a href="#" rel="clickover" title="Population rurale" data-content="La population rurale prend en compte la population issue de zones dessin&eacute;es sur la carte"><i class="icon-info-sign"></i></a>&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($row_Pays['ch_pay_population_carte'], 0, ',', ' '); echo $population_pays_francais ?> habitants</p>
               <p><strong>Population totale&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($population_pays + $row_Pays['ch_pay_population_carte'], 0, ',', ' '); echo $population_pays_francais ?> habitants</p>
-              <p><strong>Population employée&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($row_Pays['ch_pay_emploi_carte'], 0, ',', ' '); echo $population_pays_francais ?> habitants</p>
+              <!-- <p><strong>Population employée&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($row_Pays['ch_pay_emploi_carte'], 0, ',', ' '); echo $population_pays_francais ?> habitants</p>-->
               <p><strong>R&eacute;gime&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_forme_etat']; ?></p>
             </div>
             <!-- type de jeu
