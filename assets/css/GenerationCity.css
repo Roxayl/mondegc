@@ -330,8 +330,9 @@ input[type='submit'] {
 	padding-bottom: 5px;
 	padding-left: 10px;
 	color: #325608;
+    font-family: "Titillium Web", sans-serif;
 	text-shadow: #ffffff;
-	font-size: 0.85em;
+	font-size: 0.9em;
 	margin-top: 5px;
 	margin-right: 4px;
 	margin-bottom: 6px;
@@ -1417,7 +1418,7 @@ Desktop large
 /* Ajustements police header */
 
 .jumbotron h1 {
-	font-size: 3em;
+	font-size: 2.9em;
 	line-height: 1em;
 }
 .jumbotron p {

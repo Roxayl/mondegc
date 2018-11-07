@@ -84,7 +84,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 						type: 'png', getURL: overlay_getTileURL,
 						isBaseLayer: true,
 						transitionEffect : "resize",
-						attribution:"&copy; Myname"
+						attribution:"&copy; Boxxy-2014"
 	                });
 	            map.addLayer(tmsoverlay1);
 
