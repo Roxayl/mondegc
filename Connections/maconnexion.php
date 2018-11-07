@@ -4,15 +4,18 @@
 # HTTP="true"
 
 
-$hostname_maconnexion = "localhost";
-$database_maconnexion = "mgvx_generationcitycom3";
-$username_maconnexion = "root";
-$password_maconnexion = "";
-
-/* $hostname_maconnexion = "mgvx.myd.infomaniak.com";
-$database_maconnexion = "mgvx_generationcitycom3";
-$username_maconnexion = "mgvx_monde";
-$password_maconnexion = "NewMonde";*/
+if($_SERVER['HTTP_HOST'] === 'localhost') {
+    $hostname_maconnexion = "localhost";
+    $database_maconnexion = "mgvx_generationcitycom3";
+    $username_maconnexion = "root";
+    $password_maconnexion = "";
+}
+else {
+    $hostname_maconnexion = "mgvx.myd.infomaniak.com";
+    $database_maconnexion = "mgvx_generationcitycom3";
+    $username_maconnexion = "mgvx_monde";
+    $password_maconnexion = "NewMonde";
+}
 
 
 $maconnexion = @mysql_pconnect($hostname_maconnexion, $username_maconnexion, $password_maconnexion) or trigger_error(mysql_error(),E_USER_ERROR);
