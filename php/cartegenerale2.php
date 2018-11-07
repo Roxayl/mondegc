@@ -479,7 +479,7 @@ $Paysville = str_replace ( '-', ' ', $row_MarkerVilles['ch_pay_nom']);
 		var x = '<?php echo $row_MarkerVilles['ch_vil_coord_X']; ?>' ;
 		var y = '<?php echo $row_MarkerVilles['ch_vil_coord_Y']; ?>' ;
 		<?php if ($row_MarkerVilles['ch_vil_capitale'] == 1) {?>
-		var pointercolor = "black";
+		var pointercolor = "red";
         <?php } else { ?>
 		var pointercolor = "white";
   		<?php } ?>
