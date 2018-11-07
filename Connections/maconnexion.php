@@ -759,14 +759,14 @@ function styleVoies($typeVoie, &$couleurTrait, &$epaisseurTrait, &$Trait){
 				$epaisseurTrait = "2";
 				$Trait = "solid";
 			} elseif ( $typeVoie == "cheminFer" ){
-				$couleurTrait = "#ea69a0";
-				$epaisseurTrait = "1";
-				$Trait = "solid";
+				$couleurTrait = "#E14A51";
+				$epaisseurTrait = "2";
+				$Trait = "dot";
 			} elseif ( $typeVoie == "canal" ){
 				$couleurTrait = "#009ee0";
 				$epaisseurTrait = "2";
 				$Trait = "solid";
-            } elseif ( $typeVoie == "route maritime" ){
+            } elseif ( $typeVoie == "maritime" || $typeVoie == 'route maritime' ){
 				$couleurTrait = "#009ee0";
 				$epaisseurTrait = "2";
 				$Trait = "dot";
@@ -1026,7 +1026,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.01;
 				$education = $surface*0;
 				$population = $surface*0;
-			} elseif ( $typeZone == "maritime" ){
+			} elseif ( $typeZone == "maritime" || $typeZone == "route maritime" ){
 				$label = "Route maritime";
 				$budget = $surface*-0.25;
 				$industrie = $surface*0.005;
@@ -1092,7 +1092,7 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$environnement = $surface*-0.005;
 				$education = $surface*0;
 				$population = $surface*0;
-			} elseif ( $typeZone == "route maritime" ){
+			} elseif ( $typeZone == "route maritime" || $typeZone == "route maritime" ){
 				$label = "route maritime";
 				$budget = $surface*-0.25;
 				$industrie = $surface*0.005;

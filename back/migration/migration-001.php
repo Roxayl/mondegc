@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+require_once('../../Connections/maconnexion.php');
 
 mysql_select_db($database_maconnexion, $maconnexion);
 
