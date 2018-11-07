@@ -528,6 +528,7 @@ coordEmplacement($emplacement, $x, $y);
 				selectControl = new OpenLayers.Control.SelectFeature(
                 [vectorsAjoutZone, vectorsAdministrations, vectorsZones, vectorsVoies, vectorsAjoutVoie, vectors1, vectors2, vectors3 ]
             );
+            selectControl.handlers.feature.stopDown = false;
             map.addControl(selectControl);
             selectControl.activate();
 

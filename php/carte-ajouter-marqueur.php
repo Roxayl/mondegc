@@ -452,6 +452,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
                 }
             );
             
+            selectControl.handlers.feature.stopDown = false;
             map.addControl(selectControl);
             selectControl.activate();
 			vectors1.addFeatures(createFeatures1());

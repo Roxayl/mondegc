@@ -506,6 +506,7 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
 				selectControl = new OpenLayers.Control.SelectFeature(
                 [vectorsZones, vectorsVoies, vectors1, vectors2, vectors3 ]
             );
+            selectControl.handlers.feature.stopDown = false;
             map.addControl(selectControl);
             selectControl.activate();
 						

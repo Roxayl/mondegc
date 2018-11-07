@@ -580,6 +580,7 @@ if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_Marker
 				selectControl = new OpenLayers.Control.SelectFeature(
                 [vectorsAjoutZone, vectorsAdministrations, vectorsZones, vectorsVoies, vectorsAjoutVoie, vectors1, vectors2, vectors3 ]
             );
+            selectControl.handlers.feature.stopDown = false;
             map.addControl(selectControl);
             selectControl.activate();
 
