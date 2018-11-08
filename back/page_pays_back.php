@@ -37,8 +37,9 @@ $totalRows_User = mysql_num_rows($User);
 
 //Mise à jour formulaire pays
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
-	if ($_POST['ch_pay_emplacement'] < 6 ){ $ch_pay_continent = "RFGC";}
-	if ($_POST['ch_pay_emplacement'] >= 6 and $_POST['ch_pay_emplacement'] < 14 ){ $ch_pay_continent = "Aurinea";}
+	if ($_POST['ch_pay_emplacement'] >= 3 and $_POST['ch_pay_emplacement'] <= 4 ){ $ch_pay_continent = "RFGC";}
+	if ($_POST['ch_pay_emplacement'] >= 5 and $_POST['ch_pay_emplacement'] < 14 ){ $ch_pay_continent = "Aurinea";}
+	if ($_POST['ch_pay_emplacement'] < 3 ){ $ch_pay_continent = "Aurinea";}
 	if ($_POST['ch_pay_emplacement'] >= 14 and $_POST['ch_pay_emplacement'] < 18 ){ $ch_pay_continent = "Oceania";}
 	if ($_POST['ch_pay_emplacement'] >= 18 and $_POST['ch_pay_emplacement'] < 24 ){ $ch_pay_continent = "Volcania";}
 	if ($_POST['ch_pay_emplacement'] >= 24 and $_POST['ch_pay_emplacement'] <= 27 ){ $ch_pay_continent = "Aldesyl";}

