@@ -342,13 +342,13 @@ init();
         <div class="row-fluid">
           <div class="span4 thumb">
             <?php if ($row_User['ch_use_lien_imgpersonnage']) {?>
-            <img src="<?php echo $row_User['ch_use_lien_imgpersonnage']; ?>" alt="<?php echo $row_User['ch_use_nom_dirigeant']; ?> <?php echo $row_User['ch_use_prenom_dirigeant']; ?>" title="<?php echo $row_User['ch_use_nom_dirigeant']; ?> <?php echo $row_User['ch_use_prenom_dirigeant']; ?>">
+            <img src="<?php echo $row_User['ch_use_lien_imgpersonnage']; ?>" alt="<?php echo $row_User['ch_use_prenom_dirigeant']; ?> <?php echo $row_User['ch_use_nom_dirigeant']; ?>" title="<?php echo $row_User['ch_use_prenom_dirigeant']; ?> <?php echo $row_User['ch_use_nom_dirigeant']; ?>">
             <?php } else { ?>
             <img src="assets/img/imagesdefaut/personnage.jpg" alt="personnage par default">
             <?php } ?>
             <div class="titre-gris">
               <?php if ($row_User['ch_use_nom_dirigeant'] OR $row_User['ch_use_prenom_dirigeant']) {?>
-              <h3><?php echo $row_User['ch_use_nom_dirigeant']; ?> <?php echo $row_User['ch_use_prenom_dirigeant']; ?></h3>
+              <h3><?php echo $row_User['ch_use_prenom_dirigeant']; ?> <?php echo $row_User['ch_use_nom_dirigeant']; ?></h3>
               <?php } else { ?>
               <h3>Pas de dirigeant</h3>
               <?php } ?>

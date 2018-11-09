@@ -195,8 +195,8 @@ $totalRows_menu = mysql_num_rows($menu);
             <a class="dropdown-toggle" data-toggle="dropdown" title="les autres sites de G&eacute;n&eacute;ration City">G&eacute;n&eacute;ration City <b class="caret"></b></a>
             <ul class="dropdown-menu">            
               <li><a href="http://www.forum-gc.com">Le forum</a></li>
+              <li><a href="http://vasel.yt/wiki/index.php?title=Accueil">Le Wiki</a></li>
 			  <li><a href="https://squirrel.romukulot.fr/">Squirrel</a></li>
-              <li><a href="http://www.facebook.com/generationcitylesite">Facebook</a></li>			
             </ul>
           </li>
         </ul>

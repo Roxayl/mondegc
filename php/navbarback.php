@@ -66,7 +66,7 @@ $totalRows_menu = mysql_num_rows($menu);
             <a href="../Page-carte.php" class="dropdown-toggle" data-toggle="dropdown" title="liste des pays class&eacute;s par continent">Les pays <b class="caret hidden-phone"></b></a>
             <ul class="dropdown-menu dropdown-double hidden-phone">
               <div class="drop-colonne-gauche">
-                <li class="nav-header"><img src="../assets/img/Volcania.png" class="img-continent"> R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</li>
+                <li class="nav-header"><img src="../assets/img/Aurinea.png" class="img-continent"> R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</li>
                 <?php 
 				do { 
                 if ($row_menu['ch_pay_continent'] == 'RFGC') {
@@ -177,9 +177,9 @@ $totalRows_menu = mysql_num_rows($menu);
             </center>
             <a href="http://www.generation-city.com" class="dropdown-toggle" data-toggle="dropdown" title="les autres sites de G&eacute;n&eacute;ration City">G&eacute;n&eacute;ration City <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="http://www.generation-city.com">Le site</a></li>
               <li><a href="http://www.forum-gc.com">Le forum</a></li>
-              <li><a href="http://www.facebook.com/generationcitylesite">Facebook</a></li>
+              <li><a href="http://vasel.yt/wiki/index.php?title=Accueil">Le Wiki</a></li>
+			  <li><a href="https://squirrel.romukulot.fr/">Squirrel</a></li>
             </ul>
           </li>
         </ul>
