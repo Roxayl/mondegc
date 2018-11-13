@@ -19,6 +19,10 @@ else {
 
 
 $maconnexion = @mysql_pconnect($hostname_maconnexion, $username_maconnexion, $password_maconnexion) or trigger_error(mysql_error(),E_USER_ERROR);
+
+if($_SERVER['HTTP_HOST'] === 'localhost') {
+    mysql_set_charset('utf8',$maconnexion);
+}
 mysql_select_db($database_maconnexion);
 
 //Protection  données envoyées
@@ -737,7 +741,7 @@ function styleZones($typeZone, &$fillcolor, &$fillOpacity, &$strokeWidth, &$stro
 			} elseif ( $typeZone == "region" ){
 				$fillcolor = "#ffffff";
 				$fillOpacity = "0";
-				$strokeWidth = "5";
+				$strokeWidth = "3";
 				$strokeColor = "#626262";
 				$strokeOpacity = "0.5";
 				$Trait = "6 12 6 12";
