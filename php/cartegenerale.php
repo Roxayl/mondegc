@@ -130,11 +130,11 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
                         pointRadius: "5",
 						label : "${name}",
 						fontColor: "black",
-                    fontSize: "1Opx",
-					fontOpacity: 0.5,
-                    fontFamily: "Arial",
-                    fontWeight: "200",
-                    labelOutlineWidth: 0,
+                        fontSize: "12px",
+                        fontOpacity: 0.5,
+                        fontFamily: "Roboto",
+                        fontWeight: "200",
+                        labelOutlineWidth: 0,
 						cursor: "pointer"
                     }, OpenLayers.Feature.Vector.style["default"])),
                 }),
@@ -180,7 +180,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
                     fontWeight: "bold",
                     labelOutlineWidth: 0
                 }}),
-                minResolution: map.getResolutionForZoom(3),
+                minResolution: map.getResolutionForZoom(4),
                 renderers: renderer
             });
             
@@ -225,7 +225,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 			
   			// calque vector pays
 			var vectors1 = new OpenLayers.Layer.Vector(" Pays", {
-	            maxResolution: map.getResolutionForZoom(1),
+	            maxResolution: map.getResolutionForZoom(2),
                 renderers: renderer,
                 styleMap: new OpenLayers.StyleMap({
                     "default": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
@@ -234,18 +234,20 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 						fillColor: "white",
 						strokeColor: "black",
                         externalGraphic: "${flag}",
-                        graphicOpacity: 1,
+                        label : "${name}",
+						fontColor: "black",
+                    	fontFamily: "Roboto",
+                    	fontWeight: "bold",
+                    	fontSize: "12px",
+                        labelAlign: "cm",
+                        labelXOffset: 30,
+                        labelYOffset: -15,
+                        graphicOpacity: 0.6,
 						graphicWidth: 30,
                         pointRadius: 10
                     }, OpenLayers.Feature.Vector.style["default"])),
                     "select": new OpenLayers.Style({
-                        externalGraphic: "${flag}",
-                        graphicOpacity: 0.5,
-                        label : "${name}",
-						fontColor: "black",
-                    	fontSize: "16px",
-                    	fontFamily: "Arial",
-                    	fontWeight: "bold",
+                        graphicOpacity: 1,
                     	labelOutlineWidth: 2
                     	})
                 })
@@ -253,24 +255,29 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 			
   // calque vector villes
             var vectors2 = new OpenLayers.Layer.Vector(" Villes", {
-	            maxResolution: map.getResolutionForZoom(2),
+	            maxResolution: map.getResolutionForZoom(3),
                 renderers: renderer,
                 styleMap: new OpenLayers.StyleMap({
                     "default": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
 						cursor: "pointer",
                         fillColor: "${couleur}",
-                        strokeColor: "black",
+                        strokeColor: "${couleurTrait}",
+                        label: "${label}",
                         graphicName: "circle",
+                        labelAlign: "cm",
+                        labelXOffset: 30,
+                        labelYOffset: -15,
                         fillOpacity: 1,
-                        pointRadius: "${size}"
+                        pointRadius: "${size}",
+                    	fontSize: "${fontSize}",
+                    	fontFamily: "Roboto"
                     }, OpenLayers.Feature.Vector.style["default"])),
                     "select": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
 						label : "${name}",
-						labelXOffset: 0,
-                    	labelYOffset: -15,
 						fontStyle: "italic",
 						strokeColor: "white",
                         fillOpacity: 1,
+                    	fontSize: "12px",
                         pointRadius: "${size}"
                     }, OpenLayers.Feature.Vector.style["select"]))
                 })
@@ -387,15 +394,18 @@ $Paysville = str_replace ( '-', ' ', $row_MarkerVilles['ch_pay_nom']);
 		<?php if ($row_MarkerVilles['ch_vil_capitale'] == 1) {?>
 		var pointercolor = "red";
         <?php } else { ?>
-		var pointercolor = "white";
+		var pointercolor = "black";
   		<?php } ?>
 		<?php $population = $row_MarkerVilles['ch_vil_population'];
 		tailleVilles($population, $sizeicon); ?>
                 features.push(new OpenLayers.Feature.Vector(
                     new OpenLayers.Geometry.Point(x,y), features.attributes = {
-                name: "<?php echo $Nomville; ?>",
+                name: "<?php echo htmlspecialchars($Nomville); ?>",
 				size : <?php echo $sizeicon; ?>,
-				couleur : pointercolor,
+				couleur : "white",
+                label : "<?php echo ($population > 1000000 || $row_MarkerVilles['ch_vil_capitale'] == 1 ? $Nomville : ""); ?>",
+                fontSize: "<?php echo ($population > 3000000 || $row_MarkerVilles['ch_vil_capitale'] == 1 ? "12px" : "11px"); ?>",
+                couleurTrait: pointercolor,
 				popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><a href='page-ville.php?ch_pay_id=<?php echo $row_MarkerVilles['ch_vil_paysID']; ?>&ch_ville_id=<?php echo $row_MarkerVilles['ch_vil_ID']; ?>'><?php if ($row_MarkerVilles['ch_vil_lien_img1']) {?><img src='<?php echo addslashes($row_MarkerVilles['ch_vil_lien_img1']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/ville.jpg'><?php }?></a></div><div><h3><?php echo addslashes($Nomville); ?></h3><p><em>cr&eacute;&eacute;e par <?php echo addslashes($row_MarkerVilles['ch_use_login']); ?></em></p></div><div class='infocarte-icon'><?php if ($row_MarkerVilles['ch_use_lien_imgpersonnage']) {?><img class='avatar' src='<?php echo addslashes($row_MarkerVilles['ch_use_lien_imgpersonnage']); ?>'></img><?php } else { ?><img src='assets/img/imagesdefaut/personnage.jpg'><?php }?><?php if ($row_MarkerVilles['ch_vil_armoiries']) {?><img class='armoirie' src='<?php echo addslashes($row_MarkerVilles['ch_vil_armoiries']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/blason.jpg'><?php }?></div><p><?php if ( $row_MarkerVilles['ch_vil_capitale'] == 1) { echo 'Capitale';} else { echo 'Ville'; } ?> du pays <strong><a href='page-pays.php?ch_pay_id=<?php echo $row_MarkerVilles['ch_vil_paysID']; ?>'><?php echo addslashes($Paysville); ?></a></strong></p><p>Mise &agrave; jour le&nbsp;: <strong><?php  echo date('d/m/Y', strtotime( $row_MarkerVilles['ch_vil_mis_jour'])); ?> &agrave; <?php  echo date('G:i', strtotime($row_MarkerVilles['ch_vil_mis_jour'])); ?></strong></p><p>Population&nbsp;: <strong><?php $population_pays_francais = number_format($row_MarkerVilles['ch_vil_population'], 0, ',', ' '); echo $population_pays_francais; ?> habitants</strong></p><p>Sp&eacute;cialit&eacute;&nbsp;: <strong><?php if ( $row_MarkerVilles['ch_vil_specialite']) { echo addslashes($Specialiteville);} else { echo 'NA'; } ?></strong></p><div class='pull-center'></div></div><div class='pied'><a class='btn btn-primary' href='page-ville.php?ch_pay_id=<?php echo $row_MarkerVilles['ch_vil_paysID']; ?>&ch_ville_id=<?php echo $row_MarkerVilles['ch_vil_ID']; ?>'>Visiter cette ville</a></div>"
             }));
 		<?php } while ($row_MarkerVilles = mysql_fetch_assoc($MarkerVilles)); ?>

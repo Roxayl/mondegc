@@ -329,7 +329,7 @@ $row_geometries = mysql_fetch_assoc($geometries);
 		$tot_environnement = $tot_environnement + $environnement;
 		$tot_education = $tot_education + $education;
 		$tot_population = $tot_population + $population;
-		$tot_emploi = $tot_emploi + $population;
+		$tot_emploi = $tot_emploi + $emploi;
 		 } while ($row_geometries = mysql_fetch_assoc($geometries));
 
 //Enregistrement du total des ressources de la carte.
