@@ -914,7 +914,7 @@ img.olTileImage {
         <div class="span12">
           <form action="../Carte-modifier.php" method="post">
             <input name="paysID" type="hidden" value="<?php echo $colname_paysID; ?>">
-            <button class="btn btn-primary" type="submit" title="lien vers les outils de dessin">D&eacute;ssiner sur la carte</button>
+            <button class="btn btn-primary" type="submit" title="lien vers les outils de dessin">Dessiner sur la carte</button>
           </form>
         </div>
       </section>
