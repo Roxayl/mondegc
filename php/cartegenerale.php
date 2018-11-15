@@ -130,7 +130,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
                         pointRadius: "5",
 						label : "${name}",
 						fontColor: "black",
-                        fontSize: "12px",
+                        fontSize: "11px",
                         fontOpacity: 0.5,
                         fontFamily: "Roboto",
                         fontWeight: "200",
@@ -174,7 +174,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
                     pointerEvents: "visiblePainted",
                     label : "${name}",
                     fontColor: "black",
-                    fontSize: "20px",
+                    fontSize: "18px",
 					fontOpacity: 0.5,
                     fontFamily: "Arial",
                     fontWeight: "bold",
@@ -238,7 +238,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 						fontColor: "black",
                     	fontFamily: "Roboto",
                     	fontWeight: "bold",
-                    	fontSize: "12px",
+                    	fontSize: "11px",
                         labelAlign: "cm",
                         labelXOffset: 30,
                         labelYOffset: -15,
@@ -277,7 +277,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 						fontStyle: "italic",
 						strokeColor: "white",
                         fillOpacity: 1,
-                    	fontSize: "12px",
+                    	fontSize: "11px",
                         pointRadius: "${size}"
                     }, OpenLayers.Feature.Vector.style["select"]))
                 })
@@ -404,7 +404,7 @@ $Paysville = str_replace ( '-', ' ', $row_MarkerVilles['ch_pay_nom']);
 				size : <?php echo $sizeicon; ?>,
 				couleur : "white",
                 label : "<?php echo ($population > 1000000 || $row_MarkerVilles['ch_vil_capitale'] == 1 ? $Nomville : ""); ?>",
-                fontSize: "<?php echo ($population > 3000000 || $row_MarkerVilles['ch_vil_capitale'] == 1 ? "12px" : "11px"); ?>",
+                fontSize: "<?php echo ($population > 3000000 || $row_MarkerVilles['ch_vil_capitale'] == 1 ? "11px" : "10px"); ?>",
                 couleurTrait: pointercolor,
 				popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><a href='page-ville.php?ch_pay_id=<?php echo $row_MarkerVilles['ch_vil_paysID']; ?>&ch_ville_id=<?php echo $row_MarkerVilles['ch_vil_ID']; ?>'><?php if ($row_MarkerVilles['ch_vil_lien_img1']) {?><img src='<?php echo addslashes($row_MarkerVilles['ch_vil_lien_img1']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/ville.jpg'><?php }?></a></div><div><h3><?php echo addslashes($Nomville); ?></h3><p><em>cr&eacute;&eacute;e par <?php echo addslashes($row_MarkerVilles['ch_use_login']); ?></em></p></div><div class='infocarte-icon'><?php if ($row_MarkerVilles['ch_use_lien_imgpersonnage']) {?><img class='avatar' src='<?php echo addslashes($row_MarkerVilles['ch_use_lien_imgpersonnage']); ?>'></img><?php } else { ?><img src='assets/img/imagesdefaut/personnage.jpg'><?php }?><?php if ($row_MarkerVilles['ch_vil_armoiries']) {?><img class='armoirie' src='<?php echo addslashes($row_MarkerVilles['ch_vil_armoiries']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/blason.jpg'><?php }?></div><p><?php if ( $row_MarkerVilles['ch_vil_capitale'] == 1) { echo 'Capitale';} else { echo 'Ville'; } ?> du pays <strong><a href='page-pays.php?ch_pay_id=<?php echo $row_MarkerVilles['ch_vil_paysID']; ?>'><?php echo addslashes($Paysville); ?></a></strong></p><p>Mise &agrave; jour le&nbsp;: <strong><?php  echo date('d/m/Y', strtotime( $row_MarkerVilles['ch_vil_mis_jour'])); ?> &agrave; <?php  echo date('G:i', strtotime($row_MarkerVilles['ch_vil_mis_jour'])); ?></strong></p><p>Population&nbsp;: <strong><?php $population_pays_francais = number_format($row_MarkerVilles['ch_vil_population'], 0, ',', ' '); echo $population_pays_francais; ?> habitants</strong></p><p>Sp&eacute;cialit&eacute;&nbsp;: <strong><?php if ( $row_MarkerVilles['ch_vil_specialite']) { echo addslashes($Specialiteville);} else { echo 'NA'; } ?></strong></p><div class='pull-center'></div></div><div class='pied'><a class='btn btn-primary' href='page-ville.php?ch_pay_id=<?php echo $row_MarkerVilles['ch_vil_paysID']; ?>&ch_ville_id=<?php echo $row_MarkerVilles['ch_vil_ID']; ?>'>Visiter cette ville</a></div>"
             }));
@@ -448,7 +448,7 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
   			vectors1.events.on({
                 "featureselected": function(e) {
                     showStatus(e.feature.attributes.popupContentHTML);
-	       			map.setCenter(e.feature.geometry.getBounds().getCenterLonLat(), 4);},
+	       			map.setCenter(e.feature.geometry.getBounds().getCenterLonLat(), 3);},
                 "featureunselected": function(e) {}
             });
 			
