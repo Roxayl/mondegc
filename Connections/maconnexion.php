@@ -447,8 +447,8 @@ switch ($emplacement) // placement des markers selon la variable d'emplacement
     break;
     
     case 23: 
-        $x="54.5";
-		$y="-45.5";
+        $x="43.5";
+		$y="-58.5";
     break;
     
     case 24: 
@@ -614,6 +614,16 @@ switch ($emplacement) // placement des markers selon la variable d'emplacement
     case 56:
         $x="-18";
         $y="-60";
+    break;
+
+    case 57:
+        $x="-57";
+        $y="-44";
+    break;
+
+    case 58:
+        $x="-73";
+        $y="-43.5";
     break;
     
     default:
