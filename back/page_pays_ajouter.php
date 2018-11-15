@@ -180,7 +180,7 @@ img.olTileImage {
       <h3>Choisir un emplacement&nbsp;:</h3>
       <div id="spryradio2">
         <ul class="Icone-thumb">
-          <?php for ($nb_emplacement = 1; $nb_emplacement <= 56; $nb_emplacement++) {?>
+          <?php for ($nb_emplacement = 1; $nb_emplacement <= 58; $nb_emplacement++) {?>
           <li class=""> <img src="../Carto/Emplacements/emplacement<?php echo $nb_emplacement ?>.jpg">
             <label>
               <input type="radio" name="ch_pay_emplacement" value="<?php echo $nb_emplacement ?>" id="ch_pay_emplacement_<?php echo $nb_emplacement ?>">

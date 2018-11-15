@@ -439,7 +439,7 @@ img.olTileImage {
                       <h3>Modifier l'emplacement :</h3>
                       <div id="spryradio2">
                         <select name="ch_pay_emplacement" id="ch_pay_emplacement">
-                          <?php for ($nb_emplacement = 1; $nb_emplacement <= 56; $nb_emplacement++) {?>
+                          <?php for ($nb_emplacement = 1; $nb_emplacement <= 58; $nb_emplacement++) {?>
                           <option value="<?php echo $nb_emplacement ?>"<?php if (!(strcmp("$nb_emplacement", $row_InfoGenerale['ch_pay_emplacement']))) {echo "selected=\"selected\"";} ?>> N°<?php echo $nb_emplacement ?></option>
                           <?php }?>
                         </select>
