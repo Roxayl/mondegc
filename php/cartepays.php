@@ -81,9 +81,14 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
   // options
 	            var options = {
 	                controls: [
-					new OpenLayers.Control.TouchNavigation({dragPanOptions: {enableKinetic: true}}),
-					new OpenLayers.Control.Zoom()
-					],
+                        new OpenLayers.Control.TouchNavigation({
+                            dragPanOptions: {enableKinetic: true}
+                        }),
+                        new OpenLayers.Control.Zoom(),
+                        new OpenLayers.Control.Navigation({
+                            mouseWheelOptions: {interval: 100}
+                        })
+                    ],
 					numZoomLevels: 6,
 		            projection: new OpenLayers.Projection("EPSG:4326"),
 		            maxResolution: 0.703125,

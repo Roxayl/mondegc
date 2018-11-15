@@ -33,20 +33,20 @@ $totalRows_MarkerPays = mysql_num_rows($MarkerPays);
 				
 	            var options = {
 	                controls: [
-					new OpenLayers.Control.ScaleLine(),
-					new OpenLayers.Control.TouchNavigation({
-                dragPanOptions: {
-                    enableKinetic: true
-                }
-            }),
-			new OpenLayers.Control.Zoom(),
-					],
+                        new OpenLayers.Control.ScaleLine(),
+                        new OpenLayers.Control.TouchNavigation({
+                            dragPanOptions: {enableKinetic: true}
+                        }),
+                        new OpenLayers.Control.Zoom(),
+                        new OpenLayers.Control.Navigation({
+                            mouseWheelOptions: {interval: 100}
+                        })
+                    ],
 		            projection: new OpenLayers.Projection("EPSG:4326"),
 		            maxResolution: 0.703125,
 		            maxExtent: new OpenLayers.Bounds(-180, -90, 180, 90),
-					numZoomLevels: 3,
-					
-		            };
+					numZoomLevels: 3
+                };
 					
                 
 				// construction de la carte
