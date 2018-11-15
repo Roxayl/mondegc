@@ -72,7 +72,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-inf_off")) {
       <div class="controls">
         <textarea rows="4" name="ch_inf_off_desc" class="input-xxlarge" id="ch_inf_off_desc"></textarea>
         <br />
-        <span class="textareaMaxCharsMsg">250 caract&egrave;res max.</span><span class="textareaRequiredMsg">Une valeur est requise.</span></div>
+        <span class="textareaMaxCharsMsg">600 caract&egrave;res max.</span><span class="textareaRequiredMsg">Une valeur est requise.</span></div>
     </div>
     <h3>Influence sur l'économie</h3>
     <div class="row-fluid">
@@ -163,5 +163,5 @@ var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7", "inte
 var sprytextfield8 = new Spry.Widget.ValidationTextField("sprytextfield8", "integer", {validateOn:["change"], isRequired:false, useCharacterMasking:true});
 var sprytextfield9 = new Spry.Widget.ValidationTextField("sprytextfield9", "integer", {validateOn:["change"], isRequired:false, useCharacterMasking:true});
 var sprytextfield10 = new Spry.Widget.ValidationTextField("sprytextfield10", "integer", {validateOn:["change"], isRequired:false, useCharacterMasking:true});
-var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:250, validateOn:["change"], useCharacterMasking:false});
+var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:600, validateOn:["change"], useCharacterMasking:false});
 </script>

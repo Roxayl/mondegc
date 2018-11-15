@@ -161,7 +161,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 		  $_SESSION['aujourdhui']=false;
 		  ?>
     <div class="titre-gris">
-      <h3>Aujourdhui</h3>
+      <h3>Aujourd'hui</h3>
     </div>
     <?php } ?>
         <?php if (($row_LastCommunique['date'] < $_SESSION['now']) AND ($row_LastCommunique['date'] >= $_SESSION['datehier']) AND ($_SESSION['hier']==true)) {
