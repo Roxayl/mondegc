@@ -1142,4 +1142,54 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 			}
 }
 }
-?>
+
+if(!function_exists('renderResources')) {
+    function renderResources($resources) {
+
+        ?>
+        <ul class="token">
+          <li class="span1"><span title="Budget"><img src="assets/img/ressources/Budget.png" alt="icone Budget"></span>
+            <p>
+              <?php echo number_format($resources['budget'], 0, ',', ' '); ?>
+            </p>
+          </li>
+          <li class="span1"><span title="Industrie"><img src="assets/img/ressources/Industrie.png" alt="icone Industrie"></span>
+            <p>
+              <?php echo number_format($resources['industrie'], 0, ',', ' '); ?>
+            </p>
+          </li>
+          <li class="span1"><span title="Commerce"><img src="assets/img/ressources/Bureau.png" alt="icone Commerce"></span>
+            <p>
+              <?php echo number_format($resources['commerce'], 0, ',', ' '); ?>
+            </p>
+          </li>
+          <li class="span1"><span title="Agriculture"><img src="assets/img/ressources/Agriculture.png" alt="icone Agriculture"></span>
+            <p>
+              <?php echo number_format($resources['agriculture'], 0, ',', ' '); ?>
+            </p>
+          </li>
+          <li class="span1"><span title="Tourisme"><img src="assets/img/ressources/tourisme.png" alt="icone Tourisme"></span>
+            <p>
+              <?php echo number_format($resources['tourisme'], 0, ',', ' '); ?>
+            </p>
+          </li>
+          <li class="span1"><span title="Recherche"><img src="assets/img/ressources/Recherche.png" alt="icone Recherche"></span>
+            <p>
+              <?php echo number_format($resources['recherche'], 0, ',', ' '); ?>
+            </p>
+          </li>
+          <li class="span1"><span title="Environnement"><img src="assets/img/ressources/Environnement.png" alt="icone Environnement"></span>
+            <p>
+              <?php echo number_format($resources['environnement'], 0, ',', ' '); ?>
+            </p>
+          </li>
+          <li class="span1"><span title="Education"><img src="assets/img/ressources/Education.png" alt="icone Education"></span>
+            <p>
+              <?php echo number_format($resources['education'], 0, ',', ' '); ?>
+            </p>
+          </li>
+        </ul>
+        <?php
+
+    }
+}

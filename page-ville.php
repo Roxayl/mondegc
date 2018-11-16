@@ -77,6 +77,20 @@ mysql_select_db($database_maconnexion, $maconnexion);
 $query_somme_ressources = sprintf("SELECT SUM(ch_inf_off_budget) AS budget,SUM(ch_inf_off_Industrie) AS industrie, SUM(ch_inf_off_Commerce) AS commerce, SUM(ch_inf_off_Agriculture) AS agriculture, SUM(ch_inf_off_Tourisme) AS tourisme, SUM(ch_inf_off_Recherche) AS recherche, SUM(ch_inf_off_Environnement) AS environnement, SUM(ch_inf_off_Education) AS education FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_ID = %s AND ch_vil_capitale != 3 AND ch_inf_statut = 2", GetSQLValueString($villeid, "int"));
 $somme_ressources = mysql_query($query_somme_ressources, $maconnexion) or die(mysql_error());
 $row_somme_ressources = mysql_fetch_assoc($somme_ressources);
+
+//Recherche de la balance des ressources monument
+$query_monument_ressources = sprintf("SELECT SUM(ch_mon_cat_budget) AS budget,SUM(ch_mon_cat_industrie) AS industrie, SUM(ch_mon_cat_commerce) AS commerce, SUM(ch_mon_cat_agriculture) AS agriculture, SUM(ch_mon_cat_tourisme) AS tourisme, SUM(ch_mon_cat_recherche) AS recherche, SUM(ch_mon_cat_environnement) AS environnement, SUM(ch_mon_cat_education) AS education FROM monument_categories
+  INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+  INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_villeID = %s", GetSQLValueString($villeid, "int"));
+$monument_ressources = mysql_query($query_monument_ressources, $maconnexion) or die(mysql_error());
+$row_monument_ressources = mysql_fetch_assoc($monument_ressources);
+
+// Total ressources
+$total_ressources = array('budget' => 0, 'industrie' => 0, 'commerce' => 0, 'agriculture' => 0, 'tourisme' => 0, 'recherche' => 0, 'environnement' => 0, 'education' => 0);
+foreach($total_ressources as $resourceName => $value) {
+    $total_ressources[$resourceName] = $row_monument_ressources[$resourceName] + $row_somme_ressources[$resourceName];
+}
+
 }
 
 //requete Infrastructure
@@ -518,49 +532,19 @@ init();
           <h1>Economie</h1>
         </div>
         <h3>Balance des ressources</h3>
-        <ul class="token">
-          <li class="span1"><a href="#" title="Budget"><img src="assets/img/ressources/Budget.png" alt="icone Budget"></a>
-            <p>
-              <?php $chiffre_francais = number_format($row_somme_ressources['budget'], 0, ',', ' '); echo $chiffre_francais; ?>
-            </p>
-          </li>
-          <li class="span1"><a href="#" title="Industrie"><img src="assets/img/ressources/Industrie.png" alt="icone Industrie"></a>
-            <p>
-              <?php $chiffre_francais = number_format($row_somme_ressources['industrie'], 0, ',', ' '); echo $chiffre_francais; ?>
-            </p>
-          </li>
-          <li class="span1"><a href="#" title="Commerce"><img src="assets/img/ressources/Bureau.png" alt="icone Commerce"></a>
-            <p>
-              <?php $chiffre_francais = number_format($row_somme_ressources['commerce'], 0, ',', ' '); echo $chiffre_francais; ?>
-            </p>
-          </li>
-          <li class="span1"><a href="#" title="Agriculture"><img src="assets/img/ressources/Agriculture.png" alt="icone Agriculture"></a>
-            <p>
-              <?php $chiffre_francais = number_format($row_somme_ressources['agriculture'], 0, ',', ' '); echo $chiffre_francais; ?>
-            </p>
-          </li>
-          <li class="span1"><a href="#" title="Tourisme"><img src="assets/img/ressources/tourisme.png" alt="icone Tourisme"></a>
-            <p>
-              <?php $chiffre_francais = number_format($row_somme_ressources['tourisme'], 0, ',', ' '); echo $chiffre_francais; ?>
-            </p>
-          </li>
-          <li class="span1"><a href="#" title="Recherche"><img src="assets/img/ressources/Recherche.png" alt="icone Recherche"></a>
-            <p>
-              <?php $chiffre_francais = number_format($row_somme_ressources['recherche'], 0, ',', ' '); echo $chiffre_francais; ?>
-            </p>
-          </li>
-          <li class="span1"><a href="#" title="Environnement"><img src="assets/img/ressources/Environnement.png" alt="icone Environnement"></a>
-            <p>
-              <?php $chiffre_francais = number_format($row_somme_ressources['environnement'], 0, ',', ' '); echo $chiffre_francais; ?>
-            </p>
-          </li>
-          <li class="span1"><a href="#" title="Education"><img src="assets/img/ressources/Education.png" alt="icone Education"></a>
-            <p>
-              <?php $chiffre_francais = number_format($row_somme_ressources['education'], 0, ',', ' '); echo $chiffre_francais; ?>
-            </p>
-          </li>
-        </ul>
-        <div class="clearfix"></div>
+
+          <?php renderResources($total_ressources); ?>
+          <div class="clearfix"></div>
+
+        <h3>Détail des ressources</h3>
+
+          <h4 style="margin-left: 10px;">Infrastructures</h4>
+          <?php renderResources($row_somme_ressources); ?>
+          <div class="clearfix"></div>
+
+          <h4 style="margin-left: 10px;">Patrimoine</h4>
+          <?php renderResources($row_monument_ressources); ?>
+          <div class="clearfix"></div>
         <!-- Liste infrasructures
     ================================================== -->
         <h3>Infrastructures de la ville</h3>

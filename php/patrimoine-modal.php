@@ -26,6 +26,13 @@ $commentaire = mysql_query($query_commentaire, $maconnexion) or die(mysql_error(
 $row_commentaire = mysql_fetch_assoc($commentaire);
 $totalRows_commentaire = mysql_num_rows($commentaire);
 
+// *** Ressources patrimoine
+$query_monument_ressources = sprintf("SELECT SUM(ch_mon_cat_budget) AS budget,SUM(ch_mon_cat_industrie) AS industrie, SUM(ch_mon_cat_commerce) AS commerce, SUM(ch_mon_cat_agriculture) AS agriculture, SUM(ch_mon_cat_tourisme) AS tourisme, SUM(ch_mon_cat_recherche) AS recherche, SUM(ch_mon_cat_environnement) AS environnement, SUM(ch_mon_cat_education) AS education FROM monument_categories
+  INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+  INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_id = %s", GetSQLValueString($colname_monument, "int"));
+$monument_ressources = mysql_query($query_monument_ressources, $maconnexion) or die(mysql_error());
+$row_monument_ressources = mysql_fetch_assoc($monument_ressources);
+
 
 // *** Requête pour infos sur les categories.
 $listcategories = ($row_monument['listcat']);
@@ -119,10 +126,15 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
             </li>
             <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); ?>
         </ul>
+
         <?php mysql_free_result($liste_mon_cat3); ?>
         <?php } else { ?>
         <p>Ce monument ne fait partie d'aucune cat&eacute;gorie.</p>
         <?php }?>
+
+        <p><strong>Influence sur l'économie :</strong></p>
+          <?php renderResources($row_monument_ressources); ?>
+          <div class="clearfix"></div>
       </div>
       <div class="span4">
         <iframe width="100%" height="300px" frameborder="0" scrolling="no" src="Iframeposition.php?x=<?php echo $row_monument['ch_pat_coord_X']; ?>&y=<?php echo $row_monument['ch_pat_coord_Y']; ?>" name="iframe"></iframe>

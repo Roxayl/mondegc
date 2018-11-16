@@ -16,6 +16,13 @@ $monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
 $row_monument = mysql_fetch_assoc($monument);
 $totalRows_monument = mysql_num_rows($monument);
 
+// *** Ressources patrimoine
+$query_monument_ressources = sprintf("SELECT SUM(ch_mon_cat_budget) AS budget,SUM(ch_mon_cat_industrie) AS industrie, SUM(ch_mon_cat_commerce) AS commerce, SUM(ch_mon_cat_agriculture) AS agriculture, SUM(ch_mon_cat_tourisme) AS tourisme, SUM(ch_mon_cat_recherche) AS recherche, SUM(ch_mon_cat_environnement) AS environnement, SUM(ch_mon_cat_education) AS education FROM monument_categories
+  INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+  INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_id = %s", GetSQLValueString($colname_monument, "int"));
+$monument_ressources = mysql_query($query_monument_ressources, $maconnexion) or die(mysql_error());
+$row_monument_ressources = mysql_fetch_assoc($monument_ressources);
+
 // Connection infos dirigeant pays
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($row_monument['ch_pat_paysID'], "int"));
@@ -200,6 +207,10 @@ $_SESSION['last_work'] = 'page-monument.php?ch_pat_id='.$row_monument['ch_pat_id
       <?php } else { ?>
       <p>Ce monument ne fait partie d'aucune cat&eacute;gorie.</p>
       <?php }?>
+
+        <p><strong>Influence sur l'économie :</strong></p>
+          <?php renderResources($row_monument_ressources); ?>
+          <div class="clearfix"></div>
       </div>
     <div class="span4">
       <iframe width="100%" height="300px" frameborder="0" scrolling="no" src="Iframeposition.php?x=<?php echo $row_monument['ch_pat_coord_X']; ?>&y=<?php echo $row_monument['ch_pat_coord_Y']; ?>" name="iframe"></iframe>

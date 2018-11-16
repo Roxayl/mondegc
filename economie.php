@@ -33,17 +33,58 @@ if (isset($_GET['cat'])) {
 } 
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_somme_ressources = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, 
-((SELECT SUM(ch_inf_off_budget) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_budget_carte ) AS budget,
-(SELECT SUM(ch_inf_off_Industrie) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_industrie_carte AS industrie,
-(SELECT SUM(ch_inf_off_Commerce) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_commerce_carte AS commerce,
-(SELECT SUM(ch_inf_off_Agriculture) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_agriculture_carte AS agriculture,
-(SELECT SUM(ch_inf_off_Tourisme) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_tourisme_carte AS tourisme,
-(SELECT SUM(ch_inf_off_Recherche) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_recherche_carte AS recherche,
-(SELECT SUM(ch_inf_off_Environnement) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_environnement_carte AS environnement,
-(SELECT SUM(ch_inf_off_Education) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_education_carte AS education
+(SELECT SUM(ch_inf_off_budget) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_budget_carte 
++ COALESCE((SELECT SUM(ch_mon_cat_budget) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+AS budget,
+(SELECT SUM(ch_inf_off_Industrie) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_industrie_carte
++ COALESCE((SELECT SUM(ch_mon_cat_industrie) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+AS industrie,
+(SELECT SUM(ch_inf_off_Commerce) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_commerce_carte
++ COALESCE((SELECT SUM(ch_mon_cat_commerce) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+ AS commerce,
+(SELECT SUM(ch_inf_off_Agriculture) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_agriculture_carte
++ COALESCE((SELECT SUM(ch_mon_cat_agriculture) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+ AS agriculture,
+(SELECT SUM(ch_inf_off_Tourisme) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_tourisme_carte
++ COALESCE((SELECT SUM(ch_mon_cat_tourisme) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+ AS tourisme,
+(SELECT SUM(ch_inf_off_Recherche) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_recherche_carte
++ COALESCE((SELECT SUM(ch_mon_cat_recherche) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+ AS recherche,
+(SELECT SUM(ch_inf_off_Environnement) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_environnement_carte
++ COALESCE((SELECT SUM(ch_mon_cat_environnement) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+ AS environnement,
+(SELECT SUM(ch_inf_off_Education) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_education_carte
++ COALESCE((SELECT SUM(ch_mon_cat_education) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+ AS education
 FROM pays WHERE ch_pay_publication = 1 ORDER BY $cat DESC");
+//echo $query_somme_ressources; exit;
 $query_limit_somme_ressources = sprintf("%s LIMIT %d, %d", $query_somme_ressources, $startRow_somme_ressources, $maxRows_somme_ressources);
-$somme_ressources = mysql_query($query_limit_somme_ressources, $maconnexion) or die(mysql_error());
+$somme_ressources = mysql_query($query_limit_somme_ressources);
 $row_somme_ressources = mysql_fetch_assoc($somme_ressources);
 
 if (isset($_GET['totalRows_somme_ressources'])) {
@@ -75,14 +116,54 @@ $queryString_somme_ressources = sprintf("&totalRows_somme_ressources=%d%s", $tot
 //calcul ressources mondiales 
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_somme_ressources_mondiales = sprintf("SELECT
-((SELECT SUM(ch_inf_off_budget) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_budget_carte ) AS budget,
-(SELECT SUM(ch_inf_off_Industrie) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_industrie_carte AS industrie,
-(SELECT SUM(ch_inf_off_Commerce) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_commerce_carte AS commerce,
-(SELECT SUM(ch_inf_off_Agriculture) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_agriculture_carte AS agriculture,
-(SELECT SUM(ch_inf_off_Tourisme) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_tourisme_carte AS tourisme,
-(SELECT SUM(ch_inf_off_Recherche) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_recherche_carte AS recherche,
-(SELECT SUM(ch_inf_off_Environnement) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_environnement_carte AS environnement,
-(SELECT SUM(ch_inf_off_Education) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)+ ch_pay_education_carte AS education
+(SELECT SUM(ch_inf_off_budget) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_budget_carte 
++ COALESCE((SELECT SUM(ch_mon_cat_budget) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+AS budget,
+(SELECT SUM(ch_inf_off_Industrie) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_industrie_carte
++ COALESCE((SELECT SUM(ch_mon_cat_industrie) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+AS industrie,
+(SELECT SUM(ch_inf_off_Commerce) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_commerce_carte
++ COALESCE((SELECT SUM(ch_mon_cat_commerce) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+ AS commerce,
+(SELECT SUM(ch_inf_off_Agriculture) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_agriculture_carte
++ COALESCE((SELECT SUM(ch_mon_cat_agriculture) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+ AS agriculture,
+(SELECT SUM(ch_inf_off_Tourisme) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_tourisme_carte
++ COALESCE((SELECT SUM(ch_mon_cat_tourisme) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+ AS tourisme,
+(SELECT SUM(ch_inf_off_Recherche) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_recherche_carte
++ COALESCE((SELECT SUM(ch_mon_cat_recherche) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+ AS recherche,
+(SELECT SUM(ch_inf_off_Environnement) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_environnement_carte
++ COALESCE((SELECT SUM(ch_mon_cat_environnement) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+ AS environnement,
+(SELECT SUM(ch_inf_off_Education) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
++ ch_pay_education_carte
++ COALESCE((SELECT SUM(ch_mon_cat_education) FROM monument_categories
+   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
+ AS education
 FROM pays WHERE ch_pay_publication = 1 GROUP BY ch_pay_id ORDER BY %s DESC", GetSQLValueString($cat, "text"));
 $somme_ressources_mondiales = mysql_query($query_somme_ressources_mondiales, $maconnexion) or die(mysql_error());
 $row_somme_ressources_mondiales = mysql_fetch_assoc($somme_ressources_mondiales);
