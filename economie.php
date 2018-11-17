@@ -87,10 +87,12 @@ $query_limit_somme_ressources = sprintf("%s LIMIT %d, %d", $query_somme_ressourc
 $somme_ressources = mysql_query($query_limit_somme_ressources);
 $row_somme_ressources = mysql_fetch_assoc($somme_ressources);
 
+
 if (isset($_GET['totalRows_somme_ressources'])) {
   $totalRows_somme_ressources = $_GET['totalRows_somme_ressources'];
 } else {
   $all_somme_ressources = mysql_query($query_somme_ressources);
+  $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
   $totalRows_somme_ressources = mysql_num_rows($all_somme_ressources);
 }
 $totalPages_somme_ressources = ceil($totalRows_somme_ressources/$maxRows_somme_ressources)-1;
@@ -181,6 +183,21 @@ $tot_mon_education = $tot_mon_education + $row_somme_ressources_mondiales['educa
 } while ($row_somme_ressources_mondiales = mysql_fetch_assoc($somme_ressources_mondiales));
 
 
+
+$graph_ressources = array();
+$graph_country = array();
+$graph_colors = array();
+
+do {
+    $graph_ressources[] = $row_all_somme_ressources[$cat];
+    $graph_country[] = $row_all_somme_ressources['ch_pay_nom'];
+    $graph_colors[] = '';
+} while($row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources));
+mysql_data_seek($all_somme_ressources, 0);
+
+$row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
+
+
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
@@ -244,6 +261,8 @@ $tot_mon_education = $tot_mon_education + $row_somme_ressources_mondiales['educa
 <script type="text/javascript" src="assets/js/Editeur.js"></script>
 <!-- SPRY ASSETS -->
 <script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
+<!-- Chart.js : génération de graphes -->
+<script src="assets/js/Chart.2.7.3.bundle.js"></script>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
@@ -311,8 +330,102 @@ $tot_mon_education = $tot_mon_education + $row_somme_ressources_mondiales['educa
         <div class="titre-bleu anchor" id="ressources"> <img src="assets/img/IconesBDD/Bleu/100/eco.png">
           <h1>Statistiques &eacute;conomiques</h1>
         </div>
+       <div class="row-fluid">
+       <div class="span8 well">
+
+
+        <img class="token-list-eco pull-left" src="assets/img/ressources/<?= $cat === "commerce" ? "Bureau" : ucfirst($cat) ?>.png" alt="icone <?= $cat ?>" style="width: 50px;">
+        <form action="economie.php#ressources" method="GET">
+          <select class="btn-large" name="cat" id="cat" onchange="this.form.submit()">
+            <option value="" <?php if ($colname_somme_ressources == NULL) {?>selected<?php } ?>>S&eacute;lectionnez une ressource</option>
+            <option value="commerce" <?php if ($cat == 'commerce') {?>selected<?php } ?>>Commerce</option>
+			<option value="industrie" <?php if ($cat == 'industrie') {?>selected<?php } ?>>Industrie</option>
+            <option value="agriculture" <?php if ($cat == 'agriculture') {?>selected<?php } ?>>Agriculture</option>
+            <option value="tourisme" <?php if ($cat == 'tourisme') {?>selected<?php } ?>>Tourisme</option>
+            <option value="recherche" <?php if ($cat == 'recherche') {?>selected<?php } ?>>Recherche</option>
+            <option value="environnement" <?php if ($cat == 'environnement') {?>selected<?php } ?>>Environnement</option>
+            <option value="education" <?php if ($cat == 'education') {?>selected<?php } ?>>Education</option>
+			<option value="budget" <?php if ($cat == 'budget') {?>selected<?php } ?>>Budget</option>
+          </select>
+        </form>
+
+           <div class="chart-container">
+              <canvas id="eco-chart" width="600" height="320"></canvas>
+          </div>
+
+          <script type="text/javascript">
+
+          (function($, window, Chart, document, undefined) {
+
+              var chartColors = [
+                '#4dc9f6',
+                '#f67019',
+                '#f53794',
+                '#537bc4',
+                '#acc236',
+                '#166a8f',
+                '#00a950',
+                '#58595b',
+                '#8549ba'
+            ];
+            var i = 0;
+
+            var getColor = function() {
+
+                var length = chartColors.length;
+                i++;
+                var returnValue = chartColors[i];
+                if(i + 1 >= length)
+                    i = 0;
+                return returnValue;
+
+            };
+
+            var colorArray = [];
+            for(var j = 0; j < <?= $totalRows_somme_ressources ?>; j++){
+                colorArray.push(getColor());
+            }
+
+            var ctx = $("#eco-chart");
+            var ecoChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    datasets: [{
+                        data: <?= json_encode($graph_ressources); ?>,
+                        backgroundColor: colorArray,
+                        label: "<?= $cat ?>"
+                    }],
+
+                    // These labels appear in the legend and in the tooltips when hovering different arcs
+                    labels: <?= json_encode($graph_country); ?>
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                offsetGridLines: true
+                            },
+                            ticks: {
+                                display: false
+                            }
+                        }]
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            });
+
+          })(jQuery, window, Chart, document);
+
+
+
+          </script>
+
+       </div>
+          
         <!-- affichage ressource et somme mondiale en fonction du choix -->
-        <div class="span4 pull-right well ressources">
+        <div class="span4 well ressources">
           <p><i class="icon-globe icon-white"></i> Balance mondiale&nbsp;:</p>
           <?php if ($cat =="budget") { ?>
           <a href="#" title="Budget"><img src="assets/img/ressources/Budget.png" alt="icone Budget"></a>
@@ -347,21 +460,8 @@ $tot_mon_education = $tot_mon_education + $row_somme_ressources_mondiales['educa
           <h3><?php $chiffre_francais = number_format($tot_mon_education, 0, ',', ' '); echo $chiffre_francais; ?></h3>
           <?php } ?>
         </div>
+       </div>
         <!-- choix ressources  -->
-        <form action="economie.php#ressources" method="GET">
-          <select name="cat" id="cat" onchange="this.form.submit()">
-            <option value="" <?php if ($colname_somme_ressources == NULL) {?>selected<?php } ?>>S&eacute;lectionnez une ressource</option>            
-            <option value="commerce" <?php if ($cat == 'commerce') {?>selected<?php } ?>>Commerce</option>
-			<option value="industrie" <?php if ($cat == 'industrie') {?>selected<?php } ?>>Industrie</option>            
-            <option value="agriculture" <?php if ($cat == 'agriculture') {?>selected<?php } ?>>Agriculture</option>
-            <option value="tourisme" <?php if ($cat == 'tourisme') {?>selected<?php } ?>>Tourisme</option>
-            <option value="recherche" <?php if ($cat == 'recherche') {?>selected<?php } ?>>Recherche</option>
-            <option value="environnement" <?php if ($cat == 'environnement') {?>selected<?php } ?>>Environnement</option>
-            <option value="education" <?php if ($cat == 'education') {?>selected<?php } ?>>Education</option>
-			<option value="budget" <?php if ($cat == 'budget') {?>selected<?php } ?>>Budget</option>
-          </select>
-        </form>
-        <div class="clearfix"></div>
         <?php  
 		$rank= $startRow_somme_ressources; 
 		do { 
@@ -412,7 +512,7 @@ $tot_mon_education = $tot_mon_education + $row_somme_ressources_mondiales['educa
               <h3><?php $chiffre_francais = number_format($row_somme_ressources['recherche'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
             </div>
             <?php } elseif (($cat =="environnement") AND ($row_somme_ressources['environnement']!=NULL)) { ?>
-            <div class="span1 token-list-eco"> <a href="#" title="Zvironnement"><img src="assets/img/ressources/Environnement.png" alt="icone Environnement"></a> </div>
+            <div class="span1 token-list-eco"> <a href="#" title="Environnement"><img src="assets/img/ressources/Environnement.png" alt="icone Environnement"></a> </div>
             <div class="span3">
               <h3><?php $chiffre_francais = number_format($row_somme_ressources['environnement'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
             </div>

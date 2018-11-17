@@ -1304,6 +1304,15 @@ table .btn {
 	float:left;
 }
 
+.chart-container {
+    width: 600px;
+    height: 320px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+}
+
 /* Images modal ressources
 ------------------------- */
 .img-modal-ressource{
