@@ -800,6 +800,10 @@ function styleVoies($typeVoie, &$couleurTrait, &$epaisseurTrait, &$Trait){
 				$couleurTrait = "#5581A0";
 				$epaisseurTrait = "2";
 				$Trait = "dot";
+			} elseif ( $typeVoie == "frontiere" ){
+				$couleurTrait = "#000000";
+				$epaisseurTrait = "2";
+				$Trait = "dashdot";
 			} else {
 				$couleurTrait = "#af1018";
 				$epaisseurTrait = "3";
