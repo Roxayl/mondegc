@@ -50,7 +50,7 @@ $_SESSION['an']=true;
 <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url('assets/img/ImgIntroheader.jpg');
+	background-image: url('http://image.noelshack.com/fichiers/2018/52/3/1545838002-bg-bottom-white.png');
 }
 </style>
 <!-- Le javascript
@@ -58,6 +58,17 @@ $_SESSION['an']=true;
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
+<script src="assets/js/bootstrap-affix.js"></script>
+<script src="assets/js/application.js"></script>
+<script src="assets/js/bootstrap-scrollspy.js"></script>
+<script src="assets/js/bootstrapx-clickover.js"></script>
+<script type="text/javascript">
+      $(function() {
+          $('[rel="clickover"]').clickover();})
+</script>
+<!-- MODAL -->
+<script src="assets/js/bootstrap-modalmanager.js"></script>
+<script src="assets/js/bootstrap-modal.js"></script>
 
 </head>
 <body>
@@ -66,6 +77,9 @@ $_SESSION['an']=true;
 <?php $accueil=true; include('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
+
+<div class="modal container fade" id="myModal"></div>
+
 <div id="introheader" class="jumbotron">
   <div class="container">
     <div class="header">
@@ -85,23 +99,91 @@ $_SESSION['an']=true;
 <div class="container corps-page">
   <!-- CATEGORIE Dernières actualites
 ================================================== -->
-
-<div id="actu" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Membre1.png" alt="icone user">
-  <h1>Derni&egrave;res actualit&eacute;s</h1>
-</div>
   <!-- LISTE Dernières actualites
 ================================================== -->
 
 <div class="row-fluid">
     <div class="span8" id="postswrapper">
+
+        <div id="actu" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Membre1.png" alt="icone user">
+          <h1>Derni&egrave;res actualit&eacute;s</h1>
+        </div>
         <?php include('last_MAJ.php'); ?>
     </div>
     <div class="span4">
 
+        <div id="actu" class="titre-bleu anchor"> <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png" alt="icone user">
+          <h1>Communiqués publiés</h1>
+        </div>
+        <?php
+        $query_communiquesPays = "
+SELECT communique_pays.ch_com_label AS type_notification, communique_pays.ch_com_ID AS id, communique_pays.ch_com_statut AS statut, communique_pays.ch_com_categorie AS sous_categorie, communique_pays.ch_com_element_id AS id_element, communique_pays.ch_com_user_id AS id_auteur, communique_pays.ch_com_date AS date, communique_pays.ch_com_titre AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_pay_id AS id_institution, ch_pay_nom AS institution, ch_pay_lien_imgdrapeau AS img_institution, ch_pay_id AS pays_institution
+FROM communiques communique_pays 
+INNER JOIN users ON communique_pays.ch_com_user_id = ch_use_id 
+INNER JOIN pays ON communique_pays.ch_com_element_id = ch_pay_id
+WHERE communique_pays.ch_com_statut = 1 AND communique_pays.ch_com_categorie='pays' OR communique_pays.ch_com_categorie='com_pays' 
+UNION 
+SELECT communique_ville.ch_com_label AS type_notification, communique_ville.ch_com_ID AS id, communique_ville.ch_com_statut AS statut, communique_ville.ch_com_categorie AS sous_categorie, communique_ville.ch_com_element_id AS id_element, communique_ville.ch_com_user_id AS id_auteur, communique_ville.ch_com_date AS date, communique_ville.ch_com_titre AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_vil_ID AS id_institution, ch_vil_nom AS institution, ch_vil_armoiries AS img_institution, ch_vil_paysID AS pays_institution
+FROM communiques communique_ville 
+INNER JOIN villes ON ch_com_element_id = ch_vil_ID 
+INNER JOIN users ON communique_ville.ch_com_user_id = ch_use_id 
+WHERE communique_ville.ch_com_statut = 1 AND communique_ville.ch_com_categorie ='ville' OR communique_ville.ch_com_categorie ='com_ville' 
+UNION 
+SELECT communique_institut.ch_com_label AS type_notification, communique_institut.ch_com_ID AS id, communique_institut.ch_com_statut AS statut, communique_institut.ch_com_categorie AS sous_categorie, communique_institut.ch_com_element_id AS id_element, communique_institut.ch_com_user_id AS id_auteur, communique_institut.ch_com_date AS date, communique_institut.ch_com_titre AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_ins_ID AS id_institution, ch_ins_nom AS institution, ch_ins_logo AS img_institution, ch_ins_ID AS pays_institution
+FROM communiques communique_institut 
+INNER JOIN instituts ON ch_com_element_id = ch_ins_ID 
+INNER JOIN users ON communique_institut.ch_com_user_id = ch_use_id 
+WHERE communique_institut.ch_com_statut = 1 AND communique_institut.ch_com_categorie ='institut' 
+UNION
+SELECT communique_monument.ch_com_label AS type_notification, communique_monument.ch_com_ID AS id, communique_monument.ch_com_statut AS statut, communique_monument.ch_com_categorie AS sous_categorie, communique_monument.ch_com_element_id AS id_element, communique_monument.ch_com_user_id AS id_auteur, communique_monument.ch_com_date AS date, communique_monument.ch_com_titre AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_pat_id AS id_institution, ch_pat_nom AS institution, ch_pat_lien_img1 AS img_institution, ch_pat_paysID AS pays_institution
+FROM communiques communique_monument 
+INNER JOIN patrimoine ON ch_com_element_id = ch_pat_id
+INNER JOIN users ON communique_monument.ch_com_user_id = ch_use_id 
+WHERE communique_monument.ch_com_statut = 1 AND communique_monument.ch_com_categorie ='com_monument'
+UNION
+SELECT communique_monument.ch_com_label AS type_notification, communique_monument.ch_com_ID AS id, communique_monument.ch_com_statut AS statut, communique_monument.ch_com_categorie AS sous_categorie, communique_monument.ch_com_element_id AS id_element, communique_monument.ch_com_user_id AS id_auteur, communique_monument.ch_com_date AS date, communique_monument.ch_com_titre AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_his_id AS id_institution, ch_his_nom AS institution, ch_his_lien_img1 AS img_institution, ch_his_paysID AS pays_institution
+FROM communiques communique_monument 
+INNER JOIN histoire ON ch_com_element_id = ch_his_id
+INNER JOIN users ON communique_monument.ch_com_user_id = ch_use_id 
+WHERE communique_monument.ch_com_statut = 1 AND communique_monument.ch_com_categorie ='com_fait_his'
+ORDER BY date DESC LIMIT 0, 15";
+        $communiquesPays = mysql_query($query_communiquesPays, $maconnexion) or die(mysql_error());
+        $row_communiquesPays = mysql_fetch_assoc($communiquesPays);
+        ?>
+
+        <ul class="liste-transparente">
+        <?php do { ?>
+        <li class="fond-notification item">
+        <div class="row">
+            <div class="span3">
+                <img style="width: 70px;" src="<?= $row_communiquesPays['img_institution'] ?>" />
+            </div>
+            <div class="span9">
+                <p style="margin-top: 10px;"><?= $row_communiquesPays['institution'] ?></p>
+                <h4><a href="php/communique-modal.php?com_id=<?= $row_communiquesPays['id'] ?>" data-toggle="modal" data-target="#myModal"><?php echo htmlspecialchars($row_communiquesPays['titre']); ?></a></h4>
+                <small><?php echo date("d/m/Y", strtotime($row_communiquesPays['date'])); ?></small>
+            </div>
+        </div>
+        </li>
+      <?php } while ($row_communiquesPays = mysql_fetch_assoc($communiquesPays)); ?>
+        </ul>
+
     </div>
 </div>
+    <script>
+        $("a[data-toggle=modal]").click(function (e) {
+          lv_target = $(this).attr('data-target');
+          lv_url = $(this).attr('href');
+          $(lv_target).load(lv_url);
+        });
+
+        $('#closemodal').click(function() {
+            $('#myModal').modal('hide');
+        });
+    </script>
 <!-- Footer
     ================================================== -->
+
 <?php include('php/footer.php'); ?>
 </body>
 </html>

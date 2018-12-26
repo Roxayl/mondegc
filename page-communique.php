@@ -128,7 +128,6 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
 <!-- MODAL -->
 <script src="assets/js/bootstrap-modalmanager.js"></script>
 <script src="assets/js/bootstrap-modal.js"></script>
-</script>
 <!-- EDITEUR -->
 <script type="text/javascript" src="assets/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript" src="assets/js/Editeur.js"></script>
@@ -245,8 +244,10 @@ $("a[data-toggle=modal]").click(function (e) {
   $(lv_target).load(lv_url)})
 
 $('#closemodal').click(function() {
-    $('#myModal').modal('hide');
+    $('#Modal-Monument').modal('hide');
 });
+
+$('.popover-html').popover({ html : true});
 </script>
 <?php
 mysql_free_result($communique);

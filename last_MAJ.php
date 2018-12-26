@@ -273,7 +273,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
           </div>
           <div class="row-fluid fond-notification">
             <div class="span2 auteur"><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="auteur"></a> </div>
-            <div class="span8 desc"> <small>le
+            <div class="span9 desc"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
@@ -319,7 +319,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
           </div>
           <div class="row-fluid fond-notification">
             <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="auteur"></a> </div>
-            <div class="span8"> <small>le
+            <div class="span9"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
@@ -362,7 +362,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
           </div>
           <div class="row-fluid fond-notification">
             <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="auteur"></a> </div>
-            <div class="span8"> <small>le
+            <div class="span9"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
@@ -462,14 +462,14 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
             <h3>Pays mis &agrave; jour</h3>
           </div>
           <div class="row-fluid fond-notification">
-            <div class="span4">
+            <div class="span3">
               <?php if ($row_LastCommunique['img_institution']) {?>
               <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['id']; ?>" alt="pays"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="Drapeau du pays"></a>
               <?php } else {?>
               <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['id']; ?>" alt="pays"><img src="assets/img/imagesdefaut/drapeau.jpg" alt="Drapeau du pays"></a>
               <?php }?>
             </div>
-            <div class="span8"> <small>le
+            <div class="span9"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
@@ -490,14 +490,14 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
             <h3>Ville mise &agrave; jour</h3>
           </div>
           <div class="row-fluid fond-notification">
-            <div class="span4">
+            <div class="span3">
               <?php if ($row_LastCommunique['img_institution']) {?>
               <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration ville"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="illustration ville"></a>
               <?php } else {?>
               <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration ville"><img src="assets/img/imagesdefaut/ville.jpg" alt="illustration ville"></a>
               <?php }?>
             </div>
-            <div class="span8"> <small>le
+            <div class="span9"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
@@ -518,14 +518,14 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
             <h3>Nouveau monument</h3>
           </div>
           <div class="row-fluid fond-notification">
-            <div class="span4">
+            <div class="span3">
               <?php if ($row_LastCommunique['img_institution']) {?>
               <a href="page-monument.php?ch_pat_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration monument"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="illustration monument"></a>
               <?php } else {?>
               <a href="page-monument.php?ch_pat_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration monument"><img src="assets/img/imagesdefaut/ville.jpg" alt="illustration monument"></a>
               <?php }?>
             </div>
-            <div class="span8"> <small>le
+            <div class="span9"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
@@ -570,14 +570,14 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
             <h3>Nouvelle p&eacute;riode historique</h3>
           </div>
           <div class="row-fluid fond-notification">
-            <div class="span4">
+            <div class="span3">
               <?php if ($row_LastCommunique['img_institution']) {?>
               <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration fait historique"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="illustration fait historique"></a>
               <?php } else {?>
               <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration fait historique"><img src="assets/img/imagesdefaut/ville.jpg" alt="illustration fait historique"></a>
               <?php }?>
             </div>
-            <div class="span8"> <small>le
+            <div class="span9"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
@@ -598,14 +598,14 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
             <h3>Nouveau personnage historique</h3>
           </div>
           <div class="row-fluid fond-notification">
-            <div class="span4">
+            <div class="span3">
               <?php if ($row_LastCommunique['img_institution']) {?>
               <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration fait historique"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="illustration fait historique"></a>
               <?php } else {?>
               <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration fait historique"><img src="assets/img/imagesdefaut/ville.jpg" alt="illustration fait historique"></a>
               <?php }?>
             </div>
-            <div class="span8"> <small>le
+            <div class="span9"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
@@ -626,14 +626,14 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
             <h3>Nouveau fait historique</h3>
           </div>
           <div class="row-fluid fond-notification">
-            <div class="span4">
+            <div class="span3">
               <?php if ($row_LastCommunique['img_institution']) {?>
               <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration fait historique"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="illustration fait historique"></a>
               <?php } else {?>
               <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration fait historique"><img src="assets/img/imagesdefaut/ville.jpg" alt="illustration fait historique"></a>
               <?php }?>
             </div>
-            <div class="span8"> <small>le
+            <div class="span9"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>

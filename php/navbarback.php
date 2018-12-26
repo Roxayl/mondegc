@@ -18,7 +18,7 @@ $totalRows_menu = mysql_num_rows($menu);
         <a href="<?php echo $logoutAction ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a> </div>
       <!-- Logo -->
       <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-      <a class="brand" href="../index.php">Le Monde GC</a> 
+      <a class="brand" href="../index.php"><img src="assets/img/logo2018.png" alt="Le Monde GC" /></a>
       
       <!-- Collapse -->
       <div class="nav-collapse collapse"> 
@@ -26,7 +26,7 @@ $totalRows_menu = mysql_num_rows($menu);
         <!-- Menu gestion une fois connecté desktop/phone -->
         <div class="hidden-tablet navbar-form <?php echo $_SESSION['menu_gestion']?>">
             <div><a href="membre-modifier_back.php?paysID=<?= $_SESSION['pays_ID'] ?>&userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Mon profil</a></div>
-            <div><a href="page_pays_back.php?paysID=<?= $_SESSION['pays_ID'] ?>&userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mon pays</a></div>
+            <div><a style="margin-top: 3px;" href="page_pays_back.php?paysID=<?= $_SESSION['pays_ID'] ?>&userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mon pays</a></div>
           <div class="offset"><span class="Nav-pseudo"><span class="bienvenue">Bienvenue </span><?php echo $_SESSION['login_user']?>&nbsp;</span> <a href="<?php echo $logoutAction ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a></div>
         </div>
         

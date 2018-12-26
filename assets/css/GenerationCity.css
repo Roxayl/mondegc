@@ -311,7 +311,7 @@ input[type='submit'] {
 
 .navbar-inner {
 	background-color: #6e9fff;
-	background-image: url("../img/FondNavbar.png");
+	background-image: url("../img/FondNavbar2018.png");
  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
 .navbar .nav > li > a {
@@ -346,7 +346,8 @@ body > .navbar .brand {
 	padding-left: 0;
 	margin-right: 19px;
 	color: #ffffff;
-	margin-top: 70px;
+    width: 205px;
+	margin-top: 50px;
 	text-shadow: 1px 1px 1px rgba(0,0,0,.6), 0 0 2px rgba(0,0,0,.2);
 	-webkit-transition: all .2s linear;
 	-moz-transition: all .2s linear;
@@ -356,6 +357,11 @@ body > .navbar .brand {
 body > .navbar .brand:hover {
 	text-decoration: none;
 	text-shadow: 0 1px 0 rgba(0,0,0,.1), 0 0 4px rgba(0,0,0,.125);
+}
+.brand img {
+    margin-left: -10px;
+    width: 230px;
+    position: absolute;
 }
 /* formulaire de connection */
 .navbar-form {
@@ -479,7 +485,7 @@ ul.dropdown-menu.dropdown-double > div.drop-colonne-droite > li, ul.dropdown-men
 -------------------------------------------------- */
 
 .jumbotron {
-	background-color: #6e9fff;
+	background-color: #203950;
 	background-position: bottom;
 	background-size: cover;
 	text-align: center;
@@ -490,13 +496,16 @@ ul.dropdown-menu.dropdown-double > div.drop-colonne-droite > li, ul.dropdown-men
 .jumbotron .container {
 	position: relative;
 	z-index: 2;
-	height: 320px;
+	height: 260px;
 	overflow: hidden;
+}
+#introheader .container {
+    height: 330px;
 }
 .jumbotron .container-carousel {
 	position: relative;
 	margin-top: -5px;
-	height: 450px;
+	height: 360px;
 }
 .jumbotron-institut {
 	background-color: transparent;
