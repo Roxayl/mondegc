@@ -32,16 +32,19 @@ $totalRows_menu = mysql_num_rows($menu);
         
         <!-- Menu -->
         <ul class="nav">
+
           <li class="<?php if ($accueil) { echo('active');} ?>">
             <center>
               <a href="../index.php"><i class="icon icon-accueil"></i></a>
             </center>
             <a href="../index.php">Accueil</a> </li>
+
           <li class="<?php if ($carte) { echo('active');} ?>">
             <center>
               <a href="../Page-carte.php" title="carte du monde GC"><i class="icon icon-carte"></i></a>
             </center>
             <a href="../Page-carte.php" title="carte du monde GC">Carte</a> </li>
+
           <li class="dropdown <?php if ($pays) { echo('active');}  ?>">
             <center>
               <a href="../Page-carte.php#liste-pays" title="liste des pays class&eacute;s par continent"><i class="icon icon-pays"></i></a>
@@ -130,6 +133,7 @@ $totalRows_menu = mysql_num_rows($menu);
               </div>
             </ul>
           </li>
+
           <li class="dropdown <?php if ($institut) { echo('active');}  ?>">
             <center>
               <a href="../OCGC.php" title="Institutions de r&eacute;gulation du monde GC"><i class="icon icon-institut"></i></a>
@@ -144,27 +148,31 @@ $totalRows_menu = mysql_num_rows($menu);
               <li><a href="../politique.php">Politique</a></li>
             </ul>
           </li>
+
           <li class="<?php if ($evenement) { echo('active');}  ?>">
             <center>
               <a href="../evenements.php" title="Actualit&eacute;s du monde GC"><i class="icon icon-evenement"></i></a>
             </center>
             <a href="../evenements.php" title="Actualit&eacute;s du monde GC">&Eacute;v&eacute;nements</a> </li>
+
           <li class="<?php if ($participer) { echo('active');}  ?>">
             <center>
               <a href="../participer.php" title="informations pratiques"><i class="icon icon-participer"></i></a>
             </center>
             <a href="../participer.php" title="informations pratiques">Participer</a> </li>
+
           <li class="dropdown <?php if ($generation_city) { echo('active');}  ?>">
             <center>
-              <a href="http://www.generation-city.com" title="les autres sites de G&eacute;n&eacute;ration City"><i class="icon icon-generation_city"></i></a>
+              <a title="les autres sites de G&eacute;n&eacute;ration City"><i class="icon icon-generation_city"></i></a>
             </center>
-            <a href="http://www.generation-city.com" class="dropdown-toggle" data-toggle="dropdown" title="les autres sites de G&eacute;n&eacute;ration City">G&eacute;n&eacute;ration City <b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="les autres sites de G&eacute;n&eacute;ration City">G&eacute;n&eacute;ration City <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="http://www.forum-gc.com">Le forum</a></li>
               <li><a href="http://vasel.yt/wiki/index.php?title=Accueil">Le Wiki</a></li>
 			  <li><a href="https://squirrel.romukulot.fr/">Squirrel</a></li>
             </ul>
           </li>
+
         </ul>
       </div>
     </div>

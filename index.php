@@ -83,9 +83,6 @@ $_SESSION['an']=true;
 <!-- Icon Start
 ================================================== -->
 <div class="container corps-page">
-  <div class="liens-rapides pull-center">
-    <p>Accès rapide : <a href="back/Haut-Conseil.php">Haut Conseil</a> - <a href="connexion.php">Connexion</a> - <a href="participer.php#charte">Charte</a></p>
-  </div>
   <!-- CATEGORIE Dernières actualites
 ================================================== -->
 
@@ -94,8 +91,15 @@ $_SESSION['an']=true;
 </div>
   <!-- LISTE Dernières actualites
 ================================================== -->
-<?php include('last_MAJ.php'); ?>
-</div>                
+
+<div class="row-fluid">
+    <div class="span8" id="postswrapper">
+        <?php include('last_MAJ.php'); ?>
+    </div>
+    <div class="span4">
+
+    </div>
+</div>
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>

@@ -148,9 +148,8 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 
 <!-- CATEGORIE Dernières actualités
 ================================================== -->
-
-<div class="row-fluid" id="postswrapper"> <small class="pull-right">de <?php echo ($startRow_LastCommunique + 1) ?> &agrave; <?php echo min($startRow_LastCommunique + $maxRows_LastCommunique, $totalRows_LastCommunique) ?> sur <?php echo $totalRows_LastCommunique ?></small>
-  <div class="clearfix"></div>
+<!--<small class="pull-right">de <?php echo ($startRow_LastCommunique + 1) ?> &agrave; <?php echo min($startRow_LastCommunique + $maxRows_LastCommunique, $totalRows_LastCommunique) ?> sur <?php echo $totalRows_LastCommunique ?></small>
+  <div class="clearfix"></div>-->
   <ul class="liste-transparente">
     <!-- Titres reperes temporels
 ================================================== -->
@@ -269,8 +268,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 ================================================== -->
     <li class="item">
       <div class="row-fluid">
-        <div class="span2"></div>
-        <div class="span8">
           <div class="titre-gris"> <img src="assets/img/IconesBDD/100/Communique.png">
             <h3>Nouveau Communiqu&eacute;</h3>
           </div>
@@ -285,7 +282,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
               <h4><a href="page-communique.php?com_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
             </div>
             <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['id_institution']; ?>"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="pays"></a> </div>
-          </div>
         </div>
       </div>
     </li>
@@ -318,8 +314,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 ================================================== -->
     <li class="item">
       <div class="row-fluid">
-        <div class="span2"></div>
-        <div class="span8">
           <div class="titre-gris"> <img src="assets/img/IconesBDD/100/Communique.png">
             <h3>Nouveau Communiqu&eacute;</h3>
           </div>
@@ -341,7 +335,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
               <?php }?>
             </div>
           </div>
-        </div>
       </div>
     </li>
     <?php } ?>
@@ -364,8 +357,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 	$lien_institut = "OCGC.php"; }?>
     <li class="item">
       <div class="row-fluid">
-        <div class="span2"></div>
-        <div class="span8">
           <div class="titre-gris"> <img src="assets/img/IconesBDD/100/ocgc.png">
             <h3>Nouveau Communiqu&eacute;</h3>
           </div>
@@ -386,7 +377,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
               <a href="<?php echo $lien_institut; ?>"><img src="assets/img/imagesdefaut/blason.jpg" alt="photo armoiries"></a>
               <?php }?>
             </div>
-          </div>
         </div>
       </div>
     </li>
@@ -468,8 +458,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 ================================================== -->
     <li class="item">
       <div class="row-fluid">
-        <div class="span2"></div>
-        <div class="span8">
           <div class="titre-gris"> <img src="assets/img/IconesBDD/100/Pays1.png">
             <h3>Pays mis &agrave; jour</h3>
           </div>
@@ -489,7 +477,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
               <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a mis &agrave; jour la page de son pays&nbsp;:</p>
               <h4><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
             </div>
-          </div>
         </div>
       </div>
     </li>
@@ -499,8 +486,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 ================================================== -->
     <li class="item">
       <div class="row-fluid">
-        <div class="span2"></div>
-        <div class="span8">
           <div class="titre-gris"> <img src="assets/img/IconesBDD/100/Ville1.png">
             <h3>Ville mise &agrave; jour</h3>
           </div>
@@ -520,7 +505,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
               <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a mis &agrave; jour la page de sa ville&nbsp;:</p>
               <h4><a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
             </div>
-          </div>
         </div>
       </div>
     </li>
@@ -530,8 +514,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 ================================================== -->
     <li class="item">
       <div class="row-fluid">
-        <div class="span2"></div>
-        <div class="span8">
           <div class="titre-gris"> <img src="assets/img/IconesBDD/100/monument1.png">
             <h3>Nouveau monument</h3>
           </div>
@@ -551,7 +533,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
               <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a cr&eacute;&eacute; un nouveau monument dans la ville <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>"> <?php echo $row_LastCommunique['institution']; ?> </a>:</p>
               <h4><a href="page-monument.php?ch_pat_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
             </div>
-          </div>
         </div>
       </div>
     </li>
@@ -585,8 +566,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
     <?php if (( $row_LastCommunique['statut'] == 1) and ( $row_LastCommunique['id_element'] != NULL))  {?>
     <li class="item">
       <div class="row-fluid">
-        <div class="span2"></div>
-        <div class="span8">
           <div class="titre-gris"> <img src="assets/img/IconesBDD/100/faithistorique.png">
             <h3>Nouvelle p&eacute;riode historique</h3>
           </div>
@@ -607,7 +586,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
               <h4>du <?php echo affDate($row_LastCommunique['sous_categorie']); ?> au <?php echo affDate($row_LastCommunique['id_element']); ?></h4>
               <h4><a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
             </div>
-          </div>
         </div>
       </div>
     </li>
@@ -616,8 +594,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
     <?php } elseif ( $row_LastCommunique['statut'] == 2) {?>
     <li class="item">
       <div class="row-fluid">
-        <div class="span2"></div>
-        <div class="span8">
           <div class="titre-gris"> <img src="assets/img/IconesBDD/100/faithistorique.png">
             <h3>Nouveau personnage historique</h3>
           </div>
@@ -638,7 +614,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
               <h4><a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a></h4>
               <h4>(<?php echo affDate($row_LastCommunique['sous_categorie']); ?> - <?php echo affDate($row_LastCommunique['id_element']); ?>)</h4>
             </div>
-          </div>
         </div>
       </div>
     </li>
@@ -647,8 +622,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
     <?php } else { ?>
      <li class="item">
       <div class="row-fluid">
-        <div class="span2"></div>
-        <div class="span8">
           <div class="titre-gris"> <img src="assets/img/IconesBDD/100/faithistorique.png">
             <h3>Nouveau fait historique</h3>
           </div>
@@ -669,7 +642,6 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
               <h4>Le <?php echo affDate($row_LastCommunique['sous_categorie']); ?></h4>
               <h4><a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
             </div>
-          </div>
         </div>
       </div>
     </li>
@@ -764,7 +736,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
       <img src="assets/img/ajax-loader.gif" />
     </center>
   </div>
-</div>
+
 <script>
 $("button").click(function(){
 	$('div#loadmoreajaxloader').show();

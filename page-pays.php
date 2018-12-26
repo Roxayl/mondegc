@@ -237,9 +237,6 @@ init();
         <?php if ($row_Pays['ch_pay_header_patrimoine'] OR $row_Pays['ch_pay_text_patrimoine'] OR $row_monument) { ?>
         <li><a href="#patrimoine">Patrimoine</a></li>
         <?php } ?>
-		<?php if ($row_Pays['ch_pay_header_culture'] OR $row_Pays['ch_pay_text_culture'] OR $row_monument) { ?>
-        <li><a href="#culture">Projets secrets</a></li>
-        <?php } ?>
         <li><a href="#commentaires">Visites</a></li>
       </ul>
     </div>
@@ -771,71 +768,6 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         <!-- Liste des monuments
         ================================================== -->
         <h3>Liste des monuments</h3>
-        <div id="liste-monuments">
-          <ul class="listes">
-            <?php do { 
-			$listcategories = ($row_monument['listcat']);
-			if ($row_monument['listcat']) {
-          
-mysql_select_db($database_maconnexion, $maconnexion);
-$query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
-$liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
-$row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
-$totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
-			 } ?>
-            <li class="row-fluid">
-              <div class="span5 img-listes">
-                <?php if ($row_monument['ch_pat_lien_img1']) {?>
-                <img src="<?php echo $row_monument['ch_pat_lien_img1']; ?>" alt="image <?php echo $row_monument['ch_pat_nom']; ?>">
-                <?php } else { ?>
-                <img src="assets/img/imagesdefaut/ville.jpg" alt="monument">
-                <?php } ?>
-              </div>
-              <div class="span6 info-listes">
-                <h4><?php echo $row_monument['ch_pat_nom']; ?></h4>
-                <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
-                  <?php  echo date("d/m/Y", strtotime($row_monument['ch_pat_mis_jour'])); ?>
-                  &agrave; <?php echo date("G:i:s", strtotime($row_monument['ch_pat_mis_jour'])); ?> </p>
-                <?php if ($row_liste_mon_cat3) { ?>
-                <div class="row-fluid icone-categorie">
-                  <?php do { ?>
-                    <!-- Icone et popover de la categorie -->
-                    <div class=""><a href="#" rel="clickover" title="<?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" data-placement="top" data-content="<?php echo $row_liste_mon_cat3['ch_mon_cat_desc']; ?>"><img src="<?php echo $row_liste_mon_cat3['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" style="background-color:<?php echo $row_liste_mon_cat3['ch_mon_cat_couleur']; ?>;"></a></div>
-                    <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); ?>
-                  <?php mysql_free_result($liste_mon_cat3); ?>
-                </div>
-                <?php }?>
-                <p><strong>Description&nbsp;: </strong> <?php echo $row_monument['ch_pat_description']; ?></p>
-                <a class="btn btn-primary" href="php/patrimoine-modal.php?ch_pat_id=<?php echo $row_monument['ch_pat_ID']; ?>" data-toggle="modal" data-target="#Modal-Monument">Visiter</a>
-                <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
-                <a class="btn btn-primary" href="php/partage-monument.php?ch_pat_id=<?php echo $row_monument['ch_pat_ID']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i></a>
-                <?php } ?>
-              </div>
-            </li>
-            <?php } while ($row_monument = mysql_fetch_assoc($monument)); ?>
-          </ul>
-        </div>
-        <div class="modal container fade" id="Modal-Monument"></div>
-        <p>&nbsp;</p>
-        <?php } ?>
-        <?php if ($row_Pays['ch_pay_header_patrimoine'] OR $row_Pays['ch_pay_text_patrimoine']) { ?>
-        <div class="well">
-          <h5><strong><?php echo $row_Pays['ch_pay_header_patrimoine']; ?></strong></h5>
-          <?php echo $row_Pays['ch_pay_text_patrimoine']; ?> </div>
-        <?php } ?>
-      </section>
-      <?php } ?>
-	  <!-- Projets intercontinentaux
-        ================================================== -->
-      <?php if ($row_Pays['ch_pay_header_culture'] OR $row_Pays['ch_pay_text_culture'] OR $row_monument) { ?>
-      <section>
-        <div id="culture" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/monument1.png">
-          <h1>Projets intercontinentaux</h1>
-        </div>
-        <?php if ($row_monument) { ?>
-        <!-- Liste des projets
-        ================================================== -->
-        <h3>Liste des projets</h3>
         <div id="liste-monuments">
           <ul class="listes">
             <?php do { 
