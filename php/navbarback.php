@@ -13,18 +13,9 @@ $totalRows_menu = mysql_num_rows($menu);
       
       <!-- Menu gestion une fois connecté tablet -->
       <div class="visible-tablet navbar-form menu-gestion <?php echo $_SESSION['menu_gestion']?>"> <span class="Nav-pseudo">Bienvenue <?php echo $_SESSION['login_user']?>&nbsp;</span>
-        <form  action="page_pays_back.php" method="post">
-          <input name="paysID" type="hidden" value="<?php echo $_SESSION['pays_ID']; ?>">
-          <input name="userID" type="hidden" value="<?php echo $_SESSION['user_ID']; ?>">
-          <button class="btn btn-small btn-primary" type="submit" title="page de gestion des bases de donn&eacute;es"><i class="icon-pays-small-white"></i> Mon pays</button>
-        </form>
-        <form action="membre-modifier_back.php" method="post">
-          <input name="paysID" type="hidden" value="<?php echo $_SESSION['pays_ID']; ?>">
-          <input name="userID" type="hidden" value="<?php echo $_SESSION['user_ID']; ?>">
-          <button class="btn btn-small btn-primary" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Mon profil</button>
-        </form>
+        <div><a href="membre-modifier_back.php?paysID=<?= $_SESSION['pays_ID'] ?>&userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Mon profil</a></div>
+            <div><a href="page_pays_back.php?paysID=<?= $_SESSION['pays_ID'] ?>&userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mon pays</a></div>
         <a href="<?php echo $logoutAction ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a> </div>
-      
       <!-- Logo -->
       <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
       <a class="brand" href="../index.php">Le Monde GC</a> 
@@ -34,16 +25,8 @@ $totalRows_menu = mysql_num_rows($menu);
         
         <!-- Menu gestion une fois connecté desktop/phone -->
         <div class="hidden-tablet navbar-form <?php echo $_SESSION['menu_gestion']?>">
-          <form action="membre-modifier_back.php" method="post">
-            <input name="paysID" type="hidden" value="<?php echo $_SESSION['pays_ID']; ?>">
-            <input name="userID" type="hidden" value="<?php echo $_SESSION['user_ID']; ?>">
-            <button class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Mon profil</button>
-          </form>
-          <form  action="page_pays_back.php" method="post">
-            <input name="paysID" type="hidden" value="<?php echo $_SESSION['pays_ID']; ?>">
-            <input name="userID" type="hidden" value="<?php echo $_SESSION['user_ID']; ?>">
-            <button class="btn btn-primary" type="submit" title="page de gestion des bases de donn&eacute;es"><i class="icon-pays-small-white"></i> Mon pays</button>
-          </form>
+            <div><a href="membre-modifier_back.php?paysID=<?= $_SESSION['pays_ID'] ?>&userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Mon profil</a></div>
+            <div><a href="page_pays_back.php?paysID=<?= $_SESSION['pays_ID'] ?>&userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mon pays</a></div>
           <div class="offset"><span class="Nav-pseudo"><span class="bienvenue">Bienvenue </span><?php echo $_SESSION['login_user']?>&nbsp;</span> <a href="<?php echo $logoutAction ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a></div>
         </div>
         

@@ -16,10 +16,10 @@ $_SESSION['last_work'] = $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
 
 //Recuperation variables
 $colname_User = $_SESSION['Temp_userID'];
-if (isset($_POST['userID'])) {
-$_SESSION['Temp_userID'] = $_POST['userID'];
+if (isset($_REQUEST['userID'])) {
+$_SESSION['Temp_userID'] = $_REQUEST['userID'];
 $colname_User = $_SESSION['Temp_userID'];
-unset($_POST['userID']);
+unset($_REQUEST['userID']);
 }
 
 mysql_select_db($database_maconnexion, $maconnexion);

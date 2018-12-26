@@ -16,9 +16,9 @@ exit();
 
 //Récupération variables
 $colname_paysID = $_SESSION['pays_ID'];
-if (isset($_POST['paysID']) AND ($_SESSION['statut'] >=20)) {
-$colname_paysID = $_POST['paysID'];
-unset($_POST['paysID']);
+if (isset($_REQUEST['paysID']) AND ($_SESSION['statut'] >=20)) {
+$colname_paysID = $_REQUEST['paysID'];
+unset($_REQUEST['paysID']);
 }
 
 //Requete Pays
