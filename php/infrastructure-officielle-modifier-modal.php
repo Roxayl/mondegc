@@ -29,6 +29,13 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
+  // Gestion des groupes d'infrastructures
+  $delete_group = mysql_query('DELETE FROM infrastructures_officielles_groupes WHERE ID_infra_officielle = ' . mysql_real_escape_string($_POST['ch_inf_off_id']));
+  $insert_group = mysql_query(sprintf('INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle) VALUES(%s, %s)',
+      GetSQLValueString($_POST['groupe_infra']),
+      GetSQLValueString($_POST['ch_inf_off_id'])
+  ));
+
   $updateGoTo = "../back/institut_economie.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";

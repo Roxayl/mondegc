@@ -331,7 +331,7 @@ init();
         <?php if ($row_infoVille['ch_vil_transports']) { ?>
         <li><a href="#transports">Transports</a></li>
         <?php } ?>
-        <?php if ($row_monument) { ?>
+        <?php if ($row_monument || $row_infoVille['ch_vil_culture']) { ?>
         <li><a href="#patrimoine">Patrimoine</a></li>
         <?php } ?>
         <li><a href="#commentaires">Visites</a></li>
@@ -586,27 +586,39 @@ init();
         <div class="titre-vert anchor" id="Journal"> <img src="assets/img/IconesBDD/100/Ville1.png">
           <h1>Journal</h1>
         </div>
-        <div class="well"> <?php echo $row_infoVille['ch_vil_contenu']; ?> </div>
+        <div class="well">
+            <?php if(!$row_infoVille['ch_vil_contenu']) { ?>
+                <p><i>La présentation de cette ville est vide !</i></p>
+            <?php } ?>
+            <?php echo $row_infoVille['ch_vil_contenu']; ?>
+        </div>
       </section>
+
         <!-- Politique et administration
     ================================================== -->
+    <?php if($row_infoVille['ch_vil_administration']) { ?>
       <section>
         <div class="titre-vert anchor" id="politique"> <img src="assets/img/IconesBDD/100/Ville1.png">
           <h1>Politique et administration</h1>
         </div>
         <div class="well"> <?php echo $row_infoVille['ch_vil_administration']; ?> </div>
       </section>
+    <?php } ?>
+
         <!-- Transports
     ================================================== -->
+    <?php if($row_infoVille['ch_vil_transports']) { ?>
       <section>
         <div class="titre-vert anchor" id="transports"> <img src="assets/img/IconesBDD/100/Ville1.png">
           <h1>Transports</h1>
         </div>
         <div class="well"> <?php echo $row_infoVille['ch_vil_transports']; ?> </div>
       </section>
+    <?php } ?>
+
       <!-- Patrimoine
         ================================================== -->
-      <?php if ($row_monument) { ?>
+      <?php if ($row_monument || $row_infoVille['ch_vil_culture']) { ?>
       <section>
         <div id="patrimoine" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/monument1.png">
           <h1>Patrimoine</h1>

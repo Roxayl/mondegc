@@ -14,7 +14,7 @@ $queries = array();
 /*// Table infrastructures_groupes
 $queries[] = "CREATE TABLE infrastructures_groupes
 (
-  id         INT          NOT NULL
+  id         INT AUTO_INCREMENT
     PRIMARY KEY,
   nom_groupe VARCHAR(191) NULL,
   CONSTRAINT infrastructures_groupes_id_uindex
@@ -25,7 +25,7 @@ $queries[] = "CREATE TABLE infrastructures_groupes
 // Table infrastructures_officielles_groupes
 $queries[] = "CREATE TABLE infrastructures_officielles_groupes
 (
-  id                  INT NOT NULL
+  id                  INT AUTO_INCREMENT
     PRIMARY KEY,
   ID_groupes          INT NULL,
   ID_infra_officielle INT NULL,
