@@ -53,6 +53,20 @@ $infra_officielles = mysql_query($query_infra_officielles, $maconnexion) or die(
 $row_infra_officielles = mysql_fetch_assoc($infra_officielles);
 $totalRows_infra_officielles = mysql_num_rows($infra_officielles);
 
+// Obtenir tous les groupes d'infrastructures.
+$query_infra_group = 'SELECT * FROM infrastructures_groupes';
+$infra_group = mysql_query($query_infra_group, $maconnexion);
+
+// Voir si l'infra en question fait partie d'un groupe.
+$query_infra_officielles_group = 'SELECT * FROM infrastructures_officielles_groupes
+  WHERE ID_infra_officielle = ' . mysql_real_escape_string($colname_infra_officielles);
+$infra_officielles_group = mysql_query($query_infra_officielles_group);
+$row_infra_officielles_group = mysql_fetch_assoc($infra_officielles_group);
+$selected_infra_group = 0;
+if(!empty($row_infra_officielles_group)) {
+    $selected_infra_group = $row_infra_officielles_group['ID_groupes'];
+}
+
 ?>
 
 <!-- Modal Header-->
@@ -85,6 +99,18 @@ $totalRows_infra_officielles = mysql_num_rows($infra_officielles);
         <br />
       <span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
     </div>
+    <!-- Groupe d'infrastructure -->
+    <div id="sprytextfield1" class="control-group">
+      <label class="control-label" for="groupe_infra">Groupe d'infrastructure</label>
+      <div class="controls">
+          <select name="groupe_infra" id="groupe_infra">
+              <?php while($row_infra_group = mysql_fetch_assoc($infra_group)): ?>
+                <option value="<?= $row_infra_group['id'] ?>" <?= $selected_infra_group == $row_infra_group['id'] ? 'selected' : '' ?>><?= $row_infra_group['nom_groupe'] ?>
+                </option>
+              <?php endwhile; ?>
+          </select>
+        <br /></div >
+    </div>
     <!-- Règles -->
     <div id="sprytextarea1" class="control-group">
       <label class="control-label" for="ch_inf_off_desc">Règles </label>
@@ -93,6 +119,7 @@ $totalRows_infra_officielles = mysql_num_rows($infra_officielles);
         <br />
         <span class="textareaMaxCharsMsg">250 caract&egrave;res max.</span><span class="textareaRequiredMsg">Une valeur est requise.</span></div>
     </div>
+
     <h3>Influence sur l'économie</h3>
     <div class="row-fluid">
     <div class="span6">
