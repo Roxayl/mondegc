@@ -321,10 +321,16 @@ init();
         <li><a href="#presentation">Pr&eacute;sentation</a></li>
         <?php } ?>
         <li><a href="#carte">Carte</a></li>
-        <?php if ($row_infrastructure) { ?>
-        <li><a href="#Economie">Economie</a></li>
+        <?php if ($row_infrastructure || $row_monument) { ?>
+        <li><a href="#Economie">Économie</a></li>
         <?php } ?>
         <li><a href="#Journal">Journal</a></li>
+        <?php if ($row_infoVille['ch_vil_administration']) { ?>
+        <li><a href="#politique">Politique et administration</a></li>
+        <?php } ?>
+        <?php if ($row_infoVille['ch_vil_transports']) { ?>
+        <li><a href="#transports">Transports</a></li>
+        <?php } ?>
         <?php if ($row_monument) { ?>
         <li><a href="#patrimoine">Patrimoine</a></li>
         <?php } ?>
@@ -526,10 +532,10 @@ init();
       </section>
       <!-- Economie
     ================================================== -->
-      <?php if ($row_infrastructure) { ?>
+      <?php if ($row_infrastructure || $row_monument) { ?>
       <section>
         <div class="titre-vert anchor" id="Economie"> <img src="assets/img/IconesBDD/100/eco.png">
-          <h1>Economie</h1>
+          <h1>Économie</h1>
         </div>
         <h3>Balance des ressources</h3>
 
@@ -549,7 +555,9 @@ init();
     ================================================== -->
         <h3>Infrastructures de la ville</h3>
         <ul class="listes">
-          <?php do { ?>
+          <?php do {
+              if(!isset($row_infrastructure['ch_inf_lien_image'])) break;
+              ?>
             <li class="row-fluid">
               <div class="span3 img-listes">
                 <?php if ($row_infrastructure['ch_inf_lien_image']) {?>
@@ -579,6 +587,22 @@ init();
           <h1>Journal</h1>
         </div>
         <div class="well"> <?php echo $row_infoVille['ch_vil_contenu']; ?> </div>
+      </section>
+        <!-- Politique et administration
+    ================================================== -->
+      <section>
+        <div class="titre-vert anchor" id="politique"> <img src="assets/img/IconesBDD/100/Ville1.png">
+          <h1>Politique et administration</h1>
+        </div>
+        <div class="well"> <?php echo $row_infoVille['ch_vil_administration']; ?> </div>
+      </section>
+        <!-- Transports
+    ================================================== -->
+      <section>
+        <div class="titre-vert anchor" id="transports"> <img src="assets/img/IconesBDD/100/Ville1.png">
+          <h1>Transports</h1>
+        </div>
+        <div class="well"> <?php echo $row_infoVille['ch_vil_transports']; ?> </div>
       </section>
       <!-- Patrimoine
         ================================================== -->
@@ -623,7 +647,7 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
                     <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); ?>
                   <?php mysql_free_result($liste_mon_cat3); ?>
                 </div>
-                <?php }?>
+                <?php } ?>
                 <p><strong>Description&nbsp;: </strong><?php echo $row_monument['ch_pat_description']; ?></p>
                 <a class="btn btn-primary" href="php/patrimoine-modal.php?ch_pat_id=<?php echo $row_monument['ch_pat_ID']; ?>" data-toggle="modal" data-target="#Modal-Monument">Visiter</a>
                 <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
@@ -634,6 +658,8 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
             <?php } while ($row_monument = mysql_fetch_assoc($monument)); ?>
           </ul>
         </div>
+        <div class="well"> <?php echo $row_infoVille['ch_vil_culture']; ?> </div>
+
         <div class="modal container fade" id="Modal-Monument"></div>
         <script>
 $("a[data-toggle=modal]").click(function (e) {

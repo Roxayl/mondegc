@@ -19,7 +19,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_ville")) {
-  $updateSQL = sprintf("UPDATE villes SET ch_vil_paysID=%s, ch_vil_user=%s, ch_vil_label=%s, ch_vil_date_enregistrement=%s, ch_vil_mis_jour=%s, ch_vil_nb_update=%s, ch_vil_coord_X=%s, ch_vil_coord_Y=%s, ch_vil_type_jeu=%s, ch_vil_nom=%s, ch_vil_armoiries=%s, ch_vil_capitale=%s, ch_vil_population=%s, ch_vil_specialite=%s, ch_vil_lien_img1=%s, ch_vil_lien_img2=%s, ch_vil_lien_img3=%s, ch_vil_lien_img4=%s, ch_vil_lien_img5=%s, ch_vil_legende_img1=%s, ch_vil_legende_img2=%s, ch_vil_legende_img3=%s, ch_vil_legende_img4=%s, ch_vil_legende_img5=%s, ch_vil_header=%s, ch_vil_contenu=%s WHERE ch_vil_ID=%s",
+  $updateSQL = sprintf("UPDATE villes SET ch_vil_paysID=%s, ch_vil_user=%s, ch_vil_label=%s, ch_vil_date_enregistrement=%s, ch_vil_mis_jour=%s, ch_vil_nb_update=%s, ch_vil_coord_X=%s, ch_vil_coord_Y=%s, ch_vil_type_jeu=%s, ch_vil_nom=%s, ch_vil_armoiries=%s, ch_vil_capitale=%s, ch_vil_population=%s, ch_vil_specialite=%s, ch_vil_lien_img1=%s, ch_vil_lien_img2=%s, ch_vil_lien_img3=%s, ch_vil_lien_img4=%s, ch_vil_lien_img5=%s, ch_vil_legende_img1=%s, ch_vil_legende_img2=%s, ch_vil_legende_img3=%s, ch_vil_legende_img4=%s, ch_vil_legende_img5=%s, ch_vil_header=%s, ch_vil_contenu=%s, ch_vil_transports=%s, ch_vil_administration=%s, ch_vil_culture=%s WHERE ch_vil_ID=%s",
                        GetSQLValueString($_POST['ch_vil_paysID'], "int"),
                        GetSQLValueString($_POST['ch_vil_user'], "int"),
                        GetSQLValueString($_POST['ch_vil_label'], "text"),
@@ -46,6 +46,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_ville")) {
                        GetSQLValueString($_POST['ch_vil_legende_img5'], "text"),
                        GetSQLValueString($_POST['ch_vil_header'], "text"),
                        GetSQLValueString($_POST['ch_vil_contenu'], "text"),
+                       GetSQLValueString($_POST['ch_vil_transports'], "text"),
+                       GetSQLValueString($_POST['ch_vil_administration'], "text"),
+                       GetSQLValueString($_POST['ch_vil_culture'], "text"),
 					   GetSQLValueString($_POST['ch_vil_ID'], "int"));
 
   mysql_select_db($database_maconnexion, $maconnexion);
@@ -358,8 +361,10 @@ return true;
 				  $nbupdate = $row_ville['ch_vil_nb_update']+1; ?>
           <input name="ch_vil_mis_jour" type="hidden" value="<?php echo $now; ?>" >
           <input name="ch_vil_nb_update" type="hidden" value="<?php echo $nbupdate; ?>">
+
           <!-- Informations générales
      ================================================== -->
+
           <div class="accordion-group">
             <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" href="#collapseone"> Informations g&eacute;n&eacute;rales </a> </div>
             <div id="collapseone" class="accordion-body collapse">
@@ -465,8 +470,9 @@ return true;
               </div>
             </div>
           </div>
+
           <div class="accordion-group">
-            <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" href="#collapsetwo"> Journal de la ville </a> </div>
+            <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" href="#collapsetwo">Introduction</a> </div>
             <div id="collapsetwo" class="accordion-body collapse">
               <div class="accordion-inner"> 
                 <!-- Présentation -->
@@ -476,8 +482,15 @@ return true;
                 <div>
                   <textarea name="ch_vil_header" id="ch_vil_header" class="wysiwyg" rows="15"><?php echo $row_ville['ch_vil_header']; ?></textarea>
                 </div>
-                <p>&nbsp;</p>
-                <div class="control-group" width="100%"> 
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" href="#collapsethree">Présentation générale</a> </div>
+            <div id="collapsethree" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <div class="control-group" width="100%">
                   <!-- Contenu -->
                   <label class="control-label" for="ch_vil_contenu">Contenu de la page <a href="#" rel="clickover" title="Pr&eacute;sentation" data-content="Ecrivez ici le contenu d&eacute;taill&eacute; de la page de votre ville. R&eacute;alisez une mise en forme simple. Pensez &agrave; l'utilisation du site sur les &eacute;crans mobiles. Vous pouvez la mettre à jour au fur et &agrave; mesure"><i class="icon-info-sign"></i></a></label>
                 </div>
@@ -487,6 +500,52 @@ return true;
               </div>
             </div>
           </div>
+
+            <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" href="#collapsefour">Politique et administration urbaine</a> </div>
+            <div id="collapsefour" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <!-- Présentation -->
+                <div class="control-group" width="100%">
+                  <label class="control-label" for="ch_vil_administration">Politique et administration urbaine <a href="#" rel="clickover" title="Pr&eacute;sentation" data-placement="bottom" data-content="Parlez de l'administration de votre ville. Qui est le maire ?"><i class="icon-info-sign"></i></a></label>
+                </div>
+                <div>
+                  <textarea name="ch_vil_administration" id="ch_vil_administration" class="wysiwyg" rows="15"><?php echo $row_ville['ch_vil_administration']; ?></textarea>
+                </div>
+                </div>
+              </div>
+            </div>
+
+          <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" href="#collapsefive">Transports</a> </div>
+            <div id="collapsefive" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <!-- Présentation -->
+                <div class="control-group" width="100%">
+                  <label class="control-label" for="ch_vil_transports">Transports <a href="#" rel="clickover" title="Pr&eacute;sentation" data-placement="bottom" data-content="Infrastructures de transports dans votre ville"><i class="icon-info-sign"></i></a></label>
+                </div>
+                <div>
+                  <textarea name="ch_vil_transports" id="ch_vil_transports" class="wysiwyg" rows="15"><?php echo $row_ville['ch_vil_transports']; ?></textarea>
+                </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" href="#collapsesix">Culture et Patrimoine</a> </div>
+            <div id="collapsesix" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <!-- Présentation -->
+                <div class="control-group" width="100%">
+                  <label class="control-label" for="ch_vil_culture">Culture et Patrimoine <a href="#" rel="clickover" title="Pr&eacute;sentation" data-placement="bottom" data-content="Parlez de ce qui fait le rayonnement culturel de votre ville. Quels sont les événements populaires ?"><i class="icon-info-sign"></i></a></label>
+                </div>
+                <div>
+                  <textarea name="ch_vil_culture" id="ch_vil_culture" class="wysiwyg" rows="15"><?php echo $row_ville['ch_vil_culture']; ?></textarea>
+                </div>
+                </div>
+              </div>
+            </div>
+
         </section>
         <!-- Carousel -->
         <section>

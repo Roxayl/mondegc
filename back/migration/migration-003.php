@@ -20,6 +20,11 @@ if(empty(mysql_fetch_assoc($row_users_pays))) {
 
 // Déplacer le pays de Sebtalus au continent Aldesyl
 $queries[] = "UPDATE pays SET ch_pay_continent = 'Aldesyl' WHERE ch_pay_id = 114";
+// Ajouter 3 colonnes à la table villes
+$queries[] = "ALTER TABLE villes ADD ch_vil_transports TEXT NULL;";
+$queries[] = "ALTER TABLE villes ADD ch_vil_administration TEXT NULL;";
+$queries[] = "ALTER TABLE villes ADD ch_vil_culture TEXT NULL;";
+
 
 foreach($queries as $query) {
     $stat_ville = mysql_query($query) or die(mysql_error());

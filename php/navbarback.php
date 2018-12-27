@@ -18,7 +18,7 @@ $totalRows_menu = mysql_num_rows($menu);
         <a href="<?php echo $logoutAction ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a> </div>
       <!-- Logo -->
       <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-      <a class="brand" href="../index.php"><img src="assets/img/logo2018.png" alt="Le Monde GC" /></a>
+      <a class="brand" href="../index.php"><img src="../assets/img/logo2018.png" alt="Le Monde GC" /></a>
       
       <!-- Collapse -->
       <div class="nav-collapse collapse"> 
