@@ -7,9 +7,9 @@ mysql_select_db($database_maconnexion, $maconnexion);
 $queries = array();
 
 
-/*****
- * Requêtes à permission avancée
- *****/
+/**********
+ * Requêtes à permission avancée : envoyer manuellement à Youcef.
+ **********/
 
 /*// Table infrastructures_groupes
 $queries[] = "CREATE TABLE infrastructures_groupes
@@ -40,10 +40,10 @@ $queries[] = "ALTER TABLE villes ADD ch_vil_administration TEXT NULL";
 $queries[] = "ALTER TABLE villes ADD ch_vil_culture TEXT NULL";*/
 
 
-/*****
+/**********
+ * TODO !!!
  * Permettre de gérer plusieurs pays simultanément.
- *****/
-/* TODO */
+ **********/
 $query_pays = "SELECT * FROM pays";
 $list_pays = mysql_query($query_pays) or die(mysql_error());
 
@@ -58,12 +58,13 @@ if(empty(mysql_fetch_assoc($row_users_pays))) {
 }
 
 
-/*****
+/**********
  * Autres requêtes
- *****/
+ **********/
 
-// Déplacer le pays de Sebtalus au continent Aldesyl
+// Déplacer le pays de Sebtalus au continent Aldesyl.
 $queries[] = "UPDATE pays SET ch_pay_continent = 'Aldesyl' WHERE ch_pay_id = 114";
+// Ajout des groupes d'infrastructures.
 $queries[] = "INSERT INTO mgvx_generationcitycom3.infrastructures_groupes (id, nom_groupe) VALUES (1, 'Non catégorisé')";
 $queries[] = "INSERT INTO mgvx_generationcitycom3.infrastructures_groupes (id, nom_groupe) VALUES (2, 'Transports urbains')";
 $queries[] = "INSERT INTO mgvx_generationcitycom3.infrastructures_groupes (id, nom_groupe) VALUES (3, 'Transports interurbains')";
@@ -73,6 +74,9 @@ $queries[] = "INSERT INTO mgvx_generationcitycom3.infrastructures_groupes (id, n
 $queries[] = "INSERT INTO mgvx_generationcitycom3.infrastructures_groupes (id, nom_groupe) VALUES (7, 'Zone naturelle')";
 $queries[] = "INSERT INTO mgvx_generationcitycom3.infrastructures_groupes (id, nom_groupe) VALUES (8, 'Échanges')";
 $queries[] = "INSERT INTO mgvx_generationcitycom3.infrastructures_groupes (id, nom_groupe) VALUES (9, 'Centre économique')";
+// Mise à jour des icônes pour éviter d'avoir des images cassées (franchement ils pourraient
+// se bouger le fion :aie: )
+$queries[] = "UPDATE monument_categories SET ch_mon_cat_icon = 'http://generation-city.com/monde/assets/img/IconesBDD/100/monument1.png'";
 
 foreach($queries as $query) {
     $stat_ville = mysql_query($query) or die(mysql_error());

@@ -22,7 +22,7 @@ $totalRows_liste_mon_cat2 = mysql_num_rows($liste_mon_cat2);
 
 
 //requete liste  monuments d'une catégorie 
-$maxRows_classer_mon = 10;
+$maxRows_classer_mon = 12;
 $pageNum_classer_mon = 0;
 if (isset($_GET['pageNum_classer_mon'])) {
   $pageNum_classer_mon = $_GET['pageNum_classer_mon'];
@@ -39,7 +39,7 @@ if (isset($_GET['mon_cat_ID'])) {
   $colname_classer_mon = NULL;
 } 
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_classer_mon = sprintf("SELECT monument.ch_disp_id as id, monument.ch_disp_mon_id, ch_pat_nom, ch_pat_mis_jour, ch_pat_lien_img1, ch_pat_villeID, ch_pat_paysID, ch_vil_nom, ch_vil_ID, ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, (SELECT GROUP_CONCAT(categories.ch_disp_cat_id) FROM dispatch_mon_cat as categories WHERE monument.ch_disp_mon_id = categories.ch_disp_mon_id) AS listcat
+$query_classer_mon = sprintf("SELECT monument.ch_disp_id as id, monument.ch_disp_mon_id, ch_pat_nom, ch_pat_description, ch_pat_mis_jour, ch_pat_lien_img1, ch_pat_villeID, ch_pat_paysID, ch_vil_nom, ch_vil_ID, ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, (SELECT GROUP_CONCAT(categories.ch_disp_cat_id) FROM dispatch_mon_cat as categories WHERE monument.ch_disp_mon_id = categories.ch_disp_mon_id) AS listcat
 FROM dispatch_mon_cat as monument 
 INNER JOIN patrimoine ON monument.ch_disp_mon_id = ch_pat_id
 INNER JOIN villes ON ch_pat_villeID = ch_vil_ID 
@@ -79,7 +79,7 @@ $queryString_classer_mon = sprintf("&totalRows_classer_mon=%d%s", $totalRows_cla
 
 //requete info sur catégorie
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_info_cat = sprintf("SELECT ch_mon_cat_nom, ch_mon_cat_desc, ch_mon_cat_icon, ch_mon_cat_couleur
+$query_info_cat = sprintf("SELECT ch_mon_cat_ID, ch_mon_cat_nom, ch_mon_cat_desc, ch_mon_cat_icon, ch_mon_cat_couleur
 FROM monument_categories
 WHERE ch_mon_cat_ID = %s OR %s IS NULL AND ch_mon_cat_statut = 1", GetSQLValueString($colname_classer_mon, "int"), GetSQLValueString($colname_classer_mon, "int"));
 $info_cat = mysql_query($query_info_cat, $maconnexion) or die(mysql_error());
@@ -222,11 +222,23 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
           </div>
           <!-- Affichage si des informations de la catégorie  -->
           <?php if (($colname_classer_mon != NULL) AND ($colname_classer_mon != "")) { // affiche bouton ajouter si une categorie est choisie ?>
+              
+          <?php
+          // *** Ressources patrimoine
+        $query_monument_ressources = sprintf("SELECT SUM(ch_mon_cat_budget) AS budget,SUM(ch_mon_cat_industrie) AS industrie, SUM(ch_mon_cat_commerce) AS commerce, SUM(ch_mon_cat_agriculture) AS agriculture, SUM(ch_mon_cat_tourisme) AS tourisme, SUM(ch_mon_cat_recherche) AS recherche, SUM(ch_mon_cat_environnement) AS environnement, SUM(ch_mon_cat_education) AS education FROM monument_categories
+        WHERE ch_mon_cat_ID = %s", GetSQLValueString($row_info_cat['ch_mon_cat_ID'], "int"));
+        $monument_ressources = mysql_query($query_monument_ressources, $maconnexion) or die(mysql_error());
+        $row_monument_ressources = mysql_fetch_assoc($monument_ressources);
+          ?>
+              
           <div class="well">
             <div class="row-fluid">
               <div class="span8">
-                <p><strong><?php echo $row_info_cat['ch_mon_cat_nom']; ?></strong></p>
-                <p><?php echo $row_info_cat['ch_mon_cat_desc']; ?></p>
+                <h3><?php echo $row_info_cat['ch_mon_cat_nom']; ?></h3>
+                <p><?php echo $row_info_cat['ch_mon_cat_desc']; ?></p
+                <p><strong>Influence sur l'économie de cette catégorie :</strong></p>
+                  <?php renderResources($row_monument_ressources); ?>
+                  <div class="clearfix"></div>
               </div>
               <div class="span2 icone-categorie icone-large"><img src="<?php echo $row_info_cat['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_info_cat['ch_mon_cat_nom']; ?>" style="background-color:<?php echo $row_info_cat['ch_mon_cat_couleur']; ?>;"></div>
             </div>
@@ -234,59 +246,41 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
           <?php }?>
           <?php if ($row_classer_mon) {?>
           <!-- Liste des monuments de la categorie -->
-          <ul class="listes">
-            <!-- Requetes pour infos et icones des catégories du monuments -->
-            <?php do { 
-	  
-			$listcategories = $row_classer_mon['listcat'];
+          <div id="infra-well-container">
+        <?php do {
+
+			$listcategories = ($row_classer_mon['listcat']);
 			if ($row_classer_mon['listcat']) {
-          
-mysql_select_db($database_maconnexion, $maconnexion);
-$query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut = 1";
-$liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
-$row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
-$totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
-			 } ?>
-            <?php if ($row_classer_mon) {
-									if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_classer_mon['ch_pay_lien_imgdrapeau']))
-					{
-					$row_classer_mon['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_classer_mon['ch_pay_lien_imgdrapeau']);
-					}
-				?>
-            <!-- Item monument -->
-            <li class="row-fluid"> 
-              <!-- Image du monument -->
-              <div class="span2 img-listes">
-                <?php if ($row_classer_mon['ch_pat_lien_img1']) {?>
-                <img src="<?php echo $row_classer_mon['ch_pat_lien_img1']; ?>" alt="image <?php echo $row_classer_mon['ch_pat_nom']; ?>">
-                <?php } else { ?>
-                <img src="assets/img/imagesdefaut/ville.jpg" alt="monument">
-                <?php } ?>
-                <?php if ($row_classer_mon['ch_pay_id']) {?>
-                <a href="page-pays.php?ch_pay_id=<?php echo $row_classer_mon['ch_pat_paysID']; ?>"><img class="img-drapeau-hist" src="<?php echo $row_classer_mon['ch_pay_lien_imgdrapeau']; ?>" alt="<?php echo $row_classer_mon['ch_pay_nom']; ?>" title="<?php echo $row_classer_mon['ch_pay_nom']; ?>"></a>
-                <?php } ?>
-              </div>
-              <!-- Nom, date et lien vers la page du monument -->
-              <div class="span6 info-listes">
-                <h4><?php echo $row_classer_mon['ch_pat_nom']; ?></h4>
-                <p><strong>Ville&nbsp;: <a href="page-ville.php?ch_pay_id=<?php echo $row_classer_mon['ch_pat_paysID']; ?>&ch_ville_id=<?php echo $row_classer_mon['ch_pat_villeID']; ?>"><?php echo $row_classer_mon['ch_vil_nom']; ?></a></strong><br>
-                <strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
-                  <?php  echo date("d/m/Y", strtotime($row_classer_mon['ch_pat_mis_jour'])); ?>
-                  &agrave; <?php echo date("G:i:s", strtotime($row_classer_mon['ch_pat_mis_jour'])); ?> </p>
-                <a class="btn btn-primary" href="php/patrimoine-modal.php?ch_pat_id=<?php echo $row_classer_mon['ch_disp_mon_id']; ?>" data-toggle="modal" data-target="#Modal-Monument">Visiter</a> </div>
-              <!-- Affichage des categories du monument -->
-               <?php if ($row_liste_mon_cat3) {?>
-              <div class="span4 icone-categorie">
-                <?php do { ?>
-                  <!-- Icone et popover de la categorie -->
-                  <div class=""><a href="#" rel="clickover" title="<?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" data-placement="top" data-content="<?php echo $row_liste_mon_cat3['ch_mon_cat_desc']; ?>"><img src="<?php echo $row_liste_mon_cat3['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" style="background-color:<?php echo $row_liste_mon_cat3['ch_mon_cat_couleur']; ?>;"></a></div>
-                  <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); ?>
-              </div>
-               <?php } ?>
-            </li>
-            <?php } ?>
-            <?php } while ($row_classer_mon = mysql_fetch_assoc($classer_mon)); ?>
-          </ul>
+                mysql_select_db($database_maconnexion, $maconnexion);
+                $query_liste_mon_cat3 = "SELECT * FROM monument_categories
+                    WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
+                $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
+                $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
+                $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
+			}
+
+            $overlay_text = null;
+            if($row_liste_mon_cat3) {
+                $overlay_text = '
+                <a href="#" rel="clickover" title="' . $row_liste_mon_cat3['ch_mon_cat_nom'] . '"
+                   data-placement="top" data-content="' . $row_liste_mon_cat3['ch_mon_cat_desc'] . '">' .
+                            $row_liste_mon_cat3['ch_mon_cat_nom'] . '
+                </a>';
+            }
+
+            $infraData = array(
+              'id' => $row_classer_mon['ch_disp_mon_id'],
+              'type' => 'patrimoine',
+              'overlay_image' => $row_liste_mon_cat3['ch_mon_cat_icon'],
+              'overlay_text' => $overlay_text,
+              'image' => $row_classer_mon['ch_pat_lien_img1'],
+              'nom' => $row_classer_mon['ch_pat_nom'],
+              'description' => $row_classer_mon['ch_pat_description']
+            );
+            renderElement('infrastructure_well', $infraData);
+
+        } while ($row_classer_mon = mysql_fetch_assoc($classer_mon)); ?>
+        </div>
           <div class="modal container fade" id="Modal-Monument"></div>
           <script>
 $("a[data-toggle=modal]").click(function (e) {

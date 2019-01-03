@@ -556,36 +556,20 @@ init();
         <h3>Infrastructures de la ville</h3>
         <div class="infra-well-container">
           <?php do {
+
               if(!isset($row_infrastructure['ch_inf_lien_image'])) break;
-              ?>
-            <!--<li class="row-fluid">
-              <div class="span3 img-listes">
-                <?php if ($row_infrastructure['ch_inf_lien_image']) {?>
-                <img src="<?php echo $row_infrastructure['ch_inf_lien_image']; ?>" alt="image <?php echo $row_infrastructure['ch_inf_off_nom']; ?>">
-                <?php } else { ?>
-                <img src="assets/img/imagesdefaut/ville.jpg" alt="infrastructure">
-                <?php } ?>
-                <img class="img-inf-off" src="<?php echo $row_infrastructure['ch_inf_off_icone']; ?>" alt="icone <?php echo $row_infrastructure['ch_inf_off_nom']; ?>"> </div>
-              <div class="span8 info-listes">
-                <div>
-                  <h4><?php echo $row_infrastructure['ch_inf_off_nom']; ?></h4>
-                  <p><strong>Ajout&eacute; le&nbsp;: </strong>le
-                    <?php  echo date("d/m/Y", strtotime($row_infrastructure['ch_inf_date'])); ?>
-                    &agrave; <?php echo date("G:i:s", strtotime($row_infrastructure['ch_inf_date'])); ?> </p>
-                  <p><strong>Description&nbsp;: </strong><?php echo $row_infrastructure['ch_inf_off_desc']; ?></p>
-                  <a class="btn btn-primary" href="php/infrastructure-modal-public.php?ch_inf_id=<?php echo $row_infrastructure['ch_inf_id']; ?>" data-toggle="modal" data-target="#Modal-Monument">Influence</a></div>
-              </div>
-            </li>-->
-              <?php $infraData = array(
+
+               $infraData = array(
                   'id' => $row_infrastructure['ch_inf_id'],
                   'overlay_text' => 'Infrastructure',
                   'image' => $row_infrastructure['ch_inf_lien_image'],
                   'nom' => $row_infrastructure['ch_inf_off_nom'],
                   'description' => $row_infrastructure['ch_inf_off_desc']
               );
-              ?>
-              <?php renderElement('infrastructure_well', $infraData); ?>
-            <?php } while ($row_infrastructure = mysql_fetch_assoc($infrastructure)); ?>
+
+               renderElement('infrastructure_well', $infraData);
+
+          } while ($row_infrastructure = mysql_fetch_assoc($infrastructure)); ?>
         </div>
       </section>
       <?php } ?>
@@ -636,20 +620,20 @@ init();
         ================================================== -->
         <h3>Liste des monuments</h3>
         <div id="infra-well-container">
-            <?php do { 
+        <?php do {
+
 			$listcategories = ($row_monument['listcat']);
 			if ($row_monument['listcat']) {
-          
-mysql_select_db($database_maconnexion, $maconnexion);
-$query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
-$liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
-$row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
-$totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
-			}?>
+                mysql_select_db($database_maconnexion, $maconnexion);
+                $query_liste_mon_cat3 = "SELECT * FROM monument_categories
+                    WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
+                $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
+                $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
+                $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
+			}
 
-            <?php
-            $overlay_text = null;   
-            if($row_liste_mon_cat3)  {
+            $overlay_text = null;
+            if($row_liste_mon_cat3) {
                 $overlay_text = '
                 <a href="#" rel="clickover" title="' . $row_liste_mon_cat3['ch_mon_cat_nom'] . '"
                    data-placement="top" data-content="' . $row_liste_mon_cat3['ch_mon_cat_desc'] . '">' .
@@ -666,9 +650,9 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
               'nom' => $row_monument['ch_pat_nom'],
               'description' => $row_monument['ch_pat_description']
             );
-              ?>
-              <?php renderElement('infrastructure_well', $infraData); ?>
-            <?php } while ($row_monument = mysql_fetch_assoc($monument)); ?>
+            renderElement('infrastructure_well', $infraData);
+
+        } while ($row_monument = mysql_fetch_assoc($monument)); ?>
         </div>
         <div class="well"> <?php echo $row_infoVille['ch_vil_culture']; ?> </div>
 
