@@ -1197,3 +1197,11 @@ if(!function_exists('renderResources')) {
 
     }
 }
+
+if(!function_exists('renderElement')) {
+    function renderElement($element, $data) {
+        if(!is_array($data))
+            $data = array($data);
+        require(__DIR__ . '/../php/Elements/' . $element . '.php');
+    }
+}

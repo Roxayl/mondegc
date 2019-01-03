@@ -554,11 +554,11 @@ init();
         <!-- Liste infrasructures
     ================================================== -->
         <h3>Infrastructures de la ville</h3>
-        <ul class="listes">
+        <div class="infra-well-container">
           <?php do {
               if(!isset($row_infrastructure['ch_inf_lien_image'])) break;
               ?>
-            <li class="row-fluid">
+            <!--<li class="row-fluid">
               <div class="span3 img-listes">
                 <?php if ($row_infrastructure['ch_inf_lien_image']) {?>
                 <img src="<?php echo $row_infrastructure['ch_inf_lien_image']; ?>" alt="image <?php echo $row_infrastructure['ch_inf_off_nom']; ?>">
@@ -575,9 +575,18 @@ init();
                   <p><strong>Description&nbsp;: </strong><?php echo $row_infrastructure['ch_inf_off_desc']; ?></p>
                   <a class="btn btn-primary" href="php/infrastructure-modal-public.php?ch_inf_id=<?php echo $row_infrastructure['ch_inf_id']; ?>" data-toggle="modal" data-target="#Modal-Monument">Influence</a></div>
               </div>
-            </li>
+            </li>-->
+              <?php $infraData = array(
+                  'id' => $row_infrastructure['ch_inf_id'],
+                  'overlay_text' => 'Infrastructure',
+                  'image' => $row_infrastructure['ch_inf_lien_image'],
+                  'nom' => $row_infrastructure['ch_inf_off_nom'],
+                  'description' => $row_infrastructure['ch_inf_off_desc']
+              );
+              ?>
+              <?php renderElement('infrastructure_well', $infraData); ?>
             <?php } while ($row_infrastructure = mysql_fetch_assoc($infrastructure)); ?>
-        </ul>
+        </div>
       </section>
       <?php } ?>
       <!-- Journal
@@ -626,8 +635,7 @@ init();
         <!-- Liste des monuments
         ================================================== -->
         <h3>Liste des monuments</h3>
-        <div id="liste-monuments">
-          <ul class="listes">
+        <div id="infra-well-container">
             <?php do { 
 			$listcategories = ($row_monument['listcat']);
 			if ($row_monument['listcat']) {
@@ -638,37 +646,29 @@ $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_
 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
 			}?>
-            <li class="row-fluid">
-              <div class="span5 img-listes">
-                <?php if ($row_monument['ch_pat_lien_img1']) {?>
-                <img src="<?php echo $row_monument['ch_pat_lien_img1']; ?>" alt="image <?php echo $row_monument['ch_pat_nom']; ?>">
-                <?php } else { ?>
-                <img src="assets/img/imagesdefaut/ville.jpg" alt="monument">
-                <?php } ?>
-              </div>
-              <div class="span6 info-listes">
-                <h4><?php echo $row_monument['ch_pat_nom']; ?></h4>
-                <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
-                  <?php  echo date("d/m/Y", strtotime($row_monument['ch_pat_mis_jour'])); ?>
-                  &agrave; <?php echo date("G:i:s", strtotime($row_monument['ch_pat_mis_jour'])); ?> </p>
-                <?php if ($row_liste_mon_cat3) { ?>
-                <div class="row-fluid icone-categorie">
-                  <?php do { ?>
-                    <!-- Icone et popover de la categorie -->
-                    <div class=""><a href="#" rel="clickover" title="<?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" data-placement="top" data-content="<?php echo $row_liste_mon_cat3['ch_mon_cat_desc']; ?>"><img src="<?php echo $row_liste_mon_cat3['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" style="background-color:<?php echo $row_liste_mon_cat3['ch_mon_cat_couleur']; ?>;"></a></div>
-                    <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); ?>
-                  <?php mysql_free_result($liste_mon_cat3); ?>
-                </div>
-                <?php } ?>
-                <p><strong>Description&nbsp;: </strong><?php echo $row_monument['ch_pat_description']; ?></p>
-                <a class="btn btn-primary" href="php/patrimoine-modal.php?ch_pat_id=<?php echo $row_monument['ch_pat_ID']; ?>" data-toggle="modal" data-target="#Modal-Monument">Visiter</a>
-                <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
-                <a class="btn btn-primary" href="php/partage-monument.php?ch_pat_id=<?php echo $row_monument['ch_pat_ID']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i></a>
-                <?php } ?>
-              </div>
-            </li>
+
+            <?php
+            $overlay_text = null;   
+            if($row_liste_mon_cat3)  {
+                $overlay_text = '
+                <a href="#" rel="clickover" title="' . $row_liste_mon_cat3['ch_mon_cat_nom'] . '"
+                   data-placement="top" data-content="' . $row_liste_mon_cat3['ch_mon_cat_desc'] . '">' .
+                            $row_liste_mon_cat3['ch_mon_cat_nom'] . '
+                </a>';
+            }
+
+            $infraData = array(
+              'id' => $row_monument['ch_pat_ID'],
+              'type' => 'patrimoine',
+              'overlay_image' => $row_liste_mon_cat3['ch_mon_cat_icon'],
+              'overlay_text' => $overlay_text,
+              'image' => $row_monument['ch_pat_lien_img1'],
+              'nom' => $row_monument['ch_pat_nom'],
+              'description' => $row_monument['ch_pat_description']
+            );
+              ?>
+              <?php renderElement('infrastructure_well', $infraData); ?>
             <?php } while ($row_monument = mysql_fetch_assoc($monument)); ?>
-          </ul>
         </div>
         <div class="well"> <?php echo $row_infoVille['ch_vil_culture']; ?> </div>
 
