@@ -11,7 +11,7 @@ if (isset($_GET['ch_pat_id'])) {
   $colname_monument = $_GET['ch_pat_id'];
 }
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_monument = sprintf("SELECT ch_pat_id, ch_pat_label, ch_pat_statut, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nb_update, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_nom, ch_pat_lien_img1, ch_pat_lien_img2, ch_pat_lien_img3, ch_pat_lien_img4, ch_pat_lien_img5, ch_pat_legende_img1, ch_pat_legende_img2, ch_pat_legende_img3, ch_pat_legende_img4, ch_pat_legende_img5, ch_pat_description, ch_pay_nom, ch_vil_nom, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID WHERE ch_pat_id = %s", GetSQLValueString($colname_monument, "int"));
+$query_monument = sprintf("SELECT ch_pat_id, ch_pat_label, ch_pat_statut, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nb_update, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_nom, ch_pat_lien_img1, ch_pat_lien_img2, ch_pat_lien_img3, ch_pat_lien_img4, ch_pat_lien_img5, ch_pat_legende_img1, ch_pat_legende_img2, ch_pat_legende_img3, ch_pat_legende_img4, ch_pat_legende_img5, ch_pat_description, ch_pay_id, ch_pay_nom, ch_vil_ID, ch_vil_nom, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID WHERE ch_pat_id = %s", GetSQLValueString($colname_monument, "int"));
 $monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
 $row_monument = mysql_fetch_assoc($monument);
 $totalRows_monument = mysql_num_rows($monument);
@@ -162,7 +162,16 @@ $_SESSION['last_work'] = 'page-monument.php?ch_pat_id='.$row_monument['ch_pat_id
 
 <!-- Page CONTENT
     ================================================== -->
-<div class="container corps-page"> 
+<div class="container corps-page">
+
+    <ul class="breadcrumb pull-left">
+        <li><a href="Page-carte.php#liste-pays">Pays</a> <span class="divider">/</span></li>
+        <li><a href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>"><?= $row_monument['ch_pay_nom'] ?></a> <span class="divider">/</span></li>
+        <li><a href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>#villes">Villes</a> <span class="divider">/</span></li>
+        <li><a href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>&ch_ville_id=<?= $row_monument['ch_vil_ID'] ?>"><?= $row_monument['ch_vil_nom'] ?></a> <span class="divider">/</span></li>
+        <li><a href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>&ch_ville_id=<?= $row_monument['ch_vil_ID'] ?>#patrimoine">Patrimoine</a> <span class="divider">/</span></li>
+      <li class="active"><?= $row_monument['ch_pat_nom'] ?></li>
+    </ul>
   <!-- Moderation
      ================================================== -->
   <?php if (($_SESSION['statut'] >= 20) OR ($row_users['ch_use_id'] == $_SESSION['user_ID'])) { ?>

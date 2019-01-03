@@ -132,7 +132,12 @@ img.olTileImage {
     
     <!-- Page CONTENT
     ================================================== -->
-    <div class="span9 corps-page"> 
+    <div class="span9 corps-page">
+
+    <ul class="breadcrumb">
+      <li class="active">OCGC</li>
+    </ul>
+
       <!-- Presentation
     ================================================== -->
       <section>
@@ -152,7 +157,7 @@ img.olTileImage {
     ================================================== -->
       <section>
      <div class="titre-bleu anchor" id="organigramme"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
-        <h1>Organigramme :</h1>
+        <h1>Organigramme</h1>
 		</div>
         <div class="well">
           <div class="row-fluid">
@@ -208,7 +213,7 @@ img.olTileImage {
     ================================================== -->
       <section>
      <div class="titre-bleu anchor" id="outils disponibles"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
-        <h1>Outils disponibles :</h1>
+        <h1>Outils disponibles</h1>
 		</div>
         <div class="well">
           <div class="row-fluid">
@@ -241,7 +246,7 @@ img.olTileImage {
     ================================================== -->
       <section>
      <div class="titre-bleu anchor" id="Missions accomplies"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
-        <h1>Missions accomplies :</h1>
+        <h1>Missions accomplies</h1>
 		</div>
         <div class="well">
           <div class="row-fluid">

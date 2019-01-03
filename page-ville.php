@@ -344,6 +344,14 @@ init();
     <!-- Page CONTENT
     ================================================== -->
     <div class="span9 corps-page">
+
+    <ul class="breadcrumb pull-left">
+      <li><a href="Page-carte.php#liste-pays">Pays</a> <span class="divider">/</span></li>
+      <li><a href="page-pays.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>"><?= $row_Pays['ch_pay_nom'] ?></a> <span class="divider">/</span></li>
+        <li><a href="page-pays.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>#villes">Villes</a> <span class="divider">/</span></li>
+      <li class="active"><?= $row_infoVille['ch_vil_nom'] ?></li>
+    </ul>
+
       <?php if ($row_temperance) { ?>
       <a class="btn btn-primary" href="php/temperance-rapport-pays.php?ch_temp_id=<?php echo $row_temperance['ch_temp_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le d&eacute;tail de cette note">Note des juges&nbsp;: <?php echo get_note_finale($row_temperance['ch_temp_note']); ?>
       <?php	if ($row_temperance['ch_temp_tendance'] == "sup") { ?>
@@ -378,6 +386,8 @@ init();
       <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
       <a class="btn btn-primary pull-right" href="php/partage-ville.php?ch_vil_ID=<?php echo $row_infoVille['ch_vil_ID']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Forum</a>
       <?php } ?>
+      <div class="clearfix"></div>
+
       <!-- Cadre info ville
     ================================================== -->
       <section>

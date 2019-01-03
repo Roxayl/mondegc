@@ -243,6 +243,12 @@ init();
     <!-- END Docs nav
     ================================================== -->
     <div class="span9 corps-page">
+
+    <ul class="breadcrumb pull-left">
+      <li><a href="Page-carte.php#liste-pays">Pays</a> <span class="divider">/</span></li>
+      <li class="active"><?= $row_Pays['ch_pay_nom'] ?></li>
+    </ul>
+
       <?php if ($row_temperance) { ?>
       <a class="btn btn-primary" href="php/temperance-rapport-pays.php?ch_temp_id=<?php echo $row_temperance['ch_temp_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le d&eacute;tail de cette note">Note des juges&nbsp;: <?php echo get_note_finale($row_temperance['ch_temp_note']); ?>
       <?php	if ($row_temperance['ch_temp_tendance'] == "sup") { ?>
@@ -281,6 +287,7 @@ init();
       <a class="btn btn-primary pull-right" href="php/partage-pays.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Forum</a>
       <?php } ?>
       <div class="clearfix"></div>
+
       <!-- INfo Generales
      ================================================== -->
       <section>

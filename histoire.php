@@ -220,7 +220,13 @@ $queryString_pays_arch = sprintf("&totalRows_pays_arch=%d%s", $totalRows_pays_ar
     
     <!-- Page CONTENT
     ================================================== -->
-    <div class="span9 corps-page"> 
+    <div class="span9 corps-page">
+
+    <ul class="breadcrumb">
+        <li><a href="OCGC.php">OCGC</a> <span class="divider">/</span></li>
+      <li class="active">Histoire</li>
+    </ul>
+
       <!-- Presentation
     ================================================== -->
       <section>

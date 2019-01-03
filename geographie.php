@@ -148,7 +148,12 @@ init();
     
     <!-- Page CONTENT
     ================================================== -->
-    <div class="span9 corps-page"> 
+    <div class="span9 corps-page">
+
+    <ul class="breadcrumb">
+      <li><a href="OCGC.php">OCGC</a> <span class="divider">/</span></li>
+      <li class="active">Géographie</li>
+    </ul>
       <!-- Presentation
     ================================================== -->
       <section>

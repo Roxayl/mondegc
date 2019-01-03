@@ -404,6 +404,14 @@ body > .navbar .brand:hover {
 	visibility:hidden;
 }
 
+.breadcrumb::before {
+    content: "Navigation :\0000a0\0000a0";
+    color: rgb(153, 153, 153);
+}
+.breadcrumb {
+    background-color: #eaeaea;
+}
+
 
 /* NavBar Haut-Conseil
 -------------------------------------------------- */
@@ -456,6 +464,10 @@ body > .navbar .brand:hover {
     width: 32px;
     height: 32px;
     vertical-align: middle;
+}
+.infra-overlay .popover-content {
+    color: #0e0e0e;
+    font-family: Roboto, sans-serif;
 }
 .infra-type-infra .infra-overlay {
     background-color: #FCC102;

@@ -182,7 +182,13 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
     
     <!-- Page CONTENT
     ================================================== -->
-    <div class="span9 corps-page"> 
+    <div class="span9 corps-page">
+
+    <ul class="breadcrumb">
+      <li><a href="OCGC.php">OCGC</a> <span class="divider">/</span></li>
+      <li class="active">Patrimoine</li>
+    </ul>
+
       <!-- Presentation
     ================================================== -->
       <section>

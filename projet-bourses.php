@@ -98,9 +98,16 @@ format: 'hex'});
 </div>
 <div class="container">
   <div class="corps-page">
+
+    <ul class="breadcrumb">
+      <li><a href="OCGC.php">OCGC</a> <span class="divider">/</span></li>
+      <li><a href="economie.php">Économie</a> <span class="divider">/</span></li>
+      <li class="active">Projet bourses</li>
+    </ul>
+
     <div class="row-fluid">
       <div class="titre-bleu anchor" id="presentation"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
-        <h1>Principe des Bourses mondiales :</h1>
+        <h1>Principe des Bourses mondiales</h1>
       </div>
       <div class="well">
         <p>&nbsp;</p>

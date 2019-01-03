@@ -113,7 +113,14 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
   
   <!-- Page CONTENT
     ================================================== -->
-  <section class="corps-page">  
+  <section class="corps-page">
+
+  <ul class="breadcrumb">
+      <li><a href="OCGC.php">OCGC</a> <span class="divider">/</span></li>
+      <li><a href="economie.php">Économie</a> <span class="divider">/</span></li>
+      <li class="active">Liste des infrastructures</li>
+    </ul>
+
   <!-- Titre page
         ================================================== -->
   <div id="titre_institut" class="titre-bleu anchor"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">

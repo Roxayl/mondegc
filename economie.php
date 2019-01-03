@@ -303,7 +303,13 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
     
     <!-- Page CONTENT
     ================================================== -->
-    <div class="span9 corps-page"> 
+    <div class="span9 corps-page">
+
+    <ul class="breadcrumb">
+      <li><a href="OCGC.php">OCGC</a> <span class="divider">/</span></li>
+      <li class="active">Économie</li>
+    </ul>
+
       <!-- Presentation
     ================================================== -->
       <section><div class="well">
@@ -563,7 +569,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
           <div class="row-fluid">
             <div class="span7">
               <p>Les Bourses mondiales sont créées dans la continuité du projet Tempérance. Le but est de mettre en valeur vos ressources acquises via la mise en ligne de vos infrastrutures et via l'outil "zoning" du site GC. Mais de quelle manière ? Comment pourrez-vous faire prospérer votre Bourse ? La rubrique "En savoir plus" est à présent en ligne pour vous. Il est temps de se confronter aux défis du monde réel sur le site GC : Saurez-vous vous adapter au développement des autres pays membres ? Quels choix ferez-vous pour placer votre Bourse en tête ? Comment battrez-vous la tendance mondiale ? Bientôt, chers membres gécéens, vos propres résultats pour le projet des Bourses mondiales... </p>
-              <p><a class="btn btn-primary" href="projet-bourses.php">En savoir plus</a> <a class="btn btn-primary" href="back/Temperance_jugement.php">Juges</a></p>
+              <p><a class="btn btn-primary" href="projet-bourses.php">À propos du Projet Bourses</a></p>
             </div>
             <div class="span5"><img src="http://img15.hostingpics.net/pics/116877Bourses.jpg"></div>
           </div>
