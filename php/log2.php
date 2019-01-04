@@ -31,14 +31,6 @@ if ($row_Session_user['ch_use_acces'] == NULL) {
 setcookie('Session_mondeGC', '', time() -3600, null, null, false, false);
 
 //to fully log out a visitor we need to clear the session varialbles
-  $_SESSION['login_user'] = NULL;
-  $_SESSION['pays_ID'] = NULL;
-  $_SESSION['PrevUrl'] = NULL;
-  $_SESSION['fond_ecran'] = NULL;
-  $_SESSION['connect'] = NULL;
-  $_SESSION['user_ID'] = NULL;
-  $_SESSION['user_last_log'] = NULL;
-  $_SESSION['statut'] = NULL;
   unset($_SESSION['login_user']);
   unset($_SESSION['pays_ID']);
   unset($_SESSION['PrevUrl']);
@@ -48,8 +40,7 @@ setcookie('Session_mondeGC', '', time() -3600, null, null, false, false);
   unset($_SESSION['user_last_log']);
   unset($_SESSION['statut']);
 
-$loginFoundUser = NULL;
-unset($loginFoundUser);
+  unset($loginFoundUser);
 }
 
 // ** Si utilisateur trouve **
@@ -76,7 +67,8 @@ $updateSQL = sprintf("UPDATE users SET ch_use_last_log=%s WHERE ch_use_id=%s",
 	$_SESSION['nom_dirigeant'] = $row_Session_user['ch_use_nom_dirigeant'];
 	$_SESSION['prenom_dirigeant'] = $row_Session_user['ch_use_prenom_dirigeant'];
 	$_SESSION['derniere_visite'] = $row_Session_user['ch_use_last_log'];
-}}
+}
+}
 
 // *** Validate request to login to this site.
 if (!isset($_SESSION)) {
