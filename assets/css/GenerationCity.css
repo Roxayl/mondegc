@@ -1204,15 +1204,21 @@ table .btn {
 /* Carrousel
 -------------------------------------------------- */
 
-.titre-caroussel {
+.titre-caroussel-container-admin {
+	position: relative;
+	top: 124px;
+	margin-top: -110px;
+	z-index: 20;
+}
+.titre-caroussel-container {
 	position: relative;
 	top: 60px;
-	margin-top: -50px;
+	margin-top: -60px;
 	z-index: 20;
 }
 .carousel {
 	margin: 0px;
-	padding: 0Px;
+	padding: 0px;
 	width: 100%;
 }
 .carousel-inner {

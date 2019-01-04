@@ -251,7 +251,9 @@ init();
     ================================================== -->
   <div class="container container-carousel">
     <?php if ($row_infoVille['ch_vil_lien_img1'] OR $row_infoVille['ch_vil_lien_img2'] OR $row_infoVille['ch_vil_lien_img3'] OR $row_infoVille['ch_vil_lien_img4'] OR $row_infoVille['ch_vil_lien_img5']) { ?>
+    <div class="titre-caroussel-container">
     <h1 class="titre-caroussel"><?php echo $row_infoVille['ch_vil_nom']; ?></h1>
+    </div>
     <section id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
         <?php if ($row_infoVille['ch_vil_lien_img1']) { ?>

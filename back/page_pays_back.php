@@ -338,7 +338,8 @@ img.olTileImage {
 ================================================== -->
 <header class="jumbotron subhead anchor" id="overview">
   <div class="container">
-    <h1>Gestion du pays <?php echo $row_InfoGenerale['ch_pay_nom']; ?></h1>
+      <h2>Gestion du pays</h2>
+      <h1><?php echo $row_InfoGenerale['ch_pay_nom']; ?></h1>
   </div>
 </header>
 <!-- Docs nav
@@ -357,10 +358,10 @@ img.olTileImage {
         <?php if ($_SESSION['statut'] >= 10) { ?>
         <li><a href="#info-generales">Page pays</a></li>
         <?php }?>
-        <?php if ($row_autres_villes ) { ?>
-        <li><a href="#autres-villes">Villes autres joueurs</a></li>
-        <?php }?>
         <li><a href="#mes-villes">Mes villes</a></li>
+        <?php if ($row_autres_villes ) { ?>
+        <li><a href="#autres-villes">Villes des autres joueurs</a></li>
+        <?php }?>
         <li><a href="#routes-campagne">Routes et campagne</a></li>
         <?php if ($_SESSION['statut'] >= 10) { ?>
         <li><a href="#mes-communiques">Communiqu&eacute;s officiels</a></li>
@@ -371,7 +372,12 @@ img.olTileImage {
     <!-- END Docs nav
     ================================================== -->
     
-    <div class="span9 corps-page"> 
+    <div class="span9 corps-page">
+
+    <ul class="breadcrumb pull-left">
+      <li class="active">Gestion du pays : <?= $row_InfoGenerale['ch_pay_nom'] ?></a></li>
+    </ul>
+
       <!-- Moderation
      ================================================== -->
       <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
@@ -393,7 +399,7 @@ img.olTileImage {
       <?php if ($_SESSION['statut'] >= 10) { ?>
       <form class="pull-right" action="drapeau_modifier.php" method="post">
       <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
-      <button class="btn btn-primary" type="submit" title="Chargez une nouvelle image sur le serveur">Modifier drapeau</button>
+      <button class="btn btn-primary" type="submit" title="Chargez une nouvelle image sur le serveur"><i class="icon-pays-small-white"></i> Modifier le drapeau</button>
       </form>
       <?php } ?>
       <div class="modal container fade" id="Modal-Monument"></div>
@@ -722,69 +728,7 @@ img.olTileImage {
         <div class="alert alert-success"> Contactez le dirigeant pour modifier la page de votre pays</div>
         <?php } ?>
       </section>
-      <!-- Liste des Villes des autres joueurs
-        ================================================== -->
-      <?php if ($row_autres_villes) { ?>
-      <section>
-        <div id="autres-villes" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Ville1.png">
-          <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
-          <h1>Villes du pays</h1>
-          <?php } else { ?>
-          <!-- titre si modération -->
-          <h1>Villes des autres joueurs</h1>
-          <?php } ?>
-        </div>
-        <div class="alert alert-success">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          Cette liste présentes les villes des autres joueurs qui composent ce pays. Les dirigeants de pays y ont accès à des fins de modération...</div>
-        <table width="539" class="table table-hover">
-          <thead>
-            <tr class="tablehead">
-              <th width="5%" scope="col"><a href="#" rel="clickover" title="Statut de la ville" data-content="la ville peut-&ecirc;tre publi&eacute;e sur la page pays ou masqu&eacute;e. Le drapeau indique la capitale."><i class="icon-globe"></i></a></th>
-              <th width="46%" scope="col">Nom</th>
-              <th width="23%" scope="col">maire</th>
-              <th width="23%" scope="col">population</th>
-              <?php if ($_SESSION['statut'] >= 20) { // Affichage si sup ou egal à dirigeant ?>
-              <th width="4%" scope="col">&nbsp;</th>
-              <th width="4%" scope="col">&nbsp;</th>
-              <?php } ?>
-            </tr>
-          </thead>
-          <tbody>
-            <?php do { ?>
-              <tr>
-                <td><img src="../assets/img/statutvil_<?php echo $row_autres_villes['ch_vil_capitale']; ?>.png" alt="Statut"></td>
-                <td><?php echo $row_autres_villes['ch_vil_nom']; ?></td>
-                <td><?php echo $row_autres_villes['ch_use_login']; ?></td>
-                <td><?php echo $row_autres_villes['ch_vil_population']; ?></td>
-                <?php if ($_SESSION['statut'] >= 20) { // Affichage si sup ou egal à dirigeant ?>
-                <td><form action="ville_modifier.php" method="post">
-                    <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
-                    <button class="btn" type="submit" title="modifier la ville"><i class="icon-pencil"></i></button>
-                  </form></td>
-                <td><form action="ville_confirmation_supprimer.php" method="post">
-                    <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
-                    <button class="btn" type="submit" title="supprimer la ville"><i class="icon-trash"></i></button>
-                  </form></td>
-                <?php } ?>
-              </tr>
-              <?php } while ($row_autres_villes = mysql_fetch_assoc($autres_villes)); ?>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="6"><p class="pull-right">de <?php echo ($startRow_autres_villes + 1) ?> &agrave; <?php echo min($startRow_autres_villes + $maxRows_autres_villes, $totalRows_autres_villes) ?> sur <?php echo $totalRows_autres_villes ?>
-                  <?php if ($pageNum_autres_villes > 0) { // Show if not first page ?>
-                    <a class="btn" href="<?php printf("%s?pageNum_autres_villes=%d%s#mes-villes", $currentPage, max(0, $pageNum_autres_villes - 1), $queryString_autres_villes); ?>"><i class=" icon-backward"></i> </a>
-                    <?php } // Show if not first page ?>
-                  <?php if ($pageNum_autres_villes < $totalPages_autres_villes) { // Show if not last page ?>
-                    <a class="btn" href="<?php printf("%s?pageNum_autres_villes=%d%s#mes-villes", $currentPage, min($totalPages_autres_villes, $pageNum_autres_villes + 1), $queryString_autres_villes); ?>"> <i class="icon-forward"></i></a>
-                    <?php } // Show if not last page ?>
-                </p></td>
-            </tr>
-          </tfoot>
-        </table>
-      </section>
-      <?php }  // fin affichage section autre villes si existantes.  ?>
+
       <!-- Liste des Villes du membre
         ================================================== -->
       <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) {} else { ?>
@@ -854,6 +798,71 @@ img.olTileImage {
         <?php } ?>
       </section>
       <?php } ?>
+
+    <!-- Liste des Villes des autres joueurs
+        ================================================== -->
+      <?php if ($row_autres_villes) { ?>
+      <section>
+        <div id="autres-villes" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Ville1.png">
+          <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
+          <h1>Villes du pays</h1>
+          <?php } else { ?>
+          <!-- titre si modération -->
+          <h1>Villes des autres joueurs</h1>
+          <?php } ?>
+        </div>
+        <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          Cette liste présentes les villes des autres joueurs qui composent ce pays. Les dirigeants de pays y ont accès à des fins de modération...</div>
+        <table width="539" class="table table-hover">
+          <thead>
+            <tr class="tablehead">
+              <th width="5%" scope="col"><a href="#" rel="clickover" title="Statut de la ville" data-content="la ville peut-&ecirc;tre publi&eacute;e sur la page pays ou masqu&eacute;e. Le drapeau indique la capitale."><i class="icon-globe"></i></a></th>
+              <th width="46%" scope="col">Nom</th>
+              <th width="23%" scope="col">maire</th>
+              <th width="23%" scope="col">population</th>
+              <?php if ($_SESSION['statut'] >= 20) { // Affichage si sup ou egal à dirigeant ?>
+              <th width="4%" scope="col">&nbsp;</th>
+              <th width="4%" scope="col">&nbsp;</th>
+              <?php } ?>
+            </tr>
+          </thead>
+          <tbody>
+            <?php do { ?>
+              <tr>
+                <td><img src="../assets/img/statutvil_<?php echo $row_autres_villes['ch_vil_capitale']; ?>.png" alt="Statut"></td>
+                <td><?php echo $row_autres_villes['ch_vil_nom']; ?></td>
+                <td><?php echo $row_autres_villes['ch_use_login']; ?></td>
+                <td><?php echo $row_autres_villes['ch_vil_population']; ?></td>
+                <?php if ($_SESSION['statut'] >= 20) { // Affichage si sup ou egal à dirigeant ?>
+                <td><form action="ville_modifier.php" method="post">
+                    <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
+                    <button class="btn" type="submit" title="modifier la ville"><i class="icon-pencil"></i></button>
+                  </form></td>
+                <td><form action="ville_confirmation_supprimer.php" method="post">
+                    <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
+                    <button class="btn" type="submit" title="supprimer la ville"><i class="icon-trash"></i></button>
+                  </form></td>
+                <?php } ?>
+              </tr>
+              <?php } while ($row_autres_villes = mysql_fetch_assoc($autres_villes)); ?>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="6"><p class="pull-right">de <?php echo ($startRow_autres_villes + 1) ?> &agrave; <?php echo min($startRow_autres_villes + $maxRows_autres_villes, $totalRows_autres_villes) ?> sur <?php echo $totalRows_autres_villes ?>
+                  <?php if ($pageNum_autres_villes > 0) { // Show if not first page ?>
+                    <a class="btn" href="<?php printf("%s?pageNum_autres_villes=%d%s#mes-villes", $currentPage, max(0, $pageNum_autres_villes - 1), $queryString_autres_villes); ?>"><i class=" icon-backward"></i> </a>
+                    <?php } // Show if not first page ?>
+                  <?php if ($pageNum_autres_villes < $totalPages_autres_villes) { // Show if not last page ?>
+                    <a class="btn" href="<?php printf("%s?pageNum_autres_villes=%d%s#mes-villes", $currentPage, min($totalPages_autres_villes, $pageNum_autres_villes + 1), $queryString_autres_villes); ?>"> <i class="icon-forward"></i></a>
+                    <?php } // Show if not last page ?>
+                </p></td>
+            </tr>
+          </tfoot>
+        </table>
+      </section>
+      <?php }  // fin affichage section autre villes si existantes.  ?>
+
       <!-- Routes et campagne
         ================================================== -->
       <section>

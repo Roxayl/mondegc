@@ -69,7 +69,7 @@ if (isset($_POST['ville-ID'])) {
 	unset($_POST['ville-ID']);
 }
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_ville = sprintf("SELECT * FROM villes WHERE ch_vil_ID = %s", GetSQLValueString($_SESSION['ville_encours'], "int"));
+$query_ville = sprintf("SELECT * FROM villes INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($_SESSION['ville_encours'], "int"));
 $ville = mysql_query($query_ville, $maconnexion) or die(mysql_error());
 $row_ville = mysql_fetch_assoc($ville);
 $totalRows_ville = mysql_num_rows($ville);
@@ -245,7 +245,11 @@ return true;
     ================================================== -->
   <div class="container container-carousel">
     <?php if ($row_ville['ch_vil_lien_img1'] OR $row_ville['ch_vil_lien_img2'] OR $row_ville['ch_vil_lien_img3'] OR $row_ville['ch_vil_lien_img4'] OR $row_ville['ch_vil_lien_img5']) { ?>
-    <h1 class="titre-caroussel">Modifier <?php echo $row_ville['ch_vil_nom']; ?></h1>
+
+    <div class="titre-caroussel-container-admin">
+        <h2 class="titre-caroussel-h2">Gestion de la ville</h2>
+        <h1 class="titre-caroussel"><?php echo $row_ville['ch_vil_nom']; ?></h1>
+    </div>
     <section id="myCarousel" class="carousel slide">
       <div class="carousel-inner vertical-align-center">
         <?php if ($row_ville['ch_vil_lien_img1']) { ?>
@@ -288,7 +292,8 @@ return true;
     <!-- Titre si pas de carrousel
     ================================================== -->
     <?php } else { ?>
-    <h1>Modifier <?php echo $row_ville['ch_vil_nom']; ?></h1>
+    <h2>Gestion de la ville</h2>
+    <h1><?php echo $row_ville['ch_vil_nom']; ?></h1>
     <?php } ?>
   </div>
 </header>
@@ -321,7 +326,18 @@ return true;
     
     <!-- Page CONTENT
     ================================================== -->
-    <section class="span9 corps-page"> 
+    <section class="span9 corps-page">
+
+    <ul class="breadcrumb pull-left">
+      <li><a href="page_pays_back.php?paysID=<?= $row_ville['ch_pay_id'] ?>&userID=<?= $row_User['ch_use_id'] ?>">Gestion du pays : <?= $row_ville['ch_pay_nom'] ?></a> <span class="divider">/</span></li>
+      <li class="active">Gestion de la ville : <?= $row_ville['ch_vil_nom'] ?></li>
+    </ul>
+    <div class="clearfix"></div>
+
+    <div class="pull-left">
+        <a class="btn btn-primary" href="../page-ville.php?ch_pay_id=<?= $row_ville['ch_pay_id'] ?>&ch_vil_id=<?= $row_ville['ch_vil_id'] ?>" type="submit" title="page de gestion du pays">Accéder à la page de la ville</a>
+    </div>
+
       <!-- Moderation
      ================================================== -->
       <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
