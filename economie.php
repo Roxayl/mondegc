@@ -312,10 +312,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
 
       <!-- Presentation
     ================================================== -->
-      <section><div class="well">
-        <p>&nbsp;</p>
-        <div class="alert alert-success">
-          <p>Responsable actuel de cet Institut : Sakuro</p></div>
+      <section>
         <div class="titre-bleu anchor" id="presentation"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
           <h1>Pr&eacute;sentation</h1>
         </div>

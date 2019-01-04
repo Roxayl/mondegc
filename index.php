@@ -153,16 +153,19 @@ ORDER BY date DESC LIMIT 0, 15";
 
         <ul class="liste-transparente">
         <?php do { ?>
-        <li class="fond-notification item">
+
+        <li class="item">
+        <div class="row-fluid" style="vertical-align: middle;">
+            <div class="span2"  style="vertical-align: middle;">
+                <img style="width: 55px;" src="<?= $row_communiquesPays['img_institution'] ?>" />
+            </div>
+            <div class="span10"  style="vertical-align: middle;">
+                <?= $row_communiquesPays['institution'] ?><br>
+            <small><?php echo date("d/m/Y", strtotime($row_communiquesPays['date'])); ?></small>
+            </div>
+        </div>
         <div class="row">
-            <div class="span3">
-                <img style="width: 70px;" src="<?= $row_communiquesPays['img_institution'] ?>" />
-            </div>
-            <div class="span9">
-                <p style="margin-top: 10px;"><?= $row_communiquesPays['institution'] ?></p>
-                <h4><a href="php/communique-modal.php?com_id=<?= $row_communiquesPays['id'] ?>" data-toggle="modal" data-target="#myModal"><?php echo htmlspecialchars($row_communiquesPays['titre']); ?></a></h4>
-                <small><?php echo date("d/m/Y", strtotime($row_communiquesPays['date'])); ?></small>
-            </div>
+            <h4><a href="php/communique-modal.php?com_id=<?= $row_communiquesPays['id'] ?>" data-toggle="modal" data-target="#myModal"><?php echo htmlspecialchars($row_communiquesPays['titre']); ?></a></h4>
         </div>
         </li>
       <?php } while ($row_communiquesPays = mysql_fetch_assoc($communiquesPays)); ?>

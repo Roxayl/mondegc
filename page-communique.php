@@ -243,10 +243,6 @@ $("a[data-toggle=modal]").click(function (e) {
   lv_url = $(this).attr('href')
   $(lv_target).load(lv_url)})
 
-$('#closemodal').click(function() {
-    $('#Modal-Monument').modal('hide');
-});
-
 $('.popover-html').popover({ html : true});
 </script>
 <?php

@@ -153,96 +153,63 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
   <ul class="liste-transparente">
     <!-- Titres reperes temporels
 ================================================== -->
-    <?php 
-	do { 
-		?>
-    <?php if (($row_LastCommunique['date'] > $_SESSION['now']) AND ($_SESSION['aujourdhui']==true)) {
+<?php
+do {
+
+    ?>
+
+    <div class="pull-center" style="color: #375c08;">
+      <h4>
+  <?php
+
+    if (($row_LastCommunique['date'] > $_SESSION['now']) AND ($_SESSION['aujourdhui']==true)) {
 		  $_SESSION['aujourdhui']=false;
-		  ?>
-    <div class="titre-gris">
-      <h3>Aujourd'hui</h3>
-    </div>
-    <?php } ?>
-        <?php if (($row_LastCommunique['date'] < $_SESSION['now']) AND ($row_LastCommunique['date'] >= $_SESSION['datehier']) AND ($_SESSION['hier']==true)) {
+		  echo $temps_text = "Aujourd'hui";
+    }
+    if (($row_LastCommunique['date'] < $_SESSION['now']) AND ($row_LastCommunique['date'] >= $_SESSION['datehier']) AND ($_SESSION['hier']==true)) {
 		  $_SESSION['hier']=false;
-		  ?>
-    <div class="titre-gris">
-      <p>&nbsp;</p>
-      <h3>Hier</h3>
-    </div>
-    <?php } ?>
-     <?php if (($row_LastCommunique['date'] < $_SESSION['datehier']) AND ($row_LastCommunique['date'] >= $_SESSION['dateavanthier']) AND ($_SESSION['avanthier']==true)) {
+		  echo $temps_text = "Hier";
+    }
+    if (($row_LastCommunique['date'] < $_SESSION['datehier']) AND ($row_LastCommunique['date'] >= $_SESSION['dateavanthier']) AND ($_SESSION['avanthier']==true)) {
 		  $_SESSION['avanthier']=false;
-		  ?>
-    <div class="titre-gris">
-      <p>&nbsp;</p>
-      <h3>Avant-hier</h3>
-    </div>
-    <?php } ?>
-    <?php if (($row_LastCommunique['date'] < $_SESSION['dateavanthier']) AND ($row_LastCommunique['date'] >= $_SESSION['datesemaine']) AND ($_SESSION['avantavanthier']==true)) {
+		  echo $temps_text = "Avant-hier";
+    }
+    if (($row_LastCommunique['date'] < $_SESSION['dateavanthier']) AND ($row_LastCommunique['date'] >= $_SESSION['datesemaine']) AND ($_SESSION['avantavanthier']==true)) {
 		  $_SESSION['avantavanthier']=false;
-		  ?>
-    <div class="titre-gris">
-      <p>&nbsp;</p>
-      <h3>Les jours pr&eacute;c&eacute;dents</h3>
-    </div>
-    <?php } ?>
-    <?php if (($row_LastCommunique['date'] <= $_SESSION['datesemaine']) AND ($row_LastCommunique['date'] >= $_SESSION['datedeuxsemaines']) AND ($_SESSION['semaine']==true)) {
+		  echo $temps_text = "Les jours pr&eacute;c&eacute;dents";
+    }
+    if (($row_LastCommunique['date'] <= $_SESSION['datesemaine']) AND ($row_LastCommunique['date'] >= $_SESSION['datedeuxsemaines']) AND ($_SESSION['semaine']==true)) {
 		  $_SESSION['semaine']=false;
-		  ?>
-    <div class="titre-gris">
-      <p>&nbsp;</p>
-      <h3>Il y a plus d'une semaine</h3>
-    </div>
-    <?php } ?>
-    <?php if (($row_LastCommunique['date'] <= $_SESSION['datedeuxsemaines']) AND ($row_LastCommunique['date'] >= $_SESSION['datemois']) AND ($_SESSION['deuxsemaine']==true)) {
+		  echo $temps_text = "Il y a plus d'une semaine";
+    }
+    if (($row_LastCommunique['date'] <= $_SESSION['datedeuxsemaines']) AND ($row_LastCommunique['date'] >= $_SESSION['datemois']) AND ($_SESSION['deuxsemaine']==true)) {
 		  $_SESSION['deuxsemaine']=false;
-		  ?>
-    <div class="titre-gris">
-      <p>&nbsp;</p>
-      <h3>Il y a plus de deux semaines</h3>
-    </div>
-    <?php } ?>
-    <?php if (($row_LastCommunique['date'] <= $_SESSION['datemois']) AND ($row_LastCommunique['date'] >= $_SESSION['datedeuxmois']) AND ($_SESSION['mois']==true)) {
+		  echo $temps_text = "Il y a plus de deux semaines";
+    }
+    if (($row_LastCommunique['date'] <= $_SESSION['datemois']) AND ($row_LastCommunique['date'] >= $_SESSION['datedeuxmois']) AND ($_SESSION['mois']==true)) {
 		  $_SESSION['mois']=false;
-		  ?>
-    <div class="titre-gris">
-      <p>&nbsp;</p>
-      <h3>Il y a plus d'un mois</h3>
-    </div>
-    <?php } ?>
-    <?php if (($row_LastCommunique['date'] <= $_SESSION['datedeuxmois']) AND ($row_LastCommunique['date'] >= $_SESSION['datetroismois']) AND ($_SESSION['deuxmois']==true)) {
+		  echo $temps_text = "Il y a plus d'un mois";
+    }
+    if (($row_LastCommunique['date'] <= $_SESSION['datedeuxmois']) AND ($row_LastCommunique['date'] >= $_SESSION['datetroismois']) AND ($_SESSION['deuxmois']==true)) {
 		  $_SESSION['deuxmois']=false;
-		  ?>
-    <div class="titre-gris">
-      <p>&nbsp;</p>
-      <h3>Il y a plus de deux mois</h3>
-    </div>
-    <?php } ?>
-    <?php if (($row_LastCommunique['date'] <= $_SESSION['datetroismois']) AND ($row_LastCommunique['date'] >= $_SESSION['datesixmois']) AND ($_SESSION['troismois']==true)) {
+		  echo $temps_text = "Il y a plus de deux mois";
+    }
+    if (($row_LastCommunique['date'] <= $_SESSION['datetroismois']) AND ($row_LastCommunique['date'] >= $_SESSION['datesixmois']) AND ($_SESSION['troismois']==true)) {
 		  $_SESSION['troismois']=false;
-		  ?>
-    <div class="titre-gris">
-      <p>&nbsp;</p>
-      <h3>Il y a plus de trois mois</h3>
+		  echo $temps_text = "Il y a plus de trois mois";
+    }
+    if (($row_LastCommunique['date'] <= $_SESSION['datesixmois']) AND ($row_LastCommunique['date'] >= $_SESSION['dateunan']) AND ($_SESSION['sixmois']==true)) {
+		  $_SESSION['sixmois']=false;
+		  echo $temps_text = "Il y a plus de six mois";
+    }
+    if (($row_LastCommunique['date'] <= $_SESSION['dateunan']) AND ($_SESSION['an']==true)) {
+        $_SESSION['an']=false;
+        echo $temps_text = "Il y a plus d'un an";
+    }
+    ?>
+      </h4>
     </div>
-    <?php } ?>
-    <?php if (($row_LastCommunique['date'] <= $_SESSION['datesixmois']) AND ($row_LastCommunique['date'] >= $_SESSION['dateunan']) AND ($_SESSION['sixmois']==true)) {
-		  $sixmois=false;
-		  ?>
-    <div class="titre-gris">
-      <p>&nbsp;</p>
-      <h3>Il y a plus de six mois</h3>
-    </div>
-    <?php } ?>
-    <?php if (($row_LastCommunique['date'] <= $_SESSION['dateunan']) AND ($_SESSION['an']==true)) {
-		  $_SESSION['an']=false;
-		  ?>
-    <div class="titre-gris">
-      <p>&nbsp;</p>
-      <h3>Il y a plus d'un an</h3>
-    </div>
-    <?php } ?>
+
     <?php if ( $row_LastCommunique['type_notification'] == "communique") {?>
     <!-- Si c'est un communique
 ================================================== -->
@@ -715,14 +682,16 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
         </div>
       </div>
     </li>
-    <?php } ?>
-    <?php } while ($row_LastCommunique = mysql_fetch_assoc($LastCommunique));?>
+    <?php }
+
+} while ($row_LastCommunique = mysql_fetch_assoc($LastCommunique));?>
+
+
   </ul>
   <?php if ($pageNum_LastCommunique < $totalPages_LastCommunique) { // Show if not last page ?>
   <div class="pull-center">
     <p>&nbsp;</p>
     <button id="next" class="btn btn-primary" onclick="this.style.visibility = 'hidden'">Afficher la suite</button>
-    <p>&nbsp;</p>
   </div>
   <?php } else { // Show if last page ?>
   <div class="pull-center">

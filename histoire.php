@@ -230,10 +230,6 @@ $queryString_pays_arch = sprintf("&totalRows_pays_arch=%d%s", $totalRows_pays_ar
       <!-- Presentation
     ================================================== -->
       <section>
-	  <div class="well">
-        <p>&nbsp;</p>
-        <div class="alert alert-success">
-          <p>Responsable actuel de cet Institut : Vinceinovich</p></div>
         <div class="titre-bleu anchor" id="presentation"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
           <h1>Présentation</h1>
         </div>

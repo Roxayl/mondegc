@@ -576,7 +576,7 @@ init();
                   'overlay_text' => 'Infrastructure',
                   'image' => $row_infrastructure['ch_inf_lien_image'],
                   'nom' => $row_infrastructure['ch_inf_off_nom'],
-                  'description' => $row_infrastructure['ch_inf_off_desc']
+                  'description' => $row_infrastructure['ch_inf_commentaire']
               );
 
                renderElement('infrastructure_well', $infraData);

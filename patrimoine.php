@@ -192,10 +192,6 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
       <!-- Presentation
     ================================================== -->
       <section>
-	  		<div class="well">
-        <p>&nbsp;</p>
-        <div class="alert alert-success">
-          <p>Responsable actuel de cet Institut : Maori</p></div>
         <div class="titre-bleu anchor" id="presentation"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
           <h1>Présentation</h1>
         </div>

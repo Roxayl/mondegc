@@ -112,7 +112,9 @@ $_SESSION['last_work'] = 'page-monument.php?ch_pat_id='.$row_monument['ch_pat_id
     ================================================== -->
   <div class="container container-carousel">
     <?php if ($row_monument['ch_pat_lien_img1'] OR $row_monument['ch_pat_lien_img2'] OR $row_monument['ch_pat_lien_img3'] OR $row_monument['ch_pat_lien_img4'] OR $row_monument['ch_pat_lien_img5']) { ?>
-    <h1 class="titre-caroussel"><?php echo $row_monument['ch_pat_nom']; ?></h1>
+    <div class="titre-caroussel-container">
+        <h1 class="titre-caroussel"><?php echo $row_monument['ch_pat_nom']; ?></h1>
+    </div>
     <section id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
         <?php if ($row_monument['ch_pat_lien_img1']) { ?>
