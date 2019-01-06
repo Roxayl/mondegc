@@ -284,7 +284,7 @@ init();
       </form>
       <?php } ?>
       <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
-      <a class="btn btn-primary pull-right" href="php/partage-pays.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Forum</a>
+      <a class="btn btn-primary pull-right" href="php/partage-pays.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
       <div class="clearfix"></div>
 

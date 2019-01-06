@@ -28,6 +28,7 @@ $_SESSION['an']=true;
 <meta name="author" content="">
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="assets/css/bootstrap-modal.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- TemplateEndEditable -->
@@ -78,8 +79,6 @@ $_SESSION['an']=true;
 <!-- Subhead
 ================================================== -->
 
-<div class="modal container fade" id="myModal"></div>
-
 <div id="introheader" class="jumbotron">
   <div class="container">
     <div class="header">
@@ -97,6 +96,7 @@ $_SESSION['an']=true;
 <!-- Icon Start
 ================================================== -->
 <div class="container corps-page">
+
   <!-- CATEGORIE Dernières actualites
 ================================================== -->
   <!-- LISTE Dernières actualites
@@ -153,37 +153,39 @@ ORDER BY date DESC LIMIT 0, 15";
 
         <ul class="liste-transparente">
         <?php do { ?>
-
-        <li class="item">
-        <div class="row-fluid" style="vertical-align: middle;">
-            <div class="span2"  style="vertical-align: middle;">
-                <img style="width: 55px;" src="<?= $row_communiquesPays['img_institution'] ?>" />
+            <li class="item">
+            <div class="row-fluid" style="vertical-align: middle;">
+                <div class="span2"  style="vertical-align: middle;">
+                    <img style="width: 55px;" src="<?= $row_communiquesPays['img_institution'] ?>" />
+                </div>
+                <div class="span10"  style="vertical-align: middle;">
+                    <?= $row_communiquesPays['institution'] ?><br>
+                <small><?php echo date("d/m/Y", strtotime($row_communiquesPays['date'])); ?></small>
+                </div>
             </div>
-            <div class="span10"  style="vertical-align: middle;">
-                <?= $row_communiquesPays['institution'] ?><br>
-            <small><?php echo date("d/m/Y", strtotime($row_communiquesPays['date'])); ?></small>
+            <div class="row" style="padding-left: 15px;">
+                <h4 style="text-align: left;"><a href="php/communique-modal.php?com_id=<?= $row_communiquesPays['id'] ?>" data-toggle="modal" data-target="#myModal"><?php echo htmlspecialchars($row_communiquesPays['titre']); ?></a></h4>
             </div>
-        </div>
-        <div class="row">
-            <h4><a href="php/communique-modal.php?com_id=<?= $row_communiquesPays['id'] ?>" data-toggle="modal" data-target="#myModal"><?php echo htmlspecialchars($row_communiquesPays['titre']); ?></a></h4>
-        </div>
-        </li>
+            </li>
       <?php } while ($row_communiquesPays = mysql_fetch_assoc($communiquesPays)); ?>
         </ul>
 
     </div>
 </div>
-    <script>
-        $("a[data-toggle=modal]").click(function (e) {
-          lv_target = $(this).attr('data-target');
-          lv_url = $(this).attr('href');
-          $(lv_target).load(lv_url);
-        });
 
-        $('#closemodal').click(function() {
-            $('#myModal').modal('hide');
-        });
-    </script>
+<div class="modal container fade" id="myModal"></div>
+<script>
+    $("a[data-toggle=modal]").click(function (e) {
+      lv_target = $(this).attr('data-target');
+      lv_url = $(this).attr('href');
+      $(lv_target).load(lv_url);
+    });
+
+    $('#closemodal').click(function() {
+        $('#myModal').modal('hide');
+    });
+</script>
+
 <!-- Footer
     ================================================== -->
 

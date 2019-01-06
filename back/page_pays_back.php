@@ -394,7 +394,7 @@ img.olTileImage {
       </form>
       <?php } ?>
       <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
-      <a class="btn btn-primary pull-right" href="../php/partage-pays.php?ch_pay_id=<?php echo $row_InfoGenerale['ch_pay_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Annoncez sur le forum une mise &agrave; jour de votre page"><i class="icon-share icon-white"></i> Forum</a>
+      <a class="btn btn-primary pull-right" href="../php/partage-pays.php?ch_pay_id=<?php echo $row_InfoGenerale['ch_pay_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Annoncez sur le forum une mise &agrave; jour de votre page"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
       <?php if ($_SESSION['statut'] >= 10) { ?>
       <form class="pull-right" action="drapeau_modifier.php" method="post">
@@ -749,6 +749,7 @@ img.olTileImage {
               <th width="23%" scope="col">population</th>
               <th width="4%" scope="col">&nbsp;</th>
               <th width="4%" scope="col">&nbsp;</th>
+              <th width="4%" scope="col">&nbsp;</th>
             </tr>
           </thead>
           <tbody>
@@ -760,13 +761,16 @@ img.olTileImage {
                   <?php } ?>
                   <?php echo $row_mesvilles['ch_vil_nom']; ?></td>
                 <td><?php echo $row_mesvilles['ch_vil_population']; ?></td>
+                <td>
+                    <a class="btn btn-primary" href="../page-ville.php?ch_pay_id=<?= $row_mesvilles['ch_vil_paysID'] ?>&ch_ville_id=<?= $row_mesvilles['ch_vil_ID'] ?>">Visiter</a>
+                </td>
                 <td><form action="ville_modifier.php" method="post">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_mesvilles['ch_vil_ID']; ?>">
                     <button class="btn" type="submit" title="modifier la ville"><i class="icon-pencil"></i></button>
                   </form></td>
                 <td><form action="ville_confirmation_supprimer.php" method="post">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_mesvilles['ch_vil_ID']; ?>">
-                    <button class="btn" type="submit" title="supprimer la ville"><i class="icon-trash"></i></button>
+                    <button class="btn" type="submit" title="supprimer la ville"><i class="icon-trash icon-white"></i></button>
                   </form></td>
               </tr>
               <?php } while ($row_mesvilles = mysql_fetch_assoc($mesvilles)); ?>
@@ -819,8 +823,9 @@ img.olTileImage {
             <tr class="tablehead">
               <th width="5%" scope="col"><a href="#" rel="clickover" title="Statut de la ville" data-content="la ville peut-&ecirc;tre publi&eacute;e sur la page pays ou masqu&eacute;e. Le drapeau indique la capitale."><i class="icon-globe"></i></a></th>
               <th width="46%" scope="col">Nom</th>
-              <th width="23%" scope="col">maire</th>
-              <th width="23%" scope="col">population</th>
+              <th width="23%" scope="col">Maire</th>
+              <th width="23%" scope="col">Population</th>
+              <th width="4%" scope="col">&nbsp;</th>
               <?php if ($_SESSION['statut'] >= 20) { // Affichage si sup ou egal à dirigeant ?>
               <th width="4%" scope="col">&nbsp;</th>
               <th width="4%" scope="col">&nbsp;</th>
@@ -834,6 +839,9 @@ img.olTileImage {
                 <td><?php echo $row_autres_villes['ch_vil_nom']; ?></td>
                 <td><?php echo $row_autres_villes['ch_use_login']; ?></td>
                 <td><?php echo $row_autres_villes['ch_vil_population']; ?></td>
+                <td>
+                    <a class="btn btn-primary" href="../page-ville.php?ch_pay_id=<?= $row_autres_villes['ch_vil_paysID'] ?>&ch_ville_id=<?= $row_autres_villes['ch_vil_ID'] ?>">Visiter</a>
+                </td>
                 <?php if ($_SESSION['statut'] >= 20) { // Affichage si sup ou egal à dirigeant ?>
                 <td><form action="ville_modifier.php" method="post">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
@@ -841,7 +849,7 @@ img.olTileImage {
                   </form></td>
                 <td><form action="ville_confirmation_supprimer.php" method="post">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
-                    <button class="btn" type="submit" title="supprimer la ville"><i class="icon-trash"></i></button>
+                    <button class="btn btn-danger" type="submit" title="supprimer la ville"><i class="icon-trash icon-white"></i></button>
                   </form></td>
                 <?php } ?>
               </tr>

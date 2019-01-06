@@ -191,7 +191,7 @@ return true;
       <a class="btn btn-primary pull-right" title="retour &agrave; la page de gestion de la ville" href="ville_modifier.php#mes-monuments">Retour ville</a>
       <?php } ?>
       <?php if ($row_users['ch_use_id'] == $_SESSION['user_ID']) { ?>
-  <a class="btn btn-primary pull-right" href="../php/partage-monument.php?ch_pat_id=<?php echo $row_monument['ch_pat_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i>Forum</a>
+  <a class="btn btn-primary pull-right" href="../php/partage-monument.php?ch_pat_id=<?php echo $row_monument['ch_pat_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i>Partager sur le forum</a>
   <?php } ?>
       <div class="clearfix"></div>
       <!-- Debut formulaire -->

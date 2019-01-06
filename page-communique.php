@@ -157,7 +157,7 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
   </div>
   <?php }?>
   <?php if ($row_user['ch_use_id'] == $_SESSION['user_ID']) { ?>
-  <a class="btn btn-primary pull-right" href="php/partage-communique.php?com_id=<?php echo $row_communique['ch_com_ID']; ?>" data-toggle="modal" data-target="#myModal" title="Poster sur le forum"><i class="icon-share icon-white"></i> Forum</a>
+  <a class="btn btn-primary pull-right" href="php/partage-communique.php?com_id=<?php echo $row_communique['ch_com_ID']; ?>" data-toggle="modal" data-target="#myModal" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
   <?php } ?>
   <div class="clearfix"></div>
   <div class="row-fluid communique"> 

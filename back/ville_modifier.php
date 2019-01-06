@@ -335,7 +335,7 @@ return true;
     <div class="clearfix"></div>
 
     <div class="pull-left">
-        <a class="btn btn-primary" href="../page-ville.php?ch_pay_id=<?= $row_ville['ch_pay_id'] ?>&ch_vil_id=<?= $row_ville['ch_vil_id'] ?>" type="submit" title="page de gestion du pays">Accéder à la page de la ville</a>
+        <a class="btn btn-primary btn-margin-left" href="../page-ville.php?ch_pay_id=<?= $row_ville['ch_pay_id'] ?>&ch_ville_id=<?= $row_ville['ch_vil_ID'] ?>" type="submit" title="page de gestion du pays">Accéder à la page de la ville</a>
     </div>
 
       <!-- Moderation
@@ -355,7 +355,7 @@ return true;
         <button class="btn btn-danger" type="submit" title="supprimer cette ville"><i class="icon-trash icon-white"></i></button>
       </form>
       <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
-      <a class="btn btn-primary pull-right" href="../php/partage-ville.php?ch_vil_ID=<?php echo $row_ville['ch_vil_ID']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Forum</a>
+      <a class="btn btn-primary pull-right" href="../php/partage-ville.php?ch_vil_ID=<?php echo $row_ville['ch_vil_ID']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
       <div class="clearfix"></div>
       <!-- Debut formulaire de modification ville
@@ -566,8 +566,8 @@ return true;
         <!-- Carousel -->
         <section>
           <div class="accordion-group">
-            <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" href="#collapsethree"> Carrousel d'images </a> </div>
-            <div id="collapsethree" class="accordion-body collapse">
+            <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" href="#collapseseven"> Carrousel d'images </a> </div>
+            <div id="collapseseven" class="accordion-body collapse">
               <div class="accordion-inner">
                 <div class="alert alert-success">
                   <button type="button" class="close" data-dismiss="alert">×</button>
