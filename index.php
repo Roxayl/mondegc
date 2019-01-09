@@ -105,14 +105,14 @@ $_SESSION['an']=true;
 <div class="row-fluid">
     <div class="span8" id="postswrapper">
 
-        <div id="actu" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Membre1.png" alt="icone user">
+        <div id="actu" class="titre-vert no-bg anchor"> <img src="assets/img/IconesBDD/100/Membre1.png" alt="icone user">
           <h1>Derni&egrave;res actualit&eacute;s</h1>
         </div>
         <?php include('last_MAJ.php'); ?>
     </div>
     <div class="span4">
 
-        <div id="actu" class="titre-bleu anchor"> <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png" alt="icone user">
+        <div id="actu" class="titre-bleu no-bg anchor"> <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png" alt="icone user">
           <h1>Communiqués publiés</h1>
         </div>
         <?php

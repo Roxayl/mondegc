@@ -8,7 +8,8 @@ language : 'fr_FR',
          "searchreplace wordcount visualblocks visualchars code media nonbreaking",
          "save table contextmenu directionality emoticons paste textcolor"
    ],
-   content_css: "css/content.css",
+   content_css: ['https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext'],
+  font_formats: 'Titillium Web=titillium web, titres;Roboto=roboto,texte;',
    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | preview media fullpage | forecolor backcolor emoticons", 
    style_formats: [
         {title: 'texte en gras', inline: 'strong'},
