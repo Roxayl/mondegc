@@ -4,8 +4,12 @@
 /* BODY AND STRUCTURE
 -------------------------------------------------- */
 body {
-	background-color: url("../img/bg_bottom.png");
-	font-family: "Roboto", sans-serif;
+    background-color: #abbcc8;
+    background-repeat: repeat-x;
+    background-image: url("http://generation-city.com/forum/new/img/bg_bottom.png"),url("http://generation-city.com/forum/new/img/bg_top.png");
+    background-position: bottom center, top center;
+    background-attachment: fixed, scroll;
+    font-family: "Roboto", sans-serif;
 	font-size: 1em;
 	padding-top: 108px;
 	position: relative;
@@ -81,7 +85,7 @@ h3 {
 	font-size: 24px;
 	color: #375c08;
 	font-weight: lighter;
-	font-stretch: narrower;
+	font-stretch: semi-condensed;
 	margin-left: 18px;
 	margin-top: 22px;
 	line-height: 18px;
@@ -93,7 +97,7 @@ h4, .h4 {
     font-family: "Titillium Web", "Roboto", sans-serif;
 }
 small {
-	color: #375c08;
+	color: #2d4d7f;
 	margin: 5px;
 	padding: 5px;
 	font-weight: lighter;
@@ -309,36 +313,26 @@ input[type='submit'] {
 
 .navbar-inner {
 	background-color: #6e9fff;
-	background-image: url("../img/FondNavbar2018.png");
- filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+	background-image: url("http://generation-city.com/forum/new/img/bg_header.png");
+}
+.navbar .container {
+	background-color: #6e9fff;
+	background-image: url("../img/2019/navbar.png");
 }
 .navbar .nav > li > a {
-	background: #ffffff; /* Old browsers */
-	background: -moz-linear-gradient(top, #ffffff 0%, #dfdfdf 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #dfdfdf)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #ffffff 0%, #dfdfdf 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #ffffff 0%, #dfdfdf 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top, #ffffff 0%, #dfdfdf 100%); /* IE10+ */
-	background: linear-gradient(to bottom, #ffffff 0%, #dfdfdf 100%); /* W3C */
- filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffffff', endColorstr='#dfdfdf', GradientType=0);
-	-webkit-box-shadow: -1px -1px 2px 0px rgba(0, 0, 0, 0.3);
-	box-shadow: -1px -1px 2px 0px rgba(0, 0, 0, 0.3);
 	padding-top: 5px;
 	padding-right: 10px;
 	padding-bottom: 5px;
 	padding-left: 10px;
-	color: #325608;
+	color: #ffffff;
     font-family: "Titillium Web", sans-serif;
-	text-shadow: #ffffff;
 	font-size: 0.9em;
 	margin-top: 5px;
 	margin-right: 4px;
 	margin-bottom: 6px;
 	margin-left: 4px;
 }
-.navbar .nav > li > a:hover {
- filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffffff', endColorstr='#dfdfdf', GradientType=0);
-}
+/* logo monde GC */
 body > .navbar .brand {
 	padding-right: 0;
 	padding-left: 0;
@@ -346,15 +340,6 @@ body > .navbar .brand {
 	color: #ffffff;
     width: 205px;
 	margin-top: 50px;
-	text-shadow: 1px 1px 1px rgba(0,0,0,.6), 0 0 2px rgba(0,0,0,.2);
-	-webkit-transition: all .2s linear;
-	-moz-transition: all .2s linear;
-	transition: all .2s linear;
-}
-/* logo monde GC */
-body > .navbar .brand:hover {
-	text-decoration: none;
-	text-shadow: 0 1px 0 rgba(0,0,0,.1), 0 0 4px rgba(0,0,0,.125);
 }
 .brand img {
     margin-left: -10px;
@@ -365,6 +350,7 @@ body > .navbar .brand:hover {
 .navbar-form {
 	float: right;
 	text-align: right;
+    margin-right: 10px;
 }
 .navbar form {
 	margin-bottom: -1px;
@@ -375,7 +361,6 @@ body > .navbar .brand:hover {
 .offset{
 	margin-top: 3px;
 	}
-
 
 /* Pseudo en blanc */
 .Nav-pseudo {
@@ -714,32 +699,27 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9babbf', end
 
 .titre-gris {
 	text-align: center;
+    vertical-align: middle;
 }
 .titre-gris h3 {
+    display: inline-block;
+    vertical-align: middle;
     font-family: "Titillium Web", "Roboto", sans-serif;
-	color: #375c08;
+	color: #212121;
+	/* color: #375c08; */
 	font-size: 1.3em;
 	line-height: 1.1em;
-	font-weight: lighter;
+	font-weight: bold;
 	padding: 10px 10px 10px 10px;
-	margin: 0px 0px 0px 0px;
-	background: #ffffff; /* Old browsers */
-	background: -moz-linear-gradient(top, #ffffff 0%, #dfdfdf 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #dfdfdf)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #ffffff 0%, #dfdfdf 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #ffffff 0%, #dfdfdf 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top, #ffffff 0%, #dfdfdf 100%); /* IE10+ */
-	background: linear-gradient(to bottom, #ffffff 0%, #dfdfdf 100%); /* W3C */
- filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dfdfdf', GradientType=0 ); /* IE6-9 */
-	-webkit-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.3);
-	box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.3);
+	margin: 0;
 	position: relative;
 }
 .titre-gris img {
-	width: 70px;
+    vertical-align: middle;
+	width: 32px;
+    display: inline-block;
 	position: relative;
-	top: 8px;
-	margin-bottom: -8px;
+    left: 0;
 	z-index: 3;
 }
 /* Notifications
@@ -817,7 +797,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9babbf', end
 }
 
 .listes small {
-	color: #325508;
 	margin: auto;
 	padding: 0px;
 

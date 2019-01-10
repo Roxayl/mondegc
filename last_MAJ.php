@@ -157,8 +157,9 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 do {
 
     ?>
+    <hr />
 
-    <div class="pull-center" style="color: #375c08;">
+    <!--<div class="pull-center" style="color: #375c08;">
       <h4>
   <?php
 
@@ -209,6 +210,7 @@ do {
     ?>
       </h4>
     </div>
+    -->
 
     <?php if ( $row_LastCommunique['type_notification'] == "communique") {?>
     <!-- Si c'est un communique
@@ -236,7 +238,7 @@ do {
     <li class="item">
       <div class="row-fluid">
           <div class="titre-gris"> <img src="assets/img/IconesBDD/100/Communique.png">
-            <h3>Nouveau Communiqu&eacute;</h3>
+            <h3>Nouveau communiqu&eacute;</h3>
           </div>
           <div class="row-fluid fond-notification">
             <div class="span2 auteur"><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="auteur"></a> </div>
@@ -282,7 +284,7 @@ do {
     <li class="item">
       <div class="row-fluid">
           <div class="titre-gris"> <img src="assets/img/IconesBDD/100/Communique.png">
-            <h3>Nouveau Communiqu&eacute;</h3>
+            <h3>Nouveau communiqu&eacute;</h3>
           </div>
           <div class="row-fluid fond-notification">
             <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="auteur"></a> </div>
@@ -325,11 +327,11 @@ do {
     <li class="item">
       <div class="row-fluid">
           <div class="titre-gris"> <img src="assets/img/IconesBDD/100/ocgc.png">
-            <h3>Nouveau Communiqu&eacute;</h3>
+            <h3>Nouveau communiqu&eacute;</h3>
           </div>
           <div class="row-fluid fond-notification">
             <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="auteur"></a> </div>
-            <div class="span9"> <small>le
+            <div class="span8"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>

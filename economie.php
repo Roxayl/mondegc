@@ -547,13 +547,8 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
           <h1>Projet Tempérance</h1>
         </div>
         <div class="well">
-          <div class="row-fluid">
-            <div class="span7">
               <p>Le projet Tempérance est proposé, comme son nom l'indique, pour tempérer les données économiques et générales retranscrites par les membres du forum GC et du site du même nom. Le but est d'annoncer des données économiques et sociales en adéquation avec les villes ou les pays qui s'y rattachent et qui sont présentés. Cette idée permettrait également de lancer une dynamique sur les deux sites en lançant des challenges et des recherches créatives aux membres pour justifier leurs chiffres. En d'autres termes, ce projet n'est pas conçu pour dévaloriser les conceptions des membres et ne remet pas en cause leur choix de création. Il apporte simplement une conception nouvelle créant une homogénéité des chiffres.</p>
               <p><a class="btn btn-primary" href="Projet-temperance.php">En savoir plus</a> <a class="btn btn-primary" href="back/Temperance_jugement.php">Juges</a></p>
-            </div>
-            <div class="span5"><img src="http://img15.hostingpics.net/pics/725096arbreTemprance.png"></div>
-          </div>
         </div>
       </section>
 	  	   <!-- Bourses mondiales
@@ -563,13 +558,8 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
           <h1>Bourses mondiales</h1>
         </div>
         <div class="well">
-          <div class="row-fluid">
-            <div class="span7">
               <p>Les Bourses mondiales sont créées dans la continuité du projet Tempérance. Le but est de mettre en valeur vos ressources acquises via la mise en ligne de vos infrastrutures et via l'outil "zoning" du site GC. Mais de quelle manière ? Comment pourrez-vous faire prospérer votre Bourse ? La rubrique "En savoir plus" est à présent en ligne pour vous. Il est temps de se confronter aux défis du monde réel sur le site GC : Saurez-vous vous adapter au développement des autres pays membres ? Quels choix ferez-vous pour placer votre Bourse en tête ? Comment battrez-vous la tendance mondiale ? Bientôt, chers membres gécéens, vos propres résultats pour le projet des Bourses mondiales... </p>
               <p><a class="btn btn-primary" href="projet-bourses.php">À propos du Projet Bourses</a></p>
-            </div>
-            <div class="span5"><img src="http://img15.hostingpics.net/pics/116877Bourses.jpg"></div>
-          </div>
         </div>
       </section>
       <!-- communique officiel

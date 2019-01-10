@@ -136,7 +136,7 @@ format: 'hex'});
       <p>&nbsp;</p>
       <a href="economie.php" class="btn btn-primary">Retour Institut d'Economie</a> </div>
     <div class="span5 align-left">
-      <h2>Qu'est-ce que le projet temp&eacute;rance&nbsp;?</h2>
+      <h2>Qu'est-ce que le projet Temp&eacute;rance&nbsp;?</h2>
       <p><em>"Le projet Temp&eacute;rance est propos&eacute;, comme son nom l'indique, pour  temp&eacute;rer les donn&eacute;es &eacute;conomiques et g&eacute;n&eacute;rales retranscrites par les  membres du forum GC et du site du m&ecirc;me nom. Le but est d'annoncer des  donn&eacute;es en ad&eacute;quation avec les villes ou les pays qui s'y rattachent et  qui sont pr&eacute;sent&eacute;s"</em></p>
     </div>
   </div>
@@ -194,7 +194,7 @@ format: 'hex'});
          <!-- Liste des temperances
      ================================================== -->
       <div class="titre-bleu anchor" id="presentation">
-        <h1>Pays et villes not&eacute;s par le projet temp&eacute;rance</h1>
+        <h1>Pays et villes not&eacute;s par le projet Temp&eacute;rance</h1>
       </div>
       <div>
         <div class="titre-gris anchor" id="liste-temperance">

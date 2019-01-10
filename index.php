@@ -51,7 +51,7 @@ $_SESSION['an']=true;
 <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url('http://image.noelshack.com/fichiers/2018/52/3/1545838002-bg-bottom-white.png');
+	background-image: url('http://generation-city.com/forum/new/img/cat2.jpg');
 }
 </style>
 <!-- Le javascript
@@ -110,7 +110,7 @@ $_SESSION['an']=true;
         </div>
         <?php include('last_MAJ.php'); ?>
     </div>
-    <div class="span4">
+    <div class="span4" style="background-color: #EDEDED;">
 
         <div id="actu" class="titre-bleu no-bg anchor"> <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png" alt="icone user">
           <h1>Communiqués publiés</h1>
@@ -151,6 +151,7 @@ ORDER BY date DESC LIMIT 0, 15";
         $row_communiquesPays = mysql_fetch_assoc($communiquesPays);
         ?>
 
+        <div class="well">
         <ul class="liste-transparente">
         <?php do { ?>
             <li class="item">
@@ -169,6 +170,7 @@ ORDER BY date DESC LIMIT 0, 15";
             </li>
       <?php } while ($row_communiquesPays = mysql_fetch_assoc($communiquesPays)); ?>
         </ul>
+        </div>
 
     </div>
 </div>
