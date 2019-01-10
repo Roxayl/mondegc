@@ -5,6 +5,11 @@ require_once('Connections/maconnexion.php');
 //Connexion et deconnexion
 include('php/log.php');
 
+if(isset($_SESSION['login_user'])) {
+    $thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
+    $listePays = $thisUser->getCountries();
+}
+
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
@@ -140,8 +145,34 @@ init();
     </div>
     <h3>Mes pays</h3>
     <div class="well">
+        <?php if(empty($listePays)): ?>
         <p>Vous n'avez pas de pays.</p>
+        <?php endif; ?>
+        <ul class="listes">
+            <?php foreach($listePays as $pays): ?>
+            <li class="row-fluid">
+              <div class="">
+                <div class="span2"> <a href="page-pays.php?ch_pay_id=<?= $pays['ch_pay_id']; ?>"><img src="<?= $pays['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau"></a> </div>
+                <div class="span4">
+                  <h3><?= $pays['ch_pay_nom']; ?></h3>
+                </div>
+                <div class="span4">
+                </div>
+                <div class="span2">
+                    <a href="page-pays.php?ch_pay_id=<?= $pays['ch_pay_id']; ?>" class="btn btn-primary">Visiter</a>
+                    <a href="back/page_pays_back.php?paysID=<?= $pays['ch_pay_id'] ?>&userID=<?= $thisUser->model->ch_use_id ?>" class="btn btn-primary"><i class="icon-pays-small-white"></i> Gérer mon pays</a>
+                </div>
+              </div>
+            </li>
+            <?php endforeach; ?>
+        </ul>
     </div>
+
+    <h3>Mes compagnies</h3>
+    <div class="well">
+        <p>Vous n'avez pas de compagnie.</p>
+    </div>
+
     </section>
 
     </div>
