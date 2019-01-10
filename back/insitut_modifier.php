@@ -248,8 +248,8 @@ img.olTileImage {
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- CARTE -->
-<script src="assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
-<script src="assets/js/OpenLayers.js" type="text/javascript"></script>
+<script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
+<script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
 <?php include('../php/carte-ajouter-marqueur.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>

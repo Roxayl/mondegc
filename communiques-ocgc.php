@@ -122,7 +122,7 @@ img.olTileImage {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php $evenement=true; include('php/navbar.php'); ?>
+<?php $institut=true; include('php/navbar.php'); ?>
 <!-- Page CONTENT
     ================================================== -->
 <div class="container">
@@ -130,9 +130,15 @@ img.olTileImage {
     <!-- liste des communique de l'institut
     ================================================== -->
     <section>
-    <div class="titre-vert anchor" id="titre"> <img src="assets/img/IconesBDD/100/evenement.png">
-      <h1>&Eacute;v&eacute;nements</h1>
+    <div class="titre-vert anchor" id="titre"> <img src="assets/img/IconesBDD/100/ocgc.png">
+      <h1>Communiqués des instituts</h1>
     </div>
+
+    <ul class="breadcrumb">
+      <li><a href="OCGC.php">OCGC</a> <span class="divider">/</span></li>
+      <li class="active">Communiqués des instituts</li>
+    </ul>
+
     <?php do { ?>
       <div class="row-fluid" id="communiqueID<?php echo $row_communiquesPays['ch_com_ID']; ?>">
       <small class="pull-right">

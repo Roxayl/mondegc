@@ -134,6 +134,7 @@ div.span5.align-left > p {
 	bottom: -15px;
 	margin-bottom: 0px;
 	margin-top: 20px;
+    visibility: hidden!important;
 }
 .icon-accueil {
 	background-image: url("../img/IconesBDD/50/Accueil.png");
@@ -320,17 +321,11 @@ input[type='submit'] {
 	background-image: url("../img/2019/navbar.png");
 }
 .navbar .nav > li > a {
-	padding-top: 5px;
-	padding-right: 10px;
-	padding-bottom: 5px;
-	padding-left: 10px;
-	color: #ffffff;
+    padding: 5px 10px;
+    color: #ffffff;
     font-family: "Titillium Web", sans-serif;
 	font-size: 0.9em;
-	margin-top: 5px;
-	margin-right: 4px;
-	margin-bottom: 6px;
-	margin-left: 4px;
+    margin: 5px 1px 6px;
 }
 /* logo monde GC */
 body > .navbar .brand {
@@ -1037,15 +1032,15 @@ footer img {
 
 .bs-docs-sidenav {
 	width: 228px;
-	background : #456dc6;
+	background : #e6eaff;
 	margin: -116px 0 0;
 	padding: 0;
 	text-align: left;
 }
 .bs-docs-sidenav > li > a {
 	display: block;
- *width: 190px;
-	background-color: #1d459e;
+   *width: 190px;
+	background-color: #e6eaff;
 	margin: 0 0 -1px;
 	padding: 8px 14px;
 	font-size: 15px;
@@ -1054,8 +1049,7 @@ footer img {
 .bs-docs-sidenav > li > a {
 	display: block;
  *width: 190px;
-	background-color: #1d459e;
-	color: #ffffff;
+	background-color: #e6eaff;
 	margin: 0 0 -1px;
 	padding: 8px 14px;
 	font-size: 15px;
@@ -1065,10 +1059,11 @@ footer img {
 	text-align: left;
 }
 .bs-docs-sidenav > li > a:hover {
-	background-color: #456dc6;
+	background-color: #c9cddf;
 }
 .bs-docs-sidenav > li:first-child > a {
-	background-color: #456dc6;
+	background-color: #182b45;
+    color: #fafafa;
 	height: 100px;
 }
 .bs-docs-sidenav > li > a > img {
@@ -1080,19 +1075,7 @@ footer img {
 .bs-docs-sidenav > .active > a {
 	position: relative;
 	z-index: 3;
-	background: #ffffff; /* Old browsers */
-	color: #1d459e;
-	background: #ffffff; /* Old browsers */
-	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
-
-	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkY2RjZGMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-	background: -moz-linear-gradient(top, #ffffff 0%, #dcdcdc 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #dcdcdc)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #ffffff 0%, #dcdcdc 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #ffffff 0%, #dcdcdc 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top, #ffffff 0%, #dcdcdc 100%); /* IE10+ */
-	background: linear-gradient(to bottom, #ffffff 0%, #dcdcdc 100%); /* W3C */
- filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dcdcdc', GradientType=0 ); /* IE6-8 */
+	background: #2d4d7f;
 }
 .bs-docs-sidenav.affix {
 	top: 250px;
@@ -1439,8 +1422,8 @@ Desktop large
 @media (min-width: 1200px) {
 /* Augmente taille liens NavBar */
 .navbar .nav > li > a {
-	padding-right: 15px;
-	padding-left: 15px;
+	padding-right: 12px;
+	padding-left: 12px;
 }
 
 .bienvenue {

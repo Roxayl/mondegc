@@ -4366,7 +4366,8 @@ input[type="submit"].btn.btn-mini {
 .navbar .nav > li > a:focus,
 .navbar .nav > li > a:hover {
   text-decoration: underline;
-  background-color: transparent;
+  background-color: #44567c;
+  border-radius: 4px;
 }
 
 .navbar .nav > .active > a,

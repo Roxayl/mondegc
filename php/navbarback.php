@@ -39,6 +39,12 @@ $totalRows_menu = mysql_num_rows($menu);
             </center>
             <a href="../index.php">Accueil</a> </li>
 
+          <li class="<?php if ($dashboard) { echo('active');}  ?>">
+            <center>
+              <a href="../dashboard.php" title="informations pratiques"><i class="icon icon-evenement"></i></a>
+            </center>
+            <a href="../dashboard.php" title="informations pratiques">Tableau de bord</a> </li>
+
           <li class="<?php if ($carte) { echo('active');} ?>">
             <center>
               <a href="../Page-carte.php" title="carte du monde GC"><i class="icon icon-carte"></i></a>
@@ -140,6 +146,9 @@ $totalRows_menu = mysql_num_rows($menu);
             </center>
             <a href="../OCGC.php" class="dropdown-toggle" data-toggle="dropdown" title="Institutions de r&eacute;gulation du monde GC">Les instituts <b class="caret"></b></a>
             <ul class="dropdown-menu">
+              <li class="nav-header">L'actualité de l'OCGC</li>
+              <li><a href="communiques-ocgc.php">Communiqués publiés</a></li>
+              <li class="nav-header">Structure</li>
               <li><a href="../OCGC.php">OCGC</a></li>
               <li><a href="../geographie.php">G&eacute;ographie</a></li>
               <li><a href="../patrimoine.php">Patrimoine</a></li>
@@ -148,12 +157,6 @@ $totalRows_menu = mysql_num_rows($menu);
               <li><a href="../politique.php">Politique</a></li>
             </ul>
           </li>
-
-          <li class="<?php if ($evenement) { echo('active');}  ?>">
-            <center>
-              <a href="../evenements.php" title="Actualit&eacute;s du monde GC"><i class="icon icon-evenement"></i></a>
-            </center>
-            <a href="../evenements.php" title="Actualit&eacute;s du monde GC">&Eacute;v&eacute;nements</a> </li>
 
           <li class="<?php if ($participer) { echo('active');}  ?>">
             <center>
