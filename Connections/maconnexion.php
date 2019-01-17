@@ -3,6 +3,17 @@
 # Type="MYSQL"
 # HTTP="true"
 
+defined("DEF_ROOTPATH") or define("DEF_ROOTPATH", str_replace("\\", "/", (substr(__DIR__, -12) == '/Connections' || substr(__DIR__, -12) == '\Connections') ? substr(__DIR__, 0, -12) . '/' : __DIR__ . '/'));
+
+// Auto-chargement de classes
+spl_autoload_register(function($class) {
+    // On vire l'espace de noms "Squirrel\" dans un nom de classe.
+    // $class = preg_replace('`Squirrel\\\\`', '', $class, 1);
+    // On remplace les anti-slash par des slash
+    $class = str_replace('\\', '/', $class);
+    include(DEF_ROOTPATH.'php/'. $class . '.php');
+});
+
 
 if($_SERVER['HTTP_HOST'] === 'localhost') {
     $hostname_maconnexion = "localhost";

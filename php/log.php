@@ -1,13 +1,6 @@
 <?php
 require_once('Connections/maconnexion.php');
 
-/* TODO! autoloader */
-require_once('Squirrel/BaseModel.php');
-require_once('Squirrel/ModelStructureInterface.php');
-require_once('GenCity/Monde/UserModel.php');
-require_once('GenCity/Monde/User.php');
-
-
 // *** Validate request to login to this site.
 if (!isset($_SESSION)) {
   session_start();

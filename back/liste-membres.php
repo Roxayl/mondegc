@@ -32,7 +32,7 @@ if (isset($_GET['pageNum_listemembres'])) {
 $startRow_listemembres = $pageNum_listemembres * $maxRows_listemembres;
 
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_listemembres = "SELECT ch_use_id, ch_use_date, ch_use_last_log, ch_use_login, ch_use_password, ch_use_mail, ch_use_paysID, ch_use_statut, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_biographie_dirigeant, pays.ch_pay_id, pays.ch_pay_emplacement, pays.ch_pay_nom FROM users LEFT JOIN pays ON users.ch_use_paysID = pays.ch_pay_id ORDER BY $order_by $tri";
+$query_listemembres = "SELECT ch_use_id, ch_use_date, ch_use_last_log, ch_use_login, ch_use_password, ch_use_mail, ch_use_paysID, ch_use_statut, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_biographie_dirigeant FROM users ORDER BY $order_by $tri";
 $query_limit_listemembres = sprintf("%s LIMIT %d, %d", $query_listemembres, $startRow_listemembres, $maxRows_listemembres);
 $listemembres = mysql_query($query_limit_listemembres, $maconnexion) or die(mysql_error());
 $row_listemembres = mysql_fetch_assoc($listemembres);
@@ -104,10 +104,6 @@ $totalPages_listemembres = ceil($totalRows_listemembres/$maxRows_listemembres)-1
             <th scope="col" id="<?php 
 			  if ( $nom_colonne != "ch_use_login" ) { echo 'tri_actuel';}?>"><a href="liste-membres.php?order_by=ch_use_login&tri=ASC">Login</a></th>
             <th scope="col" id="<?php 
-			  if ( $nom_colonne != "ch_pay_nom" ) { echo 'tri_actuel'; }?>"><a href="liste-membres.php?order_by=ch_pay_nom&tri=ASC">Nom du pays</a></th>
-            <th scope="col" id="<?php
-			  if ( $nom_colonne != "ch_pay_emplacement" ) { echo 'tri_actuel'; }?>"><a href="liste-membres.php?order_by=ch_pay_emplacement&tri=ASC">Emplacement</a></th>
-            <th scope="col" id="<?php 
 			  if ( $nom_colonne != "ch_use_last_log" ) { echo 'tri_actuel'; }?>"><a href="liste-membres.php?order_by=ch_use_last_log&tri=DESC">Derni&egrave;re connection</a></th>
             <th scope="col" id="tri_actuel">&nbsp;</th>
             <?php if ($_SESSION['statut'] >= 30)
@@ -132,8 +128,6 @@ $totalPages_listemembres = ceil($totalRows_listemembres/$maxRows_listemembres)-1
                 <?php ; } ?></td>
               <td><img src="<?php echo $row_listemembres['ch_use_lien_imgpersonnage']; ?>" alt="Personnage" width="80px"></td>
               <td><?php echo $row_listemembres['ch_use_login']; ?></td>
-              <td><?php echo $row_listemembres['ch_pay_nom']; ?></td>
-              <td><img src="../Carto/Emplacements/emplacement<?php echo $row_listemembres['ch_pay_emplacement']; ?>.jpg" alt="<?php echo $row_listemembres['ch_pay_nom']; ?>" width="80px"></td>
               <td><?php echo date("d/m/Y à G:i:s", strtotime($row_listemembres['ch_use_last_log'])); ?></td>
               <td><form action="membre-modifier_back.php" method="post">
                   <input name="userID" type="hidden" value="<?php echo $row_listemembres['ch_use_id']; ?>">

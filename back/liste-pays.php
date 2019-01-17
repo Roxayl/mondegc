@@ -9,10 +9,10 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
 } else {
 	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
-exit();
-	}
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ../connexion.php');
+    exit();
+}
 
 $currentPage = $_SERVER["PHP_SELF"];
 
@@ -32,7 +32,7 @@ if (isset($_GET['tri'])) {
   $tri = $_GET['tri'];
 }
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_ListPays = "SELECT pays.ch_pay_id, pays.ch_pay_publication, pays.ch_pay_continent, pays.ch_pay_emplacement, pays.ch_pay_nom, pays.ch_pay_lien_imgdrapeau, pays.ch_pay_mis_jour, users.ch_use_lien_imgpersonnage, users.ch_use_paysID, users.ch_use_login FROM pays LEFT JOIN users ON pays.ch_pay_id = users.ch_use_paysID ORDER BY $order_by $tri";
+$query_ListPays = "SELECT pays.ch_pay_id, pays.ch_pay_publication, pays.ch_pay_continent, pays.ch_pay_emplacement, pays.ch_pay_nom, pays.ch_pay_lien_imgdrapeau, pays.ch_pay_mis_jour FROM pays ORDER BY $order_by $tri";
 $query_limit_ListPays = sprintf("%s LIMIT %d, %d", $query_ListPays, $startRow_ListPays, $maxRows_ListPays);
 $ListPays = mysql_query($query_limit_ListPays, $maconnexion) or die(mysql_error());
 $row_ListPays = mysql_fetch_assoc($ListPays);
@@ -106,7 +106,7 @@ $totalPages_ListPays = ceil($totalRows_ListPays/$maxRows_ListPays)-1;
 			  if ( $nom_colonne != "ch_pay_emplacement" ) { echo 'tri_actuel'; }?>"><a href="liste-pays.php?order_by=ch_pay_emplacement&tri=ASC">Emplacement</a></th>
             <th scope="col" id="<?php 
 			  if ( $nom_colonne != "ch_pay_continent" ) { echo 'tri_actuel'; }?>"><a href="liste-pays.php?order_by=ch_pay_continent&tri=ASC">Continent</a></th>
-            <th scope="col" id="<?php 
+            <th scope="col" id="<?php
 			  if ( $nom_colonne != "ch_use_login" ) { echo 'tri_actuel'; }?>"><a href="liste-pays.php?order_by=ch_use_login&tri=ASC">Dirigeant</a></th>
             <th scope="col" id="<?php 
 			  if ( $nom_colonne != "ch_pay_mis_jour" ) { echo 'tri_actuel'; }?>"><a href="liste-pays.php?order_by=ch_pay_mis_jour&tri=DESC">Mise &agrave; jour</a></th>
@@ -125,8 +125,14 @@ $totalPages_ListPays = ceil($totalRows_ListPays/$maxRows_ListPays)-1;
               <td><?php echo $row_ListPays['ch_pay_nom']; ?></td>
               <td>N�<?php echo $row_ListPays['ch_pay_emplacement']; ?> <img class="pull-right" src="../Carto/Emplacements/emplacement<?php echo $row_ListPays['ch_pay_emplacement']; ?>.jpg" width="50px"></td>
               <td><?php echo $row_ListPays['ch_pay_continent']; ?></td>
-              <td><img src="<?php echo $row_ListPays['ch_use_lien_imgpersonnage']; ?>" width="50px">
-                <p><?php echo $row_ListPays['ch_use_login']; ?></p></td>
+              <td>
+              <?php $thisPays = new \GenCity\Monde\Pays($row_ListPays['ch_pay_id']);
+              $listeLeaders = $thisPays->getLeaders(); ?>
+                <?php foreach($listeLeaders as $thisLeader): ?>
+                <img src="<?php echo $thisLeader['ch_use_lien_imgpersonnage']; ?>" width="50px">
+                <p><?php echo $thisLeader['ch_use_login']; ?></p>
+                <?php endforeach; ?>
+              </td>
               <td><?php echo date("d/m/Y � G:i:s", strtotime($row_ListPays['ch_pay_mis_jour'])); ?></td>
               <td><form action="page_pays_back.php" method="post">
                   <input name="paysID" type="hidden" value="<?php echo $row_ListPays['ch_pay_id']; ?>">

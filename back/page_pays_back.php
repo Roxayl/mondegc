@@ -257,6 +257,11 @@ $queryString_fait_hist = sprintf("&totalRows_fait_hist=%d%s", $totalRows_fait_hi
 
 $_SESSION['fond_ecran'] = $row_InfoGenerale['ch_pay_lien_imgheader'];
 $_SESSION['last_work'] = "page_pays_back.php";
+
+// Obtenir liste des dirigeants
+$thisPays = new \GenCity\Monde\Pays($row_InfoGenerale['ch_pay_id']);
+$paysLeaders = $thisPays->getLeaders();
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -356,7 +361,8 @@ img.olTileImage {
           <p><em>Cr&eacute;&eacute; par <?php echo $row_User['ch_use_login']; ?></em></p>
           </a></li>
         <?php if ($_SESSION['statut'] >= 10) { ?>
-        <li><a href="#info-generales">Page pays</a></li>
+        <li><a href="#info-generales">Présentation</a></li>
+        <li><a href="#dirigeants">Dirigeants</a></li>
         <?php }?>
         <li><a href="#mes-villes">Mes villes</a></li>
         <?php if ($row_autres_villes ) { ?>
@@ -410,10 +416,10 @@ img.olTileImage {
       <section class="">
         <div id="info-generales" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Pays1.png">
           <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
-          <h1>La page du pays</h1>
+          <h1>Présentation du pays</h1>
           <?php } else { ?>
           <!-- titre si modération -->
-          <h1>La page de mon pays</h1>
+          <h1>La présentation de mon pays</h1>
           <?php } ?>
         </div>
         <div class="alert alert-success">
@@ -728,6 +734,40 @@ img.olTileImage {
         <div class="alert alert-success"> Contactez le dirigeant pour modifier la page de votre pays</div>
         <?php } ?>
       </section>
+
+
+      <!-- Dirigeants
+        ================================================== -->
+        <section>
+        <div id="dirigeants" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Pays1.png">
+          <h1>Dirigeants</h1>
+        </div>
+        <table width="539" class="table table-hover">
+          <thead>
+            <tr class="tablehead">
+              <th width="15%" scope="col"><a href="#" rel="clickover" title="Statut de votre ville" data-content="la ville peut-&ecirc;tre publi&eacute;e sur votre page pays ou masqu&eacute;e. Le drapeau indique la capitale."><i class="icon-globe"></i></a></th>
+              <th width="40%" scope="col">Pseudo</th>
+              <th width="30%" scope="col">Permissions</th>
+              <th width="5%" scope="col">&nbsp;</th>
+              <th width="5%" scope="col">&nbsp;</th>
+              <th width="5%" scope="col">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach($paysLeaders as $rowLeaders) { ?>
+              <tr>
+                <td><img src="<?= $rowLeaders['ch_use_lien_imgpersonnage'] ?>" alt="Statut"></td>
+                <td><?= $rowLeaders['ch_use_login'] ?></td>
+                <td><?= \GenCity\Monde\Pays::getPermissionName($rowLeaders['permissions']); ?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <?php } ?>
+          </tbody>
+        </table>
+        </section>
+
 
       <!-- Liste des Villes du membre
         ================================================== -->
