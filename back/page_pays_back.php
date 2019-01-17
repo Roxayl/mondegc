@@ -810,7 +810,7 @@ img.olTileImage {
                   </form></td>
                 <td><form action="ville_confirmation_supprimer.php" method="post">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_mesvilles['ch_vil_ID']; ?>">
-                    <button class="btn" type="submit" title="supprimer la ville"><i class="icon-trash icon-white"></i></button>
+                    <button class="btn btn-danger" type="submit" title="supprimer la ville"><i class="icon-trash icon-white"></i></button>
                   </form></td>
               </tr>
               <?php } while ($row_mesvilles = mysql_fetch_assoc($mesvilles)); ?>
@@ -974,6 +974,7 @@ img.olTileImage {
             <button class="btn btn-primary" type="submit" title="lien vers les outils de dessin">Dessiner sur la carte</button>
           </form>
         </div>
+      <div class="clearfix"></div>
       </section>
       
       <!-- Liste des Communiqués
@@ -985,7 +986,7 @@ img.olTileImage {
           <h1>Communiqu&eacute;s du pays</h1>
           <?php } else { ?>
           <!-- titre si modération -->
-          <h1>Mes Communiqu&eacute;s</h1>
+          <h1>Mes communiqu&eacute;s</h1>
           <?php } ?>
         </div>
         <div class="alert alert-success">

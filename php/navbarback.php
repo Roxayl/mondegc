@@ -5,6 +5,10 @@ mysql_select_db($database_maconnexion, $maconnexion);
 $query_menu = "SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_pay_continent FROM pays WHERE ch_pay_publication = 1 ORDER BY ch_pay_nom ASC";
 $menu = mysql_query($query_menu, $maconnexion) or die(mysql_error());
 $totalRows_menu = mysql_num_rows($menu);
+
+$row_menu = mysql_fetch_assoc($menu);
+mysql_data_seek($menu, 0);
+
 ?>
 
 <div class="navbar navbar-fixed-top">
@@ -45,19 +49,14 @@ $totalRows_menu = mysql_num_rows($menu);
             </center>
             <a href="../dashboard.php" title="informations pratiques">Tableau de bord</a> </li>
 
-          <li class="<?php if ($carte) { echo('active');} ?>">
-            <center>
-              <a href="../Page-carte.php" title="carte du monde GC"><i class="icon icon-carte"></i></a>
-            </center>
-            <a href="../Page-carte.php" title="carte du monde GC">Carte</a> </li>
-
-          <li class="dropdown <?php if ($pays) { echo('active');}  ?>">
+          <li class="dropdown <?php if ($carte || $pays) { echo('active');}  ?>">
             <center>
               <a href="../Page-carte.php#liste-pays" title="liste des pays class&eacute;s par continent"><i class="icon icon-pays"></i></a>
             </center>
-            <a href="../Page-carte.php" class="dropdown-toggle" data-toggle="dropdown" title="liste des pays class&eacute;s par continent">Les pays <b class="caret hidden-phone"></b></a>
+            <a href="../Page-carte.php" class="dropdown-toggle" data-toggle="dropdown" title="liste des pays class&eacute;s par continent">Carte et pays <b class="caret hidden-phone"></b></a>
             <ul class="dropdown-menu dropdown-double hidden-phone">
               <div class="drop-colonne-gauche">
+                <li class="nav-lien-carte" href="../page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><a href="../Page-carte.php"><div><h3>Afficher la carte</h3></div></a></li>
                 <li class="nav-header"><img src="../assets/img/Aurinea.png" class="img-continent"> R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</li>
                 <?php 
 				do { 
@@ -147,7 +146,7 @@ $totalRows_menu = mysql_num_rows($menu);
             <a href="../OCGC.php" class="dropdown-toggle" data-toggle="dropdown" title="Institutions de r&eacute;gulation du monde GC">Les instituts <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li class="nav-header">L'actualité de l'OCGC</li>
-              <li><a href="communiques-ocgc.php">Communiqués publiés</a></li>
+              <li><a href="../communiques-ocgc.php">Communiqués publiés</a></li>
               <li class="nav-header">Structure</li>
               <li><a href="../OCGC.php">OCGC</a></li>
               <li><a href="../geographie.php">G&eacute;ographie</a></li>

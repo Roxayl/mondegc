@@ -502,6 +502,28 @@ ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li.nav-header {
 ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li.divider {
 	width: 200px;
 }
+ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li.nav-lien-carte {
+	width: 200px;
+}
+ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li.nav-lien-carte > a:hover {
+	background-color: transparent;
+}
+ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li.nav-lien-carte > a:hover div {
+	opacity: 0.8;
+}
+ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li.nav-lien-carte div {
+    padding: 15px;
+    width: 200px;
+    height: 40px;
+    vertical-align: text-bottom;background-image: url('../img/2019/navbar.png');
+    border-radius: 5px;
+}
+ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li.nav-lien-carte h3 {
+    font-weight: bold;
+    position: absolute;
+    margin-top: 15px;
+ }
+
 ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li, ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li > a, ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li > a:hover, ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li > a:active, ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li > a:link, ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li > a:visited {
 	width: 200px;
 }
