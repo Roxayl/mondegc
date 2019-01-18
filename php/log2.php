@@ -162,7 +162,7 @@ setcookie('Session_mondeGC', $code_aleatoire, time() + 30*24*3600, null, null, f
 	$_SESSION['prenom_dirigeant'] = $row_LoginRS['ch_use_prenom_dirigeant'];
 	$_SESSION['derniere_visite'] = $row_LoginRS['ch_use_last_log'];
 
-
+    $_SESSION['userObject'] = new \GenCity\Monde\User($row_LoginRS['ch_use_id']);
 
 //Change the last log date
 $updateSQL = sprintf("UPDATE users SET ch_use_last_log=%s WHERE ch_use_id=%s",

@@ -1,6 +1,8 @@
 <?php
-session_start();
+
  require_once('../Connections/maconnexion.php');
+
+ session_start();
  
 //deconnexion
 include('../php/logout.php');
@@ -759,7 +761,12 @@ img.olTileImage {
                 <td><img src="<?= $rowLeaders['ch_use_lien_imgpersonnage'] ?>" alt="Statut"></td>
                 <td><?= $rowLeaders['ch_use_login'] ?></td>
                 <td><?= \GenCity\Monde\Pays::getPermissionName($rowLeaders['permissions']); ?></td>
-                <td></td>
+                <td>
+                <?php if($thisPays->getUserPermission($_SESSION['userObject']) >=
+                            \GenCity\Monde\Pays::$permissions['dirigeant']): ?>
+                    <a class="btn btn-primary" href="../php/Modal/pays_leader_edit.php?user_pays_ID=<?= $rowLeaders['users_pays_ID'] ?>" data-toggle="modal" data-target="#Modal-Monument">Gérer cet utilisateur</a>
+                <?php endif; ?>
+                </td>
                 <td></td>
                 <td></td>
               </tr>

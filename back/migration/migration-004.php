@@ -45,6 +45,13 @@ while($row = mysql_fetch_assoc($updated_list_users_pays)) {
 
 
 /**********
+ * Vider les tables stockant les sessions.
+ **********/
+$queries[] = 'TRUNCATE TABLE users_dispatch_session';
+$queries[] = 'TRUNCATE TABLE users_session';
+
+
+/**********
  * TODO !!!
  * Fusion manuelle users/pays.
  **********/
@@ -52,6 +59,5 @@ while($row = mysql_fetch_assoc($updated_list_users_pays)) {
 
 
 foreach($queries as $query) {
-
     $result_query = mysql_query($query) or die(mysql_error());
 }

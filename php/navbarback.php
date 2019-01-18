@@ -9,6 +9,9 @@ $totalRows_menu = mysql_num_rows($menu);
 $row_menu = mysql_fetch_assoc($menu);
 mysql_data_seek($menu, 0);
 
+if(!isset($loginFormAction))
+    $loginFormAction = '';
+
 ?>
 
 <div class="navbar navbar-fixed-top">

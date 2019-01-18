@@ -46,6 +46,7 @@ if ($clefSession != NULL and $clefSession != "" and !isset($_SESSION['login_user
             unset($_SESSION['user_ID']);
             unset($_SESSION['user_last_log']);
             unset($_SESSION['statut']);
+            unset($_SESSION['userObject']);
             unset($loginFoundUser);
         }
     }
@@ -74,6 +75,8 @@ if ($clefSession != NULL and $clefSession != "" and !isset($_SESSION['login_user
         $_SESSION['nom_dirigeant'] = $row_Session_user['ch_use_nom_dirigeant'];
         $_SESSION['prenom_dirigeant'] = $row_Session_user['ch_use_prenom_dirigeant'];
         $_SESSION['derniere_visite'] = $row_Session_user['ch_use_last_log'];
+
+        $_SESSION['userObject'] = new \GenCity\Monde\User($row_Session_user['ch_use_id']);
 
     }
 
@@ -168,6 +171,8 @@ if ($loginFoundUser) {
 	$_SESSION['prenom_dirigeant'] = $row_LoginRS['ch_use_prenom_dirigeant'];
 	$_SESSION['derniere_visite'] = $row_LoginRS['ch_use_last_log'];
 
+    $_SESSION['userObject'] = new \GenCity\Monde\User($row_LoginRS['ch_use_id']);
+
 	header('Location:'.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
 	die;
   	}
@@ -217,14 +222,6 @@ setcookie('Session_mondeGC', '', time() -3600, null, null, false, false);
 unset($_COOKIE["Session_mondeGC"]);
 	
   //to fully log out a visitor we need to clear the session varialbles
-  $_SESSION['login_user'] = NULL;
-  $_SESSION['pays_ID'] = NULL;
-  $_SESSION['PrevUrl'] = NULL;
-  $_SESSION['fond_ecran'] = NULL;
-  $_SESSION['connect'] = NULL;
-  $_SESSION['user_ID'] = NULL;
-  $_SESSION['user_last_log'] = NULL;
-  $_SESSION['statut'] = NULL;
   unset($_SESSION['login_user']);
   unset($_SESSION['pays_ID']);
   unset($_SESSION['PrevUrl']);
@@ -233,6 +230,7 @@ unset($_COOKIE["Session_mondeGC"]);
   unset($_SESSION['user_ID']);
   unset($_SESSION['user_last_log']);
   unset($_SESSION['statut']);
+  unset($_SESSION['userObject']);
   if ($_SERVER['QUERY_STRING'] != "doLogout=true") {
   $variables = preg_replace('#doLogout=true&(.+)#i', '$1', $_SERVER['QUERY_STRING']);
   } else {
