@@ -5,6 +5,23 @@ use Squirrel\BaseModel;
 
 class User extends BaseModel {
 
+    static function getUserPermission($label) {
+
+        $permissions = array(
+            5 => "Maire",
+            10 => "Dirigeant",
+            15 => "Juge tempérant",
+            20 => "OCGC",
+            30 => "Administrateur"
+        );
+        if(is_numeric($label)) {
+            return $permissions[$label];
+        } else {
+            return array_flip($permissions)[$label];
+        }
+
+    }
+
     public function __construct($data = null) {
 
         $this->model = new UserModel($data);
@@ -19,6 +36,15 @@ class User extends BaseModel {
              $result[] = $row;
         }
         return $result;
+
+    }
+
+    public function minStatus($status) {
+
+        if(!is_numeric($status))
+            $status = self::getUserPermission($status);
+
+        return $this->model->ch_use_statut >= $status;
 
     }
 

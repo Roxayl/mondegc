@@ -77,7 +77,7 @@ if(!isset($loginFormAction))
             <a href="Page-carte.php" class="dropdown-toggle" data-toggle="dropdown" title="liste des pays class&eacute;s par continent">Carte et pays <b class="caret hidden-phone"></b></a>
             <ul class="dropdown-menu dropdown-double hidden-phone">
               <div class="drop-colonne-gauche">
-                <li class="nav-lien-carte" href="page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><a href="Page-carte.php"><div><h3>Afficher la carte</h3></div></a></li>
+                <li class="nav-lien-carte" href="page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><a href="Page-carte.php"><div><h3>Explorer la carte</h3></div></a></li>
                 <li class="nav-header"><img src="assets/img/Aurinea.png" class="img-continent"> R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</li>
                 <?php 
 				do { 

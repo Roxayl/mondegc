@@ -1,5 +1,8 @@
 <?php
 
+use GenCity\Monde\Pays;
+use GenCity\Monde\User;
+
 include('../../Connections/maconnexion.php');
 session_start();
 header('Content-Type: text/html; charset=utf-8');
@@ -21,13 +24,13 @@ if(empty($result_users_pays)) {
     exit;
 }
 
-$thisUser = new \GenCity\Monde\User($result_users_pays['ID_user']);
-$thisPays = new \GenCity\Monde\Pays($result_users_pays['ID_pays']);
+$thisUser = new User($result_users_pays['ID_user']);
+$thisPays = new Pays($result_users_pays['ID_pays']);
 
 // Traitement données POST
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "pays_leader_edit")) {
 
-    if($thisPays->getUserPermission($_SESSION['userObject']) < \GenCity\Monde\Pays::$permissions['dirigeant']) {
+    if($thisPays->getUserPermission() < Pays::$permissions['dirigeant']) {
         echo 'Accès interdit';
         exit;
     }
@@ -44,10 +47,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "pays_leader_edit"))
 
     exit;
 
-}
-
-
-?>
+} ?>
 
 <!-- Modal Header-->
 
@@ -61,13 +61,13 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "pays_leader_edit"))
       <input name="user_pays_id" type="hidden" value="<?php echo $user_pays_ID; ?>">
       <ul>
         <li><input id="form_permission_dirigeant" name="permissions" type="radio" value="10"
-           <?= $result_users_pays['permissions'] == \GenCity\Monde\Pays::$permissions['dirigeant'] ? 'checked' : '' ?>>
+           <?= $result_users_pays['permissions'] == Pays::$permissions['dirigeant'] ? 'checked' : '' ?>>
             <label for="form_permission_dirigeant">Dirigeant</label>
         <small>Le dirigeant peut modifier tous les aspects du pays. Il peut définir d'autres dirigeants, les destituer, mais aussi modifier la présentation et créer, modifier et supprimer les villes du pays.</small></li>
-        <li><input id="form_permission_maire" name="permissions" type="radio" value="5"
-           <?= $result_users_pays['permissions'] == \GenCity\Monde\Pays::$permissions['maire'] ? 'checked' : '' ?>>
-            <label for="form_permission_maire">Maire</label>
-        <small>Le maire peut créer, modifier et supprimer la présentation du pays et les villes du pays.</small></li>
+        <li><input id="form_permission_codirigeant" name="permissions" type="radio" value="5"
+           <?= $result_users_pays['permissions'] == Pays::$permissions['codirigeant'] ? 'checked' : '' ?>>
+            <label for="form_permission_codirigeant">Co-dirigeant</label>
+        <small>Le co-dirigeant peut créer, modifier et supprimer la présentation du pays et les villes du pays.</small></li>
       </ul>
   </div>
   <div class="modal-footer">

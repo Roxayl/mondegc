@@ -1,6 +1,8 @@
 <?php
 
- require_once('../Connections/maconnexion.php');
+use GenCity\Monde\Pays;
+
+require_once('../Connections/maconnexion.php');
 
  session_start();
  
@@ -17,11 +19,8 @@ exit();
 }
 
 //Récupération variables
-$colname_paysID = $_SESSION['pays_ID'];
-if (isset($_REQUEST['paysID']) AND ($_SESSION['statut'] >=20)) {
 $colname_paysID = $_REQUEST['paysID'];
 unset($_REQUEST['paysID']);
-}
 
 //Requete Pays
 mysql_select_db($database_maconnexion, $maconnexion);
@@ -35,7 +34,6 @@ mysql_select_db($database_maconnexion, $maconnexion);
 $query_User = sprintf("SELECT ch_use_id, ch_use_login, ch_use_statut FROM users WHERE ch_use_paysID = %s AND ch_use_statut >= 10", GetSQLValueString($colname_paysID, "int"));
 $User = mysql_query($query_User, $maconnexion) or die(mysql_error());
 $row_User = mysql_fetch_assoc($User);
-$totalRows_User = mysql_num_rows($User);
 
 //Mise à jour formulaire pays
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
@@ -188,7 +186,7 @@ if (isset($_GET['pageNum_communiquesPays'])) {
 $startRow_communiquesPays = $pageNum_communiquesPays * $maxRows_communiquesPays;
 
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_communiquesPays = sprintf("SELECT * FROM communiques WHERE ch_com_user_id = %s AND communiques.ch_com_categorie = 'pays'  AND communiques.ch_com_element_id = %s", GetSQLValueString($userID, "int"), GetSQLValueString($colname_paysID, "int"));
+$query_communiquesPays = sprintf("SELECT * FROM communiques WHERE communiques.ch_com_categorie = 'pays'  AND communiques.ch_com_element_id = %s", GetSQLValueString($colname_paysID, "int"));
 $query_limit_communiquesPays = sprintf("%s LIMIT %d, %d", $query_communiquesPays, $startRow_communiquesPays, $maxRows_communiquesPays);
 $communiquesPays = mysql_query($query_limit_communiquesPays, $maconnexion) or die(mysql_error());
 $row_communiquesPays = mysql_fetch_assoc($communiquesPays);
@@ -261,7 +259,7 @@ $_SESSION['fond_ecran'] = $row_InfoGenerale['ch_pay_lien_imgheader'];
 $_SESSION['last_work'] = "page_pays_back.php";
 
 // Obtenir liste des dirigeants
-$thisPays = new \GenCity\Monde\Pays($row_InfoGenerale['ch_pay_id']);
+$thisPays = new Pays($row_InfoGenerale['ch_pay_id']);
 $paysLeaders = $thisPays->getLeaders();
 
 ?>
@@ -360,18 +358,14 @@ img.olTileImage {
           <img src="<?php echo $row_InfoGenerale['ch_pay_lien_imgdrapeau']; ?>">
           <?php }?>
           <p><strong><?php echo $row_InfoGenerale['ch_pay_nom']; ?></strong></p>
-          <p><em>Cr&eacute;&eacute; par <?php echo $row_User['ch_use_login']; ?></em></p>
           </a></li>
-        <?php if ($_SESSION['statut'] >= 10) { ?>
+        <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
         <li><a href="#info-generales">Présentation</a></li>
+        <?php }?>
         <li><a href="#dirigeants">Dirigeants</a></li>
-        <?php }?>
-        <li><a href="#mes-villes">Mes villes</a></li>
-        <?php if ($row_autres_villes ) { ?>
-        <li><a href="#autres-villes">Villes des autres joueurs</a></li>
-        <?php }?>
+        <li><a href="#villes">Villes</a></li>
         <li><a href="#routes-campagne">Routes et campagne</a></li>
-        <?php if ($_SESSION['statut'] >= 10) { ?>
+        <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
         <li><a href="#mes-communiques">Communiqu&eacute;s officiels</a></li>
         <li><a href="#faits-historiques">Histoire</a></li>
         <?php }?>
@@ -388,23 +382,16 @@ img.olTileImage {
 
       <!-- Moderation
      ================================================== -->
-      <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
-      <form class="pull-right" action="membre-modifier_back.php" method="post">
-        <input name="ch_pay_label" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_label']; ?>">
-        <input name="userID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
-        <button class="btn btn-danger" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Profil du dirigeant</button>
-      </form>
-      <?php }?>
-      <?php if ($_SESSION['statut'] >= 30) { ?>
+      <?php if ($_SESSION['userObject']->minStatus('Administrateur')) { ?>
       <form class="pull-right" action="page_pays_confirmer_supprimer.php" method="post">
       <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
       <button class="btn btn-danger" type="submit" title="supprimer ce pays"><i class="icon-trash icon-white"></i></button>
       </form>
       <?php } ?>
-      <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
+      <?php if ($thisPays->getUserPermission() >= Pays::$permissions['dirigeant']) { ?>
       <a class="btn btn-primary pull-right" href="../php/partage-pays.php?ch_pay_id=<?php echo $row_InfoGenerale['ch_pay_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Annoncez sur le forum une mise &agrave; jour de votre page"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
-      <?php if ($_SESSION['statut'] >= 10) { ?>
+      <?php if ($thisPays->getUserPermission() >= Pays::$permissions['dirigeant']) { ?>
       <form class="pull-right" action="drapeau_modifier.php" method="post">
       <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
       <button class="btn btn-primary" type="submit" title="Chargez une nouvelle image sur le serveur"><i class="icon-pays-small-white"></i> Modifier le drapeau</button>
@@ -412,17 +399,12 @@ img.olTileImage {
       <?php } ?>
       <div class="modal container fade" id="Modal-Monument"></div>
       <div class="clearfix"></div>
-      <?php if ($_SESSION['statut'] >= 10) { ?>
+      <?php if ($thisPays->getUserPermission() >= Pays::$permissions['dirigeant']) { ?>
       <!-- Debut formulaire Page Pays
         ================================================== -->
       <section class="">
         <div id="info-generales" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Pays1.png">
-          <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
           <h1>Présentation du pays</h1>
-          <?php } else { ?>
-          <!-- titre si modération -->
-          <h1>La présentation de mon pays</h1>
-          <?php } ?>
         </div>
         <div class="alert alert-success">
           <button type="button" class="close" data-dismiss="alert">×</button>
@@ -440,7 +422,7 @@ img.olTileImage {
             <input name="ch_pay_label" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_label']; ?>">
             <!-- Si l'ID du pays a ete trouve
         ================================================== -->
-            <?php if ($_SESSION['statut'] >= 20) { ?>
+            <?php if ($_SESSION['userObject']->minStatus('OCGC')) { ?>
             <div class="accordion-group">
               <div class="accordion-heading"> <a class="accordion-toggle alert-danger" data-toggle="collapse" href="#collapsemoderation"> Param&egrave;tres r&eacute;serv&eacute;s &agrave; la mod&eacute;ration </a> </div>
               <div id="collapsemoderation" class="accordion-body collapse">
@@ -747,9 +729,8 @@ img.olTileImage {
         <table width="539" class="table table-hover">
           <thead>
             <tr class="tablehead">
-              <th width="15%" scope="col"><a href="#" rel="clickover" title="Statut de votre ville" data-content="la ville peut-&ecirc;tre publi&eacute;e sur votre page pays ou masqu&eacute;e. Le drapeau indique la capitale."><i class="icon-globe"></i></a></th>
-              <th width="40%" scope="col">Pseudo</th>
-              <th width="30%" scope="col">Permissions</th>
+              <th width="50%" scope="col">Pseudo</th>
+              <th width="35%" scope="col">Permissions</th>
               <th width="5%" scope="col">&nbsp;</th>
               <th width="5%" scope="col">&nbsp;</th>
               <th width="5%" scope="col">&nbsp;</th>
@@ -758,12 +739,10 @@ img.olTileImage {
           <tbody>
             <?php foreach($paysLeaders as $rowLeaders) { ?>
               <tr>
-                <td><img src="<?= $rowLeaders['ch_use_lien_imgpersonnage'] ?>" alt="Statut"></td>
                 <td><?= $rowLeaders['ch_use_login'] ?></td>
-                <td><?= \GenCity\Monde\Pays::getPermissionName($rowLeaders['permissions']); ?></td>
+                <td><?= Pays::getPermissionName($rowLeaders['permissions']); ?></td>
                 <td>
-                <?php if($thisPays->getUserPermission($_SESSION['userObject']) >=
-                            \GenCity\Monde\Pays::$permissions['dirigeant']): ?>
+                <?php if($thisPays->getUserPermission() >= Pays::$permissions['dirigeant']): ?>
                     <a class="btn btn-primary" href="../php/Modal/pays_leader_edit.php?user_pays_ID=<?= $rowLeaders['users_pays_ID'] ?>" data-toggle="modal" data-target="#Modal-Monument">Gérer cet utilisateur</a>
                 <?php endif; ?>
                 </td>
@@ -778,16 +757,14 @@ img.olTileImage {
 
       <!-- Liste des Villes du membre
         ================================================== -->
-      <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) {} else { ?>
       <!-- pas d'affichage si modération -->
       <section>
-        <div id="mes-villes" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Ville1.png">
-          <h1>Mes villes</h1>
+        <div id="villes" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Ville1.png">
+          <h1>Villes</h1>
         </div>
-        <div class="alert alert-success">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          Identifiez-ici vos villes. N'oubliez pas de mettre les informations r&eacute;guli&egrave;rement &agrave; jour afin que le site puisse par exemple calculer la population totale de votre pays...</div>
+
         <?php if ($row_mesvilles) { ?>
+          <h3>Mes villes</h3>
         <table width="539" class="table table-hover">
           <thead>
             <tr class="tablehead">
@@ -841,30 +818,23 @@ img.olTileImage {
           </tfoot>
         </table>
         <?php } else { ?>
+          <h3>Mes villes</h3>
         <form action="ville_ajouter.php" method="post">
           <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
           <input name="user_ID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
           <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une ville</button>
         </form>
         <?php } ?>
-      </section>
-      <?php } ?>
 
     <!-- Liste des Villes des autres joueurs
         ================================================== -->
       <?php if ($row_autres_villes) { ?>
-      <section>
-        <div id="autres-villes" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Ville1.png">
-          <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
-          <h1>Villes du pays</h1>
+          <?php if ($_SESSION['userObject']->minStatus('OCGC') AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
+          <h3>Villes du pays</h3>
           <?php } else { ?>
           <!-- titre si modération -->
-          <h1>Villes des autres joueurs</h1>
+          <h3>Villes des autres dirigeants</h3>
           <?php } ?>
-        </div>
-        <div class="alert alert-success">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          Cette liste présentes les villes des autres joueurs qui composent ce pays. Les dirigeants de pays y ont accès à des fins de modération...</div>
         <table width="539" class="table table-hover">
           <thead>
             <tr class="tablehead">
@@ -873,7 +843,7 @@ img.olTileImage {
               <th width="23%" scope="col">Maire</th>
               <th width="23%" scope="col">Population</th>
               <th width="4%" scope="col">&nbsp;</th>
-              <?php if ($_SESSION['statut'] >= 20) { // Affichage si sup ou egal à dirigeant ?>
+              <?php if ($_SESSION['userObject']->minStatus('OCGC')) { ?>
               <th width="4%" scope="col">&nbsp;</th>
               <th width="4%" scope="col">&nbsp;</th>
               <?php } ?>
@@ -889,7 +859,7 @@ img.olTileImage {
                 <td>
                     <a class="btn btn-primary" href="../page-ville.php?ch_pay_id=<?= $row_autres_villes['ch_vil_paysID'] ?>&ch_ville_id=<?= $row_autres_villes['ch_vil_ID'] ?>">Visiter</a>
                 </td>
-                <?php if ($_SESSION['statut'] >= 20) { // Affichage si sup ou egal à dirigeant ?>
+                <?php if ($_SESSION['userObject']->minStatus('OCGC')) { // Affichage si sup ou egal à dirigeant ?>
                 <td><form action="ville_modifier.php" method="post">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
                     <button class="btn" type="submit" title="modifier la ville"><i class="icon-pencil"></i></button>
@@ -986,15 +956,10 @@ img.olTileImage {
       
       <!-- Liste des Communiqués
         ================================================== -->
-      <?php if ($_SESSION['statut'] >= 10) { // Affichage si sup ou egal à dirigeant ?>
+      <?php if ($thisPays->getUserPermission() >= Pays::$permissions['dirigeant']) { // Affichage si sup ou egal à dirigeant ?>
       <section id="mes-communiques">
         <div id="mes-communiques" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Communique.png">
-          <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
           <h1>Communiqu&eacute;s du pays</h1>
-          <?php } else { ?>
-          <!-- titre si modération -->
-          <h1>Mes communiqu&eacute;s</h1>
-          <?php } ?>
         </div>
         <div class="alert alert-success">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -1008,15 +973,10 @@ include('../php/communiques-back.php'); ?>
       <?php } // Affichage si sup ou egal à dirigeant ?>
       <!-- Liste des faits historiques
         ================================================== -->
-      <?php if ($_SESSION['statut'] >= 10) { // Affichage si sup ou egal à dirigeant?>
+      <?php if ($thisPays->getUserPermission() >= Pays::$permissions['dirigeant']) { // Affichage si sup ou egal à dirigeant?>
       <section>
         <div id="faits-historiques" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/faithistorique.png">
-          <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
           <h1>L'histoire du pays</h1>
-          <?php } else { ?>
-          <!-- titre si modération -->
-          <h1>L'histoire de mon pays</h1>
-          <?php } ?>
         </div>
         <div class="alert alert-success">
           <button type="button" class="close" data-dismiss="alert">&times;</button>

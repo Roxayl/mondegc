@@ -6,8 +6,8 @@ use Squirrel\BaseModel;
 class Pays extends BaseModel {
 
     public static $permissions = array(
-        'maire' => 5,
-        'dirigeant' => 10
+        'codirigeant' => 5,
+        'dirigeant'   => 10
     );
 
     public function __construct($data = null) {
@@ -17,7 +17,7 @@ class Pays extends BaseModel {
     }
 
     /**
-     * Obtient la liste des dirigeants et maires d'un pays.
+     * Obtient la liste des dirigeants et co-dirigeants d'un pays.
      * @return array Renvoie un array contenant la liste des dirigeants.
      */
     public function getLeaders() {
@@ -34,9 +34,12 @@ class Pays extends BaseModel {
     /**
      * Renvoie le niveau de permissions d'un membre sur un pays.
      * @param User $user Utilisateur.
-     * @return int Renvoie 0 si pas de permission, 5 si maire, 10 si dirigeant.
+     * @return int Renvoie 0 si pas de permission, 5 si co-dirigeant, 10 si dirigeant.
      */
-    public function getUserPermission(User $user) {
+    public function getUserPermission(User $user = null) {
+
+        if($user === null)
+            $user = $_SESSION['userObject'];
 
         $query = mysql_query(sprintf('SELECT permissions FROM users_pays WHERE ID_pays = %s AND ID_user = %s',
             GetSQLValueString($this->model->ch_pay_id, 'int'),
@@ -53,7 +56,7 @@ class Pays extends BaseModel {
 
         switch($permission) {
             case 5:
-                return 'Maire';
+                return 'Co-dirigeant';
             case 10:
                 return 'Dirigeant';
             default:
