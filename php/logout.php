@@ -74,6 +74,7 @@ $updateSQL = sprintf("UPDATE users SET ch_use_last_log=%s WHERE ch_use_id=%s",
 	$_SESSION['nom_dirigeant'] = $row_Session_user['ch_use_nom_dirigeant'];
 	$_SESSION['prenom_dirigeant'] = $row_Session_user['ch_use_prenom_dirigeant'];
 	$_SESSION['derniere_visite'] = $row_Session_user['ch_use_last_log'];
+    $_SESSION['errormsgs'] = array();
 
     $_SESSION['userObject'] = new \GenCity\Monde\User($row_Session_user['ch_use_id']);
 }}

@@ -37,57 +37,66 @@ $row_User = mysql_fetch_assoc($User);
 
 //Mise à jour formulaire pays
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
-	if ($_POST['ch_pay_emplacement'] >= 3 and $_POST['ch_pay_emplacement'] <= 4 ){ $ch_pay_continent = "RFGC";}
-	if ($_POST['ch_pay_emplacement'] >= 5 and $_POST['ch_pay_emplacement'] < 14 ){ $ch_pay_continent = "Aurinea";}
-	if ($_POST['ch_pay_emplacement'] < 3 ){ $ch_pay_continent = "Aurinea";}
-	if ($_POST['ch_pay_emplacement'] >= 14 and $_POST['ch_pay_emplacement'] < 18 ){ $ch_pay_continent = "Oceania";}
-	if ($_POST['ch_pay_emplacement'] >= 18 and $_POST['ch_pay_emplacement'] < 24 ){ $ch_pay_continent = "Volcania";}
-	if ($_POST['ch_pay_emplacement'] >= 24 and $_POST['ch_pay_emplacement'] <= 27 ){ $ch_pay_continent = "Aldesyl";}
-	if ($_POST['ch_pay_emplacement'] >= 27 and $_POST['ch_pay_emplacement'] <= 42 ){ $ch_pay_continent = "Philicie";}
-	if( $_POST['ch_pay_emplacement'] >= 42 and $_POST['ch_pay_emplacement'] <= 56 ){ $ch_pay_continent = "Aldesyl";}
-	if( $_POST['ch_pay_emplacement'] >= 56 and $_POST['ch_pay_emplacement'] <= 57 ){ $ch_pay_continent = "Volcania";}
-	if ($_POST['ch_pay_emplacement'] >= 57 and $_POST['ch_pay_emplacement'] <= 58 ){ $ch_pay_continent = "Aldesyl";}
-	
-  $updateSQL = sprintf("UPDATE pays SET ch_pay_label=%s, ch_pay_publication=%s, ch_pay_continent=%s, ch_pay_emplacement=%s, ch_pay_lien_forum=%s, ch_pay_nom=%s, ch_pay_devise=%s, ch_pay_lien_imgheader=%s, ch_pay_lien_imgdrapeau=%s, ch_pay_date=%s, ch_pay_mis_jour=%s, ch_pay_nb_update=%s, ch_pay_forme_etat=%s, ch_pay_capitale=%s, ch_pay_langue_officielle=%s, ch_pay_monnaie=%s, ch_pay_header_presentation=%s, ch_pay_text_presentation=%s, ch_pay_header_geographie=%s, ch_pay_text_geographie=%s, ch_pay_header_politique=%s, ch_pay_text_politique=%s, ch_pay_header_histoire=%s, ch_pay_text_histoire=%s, ch_pay_header_economie=%s, ch_pay_text_economie=%s, ch_pay_header_transport=%s, ch_pay_text_transport=%s, ch_pay_header_sport=%s, ch_pay_text_sport=%s, ch_pay_header_culture=%s, ch_pay_text_culture=%s, ch_pay_header_patrimoine=%s, ch_pay_text_patrimoine=%s WHERE ch_pay_id=%s",
-                       GetSQLValueString($_POST['ch_pay_label'], "text"),
-                       GetSQLValueString($_POST['ch_pay_publication'], "int"),
-                       GetSQLValueString($ch_pay_continent, "text"),
-                       GetSQLValueString($_POST['ch_pay_emplacement'], "int"),
-                       GetSQLValueString($_POST['ch_pay_lien_forum'], "text"),
-                       GetSQLValueString($_POST['ch_pay_nom'], "text"),
-                       GetSQLValueString($_POST['ch_pay_devise'], "text"),
-                       GetSQLValueString($_POST['ch_pay_lien_imgheader'], "text"),
-                       GetSQLValueString($_POST['ch_pay_lien_imgdrapeau'], "text"),
-                       GetSQLValueString($_POST['ch_pay_date'], "date"),
-                       GetSQLValueString($_POST['ch_pay_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_pay_nb_update'], "int"),
-                       GetSQLValueString($_POST['ch_pay_forme_etat'], "text"),
-                       GetSQLValueString($_POST['ch_pay_capitale'], "text"),
-                       GetSQLValueString($_POST['ch_pay_langue_officielle'], "text"),
-                       GetSQLValueString($_POST['ch_pay_monnaie'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_presentation'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_presentation'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_geographie'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_geographie'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_politique'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_politique'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_histoire'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_histoire'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_economie'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_economie'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_transport'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_transport'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_sport'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_sport'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_culture'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_culture'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_patrimoine'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_patrimoine'], "text"),
-                       GetSQLValueString($_POST['ch_pay_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
-  
+    $thisUser = $_SESSION['userObject'];
+    $thisPays = new Pays($_POST['ch_pay_id']);
+    if($thisUser->minStatus('OCGC') || $thisPays->getUserPermission($thisUser) >= Pays::$permissions['codirigeant'])
+    {
+
+        if ($_POST['ch_pay_emplacement'] >= 3 and $_POST['ch_pay_emplacement'] <= 4 ){ $ch_pay_continent = "RFGC";}
+        if ($_POST['ch_pay_emplacement'] >= 5 and $_POST['ch_pay_emplacement'] < 14 ){ $ch_pay_continent = "Aurinea";}
+        if ($_POST['ch_pay_emplacement'] < 3 ){ $ch_pay_continent = "Aurinea";}
+        if ($_POST['ch_pay_emplacement'] >= 14 and $_POST['ch_pay_emplacement'] < 18 ){ $ch_pay_continent = "Oceania";}
+        if ($_POST['ch_pay_emplacement'] >= 18 and $_POST['ch_pay_emplacement'] < 24 ){ $ch_pay_continent = "Volcania";}
+        if ($_POST['ch_pay_emplacement'] >= 24 and $_POST['ch_pay_emplacement'] <= 27 ){ $ch_pay_continent = "Aldesyl";}
+        if ($_POST['ch_pay_emplacement'] >= 27 and $_POST['ch_pay_emplacement'] <= 42 ){ $ch_pay_continent = "Philicie";}
+        if( $_POST['ch_pay_emplacement'] >= 42 and $_POST['ch_pay_emplacement'] <= 56 ){ $ch_pay_continent = "Aldesyl";}
+        if( $_POST['ch_pay_emplacement'] >= 56 and $_POST['ch_pay_emplacement'] <= 57 ){ $ch_pay_continent = "Volcania";}
+        if ($_POST['ch_pay_emplacement'] >= 57 and $_POST['ch_pay_emplacement'] <= 58 ){ $ch_pay_continent = "Aldesyl";}
+
+      $updateSQL = sprintf("UPDATE pays SET ch_pay_label=%s, ch_pay_publication=%s, ch_pay_continent=%s, ch_pay_emplacement=%s, ch_pay_lien_forum=%s, ch_pay_nom=%s, ch_pay_devise=%s, ch_pay_lien_imgheader=%s, ch_pay_lien_imgdrapeau=%s, ch_pay_date=%s, ch_pay_mis_jour=%s, ch_pay_nb_update=%s, ch_pay_forme_etat=%s, ch_pay_capitale=%s, ch_pay_langue_officielle=%s, ch_pay_monnaie=%s, ch_pay_header_presentation=%s, ch_pay_text_presentation=%s, ch_pay_header_geographie=%s, ch_pay_text_geographie=%s, ch_pay_header_politique=%s, ch_pay_text_politique=%s, ch_pay_header_histoire=%s, ch_pay_text_histoire=%s, ch_pay_header_economie=%s, ch_pay_text_economie=%s, ch_pay_header_transport=%s, ch_pay_text_transport=%s, ch_pay_header_sport=%s, ch_pay_text_sport=%s, ch_pay_header_culture=%s, ch_pay_text_culture=%s, ch_pay_header_patrimoine=%s, ch_pay_text_patrimoine=%s WHERE ch_pay_id=%s",
+                           GetSQLValueString($_POST['ch_pay_label'], "text"),
+                           GetSQLValueString($_POST['ch_pay_publication'], "int"),
+                           GetSQLValueString($ch_pay_continent, "text"),
+                           GetSQLValueString($_POST['ch_pay_emplacement'], "int"),
+                           GetSQLValueString($_POST['ch_pay_lien_forum'], "text"),
+                           GetSQLValueString($_POST['ch_pay_nom'], "text"),
+                           GetSQLValueString($_POST['ch_pay_devise'], "text"),
+                           GetSQLValueString($_POST['ch_pay_lien_imgheader'], "text"),
+                           GetSQLValueString($_POST['ch_pay_lien_imgdrapeau'], "text"),
+                           GetSQLValueString($_POST['ch_pay_date'], "date"),
+                           GetSQLValueString($_POST['ch_pay_mis_jour'], "date"),
+                           GetSQLValueString($_POST['ch_pay_nb_update'], "int"),
+                           GetSQLValueString($_POST['ch_pay_forme_etat'], "text"),
+                           GetSQLValueString($_POST['ch_pay_capitale'], "text"),
+                           GetSQLValueString($_POST['ch_pay_langue_officielle'], "text"),
+                           GetSQLValueString($_POST['ch_pay_monnaie'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_presentation'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_presentation'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_geographie'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_geographie'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_politique'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_politique'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_histoire'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_histoire'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_economie'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_economie'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_transport'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_transport'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_sport'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_sport'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_culture'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_culture'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_patrimoine'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_patrimoine'], "text"),
+                           GetSQLValueString($_POST['ch_pay_id'], "int"));
+
+      mysql_select_db($database_maconnexion, $maconnexion);
+      $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+      getErrorMessage('success', "Le pays a été modifié avec succès !");
+    } else {
+        getErrorMessage('error', "Vous n'avez pas accès à cette partie.");
+    }
   
   $updateGoTo = "page_pays_back.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -95,6 +104,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
     $updateGoTo .= $_SERVER['QUERY_STRING'];
   }
   header(sprintf("Location: %s", $updateGoTo));
+  exit;
 }
 
 //requete liste des villes du joueur
@@ -388,10 +398,10 @@ img.olTileImage {
       <button class="btn btn-danger" type="submit" title="supprimer ce pays"><i class="icon-trash icon-white"></i></button>
       </form>
       <?php } ?>
-      <?php if ($thisPays->getUserPermission() >= Pays::$permissions['dirigeant']) { ?>
+      <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
       <a class="btn btn-primary pull-right" href="../php/partage-pays.php?ch_pay_id=<?php echo $row_InfoGenerale['ch_pay_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Annoncez sur le forum une mise &agrave; jour de votre page"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
-      <?php if ($thisPays->getUserPermission() >= Pays::$permissions['dirigeant']) { ?>
+      <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
       <form class="pull-right" action="drapeau_modifier.php" method="post">
       <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
       <button class="btn btn-primary" type="submit" title="Chargez une nouvelle image sur le serveur"><i class="icon-pays-small-white"></i> Modifier le drapeau</button>
@@ -399,7 +409,10 @@ img.olTileImage {
       <?php } ?>
       <div class="modal container fade" id="Modal-Monument"></div>
       <div class="clearfix"></div>
-      <?php if ($thisPays->getUserPermission() >= Pays::$permissions['dirigeant']) { ?>
+
+        <?php renderElement('errormsgs'); ?>
+
+      <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
       <!-- Debut formulaire Page Pays
         ================================================== -->
       <section class="">
@@ -757,7 +770,6 @@ img.olTileImage {
 
       <!-- Liste des Villes du membre
         ================================================== -->
-      <!-- pas d'affichage si modération -->
       <section>
         <div id="villes" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Ville1.png">
           <h1>Villes</h1>
@@ -772,8 +784,10 @@ img.olTileImage {
               <th width="64%" scope="col">Nom</th>
               <th width="23%" scope="col">population</th>
               <th width="4%" scope="col">&nbsp;</th>
+              <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
               <th width="4%" scope="col">&nbsp;</th>
               <th width="4%" scope="col">&nbsp;</th>
+              <?php endif; ?>
             </tr>
           </thead>
           <tbody>
@@ -784,10 +798,11 @@ img.olTileImage {
                   <img src="<?php echo $row_mesvilles['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau" width="50px" title="ville appartenant au pays <?php echo $row_mesvilles['ch_pay_nom'] ?>">
                   <?php } ?>
                   <?php echo $row_mesvilles['ch_vil_nom']; ?></td>
-                <td><?php echo $row_mesvilles['ch_vil_population']; ?></td>
+                <td><?php echo formatNum($row_mesvilles['ch_vil_population']); ?></td>
                 <td>
                     <a class="btn btn-primary" href="../page-ville.php?ch_pay_id=<?= $row_mesvilles['ch_vil_paysID'] ?>&ch_ville_id=<?= $row_mesvilles['ch_vil_ID'] ?>">Visiter</a>
                 </td>
+                <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
                 <td><form action="ville_modifier.php" method="post">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_mesvilles['ch_vil_ID']; ?>">
                     <button class="btn" type="submit" title="modifier la ville"><i class="icon-pencil"></i></button>
@@ -796,6 +811,7 @@ img.olTileImage {
                     <input name="ville-ID" type="hidden" value="<?php echo $row_mesvilles['ch_vil_ID']; ?>">
                     <button class="btn btn-danger" type="submit" title="supprimer la ville"><i class="icon-trash icon-white"></i></button>
                   </form></td>
+                <?php endif; ?>
               </tr>
               <?php } while ($row_mesvilles = mysql_fetch_assoc($mesvilles)); ?>
           </tbody>
@@ -829,7 +845,7 @@ img.olTileImage {
     <!-- Liste des Villes des autres joueurs
         ================================================== -->
       <?php if ($row_autres_villes) { ?>
-          <?php if ($_SESSION['userObject']->minStatus('OCGC') AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
+          <?php if ($_SESSION['userObject']->minStatus('OCGC')) { ?>
           <h3>Villes du pays</h3>
           <?php } else { ?>
           <!-- titre si modération -->
@@ -843,7 +859,8 @@ img.olTileImage {
               <th width="23%" scope="col">Maire</th>
               <th width="23%" scope="col">Population</th>
               <th width="4%" scope="col">&nbsp;</th>
-              <?php if ($_SESSION['userObject']->minStatus('OCGC')) { ?>
+              <?php if ($_SESSION['userObject']->minStatus('OCGC') ||
+                        $thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
               <th width="4%" scope="col">&nbsp;</th>
               <th width="4%" scope="col">&nbsp;</th>
               <?php } ?>
@@ -855,11 +872,13 @@ img.olTileImage {
                 <td><img src="../assets/img/statutvil_<?php echo $row_autres_villes['ch_vil_capitale']; ?>.png" alt="Statut"></td>
                 <td><?php echo $row_autres_villes['ch_vil_nom']; ?></td>
                 <td><?php echo $row_autres_villes['ch_use_login']; ?></td>
-                <td><?php echo $row_autres_villes['ch_vil_population']; ?></td>
+                <td><?php echo formatNum($row_autres_villes['ch_vil_population']); ?></td>
                 <td>
                     <a class="btn btn-primary" href="../page-ville.php?ch_pay_id=<?= $row_autres_villes['ch_vil_paysID'] ?>&ch_ville_id=<?= $row_autres_villes['ch_vil_ID'] ?>">Visiter</a>
                 </td>
-                <?php if ($_SESSION['userObject']->minStatus('OCGC')) { // Affichage si sup ou egal à dirigeant ?>
+                <?php if ($_SESSION['userObject']->minStatus('OCGC') ||
+                        $thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) {
+                    // Affichage si sup ou egal à dirigeant ?>
                 <td><form action="ville_modifier.php" method="post">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
                     <button class="btn" type="submit" title="modifier la ville"><i class="icon-pencil"></i></button>

@@ -4,9 +4,9 @@ namespace GenCity\Monde;
 use Squirrel\ModelStructureInterface;
 
 
-class PaysModel implements ModelStructureInterface {
+class VilleModel implements ModelStructureInterface {
 
-    static $tableName = 'pays';
+    static $tableName = 'villes';
     private $info = array();
 
     public function __construct($data = null) {
@@ -21,7 +21,7 @@ class PaysModel implements ModelStructureInterface {
 
     private function populate($id) {
 
-        $query = mysql_query(sprintf('SELECT * FROM pays WHERE ch_pay_id = %s',
+        $query = mysql_query(sprintf('SELECT * FROM villes WHERE ch_vil_id = %s',
             GetSQLValueString($id, 'int')));
         $result = mysql_fetch_assoc($query);
         return $result;

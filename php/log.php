@@ -75,6 +75,7 @@ if ($clefSession != NULL and $clefSession != "" and !isset($_SESSION['login_user
         $_SESSION['nom_dirigeant'] = $row_Session_user['ch_use_nom_dirigeant'];
         $_SESSION['prenom_dirigeant'] = $row_Session_user['ch_use_prenom_dirigeant'];
         $_SESSION['derniere_visite'] = $row_Session_user['ch_use_last_log'];
+        $_SESSION['errormsgs'] = array();
 
         $_SESSION['userObject'] = new \GenCity\Monde\User($row_Session_user['ch_use_id']);
 
@@ -170,6 +171,7 @@ if ($loginFoundUser) {
 	$_SESSION['nom_dirigeant'] = $row_LoginRS['ch_use_nom_dirigeant'];
 	$_SESSION['prenom_dirigeant'] = $row_LoginRS['ch_use_prenom_dirigeant'];
 	$_SESSION['derniere_visite'] = $row_LoginRS['ch_use_last_log'];
+    $_SESSION['errormsgs'] = array();
 
     $_SESSION['userObject'] = new \GenCity\Monde\User($row_LoginRS['ch_use_id']);
 

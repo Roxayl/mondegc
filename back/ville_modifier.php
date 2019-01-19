@@ -1,6 +1,10 @@
 <?php
-session_start();
+
+use GenCity\Monde\Pays;
+use GenCity\Monde\Ville;
+
 require_once('../Connections/maconnexion.php');
+session_start();
 //deconnexion
 include('../php/logout.php');
 
@@ -18,7 +22,16 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
+
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_ville")) {
+
+    $thisVille = new Ville($_POST['ch_vil_ID']);
+    $thisPays = new Pays($thisVille->ch_vil_paysID);
+    if($thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
+        getErrorMessage('error', "Vous n'avez pas accès à cette partie.");
+    }
+
+    else {
   $updateSQL = sprintf("UPDATE villes SET ch_vil_paysID=%s, ch_vil_user=%s, ch_vil_label=%s, ch_vil_date_enregistrement=%s, ch_vil_mis_jour=%s, ch_vil_nb_update=%s, ch_vil_coord_X=%s, ch_vil_coord_Y=%s, ch_vil_type_jeu=%s, ch_vil_nom=%s, ch_vil_armoiries=%s, ch_vil_capitale=%s, ch_vil_population=%s, ch_vil_specialite=%s, ch_vil_lien_img1=%s, ch_vil_lien_img2=%s, ch_vil_lien_img3=%s, ch_vil_lien_img4=%s, ch_vil_lien_img5=%s, ch_vil_legende_img1=%s, ch_vil_legende_img2=%s, ch_vil_legende_img3=%s, ch_vil_legende_img4=%s, ch_vil_legende_img5=%s, ch_vil_header=%s, ch_vil_contenu=%s, ch_vil_transports=%s, ch_vil_administration=%s, ch_vil_culture=%s WHERE ch_vil_ID=%s",
                        GetSQLValueString($_POST['ch_vil_paysID'], "int"),
                        GetSQLValueString($_POST['ch_vil_user'], "int"),
@@ -54,12 +67,16 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_ville")) {
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
+        getErrorMessage('success', "Ville modifiée avec succès.");
+    }
+
   $updateGoTo = "ville_modifier.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];
   }
   header(sprintf("Location: %s", $updateGoTo));
+  exit;
 }
 
 //requete Villes
@@ -173,6 +190,7 @@ $totalRows_list_users = mysql_num_rows($list_users);
 // Coordonnées marqueur carte
 $coord_X = $row_ville['ch_vil_coord_X'];
 $coord_Y = $row_ville['ch_vil_coord_Y'];
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -358,6 +376,9 @@ return true;
       <a class="btn btn-primary pull-right" href="../php/partage-ville.php?ch_vil_ID=<?php echo $row_ville['ch_vil_ID']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
       <div class="clearfix"></div>
+
+        <?php renderElement('errormsgs'); ?>
+
       <!-- Debut formulaire de modification ville
      ================================================== -->
       <div id="page_ville" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Ville1.png">

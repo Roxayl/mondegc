@@ -1210,9 +1210,53 @@ if(!function_exists('renderResources')) {
 }
 
 if(!function_exists('renderElement')) {
-    function renderElement($element, $data) {
+    function renderElement($element, $data = null) {
         if(!is_array($data))
             $data = array($data);
         require(__DIR__ . '/../php/Elements/' . $element . '.php');
+    }
+}
+
+if(!function_exists('formatNum')) {
+    function formatNum($number, $decimals = 0) {
+        return number_format($number, $decimals, '.', '&#8239;');
+    }
+}
+
+if(!function_exists('getErrorMessage')) {
+    /**
+     * @param string $errorType Type d'erreur.
+     * @param string $errorInfo Corps du message.
+     * @param bool $put_on_session Détermine s'il faut stocker le message dans la session. Si ce paramètre est mis à <code>false</code>, le message est directement affiché.
+     */
+    function getErrorMessage($errorType, $errorInfo, $put_on_session = true) {
+
+        if(is_array($errorInfo)) $errorInfo = @implode($errorInfo);
+
+        if($put_on_session) {
+            $_SESSION['errmsgs'][] =
+                array('msg'      => $errorInfo,
+                      'err_type' => $errorType);
+        }
+        else {
+            showErrorMessage($errorType, $errorInfo);
+        }
+
+    }
+}
+
+if(!function_exists('showErrorMessage')) {
+    function showErrorMessage($errorType, $errorInfo) {
+
+        if($errorType === null) {
+            echo $errorInfo;
+        }
+        else {
+            echo '
+                <div class="alert alert-block alert-'.$errorType.'">' .
+                $errorInfo .
+                '</div>';
+        }
+
     }
 }
