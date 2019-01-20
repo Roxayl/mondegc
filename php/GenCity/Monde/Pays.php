@@ -20,14 +20,39 @@ class Pays extends BaseModel {
      * Obtient la liste des dirigeants et co-dirigeants d'un pays.
      * @return array Renvoie un array contenant la liste des dirigeants.
      */
-    public function getLeaders() {
+    public function getLeaders($minPermission = 0) {
 
-        $query = mysql_query(sprintf('SELECT users_pays.id AS users_pays_ID, permissions, ch_use_login, ch_use_lien_imgpersonnage FROM users JOIN users_pays ON ch_use_id = ID_user AND ID_pays = %s', GetSQLValueString($this->model->ch_pay_id, 'int')));
+        $where_query = $minPermission > 0 ? ' AND permissions >= ' . GetSQLValueString($minPermission, 'int') : '';
+
+        $query = mysql_query(sprintf('SELECT users_pays.id AS users_pays_ID, permissions, ch_use_login, ch_use_lien_imgpersonnage FROM users JOIN users_pays ON ch_use_id = ID_user AND ID_pays = %s ' . $where_query,
+            GetSQLValueString($this->model->ch_pay_id, 'int')));
         $result = array();
         while($row = mysql_fetch_assoc($query)){
              $result[] = $row;
         }
         return $result;
+
+    }
+
+    public function addLeader(User $user, $permission) {
+
+        mysql_query(sprintf(
+            'INSERT INTO users_pays(ID_pays, ID_user, permissions) ' .
+                        ' VALUES(%s, %s, %s)',
+            GetSQLValueString($this->ch_pay_id, 'int'),
+            GetSQLValueString($user->ch_use_id, 'int'),
+            GetSQLValueString($permission, 'int')
+        ));
+
+    }
+
+    public function removeLeader(User $user) {
+
+        mysql_query(sprintf(
+            'DELETE FROM users_pays WHERE ID_pays = %s AND ID_user = %s',
+            GetSQLValueString($this->ch_pay_id, 'int'),
+            GetSQLValueString($user->ch_use_id, 'int')
+        ));
 
     }
 

@@ -123,23 +123,21 @@ $totalPages_ListPays = ceil($totalRows_ListPays/$maxRows_ListPays)-1;
               <td><img src="../assets/img/statutpays<?php echo $row_ListPays['ch_pay_publication']; ?>.png" alt="Statut"></td>
               <td><img src="<?php echo $row_ListPays['ch_pay_lien_imgdrapeau']; ?>" width="75px"></td>
               <td><?php echo $row_ListPays['ch_pay_nom']; ?></td>
-              <td>N�<?php echo $row_ListPays['ch_pay_emplacement']; ?> <img class="pull-right" src="../Carto/Emplacements/emplacement<?php echo $row_ListPays['ch_pay_emplacement']; ?>.jpg" width="50px"></td>
+              <td>N°<?php echo $row_ListPays['ch_pay_emplacement']; ?> <img class="pull-right" src="../Carto/Emplacements/emplacement<?php echo $row_ListPays['ch_pay_emplacement']; ?>.jpg" width="50px"></td>
               <td><?php echo $row_ListPays['ch_pay_continent']; ?></td>
               <td>
               <?php $thisPays = new \GenCity\Monde\Pays($row_ListPays['ch_pay_id']);
               $listeLeaders = $thisPays->getLeaders(); ?>
                 <?php foreach($listeLeaders as $thisLeader): ?>
-                <img src="<?php echo $thisLeader['ch_use_lien_imgpersonnage']; ?>" width="50px">
-                <p><?php echo $thisLeader['ch_use_login']; ?></p>
+                <p><?php echo $thisLeader['ch_use_login']; ?>
+                    <small><?= \GenCity\Monde\Pays::getPermissionName($thisLeader['permissions']); ?></small></p>
                 <?php endforeach; ?>
               </td>
               <td><?php echo date("d/m/Y � G:i:s", strtotime($row_ListPays['ch_pay_mis_jour'])); ?></td>
-              <td><form action="page_pays_back.php" method="post">
-                  <input name="paysID" type="hidden" value="<?php echo $row_ListPays['ch_pay_id']; ?>">
-                  <button class="btn" type="submit" title="modifier le pays"><i class="icon-pencil"></i></button>
-                </form></td>
-              <?php if ($_SESSION['statut'] >= 30)
-{?>
+              <td>
+                  <a href="page_pays_back.php?paysID=<?= $row_ListPays['ch_pay_id'] ?>" class="btn" type="submit" title="modifier le pays"><i class="icon-pencil"></i></a></td>
+              <?php if ($_SESSION['userObject']->minStatus('Administrateur'))
+              {?>
               <td><form action="page_pays_confirmer_supprimer.php" method="post">
                   <input name="paysID" type="hidden" value="<?php echo $row_ListPays['ch_pay_id']; ?>">
                   <button class="btn" type="submit" title="supprimer le pays"><i class="icon-trash"></i></button>

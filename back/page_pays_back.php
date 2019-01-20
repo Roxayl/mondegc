@@ -116,7 +116,7 @@ if (isset($_GET['pageNum_mesvilles'])) {
 $startRow_mesvilles = $pageNum_mesvilles * $maxRows_mesvilles;
 
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_mesvilles = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_use_paysID, ch_pay_lien_imgdrapeau, ch_pay_nom FROM villes INNER JOIN users ON ch_vil_user = ch_use_id INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_vil_user= %s ORDER BY ch_vil_date_enregistrement ASC", GetSQLValueString($_SESSION['user_ID'], "int"));
+$query_mesvilles = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_use_paysID, ch_pay_lien_imgdrapeau, ch_pay_nom FROM villes INNER JOIN users ON ch_vil_user = ch_use_id INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_vil_user= %s AND ch_pay_id = %s ORDER BY ch_vil_date_enregistrement ASC", GetSQLValueString($_SESSION['user_ID'], "int"), GetSQLValueString($colname_paysID, 'int'));
 $query_limit_mesvilles = sprintf("%s LIMIT %d, %d", $query_mesvilles, $startRow_mesvilles, $maxRows_mesvilles);
 $mesvilles = mysql_query($query_limit_mesvilles, $maconnexion) or die(mysql_error());
 $row_mesvilles = mysql_fetch_assoc($mesvilles);
@@ -412,7 +412,8 @@ img.olTileImage {
 
         <?php renderElement('errormsgs'); ?>
 
-      <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
+      <?php if ($_SESSION['userObject']->minStatus('OCGC') ||
+                $thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
       <!-- Debut formulaire Page Pays
         ================================================== -->
       <section class="">
@@ -755,16 +756,25 @@ img.olTileImage {
                 <td><?= $rowLeaders['ch_use_login'] ?></td>
                 <td><?= Pays::getPermissionName($rowLeaders['permissions']); ?></td>
                 <td>
-                <?php if($thisPays->getUserPermission() >= Pays::$permissions['dirigeant']): ?>
+                <?php if($_SESSION['userObject']->minStatus('OCGC') ||
+                         $thisPays->getUserPermission() >= Pays::$permissions['dirigeant']): ?>
                     <a class="btn btn-primary" href="../php/Modal/pays_leader_edit.php?user_pays_ID=<?= $rowLeaders['users_pays_ID'] ?>" data-toggle="modal" data-target="#Modal-Monument">Gérer cet utilisateur</a>
                 <?php endif; ?>
                 </td>
-                <td></td>
+                <td>
+                <?php if($_SESSION['userObject']->minStatus('OCGC') ||
+                         $thisPays->getUserPermission() >= Pays::$permissions['dirigeant']): ?>
+                    <a class="btn btn-danger" href="../php/Modal/pays_leader_delete.php?user_pays_ID=<?= $rowLeaders['users_pays_ID'] ?>" data-toggle="modal" data-target="#Modal-Monument"><i class="icon-trash icon-white"></i> Supprimer</a>
+                <?php endif; ?>
+                </td>
                 <td></td>
               </tr>
               <?php } ?>
           </tbody>
         </table>
+
+        <a class="btn btn-primary btn-margin-left" href="../php/Modal/pays_leader_add.php?pays_ID=<?= $thisPays->ch_pay_id ?>" data-toggle="modal" data-target="#Modal-Monument">Ajouter un dirigeant...</a>
+
         </section>
 
 
@@ -825,21 +835,25 @@ img.olTileImage {
                     <a class="btn" href="<?php printf("%s?pageNum_mesvilles=%d%s#mes-villes", $currentPage, min($totalPages_mesvilles, $pageNum_mesvilles + 1), $queryString_mesvilles); ?>"> <i class="icon-forward"></i></a>
                     <?php } // Show if not last page ?>
                 </p>
+              <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
                 <form action="ville_ajouter.php" method="post">
                   <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
                   <input name="user_ID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
                   <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une ville</button>
-                </form></td>
+                </form>
+                <?php endif; ?></td>
             </tr>
           </tfoot>
         </table>
         <?php } else { ?>
-          <h3>Mes villes</h3>
-        <form action="ville_ajouter.php" method="post">
-          <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
-          <input name="user_ID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
-          <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une ville</button>
-        </form>
+            <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
+                <h3>Mes villes</h3>
+                <form action="ville_ajouter.php" method="post">
+                  <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
+                  <input name="user_ID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
+                  <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une ville</button>
+                </form>
+            <?php endif; ?></td>
         <?php } ?>
 
     <!-- Liste des Villes des autres joueurs

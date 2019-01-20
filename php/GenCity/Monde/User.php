@@ -28,6 +28,20 @@ class User extends BaseModel {
 
     }
 
+    static function getUserIdFromLogin($login) {
+
+        $query = mysql_query(sprintf(
+            'SELECT ch_use_id FROM users WHERE ch_use_login = %s',
+                GetSQLValueString($login, 'text')
+            ));
+        $result = mysql_fetch_assoc($query);
+        if(!isset($result)) {
+            return null;
+        }
+        return $result['ch_use_id'];
+
+    }
+
     public function getCountries() {
 
         $query = mysql_query(sprintf('SELECT ch_pay_id, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgdrapeau FROM pays JOIN users_pays ON ch_pay_id = ID_pays AND ID_user = %s', GetSQLValueString($this->model->ch_use_id, 'int')));
@@ -39,12 +53,16 @@ class User extends BaseModel {
 
     }
 
-    public function minStatus($status) {
+    public function minStatus($status, $eq = '>=') {
 
         if(!is_numeric($status))
             $status = self::getUserPermission($status);
 
-        return $this->model->ch_use_statut >= $status;
+        if($eq === '>=')
+            return $this->model->ch_use_statut >= $status;
+
+        else
+            return $this->model->ch_use_statut < $status;
 
     }
 
