@@ -175,13 +175,9 @@ $totalRows_pays = mysql_num_rows($pays);
           <!-- Definir statut du membre -->
           <h3>D&eacute;finir le statut du membre :</h3>
           <div id="spryradio1">
-            <label class="radio" for="ch_use_prov_statut_1">
-              <input name="ch_use_prov_statut" type="radio" id="ch_use_prov_statut_1" value="5" checked="CHECKED" selected="selected">
-              Maire de villes<a href="#" rel="clickover" title="Maire" data-content="Un maire appartient &agrave; un pays. Il peut ajouter des villes qui appartiendront &agrave; son pays, cr&eacute;er des monuments et des communiqu&eacute;s. Il n'aura pas acc&egrave;s au formulaire permettant de modifier la page du pays."><i class="icon-info-sign"></i></a></label>
-            <br>
             <label class="radio" for="ch_use_prov_statut_2">
               <input name="ch_use_prov_statut" type="radio" id="ch_use_prov_statut_2" value="10">
-              Dirigeant de pays<a href="#" rel="clickover" title="Dirigeant" data-content="Le dirigeant d'un pays peut alimenter les diff&eacute;rentes bases de donn&eacute;es au nom de son pays et ajouter des faits historiques"><i class="icon-info-sign"></i></a></label>
+              Membre<a href="#" rel="clickover" title="Membre" data-content="Un compte de base. Généralement vous choisirez cette option lors de la création d'un compte."><i class="icon-info-sign"></i></a></label>
             <br>
              <label class="radio" for="ch_use_statut_5">
                   <input name="ch_use_prov_statut" type="radio" id="ch_use_statut_5" value="15" >
@@ -206,7 +202,7 @@ $totalRows_pays = mysql_num_rows($pays);
           <div class="control-group">
             <label class="control-label" for="ch_use_prov_paysID">Pays associé au membre</label>
             <div class="controls">
-              <select name="ch_use_prov_paysID" id="cch_use_prov_paysID" class="input-xlarge">
+              <select name="ch_use_prov_paysID" id="ch_use_prov_paysID" class="input-xlarge">
                 <option>--S&eacute;lectionnez un pays--</option>
                 <?php do { ?>
                 <option value="<?php echo $row_pays['ch_pay_id']; ?>"><?php echo $row_pays['ch_pay_nom']; ?></option>

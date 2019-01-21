@@ -50,6 +50,9 @@ while($row = mysql_fetch_assoc($updated_list_users_pays)) {
 $queries[] = 'TRUNCATE TABLE users_dispatch_session';
 $queries[] = 'TRUNCATE TABLE users_session';
 
+// Tous les utilisateurs avec un compte de maire basculent vers un compte classique (ex compte dirigeant)
+$queries[] = "UPDATE users SET ch_use_statut = 10 WHERE ch_use_statut = 5";
+
 
 /**********
  * TODO !!!

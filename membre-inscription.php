@@ -47,6 +47,18 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
 
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+
+  $last_user_id = mysql_insert_id();
+
+  // Ajouter l'utilisateur à la liste des dirigeants
+  $insert_users_pays = sprintf(
+      'INSERT INTO users_pays(ID_pays, ID_user, permissions) ' .
+             'VALUES(%s, %s, %s)',
+      GetSQLValueString($_POST['ch_use_paysID'], 'int'),
+      GetSQLValueString($last_user_id, 'int'),
+      10
+  );
+  mysql_query($insert_users_pays) or die(mysql_error());
   
   // Effacement de la clef sur User_provisoire
   $userprov = $row_user_prov['ch_use_prov_ID'];
