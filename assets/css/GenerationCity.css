@@ -1770,9 +1770,7 @@ body > .navbar .brand {
 	background-repeat: no-repeat;
 	background: #417109; /* Old browsers */
 	background: linear-gradient(to bottom, #67b80e 0%, #3c6809 100%); /* W3C */
-	border-bottom-width: 1px;
 	border-top-width: 1px;
-	border-color: #ffffff;
 }
 /* remonte les icones du menu*/
 .icon-accueil, .icon-carte, .icon-pays, .icon-institut, .icon-evenement, .icon-participer, .icon-generation_city {

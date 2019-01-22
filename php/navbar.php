@@ -26,8 +26,8 @@ if(!isset($loginFormAction))
       
       <!-- Menu gestion une fois connecté tablet -->
       <div class="visible-tablet navbar-form menu-gestion menu-gestion-front <?php echo $_SESSION['menu_gestion']?>"><span class="Nav-pseudo">Bienvenue <?php echo $_SESSION['login_user']?>&nbsp;</span>
-        <div><a href="back/membre-modifier_back.php?paysID=<?= $_SESSION['pays_ID'] ?>&userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Mon profil</a></div>
-            <div><a href="back/page_pays_back.php?paysID=<?= $_SESSION['pays_ID'] ?>&userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mon pays</a></div>
+        <div><a href="back/membre-modifier_back.php?userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Mon profil</a></div>
+            <div><a href="back/page_pays_back.php?paysID=<?= $_SESSION['pays_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mon pays</a></div>
         <a href="<?php echo $logoutAction ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a> </div>
       <!-- Logo -->
       <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
@@ -50,8 +50,8 @@ if(!isset($loginFormAction))
         
         <!-- Menu gestion une fois connecté desktop/phone -->
         <div class="hidden-tablet navbar-form <?php echo $_SESSION['menu_gestion']?>">
-            <div><a href="back/membre-modifier_back.php?paysID=<?= $_SESSION['pays_ID'] ?>&userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Mon profil</a></div>
-            <div><a style="margin-top: 3px;" href="back/page_pays_back.php?paysID=<?= $_SESSION['pays_ID'] ?>&userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mon pays</a></div>
+            <div><a href="back/membre-modifier_back.php?userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Mon profil</a></div>
+            <div><a style="margin-top: 3px;" href="back/page_pays_back.php?paysID=<?= $_SESSION['pays_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mon pays</a></div>
             <div class="offset"><span class="Nav-pseudo"><span class="bienvenue">Bienvenue </span><?php echo $_SESSION['login_user']?>&nbsp;</span> <a href="<?php echo $logoutAction ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a></div>
         </div>
         

@@ -6,6 +6,32 @@ mysql_select_db($database_maconnexion, $maconnexion);
 
 $queries = array();
 
+/**********
+ * Création de tables : requêtes à permission avancée, à envoyer à Youcef.
+ **********/
+/*$queries[] = "create table personnage
+(
+	id int auto_increment,
+	entity text default null null,
+	entity_id int null,
+	nom_personnage varchar(191) null,
+    prenom_personnage varchar(191) null,
+    titre_personnage varchar(191) null,
+	predicat varchar(191) null,
+    lien_img varchar(191) null,
+    biographie text null,
+	constraint personnage_pk
+		primary key (id)
+);";*/
+/*$queries[] = "create table users_pays
+(
+  id          int auto_increment
+    primary key,
+  ID_pays     int not null,
+  ID_user     int not null,
+  permissions int not null
+);";*/
+
 
 /**********
  * Ajouter les pays à la nouvelle table.
@@ -29,10 +55,43 @@ if(empty($row_users_pays)) {
 
 }
 
-// Mettre à jour les permissions
-// On a ainsi le niveau de permission :
-//  5 = maire de ville
-// 10 = dirigeant
+
+/**********
+ * Ajouter les personnages à la nouvelle table.
+ **********/
+mysql_data_seek($list_users, 0);
+// Vérifier que la table 'personnages' est vide.
+$query_personnages = mysql_query('SELECT * FROM personnage');
+
+if(empty(mysql_fetch_assoc($query_personnages))) {
+    // Faire en sorte à ne pas ajouter un deuxième personnage pour un même pays.
+    $added_pays = array();
+
+    // Ajouter les personnages
+    while($row = mysql_fetch_assoc($list_users)) {
+        if(in_array($row['ch_use_paysID'], $added_pays, true)) continue;
+        mysql_query(sprintf("INSERT INTO personnage(entity, entity_id, nom_personnage,
+                                prenom_personnage, predicat, titre_personnage, lien_img, biographie)
+                            VALUES(%s, %s, %s, %s, %s, %s, %s, %s)",
+                    GetSQLValueString('pays', 'text'),
+                    GetSQLValueString($row['ch_use_paysID'], 'int'),
+                    GetSQLValueString($row['ch_use_nom_dirigeant'], 'text'),
+                    GetSQLValueString($row['ch_use_prenom_dirigeant'], 'text'),
+                    GetSQLValueString($row['ch_use_predicat_dirigeant'], 'text'),
+                    GetSQLValueString($row['ch_use_titre_dirigeant'], 'text'),
+                    GetSQLValueString($row['ch_use_lien_imgpersonnage'], 'text'),
+                    GetSQLValueString($row['ch_use_biographie_dirigeant'], 'text'))) or die(mysql_error());
+        $added_pays[] = $row['ch_use_paysID'];
+    }
+
+}
+
+
+/**********
+ * Mettre à jour les permissions.
+ * 5 = co-dirigeant
+ * 10 = dirigeant
+ **********/
 $updated_list_users_pays = mysql_query("SELECT * FROM users_pays") or die(mysql_error());
 while($row = mysql_fetch_assoc($updated_list_users_pays)) {
     if($row['permissions'] > 10) {
