@@ -18,6 +18,12 @@ header('Location: ../connexion.php');
 exit();
 }
 
+//Mise a jour parametres donnees personnelles
+$editFormAction = $_SERVER['PHP_SELF'];
+if (isset($_SERVER['QUERY_STRING'])) {
+  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+}
+
 //Récupération variables
 $colname_paysID = $_REQUEST['paysID'];
 unset($_REQUEST['paysID']);
@@ -271,7 +277,10 @@ $_SESSION['last_work'] = "page_pays_back.php";
 // Obtenir liste des dirigeants
 $thisPays = new Pays($row_InfoGenerale['ch_pay_id']);
 $paysLeaders = $thisPays->getLeaders();
-
+$paysPersonnages = $thisPays->getCharacters();
+if(!empty($paysPersonnages)) {
+    $paysPersonnages = $paysPersonnages[0];
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -369,10 +378,11 @@ img.olTileImage {
           <?php }?>
           <p><strong><?php echo $row_InfoGenerale['ch_pay_nom']; ?></strong></p>
           </a></li>
+        <li><a href="#dirigeants">Dirigeants</a></li>
         <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
         <li><a href="#info-generales">Présentation</a></li>
+        <li><a href="#personnage">Personnage</a></li>
         <?php }?>
-        <li><a href="#dirigeants">Dirigeants</a></li>
         <li><a href="#villes">Villes</a></li>
         <li><a href="#routes-campagne">Routes et campagne</a></li>
         <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
@@ -411,6 +421,51 @@ img.olTileImage {
       <div class="clearfix"></div>
 
         <?php renderElement('errormsgs'); ?>
+
+
+  <!-- Dirigeants
+    ================================================== -->
+    <section>
+    <div id="dirigeants" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Pays1.png">
+      <h1>Dirigeants</h1>
+    </div>
+    <table width="539" class="table table-hover">
+      <thead>
+        <tr class="tablehead">
+          <th width="50%" scope="col">Pseudo</th>
+          <th width="35%" scope="col">Permissions</th>
+          <th width="5%" scope="col">&nbsp;</th>
+          <th width="5%" scope="col">&nbsp;</th>
+          <th width="5%" scope="col">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach($paysLeaders as $rowLeaders) { ?>
+          <tr>
+            <td><?= $rowLeaders['ch_use_login'] ?></td>
+            <td><?= Pays::getPermissionName($rowLeaders['permissions']); ?></td>
+            <td>
+            <?php if($_SESSION['userObject']->minStatus('OCGC') ||
+                     $thisPays->getUserPermission() >= Pays::$permissions['dirigeant']): ?>
+                <a class="btn btn-primary" href="../php/Modal/pays_leader_edit.php?user_pays_ID=<?= $rowLeaders['users_pays_ID'] ?>" data-toggle="modal" data-target="#Modal-Monument">Gérer cet utilisateur</a>
+            <?php endif; ?>
+            </td>
+            <td>
+            <?php if($_SESSION['userObject']->minStatus('OCGC') ||
+                     $thisPays->getUserPermission() >= Pays::$permissions['dirigeant']): ?>
+                <a class="btn btn-danger" href="../php/Modal/pays_leader_delete.php?user_pays_ID=<?= $rowLeaders['users_pays_ID'] ?>" data-toggle="modal" data-target="#Modal-Monument"><i class="icon-trash icon-white"></i> Supprimer</a>
+            <?php endif; ?>
+            </td>
+            <td></td>
+          </tr>
+          <?php } ?>
+      </tbody>
+    </table>
+
+    <a class="btn btn-primary btn-margin-left" href="../php/Modal/pays_leader_add.php?pays_ID=<?= $thisPays->ch_pay_id ?>" data-toggle="modal" data-target="#Modal-Monument">Ajouter un dirigeant...</a>
+
+    </section>
+
 
       <?php if ($_SESSION['userObject']->minStatus('OCGC') ||
                 $thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
@@ -734,48 +789,37 @@ img.olTileImage {
       </section>
 
 
-      <!-- Dirigeants
-        ================================================== -->
-        <section>
-        <div id="dirigeants" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Pays1.png">
-          <h1>Dirigeants</h1>
+    <!-- Personnage
+    ================================================== -->
+    <section>
+    <div id="personnage" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Membre1.png">
+      <h1>Personnage</h1>
+    </div>
+    <?php if(empty($paysPersonnages)) { ?>
+    <p>Ce pays n'a pas encore de dirigeant.</p>
+    <?php } else { ?>
+    <div class="row-fluid">
+        <div class="span4">
+            <img src="<?= $paysPersonnages['lien_img'] ?>" />
         </div>
-        <table width="539" class="table table-hover">
-          <thead>
-            <tr class="tablehead">
-              <th width="50%" scope="col">Pseudo</th>
-              <th width="35%" scope="col">Permissions</th>
-              <th width="5%" scope="col">&nbsp;</th>
-              <th width="5%" scope="col">&nbsp;</th>
-              <th width="5%" scope="col">&nbsp;</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach($paysLeaders as $rowLeaders) { ?>
-              <tr>
-                <td><?= $rowLeaders['ch_use_login'] ?></td>
-                <td><?= Pays::getPermissionName($rowLeaders['permissions']); ?></td>
-                <td>
-                <?php if($_SESSION['userObject']->minStatus('OCGC') ||
-                         $thisPays->getUserPermission() >= Pays::$permissions['dirigeant']): ?>
-                    <a class="btn btn-primary" href="../php/Modal/pays_leader_edit.php?user_pays_ID=<?= $rowLeaders['users_pays_ID'] ?>" data-toggle="modal" data-target="#Modal-Monument">Gérer cet utilisateur</a>
-                <?php endif; ?>
-                </td>
-                <td>
-                <?php if($_SESSION['userObject']->minStatus('OCGC') ||
-                         $thisPays->getUserPermission() >= Pays::$permissions['dirigeant']): ?>
-                    <a class="btn btn-danger" href="../php/Modal/pays_leader_delete.php?user_pays_ID=<?= $rowLeaders['users_pays_ID'] ?>" data-toggle="modal" data-target="#Modal-Monument"><i class="icon-trash icon-white"></i> Supprimer</a>
-                <?php endif; ?>
-                </td>
-                <td></td>
-              </tr>
-              <?php } ?>
-          </tbody>
-        </table>
+        <div class="span8">
+            <h3>
+                <?= $paysPersonnages['predicat'] ?>
+                <?= $paysPersonnages['prenom_personnage'] ?>
+                <?= $paysPersonnages['nom_personnage'] ?></h3>
+            <small><?= $paysPersonnages['titre_personnage'] ?></small>
 
-        <a class="btn btn-primary btn-margin-left" href="../php/Modal/pays_leader_add.php?pays_ID=<?= $thisPays->ch_pay_id ?>" data-toggle="modal" data-target="#Modal-Monument">Ajouter un dirigeant...</a>
 
-        </section>
+          <form class="form-horizontal" action="avatar_modifier.php" method="post">
+            <input name="userID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
+            <button class="btn btn-primary" type="submit" title="Chargez une nouvelle image sur le serveur">Modifier avatar</button>
+          </form>
+          <a href="#ModalPers" role="button" class="btn btn-primary" data-toggle="modal">Modifier personnage</a>
+        </div>
+    </div>
+    <?php } ?>
+
+    </section>
 
 
       <!-- Liste des Villes du membre
@@ -1091,6 +1135,102 @@ include('../php/communiques-back.php'); ?>
       <?php } // Affichage si sup ou egal à dirigeant ?>
     </div>
   </div>
+
+
+    <!-- Formulaire Personnage
+        ================================================== -->
+<!-- Modal -->
+<div id="ModalPers" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalPersLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Informations Personnage</h3>
+  </div>
+  <div class="modal-body">
+  <form action="membre-modifier_back.php" name="InfoUser" method="POST" class="form-horizontal" id="InfoUser">
+
+      <input name="personnage_id" type="hidden" value="<?php echo $paysPersonnages['id']; ?>">
+    <!-- Predicat -->
+    <div class="control-group">
+      <label class="control-label" for="ch_use_predicat_dirigeant">Pr&eacute;dicat <a href="#" rel="clickover" title="Pr&eacute;dicat" data-content="Lorsque votre dirigeant sera nomm&eacute;, notamment lors des c&eacute;r&eacute;monies protocolaires, sp&eacute;cifiez quelle appellation doit être utilis&eacute;e. Le pr&eacute;dicat pr&eacute;c&egrave;de le nom et le pr&eacute;nom"><i class="icon-info-sign"></i></a></label>
+      <div class="controls">
+        <select name="ch_use_predicat_dirigeant" id="ch_use_predicat_dirigeant" class="input-xlarge">
+          <option value="" <?php if (!(strcmp("", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>aucun</option>
+          <option value="Chef" selected="selected" <?php if (!(strcmp("Chef", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Chef</option>
+          <option value="Le Capricieux" <?php if (!(strcmp("Le Capricieux", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Le Capricieux</option>
+          <option value="L'Ignoblissime" <?php if (!(strcmp("L\'Ignoblissime", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>L'Ignoblissime</option>
+          <option value="L'Incorrigible" <?php if (!(strcmp("L\'Incorrigible", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>L'Incorrigible</option>
+          <option value="L'Intraitable" <?php if (!(strcmp("L\'Intraitable", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>L'Intraitable</option>
+          <option value="Le Terrible" <?php if (!(strcmp("Le Terrible", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Le Terrible</option>
+          <option value="Le Très honorable" <?php if (!(strcmp("Le Très honorable", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Le Tr&egrave;s honorable</option>
+          <option value="Madame" <?php if (!(strcmp("Madame", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Madame</option>
+          <option value="Mademoiselle" <?php if (!(strcmp("Mademoiselle", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Mademoiselle</option>
+          <option value="Messire" <?php if (!(strcmp("Messire", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Messire</option>
+          <option value="Monseigneur" <?php if (!(strcmp("Monseigneur", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Monseigneur</option>
+          <option value="Monsieur" <?php if (!(strcmp("Monsieur", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Monsieur</option>
+          <option value="Notre Guide" <?php if (!(strcmp("Notre Guide", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Notre Guide</option>
+          <option value="Notre Guide suprême" <?php if (!(strcmp("Notre Guide suprême", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Notre Guide supr&ecirc;me</option>
+          <option value="Notre Grandeur" <?php if (!(strcmp("Notre Grandeur", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Notre Grandeur</option>
+          <option value="Sa Grâce" <?php if (!(strcmp("Sa Grâce", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Sa Gr&acirc;ce</option>
+          <option value="Sa Haute Excellence" <?php if (!(strcmp("Sa Haute Excellence", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Sa Haute Excellence</option>
+          <option value="Sa Haute Naissance" <?php if (!(strcmp("Sa Haute Naissance", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Sa Haute Naissance</option>
+          <option value="Sa Majesté" <?php if (!(strcmp("Sa Majesté", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Sa Majest&eacute;</option>
+          <option value="Sa Majesté impériale" <?php if (!(strcmp("Sa Majesté impériale", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Sa Majest&eacute; imp&eacute;riale</option>
+          <option value="Sa Sainteté" <?php if (!(strcmp("Sa Sainteté", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Sa Saintet&eacute;</option>
+          <option value="Son Altesse" <?php if (!(strcmp("Son Altesse", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Son Altesse</option>
+          <option value="Son Altesse illustrissime" <?php if (!(strcmp("Son Altesse illustrissime", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Son Altesse illustrissime</option>
+          <option value="Son Altesse impériale" <?php if (!(strcmp("Son Altesse impériale", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Son Altesse imp&eacute;riale</option>
+          <option value="Son Altesse royale" <?php if (!(strcmp("Son Altesse royale", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Son Altesse royale</option>
+          <option value="Son Altesse sérénissime" <?php if (!(strcmp("Son Altesse sérénissime", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Son Altesse s&eacute;r&eacute;nissime</option>
+          <option value="Son illustrissime Luminescence" <?php if (!(strcmp("Son illustrissime Luminescence", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Son illustrissime Luminescence</option>
+          <option value="Son Excellence" <?php if (!(strcmp("Son Excellence", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Son Excellence</option>
+          <option value="Son éminence" <?php if (!(strcmp("Son éminence", $paysPersonnages['predicat']))) {echo "selected=\"selected\"";} ?>>Son &eacute;minence </option>
+        </select>
+      </div>
+    </div>
+    <!-- Nom dirigeant -->
+    <div id="sprytextfield31" class="control-group">
+      <label class="control-label" for="ch_use_nom_dirigeant">Nom du dirigeant <a href="#" rel="clickover" title="Nom du dirigeant" data-content="50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
+      <div class="controls">
+        <input class="input-xlarge" name="ch_use_nom_dirigeant" type="text" id="ch_use_nom_dirigeant" value="<?php echo $paysPersonnages['nom_personnage']; ?>" maxlength="50">
+        <br>
+        <span class="textfieldMaxCharsMsg">50 caract&egrave;res max.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>
+    </div>
+    <!-- Prenom dirigeant -->
+    <div id="sprytextfield32" class="control-group">
+      <label class="control-label" for="ch_use_prenom_dirigeant">Pr&eacute;nom du dirigeant <a href="#" rel="clickover" title="pr&eacute;nom du dirigeant" data-content="50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
+      <div class="controls">
+        <input class="input-xlarge" name="ch_use_prenom_dirigeant" type="text" id="ch_use_prenom_dirigeant" value="<?php echo $paysPersonnages['prenom_personnage']; ?>" maxlength="50">
+        <br>
+        <span class="textfieldMaxCharsMsg">50 caract&egrave;res max.</span></div>
+    </div>
+    <!-- Titre dirigeant -->
+    <div id="sprytextfield33" class="control-group">
+      <label class="control-label" for="ch_use_titre_dirigeant">Titre du dirigeant <a href="#" rel="clickover" title="Titre du dirigeant" data-content="Le titre doit faire r&eacute;f&eacute;rence au syst&egrave;me politique et citer le nom de votre pays. Par exemple : Pr&eacute;sident de la r&eacute;publique fran&ccedil;aise. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
+      <div class="controls">
+        <input class="input-xlarge" name="ch_use_titre_dirigeant" type="text" id="ch_use_titre_dirigeant" value="<?php echo $paysPersonnages['titre_personnage']; ?>" maxlength="250">
+        <br>
+        <span class="textfieldMaxCharsMsg">50 caract&egrave;res max.</span></div>
+    </div>
+    <!-- Biographie dirigeant -->
+    <div id="sprytextarea30" class="control-group">
+      <label class="control-label" for="ch_use_biographie_dirigeant">Biographie <a href="#" rel="clickover" title="Biographie" data-content="Donnez en quelques lignes des informations qui permettrons &agrave; vos homologues du Monde GC de mieux cerner votre personnage. 500 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
+      <div class="controls">
+        <textarea rows="6" name="ch_use_biographie_dirigeant" class="input-xlarge" id="ch_use_biographie_dirigeant"><?php echo $paysPersonnages['biographie']; ?></textarea>
+        <br>
+        <span class="textareaMaxCharsMsg">500 caract&egrave;res max.</span></div>
+    </div>
+    </div>
+    <div class="modal-footer">
+      <!-- Bouton envoyer
+        ================================================== -->
+      <button data-dismiss="modal" aria-hidden="true" class="btn">Fermer</button>
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+      <input type="hidden" name="MM_update" value="InfoUser">
+    </div>
+  </form>
+</div>
+
+
 </div>
 </div>
 <!-- MESSAGE EN CAS DE PAYS ARCHIVE
@@ -1164,6 +1304,10 @@ var sprytextarea7 = new Spry.Widget.ValidationTextarea("sprytextarea7", {maxChar
 var sprytextarea8 = new Spry.Widget.ValidationTextarea("sprytextarea8", {maxChars:250, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 var sprytextarea9 = new Spry.Widget.ValidationTextarea("sprytextarea9", {maxChars:250, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 var sprytextarea10 = new Spry.Widget.ValidationTextarea("sprytextarea10", {maxChars:500, validateOn:["change"], isRequired:false, useCharacterMasking:false});
+var sprytextfield31 = new Spry.Widget.ValidationTextField("sprytextfield31", "none", {maxChars:50, validateOn:["change"]});
+var sprytextfield32 = new Spry.Widget.ValidationTextField("sprytextfield32", "none", {isRequired:false, maxChars:50, validateOn:["change"]});
+var sprytextfield33 = new Spry.Widget.ValidationTextField("sprytextfield33", "none", {isRequired:false, maxChars:50, validateOn:["change"]});
+var sprytextarea30 = new Spry.Widget.ValidationTextarea("sprytextarea30", {maxChars:500, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
 <?php
 mysql_free_result($mesvilles);
@@ -1175,4 +1319,3 @@ mysql_free_result($InfoGenerale);
 mysql_free_result($User);
 
 mysql_free_result($fait_hist);
-?>

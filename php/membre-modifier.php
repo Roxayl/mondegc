@@ -94,7 +94,7 @@ $totalRows_pays = mysql_num_rows($pays);
             Membre Banni <a href="#" rel="clickover" title="Membre Banni" data-content="Le membre ne pourra plus se connecter au site, acc&eacute;der aux formulaires ou poster des messages" data-placement="bottom"><i class="icon-info-sign"></i></a></label>
         </div>
       </div>
-      <!-- Definir statut du membre -->
+          <!-- Definir statut du membre -->
       <div id="spryradio10" class="control-group"> <span class="control-label">Statut</span>
         <div class="controls">
           <label class="radio" for="ch_use_statut_1">
@@ -181,109 +181,11 @@ $totalRows_pays = mysql_num_rows($pays);
     </div>
   </form>
 </div>
-<!-- Formulaire Personnage
-        ================================================== --> 
-<!-- Modal -->
-<div id="ModalPers" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="ModalPersLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Informations Personnage</h3>
-  </div>
-  <div class="modal-body">
-  <form action="<?php echo $editFormAction; ?>" name="InfoUser" method="POST" class="form-horizontal" id="InfoUser">
-    <input name="ch_use_id" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
-    <input name="userID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
-    <!-- Diplomatie
-        ================================================== -->
-    <input name="ch_use_id" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
-    <!-- Predicat -->
-    <div class="control-group">
-      <label class="control-label" for="ch_use_predicat_dirigeant">Pr&eacute;dicat <a href="#" rel="clickover" title="Pr&eacute;dicat" data-content="Lorsque votre dirigeant sera nomm&eacute;, notamment lors des c&eacute;r&eacute;monies protocolaires, sp&eacute;cifiez quelle appellation doit être utilis&eacute;e. Le pr&eacute;dicat pr&eacute;c&egrave;de le nom et le pr&eacute;nom"><i class="icon-info-sign"></i></a></label>
-      <div class="controls">
-        <select name="ch_use_predicat_dirigeant" id="ch_use_predicat_dirigeant" class="input-xlarge">
-          <option value="" <?php if (!(strcmp("", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>aucun</option>
-          <option value="Chef" selected="selected" <?php if (!(strcmp("Chef", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Chef</option>
-          <option value="Le Capricieux" <?php if (!(strcmp("Le Capricieux", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Le Capricieux</option>
-          <option value="L'Ignoblissime" <?php if (!(strcmp("L\'Ignoblissime", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>L'Ignoblissime</option>
-          <option value="L'Incorrigible" <?php if (!(strcmp("L\'Incorrigible", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>L'Incorrigible</option>
-          <option value="L'Intraitable" <?php if (!(strcmp("L\'Intraitable", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>L'Intraitable</option>
-          <option value="Le Terrible" <?php if (!(strcmp("Le Terrible", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Le Terrible</option>
-          <option value="Le Très honorable" <?php if (!(strcmp("Le Très honorable", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Le Tr&egrave;s honorable</option>
-          <option value="Madame" <?php if (!(strcmp("Madame", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Madame</option>
-          <option value="Mademoiselle" <?php if (!(strcmp("Mademoiselle", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Mademoiselle</option>
-          <option value="Messire" <?php if (!(strcmp("Messire", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Messire</option>
-          <option value="Monseigneur" <?php if (!(strcmp("Monseigneur", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Monseigneur</option>
-          <option value="Monsieur" <?php if (!(strcmp("Monsieur", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Monsieur</option>
-          <option value="Notre Guide" <?php if (!(strcmp("Notre Guide", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Notre Guide</option>
-          <option value="Notre Guide suprême" <?php if (!(strcmp("Notre Guide suprême", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Notre Guide supr&ecirc;me</option>
-          <option value="Notre Grandeur" <?php if (!(strcmp("Notre Grandeur", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Notre Grandeur</option>
-          <option value="Sa Grâce" <?php if (!(strcmp("Sa Grâce", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Sa Gr&acirc;ce</option>
-          <option value="Sa Haute Excellence" <?php if (!(strcmp("Sa Haute Excellence", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Sa Haute Excellence</option>
-          <option value="Sa Haute Naissance" <?php if (!(strcmp("Sa Haute Naissance", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Sa Haute Naissance</option>
-          <option value="Sa Majesté" <?php if (!(strcmp("Sa Majesté", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Sa Majest&eacute;</option>
-          <option value="Sa Majesté impériale" <?php if (!(strcmp("Sa Majesté impériale", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Sa Majest&eacute; imp&eacute;riale</option>
-          <option value="Sa Sainteté" <?php if (!(strcmp("Sa Sainteté", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Sa Saintet&eacute;</option>
-          <option value="Son Altesse" <?php if (!(strcmp("Son Altesse", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Son Altesse</option>
-          <option value="Son Altesse illustrissime" <?php if (!(strcmp("Son Altesse illustrissime", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Son Altesse illustrissime</option>
-          <option value="Son Altesse impériale" <?php if (!(strcmp("Son Altesse impériale", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Son Altesse imp&eacute;riale</option>
-          <option value="Son Altesse royale" <?php if (!(strcmp("Son Altesse royale", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Son Altesse royale</option>
-          <option value="Son Altesse sérénissime" <?php if (!(strcmp("Son Altesse sérénissime", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Son Altesse s&eacute;r&eacute;nissime</option>
-          <option value="Son illustrissime Luminescence" <?php if (!(strcmp("Son illustrissime Luminescence", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Son illustrissime Luminescence</option>
-          <option value="Son Excellence" <?php if (!(strcmp("Son Excellence", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Son Excellence</option>
-          <option value="Son éminence" <?php if (!(strcmp("Son éminence", $row_User['ch_use_predicat_dirigeant']))) {echo "selected=\"selected\"";} ?>>Son &eacute;minence </option>
-        </select>
-      </div>
-    </div>
-    <!-- Nom dirigeant -->
-    <div id="sprytextfield11" class="control-group">
-      <label class="control-label" for="ch_use_nom_dirigeant">Nom du dirigeant <a href="#" rel="clickover" title="Nom du dirigeant" data-content="50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
-      <div class="controls">
-        <input class="input-xlarge" name="ch_use_nom_dirigeant" type="text" id="ch_use_nom_dirigeant" value="<?php echo $row_User['ch_use_nom_dirigeant']; ?>" maxlength="50">
-        <br>
-        <span class="textfieldMaxCharsMsg">50 caract&egrave;res max.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>
-    </div>
-    <!-- Prenom dirigeant -->
-    <div id="sprytextfield12" class="control-group">
-      <label class="control-label" for="ch_use_prenom_dirigeant">Pr&eacute;nom du dirigeant <a href="#" rel="clickover" title="pr&eacute;nom du dirigeant" data-content="50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
-      <div class="controls">
-        <input class="input-xlarge" name="ch_use_prenom_dirigeant" type="text" id="ch_use_prenom_dirigeant" value="<?php echo $row_User['ch_use_prenom_dirigeant']; ?>" maxlength="50">
-        <br>
-        <span class="textfieldMaxCharsMsg">50 caract&egrave;res max.</span></div>
-    </div>
-    <!-- Titre dirigeant -->
-    <div id="sprytextfield13" class="control-group">
-      <label class="control-label" for="ch_use_titre_dirigeant">Titre du dirigeant <a href="#" rel="clickover" title="Titre du dirigeant" data-content="Le titre doit faire r&eacute;f&eacute;rence au syst&egrave;me politique et citer le nom de votre pays. Par exemple : Pr&eacute;sident de la r&eacute;publique fran&ccedil;aise. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
-      <div class="controls">
-        <input class="input-xlarge" name="ch_use_titre_dirigeant" type="text" id="ch_use_titre_dirigeant" value="<?php echo $row_User['ch_use_titre_dirigeant']; ?>" maxlength="250">
-        <br>
-        <span class="textfieldMaxCharsMsg">50 caract&egrave;res max.</span></div>
-    </div>
-    <!-- Biographie dirigeant -->
-    <div id="sprytextarea10" class="control-group">
-      <label class="control-label" for="ch_use_biographie_dirigeant">Biographie <a href="#" rel="clickover" title="Biographie" data-content="Donnez en quelques lignes des informations qui permettrons &agrave; vos homologues du Monde GC de mieux cerner votre personnage. 500 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
-      <div class="controls">
-        <textarea rows="6" name="ch_use_biographie_dirigeant" class="input-xlarge" id="ch_use_biographie_dirigeant"><?php echo $row_User['ch_use_biographie_dirigeant']; ?></textarea>
-        <br>
-        <span class="textareaMaxCharsMsg">500 caract&egrave;res max.</span></div>
-    </div>
-    </div>
-    <div class="modal-footer"> 
-      <!-- Bouton envoyer
-        ================================================== -->
-      <button data-dismiss="modal" aria-hidden="true" class="btn">Fermer</button>
-      <button type="submit" class="btn btn-primary">Enregistrer</button>
-      <input type="hidden" name="MM_update" value="InfoUser">
-    </div>
-  </form>
-</div>
+
 <!-- SPRY ASSETS --> 
 <script type="text/javascript">
 var spryradio10 = new Spry.Widget.ValidationRadio("spryradio10", {validateOn:["change"]});
-var sprytextfield11 = new Spry.Widget.ValidationTextField("sprytextfield11", "none", {maxChars:50, validateOn:["change"]});
-var sprytextfield12 = new Spry.Widget.ValidationTextField("sprytextfield12", "none", {isRequired:false, maxChars:50, validateOn:["change"]});
-var sprytextfield13 = new Spry.Widget.ValidationTextField("sprytextfield13", "none", {isRequired:false, maxChars:50, validateOn:["change"]});
 var sprytextfield14 = new Spry.Widget.ValidationTextField("sprytextfield14", "none", {minChars:2, maxChars:35, validateOn:["change"]});
-var sprytextarea10 = new Spry.Widget.ValidationTextarea("sprytextarea10", {maxChars:500, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 <?php if ($_SESSION['user_ID'] == $row_User['ch_use_id']) {?>
 var sprypassword10 = new Spry.Widget.ValidationPassword("sprypassword10", {minChars:2, validateOn:["change"], maxChars:32});
 var spryconfirm10 = new Spry.Widget.ValidationConfirm("spryconfirm10", "ch_use_password", {validateOn:["change"]});

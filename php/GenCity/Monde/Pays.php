@@ -34,6 +34,21 @@ class Pays extends BaseModel {
 
     }
 
+    public function getCharacters() {
+
+        $query = mysql_query(sprintf(
+            "SELECT id, entity, entity_id, nom_personnage, predicat, prenom_personnage, biographie,
+            titre_personnage, lien_img FROM personnage
+            WHERE entity = 'pays' AND entity_id = %s",
+            GetSQLValueString($this->model->ch_pay_id, 'int')));
+        $result = array();
+        while($row = mysql_fetch_assoc($query)) {
+            $result[] = $row;
+        }
+        return $result;
+
+    }
+
     public function addLeader(User $user, $permission) {
 
         mysql_query(sprintf(

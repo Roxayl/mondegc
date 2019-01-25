@@ -72,27 +72,32 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
 
 //Mise a jour profil infos personnage
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
-	if ($_POST['ch_use_acces_checkbox'] == true) {
-$_POST['ch_use_acces'] = NULL;
-} else {
-$_POST['ch_use_acces'] = 1;
-}
-  $updateSQL = sprintf("UPDATE users SET ch_use_predicat_dirigeant=%s, ch_use_titre_dirigeant=%s, ch_use_nom_dirigeant=%s, ch_use_prenom_dirigeant=%s, ch_use_biographie_dirigeant=%s WHERE ch_use_id=%s",
-                       GetSQLValueString($_POST['ch_use_predicat_dirigeant'], "text"),
-                       GetSQLValueString($_POST['ch_use_titre_dirigeant'], "text"),
-                       GetSQLValueString($_POST['ch_use_nom_dirigeant'], "text"),
-                       GetSQLValueString($_POST['ch_use_prenom_dirigeant'], "text"),
-                       GetSQLValueString($_POST['ch_use_biographie_dirigeant'], "text"),
-                       GetSQLValueString($_POST['ch_use_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
-  $updateGoTo = "membre-modifier_back.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
-  header(sprintf("Location: %s", $updateGoTo));
+	$updateSQL = sprintf("UPDATE personnage SET nom_personnage = %s, predicat = %s,
+                      prenom_personnage = %s, biographie = %s, titre_personnage = %s
+                      WHERE id = %s",
+        GetSQLValueString($_POST['ch_use_nom_dirigeant'], 'text'),
+        GetSQLValueString($_POST['ch_use_predicat_dirigeant'], 'text'),
+        GetSQLValueString($_POST['ch_use_prenom_dirigeant'], 'text'),
+        GetSQLValueString($_POST['ch_use_biographie_dirigeant'], "text"),
+        GetSQLValueString($_POST['ch_use_titre_dirigeant'], "text"),
+        GetSQLValueString($_POST['personnage_id'], "int"));
+
+	$selectSQL = mysql_query(sprintf('SELECT entity_id FROM personnage WHERE id = %s',
+        GetSQLValueString($_POST['personnage_id'], 'int')));
+	$personnageData = mysql_fetch_assoc($selectSQL);
+	$thisPays = new \GenCity\Monde\Pays($personnageData['entity_id']);
+
+    mysql_select_db($database_maconnexion, $maconnexion);
+    $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+
+    $updateGoTo = "page_pays_back.php?paysID={$thisPays->ch_pay_id}";
+    if (isset($_SERVER['QUERY_STRING'])) {
+        $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
+        $updateGoTo .= $_SERVER['QUERY_STRING'];
+    }
+    header(sprintf("Location: %s", $updateGoTo));
+    exit;
 }
 
 
