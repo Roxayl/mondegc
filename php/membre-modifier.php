@@ -1,5 +1,7 @@
 <?php require_once('../Connections/maconnexion.php'); ?>
-<?php session_start();
+<?php
+if(!isset($_SESSION))
+    session_start();
 
 switch ($row_User['ch_use_statut']) {
 case "5" : 
@@ -31,22 +33,12 @@ $totalRows_pays = mysql_num_rows($pays);
   <div class="row-fluid"> 
     <!-- image personnage -->
     <div class="span3">
-      <?php if ($row_User['ch_use_lien_imgpersonnage']) {?>
-      <img src="<?php echo $row_User['ch_use_lien_imgpersonnage']; ?>" alt="Personnage" width="250" height="250" title="Personnage">
-      <?php } else {  ?>
-      <img src="../assets/img/imagesdefaut/personnage.jpg" alt="Personnage" width="250" height="250" title="Personnage">
-      <?php } ?>
     </div>
     <!-- donnees personnage -->
-    <div class="span5">
-      <p><em><?php echo $row_User['ch_use_predicat_dirigeant']; ?></em></p>
-      <p><strong><?php echo $row_User['ch_use_nom_dirigeant']; ?></strong></p>
-      <p><?php echo $row_User['ch_use_prenom_dirigeant']; ?></p>
-      <p><em><?php echo $row_User['ch_use_titre_dirigeant']; ?></em></p>
-      <p><?php echo $row_User['ch_use_biographie_dirigeant']; ?></p>
+    <div class="span4">
     </div>
     <!-- donnees personnelles -->
-    <div class="span4">
+    <div class="span5">
       <p><strong>Statut :</strong> <?php echo $Rang_statut; ?></p>
       <p><strong>Login :</strong> <?php echo $row_User['ch_use_login']; ?></p>
       <p><strong>Mail :</strong> <?php echo $row_User['ch_use_mail']; ?></p>
@@ -55,14 +47,8 @@ $totalRows_pays = mysql_num_rows($pays);
   <div class="row-fluid"> 
     <!-- bouton upload image personnage -->
     <div class="span3">
-      <form class="form-horizontal" action="avatar_modifier.php" method="post">
-        <input name="userID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
-        <button class="btn btn-primary" type="submit" title="Chargez une nouvelle image sur le serveur">Modifier avatar</button>
-      </form>
     </div>
-    <div class="span5"> 
-      <!-- Button to trigger modal --> 
-      <a href="#ModalPers" role="button" class="btn btn-primary" data-toggle="modal">Modifier personnage</a>
+    <div class="span5">
       <p class="visible-phone">&nbsp;</p>
     </div>
     <div class="span4"> 
@@ -70,6 +56,8 @@ $totalRows_pays = mysql_num_rows($pays);
       <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Paramètres compte</a> </div>
   </div>
 </div>
+
+
 <!-- Formulaire profil
         ================================================== --> 
 <!-- Modal -->

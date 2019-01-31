@@ -316,7 +316,7 @@ do {  ?>
 <!-- Titre
         ================================================== -->
 <div id="titre_institut" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Membre1.png">
-  <h1>G&eacute;rer mon personnage</h1>
+  <h1>G&eacute;rer mon compte</h1>
 </div>
 <!-- Formulaires de modification du personnage
      ================================================== -->

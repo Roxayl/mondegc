@@ -1,10 +1,8 @@
 <?php
-if (isset($_POST['userID']))  {
-$colname_user = $_POST['userID'];
-unset($_POST['userID']);
-}else{
-$userID = 0;
-}
+
+$colname_user = $_SESSION['userObject']->ch_use_id;
+$userID = $_SESSION['userObject']->ch_use_id;
+
 if (isset($_POST['maxwidth']) )  {
 $maxwidth = $_POST['maxwidth'];
 }else{

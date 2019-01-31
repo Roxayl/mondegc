@@ -1,6 +1,6 @@
 <?php
-session_start();
 require_once('../Connections/maconnexion.php');
+session_start();
 //deconnexion
 include('../php/logout.php');
 
@@ -15,7 +15,6 @@ exit();
 
 ?>
 <?php
-session_start();
 
 $colname_ch_vil_confimation_suppression = "-1";
 if (isset($_POST['ville-ID'])) {

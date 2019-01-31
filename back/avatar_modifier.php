@@ -1,6 +1,9 @@
 <?php
-session_start();
+
+use GenCity\Monde\Pays;
+
 require_once('../Connections/maconnexion.php');
+session_start();
  
 //deconnexion
 include('../php/logout.php');
@@ -13,19 +16,30 @@ header('Location: ../connexion.php');
 exit();
 }
 
-//R�cup�ration variables
-$colname_user = $_SESSION['user_ID'];
-if (isset($_POST['userID'])) {
-  $colname_user = $_POST['userID'];
-  unset($_POST['userID']);
+$pays_ID = 0;
+if(isset($_GET['paysID'])) {
+    $pays_ID = (int)$_GET['paysID'];
 }
+
+$thisPays = new Pays($pays_ID);
+$character = $thisPays->getCharacters();
+if(empty($character)) {
+    getErrorMessage('error', "Ce personnage ou pays n'existe pas.");
+    exit;
+}
+$character = $character[0];
+if($thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
+    getErrorMessage('error', "Vous ne pouvez pas modifier l'avatar de ce membre.");
+    exit;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
 <head>
 <meta charset="iso-8859-1">
-<title>Modifier le drapeau de mon pays</title>
+<title>Modifier l'avatar</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -76,35 +90,37 @@ if (isset($_POST['userID'])) {
     <section>
       <?php include('../php/upload.php');
 if (isset($uploadconfirm)) {
-  $updateSQL = sprintf("UPDATE users SET ch_use_lien_imgpersonnage=%s WHERE ch_use_id=%s",
+  $updateSQL = sprintf("UPDATE personnage SET lien_img=%s WHERE entity='pays' AND entity_id=%s",
                        GetSQLValueString($link, "text"),
-                       GetSQLValueString($colname_user, "int"));
+                       GetSQLValueString($pays_ID, "int"));
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
-}
 
-mysql_select_db($database_maconnexion, $maconnexion);
-$query_avatar = sprintf("SELECT ch_use_id, ch_use_predicat_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_lien_imgpersonnage FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_user, "int"));
-$avatar = mysql_query($query_avatar, $maconnexion) or die(mysql_error());
-$row_avatar = mysql_fetch_assoc($avatar);
-$totalRows_avatar = mysql_num_rows($avatar);
+  getErrorMessage('success', "L'avatar a été modifié avec succès !");
+
+  getErrorMessage('success', "Lien img : {$link}");
+}
 ?>
       
       <!-- Debut formulaire -->
-      <div class="well well-large"> 
+      <div class="well well-large">
+
+        <?php renderElement('errormsgs'); ?>
+
         <!-- Image de contr�le drapeau --> 
-        <img src="<?php echo $row_avatar['ch_use_lien_imgpersonnage']; ?>" alt="avatar <?php echo $row_avatar['ch_use_nom_dirigeant']; ?>" title="drapeau <?php echo $row_avatar['ch_use_nom_dirigeant']; ?>>">
+        <img src="<?php echo $character['lien_img']; ?>" alt="avatar <?php echo $character['nom_personnage']; ?>" title="drapeau <?php echo $character['nom_personnage']; ?>>">
         <p>&nbsp;</p>
-        <p><?php echo $row_avatar['ch_use_predicat_dirigeant']; ?> <?php echo $row_avatar['ch_use_nom_dirigeant']; ?> <?php echo $row_avatar['ch_use_prenom_dirigeant']; ?>
+        <p><?php echo $character['predicat']; ?> <strong><?php echo $character['prenom_personnage']; ?> <?php echo $character['nom_personnage']; ?></strong>
         <p>&nbsp;</p>
-        <form action="avatar_modifier.php" method="post" enctype="multipart/form-data">
+        <form action="avatar_modifier.php?paysID=<?= $thisPays->ch_pay_id ?>" method="post" enctype="multipart/form-data">
           <input type="file" name="fileToUpload" id="fileToUpload" data-filename-placement="inside" title="Choisir une nouvelle image">
-          <input name="userID" id="userID" type="hidden" value="<?php echo $colname_user; ?>">
+          <input name="paysID" id="paysID" type="hidden" value="<?= $thisPays->ch_pay_id ?>">
           <input name="maxwidth" id="maxwidth" type="hidden" value="250">
           <input name="ThumbMaxwidth" id="ThumbMaxwidth" type="hidden" value="100">
           <input name="SmallThumbMaxwidth" id="SmallThumbMaxwidth" type="hidden" value="50">
           <input type="submit" name="submit" value="Envoyer" class="btn btn-primary"/>
-          <a class="btn btn-primary" href="membre-modifier_back.php" title="Retour &agrave; la page de gestion de votre profil">Retour</a>
+          <a class="btn btn-primary" href="page_pays_back.php?paysID=<?= $thisPays->ch_pay_id ?>#personnage"
+             title="Retour &agrave; la page de gestion de votre profil">Retour</a>
         </form>
       </div>
     </section>

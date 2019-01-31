@@ -475,9 +475,11 @@ img.olTileImage {
         <div id="info-generales" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Pays1.png">
           <h1>Présentation du pays</h1>
         </div>
-        <div class="alert alert-success">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; votre pays et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Compl&eacute;tez-le au fur et &agrave; mesure que votre pays grandi. </div>
+          <div class="well">
+              <p>Gérez les informations qui seront affich&eacute;es sur la page consacr&eacute;e &agrave; votre
+                  pays et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Compl&eacute;tez-le au fur et &agrave; mesure que
+                  votre pays grandit. </p>
+          </div>
         <form action="<?php echo $editFormAction; ?>" name="InfoHeader" method="POST" class="form-horizontal" id="InfoHeader">
           <div class="accordion" id="accordion2"> 
             <!-- Boutons cachés -->
@@ -795,6 +797,9 @@ img.olTileImage {
     <div id="personnage" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Membre1.png">
       <h1>Personnage</h1>
     </div>
+    <div class="well">
+        <p>Ici, vous pourrez gérer le personnage représentant le dirigeant de votre pays.</p>
+    </div>
     <?php if(empty($paysPersonnages)) { ?>
     <p>Ce pays n'a pas encore de dirigeant.</p>
     <?php } else { ?>
@@ -808,13 +813,11 @@ img.olTileImage {
                 <?= $paysPersonnages['prenom_personnage'] ?>
                 <?= $paysPersonnages['nom_personnage'] ?></h3>
             <small><?= $paysPersonnages['titre_personnage'] ?></small>
-
-
-          <form class="form-horizontal" action="avatar_modifier.php" method="post">
-            <input name="userID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
-            <button class="btn btn-primary" type="submit" title="Chargez une nouvelle image sur le serveur">Modifier avatar</button>
-          </form>
-          <a href="#ModalPers" role="button" class="btn btn-primary" data-toggle="modal">Modifier personnage</a>
+            <br>
+        <p><a href="avatar_modifier.php?paysID=<?= $thisPays->model->ch_pay_id ?>"
+             class="btn btn-primary">Modifier l'avatar du personnage</a></p>
+         <p><a href="#ModalPers" role="button" class="btn btn-primary" data-toggle="modal">Modifier personnage</a>
+        </p>
         </div>
     </div>
     <?php } ?>
