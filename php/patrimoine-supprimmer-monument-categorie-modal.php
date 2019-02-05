@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
@@ -21,7 +21,7 @@ $totalRows_mon = mysql_num_rows($mon);
 
 <!-- Modal Header-->
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
 <h3 id="myModalLabel">Enlever <?php echo $row_mon['ch_pat_nom']; ?> de la cat&eacute;gorie <?php echo $row_mon['ch_mon_cat_nom']; ?> </h3>
           </div>
           <div class="modal-body">

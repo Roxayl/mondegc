@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
@@ -22,13 +22,13 @@ $row_group_info = mysql_fetch_assoc($group_info);
 $totalRows_group_info = mysql_num_rows($group_info);
 
 $msgHead = "[center][img]".$row_group_info['ch_mem_group_icon']."[/img]
-[size=16][url=http://www.generation-city.com/monde/politique.php?mem_groupID=".$group_ID."#groupes][b]".$row_group_info['ch_mem_group_nom']."[/b][/url][/size]\nMissive secrète en provenance du monde GC[/center]\n";
+[size=16][url=http://www.generation-city.com/monde/politique.php?mem_groupID=".$group_ID."#groupes][b]".$row_group_info['ch_mem_group_nom']."[/b][/url][/size]\nMissive secrï¿½te en provenance du monde GC[/center]\n";
 
 ?>
 <script type="text/javascript">
         function envoiMessage(form)
         {
-        // Créer un message à partir des informations fournies
+        // Crï¿½er un message ï¿½ partir des informations fournies
         var txt_message = form.msgHead.value
         + "\n" + form.msgcorps.value;
 	    form.message.value = txt_message;
@@ -36,7 +36,7 @@ $msgHead = "[center][img]".$row_group_info['ch_mem_group_icon']."[/img]
 </script>
 <!-- Modal Header-->
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
   <h3 id="myModalLabel">Envoyer un message aux membres du groupe <strong><?php echo $row_group_info['ch_mem_group_nom']; ?></strong> sur le forum de G&eacute;n&eacute;ration City</h3>
 </div>
 <div class="modal-body corps-page">
@@ -81,7 +81,7 @@ $msgHead = "[center][img]".$row_group_info['ch_mem_group_icon']."[/img]
     <div class="span4">
       <div class="alert alert-danger">
         <h2>Attention&nbsp;!</h2>
-        Avant d'envoyer ce message, vous devez être connecté sur le forum</div>
+        Avant d'envoyer ce message, vous devez ï¿½tre connectï¿½ sur le forum</div>
       <div class="pull-center">
         <div class="cache-forum">
           <iframe class="forum" src="http://www.generation-city.com/monde/php/login-forum.php" width="100%" height="300" frameborder="0" scrolling="no"><a href="http://www.forum-gc.com/">se connecter</a></iframe>

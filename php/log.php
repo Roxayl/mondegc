@@ -3,7 +3,7 @@ require_once('Connections/maconnexion.php');
 
 // *** Validate request to login to this site.
 if (!isset($_SESSION)) {
-  session_start();
+
 }
 
 // *** Recherche de sessions.

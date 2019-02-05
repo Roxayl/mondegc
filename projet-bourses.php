@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include('Connections/maconnexion.php'); 
 
 //deconnexion

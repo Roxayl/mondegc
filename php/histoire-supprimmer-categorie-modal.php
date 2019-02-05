@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
@@ -20,7 +20,7 @@ $totalRows_liste_fait_cat = mysql_num_rows($liste_fait_cat);
 
 <!-- Modal Header-->
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
 <h3 id="myModalLabel">Supprimer <?php echo $row_liste_fait_cat['ch_fai_cat_nom']; ?></h3>
           </div>
           <div class="modal-body">

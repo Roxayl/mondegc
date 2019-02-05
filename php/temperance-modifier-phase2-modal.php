@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
@@ -42,13 +42,13 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance"))
 
 <form action="<?php echo $editFormAction; ?>" name="phase-temperance" method="POST" class="form-horizontal" id="phase-temperance">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
     <h3 id="myModalLabel">Ouverture des votes</h3>
   </div>
   <div class="modal-body"> 
     <p>Passer &agrave; la deuxi&egrave;me phase de la proc&eacute;dure permet de soumettre cet &eacute;lement aux juges temp&eacute;rants.</p>
     <div class="alert alert-danger"><p><i class="icon-warning-sign"></i> Cette action sera d&eacute;finitive.</p></div>
-    <!-- Boutons cachés -->
+    <!-- Boutons cachï¿½s -->
       <?php $now= date("Y-m-d G:i:s");?>
       <input name="ch_temp_statut" type="hidden" value="2">
       <input name="ch_temp_mis_jour" type="hidden" value="<?php echo $now; ?>">

@@ -72,7 +72,7 @@ $updateSQL = sprintf("UPDATE users SET ch_use_last_log=%s WHERE ch_use_id=%s",
 
 // *** Validate request to login to this site.
 if (!isset($_SESSION)) {
-  session_start();
+  
 }
 $loginFormAction = $_SERVER['PHP_SELF'];
 if (isset($_GET['accesscheck'])) {

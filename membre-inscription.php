@@ -1,6 +1,6 @@
-<?php 
-session_start();
+<?php
 require_once('Connections/maconnexion.php');
+
 
 //Connexion et deconnexion
 include('php/log.php');

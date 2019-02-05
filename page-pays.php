@@ -1,4 +1,4 @@
-<?php session_start();
+<?php
 include('Connections/maconnexion.php');
 
 //Connexion et deconnexion

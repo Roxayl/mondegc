@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
@@ -45,27 +45,27 @@ else
 {
 	$passage_ligne = "\n";
 }
-//=====Déclaration des messages au format texte et au format HTML.
-$message_txt = "Cher membre de G&eacute;n&eacute;ration City. Vous dirigez la ville $nom_ville dans le Monde GC. Les Temp&eacute;rants viennent de lancer une proc&eacute;dure afin de noter la cohérence globale de votre ville et les informations que vous affichez sur la page du site. A partir de la date d'ouverture de cette proc&eacute;dure, vous disposez d'un mois pour, si vous souhaitez, remettre en coh&eacute;rance les chiffres de votre ville. Au del&agrave; de ce delai, la page sera not&eacute;e par les juges. Nous vous remercions de l'inter&ecirc;t que vous portez &agrave; notre site. l'&eacute;quipe de G&eacute;n&eacute;ration City";
-$message_html = "<html><head></head><body><b>Cher membre de G&eacute;n&eacute;ration city</b>,<br><br>Vous dirigez la ville $nom_ville dans le Monde GC. Les Temp&eacute;rants viennent de lancer une proc&eacute;dure afin de noter la cohérence globale de votre ville et les informations que vous affichez sur la page du site.<br>A partir de la date d'ouverture de cette proc&eacute;dure, vous disposez d'un mois pour, si vous souhaitez, remettre en coh&eacute;rance les chiffres de votre ville. Au del&agrave; de ce delai, la page sera not&eacute;e par les juges.<br>Nous vous remercions de l'inter&ecirc;t que vous portez &agrave; notre site.<br><br><br><em><i>L'&eacute;quipe de G&eacute;n&eacute;ration City</i></em></body></html>";
+//=====Dï¿½claration des messages au format texte et au format HTML.
+$message_txt = "Cher membre de G&eacute;n&eacute;ration City. Vous dirigez la ville $nom_ville dans le Monde GC. Les Temp&eacute;rants viennent de lancer une proc&eacute;dure afin de noter la cohï¿½rence globale de votre ville et les informations que vous affichez sur la page du site. A partir de la date d'ouverture de cette proc&eacute;dure, vous disposez d'un mois pour, si vous souhaitez, remettre en coh&eacute;rance les chiffres de votre ville. Au del&agrave; de ce delai, la page sera not&eacute;e par les juges. Nous vous remercions de l'inter&ecirc;t que vous portez &agrave; notre site. l'&eacute;quipe de G&eacute;n&eacute;ration City";
+$message_html = "<html><head></head><body><b>Cher membre de G&eacute;n&eacute;ration city</b>,<br><br>Vous dirigez la ville $nom_ville dans le Monde GC. Les Temp&eacute;rants viennent de lancer une proc&eacute;dure afin de noter la cohï¿½rence globale de votre ville et les informations que vous affichez sur la page du site.<br>A partir de la date d'ouverture de cette proc&eacute;dure, vous disposez d'un mois pour, si vous souhaitez, remettre en coh&eacute;rance les chiffres de votre ville. Au del&agrave; de ce delai, la page sera not&eacute;e par les juges.<br>Nous vous remercions de l'inter&ecirc;t que vous portez &agrave; notre site.<br><br><br><em><i>L'&eacute;quipe de G&eacute;n&eacute;ration City</i></em></body></html>";
 //==========
 
-//=====Création de la boundary
+//=====Crï¿½ation de la boundary
 $boundary = "-----=".md5(rand());
 //==========
 
-//=====Définition du sujet.
+//=====Dï¿½finition du sujet.
 $sujet = "Lancement d'une proc&eacute;dure de temp&eacute;rance";
 //=========
 
-//=====Création du header de l'e-mail.
+//=====Crï¿½ation du header de l'e-mail.
 $header = "From: \"Generation City\"<monde@generation-city.com>".$passage_ligne;
 $header.= "Reply-to: \"Generation City\"<monde@generation-city.com>".$passage_ligne;
 $header.= "MIME-Version: 1.0".$passage_ligne;
 $header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
 //==========
 
-//=====Création du message.
+//=====Crï¿½ation du message.
 $message = $passage_ligne."--".$boundary.$passage_ligne;
 //=====Ajout du message au format texte.
 $message.= "Content-Type: text/plain; charset=\"ISO-8859-1\"".$passage_ligne;
@@ -109,11 +109,11 @@ $totalRows_villes = mysql_num_rows($villes);
 
 <form action="<?php echo $editFormAction; ?>" name="ajout-temperance" method="POST" class="form-horizontal" id="ajout-temperance">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
     <h3 id="myModalLabel">Temp&eacute;rer une ville</h3>
   </div>
   <div class="modal-body"> 
-    <!-- Boutons cachés -->
+    <!-- Boutons cachï¿½s -->
     <?php $now= date("Y-m-d G:i:s");?>
     <input name="ch_temp_label" type="hidden" value="temperance">
     <input name="ch_temp_date" type="hidden" value="<?php echo $now; ?>">
@@ -133,7 +133,7 @@ $totalRows_villes = mysql_num_rows($villes);
     </div>
 <div class="alert alert-danger">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
-      Un mail sera envoyé au maire de la ville pour l'avertir du lancement de la proc&eacute;dure</div>
+      Un mail sera envoyï¿½ au maire de la ville pour l'avertir du lancement de la proc&eacute;dure</div>
   </div>
           <input name="ch_temp_statut" type="hidden" value="1">
     <input name="ch_temp_note" type="hidden" value="">

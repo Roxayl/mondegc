@@ -4,7 +4,7 @@ use GenCity\Monde\Pays;
 
 require_once('../Connections/maconnexion.php');
 
- session_start();
+ 
  
 //deconnexion
 include('../php/logout.php');

@@ -1,7 +1,6 @@
 <?php require_once('../Connections/maconnexion.php'); ?>
 <?php
-if(!isset($_SESSION))
-    session_start();
+    
 
 switch ($row_User['ch_use_statut']) {
 case "5" : 

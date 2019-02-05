@@ -1260,3 +1260,6 @@ if(!function_exists('showErrorMessage')) {
 
     }
 }
+
+if(!isset($_SESSION))
+    session_start();

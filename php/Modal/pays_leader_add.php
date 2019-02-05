@@ -4,7 +4,7 @@ use GenCity\Monde\Pays;
 use GenCity\Monde\User;
 
 include('../../Connections/maconnexion.php');
-session_start();
+
 header('Content-Type: text/html; charset=utf-8');
 
 // renvoyer les données POST à soi-même

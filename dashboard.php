@@ -1,6 +1,6 @@
 <?php
-session_start();
 require_once('Connections/maconnexion.php');
+
 
 //Connexion et deconnexion
 include('php/log.php');
@@ -166,11 +166,6 @@ init();
             </li>
             <?php endforeach; ?>
         </ul>
-    </div>
-
-    <h3>Mes compagnies</h3>
-    <div class="well">
-        <p>Vous n'avez pas de compagnie.</p>
     </div>
 
     </section>

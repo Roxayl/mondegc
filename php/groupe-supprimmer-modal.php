@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
@@ -19,7 +19,7 @@ $totalRows_membres_groupes = mysql_num_rows($membres_groupes);
 
 <!-- Modal Header-->
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
 <h3 id="myModalLabel">Supprimer <?php echo $row_membres_groupes['ch_mem_group_nom']; ?></h3>
           </div>
           <div class="modal-body">

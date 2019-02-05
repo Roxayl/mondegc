@@ -15,7 +15,7 @@
 * http://www.gnu.org/licenses/gpl.html
 */
 
-session_start();
+
 //Settings: You can customize the captcha here
 $image_width = 120;
 $image_height = 40;

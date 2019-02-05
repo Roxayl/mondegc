@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require_once('../Connections/maconnexion.php');
 //deconnexion
 include('../php/logout.php');
@@ -7273,7 +7273,7 @@ body > .navbar .brand:hover {
 	padding-bottom: 4px;
 }
 
-/* mot bienvenue devant pseudo. S'affiche pour les écrans sup a 1200px */
+/* mot bienvenue devant pseudo. S'affiche pour les ï¿½crans sup a 1200px */
 .bienvenue {
 	visibility:hidden;
 }
@@ -9060,7 +9060,7 @@ footer img {
 	color: #ffffff;
 	padding: 0px;
 }
-/* Ajustements Accès rapides */
+/* Ajustements Accï¿½s rapides */
 .liens-rapides {
 	text-align: left;
 	margin-left: 5px;

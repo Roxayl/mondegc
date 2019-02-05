@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
@@ -67,14 +67,14 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
 <!-- Modal Header-->
 
 <form action="<?php echo $editFormAction; ?>" name="notation" method="POST" class="form-horizontal" id="notation">
-  <!-- Boutons cachés -->
+  <!-- Boutons cachï¿½s -->
   <?php $now= date("Y-m-d G:i:s");?>
   <input name="ch_not_temp_label" type="hidden" value="notation">
   <input name="ch_not_temp_date" type="hidden" value="<?php echo $now; ?>">
   <input name="ch_not_temp_juge" type="hidden" value="<?php echo $juge; ?>">
   <input name="ch_not_temp_temperance_id" type="hidden" value="<?php echo $colname_temperance; ?>">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
     <h3 id="myModalLabel"><?php echo $juges; ?>Quetionnaire de notation temp&eacute;rance : pays</h3>
   </div>
   <div class="modal-body">
@@ -100,7 +100,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
           <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">1 seul chiffre est autoris&eacute;.</span></div>
         <div id="sprytextfield11" class="span11"> <em>commentaire</em>
           <input class="span11" type="text" name="ch_not_temp_q1_com" id="ch_not_temp_q1_com" value="" />
-          <span class="textfieldMaxCharsMsg">maximum 250 caractères.</span></div>
+          <span class="textfieldMaxCharsMsg">maximum 250 caractï¿½res.</span></div>
       </li>
       <li class="row-fluid">
         <div class="span9">
@@ -112,7 +112,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
           <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">1 seul chiffre est autoris&eacute;.</span></div>
         <div id="sprytextfield12" class="span11"> <em>commentaire</em>
           <input class="span11" type="text" name="ch_not_temp_q2_com" id="ch_not_temp_q2_com" value="" />
-          <span class="textfieldMaxCharsMsg">maximum 250 caractères.</span></div>
+          <span class="textfieldMaxCharsMsg">maximum 250 caractï¿½res.</span></div>
       </li>
       <li class="row-fluid">
         <div class="span9">
@@ -124,7 +124,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
           <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">1 seul chiffre est autoris&eacute;.</span></div>
         <div id="sprytextfield13" class="span11"> <em>commentaire</em>
           <input class="span11" type="text" name="ch_not_temp_q3_com" id="ch_not_temp_q3_com" value="" />
-          <span class="textfieldMaxCharsMsg">maximum 250 caractères.</span></div>
+          <span class="textfieldMaxCharsMsg">maximum 250 caractï¿½res.</span></div>
       </li>
       <p>&nbsp;</p>
       <div class="titre-gris">
@@ -145,7 +145,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
           <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">1 seul chiffre est autoris&eacute;.</span></div>
         <div id="sprytextfield14" class="span11"> <em>commentaire</em>
           <input class="span11" type="text" name="ch_not_temp_q4_com" id="ch_not_temp_q5_com" value="" />
-          <span class="textfieldMaxCharsMsg">maximum 250 caractères.</span></div>
+          <span class="textfieldMaxCharsMsg">maximum 250 caractï¿½res.</span></div>
       </li>
       <li class="row-fluid">
         <div class="span9">
@@ -157,7 +157,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
           <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">1 seul chiffre est autoris&eacute;.</span></div>
         <div id="sprytextfield15" class="span11"> <em>commentaire</em>
           <input class="span11" type="text" name="ch_not_temp_q5_com" id="ch_not_temp_q5_com" value="" />
-          <span class="textfieldMaxCharsMsg">maximum 250 caractères.</span></div>
+          <span class="textfieldMaxCharsMsg">maximum 250 caractï¿½res.</span></div>
       </li>
       <p>&nbsp;</p>
       <div class="titre-gris">
@@ -179,7 +179,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
         <div id="sprytextfield16" class="span11">
           <p>commentaire</p>
           <input class="span11" type="text" name="ch_not_temp_q6_com" id="ch_not_temp_q6_com" value="" />
-          <span class="textfieldMaxCharsMsg">maximum 250 caractères.</span></div>
+          <span class="textfieldMaxCharsMsg">maximum 250 caractï¿½res.</span></div>
       </li>
       <li class="row-fluid">
         <div class="span9">
@@ -191,7 +191,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
           <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">1 seul chiffre est autoris&eacute;.</span></div>
         <div id="sprytextfield17" class="span11"> <em>commentaire</em>
           <input class="span11" type="text" name="ch_not_temp_q7_com" id="ch_not_temp_q7_com" value="" />
-          <span class="textfieldMaxCharsMsg">maximum 250 caractères.</span></div>
+          <span class="textfieldMaxCharsMsg">maximum 250 caractï¿½res.</span></div>
       </li>
       <li class="row-fluid">
         <div class="span9">
@@ -203,7 +203,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
           <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">1 seul chiffre est autoris&eacute;.</span></div>
         <div id="sprytextfield18" class="span11"> <em>commentaire</em>
           <input class="span11" type="text" name="ch_not_temp_q8_com" id="ch_not_temp_q8_com" value="" />
-          <span class="textfieldMaxCharsMsg">maximum 250 caractères.</span></div>
+          <span class="textfieldMaxCharsMsg">maximum 250 caractï¿½res.</span></div>
       </li>
       <p>&nbsp;</p>
       <div class="titre-gris">
@@ -224,7 +224,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
           <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">1 seul chiffre est autoris&eacute;.</span></div>
         <div id="sprytextfield19" class="span11"> <em>commentaire</em>
           <input class="span11" type="text" name="ch_not_temp_q9_com" id="ch_not_temp_q9_com" value="" />
-          <span class="textfieldMaxCharsMsg">maximum 250 caractères.</span></div>
+          <span class="textfieldMaxCharsMsg">maximum 250 caractï¿½res.</span></div>
       </li>
       <li class="row-fluid">
         <div class="span9">
@@ -236,7 +236,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
           <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">1 seul chiffre est autoris&eacute;.</span></div>
         <div id="sprytextfield20" class="span11"> <em>commentaire</em>
           <input class="span11" type="text" name="ch_not_temp_q10_com" id="ch_not_temp_q10_com" value="" />
-          <span class="textfieldMaxCharsMsg">maximum 250 caractères.</span></div>
+          <span class="textfieldMaxCharsMsg">maximum 250 caractï¿½res.</span></div>
       </li>
     </ul>
     <p>&nbsp;</p>

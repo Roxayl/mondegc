@@ -1,4 +1,4 @@
-<?php session_start();
+<?php
 
 require_once('../Connections/maconnexion.php');
 //deconnexion
@@ -323,6 +323,8 @@ do {  ?>
 <?php include('../php/membre-modifier.php'); ?>
 <!-- liste des groupes du membre
      ================================================== -->
+
+<?php /* ?>
 <div class="titre-gris">
   <h3>Mes groupes</h3>
 </div>
@@ -572,7 +574,9 @@ $("a[data-toggle=modal]").click(function (e) {
 $('#closemodal').click(function() {
     $('#Modal-Groupe').modal('hide');
 });
-</script> 
+</script>
+
+<?php */ ?>
 </div>
 <!-- END CONTENT
     ================================================== --> 

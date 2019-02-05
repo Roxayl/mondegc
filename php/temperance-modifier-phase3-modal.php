@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
@@ -41,7 +41,7 @@ $row_questionnaires = mysql_fetch_assoc($questionnaires);
 $totalRows_questionnaires = mysql_num_rows($questionnaires);
 
 
-		//Calcul résultat sur 60 points quelque soit le nb de juges
+		//Calcul rï¿½sultat sur 60 points quelque soit le nb de juges
 $note = $row_questionnaires['note'] / $nb_juges * 3;
 
 		//Recherche note precedente
@@ -92,7 +92,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance"))
 <!-- Modal Header-->
 <form action="<?php echo $editFormAction; ?>" name="phase-temperance" method="POST" class="form-horizontal" id="phase-temperance">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
     <h3 id="myModalLabel">Fermeture des votes</h3>
   </div>
   <div class="modal-body">
@@ -100,7 +100,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance"))
     <div class="alert alert-danger">
       <p><i class="icon-warning-sign"></i> Cette action sera d&eacute;finitive.</p>
     </div>
-    <!-- Boutons cachés -->
+    <!-- Boutons cachï¿½s -->
     <?php $now= date("Y-m-d G:i:s");?>
     <input name="ch_temp_statut" type="hidden" value="3">
     <input name="ch_temp_mis_jour" type="hidden" value="<?php echo $now; ?>">

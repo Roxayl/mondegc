@@ -1,6 +1,6 @@
 <?php
-session_start();
-include('Connections/maconnexion.php'); 
+include('Connections/maconnexion.php');
+
 
 //deconnexion
 include('php/log.php');

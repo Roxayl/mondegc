@@ -1,6 +1,6 @@
 <?php 
 require_once('Connections/maconnexion.php');
-session_start();
+
 
 // *** Connexion communique categorie pays
 

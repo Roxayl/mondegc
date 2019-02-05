@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
@@ -41,7 +41,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-group")) {
 
 <form action="<?php echo $editFormAction; ?>" name="ajout-group" method="POST" class="form-horizontal" id="ajout-group">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
     <?php if ($row_info_dispatch['ch_disp_mem_statut'] == 3) { ?>
     <h3 id="myModalLabel">Choisir le statut de ce membre</h3>
     <?php } else { ?>
@@ -49,7 +49,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-group")) {
     <?php } ?>
   </div>
   <div class="modal-body"> 
-    <!-- Boutons cachés -->
+    <!-- Boutons cachï¿½s -->
     <?php 
 	$now= date("Y-m-d G:i:s");?>
     <input name="ch_disp_MG_id" type="hidden" value="<?php echo $row_info_dispatch['ch_disp_MG_id']; ?>">

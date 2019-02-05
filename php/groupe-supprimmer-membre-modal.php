@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
@@ -21,7 +21,7 @@ $totalRows_mon = mysql_num_rows($mon);
 <!-- Modal Header-->
 
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
   <?php if ($row_mon['ch_disp_mem_statut'] == 3) { ?>
   <h3 id="myModalLabel">Refuser la demande de <?php echo $row_mon['ch_use_nom_dirigeant']; ?> d'int&eacute;grer groupe <?php echo $row_mon['ch_mem_group_nom']; ?> </h3>
   <?php } else { ?>
