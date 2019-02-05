@@ -689,16 +689,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9babbf', end
 -------------------------------------------------- */
 .titre-vert h1, .titre-bleu h1 {
     left: 10px;
-    background-position: right;
+    background-image: url("../img/bg-titre-left.png"), url("../img/bg-titre.png");
+    background-position: left, right;
     background-repeat: no-repeat;
-    background-image: url("../img/bg-titre.png");
 	color: #212121;
 	font-family: "Titillium Web", sans-serif;
 	font-weight: 600;
 	position: relative;
 	right: 0;
-	margin: 20px 10px 10px;
-    padding-left: 20px;
+	margin: 20px 10px 10px -10px;
+    padding-left: 60px;
 }
 .titre-vert.no-bg h1, .titre-bleu.no-bg h1 {
     background: none;
@@ -707,7 +707,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9babbf', end
 .titre-bleu img, .titre-vert img {
 	position: absolute;
     width: 54px;
-    margin: 14px 0 -12px -28px;
+    margin: 13px 0 -12px -28px;
     z-index: 3;
 }
 

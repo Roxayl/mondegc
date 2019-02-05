@@ -1,5 +1,5 @@
-<?php require_once('../Connections/maconnexion.php'); ?>
-<?php 
+<?php
+
 // Tri des pays par continent pour le menu deroulant
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_menu = "SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_pay_continent FROM pays WHERE ch_pay_publication = 1 ORDER BY ch_pay_nom ASC";
@@ -8,6 +8,11 @@ $totalRows_menu = mysql_num_rows($menu);
 
 $row_menu = mysql_fetch_assoc($menu);
 mysql_data_seek($menu, 0);
+
+$nav_userPays = array();
+if(isset($_SESSION['userObject'])) {
+    $nav_userPays = $_SESSION['userObject']->getCountries();
+}
 
 if(!isset($loginFormAction))
     $loginFormAction = '';
@@ -21,7 +26,14 @@ if(!isset($loginFormAction))
       <!-- Menu gestion une fois connecté tablet -->
       <div class="visible-tablet navbar-form menu-gestion <?php echo $_SESSION['menu_gestion']?>"> <span class="Nav-pseudo">Bienvenue <?php echo $_SESSION['login_user']?>&nbsp;</span>
         <div><a href="membre-modifier_back.php?userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Mon profil</a></div>
-            <div><a href="page_pays_back.php?paysID=<?= $_SESSION['pays_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mon pays</a></div>
+        <div class="dropdown">
+          <a href="dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mes pays</a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <?php foreach($nav_userPays as $nav_thisPays): ?>
+            <li style="width: 100%;"><a tabindex="-1" href="back/page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>"><img class="img-menu-drapeau" src="<?= $nav_thisPays['ch_pay_lien_imgdrapeau'] ?>"> <?= $nav_thisPays['ch_pay_nom'] ?></a></li>
+          <?php endforeach; ?>
+          </ul>
+        </div>
         <a href="<?php echo $logoutAction ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a> </div>
       <!-- Logo -->
       <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
@@ -33,7 +45,14 @@ if(!isset($loginFormAction))
         <!-- Menu gestion une fois connecté desktop/phone -->
         <div class="hidden-tablet navbar-form <?php echo $_SESSION['menu_gestion']?>">
             <div><a href="membre-modifier_back.php?userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Mon profil</a></div>
-            <div><a style="margin-top: 3px;" href="page_pays_back.php?paysID=<?= $_SESSION['pays_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mon pays</a></div>
+            <div class="dropdown" style="margin-top: -2px;">
+              <a href="dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mes pays</a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+              <?php foreach($nav_userPays as $nav_thisPays): ?>
+                <li style="width: 100%;"><a tabindex="-1" href="back/page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>"><img class="img-menu-drapeau" src="<?= $nav_thisPays['ch_pay_lien_imgdrapeau'] ?>"> <?= $nav_thisPays['ch_pay_nom'] ?></a></li>
+              <?php endforeach; ?>
+              </ul>
+            </div>
           <div class="offset"><span class="Nav-pseudo"><span class="bienvenue">Bienvenue </span><?php echo $_SESSION['login_user']?>&nbsp;</span> <a href="<?php echo $logoutAction ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a></div>
         </div>
         
