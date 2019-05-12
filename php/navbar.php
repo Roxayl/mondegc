@@ -183,12 +183,14 @@ if(!isset($loginFormAction))
             <center>
               <a href="OCGC.php" title="Institutions de r&eacute;gulation du monde GC"><i class="icon icon-institut"></i></a>
             </center>
-            <a href="OCGC.php" class="dropdown-toggle" data-toggle="dropdown" title="Institutions de r&eacute;gulation du monde GC">Les instituts <b class="caret"></b></a>
+            <a href="OCGC.php" class="dropdown-toggle" data-toggle="dropdown" title="L'Organisation des Cités Gécéennes">OCGC <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li class="nav-header">L'actualité de l'OCGC</li>
+              <li class="nav-header">À propos de l'OCGC</li>
+              <li><a href="OCGC.php">Présentation de l'OCGC</a></li>
               <li><a href="communiques-ocgc.php">Communiqués publiés</a></li>
-              <li class="nav-header">Structure</li>
-              <li><a href="OCGC.php">OCGC</a></li>
+              <li class="nav-header">Direction de l'OCGC</li>
+              <li><a href="assemblee.php">Assemblée Générale</a></li>
+              <li class="nav-header">Les instituts</li>
               <li><a href="geographie.php">G&eacute;ographie</a></li>
               <li><a href="patrimoine.php">Patrimoine</a></li>
               <li><a href="histoire.php">Histoire</a></li>

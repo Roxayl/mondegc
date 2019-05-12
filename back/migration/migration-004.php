@@ -9,7 +9,7 @@ $queries = array();
 /**********
  * Création de tables : requêtes à permission avancée, à envoyer à Youcef.
  **********/
-/*$queries[] = "create table personnage
+$queries[] = "create table if not exists personnage
 (
 	id int auto_increment,
 	entity text default null null,
@@ -22,15 +22,45 @@ $queries = array();
     biographie text null,
 	constraint personnage_pk
 		primary key (id)
-);";*/
-/*$queries[] = "create table users_pays
+)";
+$queries[] = "create table if not exists users_pays
 (
   id          int auto_increment
     primary key,
   ID_pays     int not null,
   ID_user     int not null,
   permissions int not null
-);";*/
+)";
+$queries[] = "create table if not exists ocgc_proposals
+(
+	id int auto_increment,
+	ID_pays int null,
+	question text null,
+	is_valid boolean default false null,
+	reponse_1 text null,
+	reponse_2 text null,
+	reponse_3 text null,
+	reponse_4 text null,
+	reponse_5 text null,
+	created int null,
+	updated int null,
+	constraint ocgc_proposals_pk
+		primary key (id)
+)
+comment 'Propositions de loi à l''Assemblée Générale'
+";
+$queries[] = "create table if not exists ocgc_votes
+(
+	id int auto_increment,
+	ID_proposal int null,
+	ID_pays int null,
+	reponse_choisie int null,
+	created int null,
+	constraint ocgc_votes_pk
+		primary key (id)
+)
+comment 'Votes aux propositions de l''Assemblée Générale'
+";
 
 
 /**********

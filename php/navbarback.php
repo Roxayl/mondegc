@@ -27,10 +27,10 @@ if(!isset($loginFormAction))
       <div class="visible-tablet navbar-form menu-gestion <?php echo $_SESSION['menu_gestion']?>"> <span class="Nav-pseudo">Bienvenue <?php echo $_SESSION['login_user']?>&nbsp;</span>
         <div><a href="membre-modifier_back.php?userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Mon profil</a></div>
         <div class="dropdown">
-          <a href="dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mes pays</a>
+          <a href="../dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mes pays</a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
           <?php foreach($nav_userPays as $nav_thisPays): ?>
-            <li style="width: 100%;"><a tabindex="-1" href="back/page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>"><img class="img-menu-drapeau" src="<?= $nav_thisPays['ch_pay_lien_imgdrapeau'] ?>"> <?= $nav_thisPays['ch_pay_nom'] ?></a></li>
+            <li style="width: 100%;"><a tabindex="-1" href="page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>"><img class="img-menu-drapeau" src="<?= $nav_thisPays['ch_pay_lien_imgdrapeau'] ?>"> <?= $nav_thisPays['ch_pay_nom'] ?></a></li>
           <?php endforeach; ?>
           </ul>
         </div>
@@ -46,10 +46,10 @@ if(!isset($loginFormAction))
         <div class="hidden-tablet navbar-form <?php echo $_SESSION['menu_gestion']?>">
             <div><a href="membre-modifier_back.php?userID=<?= $_SESSION['user_ID'] ?>" class="btn btn-primary" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Mon profil</a></div>
             <div class="dropdown" style="margin-top: -2px;">
-              <a href="dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mes pays</a>
+              <a href="../dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mes pays</a>
               <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
               <?php foreach($nav_userPays as $nav_thisPays): ?>
-                <li style="width: 100%;"><a tabindex="-1" href="back/page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>"><img class="img-menu-drapeau" src="<?= $nav_thisPays['ch_pay_lien_imgdrapeau'] ?>"> <?= $nav_thisPays['ch_pay_nom'] ?></a></li>
+                <li style="width: 100%;"><a tabindex="-1" href="page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>"><img class="img-menu-drapeau" src="<?= $nav_thisPays['ch_pay_lien_imgdrapeau'] ?>"> <?= $nav_thisPays['ch_pay_nom'] ?></a></li>
               <?php endforeach; ?>
               </ul>
             </div>
@@ -80,7 +80,7 @@ if(!isset($loginFormAction))
               <div class="drop-colonne-gauche">
                 <li class="nav-lien-carte" href="../page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><a href="../Page-carte.php"><div><h3>Explorer la carte</h3></div></a></li>
                 <li class="nav-header"><img src="../assets/img/Aurinea.png" class="img-continent"> R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</li>
-                <?php 
+                <?php
 				do { 
                 if ($row_menu['ch_pay_continent'] == 'RFGC') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
@@ -165,12 +165,14 @@ if(!isset($loginFormAction))
             <center>
               <a href="../OCGC.php" title="Institutions de r&eacute;gulation du monde GC"><i class="icon icon-institut"></i></a>
             </center>
-            <a href="../OCGC.php" class="dropdown-toggle" data-toggle="dropdown" title="Institutions de r&eacute;gulation du monde GC">Les instituts <b class="caret"></b></a>
+            <a href="../OCGC.php" class="dropdown-toggle" data-toggle="dropdown" title="L'Organisation des Cités Gécéennes">OCGC <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li class="nav-header">L'actualité de l'OCGC</li>
+              <li class="nav-header">À propos de l'OCGC</li>
+              <li><a href="../OCGC.php">Présentation de l'OCGC</a></li>
               <li><a href="../communiques-ocgc.php">Communiqués publiés</a></li>
-              <li class="nav-header">Structure</li>
-              <li><a href="../OCGC.php">OCGC</a></li>
+              <li class="nav-header">Direction de l'OCGC</li>
+              <li><a href="../assemblee.php">Assemblée Générale</a></li>
+              <li class="nav-header">Les instituts</li>
               <li><a href="../geographie.php">G&eacute;ographie</a></li>
               <li><a href="../patrimoine.php">Patrimoine</a></li>
               <li><a href="../histoire.php">Histoire</a></li>
