@@ -7,8 +7,9 @@ include('php/log.php');
 
 if(isset($_SESSION['login_user'])) {
     $thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
-    $listePays = $thisUser->getCountries();
 }
+
+$proposalList = new \GenCity\Proposal\ProposalList();
 
 ?><!DOCTYPE html>
 <html lang="fr">
@@ -119,10 +120,57 @@ init();
 
     <section>
     <div class="titre-bleu anchor" id="notifications"> <img src="assets/img/IconesBDD/Bleu/100/carte_bleu.png">
-      <h1>Liste des propositions</h1>
+      <h1>Propositions en cours de votes</h1>
     </div>
     <div class="well">
-        <p>Il n'y a pas encore de propositions.</p>
+        <?php
+        foreach($proposalList->getPendingVotes() as $pending): ?>
+
+            <p><?= $pending->question ?></p>
+
+        <?php endforeach; ?>
+    </div>
+    </section>
+
+    <section>
+    <div class="titre-bleu anchor" id="notifications"> <img src="assets/img/IconesBDD/Bleu/100/carte_bleu.png">
+      <h1>Propositions à débattre</h1>
+    </div>
+    <div class="well">
+        <?php
+        foreach($proposalList->getPendingDebate() as $pending): ?>
+
+            <p><?= $pending->question ?></p>
+
+        <?php endforeach; ?>
+    </div>
+    </section>
+
+    <section>
+    <div class="titre-bleu anchor" id="notifications"> <img src="assets/img/IconesBDD/Bleu/100/carte_bleu.png">
+      <h1>Propositions en attente de validation de l'OCGC</h1>
+    </div>
+    <div class="well">
+        <?php
+        foreach($proposalList->getPendingValidation() as $pending): ?>
+
+            <p><?= $pending->question ?></p>
+
+        <?php endforeach; ?>
+    </div>
+    </section>
+
+    <section>
+    <div class="titre-bleu anchor" id="notifications"> <img src="assets/img/IconesBDD/Bleu/100/carte_bleu.png">
+      <h1>Propositions débattues</h1>
+    </div>
+    <div class="well">
+        <?php
+        foreach($proposalList->getFinished() as $pending): ?>
+
+            <p><?= $pending->question ?></p>
+
+        <?php endforeach; ?>
     </div>
     </section>
 
