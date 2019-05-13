@@ -1,13 +1,16 @@
 <?php
 require_once('Connections/maconnexion.php');
 
-
 //Connexion et deconnexion
 include('php/log.php');
 
-if(isset($_SESSION['login_user'])) {
-    $thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
+if(!isset($_SESSION['login_user'])) {
+    header('connexion.php');
+    exit;
 }
+
+$thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
+$userPaysAllowedToVote = $thisUser->getCountries(\GenCity\Monde\User::getUserPermission('Dirigeant'));
 
 $proposalList = new \GenCity\Proposal\ProposalList();
 
@@ -119,7 +122,24 @@ init();
     </ul>
 
     <section>
-    <div class="titre-bleu anchor" id="notifications"> <img src="assets/img/IconesBDD/Bleu/100/carte_bleu.png">
+    <div class="well">
+
+        <?php renderElement('errormsgs'); ?>
+
+        <a class="btn btn-primary" href="back/ocgc_proposal_create.php">Nouvelle proposition</a>
+
+        <p>Vous pouvez voter au nom des pays suivants :</p>
+        <?php foreach($userPaysAllowedToVote as $userPays): ?>
+            <div>
+                <img src="<?= $userPays['ch_pay_lien_imgdrapeau'] ?>" style="height: 40px;" />
+                <?= $userPays['ch_pay_nom'] ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    </section>
+
+    <section>
+    <div class="titre-bleu anchor" id="notifications">
       <h1>Propositions en cours de votes</h1>
     </div>
     <div class="well">
@@ -133,7 +153,7 @@ init();
     </section>
 
     <section>
-    <div class="titre-bleu anchor" id="notifications"> <img src="assets/img/IconesBDD/Bleu/100/carte_bleu.png">
+    <div class="titre-bleu anchor" id="notifications">
       <h1>Propositions à débattre</h1>
     </div>
     <div class="well">
@@ -147,7 +167,7 @@ init();
     </section>
 
     <section>
-    <div class="titre-bleu anchor" id="notifications"> <img src="assets/img/IconesBDD/Bleu/100/carte_bleu.png">
+    <div class="titre-bleu anchor" id="notifications">
       <h1>Propositions en attente de validation de l'OCGC</h1>
     </div>
     <div class="well">
@@ -161,7 +181,7 @@ init();
     </section>
 
     <section>
-    <div class="titre-bleu anchor" id="notifications"> <img src="assets/img/IconesBDD/Bleu/100/carte_bleu.png">
+    <div class="titre-bleu anchor" id="notifications">
       <h1>Propositions débattues</h1>
     </div>
     <div class="well">

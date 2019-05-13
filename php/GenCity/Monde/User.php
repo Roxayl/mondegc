@@ -42,12 +42,21 @@ class User extends BaseModel {
 
     }
 
-    public function getCountries() {
+    public function getCountries($minPermission = null, $asObject = false) {
 
-        $query = mysql_query(sprintf('SELECT ch_pay_id, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgdrapeau FROM pays JOIN users_pays ON ch_pay_id = ID_pays AND ID_user = %s', GetSQLValueString($this->model->ch_use_id, 'int')));
+        $where_clause = '';
+        if(!is_null($minPermission)) {
+            $where_clause = ' AND permissions >= ' . $minPermission;
+        }
+
+        $query = mysql_query(sprintf('SELECT ch_pay_id, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgdrapeau FROM pays JOIN users_pays ON ch_pay_id = ID_pays AND ID_user = %s' . $where_clause, GetSQLValueString($this->model->ch_use_id, 'int')));
         $result = array();
         while($row = mysql_fetch_assoc($query)){
-             $result[] = $row;
+            if($asObject) {
+                $result[] = new Pays($row['ch_pay_id']);
+            } else {
+                $result[] = $row;
+            }
         }
         return $result;
 
