@@ -70,7 +70,7 @@ class Proposal extends BaseModel {
 
         if(!in_array($this->get('type_reponse'), array('dual', 'multiple'))) {
             $return[] = array(
-                'targetedField' => 'type',
+                'targetedField' => 'type_reponse',
                 'errorMessage' => "Le type de réponse (POUR/CONTRE ou personnalisé) spécifié est incorrect."
             );
         }
@@ -99,7 +99,7 @@ class Proposal extends BaseModel {
 
                 if(mb_strlen($this->get("reponse_$i")) < 2 || mb_strlen($this->get("reponse_$i")) > 255) {
                     $return[] = array(
-                        'targetedField' => 'question',
+                        'targetedField' => "reponse_$i",
                         'errorMessage' => "Votre réponse $i est trop courte ou trop longue (+ 255 caractères)"
                     );
                 }

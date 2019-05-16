@@ -41,7 +41,18 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    $formProposal = $postProposal;
+
 }
+
+// Préselection des checkbox/radio.
+// 'type'
+$form_radio_type = array('IRL' => '', 'RP' => '');
+$form_radio_type[$formProposal->type] = 'checked selected';
+
+// 'type_reponse'
+$form_radio_type_reponse = array('dual' => '', 'multiple' => '');
+$form_radio_type_reponse[$formProposal->type_reponse] = 'checked selected';
 
 
 ?><!DOCTYPE html>
@@ -123,7 +134,7 @@ img.olTileImage {
         <div class="well">
             <p>
             <input class="input-xlarge" type="radio" name="ocgc_proposal_create[type]" style="display: inline-block;"
-                   id="ocgc_proposal_create[type][RP]" value="RP">
+                   id="ocgc_proposal_create[type][RP]" value="RP" <?= $form_radio_type['RP'] ?>>
             <label for="ocgc_proposal_create[type][RP]" style="display: inline-block;">
                 Role-play (Résolution)</label><br />
                 Vous pouvez créer une <strong>résolution</strong> afin de solliciter l'avis de l'Assemblée Générale sur
@@ -132,7 +143,7 @@ img.olTileImage {
 
             <p>
             <input class="input-xlarge" type="radio" name="ocgc_proposal_create[type]" style="display: inline-block;"
-                   id="ocgc_proposal_create[type][IRL]" value="IRL">
+                   id="ocgc_proposal_create[type][IRL]" value="IRL" <?= $form_radio_type['IRL'] ?>>
             <label for="ocgc_proposal_create[type][IRL]" style="display: inline-block;">
                 Réel (Sondage)</label><br />
                 Vous pouvez interroger les membres de la communauté participant au Monde GC en créant un <strong>sondage</strong>.
@@ -158,7 +169,8 @@ img.olTileImage {
 
             <p>
             <input class="input-xlarge" type="radio" name="ocgc_proposal_create[type_reponse]" style="display: inline-block;"
-                   id="ocgc_proposal_create[type_reponse][dual]" value="dual">
+                   id="ocgc_proposal_create[type_reponse][dual]" value="dual"
+                   <?= $form_radio_type_reponse['dual'] ?>>
             <label for="ocgc_proposal_create[type_reponse][dual]" style="display: inline-block;">
                 Vote de type "POUR/CONTRE"</label><br />
                 Un vote à deux réponses : pour ou contre.
@@ -166,7 +178,8 @@ img.olTileImage {
 
             <p>
             <input class="input-xlarge" type="radio" name="ocgc_proposal_create[type_reponse]" style="display: inline-block;"
-                   id="ocgc_proposal_create[type_reponse][multiple]" value="multiple">
+                   id="ocgc_proposal_create[type_reponse][multiple]" value="multiple"
+                   <?= $form_radio_type_reponse['multiple'] ?>>
             <label for="ocgc_proposal_create[type_reponse][multiple]" style="display: inline-block;">
                 Vote à réponses personnalisés.</label><br />
                 Vous pouvez définir manuellement les réponses à ce sondage.
@@ -270,13 +283,23 @@ $(function() {
 </script>
 
 <script type="text/javascript">
-$('input[name="ocgc_proposal_create[type_reponse]"]').on('change', function() {
-    if($(this).attr('value') === 'dual') {
-        $('#detail_reponses').hide();
-    } else {
-        $('#detail_reponses').show();
+(function(document, window, $, undefined) {
+
+    var $input = $('input[name="ocgc_proposal_create[type_reponse]"]');
+    function updateTypeReponse() {
+        var $checked = $input.filter(':checked');
+        if($checked.attr('value') === 'dual') {
+            $('#detail_reponses').hide();
+        } else {
+            $('#detail_reponses').show();
+        }
     }
-});
+    $($input).on('change', function() {
+        updateTypeReponse();
+    });
+    updateTypeReponse();
+
+})(document, window, jQuery);
 </script>
 </body>
 </html>
