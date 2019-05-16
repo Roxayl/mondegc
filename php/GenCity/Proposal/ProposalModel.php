@@ -13,6 +13,8 @@ class ProposalModel implements ModelStructureInterface {
 
         if(is_numeric($data)) {
             $this->info = $this->populate($data);
+        } elseif(is_null($data)) {
+            $this->info = $this->getStructure();
         } else {
             $this->info = $data;
         }
@@ -28,10 +30,19 @@ class ProposalModel implements ModelStructureInterface {
 
     }
 
+    public function getStructure() {
+
+        $query = mysql_query('DESCRIBE ' . self::$tableName);
+        $finalTable = array();
+        while($row = mysql_fetch_assoc($query)) {
+            $finalTable[$row['Field']] = $row['Default'];
+        }
+        return $finalTable;
+
+    }
+
     public function __get($prop) {
 
-        if(!isset($this->info[$prop]))
-            throw new \Exception("La propriété $prop n'est pas définie pour la classe " . __CLASS__);
         return $this->info[$prop];
 
     }

@@ -21,4 +21,12 @@ class BaseModel {
         }
     }
 
+    public function set($prop, $value) {
+        if(is_array($this->model)) {
+            $this->model[$prop] = $value;
+        } else {
+            $this->model->$prop = $value;
+        }
+    }
+
 }
