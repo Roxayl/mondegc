@@ -24,6 +24,25 @@ if($_error) {
     getErrorMessage('ban_error', "Vous ne pouvez pas créer de nouvelle proposition car vous n'êtes le dirigeant d'un pays.");
 }
 
+$formProposal = new \GenCity\Proposal\Proposal(null);
+
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $postProposal = new \GenCity\Proposal\Proposal($_POST['ocgc_proposal_create']);
+    $proposalValidate = $postProposal->validate();
+
+    if(empty($proposalValidate)) {
+
+    }
+
+    else {
+        foreach($proposalValidate as $validation) {
+            getErrorMessage('error', $validation['errorMessage']);
+        }
+    }
+
+}
+
 
 ?><!DOCTYPE html>
 <html lang="fr">
@@ -97,7 +116,7 @@ img.olTileImage {
 
     <?php if(!$_error): ?>
 
-    <form method="POST">
+    <form method="POST" action="ocgc_proposal_create.php" class="form-horizontal" id="ProposalForm">
 
         <h3>Type de proposition</h3>
 
@@ -135,6 +154,8 @@ img.olTileImage {
 
         <div class="well">
 
+            <h4>Type de réponses : "pour/contre" ou personnalisé</h4>
+
             <p>
             <input class="input-xlarge" type="radio" name="ocgc_proposal_create[type_reponse]" style="display: inline-block;"
                    id="ocgc_proposal_create[type_reponse][dual]" value="dual">
@@ -151,20 +172,22 @@ img.olTileImage {
                 Vous pouvez définir manuellement les réponses à ce sondage.
             </p>
 
-            <div id="detail_reponses" style="display: none;">
+            <h4>Contenu</h4>
 
-                <div id="sprytextfield1" class="control-group">
-                    <label class="control-label" for="ocgc_proposal_create[question]">Question <a href="#" rel="clickover" title="Objet de la proposition" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
-                    <div class="controls">
-                        <input class="input-xlarge" name="ocgc_proposal_create[question]" type="text" id="ocgc_proposal_create[question]" value="" maxlength="255">
-                        <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
-                    </div>
+            <div id="sprytextfield1" class="control-group">
+                <label class="control-label" for="ocgc_proposal_create[question]">Question <a href="#" rel="clickover" title="Objet de la proposition" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
+                <div class="controls">
+                    <input class="input-xlarge" name="ocgc_proposal_create[question]" type="text" id="ocgc_proposal_create[question]" value="<?= $formProposal->get('question') ?>" maxlength="255">
+                    <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
                 </div>
+            </div>
+
+            <div id="detail_reponses" style="display: none;">
 
                 <div id="sprytextfield2" class="control-group">
                     <label class="control-label" for="ocgc_proposal_create[reponse_1]">Réponse 1 <a href="#" rel="clickover" title="Réponse 1" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_1]" type="text" id="ocgc_proposal_create[reponse_1]" value="" maxlength="255">
+                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_1]" type="text" id="ocgc_proposal_create[reponse_1]" value="<?= $formProposal->get('reponse_1') ?>" maxlength="255">
                         <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
                     </div>
                 </div>
@@ -172,7 +195,7 @@ img.olTileImage {
                 <div id="sprytextfield3" class="control-group">
                     <label class="control-label" for="ocgc_proposal_create[reponse_2]">Réponse 2 <a href="#" rel="clickover" title="Réponse 2" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_2]" type="text" id="ocgc_proposal_create[reponse_2]" value="" maxlength="255">
+                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_2]" type="text" id="ocgc_proposal_create[reponse_2]" value="<?= $formProposal->get('reponse_2') ?>" maxlength="255">
                         <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
                     </div>
                 </div>
@@ -180,7 +203,7 @@ img.olTileImage {
                 <div id="sprytextfield4" class="control-group">
                     <label class="control-label" for="ocgc_proposal_create[reponse_3]">Réponse 3 <a href="#" rel="clickover" title="Réponse 3" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_3]" type="text" id="ocgc_proposal_create[reponse_3]" value="" maxlength="255">
+                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_3]" type="text" id="ocgc_proposal_create[reponse_3]" value="<?= $formProposal->get('reponse_3') ?>" maxlength="255">
                         <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
                     </div>
                 </div>
@@ -188,7 +211,7 @@ img.olTileImage {
                 <div id="sprytextfield5" class="control-group">
                     <label class="control-label" for="ocgc_proposal_create[reponse_4]">Réponse 4 <a href="#" rel="clickover" title="Réponse 4" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_4]" type="text" id="ocgc_proposal_create[reponse_4]" value="" maxlength="255">
+                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_4]" type="text" id="ocgc_proposal_create[reponse_4]" value="<?= $formProposal->get('reponse_4') ?>" maxlength="255">
                         <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
                     </div>
                 </div>
@@ -196,7 +219,7 @@ img.olTileImage {
                 <div id="sprytextfield6" class="control-group">
                     <label class="control-label" for="ocgc_proposal_create[reponse_5]">Réponse 5 <a href="#" rel="clickover" title="Réponse 5" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_5]" type="text" id="ocgc_proposal_create[reponse_5]" value="" maxlength="255">
+                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_5]" type="text" id="ocgc_proposal_create[reponse_5]" value="<?= $formProposal->get('reponse_5') ?>" maxlength="255">
                         <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
                     </div>
                 </div>
@@ -211,7 +234,7 @@ img.olTileImage {
             <div id="sprytextfield7" class="control-group">
                 <label class="control-label" for="ocgc_proposal_create[debate_start]">Date de vote <a href="#" rel="clickover" title="Date du vote" data-content="Proposez une date à laquelle sera soumise la proposition durant la séance plénière."><i class="icon-info-sign"></i></a></label>
                 <div class="controls">
-                    <input class="input-xlarge" name="ocgc_proposal_create[debate_start]" type="text" id="ocgc_proposal_create[debate_start]" value="" maxlength="255">
+                    <input class="input-xlarge" name="ocgc_proposal_create[debate_start]" type="text" id="ocgc_proposal_create[debate_start]" value="<?= $formProposal->get('debate_start') ?>" maxlength="255">
                 </div>
             </div>
         </div>
@@ -220,7 +243,6 @@ img.olTileImage {
             <input type="submit" class="btn btn-primary" value="Envoyer !">
         </div>
 
-    </div>
     </form>
 
   <?php else: // end if($_error) ?>
@@ -246,17 +268,8 @@ img.olTileImage {
 $(function() {
     $('[rel="clickover"]').clickover();})
 </script>
-<script src="../SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
-<script src="../SpryAssets/SpryValidationTextarea.js" type="text/javascript"></script>
-<script src="../SpryAssets/SpryValidationRadio.js" type="text/javascript"></script>
-<script type="text/javascript">
-var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "url", {isRequired:true, minChars:2, maxChars:250, validateOn:["change"]});
-var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "url", {isRequired:true, minChars:2, maxChars:250, validateOn:["change"]});
-var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "url", {isRequired:true, minChars:2, maxChars:250, validateOn:["change"]});
-var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "url", {isRequired:false, minChars:2, maxChars:250, validateOn:["change"]});
-var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "url", {isRequired:false, minChars:2, maxChars:250, validateOn:["change"]});
-var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6", "url", {isRequired:false, minChars:2, maxChars:250, validateOn:["change"]});
 
+<script type="text/javascript">
 $('input[name="ocgc_proposal_create[type_reponse]"]').on('change', function() {
     if($(this).attr('value') === 'dual') {
         $('#detail_reponses').hide();
