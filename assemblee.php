@@ -140,64 +140,39 @@ init();
 
     <section>
     <div class="titre-bleu anchor" id="notifications">
-      <h1>Propositions en cours de votes</h1>
+      <h1>Liste des propositions</h1>
     </div>
-    <div class="well">
+
+    <div id="categories">
+      <table width="100%" class="table table-hover " cellspacing="1">
+        <thead>
+          <tr class="tablehead2">
+            <th scope="col">Question</th>
+          </tr>
+        </thead>
+        <tbody>
         <?php
-        foreach($proposalList->getPendingVotes() as $pending): ?>
-
-            <p><?= $pending->question ?></p>
-
+        foreach($proposalList->getAll() as $pending): ?>
+            <tr>
+              <td>=<?= $pending->question ?></td>
+            </tr>
         <?php endforeach; ?>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td><div class="btn-group pull-right">
+                <a class="btn disabled" href="#">2</a>
+                </div></td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
-    </section>
 
-    <section>
-    <div class="titre-bleu anchor" id="notifications">
-      <h1>Propositions à débattre</h1>
-    </div>
-    <div class="well">
-        <?php
-        foreach($proposalList->getPendingDebate() as $pending): ?>
-
-            <p><?= $pending->question ?></p>
-
-        <?php endforeach; ?>
-    </div>
-    </section>
-
-    <section>
-    <div class="titre-bleu anchor" id="notifications">
-      <h1>Propositions en attente de validation de l'OCGC</h1>
-    </div>
-    <div class="well">
-        <?php
-        foreach($proposalList->getPendingValidation() as $pending): ?>
-
-            <p><?= $pending->question ?></p>
-
-        <?php endforeach; ?>
-    </div>
-    </section>
-
-    <section>
-    <div class="titre-bleu anchor" id="notifications">
-      <h1>Propositions débattues</h1>
-    </div>
-    <div class="well">
-        <?php
-        foreach($proposalList->getFinished() as $pending): ?>
-
-            <p><?= $pending->question ?></p>
-
-        <?php endforeach; ?>
-    </div>
     </section>
 
     </div>
     <!-- END CONTENT
     ================================================== -->
-  </div>
 </div>
 <!-- Footer
     ================================================== -->

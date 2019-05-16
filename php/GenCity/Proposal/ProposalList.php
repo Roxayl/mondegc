@@ -23,6 +23,17 @@ class ProposalList {
 
     }
 
+    public function getAll() {
+
+        $query = 'SELECT id FROM ocgc_proposals ORDER BY
+          CASE WHEN NOW() BETWEEN debate_start AND debate_end THEN 1
+               WHEN debate_start > NOW() AND is_valid = 2 THEN 2
+               WHEN is_valid = 1 THEN 3
+               ELSE 4 END, debate_start DESC, created DESC';
+        return $this->setListFromQuery($query);
+
+    }
+
     public function getPendingVotes() {
 
         $query = 'SELECT id FROM ocgc_proposals WHERE NOW() BETWEEN debate_start AND debate_end';
@@ -32,21 +43,21 @@ class ProposalList {
 
     public function getPendingDebate() {
 
-        $query = 'SELECT id FROM ocgc_proposals WHERE debate_start < NOW() AND is_valid = 2';
+        $query = 'SELECT id FROM ocgc_proposals WHERE debate_start > NOW() AND is_valid = 2';
         return $this->setListFromQuery($query);
 
     }
 
     public function getPendingValidation() {
 
-        $query = 'SELECT id FROM ocgc_proposals WHERE debate_start < NOW() AND is_valid = 1';
+        $query = 'SELECT id FROM ocgc_proposals WHERE debate_start > NOW() AND is_valid = 1';
         return $this->setListFromQuery($query);
 
     }
 
     public function getFinished() {
 
-        $query = 'SELECT id FROM ocgc_proposals WHERE debate_end > NOW()';
+        $query = 'SELECT id FROM ocgc_proposals WHERE debate_end < NOW()';
         return $this->setListFromQuery($query);
 
     }

@@ -79,7 +79,6 @@ img.olTileImage {
 <!-- Subhead
 ================================================== -->
 <div class="container corps-page">
-  <?php include('../php/menu-haut-conseil.php'); ?>
   <div class="row-fluid">
   <!-- Debut formulaire Page Pays
         ================================================== -->
@@ -99,67 +98,126 @@ img.olTileImage {
     <?php if(!$_error): ?>
 
     <form method="POST">
-    <div class="well">
 
-        <select name="ocgc_proposal_create[ID_pays]" id="ocgc_proposal_create[ID_pays]">
-            <?php foreach($userPaysAllowedToVote as $thisPays): ?>
-                <option value="<?= $thisPays->ch_pay_id ?>"><?= $thisPays->ch_pay_nom ?></option>
-            <?php endforeach; ?>
-        </select>
+        <h3>Type de proposition</h3>
 
-        <div id="sprytextfield1" class="control-group">
-            <label class="control-label" for="ocgc_proposal_create[question]">Question <a href="#" rel="clickover" title="Objet de la proposition" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
-            <div class="controls">
-                <input class="input-xlarge" name="ocgc_proposal_create[question]" type="text" id="ocgc_proposal_create[question]" value="" maxlength="255">
-                <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
+        <div class="well">
+            <p>
+            <input class="input-xlarge" type="radio" name="ocgc_proposal_create[type]" style="display: inline-block;"
+                   id="ocgc_proposal_create[type][RP]" value="RP">
+            <label for="ocgc_proposal_create[type][RP]" style="display: inline-block;">
+                Role-play (Résolution)</label><br />
+                Vous pouvez créer une <strong>résolution</strong> afin de solliciter l'avis de l'Assemblée Générale sur
+                un événement du role-play.
+            </p>
+
+            <p>
+            <input class="input-xlarge" type="radio" name="ocgc_proposal_create[type]" style="display: inline-block;"
+                   id="ocgc_proposal_create[type][IRL]" value="IRL">
+            <label for="ocgc_proposal_create[type][IRL]" style="display: inline-block;">
+                Réel (Sondage)</label><br />
+                Vous pouvez interroger les membres de la communauté participant au Monde GC en créant un <strong>sondage</strong>.
+            </p>
+        </div>
+
+        <h3>Créer la proposition en tant que</h3>
+
+        <div class="well">
+            <label for="ocgc_proposal_create[ID_pays]">Créer la proposition en tant que :</label>
+            <select name="ocgc_proposal_create[ID_pays]" id="ocgc_proposal_create[ID_pays]">
+                <?php foreach($userPaysAllowedToVote as $thisPays): ?>
+                    <option value="<?= $thisPays->ch_pay_id ?>"><?= $thisPays->ch_pay_nom ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <h3>Contenu de la proposition</h3>
+
+        <div class="well">
+
+            <p>
+            <input class="input-xlarge" type="radio" name="ocgc_proposal_create[type_reponse]" style="display: inline-block;"
+                   id="ocgc_proposal_create[type_reponse][dual]" value="dual">
+            <label for="ocgc_proposal_create[type_reponse][dual]" style="display: inline-block;">
+                Vote de type "POUR/CONTRE"</label><br />
+                Un vote à deux réponses : pour ou contre.
+            </p>
+
+            <p>
+            <input class="input-xlarge" type="radio" name="ocgc_proposal_create[type_reponse]" style="display: inline-block;"
+                   id="ocgc_proposal_create[type_reponse][multiple]" value="multiple">
+            <label for="ocgc_proposal_create[type_reponse][multiple]" style="display: inline-block;">
+                Vote à réponses personnalisés.</label><br />
+                Vous pouvez définir manuellement les réponses à ce sondage.
+            </p>
+
+            <div id="detail_reponses" style="display: none;">
+
+                <div id="sprytextfield1" class="control-group">
+                    <label class="control-label" for="ocgc_proposal_create[question]">Question <a href="#" rel="clickover" title="Objet de la proposition" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
+                    <div class="controls">
+                        <input class="input-xlarge" name="ocgc_proposal_create[question]" type="text" id="ocgc_proposal_create[question]" value="" maxlength="255">
+                        <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
+                    </div>
+                </div>
+
+                <div id="sprytextfield2" class="control-group">
+                    <label class="control-label" for="ocgc_proposal_create[reponse_1]">Réponse 1 <a href="#" rel="clickover" title="Réponse 1" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
+                    <div class="controls">
+                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_1]" type="text" id="ocgc_proposal_create[reponse_1]" value="" maxlength="255">
+                        <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
+                    </div>
+                </div>
+
+                <div id="sprytextfield3" class="control-group">
+                    <label class="control-label" for="ocgc_proposal_create[reponse_2]">Réponse 2 <a href="#" rel="clickover" title="Réponse 2" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
+                    <div class="controls">
+                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_2]" type="text" id="ocgc_proposal_create[reponse_2]" value="" maxlength="255">
+                        <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
+                    </div>
+                </div>
+
+                <div id="sprytextfield4" class="control-group">
+                    <label class="control-label" for="ocgc_proposal_create[reponse_3]">Réponse 3 <a href="#" rel="clickover" title="Réponse 3" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
+                    <div class="controls">
+                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_3]" type="text" id="ocgc_proposal_create[reponse_3]" value="" maxlength="255">
+                        <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
+                    </div>
+                </div>
+
+                <div id="sprytextfield5" class="control-group">
+                    <label class="control-label" for="ocgc_proposal_create[reponse_4]">Réponse 4 <a href="#" rel="clickover" title="Réponse 4" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
+                    <div class="controls">
+                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_4]" type="text" id="ocgc_proposal_create[reponse_4]" value="" maxlength="255">
+                        <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
+                    </div>
+                </div>
+
+                <div id="sprytextfield6" class="control-group">
+                    <label class="control-label" for="ocgc_proposal_create[reponse_5]">Réponse 5 <a href="#" rel="clickover" title="Réponse 5" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
+                    <div class="controls">
+                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_5]" type="text" id="ocgc_proposal_create[reponse_5]" value="" maxlength="255">
+                        <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
+                    </div>
+                </div>
+
+            </div> <!-- end détail réponses -->
+
+        </div>
+
+        <h3>Modalités de vote</h3>
+
+        <div class="well">
+            <div id="sprytextfield7" class="control-group">
+                <label class="control-label" for="ocgc_proposal_create[debate_start]">Date de vote <a href="#" rel="clickover" title="Date du vote" data-content="Proposez une date à laquelle sera soumise la proposition durant la séance plénière."><i class="icon-info-sign"></i></a></label>
+                <div class="controls">
+                    <input class="input-xlarge" name="ocgc_proposal_create[debate_start]" type="text" id="ocgc_proposal_create[debate_start]" value="" maxlength="255">
+                </div>
             </div>
         </div>
 
-        <div id="sprytextfield2" class="control-group">
-            <label class="control-label" for="ocgc_proposal_create[reponse_1]">Réponse 1 <a href="#" rel="clickover" title="Réponse 1" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
-            <div class="controls">
-                <input class="input-xlarge" name="ocgc_proposal_create[reponse_1]" type="text" id="ocgc_proposal_create[reponse_1]" value="" maxlength="255">
-                <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
-            </div>
-        </div>
-
-        <div id="sprytextfield3" class="control-group">
-            <label class="control-label" for="ocgc_proposal_create[reponse_2]">Réponse 2 <a href="#" rel="clickover" title="Réponse 2" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
-            <div class="controls">
-                <input class="input-xlarge" name="ocgc_proposal_create[reponse_2]" type="text" id="ocgc_proposal_create[reponse_2]" value="" maxlength="255">
-                <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
-            </div>
-        </div>
-
-        <div id="sprytextfield4" class="control-group">
-            <label class="control-label" for="ocgc_proposal_create[reponse_3]">Réponse 3 <a href="#" rel="clickover" title="Réponse 3" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
-            <div class="controls">
-                <input class="input-xlarge" name="ocgc_proposal_create[reponse_3]" type="text" id="ocgc_proposal_create[reponse_3]" value="" maxlength="255">
-                <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
-            </div>
-        </div>
-
-        <div id="sprytextfield5" class="control-group">
-            <label class="control-label" for="ocgc_proposal_create[reponse_4]">Réponse 4 <a href="#" rel="clickover" title="Réponse 4" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
-            <div class="controls">
-                <input class="input-xlarge" name="ocgc_proposal_create[reponse_4]" type="text" id="ocgc_proposal_create[reponse_4]" value="" maxlength="255">
-                <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
-            </div>
-        </div>
-
-        <div id="sprytextfield6" class="control-group">
-            <label class="control-label" for="ocgc_proposal_create[reponse_5]">Réponse 5 <a href="#" rel="clickover" title="Réponse 5" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
-            <div class="controls">
-                <input class="input-xlarge" name="ocgc_proposal_create[reponse_5]" type="text" id="ocgc_proposal_create[reponse_5]" value="" maxlength="255">
-                <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
-            </div>
-        </div>
-
-        <div id="sprytextfield7" class="control-group">
-            <label class="control-label" for="ocgc_proposal_create[debate_start]">Date de vote <a href="#" rel="clickover" title="Date du vote" data-content="Proposez une date à laquelle sera soumise la proposition durant la séance plénière."><i class="icon-info-sign"></i></a></label>
-            <div class="controls">
-                <input class="input-xlarge" name="ocgc_proposal_create[debate_start]" type="text" id="ocgc_proposal_create[debate_start]" value="" maxlength="255">
-            </div>
+        <div class="well">
+            <input type="submit" class="btn btn-primary" value="Envoyer !">
         </div>
 
     </div>
@@ -198,6 +256,14 @@ var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "url"
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "url", {isRequired:false, minChars:2, maxChars:250, validateOn:["change"]});
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "url", {isRequired:false, minChars:2, maxChars:250, validateOn:["change"]});
 var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6", "url", {isRequired:false, minChars:2, maxChars:250, validateOn:["change"]});
+
+$('input[name="ocgc_proposal_create[type_reponse]"]').on('change', function() {
+    if($(this).attr('value') === 'dual') {
+        $('#detail_reponses').hide();
+    } else {
+        $('#detail_reponses').show();
+    }
+});
 </script>
 </body>
 </html>
