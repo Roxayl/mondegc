@@ -1,6 +1,7 @@
 <?php
 
 namespace GenCity\Proposal;
+use DateTime;
 use GenCity\Monde\Pays;
 use GenCity\Monde\User;
 use Squirrel\BaseModel;
@@ -106,7 +107,68 @@ class Proposal extends BaseModel {
             }
         }
 
+        // Vérifier la date des débats
+
+        $setDebateEnd = DateTime::createFromFormat(self::$date_formatting, $this->get('debate_start'));
+        $setDebateEnd->modify('+2 days');
+        $this->set('debate_end', $setDebateEnd->format(self::$date_formatting));
+
+        if(!$this->isValidDebateDate()) {
+            $return[] = array(
+                'targetedField' => 'debate_start',
+                'errorMessage' => "La date des débats n'est pas valide. Elle doit se situer durant une session plénière."
+            );
+        }
+
         return $return;
+
+    }
+
+    static function getNextDebates($getDebateEnd = false) {
+
+        $debatePeriods = array();
+
+        for($i = 0; $i < 3; $i++) {
+            $start_week_string = '';
+            $end_week_string = '';
+
+            $start_bonus_week = $i;
+            $end_bonus_week = $i;
+
+            if(date('D') === 'Fri') {
+                $end_bonus_week++;
+            }
+
+            if($start_bonus_week > 0) {
+                $start_week_string = "+$start_bonus_week week" . ($start_bonus_week > 1 ? 's' : '');
+            }
+            if($end_bonus_week > 0) {
+                $end_week_string = "+$end_bonus_week week" . ($end_bonus_week > 1 ? 's' : '');
+            }
+
+            $timeNextDebateStart = strtotime("next friday $start_week_string");
+            $timeNextDebateEnd = strtotime("next sunday $end_week_string");
+            $dateNextDebateStart = date(self::$date_formatting, $timeNextDebateStart);
+            $dateNextDebateEnd = date(self::$date_formatting, $timeNextDebateEnd);
+            if($getDebateEnd) {
+                $debatePeriods[] = array(
+                    'debate_start' => $dateNextDebateStart,
+                    'debate_end' => $dateNextDebateEnd
+                );
+            } else {
+                $debatePeriods[$dateNextDebateStart] = '';
+            }
+        }
+
+        return $debatePeriods;
+
+    }
+
+    public function isValidDebateDate() {
+
+        $start_is_friday = date('D', strtotime($this->get('debate_start'))) === "Fri";
+        $end_is_saturday = date('D', strtotime($this->get('debate_end'))) === "Sun";
+        return ($start_is_friday && $end_is_saturday);
 
     }
 

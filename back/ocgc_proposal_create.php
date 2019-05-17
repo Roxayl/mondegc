@@ -25,6 +25,7 @@ if($_error) {
 }
 
 $formProposal = new \GenCity\Proposal\Proposal(null);
+$formNextDebates = \GenCity\Proposal\Proposal::getNextDebates(true);
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -53,6 +54,10 @@ $form_radio_type[$formProposal->type] = 'checked selected';
 // 'type_reponse'
 $form_radio_type_reponse = array('dual' => '', 'multiple' => '');
 $form_radio_type_reponse[$formProposal->type_reponse] = 'checked selected';
+
+// 'debate_start'
+$form_select_debate_start = \GenCity\Proposal\Proposal::getNextDebates();
+$form_select_debate_start[$formProposal->debate_start] = 'checked selected';
 
 
 ?><!DOCTYPE html>
@@ -247,7 +252,14 @@ img.olTileImage {
             <div id="sprytextfield7" class="control-group">
                 <label class="control-label" for="ocgc_proposal_create[debate_start]">Date de vote <a href="#" rel="clickover" title="Date du vote" data-content="Proposez une date à laquelle sera soumise la proposition durant la séance plénière."><i class="icon-info-sign"></i></a></label>
                 <div class="controls">
-                    <input class="input-xlarge" name="ocgc_proposal_create[debate_start]" type="text" id="ocgc_proposal_create[debate_start]" value="<?= $formProposal->get('debate_start') ?>" maxlength="255">
+                    <select name="ocgc_proposal_create[debate_start]" id="ocgc_proposal_create[debate_start]">
+                    <?php foreach($formNextDebates as $nextDebate): ?>
+                        <option value="<?= $nextDebate['debate_start'] ?>"
+                          <?= $form_select_debate_start[$nextDebate['debate_start']] ?>>Du <?=
+                            date('d/m/Y H:i:s', strtotime($nextDebate['debate_start'])); ?> au <?=
+                            date('d/m/Y H:i:s', strtotime($nextDebate['debate_end'])); ?></option>
+                    <?php endforeach; ?>
+                    </select>
                 </div>
             </div>
         </div>
