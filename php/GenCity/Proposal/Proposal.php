@@ -12,6 +12,11 @@ class Proposal extends BaseModel {
     static $debate_day_end   = 'saturday';
     static $date_formatting  = 'Y-m-d H:i:s';
 
+    static $typeDetail = array(
+        'IRL' => "Sondage",
+        'RP' => "Résolution"
+    );
+
     public function __construct($data = null) {
 
         $this->model = new ProposalModel($data);
@@ -20,9 +25,50 @@ class Proposal extends BaseModel {
 
     public function create() {
 
-        $query ='INSERT INTO sq_salons_salles(ID_pays, question, is_valid,
-                             reponse_1, reponse_2, reponse_3, reponse_4, reponse_5, debate_start, debate_end)
-                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NOW(), NOW())';
+        // Obtenir la res_id max
+        // TODO! Plutôt que de définir une variable res_id et res_year, on peut plutôt
+        // essayer de définir la valeur de l'identifiant en comptant le nombre de propositions
+        // publiées au cours de l'année, ayant une date de création inférieure à celle recherchée.
+        $query = 'SELECT (MAX(res_id) + 1) AS max_res_id FROM ocgc_proposals WHERE YEAR(created) = YEAR(CURDATE())';
+        $mysql_query = mysql_query($query);
+        $current_res_id = mysql_fetch_assoc($mysql_query)['max_res_id'];
+        if(empty($current_res_id))
+            $current_res_id = 1;
+
+        // Définir variables non définies au préalable dans le formulaire.
+        $this->set('is_valid', 1);
+        $this->set('motive', null);
+        $this->set('res_id', $current_res_id);
+
+        // Requêtes
+        $query ='INSERT INTO ocgc_proposals(
+                         ID_pays, question, type, type_reponse,
+                         reponse_1, reponse_2, reponse_3, reponse_4, reponse_5, 
+                         is_valid, motive, debate_start, debate_end,
+                         res_year, res_id, created, updated)
+                 VALUES(
+                         %s, %s, %s, %s,
+                         %s, %s, %s, %s, %s,
+                         %s, %s, %s, %s,
+                         YEAR(CURDATE()), %s, NOW(), NOW())';
+
+        $query = sprintf($query,
+             GetSQLValueString($this->ID_pays),
+             GetSQLValueString($this->question),
+             GetSQLValueString($this->type),
+             GetSQLValueString($this->type_reponse),
+             GetSQLValueString($this->reponse_1),
+             GetSQLValueString($this->reponse_2),
+             GetSQLValueString($this->reponse_3),
+             GetSQLValueString($this->reponse_4),
+             GetSQLValueString($this->reponse_5),
+             GetSQLValueString($this->is_valid, 'int'),
+             GetSQLValueString($this->motive),
+             GetSQLValueString($this->debate_start),
+             GetSQLValueString($this->debate_end),
+             GetSQLValueString($this->res_id)
+        );
+        mysql_query($query);
 
     }
 
@@ -135,7 +181,7 @@ class Proposal extends BaseModel {
             $start_bonus_week = $i;
             $end_bonus_week = $i;
 
-            if(date('D') === 'Fri') {
+            if(date('D') === 'Fri' || date('D') === 'Sat') {
                 $end_bonus_week++;
             }
 

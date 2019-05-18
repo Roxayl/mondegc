@@ -147,14 +147,24 @@ init();
       <table width="100%" class="table table-hover " cellspacing="1">
         <thead>
           <tr class="tablehead2">
+            <th scope="col">Identifiant</th>
+            <th scope="col">Type</th>
             <th scope="col">Question</th>
+            <th scope="col">Proposée le</th>
+            <th scope="col">Période de vote</th>
+            <th scope="col">Statut</th>
           </tr>
         </thead>
         <tbody>
         <?php
         foreach($proposalList->getAll() as $pending): ?>
             <tr>
-              <td>=<?= $pending->question ?></td>
+              <td><?= $pending->res_year ?>-<?= $pending->res_id ?></td>
+              <td><?= \GenCity\Proposal\Proposal::$typeDetail[$pending->type] ?> (<?= $pending->type ?>)</td>
+              <td><?= $pending->question ?></td>
+              <td><?= $pending->created ?></td>
+              <td>Du <?= $pending->debate_start ?> au <?= $pending->debate_end ?></td>
+              <td></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

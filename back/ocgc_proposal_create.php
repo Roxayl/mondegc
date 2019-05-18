@@ -33,7 +33,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $proposalValidate = $postProposal->validate();
 
     if(empty($proposalValidate)) {
-
+        $postProposal->create();
+        getErrorMessage('success', "Votre proposition a été créée avec succès !");
+        header('Location: ../assemblee.php');
+        exit();
     }
 
     else {
