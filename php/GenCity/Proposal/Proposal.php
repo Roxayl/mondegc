@@ -214,7 +214,25 @@ class Proposal extends BaseModel {
 
         $start_is_friday = date('D', strtotime($this->get('debate_start'))) === "Fri";
         $end_is_saturday = date('D', strtotime($this->get('debate_end'))) === "Sun";
-        return ($start_is_friday && $end_is_saturday);
+        return $start_is_friday && $end_is_saturday;
+
+    }
+
+    public function isWithinDebatePeriod() {
+
+        return strtotime($this->get('debate_start')) < time() &&
+                                                       time() < strtotime($this->get('debate_end'));
+
+    }
+
+    public function getProposalId() {
+
+        $year = substr($this->get('res_year'), 2);
+        $id = (string)$this->get('res_id');
+        while(strlen($id) < 3) {
+            $id = (string)'0' . $id;
+        }
+        return "$year-$id";
 
     }
 

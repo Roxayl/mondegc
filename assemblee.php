@@ -153,18 +153,20 @@ init();
             <th scope="col">Proposée le</th>
             <th scope="col">Période de vote</th>
             <th scope="col">Statut</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
         <?php
         foreach($proposalList->getAll() as $pending): ?>
             <tr>
-              <td><?= $pending->res_year ?>-<?= $pending->res_id ?></td>
+              <td><?= $pending->getProposalId(); ?></td>
               <td><?= \GenCity\Proposal\Proposal::$typeDetail[$pending->type] ?> (<?= $pending->type ?>)</td>
               <td><?= $pending->question ?></td>
               <td><?= $pending->created ?></td>
               <td>Du <?= $pending->debate_start ?> au <?= $pending->debate_end ?></td>
               <td></td>
+              <td><a href="back/ocgc_proposal.php?id=<?= $pending->id ?>">Voir la proposition</a></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

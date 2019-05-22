@@ -20,6 +20,8 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 $thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
 $userPaysAllowedToVote = $thisUser->getCountries(\GenCity\Monde\User::getUserPermission('Dirigeant'), true);
+if(count($userPaysAllowedToVote) == 0)
+    $_error = true;
 if($_error) {
     getErrorMessage('ban_error', "Vous ne pouvez pas créer de nouvelle proposition car vous n'êtes le dirigeant d'un pays.");
 }
