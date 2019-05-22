@@ -567,6 +567,11 @@ ul.dropdown-menu.dropdown-double > div.drop-colonne-droite > li, ul.dropdown-men
 #introheader .container {
     height: 330px;
 }
+.jumbotron-small .container {
+    text-align: left;
+    height: auto;
+    padding-left: 30px;
+}
 .jumbotron .container-carousel {
 	position: relative;
 	margin-top: -5px;
@@ -591,6 +596,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9babbf', end
 .jumbotron h1 {
 	font-size: 2.5em;
 	line-height: 1em;
+}
+.jumbotron-small h1 {
+    font-size: 2em;
+}.jumbotron-small h2 {
+    text-transform: uppercase;
 }
 .jumbotron p {
 	font-size: 1.1em;
