@@ -73,6 +73,11 @@ class Proposal extends BaseModel {
         );
         mysql_query($query);
 
+        $this->set('id', mysql_insert_id());
+
+        // Créer les votes
+        $this->getVote()->createAllVotes();
+
     }
 
     public function validate() {
@@ -228,6 +233,26 @@ class Proposal extends BaseModel {
 
     }
 
+    /**
+     * Donne un tableau de la liste des réponses, telle qu'issue de la base de données.
+     * @return array La liste des réponses, avec leur intitulé.
+     */
+    public function getResponses() {
+
+        $return = array();
+        for($i = 1; $i <= Proposal::$maxResponses; $i++) {
+            if(empty($this->get("reponse_$i"))) break;
+            $return["reponse_$i"] = $this->get("reponse_$i");
+        }
+        return $return;
+
+    }
+
+    /**
+     * Donne l'identifiant de la proposition, comprenant l'année sur deux chiffres et
+     * l'ordre de création au cours de l'année (e.g. "19-054").
+     * @return string L'identifiant de la proposition.
+     */
     public function getProposalId() {
 
         $year = substr($this->get('res_year'), 2);
@@ -239,6 +264,10 @@ class Proposal extends BaseModel {
 
     }
 
+    /**
+     * Initialiser l'objet {@see Vote} lié à la proposition.
+     * @return Vote|null
+     */
     public function getVote() {
 
         if(is_null($this->vote)) {

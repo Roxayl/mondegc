@@ -1,6 +1,8 @@
 <?php
 
 namespace GenCity\Proposal;
+use GenCity\Monde\Pays;
+use GenCity\Monde\PaysList;
 use GenCity\Monde\User;
 
 class Vote {
@@ -11,7 +13,7 @@ class Vote {
 
     public function __construct(Proposal $proposal) {
 
-        $this->proposal = $proposal->get('id');
+        $this->proposal = $proposal;
 
         // Obtenir tous les votes
         $this->getAllVotes();
@@ -23,12 +25,36 @@ class Vote {
 
     private function getAllVotes() {
 
+        // Vider l'array avant d'ajouter les votes
+        $this->allVotes = array();
+
         $query = sprintf('SELECT * FROM ocgc_votes WHERE ID_proposal = %s',
             GetSQLValueString($this->proposal->get('id')));
         $mysql_query = mysql_query($query);
         while($thisVote = mysql_fetch_assoc($mysql_query)) {
             $this->allVotes[] = $thisVote;
         }
+
+    }
+
+    public function createAllVotes() {
+
+        $paysList = new PaysList();
+        $allowedPays = $paysList->getActive();
+
+        /** @var Pays $pays */
+        foreach($allowedPays as $pays) {
+            $query = sprintf('
+              INSERT INTO ocgc_votes(ID_proposal, ID_pays, reponse_choisie, has_voted, created)
+              VALUES(%s, %s, NULL, 0, NOW())',
+                GetSQLValueString($this->proposal->get('id')),
+                GetSQLValueString($pays->get('ch_pay_id'))
+            );
+            mysql_query($query);
+        }
+
+        // Mettre à jour la liste des votes
+        $this->getAllVotes();
 
     }
 
@@ -99,7 +125,7 @@ class Vote {
 
     }
 
-    public function getDetailedResults() {
+    public function getResultsPerCountry() {
 
 
 
