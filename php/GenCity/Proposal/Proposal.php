@@ -16,6 +16,9 @@ class Proposal extends BaseModel {
         'IRL' => "Sondage",
         'RP' => "Résolution"
     );
+    static $maxResponses = 5;
+
+    private $vote = null;
 
     public function __construct($data = null) {
 
@@ -53,20 +56,20 @@ class Proposal extends BaseModel {
                          YEAR(CURDATE()), %s, NOW(), NOW())';
 
         $query = sprintf($query,
-             GetSQLValueString($this->ID_pays),
-             GetSQLValueString($this->question),
-             GetSQLValueString($this->type),
-             GetSQLValueString($this->type_reponse),
-             GetSQLValueString($this->reponse_1),
-             GetSQLValueString($this->reponse_2),
-             GetSQLValueString($this->reponse_3),
-             GetSQLValueString($this->reponse_4),
-             GetSQLValueString($this->reponse_5),
-             GetSQLValueString($this->is_valid, 'int'),
-             GetSQLValueString($this->motive),
-             GetSQLValueString($this->debate_start),
-             GetSQLValueString($this->debate_end),
-             GetSQLValueString($this->res_id)
+             GetSQLValueString($this->get('ID_pays')),
+             GetSQLValueString($this->get('question')),
+             GetSQLValueString($this->get('type')),
+             GetSQLValueString($this->get('type_reponse')),
+             GetSQLValueString($this->get('reponse_1')),
+             GetSQLValueString($this->get('reponse_2')),
+             GetSQLValueString($this->get('reponse_3')),
+             GetSQLValueString($this->get('reponse_4')),
+             GetSQLValueString($this->get('reponse_5')),
+             GetSQLValueString($this->get('is_valid'), 'int'),
+             GetSQLValueString($this->get('motive')),
+             GetSQLValueString($this->get('debate_start')),
+             GetSQLValueString($this->get('debate_end')),
+             GetSQLValueString($this->get('res_id'))
         );
         mysql_query($query);
 
@@ -134,7 +137,7 @@ class Proposal extends BaseModel {
         // type_reponse = multiple
         else {
             $empty_remainder = false;
-            for($i = 1; $i <= 5; $i++) {
+            for($i = 1; $i <= self::$maxResponses; $i++) {
                 if($i > 2 && empty($this->get("reponse_$i")) && !$empty_remainder) {
                     $empty_remainder = true;
                 }
@@ -233,6 +236,15 @@ class Proposal extends BaseModel {
             $id = (string)'0' . $id;
         }
         return "$year-$id";
+
+    }
+
+    public function getVote() {
+
+        if(is_null($this->vote)) {
+            $this->vote = new Vote($this);
+        }
+        return $this->vote;
 
     }
 
