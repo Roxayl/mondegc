@@ -57,6 +57,11 @@ hr {
 	padding-bottom: 1px;
 	line-height: 18px;
 }
+.well.well-dark {
+    background-image: url('http://image.noelshack.com/fichiers/2019/21/5/1558706689-gc2020-ag-ocgc-fond.png');
+    background-size: cover;
+    color: #fafafa;
+}
 .thumb {
 	text-align: center;
 	padding: 49px 10px 0px 10px;
@@ -88,7 +93,7 @@ h3 {
 	font-stretch: semi-condensed;
 	margin-left: 18px;
 	margin-top: 22px;
-	line-height: 18px;
+	line-height: 24px;
 }
 .listes h3 {
 	color: #000000;
@@ -101,11 +106,28 @@ small {
 	margin: 5px;
 	padding: 5px;
 	font-weight: lighter;
-	font-stretch: narrower;
 }
 ul {
 	position: relative;
 	z-index: 10 !important;
+}
+ul.proposal-responses {
+    list-style: none;
+}
+ul.proposal-responses li {
+    display: inline-block;
+    background-color: #fafafa;
+    padding: 2px 8px;
+    color: #000000;
+    border: 1px solid #000000;
+    font-family: "Titillium Web", "Roboto", sans-serif;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+ul.proposal-responses li label {
+    font-weight: bold;
+    cursor: inherit;
+    font-size: 1.1em;
 }
 .align-left, .align-left p {
 	text-align: left;
@@ -477,7 +499,7 @@ body > .navbar .brand {
 	background-image: none;
 	background-repeat: repeat-x;
 }
-/* Dropdown Double 
+/* Dropdown Double
 -------------------------------------------------- */
 
 .dropdown-double {
@@ -710,6 +732,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9babbf', end
 	margin: 20px 10px 10px -10px;
     padding-left: 60px;
 }
+.titre-fond-blanc h1 {
+    background-image: url("../img/bg-titre-left-blanc.png"), url("../img/bg-titre-blanc.png");
+}
 .titre-vert.no-bg h1, .titre-bleu.no-bg h1 {
     background: none;
 }
@@ -719,6 +744,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9babbf', end
     width: 54px;
     margin: 13px 0 -12px -28px;
     z-index: 3;
+}
+.well .titre-bleu {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+.well-dark .titre-bleu h1 {
+    color: #fafafa!important;
+}
+.well-dark h2, .well-dark h3 {
+    color: #fafafa;
 }
 
 /* Titre gris h3
@@ -1179,7 +1214,7 @@ table .btn {
 	text-align: center;
 	overflow: hidden;
 	position:relative;
-	
+
 }
 .carousel .item {
     background-position: center center;
@@ -1326,7 +1361,7 @@ table .btn {
 .liste-ressources h3 {
 	text-align:right;
 	margin-top: 5px;
-	
+
 }
 
 .liste-ressources h4 {
@@ -1443,12 +1478,12 @@ table .btn {
 
 
 
-/* ---------------------------------------------------------------------------------------------------- 
+/* ----------------------------------------------------------------------------------------------------
 Responsive
 ---------------------------------------------------------------------------------------------------- */
 
 
-/* ---------------------------------------------------------------------------------------------------- 
+/* ----------------------------------------------------------------------------------------------------
 Desktop large
 ---------------------------------------------------------------------------------------------------- */
 @media (min-width: 1200px) {
@@ -1505,8 +1540,8 @@ Desktop large
 
 
 
-/* ---------------------------------------------------------------------------------------------------- 
-IPAD / TABLET 
+/* ----------------------------------------------------------------------------------------------------
+IPAD / TABLET
 ---------------------------------------------------------------------------------------------------- */
 
 
@@ -1538,7 +1573,7 @@ body > .navbar-fixed-top .brand {
 
 
 
-/* ---------------------------------------------------------------------------------------------------- 
+/* ----------------------------------------------------------------------------------------------------
 Tablet to desktop
 ---------------------------------------------------------------------------------------------------- */
 
@@ -1744,7 +1779,7 @@ footer li {
 	font-size: 11px;
 }
 }
-/* ---------------------------------------------------------------------------------------------------- 
+/* ----------------------------------------------------------------------------------------------------
 Tablet COLLAPSE
 ---------------------------------------------------------------------------------------------------- */
 @media (max-width: 767px) {
@@ -2000,7 +2035,7 @@ ul.dropdown-menu.dropdown-double > div.drop-colonne-droite > li, ul.dropdown-men
 	left : -18px;
 }
 
-/* Notifications 
+/* Notifications
 -------------------------------------------------- */
 
 liste-transparente {

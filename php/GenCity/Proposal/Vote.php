@@ -45,8 +45,8 @@ class Vote {
         /** @var Pays $pays */
         foreach($allowedPays as $pays) {
             $query = sprintf('
-              INSERT INTO ocgc_votes(ID_proposal, ID_pays, reponse_choisie, has_voted, created)
-              VALUES(%s, %s, NULL, 0, NOW())',
+              INSERT INTO ocgc_votes(ID_proposal, ID_pays, reponse_choisie, created)
+              VALUES(%s, %s, NULL, NOW())',
                 GetSQLValueString($this->proposal->get('id')),
                 GetSQLValueString($pays->get('ch_pay_id'))
             );
@@ -128,7 +128,7 @@ class Vote {
     public function getResultsPerCountry() {
 
         $results = array();
-        $query = sprintf('SELECT id, ID_pays, reponse_choisie, has_voted,
+        $query = sprintf('SELECT id, ID_pays, reponse_choisie,
                     ch_pay_nom, ch_pay_continent
                   FROM ocgc_votes
                   JOIN pays ON ID_pays = ch_pay_id
@@ -181,8 +181,8 @@ class Vote {
 
         $return = $colorAbstention;
 
-        if((int)$vote->has_voted === 1) {
-            if(is_null($vote->reponse_choisie)) {
+        if(!is_null($vote->reponse_choisie)) {
+            if((int)$vote->reponse_choisie === 0) {
                 $return = $colorBlanc;
             } else {
                 $arrayKey = (int)$vote->reponse_choisie - 1;

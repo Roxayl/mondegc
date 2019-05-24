@@ -73,7 +73,8 @@ class Proposal extends BaseModel {
         );
         mysql_query($query);
 
-        $this->set('id', mysql_insert_id());
+        // On réinitialise le modèle
+        $this->model = new ProposalModel(mysql_insert_id());
 
         // Créer les votes
         $this->getVote()->createAllVotes();
@@ -234,15 +235,15 @@ class Proposal extends BaseModel {
     }
 
     /**
-     * Donne un tableau de la liste des réponses, telle qu'issue de la base de données.
+     * Donne un tableau de la liste des réponses.
      * @return array La liste des réponses, avec leur intitulé.
      */
     public function getResponses() {
 
-        $return = array();
+        $return = array(0 => 'Blanc');
         for($i = 1; $i <= Proposal::$maxResponses; $i++) {
             if(empty($this->get("reponse_$i"))) break;
-            $return["reponse_$i"] = $this->get("reponse_$i");
+            $return[$i] = $this->get("reponse_$i");
         }
         return $return;
 

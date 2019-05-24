@@ -19,6 +19,9 @@ class ProposalModel implements ModelStructureInterface {
             $this->info = $data;
         }
 
+        // Initialiser le vote blanc, qu'on évitera de stocker dans la base de données.
+        $this->info['reponse_0'] = 'Blanc';
+
     }
 
     private function populate($id) {

@@ -147,14 +147,12 @@ img.olTileImage {
 
     <?php renderElement('errormsgs'); ?>
 
+    <div class="well well-dark">
     <!-- ZONE DE VOTE -->
-    <div id="info-generales" class="titre-bleu">
+    <div id="info-generales" class="titre-bleu titre-fond-blanc" style="margin: -20px -19px 0;">
         <h1>Vote</h1>
     </div>
-
-    <div class="well">
-        <div class="alert alert-block <?= $message_alert ?>"><?= $debate_message ?></div>
-
+        <p><?= $debate_message ?></p>
         <div class="row-fluid">
             <div class="span6">
                 <svg id="parliament"></svg>
@@ -162,11 +160,18 @@ img.olTileImage {
 
             <div class="span6">
                 <h3><?= $formProposal->question ?></h3>
-                <ul>
-                <?php foreach($formProposal->getResponses() as $thisResponse): ?>
-                    <li><?= $thisResponse ?></li>
-                <?php endforeach; ?>
-                </ul>
+                <ul class="proposal-responses">
+                    <?php foreach($formProposal->getResponses() as $key => $thisResponse): ?>
+                        <?php $voteArray = array(
+                            'reponse_choisie' => $key
+                        );
+                        $thisColor = $formProposal->getVote()->getColorFromVote(
+                                new \GenCity\Proposal\VoteModel($voteArray)); ?>
+                        <li style="color: <?= $thisColor ?>; border-color: <?= $thisColor ?>;">
+                            <label><input type="checkbox"> <?= $thisResponse ?></label>
+                        </li>
+                    <?php endforeach; ?>
+                </ul><button type="submit" class="btn btn-primary">Je vote !</button>
             </div>
         </div>
     </div>
