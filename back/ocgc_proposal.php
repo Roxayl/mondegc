@@ -26,6 +26,8 @@ if($_error) {
 
 $formProposal = new \GenCity\Proposal\Proposal($_GET['id']);
 
+$voteResults = $formProposal->getVote()->generateDiagramData();
+
 if($formProposal->isWithinDebatePeriod()) {
     $message_alert = "warning";
     $debate_message = "L'Assemblée Générale siège en session plénière. La procédure de vote a commencé.";
@@ -92,7 +94,7 @@ img.olTileImage {
 <style media="screen">
     svg {
         width: 500px;
-        height: 200px;
+        height: 270px;
     }
     svg .seat {
         cursor: pointer;
@@ -101,25 +103,10 @@ img.olTileImage {
 
     /* European parliament colors */
     svg .seat.gue-ngl { fill: #990000 }
-    svg .seat.sd { fill: #F0001C }
-    svg .seat.greens-efa { fill: #32CD32 }
-    svg .seat.alde { fill: #FFD700 }
-    svg .seat.epp { fill: #3399FF }
-    svg .seat.ecr { fill: #0054A5 }
-    svg .seat.efdd { fill: #40E0D0 }
-    svg .seat.enf { fill: #000000 }
-
-    /* French parliament colors */
-    svg .seat.com { fill: #990000; }
-    svg .seat.soc { fill: #D58490; }
-    svg .seat.eelv { fill: #32CD32; }
-    svg .seat.edsr { fill: #BF80FF; }
-    svg .seat.uc { fill: #B2C6FF; }
-    svg .seat.lr { fill: #4C6099; }
-
-    /* common */
-    svg .seat.vacant { fill: #FFFFFF }
-    svg .seat.no-party { fill: #909090; }
+    <?php
+    foreach($voteResults['css'] as $thisCss): ?>
+        <?= key($thisCss) ?> { fill: <?= $thisCss[key($thisCss)] ?> }
+    <?php endforeach; ?>
     </style>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
@@ -175,6 +162,11 @@ img.olTileImage {
 
             <div class="span6">
                 <h3><?= $formProposal->question ?></h3>
+                <ul>
+                <?php foreach($formProposal->getResponses() as $thisResponse): ?>
+                    <li><?= $thisResponse ?></li>
+                <?php endforeach; ?>
+                </ul>
             </div>
         </div>
     </div>
@@ -210,66 +202,10 @@ img.olTileImage {
 $(function() {
     $('[rel="clickover"]').clickover();})
 </script>
+
 <script type="text/javascript">
 
-    var data = [
-        {
-            "id": "gue-ngl",
-            "legend": "GUE-NGL",
-            "name": "European United Left–Nordic Green Left",
-            "seats": 7
-        },
-        {
-            "id": "sd",
-            "legend": "S&D",
-            "name": "Progressive Alliance of Socialists and Democrats",
-            "seats": 22
-        },
-        {
-            "id": "greens-efa",
-            "legend": "Greens-EFA",
-            "name": "The Greens–European Free Alliance",
-            "seats": 16
-        },
-        {
-            "id": "alde",
-            "legend": "ALDE",
-            "name": "Alliance of Liberals and Democrats for Europe Group",
-            "seats": 15
-        },
-        {
-            "id": "epp",
-            "legend": "EPP",
-            "name": "European People's Party Group",
-            "seats": 32
-        },
-        {
-            "id": "ecr",
-            "legend": "ECR",
-            "name": "European Conservatives and Reformists",
-            "seats": 6
-        },
-        {
-            "id": "efdd",
-            "legend": "EFDD",
-            "name": "Europe of Freedom and Direct Democracy",
-            "seats": 8
-        },
-        {
-            "id": "enf",
-            "legend": "ENF",
-            "name": "Europe of Nations and Freedom",
-            "seats": 10
-        },
-        {
-            "id": "no-party",
-            "legend": "Non-Inscrits",
-            "name": "Non-Inscrits",
-            "seats": 7
-        }
-    ];
-
-    var parliament = d3.parliament().width(500).height(200).innerRadiusCoef(0.4);
+    var parliament = d3.parliament().width(500).height(270).innerRadiusCoef(0.39);
     parliament.enter.fromCenter(true).smallToBig(true);
     parliament.exit.toCenter(true).bigToSmall(true);
     parliament.on("click", function(e) { console.log(e); });
@@ -278,7 +214,8 @@ $(function() {
         d3.select("#parliament").datum(d).call(parliament);
     };
 
-    setData(data);
+    setData(<?= json_encode($voteResults['d3DataSource']) ?>);
+
 </script>
 
 </body>

@@ -127,11 +127,74 @@ class Vote {
 
     public function getResultsPerCountry() {
 
+        $results = array();
+        $query = sprintf('SELECT id, ID_pays, reponse_choisie, has_voted,
+                    ch_pay_nom, ch_pay_continent
+                  FROM ocgc_votes
+                  JOIN pays ON ID_pays = ch_pay_id
+                  WHERE ID_proposal = %s',
+                GetSQLValueString($this->proposal->get('id')));
+        $mysql_query = mysql_query($query);
+        while($row = mysql_fetch_assoc($mysql_query)) {
+            $results[] = $row;
+        }
 
+        return $results;
+
+    }
+
+    public function generateDiagramData() {
+
+        $results = $this->getResultsPerCountry();
+
+        $diagram = array(
+            'd3DataSource' => array(),
+            'css' => array()
+        );
+        foreach($results as $row) {
+            $this_row_id = "diagram-pays-{$row['id']}";
+            $diagram['d3DataSource'][] = array(
+                'id' => $this_row_id,
+                'legend' => $row['ch_pay_continent'],
+                'name' => $row['ch_pay_nom'],
+                'seats' => 1
+            );
+            $diagram['css'][] = array(
+                "svg .seat.$this_row_id" => $this->getColorFromVote(new VoteModel($row['id']))
+            );
+        }
+
+        return $diagram;
 
     }
 
     public function voteFor() {
+
+    }
+
+    public function getColorFromVote(VoteModel $vote) {
+
+        $colorsDual = array('#0D911F', '#910F0F'); /* pour / contre */
+        $colorsMultiple = array('#918024', '#595C91', '#28915C', '#913C67', '#915836'); // Une pour chq réponse
+        $colorBlanc = '#AEB6C3';
+        $colorAbstention = '#83808A';
+
+        $return = $colorAbstention;
+
+        if((int)$vote->has_voted === 1) {
+            if(is_null($vote->reponse_choisie)) {
+                $return = $colorBlanc;
+            } else {
+                $arrayKey = (int)$vote->reponse_choisie - 1;
+                if($this->proposal->get('type_reponse') === 'dual') {
+                    $return = $colorsDual[$arrayKey];
+                } else {
+                    $return = $colorsMultiple[$arrayKey];
+                }
+            }
+        }
+
+        return $return;
 
     }
 
