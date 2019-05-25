@@ -133,6 +133,10 @@ class VoteList {
 
     }
 
+    /**
+     * @param User $user Les votes que l'utilisateur peut modifier.
+     * @return Vote[] Array d'objets.
+     */
     public function getUserVotes(User $user) {
 
         $userVotes = array();
@@ -140,9 +144,11 @@ class VoteList {
         $query = sprintf('SELECT ocgc_votes.id AS id_votes FROM ocgc_votes
                             JOIN users_pays USING(ID_pays)
                             WHERE ID_proposal = %s AND ID_user = %s
+                              AND permissions >= %s
                             ORDER BY ocgc_votes.id',
             GetSQLValueString($this->proposal->get('id')),
-            GetSQLValueString($user->get('ch_use_id')));
+            GetSQLValueString($user->get('ch_use_id')),
+            Pays::$permissions['dirigeant']);
         $mysql_query = mysql_query($query);
         while($row = mysql_fetch_assoc($mysql_query)) {
             $userVotes[$row['id_votes']] = new Vote($row['id_votes']);

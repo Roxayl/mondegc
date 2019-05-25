@@ -178,54 +178,60 @@ img.olTileImage {
     <?php renderElement('errormsgs'); ?>
 
     <div class="well well-dark">
+
     <!-- ZONE DE VOTE -->
     <div id="info-generales" class="titre-bleu titre-fond-blanc" style="margin: -20px -19px 0;">
         <h1>Vote</h1>
     </div>
-        <p><?= $debate_message ?></p>
-        <div class="row-fluid">
-            <div class="span6">
-                <svg id="parliament"></svg>
-            </div>
+    <p><?= $debate_message ?></p>
 
-            <div class="span6">
+    <div class="row-fluid">
+        <div class="span6">
+            <svg id="parliament"></svg>
+        </div>
+
+        <div class="span6">
+        <h3><?= $formProposal->question ?></h3>
+
+        <?php
+
+        /** @var Vote $thisVote */
+        foreach($userVotes as $thisVote):
+
+            $thisPays = new Pays($thisVote->get('ID_pays'));
+            ?>
+
             <form method="POST" action="ocgc_proposal.php?id=<?= $formProposal->get('id') ?>">
-                <h3><?= $formProposal->question ?></h3>
                 <input type="hidden" name="voteCast[ID_proposal]" value="<?= $formProposal->get('id') ?>">
+
+                <input type="hidden" name="voteCast[id]" value="<?= $thisVote->get('id') ?>">
+
+                <h4><img class="img-menu-drapeau" src="<?= $thisPays->get('ch_pay_lien_imgdrapeau') ?>">
+                    <?= $thisPays->get('ch_pay_nom') ?></h4>
 
                 <!-- Réponses -->
                 <ul class="proposal-responses">
-                    <?php foreach($formProposal->getResponses() as $key => $thisResponse): ?>
-                        <?php $voteArray = array(
-                            'reponse_choisie' => $key
-                        );
-                        $thisColor = $formProposal->getVote()->getColorFromVote(
-                                new \GenCity\Proposal\Vote($voteArray)); ?>
-                        <li style="color: <?= $thisColor ?>; border-color: <?= $thisColor ?>;">
-                            <label><input type="checkbox" value="<?= $key ?>" name="voteCast[reponse_choisie]">
-                                <?= $thisResponse ?></label>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-
-                <!-- ID_vote en choisissant pays -->
-                <label>
-                    Voter en tant que :
-                <select name="voteCast[id]">
-                    <?php /** @var Vote $thisVote */
-                foreach($userVotes as $thisVote):
-                    $thisPays = new Pays($thisVote->get('ID_pays')); ?>
-                    <option value="<?= $thisVote->get('id') ?>">
-                        <?= $thisPays->get('ch_pay_nom') ?>
-                    </option>
+                <?php foreach($formProposal->getResponses() as $key => $thisResponse): ?>
+                    <?php $voteArray = array(
+                        'reponse_choisie' => $key
+                    );
+                    $thisColor = $formProposal->getVote()->getColorFromVote(
+                            new \GenCity\Proposal\Vote($voteArray)); ?>
+                    <li style="color: <?= $thisColor ?>; border-color: <?= $thisColor ?>;"
+                        data-default-color="<?= $thisColor ?>">
+                        <label><input type="checkbox" value="<?= $key ?>" name="voteCast[reponse_choisie]"
+                              <?= ($key === (int)$thisVote->get('reponse_choisie')
+                                   && $thisVote->get('reponse_choisie') !== null ? 'checked selected' : '') ?>>
+                            <?= $thisResponse ?></label>
+                    </li>
                 <?php endforeach; ?>
-                </select>
-                </label>
-
-                <button type="submit" class="btn btn-primary">Je vote !</button>
+                </ul>
             </form>
-            </div>
+
+        <?php endforeach; ?>
+            
         </div>
+    </div>
     </div>
 
     <!-- ZONE DE DÉBATS -->
@@ -261,18 +267,87 @@ $(function() {
 </script>
 
 <script type="text/javascript">
+(function(window, document, $, d3, undefined) {
+
+    /** Diagram init **/
 
     var parliament = d3.parliament().width(500).height(270).innerRadiusCoef(0.39);
     parliament.enter.fromCenter(true).smallToBig(true);
     parliament.exit.toCenter(true).bigToSmall(true);
     parliament.on("click", function(e) { console.log(e); });
 
+    var diagramData = <?= json_encode($voteResults['d3DataSource']) ?>;
+
     var setData = function(d) {
         d3.select("#parliament").datum(d).call(parliament);
     };
 
-    setData(<?= json_encode($voteResults['d3DataSource']) ?>);
+    setData(diagramData);
 
+
+    /** Editing **/
+
+    var getSpecificSvgId = function(vote_id) {
+
+        for(var i = 0; i < diagramData['d3DataSource'].length; i++) {
+            if(diagramData['d3DataSource'][i]['id'] === vote_id) {
+                return;
+            }
+        }
+
+    };
+
+    var manageColors = function($thisInput) {
+
+        var selectedColor = '#83808A';
+
+        $thisInput.closest('ul').find('li').each(function() {
+
+            var el = $(this);
+
+            if(el.find('input[name="voteCast[reponse_choisie]"]').prop('checked')) {
+                el.css({
+                    "border-color": el.attr('data-default-color'),
+                    "background-color": el.attr('data-default-color'),
+                    "color": "#ffffff"
+                });
+                selectedColor = el.attr('data-default-color');
+            } else {
+                el.css({
+                    "border-color": el.attr('data-default-color'),
+                    "background-color": "#fafafa",
+                    "color": el.attr('data-default-color')
+                });
+            }
+
+        });
+
+        var row_id = $thisInput.closest('form').find('input[name="voteCast[id]"]').val();
+        $('svg .seat.diagram-pays-' + row_id).css({'fill': selectedColor});
+
+    };
+
+    $(document).on('click', 'input[name="voteCast[reponse_choisie]"]', function(ev) {
+
+        var $form = $(this).closest('form');
+
+        $.ajax({
+            url: $form.attr('action'),
+            type: 'POST',
+            data: $form.serialize()
+        }).success(function(data) {
+            // TODO! Ajouter un message dans la bannière.
+        });
+
+        manageColors($(ev.target));
+
+    });
+
+    $('input[name="voteCast[reponse_choisie]"]').filter(':checked').each(function() {
+        manageColors($(this));
+    });
+
+})(window, document, jQuery, d3);
 </script>
 
 </body>
