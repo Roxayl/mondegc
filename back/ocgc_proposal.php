@@ -19,7 +19,6 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 $thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
-$userPaysAllowedToVote = $thisUser->getCountries(\GenCity\Monde\User::getUserPermission('Dirigeant'), true);
 if($_error) {
     getErrorMessage('ban_error', "Cette proposition n'existe pas.");
 }
@@ -28,6 +27,35 @@ $formProposal = new \GenCity\Proposal\Proposal($_GET['id']);
 
 $voteResults = $formProposal->getVote()->generateDiagramData();
 
+$voteList = new \GenCity\Proposal\VoteList($formProposal);
+$userVotes = $voteList->getUserVotes($thisUser);
+
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if(isset($_POST['voteCast'])) {
+
+        $postVoteModel = new \GenCity\Proposal\Vote($_POST['voteCast']['id']);
+
+        $postVoteModel->set('reponse_choisie', $_POST['voteCast']['reponse_choisie']);
+        $voteValidate = $postVoteModel->validate($voteList, $formProposal);
+
+        if(empty($voteValidate)) {
+            $postVoteModel->castVote();
+            getErrorMessage('success', "Vous avez voté !");
+            header('Location: ocgc_proposal.php?id=' . $formProposal->get('id'));
+            exit();
+        }
+
+        else {
+            foreach($voteValidate as $validation) {
+                getErrorMessage('error', $validation['errorMessage']);
+            }
+        }
+
+    }
+
+}
+
 if($formProposal->isWithinDebatePeriod()) {
     $message_alert = "warning";
     $debate_message = "L'Assemblée Générale siège en session plénière. La procédure de vote a commencé.";
@@ -35,6 +63,8 @@ if($formProposal->isWithinDebatePeriod()) {
     $message_alert = "info";
     $debate_message = "La procédure de vote n'a pas commencé ou est terminée.";
 }
+
+use GenCity\Monde\Pays;use GenCity\Proposal\Vote;
 
 ?><!DOCTYPE html>
 <html lang="fr">
@@ -159,19 +189,41 @@ img.olTileImage {
             </div>
 
             <div class="span6">
+            <form method="POST" action="ocgc_proposal.php?id=<?= $formProposal->get('id') ?>">
                 <h3><?= $formProposal->question ?></h3>
+                <input type="hidden" name="voteCast[ID_proposal]" value="<?= $formProposal->get('id') ?>">
+
+                <!-- Réponses -->
                 <ul class="proposal-responses">
                     <?php foreach($formProposal->getResponses() as $key => $thisResponse): ?>
                         <?php $voteArray = array(
                             'reponse_choisie' => $key
                         );
                         $thisColor = $formProposal->getVote()->getColorFromVote(
-                                new \GenCity\Proposal\VoteModel($voteArray)); ?>
+                                new \GenCity\Proposal\Vote($voteArray)); ?>
                         <li style="color: <?= $thisColor ?>; border-color: <?= $thisColor ?>;">
-                            <label><input type="checkbox"> <?= $thisResponse ?></label>
+                            <label><input type="checkbox" value="<?= $key ?>" name="voteCast[reponse_choisie]">
+                                <?= $thisResponse ?></label>
                         </li>
                     <?php endforeach; ?>
-                </ul><button type="submit" class="btn btn-primary">Je vote !</button>
+                </ul>
+
+                <!-- ID_vote en choisissant pays -->
+                <label>
+                    Voter en tant que :
+                <select name="voteCast[id]">
+                    <?php /** @var Vote $thisVote */
+                foreach($userVotes as $thisVote):
+                    $thisPays = new Pays($thisVote->get('ID_pays')); ?>
+                    <option value="<?= $thisVote->get('id') ?>">
+                        <?= $thisPays->get('ch_pay_nom') ?>
+                    </option>
+                <?php endforeach; ?>
+                </select>
+                </label>
+
+                <button type="submit" class="btn btn-primary">Je vote !</button>
+            </form>
             </div>
         </div>
     </div>

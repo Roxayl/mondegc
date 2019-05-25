@@ -1,200 +1,57 @@
 <?php
 
 namespace GenCity\Proposal;
-use GenCity\Monde\Pays;
-use GenCity\Monde\PaysList;
-use GenCity\Monde\User;
+use Squirrel\BaseModel;
 
-class Vote {
+class Vote extends BaseModel {
 
-    private $proposal = null;
-    private $allVotes = array();
-    private $voter = array();
+    public function __construct($data = null) {
 
-    public function __construct(Proposal $proposal) {
-
-        $this->proposal = $proposal;
-
-        // Obtenir tous les votes
-        $this->getAllVotes();
-
-        // Définir un votant
-        $this->setVoter();
+        $this->model = new VoteModel($data);
 
     }
 
-    private function getAllVotes() {
+    public function validate(VoteList $voteList, Proposal $proposal) {
 
-        // Vider l'array avant d'ajouter les votes
-        $this->allVotes = array();
+        $return = array();
 
-        $query = sprintf('SELECT * FROM ocgc_votes WHERE ID_proposal = %s',
-            GetSQLValueString($this->proposal->get('id')));
-        $mysql_query = mysql_query($query);
-        while($thisVote = mysql_fetch_assoc($mysql_query)) {
-            $this->allVotes[] = $thisVote;
-        }
-
-    }
-
-    public function createAllVotes() {
-
-        $paysList = new PaysList();
-        $allowedPays = $paysList->getActive();
-
-        /** @var Pays $pays */
-        foreach($allowedPays as $pays) {
-            $query = sprintf('
-              INSERT INTO ocgc_votes(ID_proposal, ID_pays, reponse_choisie, created)
-              VALUES(%s, %s, NULL, NOW())',
-                GetSQLValueString($this->proposal->get('id')),
-                GetSQLValueString($pays->get('ch_pay_id'))
-            );
-            mysql_query($query);
-        }
-
-        // Mettre à jour la liste des votes
-        $this->getAllVotes();
-
-    }
-
-    private function setVoter(User $user = null) {
-
-        if(is_null($user)) {
-            if(isset($_SESSION['userObject']) && $_SESSION['userObject'] instanceof User)
-                $this->setVoter($_SESSION['userObject']);
-        } else {
-            $this->voter = $user;
-        }
-
-    }
-
-    public function getTotalVotes() {
-
-        return count($this->allVotes);
-
-    }
-
-    private function getVotesByResponse() {
-
-        $result = array();
-        $query = sprintf('SELECT reponse_choisie, COUNT(id) AS nbr_votes
-                    FROM ocgc_votes
-                    WHERE ID_proposal = %s
-                    GROUP BY reponse_choisie', $this->proposal->get('id'));
-        $mysql_query = mysql_query($query);
-        while($row = mysql_fetch_assoc($mysql_query)) {
-            $result[] = $row;
-        }
-        return $result;
-
-    }
-
-    public function getResultsByResponses() {
-
-        $listVotes = $this->getVotesByResponse();
-
-        $results = array();
-
-        for($i = 1; $i < Proposal::$maxResponses + 1; $i++) {
-            if(is_null($this->proposal->get("reponse_$i"))) break;
-            for($j = 0; $j < Proposal::$maxResponses; $j++) {
-                if(!isset($listVotes[$j]['reponse_choisie'])) break;
-                if($i === (int)$listVotes[$j]['reponse_choisie']) {
-                    $this_i = $j;
-                    break;
-                }
-            }
-            if(!isset($this_i)) {
-                $results[] = array(
-                    'reponse'   => $this->proposal->get("reponse_$i"),
-                    'id_reponse'=> $i,
-                    'nbr_votes' => 0
-                );
-                continue;
-            }
-            $results[] = array(
-                'reponse'   => $this->proposal->get("reponse_$i"),
-                'id_reponse'=> (int)$listVotes[$this_i]['id_reponse'], // est égal à $i
-                'nbr_votes' => (int)$listVotes[$this_i]['nbr_votes']
-            );
-            unset($this_i);
-        }
-
-        return $results;
-
-    }
-
-    public function getResultsPerCountry() {
-
-        $results = array();
-        $query = sprintf('SELECT id, ID_pays, reponse_choisie,
-                    ch_pay_nom, ch_pay_continent
-                  FROM ocgc_votes
-                  JOIN pays ON ID_pays = ch_pay_id
-                  WHERE ID_proposal = %s',
-                GetSQLValueString($this->proposal->get('id')));
-        $mysql_query = mysql_query($query);
-        while($row = mysql_fetch_assoc($mysql_query)) {
-            $results[] = $row;
-        }
-
-        return $results;
-
-    }
-
-    public function generateDiagramData() {
-
-        $results = $this->getResultsPerCountry();
-
-        $diagram = array(
-            'd3DataSource' => array(),
-            'css' => array()
-        );
-        foreach($results as $row) {
-            $this_row_id = "diagram-pays-{$row['id']}";
-            $diagram['d3DataSource'][] = array(
-                'id' => $this_row_id,
-                'legend' => $row['ch_pay_continent'],
-                'name' => $row['ch_pay_nom'],
-                'seats' => 1
-            );
-            $diagram['css'][] = array(
-                "svg .seat.$this_row_id" => $this->getColorFromVote(new VoteModel($row['id']))
+        // Vérifier que le pays peut voter.
+        $paysVotes = $voteList->getUserVotes($_SESSION['userObject']);
+        if(count($paysVotes) == 0) {
+            $return[] = array(
+                'targetedField' =>'ID_pays',
+                'errorMessage' => "Vous n'êtes pas autorisé à voter à ce scrutin."
             );
         }
 
-        return $diagram;
-
-    }
-
-    public function voteFor() {
-
-    }
-
-    public function getColorFromVote(VoteModel $vote) {
-
-        $colorsDual = array('#0D911F', '#910F0F'); /* pour / contre */
-        $colorsMultiple = array('#918024', '#595C91', '#28915C', '#913C67', '#915836'); // Une pour chq réponse
-        $colorBlanc = '#AEB6C3';
-        $colorAbstention = '#83808A';
-
-        $return = $colorAbstention;
-
-        if(!is_null($vote->reponse_choisie)) {
-            if((int)$vote->reponse_choisie === 0) {
-                $return = $colorBlanc;
-            } else {
-                $arrayKey = (int)$vote->reponse_choisie - 1;
-                if($this->proposal->get('type_reponse') === 'dual') {
-                    $return = $colorsDual[$arrayKey];
-                } else {
-                    $return = $colorsMultiple[$arrayKey];
-                }
-            }
+        $countResponses = $proposal->getResponses();
+        if($this->get('reponse_choisie') < 0 && $this->get('reponse_choisie') > $countResponses) {
+            $return[] = array(
+                'targetedField' => null,
+                'errorMessage' => "Votre vote ne correspond pas à une réponse."
+            );
         }
+
+        /*$currentVote = new Vote($this->get('id'));
+        if(!is_null($currentVote->get('reponse_choisie'))) {
+            $return[] = array(
+                'targetedField' => null,
+                'errorMessage' => "Vous avez déjà voté."
+            );
+        }*/
 
         return $return;
+
+    }
+
+    public function castVote() {
+
+        $query = sprintf(
+            'UPDATE ocgc_votes SET reponse_choisie = %s WHERE id = %s',
+                GetSQLValueString($this->get('reponse_choisie')),
+                GetSQLValueString($this->get('id'))
+        );
+        mysql_query($query);
 
     }
 

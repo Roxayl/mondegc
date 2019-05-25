@@ -92,6 +92,21 @@ class Pays extends BaseModel {
 
     }
 
+    public function isActive() {
+
+        $mysql_query = mysql_query(sprintf(
+        'SELECT ID_pays AS ch_pay_id, MAX(ch_use_last_log) FROM users_pays
+              JOIN users ON ch_use_id = ID_user
+              WHERE ID_pays = %s
+              GROUP BY ch_pay_id
+              HAVING MAX(ch_use_last_log) > DATE_SUB(NOW(), INTERVAL 3 MONTH)',
+            GetSQLValueString($this->get('ch_pay_id'))
+            ));
+        $results = mysql_fetch_assoc($mysql_query);
+        return !empty($results);
+
+    }
+
     static function getPermissionName($permission) {
 
         switch($permission) {

@@ -266,13 +266,13 @@ class Proposal extends BaseModel {
     }
 
     /**
-     * Initialiser l'objet {@see Vote} lié à la proposition.
-     * @return Vote|null
+     * Initialiser l'objet {@see VoteList} lié à la proposition.
+     * @return VoteList|null
      */
     public function getVote() {
 
         if(is_null($this->vote)) {
-            $this->vote = new Vote($this);
+            $this->vote = new VoteList($this);
         }
         return $this->vote;
 
