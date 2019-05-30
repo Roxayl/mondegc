@@ -167,7 +167,7 @@ init();
               <td><?= $pending->get('question') ?></td>
               <td><?= $pending->get('created') ?></td>
               <td>Du <?= $pending->get('debate_start') ?> au <?= $pending->get('debate_end') ?></td>
-              <td></td>
+              <td><?= $pending->getStatus() ?></td>
               <td><a href="back/ocgc_proposal.php?id=<?= $pending->get('id') ?>">Voir la proposition</a></td>
             </tr>
         <?php endforeach; ?>

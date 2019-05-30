@@ -12,10 +12,12 @@ class Proposal extends BaseModel {
     static $debate_day_end   = 'saturday';
     static $date_formatting  = 'Y-m-d H:i:s';
 
+    /** * @var array Détermine le type de sondage, IRL ou RP. */
     static $typeDetail = array(
         'IRL' => "Sondage",
         'RP' => "Résolution"
     );
+
     static $maxResponses = 5;
 
     private $vote = null;
@@ -78,6 +80,25 @@ class Proposal extends BaseModel {
 
         // Créer les votes
         $this->getVote()->createAllVotes();
+
+    }
+
+    public function update() {
+
+        $structure = new Proposal(null);
+
+        $query = 'UPDATE ocgc_proposals SET ';
+
+        foreach($structure->model as $field => $default) {
+            $query .= ' ' . $field . ' = ' . GetSQLValueString($this->get($field));
+            end($structure->model);
+            if($field !== key($field)) {
+                $query .= ', ';
+            }
+        }
+
+        $query .= ' WHERE id = ' . GetSQLValueString($this->get('id'));
+        mysql_query($query);
 
     }
 
@@ -275,6 +296,56 @@ class Proposal extends BaseModel {
             $this->vote = new VoteList($this);
         }
         return $this->vote;
+
+    }
+
+    public function getStatus($get_text = true) {
+
+        $statusText = array(
+            0 => "Non validée par l'OCGC",
+            1 => "En attente de validation par l'OCGC",
+            2 => "En phase de débat",
+            3 => "Vote en cours",
+            4 => "Vote terminé"
+        );
+
+        $validity = (int)$this->get('is_valid');
+        $return = 'Inconnu !';
+
+        if($validity === 1) {
+            $return = self::allValidationStatus('pendingValidation');
+        }
+        elseif($validity === 0) {
+            $return = self::allValidationStatus('notValid');
+        }
+        elseif($validity === 2) {
+            $return = self::allValidationStatus('debatePending');
+            if($this->isWithinDebatePeriod()) {
+                $return = self::allValidationStatus('votePending');
+            } elseif(time() > strtotime($this->get('debate_end'))) {
+                $return = self::allValidationStatus('voteFinished');
+            }
+        }
+
+        return ($get_text ? $statusText[$return] : $return);
+
+    }
+
+    static function allValidationStatus($label) {
+
+        $status = array(
+            'notValid' => 0,
+            'pendingValidation' => 1,
+            'debatePending' => 2,
+            'votePending' => 3,
+            'voteFinished' => 4
+        );
+
+        if(is_numeric($label)) {
+            return $status[$label];
+        } else {
+            return array_flip($status)[$label];
+        }
 
     }
 

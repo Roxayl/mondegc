@@ -229,7 +229,7 @@ img.olTileImage {
             </form>
 
         <?php endforeach; ?>
-            
+
         </div>
     </div>
     </div>
