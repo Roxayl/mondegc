@@ -28,6 +28,9 @@ class Proposal extends BaseModel {
 
     }
 
+    /**
+     * Créé une nouvelle proposition dans la base de données.
+     */
     public function create() {
 
         // Obtenir la res_id max
@@ -83,16 +86,19 @@ class Proposal extends BaseModel {
 
     }
 
+    /**
+     * Met à jour la proposition dans la base de données.
+     */
     public function update() {
 
-        $structure = new Proposal(null);
+        $structure = $this->model->getStructure();
 
         $query = 'UPDATE ocgc_proposals SET ';
 
-        foreach($structure->model as $field => $default) {
+        foreach($structure as $field => $default) {
             $query .= ' ' . $field . ' = ' . GetSQLValueString($this->get($field));
-            end($structure->model);
-            if($field !== key($field)) {
+            end($structure);
+            if($field !== key($structure)) {
                 $query .= ', ';
             }
         }
@@ -102,6 +108,10 @@ class Proposal extends BaseModel {
 
     }
 
+    /**
+     * Valide le formulaire d'une proposition.
+     * @return array Un tableau vide en cas d'absence d'erreur, la liste des erreurs sinon.
+     */
     public function validate() {
 
         $return = array();
@@ -200,6 +210,11 @@ class Proposal extends BaseModel {
 
     }
 
+    /**
+     * Permet d'obtenir les dates des trois prochaines sessions plénières.
+     * @param bool $getDebateEnd Afficher ou non dans l'array retourné la date de fin de débat.
+     * @return array La date des trois prochaines sessions plénières valides.
+     */
     static function getNextDebates($getDebateEnd = false) {
 
         $debatePeriods = array();
@@ -240,6 +255,11 @@ class Proposal extends BaseModel {
 
     }
 
+    /**
+     * Détermine si les dates <code>debate_start</code> et <code>debate_end</code> sont des dates
+     * de session plénière valides.
+     * @return bool
+     */
     public function isValidDebateDate() {
 
         $start_is_friday = date('D', strtotime($this->get('debate_start'))) === "Fri";
@@ -248,6 +268,10 @@ class Proposal extends BaseModel {
 
     }
 
+    /**
+     * Définit si la proposition est en cours de vote.
+     * @return bool
+     */
     public function isWithinDebatePeriod() {
 
         return strtotime($this->get('debate_start')) < time() &&
@@ -299,6 +323,14 @@ class Proposal extends BaseModel {
 
     }
 
+    /**
+     * Renvoie le statut de la proposition. Il existe 5 phases d'une proposition.
+     * @param bool $get_text Définit si on souhaite l'identifiant du statut (de 0 à 4) ou le
+     * texte à afficher.
+     * @return int|string Renvoie le texte si <code>$get_text</code> vaut <code>true</code>,
+     * l'identifiant sinon.
+     * @throws \Exception
+     */
     public function getStatus($get_text = true) {
 
         $statusText = array(
@@ -312,13 +344,18 @@ class Proposal extends BaseModel {
         $validity = (int)$this->get('is_valid');
         $return = 'Inconnu !';
 
-        if($validity === 1) {
+        $now = new DateTime();
+        $proposalCreate = new DateTime($this->get('created'));
+        $nextWeek = $proposalCreate->add(new \DateInterval('P1W'));
+        $validationPeriodPassed = $now > $nextWeek ? true : false;
+
+        if($validity === 1 && !$validationPeriodPassed) {
             $return = self::allValidationStatus('pendingValidation');
         }
         elseif($validity === 0) {
             $return = self::allValidationStatus('notValid');
         }
-        elseif($validity === 2) {
+        elseif($validity === 2 || ($validationPeriodPassed && $validity === 1)) {
             $return = self::allValidationStatus('debatePending');
             if($this->isWithinDebatePeriod()) {
                 $return = self::allValidationStatus('votePending');
@@ -341,7 +378,7 @@ class Proposal extends BaseModel {
             'voteFinished' => 4
         );
 
-        if(is_numeric($label)) {
+        if(!is_numeric($label)) {
             return $status[$label];
         } else {
             return array_flip($status)[$label];

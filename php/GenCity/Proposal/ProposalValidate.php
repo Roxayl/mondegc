@@ -15,7 +15,7 @@ class ProposalValidate {
     public function checkPermission() {
 
         if(isset($_SESSION['userObject'])
-             && ($_SESSION['userObject'])->getUserPermission('OCGC')) {
+             && $_SESSION['userObject']->getUserPermission('OCGC')) {
             return true;
         }
         return false;
@@ -53,14 +53,14 @@ class ProposalValidate {
 
     public function accept() {
 
-        $this->runQuery(Proposal::getValidationStatus('valid'));
+        $this->runQuery(Proposal::allValidationStatus('debatePending'));
 
         // Cette proposition est acceptée par l'OCGC après sa date de début de vote ;
         // on décale la phase de vote à la semaine suivante.
         if(strtotime($this->proposal->get('debate_start')) < time()) {
-            $nextDebates = Proposal::getNextDebates();
-            $debate_start = date(Proposal::$date_formatting, $nextDebates[0]['debate_start']);
-            $debate_end = date(Proposal::$date_formatting, $nextDebates[0]['debate_end']);
+            $nextDebates = Proposal::getNextDebates(true);
+            $debate_start = date(Proposal::$date_formatting, strtotime($nextDebates[0]['debate_start']));
+            $debate_end = date(Proposal::$date_formatting, strtotime($nextDebates[0]['debate_end']));
             $this->proposal->set('debate_start', $debate_start);
             $this->proposal->set('debate_end', $debate_end);
             $this->proposal->update();
@@ -70,7 +70,7 @@ class ProposalValidate {
 
     public function reject() {
 
-        $this->runQuery(Proposal::getValidationStatus('notValid'));
+        $this->runQuery(Proposal::allValidationStatus('notValid'));
 
     }
 

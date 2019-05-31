@@ -306,6 +306,14 @@ $query_pays = "SELECT ch_pay_id FROM pays";
 $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
 $row_pays = mysql_fetch_assoc($pays);
 
+
+/********
+ * ROUTINES
+ * Ces instructions sont exécutées à chaque chargement d'une page.
+ ********/
+
+/* Calcul ressources */
+
 do { 
 //recherche des mesures des zones de la carte pour calcul ressources
 mysql_select_db($database_maconnexion, $maconnexion);
@@ -371,4 +379,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
 		$tot_population = 0;
 		$tot_emploi = 0;
 } while ($row_pays = mysql_fetch_assoc($pays));
-?>
+
+
+/* Vérification des propositions */
+$proposalRoutine = new \GenCity\Proposal\ProposalRoutine();

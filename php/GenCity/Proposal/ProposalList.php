@@ -50,7 +50,16 @@ class ProposalList {
 
     public function getPendingValidation() {
 
-        $query = 'SELECT id FROM ocgc_proposals WHERE debate_start > NOW() AND is_valid = 1';
+        $query = 'SELECT id FROM ocgc_proposals WHERE is_valid = 1';
+        return $this->setListFromQuery($query);
+
+    }
+
+    public function getValidationPeriodExpired() {
+
+        $query = 'SELECT id FROM ocgc_proposals
+                  WHERE NOW() > DATE_ADD(created, INTERVAL 1 WEEK)
+                  AND is_valid = 1';
         return $this->setListFromQuery($query);
 
     }
