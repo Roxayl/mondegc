@@ -26,6 +26,7 @@ if($_error) {
 $formProposal = new \GenCity\Proposal\Proposal($_GET['id']);
 
 $voteResults = $formProposal->getVote()->generateDiagramData();
+$voteChartResults = $formProposal->getVote()->generateChartResults();
 
 $voteList = new \GenCity\Proposal\VoteList($formProposal);
 $userVotes = $voteList->getUserVotes($thisUser);
@@ -131,8 +132,6 @@ img.olTileImage {
         transition: all 800ms;
     }
 
-    /* European parliament colors */
-    svg .seat.gue-ngl { fill: #990000 }
     <?php
     foreach($voteResults['css'] as $thisCss): ?>
         <?= key($thisCss) ?> { fill: <?= $thisCss[key($thisCss)] ?> }
@@ -186,8 +185,11 @@ img.olTileImage {
     <p><?= $debate_message ?></p>
 
     <div class="row-fluid">
-        <div class="span6">
+        <div class="span6" id="parliament-data-container">
             <svg id="parliament"></svg>
+            <div id="parliament-chart-container">
+                <canvas id="parliament-chart" width="110" height="60"></canvas>
+            </div>
         </div>
 
         <div class="span6">
@@ -261,13 +263,44 @@ img.olTileImage {
 <script src="../assets/js/application.js"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
+<script src="../assets/js/Chart.2.7.3.bundle.js"></script>
 <script type="text/javascript">
 $(function() {
     $('[rel="clickover"]').clickover();})
 </script>
 
 <script type="text/javascript">
-(function(window, document, $, d3, undefined) {
+(function(window, document, $, d3, Chart, undefined) {
+
+    /** Chart.js **/
+
+    var ctx = document.getElementById("parliament-chart");
+    setTimeout(function() {
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: <?= json_encode($voteChartResults['labels']) ?>,
+                datasets: [{
+                    label: '# of Votes',
+                    data: <?= json_encode($voteChartResults['data']) ?>,
+                    backgroundColor: <?= json_encode($voteChartResults['bgColor']) ?>,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                rotation: 0.955 * Math.PI,
+                circumference: 1.09 * Math.PI,
+                legend: {
+                    display: false
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        });
+    }, 1000);
+
 
     /** Diagram init **/
 
@@ -327,7 +360,9 @@ $(function() {
 
     };
 
-    $(document).on('click', 'input[name="voteCast[reponse_choisie]"]', function(ev) {
+    $(document).on('change', 'input[name="voteCast[reponse_choisie]"]', function(ev) {
+        
+        $('input[name="voteCast[reponse_choisie]"]').not(this).prop('checked', false);
 
         var $form = $(this).closest('form');
 
@@ -347,7 +382,7 @@ $(function() {
         manageColors($(this));
     });
 
-})(window, document, jQuery, d3);
+})(window, document, jQuery, d3, Chart);
 </script>
 
 </body>

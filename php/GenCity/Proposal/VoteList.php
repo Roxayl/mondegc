@@ -65,13 +65,14 @@ class VoteList {
 
     }
 
-    private function getVotesByResponse() {
+    private function getVotesByResponse($get_null = true) {
 
         $result = array();
-        $query = sprintf('SELECT reponse_choisie, COUNT(id) AS nbr_votes
+        $query = sprintf('SELECT id, reponse_choisie, COUNT(id) AS nbr_votes
                     FROM ocgc_votes
-                    WHERE ID_proposal = %s
-                    GROUP BY reponse_choisie', $this->proposal->get('id'));
+                    WHERE ID_proposal = %s %s
+                    GROUP BY reponse_choisie', $this->proposal->get('id'),
+            ($get_null ? 'AND reponse_choisie IS NOT NULL' : ''));
         $mysql_query = mysql_query($query);
         while($row = mysql_fetch_assoc($mysql_query)) {
             $result[] = $row;
@@ -82,7 +83,7 @@ class VoteList {
 
     public function getResultsByResponses() {
 
-        $listVotes = $this->getVotesByResponse();
+        $listVotes = $this->getVotesByResponse(false);
 
         $results = array();
 
@@ -112,6 +113,34 @@ class VoteList {
         }
 
         return $results;
+
+    }
+
+    public function generateChartResults() {
+
+        $return = array(
+            'labels'  => array(),
+            'data'    => array(),
+            'bgColor' => array()
+        );
+
+        $results = $this->getVotesByResponse();
+
+        // Dans le cas d'un vote de type "pour/contre", on fait en sorte à ce que
+        // le vote blanc apparaisse au milieu du diagramme.
+        if($this->proposal->get('type_reponse') === 'dual' && isset($results[1])) {
+            $tmp = $results[1];
+            $results[1] = $results[0];
+            $results[0] = $tmp;
+        }
+
+        foreach($results as $result) {
+            $return['labels'][]  = $this->proposal->get('reponse_' . $result['reponse_choisie']);
+            $return['data'][]    = $result['nbr_votes'];
+            $return['bgColor'][] = $this->getColorFromVote(new Vote($result['id']));
+        }
+
+        return $return;
 
     }
 
