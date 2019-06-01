@@ -57,12 +57,18 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 }
 
-if($formProposal->isWithinDebatePeriod()) {
+$debate_message = "<h4 style='display: inline;'>" . $formProposal->getStatus() . "</h4> • ";
+
+if($formProposal->getStatus(false) ===
+    \GenCity\Proposal\Proposal::allValidationStatus('votePending')) {
     $message_alert = "warning";
-    $debate_message = "L'Assemblée Générale siège en session plénière. La procédure de vote a commencé.";
+    $debate_message .=  "L'Assemblée générale siège en session plénière. La procédure de vote a commencé.";
 } else {
     $message_alert = "info";
-    $debate_message = "La procédure de vote n'a pas commencé ou est terminée.";
+    $debate_message .= ($formProposal->getStatus(false) <
+        \GenCity\Proposal\Proposal::allValidationStatus('votePending') ?
+            "La procédure de vote n'a pas commencé." :
+            "La procédure de vote est terminée.");
 }
 
 use GenCity\Monde\Pays;use GenCity\Proposal\Vote;
@@ -78,6 +84,7 @@ use GenCity\Monde\Pays;use GenCity\Proposal\Vote;
 <link href="../Carto/OLdefault.css" rel="stylesheet">
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
 <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="../assets/css/bootstrap-modal.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
@@ -101,7 +108,7 @@ use GenCity\Monde\Pays;use GenCity\Proposal\Vote;
 <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-    background-image: url('../assets/img/bannieres-instituts/Geo.png');
+    background-image: url('http://image.noelshack.com/fichiers/2019/14/6/1554565976-assemblee-ocgc.png');
 }
 #map {
 	height: 350px;
@@ -139,15 +146,17 @@ img.olTileImage {
     </style>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
+
 <!-- Navbar
     ================================================== -->
 <?php include('../php/navbarback.php'); ?>
+
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron jumbotron-institut jumbotron-small subhead anchor" id="info-institut" >
   <div class="container">
     <h2>Organisation des Cités Gécéennes</h2>
-    <h1>Assemblée Générale</h1>
+    <h1>Assemblée générale</h1>
   </div>
 </header>
 
@@ -161,26 +170,57 @@ img.olTileImage {
 
     <ul class="breadcrumb">
         <li><a href="../OCGC.php">OCGC</a> <span class="divider">/</span></li>
-        <li><a href="../assemblee.php">Assemblée Générale</a> <span class="divider">/</span></li>
+        <li><a href="../assemblee.php">Assemblée générale</a> <span class="divider">/</span></li>
         <li class="active">
             <?= \GenCity\Proposal\Proposal::$typeDetail[$formProposal->type] ?>
             <?= $formProposal->getProposalId(); ?> :
             <?= $formProposal->question ?>
         </li>
     </ul>
-    <div class="well" style="padding-top: 0; padding-bottom: 0;">
-    <h1><small><?= \GenCity\Proposal\Proposal::$typeDetail[$formProposal->type] ?>
-               <?= $formProposal->getProposalId(); ?></small><br />
-        <?= $formProposal->question ?></h1>
-    </div>
 
     <?php renderElement('errormsgs'); ?>
 
+    <div class="well" style="margin-top: -50px;">
+
+    <h1><small><?= \GenCity\Proposal\Proposal::$typeDetail[$formProposal->type] ?>
+               <?= $formProposal->getProposalId(); ?></small><br />
+        <?= $formProposal->question ?></h1>
+
+    <p>Proposition déposée le <?= dateFormat($formProposal->get('created')) ?> par
+      <img class="img-menu-drapeau" src="<?= $formProposal->getPaysAuthor()->get('ch_pay_lien_imgdrapeau') ?>">
+      <a href="../page-pays.php?ch_pay_id=<?= $formProposal->getPaysAuthor()->get('ch_pay_id') ?>">
+          <?= $formProposal->getPaysAuthor()->get('ch_pay_nom') ?></a>
+    </p>
+
+    </div>
+
     <div class="well well-dark">
 
-    <!-- ZONE DE VOTE -->
+    <!-- ZONE DE DÉBATS -->
+    <div class="cta-title pull-right-cta">
+        <a href="../php/Modal/proposal_debate_edit.php?proposal_id=<?= $formProposal->get('id') ?>"
+           data-toggle="modal" data-target="#Modal-Monument" class="btn btn-primary btn-cta">
+            <i class="icon-white icon-edit"></i></a>
+    </div>
     <div id="info-generales" class="titre-bleu titre-fond-blanc" style="margin: -20px -19px 0;">
-        <h1>Vote</h1>
+        <h1>Débats</h1>
+    </div>
+
+    <p>Suivez les débats concernant cette proposition sur l'ensemble des sites GC suivants :</p>
+    <div class="row-fluid">
+        <div class="span6 alert inline alert-info">
+            <h4>Test</h4>
+            Test
+        </div>
+        <div class="span6 alert inline alert-info">
+            <h4>Test</h4>
+            Test
+        </div>
+    </div>
+
+    <!-- ZONE DE VOTE -->
+    <div id="info-generales" class="titre-bleu titre-fond-blanc" style="margin: 0 -19px 0;">
+        <h1>Hémicycle</h1>
     </div>
     <p><?= $debate_message ?></p>
 
@@ -236,11 +276,6 @@ img.olTileImage {
     </div>
     </div>
 
-    <!-- ZONE DE DÉBATS -->
-    <div id="info-generales" class="titre-bleu">
-        <h1>Débats</h1>
-    </div>
-
 
   <?php else: // end if($_error) ?>
 
@@ -253,6 +288,11 @@ img.olTileImage {
   </section>
 </div>
 </div>
+
+<!-- modal -->
+<div class="modal container fade" id="Modal-Monument"></div>
+<div class="clearfix"></div>
+
 <!-- Footer
     ================================================== -->
 <?php include('../php/footerback.php'); ?>
@@ -263,6 +303,8 @@ img.olTileImage {
 <script src="../assets/js/application.js"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
+<script src="../assets/js/bootstrap-modalmanager.js"></script>
+<script src="../assets/js/bootstrap-modal.js"></script>
 <script src="../assets/js/Chart.2.7.3.bundle.js"></script>
 <script type="text/javascript">
 $(function() {
@@ -271,6 +313,15 @@ $(function() {
 
 <script type="text/javascript">
 (function(window, document, $, d3, Chart, undefined) {
+
+    $("a[data-toggle=modal]").click(function (e) {
+      var lv_target = $(this).attr('data-target');
+      var lv_url = $(this).attr('href');
+      $(lv_target).load(lv_url)});
+
+    $('#closemodal').click(function() {
+        $('#Modal-Monument').modal('hide');
+    });
 
     /** Chart.js **/
 

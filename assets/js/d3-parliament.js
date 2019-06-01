@@ -154,7 +154,7 @@ d3.parliament = function() {
             circlesEnter.attr("cy", enter.fromCenter ? 0 : seatY);
             circlesEnter.attr("r", enter.smallToBig ? 0 : seatRadius);
             if (enter.fromCenter || enter.smallToBig) {
-                var t = circlesEnter.transition().duration(function() { return 1000 + Math.random()*800; });
+                var t = circlesEnter.transition().duration(function() { return 1000 + Math.random()*400; });
                 if (enter.fromCenter) {
                     t.attr("cx", seatX);
                     t.attr("cy", seatY);
@@ -173,7 +173,7 @@ d3.parliament = function() {
 
             /* animation updating seats in the parliament */
             if (update.animate) {
-              var circlesUpdate = circles.transition().duration(function() { return 1000 + Math.random()*800; });
+              var circlesUpdate = circles.transition().duration(function() { return 1000 + Math.random()*400; });
             } else {
               var circlesUpdate = circles;
             }
@@ -183,7 +183,7 @@ d3.parliament = function() {
 
             /* animation removing seats from the parliament */
             if (exit.toCenter || exit.bigToSmall) {
-                var t = circles.exit().transition().duration(function() { return 1000 + Math.random()*800; });
+                var t = circles.exit().transition().duration(function() { return 1000 + Math.random()*400; });
                 if (exit.toCenter) {
                     t.attr("cx", 0).attr("cy", 0);
                 }

@@ -292,6 +292,14 @@ input[type='submit'] {
 	background-color: #ff4e00;
  *background-color: #ff4e00;
 }
+.btn-cta {
+    padding: 3px 5px;
+}
+.pull-right-cta {
+    float: right;
+    margin-right: -32px;
+    margin-top: 5px;
+}
 .btn-connexion {
 	margin-left: 0px;
 	margin-right: 0px;

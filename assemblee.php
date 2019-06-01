@@ -19,7 +19,7 @@ $proposalList = new \GenCity\Proposal\ProposalList();
 <!-- head Html -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Monde GC - Assemblée Générale de l'OCGC</title>
+<title>Monde GC - Assemblée générale de l'OCGC</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -51,7 +51,8 @@ $proposalList = new \GenCity\Proposal\ProposalList();
 <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url('assets/img/bannieres-instituts/Geo.png');
+	background-image: url('http://image.noelshack.com/fichiers/2019/14/6/1554565976-assemblee-ocgc.png');
+    background-position: 0 600px;
 }
 #map {
 	height: 500px;
@@ -106,9 +107,9 @@ init();
 <?php $institut=true; include('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
-<header class="jumbotron jumbotron-institut subhead anchor" id="info-institut" >
+<header class="jumbotron jumbotron-institut subhead anchor" id="info-institut">
   <div class="container">
-    <h1>Assemblée Générale</h1>
+    <h1>Assemblée générale</h1>
   </div>
 </header>
 <div class="container">
@@ -118,7 +119,7 @@ init();
     <div class="corps-page">
     <ul class="breadcrumb">
       <li><a href="OCGC.php">OCGC</a> <span class="divider">/</span></li>
-      <li class="active">Assemblée Générale</li>
+      <li class="active">Assemblée générale</li>
     </ul>
 
     <section>

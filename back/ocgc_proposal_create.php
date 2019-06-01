@@ -124,18 +124,22 @@ img.olTileImage {
         ================================================== -->
   <section>
     <div id="info-generales" class="titre-bleu anchor">
-      <h1>Nouvelle proposition à l'Assemblée Générale</h1>
+      <h1>Nouvelle proposition à l'Assemblée générale</h1>
     </div>
 
     <ul class="breadcrumb">
         <li><a href="../OCGC.php">OCGC</a> <span class="divider">/</span></li>
-        <li><a href="../assemblee.php">Assemblée Générale</a> <span class="divider">/</span></li>
-        <li class="active">Nouvelle proposition à l'Assemblée Générale</li>
+        <li><a href="../assemblee.php">Assemblée générale</a> <span class="divider">/</span></li>
+        <li class="active">Nouvelle proposition à l'Assemblée générale</li>
     </ul>
 
     <?php renderElement('errormsgs'); ?>
 
     <?php if(!$_error): ?>
+
+    <div class="row-fluid">
+
+    <div class="span8">
 
     <form method="POST" action="ocgc_proposal_create.php" class="form-horizontal" id="ProposalForm">
 
@@ -147,7 +151,7 @@ img.olTileImage {
                    id="ocgc_proposal_create[type][RP]" value="RP" <?= $form_radio_type['RP'] ?>>
             <label for="ocgc_proposal_create[type][RP]" style="display: inline-block;">
                 Role-play (Résolution)</label><br />
-                Vous pouvez créer une <strong>résolution</strong> afin de solliciter l'avis de l'Assemblée Générale sur
+                Vous pouvez créer une <strong>résolution</strong> afin de solliciter l'avis de l'Assemblée générale sur
                 un événement du role-play.
             </p>
 
@@ -274,6 +278,15 @@ img.olTileImage {
         </div>
 
     </form>
+
+    </div>
+
+    <div class="span4">
+    <div style="height: 700px; background-size: cover; background-position: center; background-image: url('http://image.noelshack.com/fichiers/2019/14/6/1554565976-assemblee-ocgc.png');"></div>
+
+    </div>
+
+    </div>
 
   <?php else: // end if($_error) ?>
 
