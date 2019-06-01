@@ -1261,5 +1261,19 @@ if(!function_exists('showErrorMessage')) {
     }
 }
 
+if(!function_exists('dateFormat')) {
+
+    function dateFormat($date, $getTime = false) {
+
+        if(!is_numeric($date)) {
+            $date = strtotime($date);
+        }
+
+        return date('d/m/Y' . ($getTime ? ' à H\hi' : ''), $date);
+
+    }
+
+}
+
 if(!isset($_SESSION))
     session_start();

@@ -24,6 +24,15 @@ class Vote extends BaseModel {
             );
         }
 
+        if($proposal->getStatus() !== Proposal::allValidationStatus('votePending')) {
+            $return[] = array(
+                'targetedField' => null,
+                'errorMessage' => ($proposal->isValidDebateDate()) ?
+                    "Cette proposition n'est pas à l'ordre du jour." :
+                    "L'Assemblée générale ne siège pas pour le moment, vous ne pouvez pas voter."
+            );
+        }
+
         $countResponses = $proposal->getResponses();
         if($this->get('reponse_choisie') < 0 && $this->get('reponse_choisie') > $countResponses) {
             $return[] = array(

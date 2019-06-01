@@ -21,6 +21,7 @@ class Proposal extends BaseModel {
     static $maxResponses = 5;
 
     private $vote = null;
+    private $pays = null;
 
     public function __construct($data = null) {
 
@@ -320,6 +321,19 @@ class Proposal extends BaseModel {
             $this->vote = new VoteList($this);
         }
         return $this->vote;
+
+    }
+
+    /**
+     * Initialise le pays à l'origine de la proposition.
+     * @return Pays|null
+     */
+    public function getPaysAuthor() {
+
+        if(is_null($this->pays)) {
+            $this->pays = new Pays($this->get('ID_pays'));
+        }
+        return $this->pays;
 
     }
 
