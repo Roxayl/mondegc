@@ -55,6 +55,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     }
 
+    elseif(isset($_POST['proposalValidate'])) {
+
+        $proposalValidate = new \GenCity\Proposal\ProposalValidate($formProposal);
+        $formProposal->set('is_valid', $_POST['proposalValidate']['is_valid']);
+        $formValidate = $proposalValidate->validate();
+        if(count($formValidate) > 0) {
+            getErrorMessage('error', $formValidate);
+        } else {
+            $proposalValidate->update();
+            getErrorMessage('success', "La proposition a été acceptée avec succès !");
+        }
+
+    }
+
 }
 
 $debate_message = "<h4 style='display: inline;'>" . $formProposal->getStatus() . "</h4> • ";
@@ -206,6 +220,7 @@ img.olTileImage {
         <h1>Débats</h1>
     </div>
 
+    <div class="well">
     <?php if( !empty($formProposal->get('link_debate')) || !empty($formProposal->get('link_wiki')) ): ?>
         <p>Suivez les débats concernant cette proposition sur l'ensemble des sites GC suivants :</p>
     <?php else: ?>
@@ -213,6 +228,8 @@ img.olTileImage {
             document permettant de fournir à l'Assemblée les informations nécessaires afin de voter.
         Tout dirigeant peut proposer un lien.</p>
     <?php endif; ?>
+    </div>
+
     <div class="row-fluid">
     <?php if(!empty($formProposal->get('link_debate'))): ?>
         <div class="span6 alert inline alert-info">
@@ -234,11 +251,53 @@ img.olTileImage {
     <?php endif; ?>
     </div>
 
+    <?php
+    if($formProposal->getStatus(false) ===
+        \GenCity\Proposal\Proposal::allValidationStatus('pendingValidation')):
+    ?>
+
+    <div id="info-generales" class="titre-bleu titre-fond-blanc" style="margin: 0 -19px 0;">
+        <h1>Conseil de l'OCGC</h1>
+    </div>
+    <div class="row-fluid">
+        <h3>Validez-vous cette proposition ?</h3>
+
+        <div class="well">
+
+            <form method="POST" action="ocgc_proposal.php?id=<?= $formProposal->get('id') ?>"
+                  style="display: inline-block;">
+                <input type="hidden" name="proposalValidate[ID_proposal]" value="<?= $formProposal->get('id') ?>">
+                <input type="hidden" name="proposalValidate[is_valid]" value="2">
+                <button type="submit" class="btn btn-success form-button-inline">Accepter</button>
+            </form>
+
+            <form method="POST" action="ocgc_proposal.php?id=<?= $formProposal->get('id') ?>"
+                  style="display: inline-block;">
+                <input type="hidden" name="proposalValidate[ID_proposal]" value="<?= $formProposal->get('id') ?>">
+                <input type="hidden" name="proposalValidate[is_valid]" value="0">
+                <button type="submit" class="btn btn-danger form-button-inline">Refuser</button>
+            </form>
+
+            <p>Consultez les détails de cette proposition ci-dessous.</p>
+            <p>En tant que membre du Conseil de l'OCGC, vous pouvez accepter ou refuser cette proposition.
+            Vérifiez que cette proposition est conforme à la Charte de l'OCGC. Une proposition est
+            automatiquement acceptée lorsqu'elle n'a pas reçu de réponse de la part du Conseil
+            une semaine après sa création.</p>
+
+        </div>
+    </div>
+    <?php
+    endif;
+    ?>
+
     <!-- ZONE DE VOTE -->
     <div id="info-generales" class="titre-bleu titre-fond-blanc" style="margin: 0 -19px 0;">
         <h1>Hémicycle</h1>
     </div>
-    <p><?= $debate_message ?></p>
+
+    <div class="well">
+        <p><?= $debate_message ?></p>
+    </div>
 
     <div class="row-fluid">
         <div class="span6" id="parliament-data-container">
@@ -253,40 +312,41 @@ img.olTileImage {
 
         <?php
 
-        /** @var Vote $thisVote */
-        foreach($userVotes as $thisVote):
+        if($formProposal->getStatus(false) ===
+            \GenCity\Proposal\Proposal::allValidationStatus('votePending')):
 
-            $thisPays = new Pays($thisVote->get('ID_pays'));
-            ?>
+            renderElement('Proposal/proposal_pending_votes', array(
+                'formProposal' => $formProposal,
+                'userVotes' => $userVotes
+            ));
 
-            <form method="POST" action="ocgc_proposal.php?id=<?= $formProposal->get('id') ?>">
-                <input type="hidden" name="voteCast[ID_proposal]" value="<?= $formProposal->get('id') ?>">
+        else:
+        ?>
 
-                <input type="hidden" name="voteCast[id]" value="<?= $thisVote->get('id') ?>">
+            <!-- Réponses -->
+            <ul class="proposal-responses">
+            <?php foreach($formProposal->getResponses() as $key => $thisResponse): ?>
+                <?php $voteArray = array(
+                    'reponse_choisie' => $key
+                );
+                $thisColor = $formProposal->getVote()->getColorFromVote(
+                        new \GenCity\Proposal\Vote($voteArray)); ?>
+                <li style="color: <?= $thisColor ?>; border-color: <?= $thisColor ?>;"
+                    data-default-color="<?= $thisColor ?>">
+                    <label><?= $thisResponse ?></label>
+                </li>
+            <?php endforeach; ?>
+            </ul>
 
-                <h4><img class="img-menu-drapeau" src="<?= $thisPays->get('ch_pay_lien_imgdrapeau') ?>">
-                    <?= $thisPays->get('ch_pay_nom') ?></h4>
+            <?php if($formProposal->getStatus(false) ===
+                \GenCity\Proposal\Proposal::allValidationStatus('debatePending')): ?>
+            <p>La phase de vote aura lieu au cours de la session plénière de l'Assemblée à partir du
+                <?= dateFormat($formProposal->get('debate_start')) ?>.</p>
+            <?php endif; ?>
 
-                <!-- Réponses -->
-                <ul class="proposal-responses">
-                <?php foreach($formProposal->getResponses() as $key => $thisResponse): ?>
-                    <?php $voteArray = array(
-                        'reponse_choisie' => $key
-                    );
-                    $thisColor = $formProposal->getVote()->getColorFromVote(
-                            new \GenCity\Proposal\Vote($voteArray)); ?>
-                    <li style="color: <?= $thisColor ?>; border-color: <?= $thisColor ?>;"
-                        data-default-color="<?= $thisColor ?>">
-                        <label><input type="checkbox" value="<?= $key ?>" name="voteCast[reponse_choisie]"
-                              <?= ($key === (int)$thisVote->get('reponse_choisie')
-                                   && $thisVote->get('reponse_choisie') !== null ? 'checked selected' : '') ?>>
-                            <?= $thisResponse ?></label>
-                    </li>
-                <?php endforeach; ?>
-                </ul>
-            </form>
-
-        <?php endforeach; ?>
+        <?php
+        endif;
+        ?>
 
         </div>
     </div>

@@ -24,7 +24,7 @@ class Vote extends BaseModel {
             );
         }
 
-        if($proposal->getStatus() !== Proposal::allValidationStatus('votePending')) {
+        if($proposal->getStatus(false) !== Proposal::allValidationStatus('votePending')) {
             $return[] = array(
                 'targetedField' => null,
                 'errorMessage' => ($proposal->isValidDebateDate()) ?

@@ -74,4 +74,10 @@ class ProposalValidate {
 
     }
 
+    public function update() {
+
+        (int)$this->proposal->get('is_valid') === 2 ? $this->accept() : $this->reject();
+
+    }
+
 }
