@@ -198,7 +198,7 @@ img.olTileImage {
 
     <!-- ZONE DE DÉBATS -->
     <div class="cta-title pull-right-cta">
-        <a href="../php/Modal/proposal_debate_edit.php?proposal_id=<?= $formProposal->get('id') ?>"
+        <a href="../php/Modal/proposal_debate_edit.php?ID_proposal=<?= $formProposal->get('id') ?>"
            data-toggle="modal" data-target="#Modal-Monument" class="btn btn-primary btn-cta">
             <i class="icon-white icon-edit"></i></a>
     </div>
@@ -206,16 +206,32 @@ img.olTileImage {
         <h1>Débats</h1>
     </div>
 
-    <p>Suivez les débats concernant cette proposition sur l'ensemble des sites GC suivants :</p>
+    <?php if( !empty($formProposal->get('link_debate')) || !empty($formProposal->get('link_wiki')) ): ?>
+        <p>Suivez les débats concernant cette proposition sur l'ensemble des sites GC suivants :</p>
+    <?php else: ?>
+        <p>N'hésitez pas à ajouter le lien vers un sujet sur le forum, le Monde GC, le wiki, ou tout autre
+            document permettant de fournir à l'Assemblée les informations nécessaires afin de voter.
+        Tout dirigeant peut proposer un lien.</p>
+    <?php endif; ?>
     <div class="row-fluid">
+    <?php if(!empty($formProposal->get('link_debate'))): ?>
         <div class="span6 alert inline alert-info">
-            <h4>Test</h4>
-            Test
+            <a href="<?= __s($formProposal->get('link_debate')) ?>">
+                <h4><i class="icon-globe" style="vertical-align: middle;"></i>
+                    <?= __s($formProposal->get('link_debate_name')) ?></h4>
+                <?= __s($formProposal->get('link_debate')) ?>
+            </a>
         </div>
+    <?php endif; ?>
+    <?php if(!empty($formProposal->get('link_wiki'))): ?>
         <div class="span6 alert inline alert-info">
-            <h4>Test</h4>
-            Test
+            <a href="<?= __s($formProposal->get('link_wiki')) ?>">
+                <h4><i class="icon-globe" style="vertical-align: middle;"></i>
+                    <?= __s($formProposal->get('link_wiki_name')) ?></h4>
+                <?= __s($formProposal->get('link_wiki')) ?>
+            </a>
         </div>
+    <?php endif; ?>
     </div>
 
     <!-- ZONE DE VOTE -->

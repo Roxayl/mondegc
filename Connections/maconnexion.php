@@ -1226,7 +1226,7 @@ if(!function_exists('formatNum')) {
 if(!function_exists('getErrorMessage')) {
     /**
      * @param string $errorType Type d'erreur.
-     * @param string $errorInfo Corps du message.
+     * @param string|array $errorInfo Corps du message.
      * @param bool $put_on_session Détermine s'il faut stocker le message dans la session. Si ce paramètre est mis à <code>false</code>, le message est directement affiché.
      */
     function getErrorMessage($errorType, $errorInfo, $put_on_session = true) {
@@ -1270,6 +1270,16 @@ if(!function_exists('dateFormat')) {
         }
 
         return date('d/m/Y' . ($getTime ? ' à H\hi' : ''), $date);
+
+    }
+
+}
+
+if(!function_exists('__s')) {
+
+    function __s($text) {
+
+        return htmlspecialchars($text, ENT_QUOTES);
 
     }
 
