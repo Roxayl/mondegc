@@ -73,16 +73,34 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $debate_message = "<h4 style='display: inline;'>" . $formProposal->getStatus() . "</h4> • ";
 
-if($formProposal->getStatus(false) ===
-    \GenCity\Proposal\Proposal::allValidationStatus('votePending')) {
-    $message_alert = "warning";
-    $debate_message .=  "L'Assemblée générale siège en session plénière. La procédure de vote a commencé.";
-} else {
-    $message_alert = "info";
-    $debate_message .= ($formProposal->getStatus(false) <
-        \GenCity\Proposal\Proposal::allValidationStatus('votePending') ?
-            "La procédure de vote n'a pas commencé." :
-            "La procédure de vote est terminée.");
+switch($formProposal->getStatus(false)) {
+    case \GenCity\Proposal\Proposal::allValidationStatus('notValid'):
+        $debate_message .= "Cette proposition a été rejetée par l'OCGC.";
+        $countdown_text = "Rejeté par l'OCGC";
+        break;
+
+    case \GenCity\Proposal\Proposal::allValidationStatus('pendingValidation'):
+        $debate_message .= "Cette proposition attend d'être validé par l'OCGC.";
+        $countdown_text = "En attente de l'OCGC";
+        break;
+
+    case \GenCity\Proposal\Proposal::allValidationStatus('debatePending'):
+        $debate_message .= "Les débats se poursuivent en l'attente de la procédure de vote.";
+        $countdown_text = "Débat en cours";
+        break;
+
+    case \GenCity\Proposal\Proposal::allValidationStatus('votePending'):
+        $debate_message .= "L'Assemblée générale siège en session plénière. La procédure de vote a commencé.";
+        $countdown_text = "";
+        break;
+
+    case \GenCity\Proposal\Proposal::allValidationStatus('voteFinished'):
+        $debate_message .= "La procédure de vote est terminée.";
+        $countdown_text = $voteList->getResultsByResponses()[0]['reponse'];
+        break;
+
+    default:
+        throw new UnexpectedValueException("Mauvaise pioche !");
 }
 
 use GenCity\Monde\Pays;use GenCity\Proposal\Vote;
@@ -301,10 +319,24 @@ img.olTileImage {
 
     <div class="row-fluid">
         <div class="span6" id="parliament-data-container">
+
             <svg id="parliament"></svg>
             <div id="parliament-chart-container">
                 <canvas id="parliament-chart" width="110" height="60"></canvas>
             </div>
+
+            <div id="proposal-results-container" class="well row-fluid">
+                <div class="span5">
+                    <h2 id="proposal-countdown"
+                        <?= $formProposal->getStatus(false) ===
+                        \GenCity\Proposal\Proposal::allValidationStatus('votePending') ?
+                            'runCountdown' : ''?>>
+                        <?= $countdown_text ?></h2>
+                </div>
+                <div class="span7 well">
+                </div>
+            </div>
+
         </div>
 
         <div class="span6">
@@ -390,6 +422,52 @@ $(function() {
 <script type="text/javascript">
 (function(window, document, $, d3, Chart, undefined) {
 
+    var countdownElementId = 'proposal-countdown';
+
+    var CountDownTimer = function(dt, id) {
+        var end = new Date(dt);
+
+        var _second = 1000;
+        var _minute = _second * 60;
+        var _hour = _minute * 60;
+        var _day = _hour * 24;
+        var timer;
+
+        function showRemaining() {
+            var now = new Date();
+            var distance = end - now;
+            if (distance < 0) {
+
+                clearInterval(timer);
+                document.getElementById(id).innerHTML = 'Vote terminé';
+
+                return;
+            }
+            var days = Math.floor(distance / _day);
+            var hours = Math.floor((distance % _day) / _hour);
+            var minutes = Math.floor((distance % _hour) / _minute);
+            var seconds = Math.floor((distance % _minute) / _second);
+
+            var output = '';
+
+            output += ('0' + days).slice(-2) + ':';
+            output += ('0' + hours).slice(-2) + ':';
+            output += ('0' + minutes).slice(-2) + ':';
+            output += ('0' + seconds).slice(-2) + '';
+
+            document.getElementById(id).innerHTML = '<h4 style="margin: 0;">Vote en cours</h4>' + output;
+        }
+
+        timer = setInterval(showRemaining, 1000);
+    };
+
+    if($('#' + countdownElementId).get(0).hasAttribute('runCountdown')) {
+        CountDownTimer("<?= $formProposal->get('debate_end') ?>", countdownElementId);
+    }
+
+
+    /** Modal **/
+
     $("a[data-toggle=modal]").click(function (e) {
       var lv_target = $(this).attr('data-target');
       var lv_url = $(this).attr('href');
@@ -398,6 +476,7 @@ $(function() {
     $('#closemodal').click(function() {
         $('#Modal-Monument').modal('hide');
     });
+
 
     /** Chart.js **/
 

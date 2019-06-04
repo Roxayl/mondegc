@@ -140,6 +140,16 @@ div.span5.align-left > p {
 	text-align: left;
 }
 
+#proposal-countdown {
+    border: 1px solid #fafafa;
+    border-radius: 4px;
+    display: inline-block;
+    padding: 4px 6px;
+}
+#proposal-results-container {
+    text-align: left;
+}
+
 /* ICONES
 -------------------------------------------------- */
 
