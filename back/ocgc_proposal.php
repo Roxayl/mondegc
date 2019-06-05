@@ -96,7 +96,7 @@ switch($formProposal->getStatus(false)) {
 
     case \GenCity\Proposal\Proposal::allValidationStatus('voteFinished'):
         $debate_message .= "La procédure de vote est terminée.";
-        $countdown_text = $voteList->getResultsByResponses()[0]['reponse'];
+        $countdown_text = $formProposal->get("reponse_" . $voteList->getResultsByResponses()[0]['reponse_choisie']);
         break;
 
     default:
@@ -350,6 +350,13 @@ img.olTileImage {
             renderElement('Proposal/proposal_pending_votes', array(
                 'formProposal' => $formProposal,
                 'userVotes' => $userVotes
+            ));
+
+        elseif($formProposal->getStatus(false) ===
+            GenCity\Proposal\Proposal::allValidationStatus('voteFinished')):
+
+            renderElement('Proposal/proposal_final_votes', array(
+                'formProposal' => $formProposal
             ));
 
         else:

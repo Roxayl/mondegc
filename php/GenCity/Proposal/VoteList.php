@@ -65,15 +65,33 @@ class VoteList {
 
     }
 
-    private function getVotesByResponse($get_null = true) {
+    /**
+     * Donne le nombre de votes d'abstention (valeur <code>NULL</code> pour le champ 'reponse_choisie').
+     * @return int Nombre d'abstentionnistes.
+     */
+    public function getAbstentionVotes() {
+
+        $query = mysql_query(sprintf('SELECT COUNT(id) AS nbr_votes
+                      FROM ocgc_votes
+                      WHERE ID_proposal = %s AND reponse_choisie IS NULL',
+            GetSQLValueString($this->proposal->get('id'))));
+        $count = mysql_fetch_assoc($query)['nbr_votes'];
+
+        return (int)$count;
+
+    }
+
+    private function getVotesByResponse($get_null = true, $orderby_count = false) {
 
         $result = array();
         $query = sprintf('SELECT id, reponse_choisie, COUNT(id) AS nbr_votes
                     FROM ocgc_votes
                     WHERE ID_proposal = %s %s
-                    GROUP BY reponse_choisie', $this->proposal->get('id'),
-            ($get_null ? 'AND reponse_choisie IS NOT NULL' : ''));
-        $mysql_query = mysql_query($query);
+                    GROUP BY reponse_choisie %s ',
+                    $this->proposal->get('id'),
+                   ($get_null ? '' : ' AND reponse_choisie IS NOT NULL '),
+                   ($orderby_count ? ' ORDER BY nbr_votes DESC ' : ''));
+        $mysql_query = mysql_query($query) or die(mysql_error());
         while($row = mysql_fetch_assoc($mysql_query)) {
             $result[] = $row;
         }
@@ -83,33 +101,15 @@ class VoteList {
 
     public function getResultsByResponses() {
 
-        $listVotes = $this->getVotesByResponse(false);
+        $results = $this->getVotesByResponse(false, true);
 
-        $results = array();
+        $sum = 0;
+        foreach($results as $result) {
+            $sum += (int)$result['nbr_votes'];
+        }
 
-        for($i = 1; $i < Proposal::$maxResponses + 1; $i++) {
-            if(is_null($this->proposal->get("reponse_$i"))) break;
-            for($j = 0; $j < Proposal::$maxResponses; $j++) {
-                if(!isset($listVotes[$j]['reponse_choisie'])) break;
-                if($i === (int)$listVotes[$j]['reponse_choisie']) {
-                    $this_i = $j;
-                    break;
-                }
-            }
-            if(!isset($this_i)) {
-                $results[] = array(
-                    'reponse'   => $this->proposal->get("reponse_$i"),
-                    'id_reponse'=> $i,
-                    'nbr_votes' => 0
-                );
-                continue;
-            }
-            $results[] = array(
-                'reponse'   => $this->proposal->get("reponse_$i"),
-                'id_reponse'=> (int)$listVotes[$this_i]['id_reponse'], // est égal à $i
-                'nbr_votes' => (int)$listVotes[$this_i]['nbr_votes']
-            );
-            unset($this_i);
+        foreach($results as &$result) {
+            $result['pct'] = round($result['nbr_votes'] / $sum, 3);
         }
 
         return $results;
@@ -124,7 +124,7 @@ class VoteList {
             'bgColor' => array()
         );
 
-        $results = $this->getVotesByResponse();
+        $results = $this->getVotesByResponse(false, false);
 
         // Dans le cas d'un vote de type "pour/contre", on fait en sorte à ce que
         // le vote blanc apparaisse au milieu du diagramme.

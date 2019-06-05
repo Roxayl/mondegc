@@ -3,10 +3,12 @@
 use GenCity\Monde\Pays;
 use GenCity\Proposal\Vote;
 
+
+/** @var \GenCity\Proposal\Proposal $formProposal */
 $formProposal = $data['formProposal'];
+/** @var Vote[] $userVotes */
 $userVotes = $data['userVotes'];
 
-/** @var Vote $thisVote */
 foreach($userVotes as $thisVote):
 
     $thisPays = new Pays($thisVote->get('ID_pays'));
