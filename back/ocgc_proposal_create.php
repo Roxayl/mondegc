@@ -170,7 +170,7 @@ img.olTileImage {
             <label for="ocgc_proposal_create[ID_pays]">Créer la proposition en tant que :</label>
             <select name="ocgc_proposal_create[ID_pays]" id="ocgc_proposal_create[ID_pays]">
                 <?php foreach($userPaysAllowedToVote as $thisPays): ?>
-                    <option value="<?= $thisPays->ch_pay_id ?>"><?= $thisPays->ch_pay_nom ?></option>
+                    <option value="<?= $thisPays->ch_pay_id ?>"><?= __s($thisPays->ch_pay_nom) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -204,7 +204,7 @@ img.olTileImage {
             <div id="sprytextfield1" class="control-group">
                 <label class="control-label" for="ocgc_proposal_create[question]">Question <a href="#" rel="clickover" title="Objet de la proposition" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
                 <div class="controls">
-                    <input class="input-xlarge" name="ocgc_proposal_create[question]" type="text" id="ocgc_proposal_create[question]" value="<?= $formProposal->get('question') ?>" maxlength="255">
+                    <input class="input-xlarge" name="ocgc_proposal_create[question]" type="text" id="ocgc_proposal_create[question]" value="<?= __s($formProposal->get('question')) ?>" maxlength="255">
                     <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
                 </div>
             </div>
@@ -214,7 +214,7 @@ img.olTileImage {
                 <div id="sprytextfield2" class="control-group">
                     <label class="control-label" for="ocgc_proposal_create[reponse_1]">Réponse 1 <a href="#" rel="clickover" title="Réponse 1" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_1]" type="text" id="ocgc_proposal_create[reponse_1]" value="<?= $formProposal->get('reponse_1') ?>" maxlength="255">
+                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_1]" type="text" id="ocgc_proposal_create[reponse_1]" value="<?= __s($formProposal->get('reponse_1')) ?>" maxlength="255">
                         <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
                     </div>
                 </div>
@@ -222,7 +222,7 @@ img.olTileImage {
                 <div id="sprytextfield3" class="control-group">
                     <label class="control-label" for="ocgc_proposal_create[reponse_2]">Réponse 2 <a href="#" rel="clickover" title="Réponse 2" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_2]" type="text" id="ocgc_proposal_create[reponse_2]" value="<?= $formProposal->get('reponse_2') ?>" maxlength="255">
+                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_2]" type="text" id="ocgc_proposal_create[reponse_2]" value="<?= __s($formProposal->get('reponse_2')) ?>" maxlength="255">
                         <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
                     </div>
                 </div>
@@ -230,7 +230,7 @@ img.olTileImage {
                 <div id="sprytextfield4" class="control-group">
                     <label class="control-label" for="ocgc_proposal_create[reponse_3]">Réponse 3 <a href="#" rel="clickover" title="Réponse 3" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_3]" type="text" id="ocgc_proposal_create[reponse_3]" value="<?= $formProposal->get('reponse_3') ?>" maxlength="255">
+                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_3]" type="text" id="ocgc_proposal_create[reponse_3]" value="<?= __s($formProposal->get('reponse_3')) ?>" maxlength="255">
                         <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
                     </div>
                 </div>
@@ -238,7 +238,7 @@ img.olTileImage {
                 <div id="sprytextfield5" class="control-group">
                     <label class="control-label" for="ocgc_proposal_create[reponse_4]">Réponse 4 <a href="#" rel="clickover" title="Réponse 4" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_4]" type="text" id="ocgc_proposal_create[reponse_4]" value="<?= $formProposal->get('reponse_4') ?>" maxlength="255">
+                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_4]" type="text" id="ocgc_proposal_create[reponse_4]" value="<?= __s($formProposal->get('reponse_4')) ?>" maxlength="255">
                         <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
                     </div>
                 </div>
@@ -246,7 +246,7 @@ img.olTileImage {
                 <div id="sprytextfield6" class="control-group">
                     <label class="control-label" for="ocgc_proposal_create[reponse_5]">Réponse 5 <a href="#" rel="clickover" title="Réponse 5" data-content="255 caractères maximum."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_5]" type="text" id="ocgc_proposal_create[reponse_5]" value="<?= $formProposal->get('reponse_5') ?>" maxlength="255">
+                        <input class="input-xlarge" name="ocgc_proposal_create[reponse_5]" type="text" id="ocgc_proposal_create[reponse_5]" value="<?= __s($formProposal->get('reponse_5')) ?>" maxlength="255">
                         <span class="textfieldMaxCharsMsg">255 caract&egrave;res max.</span>
                     </div>
                 </div>

@@ -206,7 +206,7 @@ img.olTileImage {
         <li class="active">
             <?= \GenCity\Proposal\Proposal::$typeDetail[$formProposal->type] ?>
             <?= $formProposal->getProposalId(); ?> :
-            <?= $formProposal->question ?>
+            <?= __s($formProposal->question) ?>
         </li>
     </ul>
 
@@ -216,12 +216,12 @@ img.olTileImage {
 
     <h1><small><?= \GenCity\Proposal\Proposal::$typeDetail[$formProposal->type] ?>
                <?= $formProposal->getProposalId(); ?></small><br />
-        <?= $formProposal->question ?></h1>
+        <?= __s($formProposal->question) ?></h1>
 
     <p>Proposition déposée le <?= dateFormat($formProposal->get('created')) ?> par
-      <img class="img-menu-drapeau" src="<?= $formProposal->getPaysAuthor()->get('ch_pay_lien_imgdrapeau') ?>">
-      <a href="../page-pays.php?ch_pay_id=<?= $formProposal->getPaysAuthor()->get('ch_pay_id') ?>">
-          <?= $formProposal->getPaysAuthor()->get('ch_pay_nom') ?></a>
+      <img class="img-menu-drapeau" src="<?= __s($formProposal->getPaysAuthor()->get('ch_pay_lien_imgdrapeau')) ?>">
+      <a href="../page-pays.php?ch_pay_id=<?= __s($formProposal->getPaysAuthor()->get('ch_pay_id')) ?>">
+          <?= __s($formProposal->getPaysAuthor()->get('ch_pay_nom')) ?></a>
     </p>
 
     </div>
@@ -365,7 +365,7 @@ img.olTileImage {
                         new \GenCity\Proposal\Vote($voteArray)); ?>
                 <li style="color: <?= $thisColor ?>; border-color: <?= $thisColor ?>;"
                     data-default-color="<?= $thisColor ?>">
-                    <label><?= $thisResponse ?></label>
+                    <label><?= __s($thisResponse) ?></label>
                 </li>
             <?php endforeach; ?>
             </ul>
@@ -485,11 +485,11 @@ $(function() {
         var myChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: <?= json_encode($voteChartResults['labels']) ?>,
+                labels: <?= json_encode(__s($voteChartResults['labels'])) ?>,
                 datasets: [{
                     label: '# of Votes',
-                    data: <?= json_encode($voteChartResults['data']) ?>,
-                    backgroundColor: <?= json_encode($voteChartResults['bgColor']) ?>,
+                    data: <?= json_encode(__s($voteChartResults['data'])) ?>,
+                    backgroundColor: <?= json_encode(__s($voteChartResults['bgColor'])) ?>,
                     borderWidth: 0
                 }]
             },

@@ -4,13 +4,10 @@ require_once('Connections/maconnexion.php');
 //Connexion et deconnexion
 include('php/log.php');
 
-if(!isset($_SESSION['login_user'])) {
-    header('connexion.php');
-    exit;
+if(isset($_SESSION['userObject'])) {
+    $thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
+    $userPaysAllowedToVote = $thisUser->getCountries(\GenCity\Monde\User::getUserPermission('Dirigeant'));
 }
-
-$thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
-$userPaysAllowedToVote = $thisUser->getCountries(\GenCity\Monde\User::getUserPermission('Dirigeant'));
 
 $proposalList = new \GenCity\Proposal\ProposalList();
 
@@ -127,15 +124,20 @@ init();
 
         <?php renderElement('errormsgs'); ?>
 
-        <a class="btn btn-primary" href="back/ocgc_proposal_create.php">Nouvelle proposition</a>
+        <?php if(isset($userPaysAllowedToVote)): ?>
 
-        <p>Vous pouvez voter au nom des pays suivants :</p>
-        <?php foreach($userPaysAllowedToVote as $userPays): ?>
-            <div>
-                <img src="<?= $userPays['ch_pay_lien_imgdrapeau'] ?>" style="height: 40px;" />
-                <?= $userPays['ch_pay_nom'] ?>
-            </div>
-        <?php endforeach; ?>
+            <a class="btn btn-primary" href="back/ocgc_proposal_create.php">Nouvelle proposition</a>
+
+            <p>Vous pouvez voter au nom des pays suivants :</p>
+            <?php foreach($userPaysAllowedToVote as $userPays): ?>
+                <div>
+                    <img src="<?= __s($userPays['ch_pay_lien_imgdrapeau']) ?>" style="height: 40px;" />
+                    <?= __s($userPays['ch_pay_nom']) ?>
+                </div>
+            <?php endforeach; ?>
+
+        <?php endif; ?>
+
     </div>
     </section>
 
@@ -152,7 +154,8 @@ init();
             <th scope="col">Type</th>
             <th scope="col">Question</th>
             <th scope="col">Proposée le</th>
-            <th scope="col">Période de vote</th>
+            <th scope="col">Proposée par</th>
+            <th scope="col">Début du vote</th>
             <th scope="col">Statut</th>
             <th scope="col"></th>
           </tr>
@@ -162,14 +165,20 @@ init();
         /** @var \GenCity\Proposal\Proposal $pending */
         foreach($proposalList->getAll() as $pending): ?>
             <tr>
-              <td><?= $pending->getProposalId(); ?></td>
+                <td><a href="back/ocgc_proposal.php?id=<?= $pending->get('id') ?>"><?=
+                        $pending->getProposalId(); ?></a></td>
               <td><?= \GenCity\Proposal\Proposal::$typeDetail[$pending->get('type')] ?>
                   (<?= $pending->get('type') ?>)</td>
-              <td><?= $pending->get('question') ?></td>
-              <td><?= $pending->get('created') ?></td>
-              <td>Du <?= $pending->get('debate_start') ?> au <?= $pending->get('debate_end') ?></td>
+              <td><?= __s($pending->get('question')) ?></td>
+              <td><?= dateFormat($pending->get('created')) ?></td>
+              <td style="text-align: center;">
+                  <img src="<?= __s($pending->getPaysAuthor()->get('ch_pay_lien_imgdrapeau')) ?>"
+                       title="<?= __s($pending->getPaysAuthor()->get('ch_pay_nom')) ?>"
+                       class="img-menu-drapeau"></td>
+              <td><?= dateFormat($pending->get('debate_start')) ?></td>
               <td><?= $pending->getStatus() ?></td>
-              <td><a href="back/ocgc_proposal.php?id=<?= $pending->get('id') ?>">Voir la proposition</a></td>
+              <td><a href="back/ocgc_proposal.php?id=<?= $pending->get('id') ?>"
+                  class="btn btn-primary">Voir la proposition</a></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

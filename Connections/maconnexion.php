@@ -1277,9 +1277,19 @@ if(!function_exists('dateFormat')) {
 
 if(!function_exists('__s')) {
 
+    /**
+     * Filtre un texte avant affichage.
+     * @param string|array $text Texte ou array à traiter.
+     * @return mixed|array|string <code>array</code> ou <code>string</code> en cas de succès. <code>FALSE</code>
+     *                            en cas d'échec.
+     */
     function __s($text) {
 
-        return htmlspecialchars($text, ENT_QUOTES);
+        if(is_array($text)) {
+            return filter_var_array($text, FILTER_SANITIZE_SPECIAL_CHARS);
+        } else {
+            return htmlspecialchars($text, ENT_QUOTES);
+        }
 
     }
 
