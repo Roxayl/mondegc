@@ -163,10 +163,29 @@ img.olTileImage {
 
 <!-- STYLE -->
 <style media="screen">
+
+    .tooltip {
+        pointer-events: none; /*let mouse events pass through*/
+        opacity:0;
+        transition: opacity 0.3s;
+        text-shadow: 1px 1px 0px gray;
+    }
+
+    div.tooltip {
+        background: lightblue;
+        border:solid gray;
+        position: absolute;
+        max-width: 8em;
+        text-align:center;
+    }
+    
     svg {
         width: 500px;
         height: 270px;
+        /*allow tooltips to spill into margins */
+        overflow: visible;
     }
+
     svg .seat {
         cursor: pointer;
         transition: all 800ms;
@@ -320,6 +339,8 @@ img.olTileImage {
 
     <div class="row-fluid">
         <div class="span6" id="parliament-data-container">
+
+            <div class="mouse tooltip" >Tooltip content</div>
 
             <svg id="parliament"></svg>
             <div id="parliament-chart-container">
@@ -552,6 +573,76 @@ $(function() {
     };
 
     setData(diagramData);
+
+
+    /** Tooltip **/
+
+    var tooltip = d3.selectAll(".tooltip:not(.css)");
+    var HTMLmouseTip = d3.select("div.tooltip.mouse");
+    /* If this seems like a lot of different variables,
+       remember that normally you'd only implement one
+       type of tooltip! */
+
+    /* I'm using d3 to add the event handlers to the circles
+       and set positioning attributes on the tooltips, but
+       you could use JQuery or plain Javascript. */
+    d3.select("svg").select("g")
+        .selectAll("circle")
+
+        /***** Easy but ugly tooltip *****/
+        .attr("title", "Automatic Title Tooltip")
+
+        .on("mouseover", function () {
+
+            tooltip.style("opacity", "1");
+
+            /* You'd normally set the tooltip text
+               here, based on data from the  element
+               being moused-over; I'm just setting colour. */
+            tooltip.style("color", this.getAttribute("fill") );
+          /* Note: SVG text is set in CSS to link fill colour to
+             the "color" attribute. */
+
+            tooltip.html();
+
+            /***** Positioning a tooltip precisely
+                   over an SVG element *****/
+
+            /***** For an HTML tooltip *****/
+
+            //for the HTML tooltip, we're not interested in a
+            //transformation relative to an internal SVG coordinate
+            //system, but relative to the page body
+
+            //We can't get that matrix directly,
+            //but we can get the conversion to the
+            //screen coordinates.
+
+            var matrix = this.getScreenCTM()
+                    .translate(+this.getAttribute("cx"),
+                             +this.getAttribute("cy"));
+
+        })
+        .on("mousemove", function () {
+
+            /***** Positioning a tooltip using mouse coordinates *****/
+
+            /* The code is shorter, but it runs every time
+               the mouse moves, so it could slow down other
+               processes or animation. */
+
+            /***** For an HTML tooltip *****/
+
+            //mouse coordinates relative to the page as a whole
+            //can be accessed directly from the click event object
+            //(which d3 stores as d3.event)
+            HTMLmouseTip
+                .style("left", Math.max(0, d3.event.pageX - 150) + "px")
+                .style("top", (d3.event.pageY + 20) + "px");
+        })
+        .on("mouseout", function () {
+            return tooltip.style("opacity", "0");
+        });
 
 
     /** Editing **/

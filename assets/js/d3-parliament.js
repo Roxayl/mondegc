@@ -122,6 +122,11 @@ d3.parliament = function() {
                 c += (d.party && d.party.id) || "";
                 return c.trim();
             };
+            var voteId = function(d) {
+                var vid = "";
+                vid += (d.party && d.party.voteId) || "";
+                return vid.trim();
+            };
             var seatX = function(d) { return d.cartesian.x; };
             var seatY = function(d) { return d.cartesian.y; };
             var seatRadius = function(d) {
@@ -147,9 +152,13 @@ d3.parliament = function() {
             var circles = container.selectAll(".seat").data(seats);
             circles.attr("class", seatClasses);
 
+            /* Identifiant du vote, utilisé pour le tooltip */
+            circles.attr("data-vote-id", voteId);
+
             /* animation adding seats to the parliament */
             var circlesEnter = circles.enter().append("circle");
             circlesEnter.attr("class", seatClasses);
+            circlesEnter.attr("data-vote-id", voteId);
             circlesEnter.attr("cx", enter.fromCenter ? 0 : seatX);
             circlesEnter.attr("cy", enter.fromCenter ? 0 : seatY);
             circlesEnter.attr("r", enter.smallToBig ? 0 : seatRadius);

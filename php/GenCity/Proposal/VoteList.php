@@ -222,6 +222,7 @@ class VoteList {
             $this_row_id = "diagram-pays-{$row['id']}";
             $diagram['d3DataSource'][] = array(
                 'id' => $this_row_id,
+                'voteId' => $row['id'],
                 'legend' => $row['ch_pay_continent'],
                 'name' => $row['ch_pay_nom'],
                 'seats' => 1
