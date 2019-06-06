@@ -95,8 +95,9 @@ switch($formProposal->getStatus(false)) {
         break;
 
     case \GenCity\Proposal\Proposal::allValidationStatus('voteFinished'):
+        $proposalDecision = new \GenCity\Proposal\ProposalDecisionMaker($voteList);
         $debate_message .= "La procédure de vote est terminée.";
-        $countdown_text = $formProposal->get("reponse_" . $voteList->getResultsByResponses()[0]['reponse_choisie']);
+        $countdown_text = "";
         break;
 
     default:
@@ -326,14 +327,30 @@ img.olTileImage {
             </div>
 
             <div id="proposal-results-container" class="well row-fluid">
-                <div class="span5">
-                    <h2 id="proposal-countdown"
-                        <?= $formProposal->getStatus(false) ===
+                <div class="span6">
+
+                    <?php
+                    if($formProposal->getStatus(false) ===
+                        \GenCity\Proposal\Proposal::allValidationStatus('voteFinished')): ?>
+                        <h2>
+                        <?php
+                        renderElement('Proposal/proposal_decision', array(
+                            'decisionData' => $proposalDecision->outputFormat())); ?>
+                        </h2>
+
+                    <?php
+                    else: ?>
+                        <h2 id="proposal-countdown" <?= $formProposal->getStatus(false) ===
                         \GenCity\Proposal\Proposal::allValidationStatus('votePending') ?
                             'runCountdown' : ''?>>
-                        <?= $countdown_text ?></h2>
+                            <?= $countdown_text ?>
+                        </h2>
+                    <?php
+                    endif;
+                    ?>
+
                 </div>
-                <div class="span7 well">
+                <div class="span6 well">
                 </div>
             </div>
 
@@ -429,48 +446,54 @@ $(function() {
 <script type="text/javascript">
 (function(window, document, $, d3, Chart, undefined) {
 
-    var countdownElementId = 'proposal-countdown';
+    /** Countdown **/
 
-    var CountDownTimer = function(dt, id) {
-        var end = new Date(dt);
+    try {
 
-        var _second = 1000;
-        var _minute = _second * 60;
-        var _hour = _minute * 60;
-        var _day = _hour * 24;
-        var timer;
+        var countdownElementId = 'proposal-countdown';
 
-        function showRemaining() {
-            var now = new Date();
-            var distance = end - now;
-            if (distance < 0) {
+        var CountDownTimer = function(dt, id) {
+            var end = new Date(dt);
 
-                clearInterval(timer);
-                document.getElementById(id).innerHTML = 'Vote terminé';
+            var _second = 1000;
+            var _minute = _second * 60;
+            var _hour = _minute * 60;
+            var _day = _hour * 24;
+            var timer;
 
-                return;
+            function showRemaining() {
+                var now = new Date();
+                var distance = end - now;
+                if (distance < 0) {
+
+                    clearInterval(timer);
+                    document.getElementById(id).innerHTML = 'Vote terminé';
+
+                    return;
+                }
+                var days = Math.floor(distance / _day);
+                var hours = Math.floor((distance % _day) / _hour);
+                var minutes = Math.floor((distance % _hour) / _minute);
+                var seconds = Math.floor((distance % _minute) / _second);
+
+                var output = '';
+
+                output += ('0' + days).slice(-2) + ':';
+                output += ('0' + hours).slice(-2) + ':';
+                output += ('0' + minutes).slice(-2) + ':';
+                output += ('0' + seconds).slice(-2) + '';
+
+                document.getElementById(id).innerHTML = '<h4 style="margin: 0;">Vote en cours</h4>' + output;
             }
-            var days = Math.floor(distance / _day);
-            var hours = Math.floor((distance % _day) / _hour);
-            var minutes = Math.floor((distance % _hour) / _minute);
-            var seconds = Math.floor((distance % _minute) / _second);
 
-            var output = '';
+            timer = setInterval(showRemaining, 1000);
+        };
 
-            output += ('0' + days).slice(-2) + ':';
-            output += ('0' + hours).slice(-2) + ':';
-            output += ('0' + minutes).slice(-2) + ':';
-            output += ('0' + seconds).slice(-2) + '';
-
-            document.getElementById(id).innerHTML = '<h4 style="margin: 0;">Vote en cours</h4>' + output;
+        if($('#' + countdownElementId).get(0).hasAttribute('runCountdown')) {
+            CountDownTimer("<?= $formProposal->get('debate_end') ?>", countdownElementId);
         }
 
-        timer = setInterval(showRemaining, 1000);
-    };
-
-    if($('#' + countdownElementId).get(0).hasAttribute('runCountdown')) {
-        CountDownTimer("<?= $formProposal->get('debate_end') ?>", countdownElementId);
-    }
+    } catch(err) { }
 
 
     /** Modal **/

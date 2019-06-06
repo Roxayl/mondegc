@@ -81,27 +81,50 @@ class VoteList {
 
     }
 
-    private function getVotesByResponse($get_null = true, $orderby_count = false) {
+    private function getVotesByResponse($get_null = true, $orderby_field = 'id') {
 
-        $result = array();
+        $listReponses = array_keys($this->proposal->getResponses());
+
+        $orderby_list = array(
+            'count' => 'ORDER BY nbr_votes DESC',
+            'reponse_choisie' => 'ORDER BY reponse_choisie ASC',
+            'id' => 'ORDER BY id ASC'
+        );
+
+        $results = array();
         $query = sprintf('SELECT id, reponse_choisie, COUNT(id) AS nbr_votes
                     FROM ocgc_votes
                     WHERE ID_proposal = %s %s
                     GROUP BY reponse_choisie %s ',
                     $this->proposal->get('id'),
                    ($get_null ? '' : ' AND reponse_choisie IS NOT NULL '),
-                   ($orderby_count ? ' ORDER BY nbr_votes DESC ' : ''));
+                   $orderby_list[$orderby_field]);
         $mysql_query = mysql_query($query) or die(mysql_error());
+
+
         while($row = mysql_fetch_assoc($mysql_query)) {
-            $result[] = $row;
+            $results[] = $row;
         }
-        return $result;
+
+        $existingReponses = array_column($results, 'reponse_choisie');
+
+        foreach($listReponses as $thisReponse) {
+            if(!in_array($thisReponse, $existingReponses)) {
+                $results[] = array(
+                    'id' => null,
+                    'reponse_choisie' => $thisReponse,
+                    'nbr_votes' => 0
+                );
+            }
+        }
+
+        return $results;
 
     }
 
-    public function getResultsByResponses() {
+    public function getResultsByResponses($orderby_field = 'id') {
 
-        $results = $this->getVotesByResponse(false, true);
+        $results = $this->getVotesByResponse(false, $orderby_field);
 
         $sum = 0;
         foreach($results as $result) {
@@ -124,7 +147,7 @@ class VoteList {
             'bgColor' => array()
         );
 
-        $results = $this->getVotesByResponse(false, false);
+        $results = $this->getVotesByResponse(false, 'id');
 
         // Dans le cas d'un vote de type "pour/contre", on fait en sorte à ce que
         // le vote blanc apparaisse au milieu du diagramme.

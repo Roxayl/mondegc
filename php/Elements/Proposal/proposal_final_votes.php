@@ -6,7 +6,7 @@ $formProposal = $data['formProposal'];
 
 $voteList = $formProposal->getVote();
 
-$results = $voteList->getResultsByResponses();
+$results = $voteList->getResultsByResponses('count');
 
 $totalVotes = $voteList->getTotalVotes();
 $absVotes   = $voteList->getAbstentionVotes();
