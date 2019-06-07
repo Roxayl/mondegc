@@ -123,6 +123,7 @@ ul.proposal-responses li {
     font-family: "Titillium Web", "Roboto", sans-serif;
     text-transform: uppercase;
     cursor: pointer;
+    margin: 2px 1px 3px;
 }
 ul.proposal-responses li label {
     font-weight: bold;
@@ -149,6 +150,7 @@ div.span5.align-left > p {
 #proposal-results-container {
     text-align: left;
 }
+
 
 /* ICONES
 -------------------------------------------------- */
@@ -1509,6 +1511,31 @@ table .btn {
 	position:relative;
 	bottom: 16px;
 	right: 25px;
+}
+
+/* TOOLTIP
+-------------------------------------------------- */
+
+#parliament-data-container .tooltip {
+    pointer-events: none; /*let mouse events pass through*/
+    opacity: 0;
+    transition: opacity 0.3s;
+
+    /* style */
+    box-shadow: 1px 2px 2px #373737;
+    font-family: "Titillium Web", sans-serif;
+    width: 9em;
+    background-color: #fafafa;
+    color: black;
+    font-size: inherit;
+    text-align: left;
+    padding: 0;
+}
+#parliament-data-container .tooltip-container {
+    margin: 0;
+    border: none;
+    border-left: 9px solid;
+    padding: 1px 0 2px 5px;
 }
 
 

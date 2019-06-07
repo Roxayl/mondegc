@@ -123,9 +123,8 @@ d3.parliament = function() {
                 return c.trim();
             };
             var voteId = function(d) {
-                var vid = "";
-                vid += (d.party && d.party.voteId) || "";
-                return vid.trim();
+                vid = (d.party && d.party.voteId) || "";
+                return vid;
             };
             var seatX = function(d) { return d.cartesian.x; };
             var seatY = function(d) { return d.cartesian.y; };

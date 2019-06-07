@@ -31,6 +31,9 @@ $voteChartResults = $formProposal->getVote()->generateChartResults();
 $voteList = new \GenCity\Proposal\VoteList($formProposal);
 $userVotes = $voteList->getUserVotes($thisUser);
 
+$reponsesData = $voteList->generateTooltipData();
+
+
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if(isset($_POST['voteCast'])) {
@@ -163,21 +166,6 @@ img.olTileImage {
 
 <!-- STYLE -->
 <style media="screen">
-
-    .tooltip {
-        pointer-events: none; /*let mouse events pass through*/
-        opacity:0;
-        transition: opacity 0.3s;
-        text-shadow: 1px 1px 0px gray;
-    }
-
-    div.tooltip {
-        background: lightblue;
-        border:solid gray;
-        position: absolute;
-        max-width: 8em;
-        text-align:center;
-    }
     
     svg {
         width: 500px;
@@ -577,11 +565,31 @@ $(function() {
 
     /** Tooltip **/
 
+    var voteData = <?= json_encode($reponsesData); ?>;
+
     var tooltip = d3.selectAll(".tooltip:not(.css)");
     var HTMLmouseTip = d3.select("div.tooltip.mouse");
     /* If this seems like a lot of different variables,
        remember that normally you'd only implement one
        type of tooltip! */
+
+    var generateTooltipHtmlData = function(voteId) {
+
+        var str = '';
+        str += '<div class="tooltip-container" style="border-color: ' + voteData[voteId].reponseColor + '">';
+        str += '<img src="' + voteData[voteId].paysDrapeau + '" class="img-menu-drapeau" /> '
+        str += "<span>"
+        str += voteData[voteId].paysNom
+        str += "</span>"
+        str += "<br>"
+        str += '<strong style="color: ' + voteData[voteId].reponseColor + '">'
+        str += voteData[voteId].reponseIntitule.toUpperCase()
+        str += '</strong>'
+        str += '</div>';
+
+        return str;
+
+    };
 
     /* I'm using d3 to add the event handlers to the circles
        and set positioning attributes on the tooltips, but
@@ -603,7 +611,8 @@ $(function() {
           /* Note: SVG text is set in CSS to link fill colour to
              the "color" attribute. */
 
-            tooltip.html();
+            var tooltipString = generateTooltipHtmlData(d3.select(this).attr('data-vote-id'));
+            tooltip.html(tooltipString);
 
             /***** Positioning a tooltip precisely
                    over an SVG element *****/

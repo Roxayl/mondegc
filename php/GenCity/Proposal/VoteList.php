@@ -167,18 +167,21 @@ class VoteList {
 
     }
 
+    /**
+     * Donne les résultats par pays.
+     * @return Vote[] Array d'objets.
+     */
     public function getResultsPerCountry() {
 
         $results = array();
-        $query = sprintf('SELECT id, ID_pays, reponse_choisie,
-                    ch_pay_nom, ch_pay_continent
+        $query = sprintf('SELECT ocgc_votes.*
                   FROM ocgc_votes
                   JOIN pays ON ID_pays = ch_pay_id
                   WHERE ID_proposal = %s',
                 GetSQLValueString($this->proposal->get('id')));
         $mysql_query = mysql_query($query);
         while($row = mysql_fetch_assoc($mysql_query)) {
-            $results[] = $row;
+            $results[] = new Vote($row);
         }
 
         return $results;
@@ -193,7 +196,7 @@ class VoteList {
 
         $userVotes = array();
 
-        $query = sprintf('SELECT ocgc_votes.id AS id_votes FROM ocgc_votes
+        $query = sprintf('SELECT ocgc_votes.* FROM ocgc_votes
                             JOIN users_pays USING(ID_pays)
                             WHERE ID_proposal = %s AND ID_user = %s
                               AND permissions >= %s
@@ -203,7 +206,7 @@ class VoteList {
             Pays::$permissions['dirigeant']);
         $mysql_query = mysql_query($query);
         while($row = mysql_fetch_assoc($mysql_query)) {
-            $userVotes[$row['id_votes']] = new Vote($row['id_votes']);
+            $userVotes[$row['id']] = new Vote($row);
         }
 
         return $userVotes;
@@ -218,21 +221,44 @@ class VoteList {
             'd3DataSource' => array(),
             'css' => array()
         );
-        foreach($results as $row) {
-            $this_row_id = "diagram-pays-{$row['id']}";
+        foreach($results as $vote) {
+            $this_row_id = "diagram-pays-" . $vote->get('id');
             $diagram['d3DataSource'][] = array(
                 'id' => $this_row_id,
-                'voteId' => $row['id'],
-                'legend' => $row['ch_pay_continent'],
-                'name' => $row['ch_pay_nom'],
+                'voteId' => $vote->get('id'),
+                'legend' => $vote->getPaysAuthor()->get('ch_pay_continent'),
+                'name' => $vote->getPaysAuthor()->get('ch_pay_nom'),
                 'seats' => 1
             );
             $diagram['css'][] = array(
-                "svg .seat.$this_row_id" => $this->getColorFromVote(new Vote($row['id']))
+                "svg .seat.$this_row_id" => $this->getColorFromVote($vote)
             );
         }
 
         return $diagram;
+
+    }
+
+    public function generateTooltipData() {
+
+        $return = array();
+
+        $votes = $this->getResultsPerCountry();
+
+        foreach($votes as $vote) {
+
+            $reponseIntitule = $vote->get('reponse_choisie') !== null ?
+                $this->getProposal()->get('reponse_' . $vote->get('reponse_choisie')) : 'Abstention';
+
+            $return[$vote->get('id')] = array(
+                'paysNom' => $vote->getPaysAuthor()->get('ch_pay_nom'),
+                'paysDrapeau' => $vote->getPaysAuthor()->get('ch_pay_lien_imgdrapeau'),
+                'reponseColor' => $this->getColorFromVote($vote),
+                'reponseIntitule' => $reponseIntitule
+            );
+        }
+
+        return $return;
 
     }
 

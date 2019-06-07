@@ -1,9 +1,12 @@
 <?php
 
 namespace GenCity\Proposal;
+use GenCity\Monde\Pays;
 use Squirrel\BaseModel;
 
 class Vote extends BaseModel {
+
+    private $pays = null;
 
     public function __construct($data = null) {
 
@@ -61,6 +64,14 @@ class Vote extends BaseModel {
                 GetSQLValueString($this->get('id'))
         );
         mysql_query($query);
+
+    }
+
+    public function getPaysAuthor() {
+
+        if($this->pays === null)
+            $this->pays = new Pays($this->get('ID_pays'));
+        return $this->pays;
 
     }
 
