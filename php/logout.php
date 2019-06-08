@@ -7,7 +7,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 // *** Recherche de sessions.
-$clefSession = $_COOKIE['Session_mondeGC'];
+$clefSession = isset($_COOKIE['Session_mondeGC']) ? $_COOKIE['Session_mondeGC'] : null;
 
 if ($clefSession != NULL and $clefSession != "") {
 mysql_select_db($database_maconnexion, $maconnexion);

@@ -6,11 +6,7 @@ include('../php/logout.php');
 
 $_error = false;
 
-if (!($_SESSION['statut']) or $_SESSION['statut'] < 10) {
-    // Redirection vers page connexion
-    header("Status: 301 Moved Permanently", false, 301);
-    header('Location: ../connexion.php');
-    exit();
+if (!isset($_SESSION['statut']) or $_SESSION['statut'] < 10) {
 }
 
 $editFormAction = $_SERVER['PHP_SELF'];
@@ -18,7 +14,9 @@ if (isset($_SERVER['QUERY_STRING'])) {
     $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-$thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
+if(isset($_SESSION['userObject'])) {
+    $thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
+}
 if($_error) {
     getErrorMessage('ban_error', "Cette proposition n'existe pas.");
 }
@@ -29,7 +27,7 @@ $voteResults = $formProposal->getVote()->generateDiagramData();
 $voteChartResults = $formProposal->getVote()->generateChartResults();
 
 $voteList = new \GenCity\Proposal\VoteList($formProposal);
-$userVotes = $voteList->getUserVotes($thisUser);
+$userVotes = isset($_SESSION['userObject']) ? $voteList->getUserVotes($thisUser) : array();
 
 $reponsesData = $voteList->generateTooltipData();
 
@@ -371,7 +369,8 @@ img.olTileImage {
         <?php
 
         if($formProposal->getStatus(false) ===
-            \GenCity\Proposal\Proposal::allValidationStatus('votePending')):
+            \GenCity\Proposal\Proposal::allValidationStatus('votePending') &&
+           count($userVotes) > 0):
 
             renderElement('Proposal/proposal_pending_votes', array(
                 'formProposal' => $formProposal,
@@ -487,8 +486,7 @@ $(function() {
 
                 var output = '';
 
-                output += ('0' + days).slice(-2) + ':';
-                output += ('0' + hours).slice(-2) + ':';
+                output += ('0' + (days + 1) * hours).slice(-2) + ':';
                 output += ('0' + minutes).slice(-2) + ':';
                 output += ('0' + seconds).slice(-2) + '';
 
