@@ -366,7 +366,7 @@ input[type='submit'] {
     padding: 5px 10px;
     color: #ffffff;
     font-family: "Titillium Web", sans-serif;
-	font-size: 0.9em;
+    font-size: 0.935em;
     margin: 5px 1px 6px;
 }
 /* logo monde GC */
@@ -402,10 +402,11 @@ body > .navbar .brand {
 /* Pseudo en blanc */
 .Nav-pseudo {
 	color: #ffffff;
-	font-size: 0.8em;
+	font-size: 1em;
 	position: relative;
 	top: 4px;
 	text-shadow: 2px 0px 2px rgba(0, 0, 0, 0.3), 2px 0px 6px rgba(0, 0, 0, 0.1);
+    font-family: "Titillium Web", sans-serif;
 }
 /* Btn du menu gestion */
 .btn-nav-gestion {
