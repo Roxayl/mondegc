@@ -31,6 +31,8 @@ $userVotes = isset($_SESSION['userObject']) ? $voteList->getUserVotes($thisUser)
 
 $reponsesData = $voteList->generateTooltipData();
 
+$proposalDecision = new \GenCity\Proposal\ProposalDecisionMaker($voteList);
+
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -96,7 +98,6 @@ switch($formProposal->getStatus(false)) {
         break;
 
     case \GenCity\Proposal\Proposal::allValidationStatus('voteFinished'):
-        $proposalDecision = new \GenCity\Proposal\ProposalDecisionMaker($voteList);
         $debate_message .= "La procédure de vote est terminée.";
         $countdown_text = "";
         break;
@@ -357,7 +358,11 @@ img.olTileImage {
                     ?>
 
                 </div>
+
                 <div class="span6 well">
+                    <?php renderElement('Proposal/proposal_description',
+                        array('formProposal' => $formProposal,
+                              'decisionData' => $proposalDecision->outputFormat())); ?>
                 </div>
             </div>
 

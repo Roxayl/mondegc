@@ -24,7 +24,7 @@ class ProposalDecisionMaker {
 
             $results = $this->voteList->getResultsByResponses('reponse_choisie');
 
-            if($results[1]['pct'] > 0.5) {
+            if($results[1]['pct'] > (float)$this->proposal->get('threshold') + 0.001) {
                 $acceptedResponses[] = $results[1]['reponse_choisie'];
                 // pour ; acceptée
             } else {
@@ -35,7 +35,7 @@ class ProposalDecisionMaker {
         } else {
 
             $results = $this->voteList->getResultsByResponses('count');
-            if($results[0]['pct'] > 0.5) {
+            if($results[0]['pct'] > (float)$this->proposal->get('threshold') + 0.001) {
                 $acceptedResponses[] = $results[0]['reponse_choisie'];
                 // Réponse #1 en votes
             } else {

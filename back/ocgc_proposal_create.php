@@ -60,6 +60,10 @@ $form_radio_type[$formProposal->type] = 'checked selected';
 $form_radio_type_reponse = array('dual' => '', 'multiple' => '');
 $form_radio_type_reponse[$formProposal->type_reponse] = 'checked selected';
 
+// 'thresholg'
+$form_radio_threshold = array('0.50' => '', '0.66' => '');
+$form_radio_threshold[$formProposal->threshold] = 'checked selected';
+
 // 'debate_start'
 $form_select_debate_start = \GenCity\Proposal\Proposal::getNextDebates();
 $form_select_debate_start[$formProposal->debate_start] = 'checked selected';
@@ -257,6 +261,33 @@ img.olTileImage {
 
         <h3>Modalités de vote</h3>
 
+        <div id="form-threshold-container">
+            <div class="well">
+                <p>Cette proposition sera acceptée lorsqu'elle recueille ce seuil de votes favorables :</p>
+            </div>
+            <div class="row-fluid well">
+                <div class="span6">
+                    <input class="input-xlarge" type="radio" name="ocgc_proposal_create[threshold]" style="display: inline-block;"
+                           id="ocgc_proposal_create[threshold][50]" value="0.50"
+                           <?= $form_radio_threshold['0.50'] ?>>
+                    <label for="ocgc_proposal_create[threshold][50]" style="display: inline-block;">
+                        <span style="font-size: 16px;">50%</span><br />
+                        Ce seuil s'applique à la plupart des propositions.</label>
+                </div>
+
+                <div class="span6">
+                <input class="input-xlarge" type="radio" name="ocgc_proposal_create[threshold]" style="display: inline-block;"
+                       id="ocgc_proposal_create[threshold][66]" value="0.66"
+                       <?= $form_radio_threshold['0.66'] ?>>
+                <label for="ocgc_proposal_create[threshold][66]" style="display: inline-block;">
+                    <span style="font-size: 16px;">66%</span><br />
+                    Ce seuil s'applique aux propositions portant sur les thèmes suivants :<br />
+                    - Acceptation d'un nouveau pays au sein de l'OCGC<br />
+                    - Destitution du Président de l'OCGC.</label>
+                </div>
+            </div>
+        </div>
+
         <div class="well">
             <div id="sprytextfield7" class="control-group">
                 <label class="control-label" for="ocgc_proposal_create[debate_start]">Date de vote <a href="#" rel="clickover" title="Date du vote" data-content="Proposez une date à laquelle sera soumise la proposition durant la séance plénière."><i class="icon-info-sign"></i></a></label>
@@ -320,8 +351,10 @@ $(function() {
         var $checked = $input.filter(':checked');
         if($checked.attr('value') === 'dual') {
             $('#detail_reponses').hide();
+            $('#form-threshold-container').show();
         } else {
             $('#detail_reponses').show();
+            $('#form-threshold-container').hide();
         }
     }
     $($input).on('change', function() {

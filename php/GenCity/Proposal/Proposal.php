@@ -53,12 +53,12 @@ class Proposal extends BaseModel {
         $query ='INSERT INTO ocgc_proposals(
                          ID_pays, question, type, type_reponse,
                          reponse_1, reponse_2, reponse_3, reponse_4, reponse_5, 
-                         is_valid, motive, debate_start, debate_end,
+                         threshold, is_valid, motive, debate_start, debate_end,
                          res_year, res_id, created, updated)
                  VALUES(
                          %s, %s, %s, %s,
                          %s, %s, %s, %s, %s,
-                         %s, %s, %s, %s,
+                         %s, %s, %s, %s, %s,
                          YEAR(CURDATE()), %s, NOW(), NOW())';
 
         $query = sprintf($query,
@@ -71,13 +71,14 @@ class Proposal extends BaseModel {
              GetSQLValueString($this->get('reponse_3')),
              GetSQLValueString($this->get('reponse_4')),
              GetSQLValueString($this->get('reponse_5')),
+             GetSQLValueString($this->get('threshold')),
              GetSQLValueString($this->get('is_valid'), 'int'),
              GetSQLValueString($this->get('motive')),
              GetSQLValueString($this->get('debate_start')),
              GetSQLValueString($this->get('debate_end')),
              GetSQLValueString($this->get('res_id'))
         );
-        mysql_query($query);
+        mysql_query($query) or getErrorMessage('error', "Impossible !");
 
         // On réinitialise le modèle
         $this->model = new ProposalModel(mysql_insert_id());
@@ -204,6 +205,15 @@ class Proposal extends BaseModel {
             $return[] = array(
                 'targetedField' => 'debate_start',
                 'errorMessage' => "La date des débats n'est pas valide. Elle doit se situer durant une session plénière."
+            );
+        }
+
+        // Vérifier le seuil de validation
+
+        if(!in_array($this->get('threshold'), array(0.50, 0.66))) {
+            $return[] = array(
+                'targetedField' => 'threshold',
+                'errorMessage' => "Le seuil de validation de la proposition n'est pas valide."
             );
         }
 

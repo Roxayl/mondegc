@@ -85,22 +85,14 @@ class VoteList {
 
         $listReponses = array_keys($this->proposal->getResponses());
 
-        $orderby_list = array(
-            'count' => 'ORDER BY nbr_votes DESC',
-            'reponse_choisie' => 'ORDER BY reponse_choisie ASC',
-            'id' => 'ORDER BY id ASC'
-        );
-
         $results = array();
         $query = sprintf('SELECT id, reponse_choisie, COUNT(id) AS nbr_votes
                     FROM ocgc_votes
                     WHERE ID_proposal = %s %s
-                    GROUP BY reponse_choisie %s ',
+                    GROUP BY reponse_choisie ',
                     $this->proposal->get('id'),
-                   ($get_null ? '' : ' AND reponse_choisie IS NOT NULL '),
-                   $orderby_list[$orderby_field]);
+                   ($get_null ? '' : ' AND reponse_choisie IS NOT NULL '));
         $mysql_query = mysql_query($query) or die(mysql_error());
-
 
         while($row = mysql_fetch_assoc($mysql_query)) {
             $results[] = $row;
@@ -118,6 +110,22 @@ class VoteList {
             }
         }
 
+        // Tri du tableau
+        usort($results, function($a, $b) use($orderby_field) {
+            $return = 0;
+            switch($orderby_field) {
+                case 'id':
+                case 'reponse_choisie':
+                    $return = $a[$orderby_field] < $b[$orderby_field] ? -1 : 1;
+                    break;
+
+                case 'count':
+                    $return = $a['nbr_votes'] > $b['nbr_votes'] ? -1 : 1;
+                    break;
+            }
+            return $return;
+        });
+
         return $results;
 
     }
@@ -132,7 +140,7 @@ class VoteList {
         }
 
         foreach($results as &$result) {
-            $result['pct'] = round($result['nbr_votes'] / $sum, 3);
+            $result['pct'] = $sum === 0 ? 0 : round($result['nbr_votes'] / $sum, 3);
         }
 
         return $results;
