@@ -773,7 +773,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9babbf', end
 .well-dark .titre-bleu h1 {
     color: #fafafa!important;
 }
-.well-dark h2, .well-dark h3 {
+.well-dark h2, .well-dark h3, .well-dark small {
     color: #fafafa;
 }
 

@@ -147,34 +147,6 @@ class VoteList {
 
     }
 
-    public function generateChartResults() {
-
-        $return = array(
-            'labels'  => array(),
-            'data'    => array(),
-            'bgColor' => array()
-        );
-
-        $results = $this->getVotesByResponse(false, 'id');
-
-        // Dans le cas d'un vote de type "pour/contre", on fait en sorte à ce que
-        // le vote blanc apparaisse au milieu du diagramme.
-        if($this->proposal->get('type_reponse') === 'dual' && isset($results[1])) {
-            $tmp = $results[1];
-            $results[1] = $results[0];
-            $results[0] = $tmp;
-        }
-
-        foreach($results as $result) {
-            $return['labels'][]  = $this->proposal->get('reponse_' . $result['reponse_choisie']);
-            $return['data'][]    = $result['nbr_votes'];
-            $return['bgColor'][] = $this->getColorFromVote(new Vote($result['id']));
-        }
-
-        return $return;
-
-    }
-
     /**
      * Donne les résultats par pays.
      * @return Vote[] Array d'objets.
@@ -185,7 +157,9 @@ class VoteList {
         $query = sprintf('SELECT ocgc_votes.*
                   FROM ocgc_votes
                   JOIN pays ON ID_pays = ch_pay_id
-                  WHERE ID_proposal = %s',
+                  WHERE ID_proposal = %s
+                  ORDER BY FIELD(ch_pay_continent,
+                    "RFGC", "Aurinea", "Oceania", "Volcania", "Aldesyl", "Philicie")',
                 GetSQLValueString($this->proposal->get('id')));
         $mysql_query = mysql_query($query);
         while($row = mysql_fetch_assoc($mysql_query)) {
@@ -244,6 +218,34 @@ class VoteList {
         }
 
         return $diagram;
+
+    }
+
+    public function generateChartResults() {
+
+        $return = array(
+            'labels'  => array(),
+            'data'    => array(),
+            'bgColor' => array()
+        );
+
+        $results = $this->getVotesByResponse(false, 'reponse_choisie');
+
+        // Dans le cas d'un vote de type "pour/contre", on fait en sorte à ce que
+        // le vote blanc apparaisse au milieu du diagramme.
+        if($this->proposal->get('type_reponse') === 'dual' && isset($results[1])) {
+            $tmp = $results[1];
+            $results[1] = $results[0];
+            $results[0] = $tmp;
+        }
+
+        foreach($results as $result) {
+            $return['labels'][]  = $this->proposal->get('reponse_' . $result['reponse_choisie']);
+            $return['data'][]    = $result['nbr_votes'];
+            $return['bgColor'][] = $this->getColorFromVote(new Vote($result['id']));
+        }
+
+        return $return;
 
     }
 

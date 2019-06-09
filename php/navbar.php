@@ -198,7 +198,7 @@ if(!isset($loginFormAction))
               <li><a href="OCGC.php">Présentation de l'OCGC</a></li>
               <li><a href="communiques-ocgc.php">Communiqués publiés</a></li>
               <li class="nav-header">Direction de l'OCGC</li>
-              <li><a href="assemblee.php">Assemblée Générale</a></li>
+              <li><a href="assemblee.php">Assemblée générale</a></li>
               <li class="nav-header">Les instituts</li>
               <li><a href="geographie.php">G&eacute;ographie</a></li>
               <li><a href="patrimoine.php">Patrimoine</a></li>
