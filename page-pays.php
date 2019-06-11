@@ -31,10 +31,14 @@ $population_pays = $row_population['population_pays'];
 
 //Connexion base de données utilisateur pour info personnage
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_User = sprintf("SELECT ch_use_id, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_biographie_dirigeant, ch_use_login, (SELECT GROUP_CONCAT(ch_disp_group_id) FROM dispatch_mem_group WHERE ch_use_id = ch_disp_mem_id AND ch_disp_mem_statut != 3) AS listgroup FROM users WHERE ch_use_paysID = %s AND ch_use_statut >= 10", GetSQLValueString($colname_Pays, "int"));
+$query_User = sprintf("SELECT ch_use_id, ch_use_login, (SELECT GROUP_CONCAT(ch_disp_group_id) FROM dispatch_mem_group WHERE ch_use_id = ch_disp_mem_id AND ch_disp_mem_statut != 3) AS listgroup FROM users WHERE ch_use_paysID = %s AND ch_use_statut >= 10", GetSQLValueString($colname_Pays, "int"));
 $User = mysql_query($query_User, $maconnexion) or die(mysql_error());
 $row_User = mysql_fetch_assoc($User);
 $totalRows_User = mysql_num_rows($User);
+
+// Obtention personnage
+$thisPays = new \GenCity\Monde\Pays($colname_Pays);
+$personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
 
 //Recherche des monuments du pays
 mysql_select_db($database_maconnexion, $maconnexion);
@@ -352,24 +356,25 @@ init();
         </div>
         <div class="row-fluid">
           <div class="span4 thumb">
-            <?php if ($row_User['ch_use_lien_imgpersonnage']) {?>
-            <img src="<?php echo $row_User['ch_use_lien_imgpersonnage']; ?>" alt="<?php echo $row_User['ch_use_prenom_dirigeant']; ?> <?php echo $row_User['ch_use_nom_dirigeant']; ?>" title="<?php echo $row_User['ch_use_prenom_dirigeant']; ?> <?php echo $row_User['ch_use_nom_dirigeant']; ?>">
+            <?php if (!empty($personnage->get('lien_img'))) {?>
+            <img src="<?= $personnage->get('lien_img'); ?>" alt="<?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?>" title="<?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?>">
             <?php } else { ?>
             <img src="assets/img/imagesdefaut/personnage.jpg" alt="personnage par default">
             <?php } ?>
             <div class="titre-gris">
-              <?php if ($row_User['ch_use_nom_dirigeant'] OR $row_User['ch_use_prenom_dirigeant']) {?>
-              <h3><?php echo $row_User['ch_use_prenom_dirigeant']; ?> <?php echo $row_User['ch_use_nom_dirigeant']; ?></h3>
+              <?php if (!empty($personnage->get('prenom_personnage')) OR !empty($personnage->get('nom_personnage')))
+              { ?>
+                  <h3><?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?></h3>
               <?php } else { ?>
-              <h3>Pas de dirigeant</h3>
+                <h3>Pas de dirigeant</h3>
               <?php } ?>
             </div>
           </div>
           <div class="span8">
             <h3>Dirigeant du pays&nbsp;:</h3>
             <div class="well">
-              <p><i><?php echo $row_User['ch_use_predicat_dirigeant']; ?></i></p>
-              <p><i><?php echo $row_User['ch_use_titre_dirigeant']; ?></i></p>
+              <p><i><?= $personnage->get('predicat') ?></i></p>
+              <p><i><?= $personnage->get('titre_personnage') ?></i></p>
             </div>
             <?php if ($row_User['listgroup']) { ?>
             <h3>Groupes politiques</h3>
@@ -380,10 +385,10 @@ init();
                 <?php } while ($row_liste_group = mysql_fetch_assoc($liste_group)); ?>
             </div>
             <?php } ?>
-            <?php if ($row_User['ch_use_biographie_dirigeant']) { ?>
+            <?php if (!empty($personnage->get('biographie'))) { ?>
             <h3>Biographie&nbsp;:</h3>
             <div class="well">
-              <p><?php echo $row_User['ch_use_biographie_dirigeant']; ?></p>
+              <p><?= $personnage->get('biographie') ?></p>
             </div>
           </div>
           <?php } ?>
