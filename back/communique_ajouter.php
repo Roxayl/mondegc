@@ -24,6 +24,10 @@ if ( $cat == "pays") {
   if (isset($_POST['com_element_id'])) {
   $colname_elementid = $_POST['com_element_id'];
   unset($_POST['com_element_id']);
+
+  $thisPays = new \GenCity\Monde\Pays($colname_elementid);
+  $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
+
 }  
   mysql_select_db($database_maconnexion, $maconnexion);
 $query_pays = sprintf("SELECT ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_elementid, "int"));
@@ -119,7 +123,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
 if ( $_POST['ch_com_categorie'] == "pays") {
-$insertGoTo = 'page_pays_back.php';
+$insertGoTo = 'page_pays_back.php?paysID=' . (int)$_POST['ch_com_element_id'];
 }
 elseif ( $_POST['ch_com_categorie'] == "ville") {
 $insertGoTo = 'ville_modifier.php';
@@ -200,14 +204,16 @@ $insertGoTo = 'page_pays_back.php';
     ================================================== -->
 <div class="container corps-page">
   <div class="row-fluid communique">
-    <section> 
+    <section>
+    <?php if(isset($personnage)): ?>
       <!-- EN-tête Personnage pour communiquées officiels et commentaire-->
-      <div class="span3 thumb"> <img src="<?php echo $row_user['ch_use_lien_imgpersonnage']; ?>" alt="photo <?php echo $row_user['ch_use_nom_dirigeant']; ?>">
+      <div class="span3 thumb"> <img src="<?= $personnage->get('lien_img') ?>" alt="photo <?= $personnage->get('nom_personnage') ?>">
         <div class="titre-gris">
-          <p><?php echo $row_user['ch_use_predicat_dirigeant']; ?></p>
-          <h3><?php echo $row_user['ch_use_prenom_dirigeant']; ?> <?php echo $row_user['ch_use_nom_dirigeant']; ?></h3>
-          <small><?php echo $row_user['ch_use_titre_dirigeant']; ?></small> </div>
+          <p><?= $personnage->get('predicat') ?></p>
+          <h3><?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?></h3>
+          <small><?= $personnage->get('titre_personnage') ?></small> </div>
       </div>
+    <?php endif; ?>
       <div class="offset6 span3 thumb">
         <?php if (($cat == "ville") || ($cat == "pays") || ($cat == "institut")) { ?>
         <!-- EN-tête Institution pour communiqués officiels-->

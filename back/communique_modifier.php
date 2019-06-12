@@ -96,6 +96,9 @@ $nom_organisation = $row_cat_pays['ch_pay_nom'];
 $insigne = $row_cat_pays['ch_pay_lien_imgdrapeau'];
 $soustitre = $row_cat_pays['ch_pay_devise'];
 
+$thisPays = new \GenCity\Monde\Pays($colname_elementid);
+$personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
+
 mysql_free_result($cat_pays);
 }
 
@@ -192,13 +195,15 @@ $totalRows_user = mysql_num_rows($user);
 <div class="container corps-page">
   <div class="row-fluid communique">
     <section> 
+      <?php if(isset($personnage)): ?>
       <!-- EN-tête Personnage pour communiquées officiels et commentaire-->
-      <div class="span3 thumb"> <img src="<?php echo $row_user['ch_use_lien_imgpersonnage']; ?>" alt="photo <?php echo $row_user['ch_use_nom_dirigeant']; ?>">
+      <div class="span3 thumb"> <img src="<?= $personnage->get('lien_img') ?>" alt="photo <?= $personnage->get('nom_personnage') ?>">
         <div class="titre-gris">
-          <p><?php echo $row_user['ch_use_predicat_dirigeant']; ?></p>
-          <h3><?php echo $row_user['ch_use_prenom_dirigeant']; ?> <?php echo $row_user['ch_use_nom_dirigeant']; ?></h3>
-          <small><?php echo $row_user['ch_use_titre_dirigeant']; ?></small> </div>
+          <p><?= $personnage->get('predicat') ?></p>
+          <h3><?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?></h3>
+          <small><?= $personnage->get('titre_personnage') ?></small> </div>
       </div>
+    <?php endif; ?>
       <div class="offset6 span3 thumb">
         <?php if (($row_communique['ch_com_categorie'] == "pays") || ($row_communique['ch_com_categorie'] == "ville") || ($row_communique['ch_com_categorie'] == "institut")) { ?>
         <!-- EN-tête Institution pour communiqués officiels-->

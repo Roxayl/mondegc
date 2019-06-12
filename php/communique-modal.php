@@ -31,6 +31,9 @@ $insigne = $row_pays['ch_pay_lien_imgdrapeau'];
 $soustitre = $row_pays['ch_pay_devise'];
 $background_jumbotron = $row_pays['ch_pay_lien_imgheader'];
 mysql_free_result($pays);
+
+$thisPays = new \GenCity\Monde\Pays($elementID);
+$personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
 }
 
 if ( $cat == "ville") {
@@ -95,12 +98,15 @@ $totalRows_commentaire = mysql_num_rows($commentaire);
   </div>
   <div class="row-fluid communique"> 
     <!-- EN-tête Auteur-->
-    <div class="span2 thumb"> <img src="<?php echo $row_user['ch_use_lien_imgpersonnage']; ?>" alt="photo <?php echo $row_user['ch_use_nom_dirigeant']; ?>">
-      <div class="titre-gris">
-        <p><?php echo $row_user['ch_use_predicat_dirigeant']; ?></p>
-        <h3><?php echo $row_user['ch_use_prenom_dirigeant']; ?> <?php echo $row_user['ch_use_nom_dirigeant']; ?></h3>
-        <small><?php echo $row_user['ch_use_titre_dirigeant']; ?></small> </div>
-    </div>
+    <?php if(isset($personnage)): ?>
+      <!-- EN-tête Personnage pour communiquées officiels et commentaire-->
+      <div class="span2 thumb"> <img src="<?= $personnage->get('lien_img') ?>" alt="photo <?= $personnage->get('nom_personnage') ?>">
+        <div class="titre-gris">
+          <p><?= $personnage->get('predicat') ?></p>
+          <h3><?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?></h3>
+          <small><?= $personnage->get('titre_personnage') ?></small> </div>
+      </div>
+    <?php endif; ?>
     <!-- EN-tête Institution-->
     <div class="offset8 span2 thumb">
       <?php if ( $cat == "ville") {?>

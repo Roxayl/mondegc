@@ -32,6 +32,8 @@ $insigne = $row_com_pays['ch_pay_lien_imgdrapeau'];
 $soustitre = $row_com_pays['ch_pay_devise'];
 $background_jumbotron = $row_com_pays['ch_pay_lien_imgheader'];
 mysql_free_result($com_pays);
+
+$thisElement = new \GenCity\Monde\Pays($elementID);
 }
 
 if ( $cat == "ville") {
@@ -73,6 +75,10 @@ $query_user = sprintf("SELECT ch_use_id, ch_use_lien_imgpersonnage, ch_use_predi
 $user = mysql_query($query_user, $maconnexion) or die(mysql_error());
 $row_user = mysql_fetch_assoc($user);
 $totalRows_user = mysql_num_rows($user);
+
+if(isset($thisElement)) {
+    $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisElement);
+}
 
 $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_ID'];
 ?><!DOCTYPE html>
@@ -162,12 +168,16 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
   <div class="clearfix"></div>
   <div class="row-fluid communique"> 
     <!-- EN-tête Personnage pour communiquées officiels et commentaire-->
-    <div class="span3 thumb"> <img src="<?php echo $row_user['ch_use_lien_imgpersonnage']; ?>" alt="photo <?php echo $row_user['ch_use_nom_dirigeant']; ?>">
+    <div class="span3 thumb">
+
+        <?php if(isset($personnage)): ?>
+        <img src="<?= $personnage->get('lien_img') ?>" alt="photo <?= $personnage->get('nom_personnage') ?>">
       <div class="titre-gris">
-        <p><?php echo $row_user['ch_use_predicat_dirigeant']; ?></p>
-        <h3><?php echo $row_user['ch_use_prenom_dirigeant']; ?> <?php echo $row_user['ch_use_nom_dirigeant']; ?></h3>
-        <small><?php echo $row_user['ch_use_titre_dirigeant']; ?></small> </div>
+        <p><?= $personnage->get('predicat') ?></p>
+        <h3><?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?></h3>
+        <small><?= $personnage->get('titre_personnage') ?></small> </div>
     </div>
+      <?php endif; ?>
     <!-- EN-tête Institution pour communiqués officiels-->
     <div class="offset6 span3 thumb">
        <?php if ( $cat == "ville") {?>
