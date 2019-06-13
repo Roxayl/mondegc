@@ -23,9 +23,16 @@ $MarkerMonument = mysql_query($query_MarkerMonument, $maconnexion) or die(mysql_
 $row_MarkerMonument = mysql_fetch_assoc($MarkerMonument);
 $totalRows_MarkerMonument = mysql_num_rows($MarkerMonument);
 
+// Connexion BDD gometries pour afficher terres
+mysql_select_db($database_maconnexion, $maconnexion);
+$query_ZonesTerres = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_type, ch_geo_nom FROM geometries WHERE ch_geo_geometries = 'polygon' AND ch_geo_type= 'terre'";
+$ZonesTerres = mysql_query($query_ZonesTerres, $maconnexion) or die(mysql_error());
+$row_ZonesTerres = mysql_fetch_assoc($ZonesTerres);
+$totalRows_ZonesTerres = mysql_num_rows($ZonesTerres);
+
 // Connexion BDD gometries pour afficher zones des pays
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_ZonesPays = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'polygon'";
+$query_ZonesPays = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'polygon' AND ch_geo_type != 'terre'";
 $ZonesPays = mysql_query($query_ZonesPays, $maconnexion) or die(mysql_error());
 $row_ZonesPays = mysql_fetch_assoc($ZonesPays);
 $totalRows_ZonesPays = mysql_num_rows($ZonesPays);
@@ -127,6 +134,58 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
             // allow testing of specific renderers via "?renderer=Canvas", etc
             var renderer = OpenLayers.Util.getParameters(window.location.href).renderer;
             renderer = (renderer) ? [renderer] : OpenLayers.Layer.Vector.prototype.renderers;
+
+
+            // calque vector TERRES
+            var vectorsTerres = new OpenLayers.Layer.Vector(" Terres", {
+                styleMap: new OpenLayers.StyleMap({
+                    "default": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
+						fillColor: "${couleur}",
+						strokeWidth : "${epaisseurTrait}",
+                        fillOpacity: "${opaciteCouleur}",
+						strokeColor: "${couleurTrait}",
+						strokeOpacity: "${opaciteTrait}",
+						strokeDashstyle : "${Trait}",
+						strokeLinecap : "square",
+                        pointRadius: "5",
+						label : "",
+						fontColor: "black",
+                        fontSize: "11px",
+                        fontOpacity: 0.5,
+                        fontFamily: "Roboto",
+                        fontWeight: "200",
+                        labelOutlineWidth: 0,
+						cursor: "pointer"
+                    }, OpenLayers.Feature.Vector.style["default"])),
+                }),
+	            maxResolution: map.getResolutionForZoom(0),
+                renderers: renderer
+            });
+        map.addLayer(vectorsTerres);
+
+
+  			// Ajout geometries zones TERRES
+			var format = new OpenLayers.Format.WKT({
+    		'internalProjection': map.baseLayer.projection,
+    		'externalProjection': new OpenLayers.Projection("EPSG:4326")
+			});
+			<?php do {
+			$Nomzone = str_replace ( '-', ' ', $row_ZonesTerres['ch_geo_nom']);
+			$typeZone = $row_ZonesTerres['ch_geo_type'];
+			styleZones($typeZone, $fillcolor, $fillOpacity, $strokeWidth, $strokeColor, $strokeOpacity, $Trait);
+			?>
+			var polygonFeature= format.read("<?php echo $row_ZonesTerres['ch_geo_wkt']; ?>");
+			polygonFeature.attributes = {
+				couleur : "<?php echo $fillcolor; ?>",
+				epaisseurTrait : "<?php echo $strokeWidth; ?>",
+                opaciteCouleur : "<?php echo $fillOpacity; ?>",
+				couleurTrait : "<?php echo $strokeColor; ?>",
+				opaciteTrait : "<?php echo $strokeOpacity; ?>",
+				Trait : "<?php echo $Trait; ?>",
+				name : "<?php echo $Nomzone; ?>"
+            }
+		vectorsTerres.addFeatures([polygonFeature]);
+		<?php } while ($row_ZonesTerres = mysql_fetch_assoc($ZonesTerres)); ?>
 
 
 		// calque vector modifier zones administratives

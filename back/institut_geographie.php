@@ -65,7 +65,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature"))
 
 
 $bounds = "0,0";
-if ($_GET['bounds']) {
+if (isset($_GET['bounds'])) {
 	$bounds = $_GET['bounds'];
 }
 

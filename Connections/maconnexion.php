@@ -766,6 +766,13 @@ function styleZones($typeZone, &$fillcolor, &$fillOpacity, &$strokeWidth, &$stro
 				$strokeColor = "#626262";
 				$strokeOpacity = "0.5";
 				$Trait = "6 12 6 12";
+            } elseif ( $typeZone == "terre" ){
+				$fillcolor = "#acd0a5";
+				$fillOpacity = "1";
+				$strokeWidth = "1";
+				$strokeColor = "#1b82ab";
+				$strokeOpacity = "0.5";
+				$Trait = "solid";
             } else {
 				$fillcolor = "#97bf0d";
 				$fillOpacity = "0.5";
