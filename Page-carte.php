@@ -4,6 +4,11 @@ require_once('Connections/maconnexion.php');
 //Connexion et deconnexion
 include('php/log.php');
 
+// On essaye de ne pas afficher les messages d'erreur, le temps de les corriger.
+if($_SERVER["REMOTE_ADDR"] === '127.0.0.1') {
+    ob_start();
+}
+
 // Calcul des statistiques
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_stat_pays = "SELECT ch_pay_id, ch_pay_continent, ch_pay_population_carte FROM pays WHERE ch_pay_publication = 1";
@@ -17,52 +22,80 @@ $stat_ville = mysql_query($query_stat_ville, $maconnexion) or die(mysql_error())
 $row_stat_ville = mysql_fetch_assoc($stat_ville);
 $totalRows_stat_ville = mysql_num_rows($stat_ville);
 
+$nbhabitants_Aurinea = 0;
+$nbpays_Aurinea = 0;
+$nbhabitants_RFGC = 0;
+$nbpays_RFGC = 0;
+$nbhabitants_Volcania = 0;
+$nbpays_Volcania = 0;
+$nbhabitants_Oceania = 0;
+$nbpays_Oceania = 0;
+$nbhabitants_Philicie = 0;
+$nbpays_Philicie = 0;
+$nbhabitants_Aldesyl = 0;
+$nbpays_Aldesyl = 0;
+
+
 do {
 switch ($row_stat_pays['ch_pay_continent']) {
 		case "Aurinea" :
-		$nbhabitants_Aurinea = $nbhabitants_Aurinea + $row_stat_pays['ch_pay_population_carte'];
-		$nbpays_Aurinea = $nbpays_Aurinea +1; break;
+		$nbhabitants_Aurinea += $row_stat_pays['ch_pay_population_carte'];
+		$nbpays_Aurinea++; break;
 		case "RFGC" :
-		$nbhabitants_RFGC = $nbhabitants_RFGC + $row_stat_pays['ch_pay_population_carte'];
-		$nbpays_RFGC = $nbpays_RFGC +1; break;
+		$nbhabitants_RFGC += $row_stat_pays['ch_pay_population_carte'];
+		$nbpays_RFGC++; break;
 		case "Volcania" :
-		$nbhabitants_Volcania = $nbhabitants_Volcania + $row_stat_pays['ch_pay_population_carte'];
-		$nbpays_Volcania = $nbpays_Volcania +1; break;
+		$nbhabitants_Volcania += $row_stat_pays['ch_pay_population_carte'];
+		$nbpays_Volcania++; break;
 		case "Aldesyl" :
-		$nbhabitants_Aldesyl = $nbhabitants_Aldesyl + $row_stat_pays['ch_pay_population_carte'];
-		$nbpays_Aldesyl = $nbpays_Aldesyl +1; break;
+		$nbhabitants_Aldesyl += $row_stat_pays['ch_pay_population_carte'];
+		$nbpays_Aldesyl++; break;
 		case "Oceania" :
-		$nbhabitants_Oceania = $nbhabitants_Oceania + $row_stat_pays['ch_pay_population_carte'];
-		$nbpays_Oceania = $nbpays_Oceania+1; break;
+		$nbhabitants_Oceania += $row_stat_pays['ch_pay_population_carte'];
+		$nbpays_Oceania++; break;
 		case "Philicie" :
-		$nbhabitants_Philicie = $nbhabitants_Philicie + $row_stat_pays['ch_pay_population_cartes'];
-		$nbpays_Philicie = $nbpays_Philicie+1; break;
+		$nbhabitants_Philicie += $row_stat_pays['ch_pay_population_cartes'];
+		$nbpays_Philicie++; break;
 		default:
 		break;
 		}
 } while ($row_stat_pays = mysql_fetch_assoc($stat_pays));
-	  mysql_data_seek($stat_pays,0); 
+	  mysql_data_seek($stat_pays,0);
+
+
+$nbvilles_Aurinea = 0;
+$nbhabitants_Aurinea = 0;
+$nbvilles_RFGC = 0;
+$nbhabitants_RFGC = 0;
+$nbvilles_Volcania = 0;
+$nbhabitants_Volcania = 0;
+$nbvilles_Aldesyl = 0;
+$nbhabitants_Aldesyl = 0;
+$nbvilles_Oceania = 0;
+$nbhabitants_Oceania = 0;
+$nbvilles_Philicie = 0;
+$nbhabitants_Philicie = 0;
 
 do {
 switch ($row_stat_ville['ch_pay_continent']) {
 		case "Aurinea" :
-		$nbvilles_Aurinea = $nbvilles_Aurinea + $row_stat_ville['nbville'];
-		$nbhabitants_Aurinea = $nbhabitants_Aurinea + $row_stat_ville['nbhabitant']; break;
+		$nbvilles_Aurinea += $row_stat_ville['nbville'];
+		$nbhabitants_Aurinea += $row_stat_ville['nbhabitant']; break;
 		case "RFGC" :
-		$nbvilles_RFGC = $nbvilles_RFGC + $row_stat_ville['nbville'];
-		$nbhabitants_RFGC = $nbhabitants_RFGC + $row_stat_ville['nbhabitant']; break;
+		$nbvilles_RFGC += $row_stat_ville['nbville'];
+		$nbhabitants_RFGC += $row_stat_ville['nbhabitant']; break;
 		case "Volcania" :
-		$nbvilles_Volcania = $nbvilles_Volcania + $row_stat_ville['nbville'];
-		$nbhabitants_Volcania = $nbhabitants_Volcania + $row_stat_ville['nbhabitant']; break;
+		$nbvilles_Volcania += $row_stat_ville['nbville'];
+		$nbhabitants_Volcania += $row_stat_ville['nbhabitant']; break;
 		case "Aldesyl" :
-		$nbvilles_Aldesyl = $nbvilles_Aldesyl + $row_stat_ville['nbville'];
-		$nbhabitants_Aldesyl = $nbhabitants_Aldesyl + $row_stat_ville['nbhabitant']; break;
+		$nbvilles_Aldesyl += $row_stat_ville['nbville'];
+		$nbhabitants_Aldesyl += $row_stat_ville['nbhabitant']; break;
 		case "Oceania" :
-		$nbvilles_Oceania = $nbvilles_Oceania + $row_stat_ville['nbville'];
-		$nbhabitants_Oceania = $nbhabitants_Oceania + $row_stat_ville['nbhabitant']; break;
+		$nbvilles_Oceania += $row_stat_ville['nbville'];
+		$nbhabitants_Oceania += $row_stat_ville['nbhabitant']; break;
 		case "Philicie" :
-		$nbvilles_Philicie = $nbvilles_Philicie + $row_stat_ville['nbville'];
-		$nbhabitants_Philicie = $nbhabitants_Philicie + $row_stat_ville['nbhabitant']; break;
+		$nbvilles_Philicie += $row_stat_ville['nbville'];
+		$nbhabitants_Philicie += $row_stat_ville['nbhabitant']; break;
 		default:
 		break;
 		}
@@ -81,6 +114,11 @@ $query_listePays = "SELECT ch_pay_id, ch_pay_continent, ch_pay_nom, ch_pay_lien_
 $listePays = mysql_query($query_listePays, $maconnexion) or die(mysql_error());
 $row_listePays = mysql_fetch_assoc($listePays);
 $totalRows_listePays = mysql_num_rows($listePays);
+
+// Fin de la temporisation de sortie
+if($_SERVER["REMOTE_ADDR"] === '127.0.0.1') {
+    ob_end_clean();
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml>">
