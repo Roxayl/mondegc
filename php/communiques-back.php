@@ -62,6 +62,9 @@ $queryString_Liste_communiques = sprintf("&totalRows_Liste_communiques=%d%s", $t
                 &agrave; <?php echo date("G:i:s", strtotime($row_Liste_communiques['ch_com_date_mis_jour'])); ?>
                 </td>
                 <td><form action="communique_modifier.php" method="post">
+                    <?php if(isset($colname_paysID)): ?>
+                      <input name="paysID" type="hidden" value="<?php echo $colname_paysID; ?>">
+                    <?php endif; ?>
                     <input name="userID" type="hidden" value="<?php echo $userID; ?>">
                     <input name="com_id" type="hidden" value="<?php echo $row_Liste_communiques['ch_com_ID']; ?>">
                     <button class="btn" type="submit" title="modifier le communiqu&eacute;"><i class="icon-pencil"></i></button>
@@ -86,6 +89,9 @@ $queryString_Liste_communiques = sprintf("&totalRows_Liste_communiques=%d%s", $t
                 
                 <!-- ajouter un commentaire -->
                 <form action="communique_ajouter.php" method="post">
+                <?php if(isset($colname_paysID)): ?>
+                  <input name="paysID" type="hidden" value="<?php echo $colname_paysID; ?>">
+                <?php endif; ?>
                   <input name="userID" type="hidden" value="<?php echo $userID; ?>">
                   <input name="cat" type="hidden" value="<?php echo $com_cat; ?>">
                   <input name="com_element_id" type="hidden" value="<?php echo $com_element_id; ?>">
@@ -96,6 +102,9 @@ $queryString_Liste_communiques = sprintf("&totalRows_Liste_communiques=%d%s", $t
         </table>
         <?php } else { ?>
         <form action="communique_ajouter.php" method="post">
+                <?php if(isset($colname_paysID)): ?>
+                  <input name="paysID" type="hidden" value="<?php echo $colname_paysID; ?>">
+                <?php endif; ?>
                  <input name="userID" type="hidden" value="<?php echo $userID; ?>">
                   <input name="cat" type="hidden" value="<?php echo $com_cat; ?>">
           <input name="com_element_id" type="hidden" value="<?php echo $com_element_id; ?>">

@@ -25,7 +25,7 @@ $row_pays = mysql_fetch_assoc($pays);
 $totalRows_pays = mysql_num_rows($pays);
 
 $ch_com_categorie = $cat;
-$ch_com_element_id = $colname_elementid;
+$ch_com_element_id = isset($colname_elementid) ?: 0;
 $nom_organisation = $row_pays['ch_pay_nom'];
 $insigne = $row_pays['ch_pay_lien_imgdrapeau'];
 $soustitre = $row_pays['ch_pay_devise'];
@@ -86,7 +86,7 @@ $ch_com_categorie = "com_communique";
 $ch_com_element_id = $colname_communique;
 
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_commentaire = sprintf("SELECT ch_com_ID, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_use_paysID, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_categorie = %s AND ch_com_element_id = %s ORDER BY ch_com_date DESC", GetSQLValueString($ch_com_categorie, "text"), GetSQLValueString($ch_com_element_id, "int"));
+$query_commentaire = sprintf("SELECT ch_com_ID, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_com_pays_id AS ch_use_paysID, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_categorie = %s AND ch_com_element_id = %s ORDER BY ch_com_date DESC", GetSQLValueString($ch_com_categorie, "text"), GetSQLValueString($ch_com_element_id, "int"));
 $commentaire = mysql_query($query_commentaire, $maconnexion) or die(mysql_error());
 $row_commentaire = mysql_fetch_assoc($commentaire);
 $totalRows_commentaire = mysql_num_rows($commentaire);
@@ -162,7 +162,12 @@ $totalRows_commentaire = mysql_num_rows($commentaire);
   <?php } ?>
   <?php if ($row_commentaire) { ?>
   <ul class="listes">
-    <?php do { ?>
+    <?php do {
+
+    $paysReaction = new \GenCity\Monde\Pays($row_commentaire['ch_use_paysID']);
+    $persoReaction = \GenCity\Monde\Personnage::constructFromEntity($paysReaction);
+    ?>
+
       <li class="row-fluid" id="commentaireID<?php echo $row_commentaire['ch_com_ID']; ?>"> 
         <!-- AFFICHAGE OUTILS MODERATION -->
         <div class="span2 img-listes"> <img src="<?php echo $row_commentaire['ch_use_lien_imgpersonnage']; ?>"> </div>
@@ -179,11 +184,27 @@ $totalRows_commentaire = mysql_num_rows($commentaire);
           </form>
           <?php } ?>
         </div>
-          <h4><?php echo $row_commentaire['ch_use_predicat_dirigeant']; ?> <?php echo $row_commentaire['ch_use_prenom_dirigeant']; ?> <?php echo $row_commentaire['ch_use_nom_dirigeant']; ?></h4>
-          <h5><?php echo $row_commentaire['ch_use_titre_dirigeant']; ?></h5>
-          <!-- AFFICHAGE DATE --> 
+
+          <?php if(isset($persoReaction)): ?>
+          <h4><?= __s($persoReaction->get('predicat')) ?> <?= __s($persoReaction->get('prenom_personnage')) ?> <?= __s($persoReaction->get('nom_personnage')) ?></h4>
+          <h5>
+              <?= isset($paysReaction) ? '<img class="img-menu-drapeau" src="' . __s($paysReaction->get('ch_pay_lien_imgdrapeau')) . '">
+                ' . __s($paysReaction->get('ch_pay_nom')) . ' &#183; ' : '' ?>
+              <?= __s($persoReaction->get('titre_personnage')) ?></h5>
+          <!-- AFFICHAGE DATE -->
           <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_commentaire['ch_com_date'])); ?></small>
           <p><?php echo $row_commentaire['ch_com_contenu']; ?></p>
+          <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?php echo $row_commentaire['ch_use_paysID']; ?>#diplomatie">Afficher la page du pays</a>
+
+          <?php else: ?>
+          <h4><?php echo $row_commentaire['ch_use_predicat_dirigeant']; ?> <?php echo $row_commentaire['ch_use_prenom_dirigeant']; ?> <?php echo $row_commentaire['ch_use_nom_dirigeant']; ?></h4>
+          <h5><?php echo $row_commentaire['ch_use_titre_dirigeant']; ?></h5>
+          <!-- AFFICHAGE DATE -->
+          <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_commentaire['ch_com_date'])); ?></small>
+          <p><?php echo $row_commentaire['ch_com_contenu']; ?></p>
+          <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?php echo $row_commentaire['ch_use_paysID']; ?>#diplomatie">Afficher son profil</a>
+          <?php endif; ?>
+
           <form class="" action="page-communique.php?ch_pay_id=<?php echo $row_commentaire['ch_use_paysID']; ?>#diplomatie" method="post">
             <button class="btn btn-primary" type="submit">Afficher son profil</button>
           </form>

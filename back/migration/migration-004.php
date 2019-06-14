@@ -134,6 +134,13 @@ while($row = mysql_fetch_assoc($updated_list_users_pays)) {
 
 
 /**********
+ * On précise l'ID du pays dans la table 'communiques', depuis l'ancienne version du site.
+ **********/
+$com_update = 'UPDATE communiques SET ch_com_pays_id = (SELECT ch_use_paysID FROM users WHERE ch_use_id = communiques.ch_com_user_id)';
+mysql_query($com_update) or die(mysql_error());
+
+
+/**********
  * Vider les tables stockant les sessions.
  **********/
 $queries[] = 'TRUNCATE TABLE users_dispatch_session';

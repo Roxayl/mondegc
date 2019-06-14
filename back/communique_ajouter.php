@@ -25,10 +25,11 @@ if ( $cat == "pays") {
   $colname_elementid = $_POST['com_element_id'];
   unset($_POST['com_element_id']);
 
-  $thisPays = new \GenCity\Monde\Pays($colname_elementid);
+  $thisPays = new \GenCity\Monde\Pays($_POST['paysID']);
   $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
 
-}  
+}
+
   mysql_select_db($database_maconnexion, $maconnexion);
 $query_pays = sprintf("SELECT ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_elementid, "int"));
 $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
@@ -108,7 +109,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique")) {
-  $insertSQL = sprintf("INSERT INTO communiques (ch_com_label, ch_com_statut, ch_com_categorie, ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+  $insertSQL = sprintf("INSERT INTO communiques (ch_com_label, ch_com_statut, ch_com_categorie, ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_com_pays_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['ch_com_label'], "text"),
                        GetSQLValueString($_POST['ch_com_statut'], "int"),
                        GetSQLValueString($_POST['ch_com_categorie'], "text"),
@@ -117,10 +118,16 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
                        GetSQLValueString($_POST['ch_com_date'], "date"),
                        GetSQLValueString($_POST['ch_com_date_mis_jour'], "date"),
                        GetSQLValueString($_POST['ch_com_titre'], "text"),
-                       GetSQLValueString($_POST['ch_com_contenu'], "text"));
+                       GetSQLValueString($_POST['ch_com_contenu'], "text"),
+                       GetSQLValueString($_POST['ch_com_pays_id'], 'int'));
 
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+
+  $last_insert_id = mysql_insert_id();
+  $banner_text = "Votre communiqué a été ajouté avec succès !<br />";
+  $banner_text .= "<a href='../page-communique.php?com_id=$last_insert_id'>Accéder à votre communiqué</a>";
+  getErrorMessage('success', $banner_text);
 
 if ( $_POST['ch_com_categorie'] == "pays") {
 $insertGoTo = 'page_pays_back.php?paysID=' . (int)$_POST['ch_com_element_id'];
@@ -155,6 +162,14 @@ $insertGoTo = 'page_pays_back.php';
   }
   header(sprintf("Location: %s", $insertGoTo));
 }
+
+
+if(isset($thisPays)) {
+    $pays_id = $thisPays->get('ch_pay_id');
+} else {
+    $pays_id = 0;
+}
+
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
@@ -267,6 +282,7 @@ $insertGoTo = 'page_pays_back.php';
       <?php 
 				  $now= date("Y-m-d G:i:s");?>
       <input name="ch_com_label" type="hidden" value="communique">
+      <input name="ch_com_pays_id" type="hidden" value="<?php echo $pays_id ?>">
       <input name="ch_com_categorie" type="hidden" value="<?php echo $cat ?>">
       <input name="ch_com_element_id" type="hidden" value="<?php echo $colname_elementid ?>">
       <input name="ch_com_user_id" type="hidden" value="<?php echo $colname_user ?>">

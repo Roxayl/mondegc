@@ -26,14 +26,15 @@ $row_com_pays = mysql_fetch_assoc($com_pays);
 $totalRows_com_pays = mysql_num_rows($com_pays);
 
 $ch_com_categorie = $cat;
-$ch_com_element_id = $colname_elementid;
+$ch_com_element_id = isset($colname_elementid) ?: 0;
 $nom_organisation = $row_com_pays['ch_pay_nom'];
 $insigne = $row_com_pays['ch_pay_lien_imgdrapeau'];
 $soustitre = $row_com_pays['ch_pay_devise'];
 $background_jumbotron = $row_com_pays['ch_pay_lien_imgheader'];
 mysql_free_result($com_pays);
 
-$thisElement = new \GenCity\Monde\Pays($elementID);
+$pays = new \GenCity\Monde\Pays($elementID);
+$personnage = \GenCity\Monde\Personnage::constructFromEntity($pays);
 }
 
 if ( $cat == "ville") {
@@ -75,10 +76,6 @@ $query_user = sprintf("SELECT ch_use_id, ch_use_lien_imgpersonnage, ch_use_predi
 $user = mysql_query($query_user, $maconnexion) or die(mysql_error());
 $row_user = mysql_fetch_assoc($user);
 $totalRows_user = mysql_num_rows($user);
-
-if(isset($thisElement)) {
-    $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisElement);
-}
 
 $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_ID'];
 ?><!DOCTYPE html>

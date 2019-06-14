@@ -35,8 +35,13 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_communique
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
+  $this_com_id = (int)$_POST['ch_com_ID'];
+  $banner_text = "Votre communiqué a été modifié ! Ouf !<br />";
+  $banner_text .= "<a href='../page-communique.php?com_id=$this_com_id'>Accéder à votre communiqué</a>";
+  getErrorMessage('success', $banner_text);
+
 if ( $_POST['ch_com_categorie'] == "pays") {
-$updateGoTo = 'page_pays_back.php';
+$updateGoTo = 'page_pays_back.php?paysID=' . (int)$_POST['ch_com_pays_id'];
 }
 elseif ( $_POST['ch_com_categorie'] == "ville") {
 $updateGoTo = 'ville_modifier.php';
@@ -91,12 +96,12 @@ $row_cat_pays = mysql_fetch_assoc($cat_pays);
 $totalRows_cat_pays = mysql_num_rows($cat_pays);
 
 $ch_com_categorie = $cat;
-$ch_com_element_id = $colname_elementid;
+$ch_com_element_id = isset($colname_elementid) ?: 0;
 $nom_organisation = $row_cat_pays['ch_pay_nom'];
 $insigne = $row_cat_pays['ch_pay_lien_imgdrapeau'];
 $soustitre = $row_cat_pays['ch_pay_devise'];
 
-$thisPays = new \GenCity\Monde\Pays($colname_elementid);
+$thisPays = new \GenCity\Monde\Pays($_POST['paysID']);
 $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
 
 mysql_free_result($cat_pays);
@@ -253,6 +258,7 @@ $totalRows_user = mysql_num_rows($user);
       <!-- Bouton cachés -->
       <?php $now= date("Y-m-d G:i:s");?>
       <input name="ch_com_ID" type="hidden" value="<?php echo $row_communique['ch_com_ID']; ?>">
+      <input name="ch_com_pays_id" type="hidden" value="<?php echo $row_communique['ch_com_pays_id'] ?>">
       <input name="ch_com_label" type="hidden" value="<?php echo $row_communique['ch_com_label']; ?>">
       <input name="ch_com_categorie" type="hidden" value="<?php echo $row_communique['ch_com_categorie']; ?>">
       <input name="ch_com_element_id" type="hidden" value="<?php echo $row_communique['ch_com_element_id']; ?>">

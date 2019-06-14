@@ -9,7 +9,7 @@ if (isset($_GET['pageNum_commentaire'])) {
 $startRow_commentaire = $pageNum_commentaire * $maxRows_commentaire;
 
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_commentaire = sprintf("SELECT ch_com_ID, ch_com_label, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_use_paysID, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_categorie = %s AND ch_com_element_id = %s ORDER BY ch_com_date DESC", GetSQLValueString($ch_com_categorie, "text"), GetSQLValueString($ch_com_element_id, "int"));
+$query_commentaire = sprintf("SELECT ch_com_ID, ch_com_label, ch_com_user_id, ch_com_categorie,ch_com_element_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_com_pays_id AS ch_use_paysID, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_categorie = %s AND ch_com_element_id = %s ORDER BY ch_com_date DESC", GetSQLValueString($ch_com_categorie, "text"), GetSQLValueString($ch_com_element_id, "int"));
 $query_limit_commentaire = sprintf("%s LIMIT %d, %d", $query_commentaire, $startRow_commentaire, $maxRows_commentaire);
 $commentaire = mysql_query($query_limit_commentaire, $maconnexion) or die(mysql_error());
 $row_commentaire = mysql_fetch_assoc($commentaire);
@@ -42,7 +42,12 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
 <!-- REACTIONS -->
 <?php if ($row_commentaire) { ?>
 <ul class="listes listes-visiteurs">
-  <?php do { ?>
+  <?php do {
+
+    $paysReaction = new \GenCity\Monde\Pays($row_commentaire['ch_use_paysID']);
+    $persoReaction = \GenCity\Monde\Personnage::constructFromEntity($paysReaction);
+
+      ?>
   <li class="row-fluid anchor" id="commentaireID<?php echo $row_commentaire['ch_com_ID']; ?>"> 
     <div>
     <div class="span3 img-listes img-avatar"> <img src="<?php echo $row_commentaire['ch_use_lien_imgpersonnage']; ?>"> </div>
@@ -60,12 +65,28 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
       </form>
       <?php } ?>
     </div>
-      <h4><?php echo $row_commentaire['ch_use_predicat_dirigeant']; ?> <?php echo $row_commentaire['ch_use_prenom_dirigeant']; ?> <?php echo $row_commentaire['ch_use_nom_dirigeant']; ?></h4>
-      <h5><?php echo $row_commentaire['ch_use_titre_dirigeant']; ?></h5>
+
+    <?php if(isset($persoReaction)): ?>
+      <h4><?= __s($persoReaction->get('predicat')) ?> <?= __s($persoReaction->get('prenom_personnage')) ?> <?= __s($persoReaction->get('nom_personnage')) ?></h4>
+      <h5>
+          <?= isset($paysReaction) ? '<img class="img-menu-drapeau" src="' . __s($paysReaction->get('ch_pay_lien_imgdrapeau')) . '">
+            ' . __s($paysReaction->get('ch_pay_nom')) . ' &#183; ' : '' ?>
+          <?= __s($persoReaction->get('titre_personnage')) ?></h5>
       <!-- AFFICHAGE DATE --> 
       <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_commentaire['ch_com_date'])); ?></small>
       <p><?php echo $row_commentaire['ch_com_contenu']; ?></p>
-      <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?php echo $row_commentaire['ch_use_paysID']; ?>#diplomatie">Afficher son profil</a> </div>
+      <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?php echo $row_commentaire['ch_use_paysID']; ?>#diplomatie">Afficher la page du pays</a>
+
+      <?php else: ?>
+      <h4><?php echo $row_commentaire['ch_use_predicat_dirigeant']; ?> <?php echo $row_commentaire['ch_use_prenom_dirigeant']; ?> <?php echo $row_commentaire['ch_use_nom_dirigeant']; ?></h4>
+      <h5><?php echo $row_commentaire['ch_use_titre_dirigeant']; ?></h5>
+      <!-- AFFICHAGE DATE -->
+      <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_commentaire['ch_com_date'])); ?></small>
+      <p><?php echo $row_commentaire['ch_com_contenu']; ?></p>
+      <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?php echo $row_commentaire['ch_use_paysID']; ?>#diplomatie">Afficher son profil</a>
+      <?php endif; ?>
+
+      </div>
       </div>
   </li>
   <?php } while ($row_commentaire = mysql_fetch_assoc($commentaire)); ?>
@@ -90,18 +111,31 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
 } 
 } ?>
 <!-- NOUVEAU COMMENTAIRE SI CONNECTE -->
-<?php if ($_SESSION['connect']) { ?>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
+<?php if ($_SESSION['connect']) {
+
+    if(isset($_SESSION['userObject'])) {
+        $thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
+        /** @var \GenCity\Monde\Pays[] $userPays */
+        $userPays = $thisUser->getCountries(
+                \GenCity\Monde\User::getUserPermission('Dirigeant'), true);
+    }
+
+    ?>
     <h3>Ecrire un commentaire</h3>
 <ul id="EcrireCommentaire" class="listes listes-visiteurs">
   <li class="row-fluid">
-    <div class="span3 img-listes img-avatar"> <img src="<?php echo $_SESSION['img_dirigeant']; ?>"> </div>
+    <div class="span3"></div>
     <div class="span9 info-listes">
-      <h4><?php echo $_SESSION['predicat_dirigeant']; ?> <?php echo $_SESSION['prenom_dirigeant']; ?> <?php echo $_SESSION['nom_dirigeant']; ?></h4>
-      <h5><?php echo $_SESSION['titre_dirigeant']; ?></h5>
+        <label> Publier en tant que :
+        <select name="ch_com_pays_id">
+            <?php foreach($userPays as $thisPays): ?>
+                <option value="<?= __s($thisPays->get('ch_pay_id')) ?>">
+                    <?= __s($thisPays->get('ch_pay_nom')) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        </label>
     </div>
-    <p>&nbsp;</p>
   </li>
 </ul>
 <form action="" method="POST" name="ajout_communique" id="ajout_communique">
