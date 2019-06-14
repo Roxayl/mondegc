@@ -13,11 +13,7 @@ exit();
 }
 
 //Récupération variables
-$colname_paysID = $_SESSION['pays_ID'];
-if (isset($_POST['paysID']) AND ($_SESSION['statut'] >=20)) {
 $colname_paysID = $_POST['paysID'];
-unset($_POST['paysID']);
-}
 
 //Requete Pays
 mysql_select_db($database_maconnexion, $maconnexion);
@@ -95,8 +91,6 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
   mysql_free_result($geometries);
-  $insertGoTo = "Carte-modifier.php?bounds=".$_POST['ch_geo_bounds'];
-  header(sprintf("Location: %s", $insertGoTo));
 }
 
 
@@ -166,8 +160,6 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
   mysql_free_result($geometries);
-  $updateGoTo = "Carte-modifier.php?bounds=".$_POST['ch_geo_bounds'];
-  header(sprintf("Location: %s", $updateGoTo));
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
