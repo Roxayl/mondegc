@@ -34,9 +34,15 @@ $MarkerMonument = mysql_query($query_MarkerMonument, $maconnexion) or die(mysql_
 $row_MarkerMonument = mysql_fetch_assoc($MarkerMonument);
 $totalRows_MarkerMonument = mysql_num_rows($MarkerMonument);
 
+// Connexion BDD gometries pour afficher terres
+mysql_select_db($database_maconnexion, $maconnexion);
+$query_ZonesTerres = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_type, ch_geo_nom FROM geometries WHERE ch_geo_geometries = 'polygon' AND ch_geo_type= 'terre'";
+$ZonesTerres = mysql_query($query_ZonesTerres, $maconnexion) or die(mysql_error());
+$totalRows_ZonesTerres = mysql_num_rows($ZonesTerres);
+
 // Connexion BDD gometries pour afficher zones du pays
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_ZonesPays = sprintf("SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries INNER JOIN pays ON ch_geo_pay_id = ch_pay_id INNER JOIN users ON ch_geo_user = ch_use_id WHERE (ch_geo_pay_id=%s OR ch_geo_pay_id =1) AND ch_geo_geometries = 'polygon'", GetSQLValueString($colname_paysID, "int"));
+$query_ZonesPays = sprintf("SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries INNER JOIN pays ON ch_geo_pay_id = ch_pay_id INNER JOIN users ON ch_geo_user = ch_use_id WHERE (ch_geo_pay_id=%s OR ch_geo_pay_id =1) AND ch_geo_geometries = 'polygon' AND ch_geo_type != 'terre'", GetSQLValueString($colname_paysID, "int"));
 $ZonesPays = mysql_query($query_ZonesPays, $maconnexion) or die(mysql_error());
 $row_ZonesPays = mysql_fetch_assoc($ZonesPays);
 $totalRows_ZonesPays = mysql_num_rows($ZonesPays);
@@ -188,6 +194,57 @@ map.addLayer(vectorLayer);
             'default': sty,
             'select': {strokeColor: "red", fillColor: "red"}
         });
+
+        // calque vector TERRES
+            var vectorsTerres = new OpenLayers.Layer.Vector(" Terres", {
+                styleMap: new OpenLayers.StyleMap({
+                    "default": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
+						fillColor: "${couleur}",
+						strokeWidth : "${epaisseurTrait}",
+                        fillOpacity: "${opaciteCouleur}",
+						strokeColor: "${couleurTrait}",
+						strokeOpacity: "${opaciteTrait}",
+						strokeDashstyle : "${Trait}",
+						strokeLinecap : "square",
+                        pointRadius: "5",
+						label : "",
+						fontColor: "black",
+                        fontSize: "11px",
+                        fontOpacity: 0.5,
+                        fontFamily: "Roboto",
+                        fontWeight: "200",
+                        labelOutlineWidth: 0,
+						cursor: "pointer"
+                    }, OpenLayers.Feature.Vector.style["default"])),
+                }),
+	            maxResolution: map.getResolutionForZoom(0),
+                renderers: renderer
+            });
+        map.addLayer(vectorsTerres);
+
+
+  			// Ajout geometries zones TERRES
+			var format = new OpenLayers.Format.WKT({
+    		'internalProjection': map.baseLayer.projection,
+    		'externalProjection': new OpenLayers.Projection("EPSG:4326")
+			});
+			<?php while($row_ZonesTerres = mysql_fetch_assoc($ZonesTerres)) {
+			$Nomzone = str_replace ( '-', ' ', $row_ZonesTerres['ch_geo_nom']);
+			$typeZone = $row_ZonesTerres['ch_geo_type'];
+			styleZones($typeZone, $fillcolor, $fillOpacity, $strokeWidth, $strokeColor, $strokeOpacity, $Trait);
+			?>
+			var polygonFeature= format.read("<?php echo $row_ZonesTerres['ch_geo_wkt']; ?>");
+			polygonFeature.attributes = {
+				couleur : "<?php echo $fillcolor; ?>",
+				epaisseurTrait : "<?php echo $strokeWidth; ?>",
+                opaciteCouleur : "<?php echo $fillOpacity; ?>",
+				couleurTrait : "<?php echo $strokeColor; ?>",
+				opaciteTrait : "<?php echo $strokeOpacity; ?>",
+				Trait : "<?php echo $Trait; ?>",
+				name : "<?php echo $Nomzone; ?>"
+            }
+		vectorsTerres.addFeatures([polygonFeature]);
+		<?php } ?>
 		
 		// calque vector modifier zones administratives
             var vectorsAdministrations = new OpenLayers.Layer.Vector(" R&eacute;gions", {

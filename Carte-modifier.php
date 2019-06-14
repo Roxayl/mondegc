@@ -26,23 +26,35 @@ $InfoGenerale = mysql_query($query_InfoGenerale, $maconnexion) or die(mysql_erro
 $row_InfoGenerale = mysql_fetch_assoc($InfoGenerale);
 $totalRows_InfoGenerale = mysql_num_rows($InfoGenerale);
 
+$user_has_perm = $_SESSION['userObject']->minStatus('OCGC');
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
-	
-  $insertSQL = sprintf("INSERT INTO geometries (ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_geo_wkt'], "text"),
-					   GetSQLValueString($_POST['ch_geo_pay_id'], "int"),
-					   GetSQLValueString($_POST['ch_geo_user'], "int"),
-					   GetSQLValueString($_POST['ch_geo_maj_user'], "int"),
-                       GetSQLValueString($_POST['ch_geo_date'], "date"),
-                       GetSQLValueString($_POST['ch_geo_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_geo_geometries'], "text"),
-                       GetSQLValueString($_POST['ch_geo_mesure'], "int"),
-                       GetSQLValueString($_POST['ch_geo_type'], "text"),
-                       GetSQLValueString($_POST['ch_geo_nom'], "text"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+    if($user_has_perm && in_array($_POST['ch_geo_type'], array('terre', 'frontiere'))) {
+        getErrorMessage('error', "Vous ne pouvez pas créer de zone de type "
+            . __s($_POST['ch_geo_type']) . ".");
+    }
+
+    else {
+
+      $insertSQL = sprintf("INSERT INTO geometries (ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                           GetSQLValueString($_POST['ch_geo_wkt'], "text"),
+                           GetSQLValueString($_POST['ch_geo_pay_id'], "int"),
+                           GetSQLValueString($_POST['ch_geo_user'], "int"),
+                           GetSQLValueString($_POST['ch_geo_maj_user'], "int"),
+                           GetSQLValueString($_POST['ch_geo_date'], "date"),
+                           GetSQLValueString($_POST['ch_geo_mis_jour'], "date"),
+                           GetSQLValueString($_POST['ch_geo_geometries'], "text"),
+                           GetSQLValueString($_POST['ch_geo_mesure'], "int"),
+                           GetSQLValueString($_POST['ch_geo_type'], "text"),
+                           GetSQLValueString($_POST['ch_geo_nom'], "text"));
+
+      mysql_select_db($database_maconnexion, $maconnexion);
+      $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+
+      getErrorMessage('success', "La zone " . __s($_POST['ch_geo_nom']) . ' a été ajoutée !');
+
+    }
 
 //recherche des mesures des zones de la carte pour calcul ressources
 mysql_select_db($database_maconnexion, $maconnexion);
@@ -90,6 +102,13 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) {
   $paysid = $_POST['ch_geo_pay_id'];
+
+    if($user_has_perm && in_array($_POST['ch_geo_type'], array('terre', 'frontiere'))) {
+        getErrorMessage('error', "Vous ne pouvez pas créer de zone de type "
+            . __s($_POST['ch_geo_type']) . ".");
+    }
+
+    else {
   $updateSQL = sprintf("UPDATE geometries SET ch_geo_wkt=%s, ch_geo_pay_id=%s, ch_geo_user=%s, ch_geo_maj_user=%s, ch_geo_date=%s, ch_geo_mis_jour=%s, ch_geo_geometries=%s, ch_geo_mesure=%s, ch_geo_type=%s, ch_geo_nom=%s WHERE ch_geo_id=%s",
                        GetSQLValueString($_POST['ch_geo_wkt'], "text"),
 					   GetSQLValueString($_POST['ch_geo_pay_id'], "int"),
@@ -105,7 +124,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature"))
 
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
-  
+    }
   
   //recherche des mesures des zones de la carte pour calcul ressources
 mysql_select_db($database_maconnexion, $maconnexion);
@@ -312,6 +331,7 @@ init();
       </div>
       <div class="" id="info">
         <h1>Modifier la carte</h1>
+          <?php renderElement('errormsgs'); ?>
         <p>Cliquez sur les outils &agrave; droite de la carte pour ajouter ou modifier des &eacute;l&eacute;ments.</p>
         <p>Utilsez le premier outil pour ajouter votre premi&egrave;re route ou le troisi&egrave;me outil lors &agrave; sauvegarder votre trac&eacute;.</p>
         <p>Utilisez Ctrl-Z ou Cmd-Z pour annuler les derniers points trac&eacute;s.</p>

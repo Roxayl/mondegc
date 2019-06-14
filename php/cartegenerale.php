@@ -27,7 +27,6 @@ $totalRows_MarkerMonument = mysql_num_rows($MarkerMonument);
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_ZonesTerres = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_type, ch_geo_nom FROM geometries WHERE ch_geo_geometries = 'polygon' AND ch_geo_type= 'terre'";
 $ZonesTerres = mysql_query($query_ZonesTerres, $maconnexion) or die(mysql_error());
-$row_ZonesTerres = mysql_fetch_assoc($ZonesTerres);
 $totalRows_ZonesTerres = mysql_num_rows($ZonesTerres);
 
 // Connexion BDD gometries pour afficher zones des pays
@@ -160,7 +159,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
     		'internalProjection': map.baseLayer.projection,
     		'externalProjection': new OpenLayers.Projection("EPSG:4326")
 			});
-			<?php do {
+			<?php while ($row_ZonesTerres = mysql_fetch_assoc($ZonesTerres)) {
 			$Nomzone = str_replace ( '-', ' ', $row_ZonesTerres['ch_geo_nom']);
 			$typeZone = $row_ZonesTerres['ch_geo_type'];
 			styleZones($typeZone, $fillcolor, $fillOpacity, $strokeWidth, $strokeColor, $strokeOpacity, $Trait);
@@ -176,7 +175,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				name : "<?php echo $Nomzone; ?>"
             }
 		vectorsTerres.addFeatures([polygonFeature]);
-		<?php } while ($row_ZonesTerres = mysql_fetch_assoc($ZonesTerres)); ?>
+		<?php }; ?>
 
 
 		// calque vector modifier zones administratives
