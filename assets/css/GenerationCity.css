@@ -150,6 +150,15 @@ div.span5.align-left > p {
 #proposal-results-container {
     text-align: left;
 }
+.proposal-active-container em, .proposal-active-container small, .proposal-active-container h4 {
+    display: inline;
+}
+.proposal-active-container {
+    padding: 15px;
+}
+.proposal-active-container a {
+    color: inherit;
+}
 
 
 /* ICONES

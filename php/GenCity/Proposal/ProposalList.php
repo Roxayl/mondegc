@@ -36,7 +36,8 @@ class ProposalList {
 
     public function getPendingVotes() {
 
-        $query = 'SELECT id FROM ocgc_proposals WHERE NOW() BETWEEN debate_start AND debate_end';
+        $query = 'SELECT id FROM ocgc_proposals WHERE NOW() BETWEEN debate_start AND debate_end
+                  AND is_valid = 2';
         return $this->setListFromQuery($query);
 
     }
@@ -66,7 +67,7 @@ class ProposalList {
 
     public function getFinished() {
 
-        $query = 'SELECT id FROM ocgc_proposals WHERE debate_end < NOW()';
+        $query = 'SELECT id FROM ocgc_proposals WHERE debate_end < NOW() AND is_valid = 2';
         return $this->setListFromQuery($query);
 
     }

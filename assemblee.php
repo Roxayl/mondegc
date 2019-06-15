@@ -9,7 +9,17 @@ if(isset($_SESSION['userObject'])) {
     $userPaysAllowedToVote = $thisUser->getCountries(\GenCity\Monde\User::getUserPermission('Dirigeant'));
 }
 
+$paysRFGC = new \GenCity\Monde\Pays(29);
+
 $proposalList = new \GenCity\Proposal\ProposalList();
+
+
+/** @var \GenCity\Proposal\Proposal[] $proposalsPendingVotes */
+$proposalsPendingVotes = $proposalList->getPendingVotes();
+/** @var \GenCity\Proposal\Proposal[] $proposalsPendingValidation */
+$proposalsPendingValidation = $proposalList->getPendingValidation();
+/** @var \GenCity\Proposal\Proposal[] $proposalsFinished */
+$proposalsFinished = $proposalList->getFinished();
 
 ?><!DOCTYPE html>
 <html lang="fr">
@@ -49,7 +59,7 @@ $proposalList = new \GenCity\Proposal\ProposalList();
 <style>
 .jumbotron {
 	background-image: url('http://image.noelshack.com/fichiers/2019/14/6/1554565976-assemblee-ocgc.png');
-    background-position: 0 600px;
+    background-position: 0 400px;
 }
 #map {
 	height: 500px;
@@ -105,45 +115,95 @@ init();
 ================================================== -->
 <header class="jumbotron jumbotron-institut subhead anchor" id="info-institut">
   <div class="container">
+    <h2 style="text-transform: uppercase">Organisation des Cités Gécéennes</h2>
     <h1>Assemblée générale</h1>
   </div>
 </header>
 <div class="container">
 
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row-fluid">
+    <div class="span3 bs-docs-sidebar">
+      <ul class="nav nav-list bs-docs-sidenav">
+        <li class="row-fluid"><a href="#info-institut">
+          <img src="assets/img/imagesdefaut/blason.jpg">
+          <p><strong>Assemblée Générale</strong></p>
+          <p><em>Organisation des Cités Gécéennes</em></p>
+          </a></li>
+        <li><a href="#presentation">Présentation</a></li>
+        <li><a href="#propositions">Propositions</a></li>
+      </ul>
+    </div>
+    <!-- END Docs nav
+    ================================================== -->
+
     <!-- Page CONTENT
     ================================================== -->
-    <div class="corps-page">
+    <div class="span9 corps-page">
     <ul class="breadcrumb">
       <li><a href="OCGC.php">OCGC</a> <span class="divider">/</span></li>
       <li class="active">Assemblée générale</li>
     </ul>
 
-    <section>
+    <section id="presentation">
     <div class="well">
-
         <?php renderElement('errormsgs'); ?>
-
-        <?php if(isset($userPaysAllowedToVote)): ?>
-
-            <a class="btn btn-primary" href="back/ocgc_proposal_create.php">Nouvelle proposition</a>
-
-            <p>Vous pouvez voter au nom des pays suivants :</p>
-            <?php foreach($userPaysAllowedToVote as $userPays): ?>
-                <div>
-                    <img src="<?= __s($userPays['ch_pay_lien_imgdrapeau']) ?>" style="height: 40px;" />
-                    <?= __s($userPays['ch_pay_nom']) ?>
-                </div>
-            <?php endforeach; ?>
-
-        <?php endif; ?>
+    <div class="row-fluid">
+        <div class="span8">
+            <p>L'Assemblée générale de l'Organisation des Cités gécéennes (OCGC) est un organe de délibération et de prise de décisions composé de tous les pays officiellement reconnus par la communauté internationale. Son siège se trouve au même endroit que celui de l'OCGC, à Lutèce, la capitale de la
+                <a href="page-pays.php?ch_pay_id=<?= $paysRFGC->get('ch_pay_id') ?>">
+                  <img class="img-menu-drapeau" src="<?= $paysRFGC->get('ch_pay_lien_imgdrapeau') ?>">&nbsp;RFGC</a>.
+            </p>
+            <p>Articles détaillés : <a href="http://vasel.yt/wiki/index.php?title=Assembl%C3%A9e_G%C3%A9n%C3%A9rale_de_l%27OCGC">Wiki</a></p>
+        <br>
+            <h4>Fonctionnement</h4>
+            <p>Chaque pays reconnu internationalement est membre de droit de l'Assemblée générale. Elle compte aujourd'hui une vingtaine de pays membres.</p>
+            <p>Chaque pays peut faire une proposition à l'AG, qui sera votée en session plénière si le Conseil de l'OCGC valide le projet. L'approbation d'une proposition nécessite la majorité qualifiée de 50%, à l'exception de certaines motions comme la reconnaissance internationale d'un nouveau pays.</p>
+        </div>
+        <div class="span4">
+            <a href="http://image.noelshack.com/fichiers/2019/21/5/1558707533-organigramme-ocgcbis.png">
+              <img src="http://image.noelshack.com/fichiers/2019/21/5/1558707533-organigramme-ocgcbis.png"
+                    alt="Schéma représentant le fonctionnement des organes de l'OCGC">
+            </a>
+        </div>
+    </div>
 
     </div>
     </section>
 
     <section>
-    <div class="titre-bleu anchor" id="notifications">
-      <h1>Liste des propositions</h1>
+
+    <!-- PROPOSITIONS -->
+    <?php if(isset($userPaysAllowedToVote)): ?>
+    <div class="cta-title pull-right-cta">
+        <a href="back/ocgc_proposal_create.php"
+           class="btn btn-primary btn-cta">
+            <i class="icon-white icon-pencil"></i> Lancer une proposition</a>
     </div>
+    <?php endif; ?>
+
+    <div class="titre-bleu" id="propositions">
+      <h1>Propositions</h1>
+    </div>
+
+    <h3>Propositions actives</h3>
+
+    <?php if(count($proposalsPendingVotes)): ?>
+        <h4>Vote en cours</h4>
+        <?php renderElement('Proposal/proposal_active_list', array(
+                'proposalList' => $proposalsPendingVotes
+            )); ?>
+    <?php endif; ?>
+
+    <?php if(count($proposalsPendingValidation)): ?>
+        <h4>En attente d'une validation du Conseil de l'OCGC</h4>
+        <?php renderElement('Proposal/proposal_active_list', array(
+                'proposalList' => $proposalsPendingValidation
+            )); ?>
+    <?php endif; ?>
+
+    <h3>Propositions déjà votées</h3>
 
     <div id="categories">
       <table width="100%" class="table table-hover " cellspacing="1">
@@ -196,6 +256,8 @@ init();
     </div>
     <!-- END CONTENT
     ================================================== -->
+    </div>
+
 </div>
 <!-- Footer
     ================================================== -->
