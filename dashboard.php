@@ -134,7 +134,7 @@ init();
       <h1>Notifications</h1>
     </div>
     <div class="well">
-        <p>Vous n'avez pas encore de notifications.</p>
+        <div class="alert alert-info">Vos notifications arrivent bientôt !</div>
     </div>
     </section>
 

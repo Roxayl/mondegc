@@ -441,53 +441,7 @@ init();
           </div>
         </div>
       </section>
-      <!-- Diplomatie
-     ================================================== -->
-      <?php if($row_User['ch_use_id'] != $row_Pays['ch_use_id']) { ?>
-      <section>
-        <div id="diplomatie" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Membre1.png">
-          <h1>Diplomatie</h1>
-        </div>
-        <div class="row-fluid">
-          <div class="span4 thumb">
-            <?php if ($row_User['ch_use_lien_imgpersonnage']) {?>
-            <img src="<?php echo $row_User['ch_use_lien_imgpersonnage']; ?>" alt="<?php echo $row_User['ch_use_nom_dirigeant']; ?> <?php echo $row_User['ch_use_prenom_dirigeant']; ?>" title="<?php echo $row_User['ch_use_nom_dirigeant']; ?> <?php echo $row_User['ch_use_prenom_dirigeant']; ?>">
-            <?php } else { ?>
-            <img src="assets/img/imagesdefaut/personnage.jpg" alt="personnage par default">
-            <?php } ?>
-            <div class="titre-gris">
-              <?php if ($row_User['ch_use_nom_dirigeant'] OR $row_User['ch_use_prenom_dirigeant']) {?>
-              <h3><?php echo $row_User['ch_use_nom_dirigeant']; ?> <?php echo $row_User['ch_use_prenom_dirigeant']; ?></h3>
-              <?php } else { ?>
-              <h3>Pas de dirigeant</h3>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="span8">
-            <h3>Maire de la ville&nbsp;:</h3>
-            <div class="well">
-              <p><i><?php echo $row_User['ch_use_predicat_dirigeant']; ?></i></p>
-              <p><i><?php echo $row_User['ch_use_titre_dirigeant']; ?></i></p>
-            </div>
-            <?php if ($row_User['listgroup']) { ?>
-            <h3>Groupes politiques</h3>
-            <div class="row-fluid">
-              <?php do { ?>
-                <!-- Icone et popover de la categorie -->
-                <div class="span2 icone-categorie"><a href="#" rel="clickover" title="<?php echo $row_liste_group['ch_mem_group_nom']; ?>" data-placement="top" data-content="<?php echo $row_liste_group['ch_mem_group_desc']; ?>"><img src="<?php echo $row_liste_group['ch_mem_group_icon']; ?>" alt="icone <?php echo $row_liste_group['ch_mem_group_nom']; ?>" style="background-color:<?php echo $row_liste_group['ch_mem_group_couleur']; ?>;"></a></div>
-                <?php } while ($row_liste_group = mysql_fetch_assoc($liste_group)); ?>
-            </div>
-            <?php } ?>
-            <?php if ($row_User['ch_use_biographie_dirigeant']) { ?>
-            <h3>Biographie&nbsp;:</h3>
-            <div class="well">
-              <p><?php echo $row_User['ch_use_biographie_dirigeant']; ?></p>
-            </div>
-          </div>
-          <?php } ?>
-        </div>
-      </section>
-      <?php } ?>
+
       <!-- Communiqués
         ================================================== -->
       <section>

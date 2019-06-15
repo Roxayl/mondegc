@@ -92,11 +92,13 @@ if(!isset($loginFormAction))
             </center>
             <a href="index.php">Accueil</a> </li>
 
+        <?php if(isset($_SESSION['userObject'])): ?>
           <li class="<?php if ($dashboard) { echo('active');}  ?>">
             <center>
               <a href="dashboard.php" title="informations pratiques"><i class="icon icon-evenement"></i></a>
             </center>
             <a href="dashboard.php" title="informations pratiques">Tableau de bord</a> </li>
+        <?php endif; ?>
 
           <li class="dropdown <?php if ($carte || $menupays) { echo('active');}  ?>">
             <center>
@@ -197,9 +199,10 @@ if(!isset($loginFormAction))
               <li class="nav-header">À propos de l'OCGC</li>
               <li><a href="OCGC.php">Présentation de l'OCGC</a></li>
               <li><a href="communiques-ocgc.php">Communiqués publiés</a></li>
-              <li class="nav-header">Direction de l'OCGC</li>
+              <li class="nav-header">Organes de l'OCGC</li>
+              <li><a href="http://vasel.yt/wiki/index.php?title=Pr%C3%A9sidence_de_Julia_Keberg_%C3%A0_l%27OCGC">Conseil de l'OCGC</a></li>
               <li><a href="assemblee.php">Assemblée générale</a></li>
-              <li class="nav-header">Les instituts</li>
+              <li class="nav-header">Les comités</li>
               <li><a href="geographie.php">G&eacute;ographie</a></li>
               <li><a href="patrimoine.php">Patrimoine</a></li>
               <li><a href="histoire.php">Histoire</a></li>
