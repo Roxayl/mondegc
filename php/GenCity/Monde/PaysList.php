@@ -12,6 +12,8 @@ class PaysList {
 
     private function setListFromQuery($query) {
 
+        $this->list = array();
+
         $mysql_query = mysql_query($query);
 
         while($proposal = mysql_fetch_assoc($mysql_query)) {

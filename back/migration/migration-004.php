@@ -111,6 +111,7 @@ $row_users_pays = mysql_fetch_assoc($list_users_pays);
 if(empty($row_users_pays)) {
     // Insérer dans la table
     while($row = mysql_fetch_assoc($list_users)) {
+        if($row['ch_use_paysID'] == 0) continue;
         $insert_sql = sprintf("INSERT INTO users_pays(ID_pays, ID_user, permissions)
                        VALUES(%s, %s, %s)",
                       GetSQLValueString($row['ch_use_paysID'], 'int'),
