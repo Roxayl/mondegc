@@ -6,23 +6,30 @@ mysql_select_db($database_maconnexion, $maconnexion);
 
 $queries = array();
 
+
+/*************************
+ *                       *
+ *   CRÉATION DE TABLES  *
+ *                       *
+ *************************/
+
 /**********
  * Création de tables : requêtes à permission avancée, à envoyer à Youcef.
  **********/
 $queries[] = "create table if not exists personnage
 (
-	id int auto_increment,
-	entity text default null null,
-	entity_id int null,
-	nom_personnage varchar(191) null,
-    prenom_personnage varchar(191) null,
-    titre_personnage varchar(191) null,
-	predicat varchar(191) null,
-    lien_img varchar(191) null,
-    biographie text null,
-	constraint personnage_pk
-		primary key (id)
+  id                int auto_increment
+    primary key,
+  entity            text         null,
+  entity_id         int          null,
+  nom_personnage    varchar(191) null,
+  predicat          varchar(191) null,
+  prenom_personnage varchar(191) null,
+  biographie        text         null,
+  titre_personnage  varchar(191) null,
+  lien_img          varchar(191) null
 )";
+
 $queries[] = "create table if not exists users_pays
 (
   id          int auto_increment
@@ -31,37 +38,66 @@ $queries[] = "create table if not exists users_pays
   ID_user     int not null,
   permissions int not null
 )";
+
 $queries[] = "create table if not exists ocgc_proposals
 (
-	id int auto_increment,
-	ID_pays int null,
-	question text null,
-	is_valid boolean default false null,
-	reponse_1 text null,
-	reponse_2 text null,
-	reponse_3 text null,
-	reponse_4 text null,
-	reponse_5 text null,
-	created int null,
-	updated int null,
-	constraint ocgc_proposals_pk
-		primary key (id)
+  id               int auto_increment
+    primary key,
+  ID_pays          int                                      null,
+  question         text                                     null,
+  type             enum ('IRL', 'RP')        default 'RP'   null,
+  type_reponse     enum ('dual', 'multiple') default 'dual' null comment 'Pour/Contre = ''dual'' ; vote multiple = ''multiple''',
+  reponse_1        text                                     null,
+  reponse_2        text                                     null,
+  reponse_3        text                                     null,
+  reponse_4        text                                     null,
+  reponse_5        text                                     null,
+  threshold        float(3, 2)               default 0.50   null,
+  is_valid         tinyint(3)                default 1      null comment '0 = rejeté ; 1 = en attente ; 2 = accepté',
+  motive           text                                     null comment 'Expliquer pourquoi la proposition est validée ou pas par l''OCGC.',
+  debate_start     datetime                                 null,
+  debate_end       datetime                                 null,
+  link_debate      text                                     null,
+  link_debate_name text                                     null,
+  link_wiki        text                                     null,
+  link_wiki_name   text                                     null,
+  res_year         int                                      null,
+  res_id           int                                      null,
+  created          datetime                                 null,
+  updated          datetime                                 null,
+  constraint proposal_id
+    unique (res_year, res_id)
 )
-comment 'Propositions de loi à l''Assemblée Générale'
-";
+  comment 'Propositions de loi à l''Assemblée Générale'";
+
 $queries[] = "create table if not exists ocgc_votes
 (
-	id int auto_increment,
-	ID_proposal int null,
-	ID_pays int null,
-	reponse_choisie int null,
-	created int null,
-	constraint ocgc_votes_pk
-		primary key (id)
+  id              int auto_increment
+    primary key,
+  ID_proposal     int      null,
+  ID_pays         int      null,
+  reponse_choisie int      null comment 'ID de la réponse. NULL = abstention ; 0 = vote blanc ; 1 à 5 = réponses',
+  created         datetime null
 )
-comment 'Votes aux propositions de l''Assemblée Générale'
-";
+  comment 'Votes aux propositions de l''Assemblée Générale'";
 
+$queries[] = 'alter table communiques
+  add ch_com_pays_id int null';
+
+// On exécute cette première liste de queries.
+foreach($queries as $query) {
+    mysql_query($query) or die(mysql_error());
+}
+
+
+
+/*************************
+ *                       *
+ *    AUTRES REQUÊTES    *
+ *                       *
+ *************************/
+
+$queries = array();
 
 /**********
  * Ajouter les pays à la nouvelle table.
