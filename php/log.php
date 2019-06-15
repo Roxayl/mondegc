@@ -256,7 +256,7 @@ unset($_COOKIE["Session_mondeGC"]);
 // *** Enregistrement commentaires.
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique")) {
-  $insertSQL = sprintf("INSERT INTO communiques (ch_com_label, ch_com_statut, ch_com_categorie, ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+  $insertSQL = sprintf("INSERT INTO communiques (ch_com_label, ch_com_statut, ch_com_categorie, ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_com_pays_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['ch_com_label'], "text"),
                        GetSQLValueString($_POST['ch_com_statut'], "int"),
                        GetSQLValueString($_POST['ch_com_categorie'], "text"),
@@ -265,7 +265,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
                        GetSQLValueString($_POST['ch_com_date'], "date"),
                        GetSQLValueString($_POST['ch_com_date_mis_jour'], "date"),
                        GetSQLValueString($_POST['ch_com_titre'], "text"),
-                       GetSQLValueString($_POST['ch_com_contenu'], "text"));
+                       GetSQLValueString($_POST['ch_com_contenu'], "text"),
+                       GetSQLValueString($_POST['ch_com_pays_id'], 'int'));
 
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result3 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());

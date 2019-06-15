@@ -122,6 +122,9 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
 
     ?>
     <h3>Ecrire un commentaire</h3>
+
+    <form action="" method="POST" name="ajout_communique" id="ajout_communique">
+
 <ul id="EcrireCommentaire" class="listes listes-visiteurs">
   <li class="row-fluid">
     <div class="span3"></div>
@@ -138,7 +141,6 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
     </div>
   </li>
 </ul>
-<form action="" method="POST" name="ajout_communique" id="ajout_communique">
         <!-- Bouton cachés -->
         <?php 
 				  $now= date("Y-m-d G:i:s");?>

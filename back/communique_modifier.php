@@ -37,7 +37,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_communique
 
   $this_com_id = (int)$_POST['ch_com_ID'];
   $banner_text = "Votre communiqué a été modifié ! Ouf !<br />";
-  $banner_text .= "<a href='../page-communique.php?com_id=$this_com_id'>Accéder à votre communiqué</a>";
+  if($_POST['ch_com_ID'] === $_POST['ch_com_element_id']) {
+      $banner_text .= "<a href='page-communique.php?com_id=$this_com_id'>Accéder à votre communiqué</a>";
+  }
   getErrorMessage('success', $banner_text);
 
 if ( $_POST['ch_com_categorie'] == "pays") {
@@ -65,8 +67,9 @@ elseif (( $_POST['ch_com_categorie'] == "institut") AND ( $_POST['ch_com_element
 $updateGoTo = 'institut_sport.php';
 }
 else {
-$updateGoTo = 'page_pays_back.php';
+$updateGoTo = 'page_pays_back.php?paysID=' . $paysID;
 }
+$updateGoTo = '../page-communique.php?com_id=' . (int)$_POST['ch_com_element_id'];
 
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
