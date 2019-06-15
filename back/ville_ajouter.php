@@ -57,7 +57,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_ville")) {
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $insertGoTo = "page_pays_back.php#mes-villes";
+  $insertGoTo = "page_pays_back.php?paysID=" . (int)$_POST['ch_vil_paysID'] . "#mes-villes";
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
