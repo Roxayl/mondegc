@@ -73,7 +73,7 @@ $form_select_debate_start[$formProposal->debate_start] = 'checked selected';
 <html lang="fr">
 <head>
 <meta charset="iso-8859-1">
-<title>Haut-Conseil - Nouveau pays</title>
+<title>Monde GC - Nouvelle proposition à l'Assemblée générale</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">

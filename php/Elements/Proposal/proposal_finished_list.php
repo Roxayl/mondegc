@@ -7,25 +7,33 @@ $proposalList = $data['proposalList'];
 
 <?php foreach($proposalList as $proposal):
 
-    $info = ''; $btn_text = '';
+    $info = '';
+    $btn_text = '';
 
-    if($proposal->getStatus(false) ===
-       \GenCity\Proposal\Proposal::allValidationStatus('votePending')) {
-        $info = "En vote jusqu'au " . dateFormat($proposal->get('debate_end'), true);
-        $btn_text = 'Voter';
-    } elseif($proposal->getStatus(false) ===
-       \GenCity\Proposal\Proposal::allValidationStatus('pendingValidation')) {
-        $info = "À modérer dans les 7 jours suivant la création de la proposition";
-        $btn_text = 'Modérer';
+    $voteList = $proposal->getVote();
+    $decisionMaker = new \GenCity\Proposal\ProposalDecisionMaker($voteList);
+    $decisionFormat = $decisionMaker->outputFormat();
+
+    $bg_color = 'inherit';
+    $text_color = 'inherit';
+
+    if(count($decisionFormat) > 1) {
+        $info .= '<em>Second tour :</em><br>';
     }
-
+    foreach($decisionFormat as $thisDecision) {
+        $info .= '<h4 style="font-style: normal; color: ' . $thisDecision['color'] . ';">'
+              . __s($thisDecision['intitule']) . '</h4><br>';
+        $bg_color = $thisDecision['color'];
+        $text_color = $thisDecision['color'] !== '#fafafa' ? '#fafafa' : '#0a0a0a';
+    }
     ?>
 
-    <div class="proposal-active-container well well-dark">
+    <div class="proposal-active-container well well-light">
         <div class="row-fluid">
 
           <div class="span7">
-            <small><?= $proposal->getProposalId() ?> -
+            <small style="background-color: <?= $bg_color ?>; padding: 2px 3px; color: <?= $text_color ?>">
+                <?= $proposal->getProposalId() ?> -
                 <?= \GenCity\Proposal\Proposal::$typeDetail[$proposal->get('type')] ?>
                 (<?= __s($proposal->get('type')) ?>)</small><br>
             <a href="back/ocgc_proposal.php?id=<?= $proposal->get('id') ?>"><h4>

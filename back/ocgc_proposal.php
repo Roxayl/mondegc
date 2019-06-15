@@ -6,7 +6,10 @@ include('../php/logout.php');
 
 $_error = false;
 
-if (!isset($_SESSION['statut']) or $_SESSION['statut'] < 10) {
+if(isset($_SESSION['userObject']) && $_SESSION['userObject']->minStatus('OCGC')) {
+    $has_ocgc_perm = true;
+} else {
+    $has_ocgc_perm = false;
 }
 
 $editFormAction = $_SERVER['PHP_SELF'];
@@ -112,7 +115,7 @@ use GenCity\Monde\Pays;use GenCity\Proposal\Vote;
 <html lang="fr">
 <head>
 <meta charset="iso-8859-1">
-<title>Haut-Conseil - Nouveau pays</title>
+<title>Monde GC - Proposition : <?= $formProposal->get('question') ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -277,10 +280,9 @@ img.olTileImage {
     </div>
 
     <?php
-    if($formProposal->getStatus(false) ===
+    if($has_ocgc_perm && $formProposal->getStatus(false) ===
         \GenCity\Proposal\Proposal::allValidationStatus('pendingValidation')):
     ?>
-
     <div id="info-generales" class="titre-bleu titre-fond-blanc" style="margin: 0 -19px 0;">
         <h1>Conseil de l'OCGC</h1>
     </div>

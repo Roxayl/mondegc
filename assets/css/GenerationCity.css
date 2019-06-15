@@ -62,6 +62,10 @@ hr {
     background-size: cover;
     color: #fafafa;
 }
+.well.well-light {
+    background-color: #e6eaff;
+    color: #0a0a0a;
+}
 .thumb {
 	text-align: center;
 	padding: 49px 10px 0px 10px;
@@ -784,6 +788,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9babbf', end
 }
 .well-dark h2, .well-dark h3, .well-dark small {
     color: #fafafa;
+}
+.well-light h2, .well-light h3, .well-light small {
+    color: #0a0a0a;
 }
 
 /* Titre gris h3

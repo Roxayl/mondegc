@@ -127,7 +127,7 @@ init();
     <div class="span3 bs-docs-sidebar">
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#info-institut">
-          <img src="assets/img/imagesdefaut/blason.jpg">
+          <img src="http://image.noelshack.com/fichiers/2019/24/6/1560607735-ocgc-logo-ag-bis.png">
           <p><strong>Assemblée Générale</strong></p>
           <p><em>Organisation des Cités Gécéennes</em></p>
           </a></li>
@@ -155,7 +155,7 @@ init();
                 <a href="page-pays.php?ch_pay_id=<?= $paysRFGC->get('ch_pay_id') ?>">
                   <img class="img-menu-drapeau" src="<?= $paysRFGC->get('ch_pay_lien_imgdrapeau') ?>">&nbsp;RFGC</a>.
             </p>
-            <p>Articles détaillés : <a href="http://vasel.yt/wiki/index.php?title=Assembl%C3%A9e_G%C3%A9n%C3%A9rale_de_l%27OCGC">Wiki</a></p>
+            <p><i>Articles détaillés :</i> <a href="http://www.forum-gc.com/f18-partie-privee"><i class="icon-globe"></i> Forum</a> &#183; <a href="http://vasel.yt/wiki/index.php?title=Assembl%C3%A9e_G%C3%A9n%C3%A9rale_de_l%27OCGC"><i class="icon-globe"></i> Wiki</a></p>
         <br>
             <h4>Fonctionnement</h4>
             <p>Chaque pays reconnu internationalement est membre de droit de l'Assemblée générale. Elle compte aujourd'hui une vingtaine de pays membres.</p>
@@ -190,66 +190,28 @@ init();
     <h3>Propositions actives</h3>
 
     <?php if(count($proposalsPendingVotes)): ?>
-        <h4>Vote en cours</h4>
+        <h4 class="well">Vote en cours</h4>
         <?php renderElement('Proposal/proposal_active_list', array(
                 'proposalList' => $proposalsPendingVotes
             )); ?>
     <?php endif; ?>
 
     <?php if(count($proposalsPendingValidation)): ?>
-        <h4>En attente d'une validation du Conseil de l'OCGC</h4>
+        <h4 class="well">En attente d'une validation du Conseil de l'OCGC</h4>
         <?php renderElement('Proposal/proposal_active_list', array(
                 'proposalList' => $proposalsPendingValidation
             )); ?>
     <?php endif; ?>
 
     <h3>Propositions déjà votées</h3>
+    <?php if(count($proposalsFinished)): ?>
+        <?php renderElement('Proposal/proposal_finished_list', array(
+                'proposalList' => $proposalsFinished
+            )); ?>
+    <?php else: ?>
+        <p>Aucune proposition votée pour le moment.</p>
+    <?php endif; ?>
 
-    <div id="categories">
-      <table width="100%" class="table table-hover " cellspacing="1">
-        <thead>
-          <tr class="tablehead2">
-            <th scope="col">Identifiant</th>
-            <th scope="col">Type</th>
-            <th scope="col">Question</th>
-            <th scope="col">Proposée le</th>
-            <th scope="col">Proposée par</th>
-            <th scope="col">Début du vote</th>
-            <th scope="col">Statut</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-        <?php
-        /** @var \GenCity\Proposal\Proposal $pending */
-        foreach($proposalList->getAll() as $pending): ?>
-            <tr>
-                <td><a href="back/ocgc_proposal.php?id=<?= $pending->get('id') ?>"><?=
-                        $pending->getProposalId(); ?></a></td>
-              <td><?= \GenCity\Proposal\Proposal::$typeDetail[$pending->get('type')] ?>
-                  (<?= $pending->get('type') ?>)</td>
-              <td><?= __s($pending->get('question')) ?></td>
-              <td><?= dateFormat($pending->get('created')) ?></td>
-              <td style="text-align: center;">
-                  <img src="<?= __s($pending->getPaysAuthor()->get('ch_pay_lien_imgdrapeau')) ?>"
-                       title="<?= __s($pending->getPaysAuthor()->get('ch_pay_nom')) ?>"
-                       class="img-menu-drapeau"></td>
-              <td><?= dateFormat($pending->get('debate_start')) ?></td>
-              <td><?= $pending->getStatus() ?></td>
-              <td><a href="back/ocgc_proposal.php?id=<?= $pending->get('id') ?>"
-                  class="btn btn-primary">Voir la proposition</a></td>
-            </tr>
-        <?php endforeach; ?>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td><div class="btn-group pull-right">
-                <a class="btn disabled" href="#">2</a>
-                </div></td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
 
     </section>
 
