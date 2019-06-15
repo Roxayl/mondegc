@@ -119,7 +119,8 @@ img.olTileImage {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php $institut = true;
+include('../php/navbarback.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container corps-page">

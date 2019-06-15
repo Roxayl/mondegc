@@ -191,7 +191,8 @@ img.olTileImage {
 
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php $institut = true;
+include('../php/navbarback.php'); ?>
 
 <!-- Subhead
 ================================================== -->
