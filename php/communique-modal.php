@@ -140,11 +140,11 @@ $totalRows_commentaire = mysql_num_rows($commentaire);
 
 <div class="modal-body corps-page">
 <?php if ( $cat == "institut") {?>
-  <div class="titre-bleu"> <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png" alt="communiqu&eacute;">
+  <div class="titre-bleu">
     <h1><?php echo $row_communique['ch_com_titre']; ?></h1>
   </div>
   <?php } else { ?>
-  <div class="titre-vert"> <img src="assets/img/IconesBDD/100/Communique.png" alt="communiqu&eacute;">
+  <div class="titre-vert">
     <h1><?php echo $row_communique['ch_com_titre']; ?></h1>
   </div>
   <?php } ?>
@@ -152,11 +152,11 @@ $totalRows_commentaire = mysql_num_rows($commentaire);
   
   <!-- REACTIONS -->
   <?php if ( $cat == "institut") {?>
-  <div id="commentaires" class="titre-bleu anchor"> <img src="assets/img/IconesBDD/Bleu/100/Membre1_bleu.png" alt="visites">
+  <div id="commentaires" class="titre-bleu anchor">
     <h1>R&eacute;actions</h1>
   </div>
   <?php } else { ?>
-  <div id="commentaires" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Membre1.png" alt="visites">
+  <div id="commentaires" class="titre-vert anchor">
     <h1>R&eacute;actions</h1>
   </div>
   <?php } ?>

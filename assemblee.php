@@ -71,7 +71,6 @@ img.olTileImage {
 <!-- CARTE -->
 <script src="assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('php/cartepays.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>

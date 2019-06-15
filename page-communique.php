@@ -144,7 +144,10 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
 <?php include('php/navbar.php'); ?>
 <!-- Page CONTENT
     ================================================== -->
-<div class="container corps-page"> 
+<div class="container corps-page">
+
+    <?php renderElement('errormsgs'); ?>
+
   <!-- Moderation
      ================================================== -->
 <?php if (($_SESSION['statut'] >= 20) OR ($row_user['ch_use_id'] == $_SESSION['user_ID'])) { ?>
@@ -206,11 +209,11 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
   <div class="row-fluid"> 
     <!-- Titre  -->
     <?php if ( $cat == "institut") {?>
-  <div class="titre-bleu"> <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png" alt="communiqu&eacute;">
+  <div class="titre-bleu">
       <h1><?php echo $row_communique['ch_com_titre']; ?></h1>
     </div>
   <?php } else { ?>
-  <div class="titre-vert"> <img src="assets/img/IconesBDD/100/Communique.png" alt="communiqu&eacute;">
+  <div class="titre-vert">
       <h1><?php echo $row_communique['ch_com_titre']; ?></h1>
     </div>
   <?php } ?>
@@ -220,11 +223,11 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
         ================================================== -->
     <section>
     <?php if ( $cat == "institut") {?>
-  <div id="commentaires" class="titre-bleu anchor"> <img src="assets/img/IconesBDD/Bleu/100/Membre1_bleu.png" alt="visites">
+  <div id="commentaires" class="titre-bleu anchor">
         <h1>R&eacute;actions</h1>
       </div>
   <?php } else { ?>
-  <div id="commentaires" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Membre1.png" alt="visites">
+  <div id="commentaires" class="titre-vert anchor">
         <h1>R&eacute;actions</h1>
       </div>
   <?php } ?>

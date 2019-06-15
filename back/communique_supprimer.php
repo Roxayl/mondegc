@@ -23,6 +23,8 @@ if ((isset($_POST['communique-ID'])) && ($_POST['communique-ID'] != "")) {
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
+  getErrorMessage('success', "Communiqué supprimé ! Pouf.");
+
   $deleteGoTo = '../index.php';
   if (isset($_SERVER['QUERY_STRING'])) {
     $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";

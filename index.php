@@ -104,6 +104,8 @@ $_SESSION['an']=true;
 <div class="row-fluid">
     <div class="span8" id="postswrapper">
 
+        <?php renderElement('errormsgs'); ?>
+
         <div id="actu" class="titre-vert no-bg anchor"> <img src="assets/img/IconesBDD/100/Membre1.png" alt="icone user">
           <h1>Derni&egrave;res actualit&eacute;s</h1>
         </div>
