@@ -14,6 +14,11 @@ $proposalList = $data['proposalList'];
         $info = "En vote jusqu'au " . dateFormat($proposal->get('debate_end'), true);
         $btn_text = 'Voter';
     } elseif($proposal->getStatus(false) ===
+       \GenCity\Proposal\Proposal::allValidationStatus('debatePending')) {
+        $info = "Soumis au vote le " . dateFormat($proposal->get('debate_start'), true);
+        $btn_text = "Débattre";
+    }
+    elseif($proposal->getStatus(false) ===
        \GenCity\Proposal\Proposal::allValidationStatus('pendingValidation')) {
         $info = "À modérer dans les 7 jours suivant la création de la proposition";
         $btn_text = 'Modérer';

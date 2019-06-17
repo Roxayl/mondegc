@@ -16,6 +16,8 @@ $proposalList = new \GenCity\Proposal\ProposalList();
 
 /** @var \GenCity\Proposal\Proposal[] $proposalsPendingVotes */
 $proposalsPendingVotes = $proposalList->getPendingVotes();
+/** @var \GenCity\Proposal\Proposal[] $proposalsPendingDebate */
+$proposalsPendingDebate = $proposalList->getPendingDebate();
 /** @var \GenCity\Proposal\Proposal[] $proposalsPendingValidation */
 $proposalsPendingValidation = $proposalList->getPendingValidation();
 /** @var \GenCity\Proposal\Proposal[] $proposalsFinished */
@@ -193,6 +195,13 @@ init();
         <h4 class="well">Vote en cours</h4>
         <?php renderElement('Proposal/proposal_active_list', array(
                 'proposalList' => $proposalsPendingVotes
+            )); ?>
+    <?php endif; ?>
+
+    <?php if(count($proposalsPendingDebate)): ?>
+        <h4 class="well">Débat en cours</h4>
+        <?php renderElement('Proposal/proposal_active_list', array(
+                'proposalList' => $proposalsPendingDebate
             )); ?>
     <?php endif; ?>
 
