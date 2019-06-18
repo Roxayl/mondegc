@@ -315,7 +315,7 @@ do {  ?>
    ?>
 <!-- Titre
         ================================================== -->
-<div id="titre_institut" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Membre1.png">
+<div id="titre_institut" class="titre-vert anchor"> 
   <h1>G&eacute;rer mon compte</h1>
 </div>
 <!-- Formulaires de modification du personnage
@@ -491,7 +491,7 @@ $('#closemodal').click(function() {
 </div>
 <!-- Liste des autres groupes
         ================================================== -->
-<div class="titre-vert anchor" id="classer-membres"> <img src="../assets/img/IconesBDD/100/Membre1.png">
+<div class="titre-vert anchor" id="classer-membres"> 
   <h1>Rejoignez des groupes</h1>
 </div>
 <div class="row-fluid"> 

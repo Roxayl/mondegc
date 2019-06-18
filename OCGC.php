@@ -137,7 +137,7 @@ img.olTileImage {
       <!-- Presentation
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="presentation"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
+        <div class="titre-bleu anchor" id="presentation">
           <h1>Présentation</h1>
         </div>
         <div class="well">
@@ -154,7 +154,7 @@ img.olTileImage {
       <!-- communique officiel
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="communiques"> <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png">
+        <div class="titre-bleu anchor" id="communiques">
           <h1>Communiqu&eacute;s officiels</h1>
         </div>
         <?php 

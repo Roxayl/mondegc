@@ -130,7 +130,7 @@ init();
     </ul>
 
     <section>
-    <div class="titre-bleu anchor" id="notifications"> <img src="assets/img/IconesBDD/Bleu/100/carte_bleu.png">
+    <div class="titre-bleu anchor" id="notifications">
       <h1>Notifications</h1>
     </div>
     <div class="well">
@@ -139,7 +139,7 @@ init();
     </section>
 
     <section>
-    <div class="titre-bleu anchor" id="gestion"> <img src="assets/img/IconesBDD/Bleu/100/carte_bleu.png">
+    <div class="titre-bleu anchor" id="gestion">
       <h1>Gestion</h1>
     </div>
     <h3>Mes pays</h3>

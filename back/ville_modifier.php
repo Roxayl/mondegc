@@ -381,7 +381,7 @@ return true;
 
       <!-- Debut formulaire de modification ville
      ================================================== -->
-      <div id="page_ville" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Ville1.png">
+      <div id="page_ville" class="titre-vert anchor">
         <h1>Page de <?php echo $row_ville['ch_vil_nom']; ?></h1>
       </div>
       <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_ville" Id="ajout_ville" onsubmit='return verif_champ(document.ajout_ville.form_coord_X.value);'>
@@ -669,7 +669,7 @@ return true;
     <!-- Liste des Communiqués
         ================================================== -->
     <section>
-      <div id="mes-communiques" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Communique.png">
+      <div id="mes-communiques" class="titre-vert anchor">
         <h1>Communiqu&eacute;s</h1>
       </div>
       <div class="alert alert-success">
@@ -685,7 +685,7 @@ include('../php/communiques-back.php'); ?>
     <!-- Liste des infrastructures
         ================================================== -->
     <section>
-      <div id="mes-infrastructures" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/eco.png">
+      <div id="mes-infrastructures" class="titre-vert anchor">
         <h1>Infrastructures</h1>
       </div>
       <div class="alert alert-success">
@@ -756,7 +756,7 @@ $('#closemodal').click(function() {
     <!-- Liste des monuments
         ================================================== -->
     <section>
-      <div id="mes-monuments" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/monument1.png">
+      <div id="mes-monuments" class="titre-vert anchor">
         <h1>Monuments</h1>
       </div>
       <div class="alert alert-success">

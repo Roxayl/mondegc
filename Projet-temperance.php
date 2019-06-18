@@ -151,7 +151,7 @@ format: 'hex'});
     </ul>
 
     <div class="row-fluid">
-      <div class="titre-bleu anchor" id="presentation"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
+      <div class="titre-bleu anchor" id="presentation">
         <h1>Principe de Tempérance</h1>
       </div>
       <div class="well">

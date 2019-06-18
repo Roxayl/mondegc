@@ -154,7 +154,7 @@ function affDate($date){
   <div class="well"> <?php echo $row_fait_his['ch_his_contenu']; ?> </div>
   <?php }?>
   <!-- REACTIONS -->
-  <div id="commentaires" class="titre-vert"> <img src="assets/img/IconesBDD/100/Membre1.png" alt="visites">
+  <div id="commentaires" class="titre-vert">
     <h1>R&eacute;actions</h1>
   </div>
   <?php if ($row_commentaire) { ?>

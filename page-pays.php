@@ -351,7 +351,7 @@ init();
       <!-- Diplomatie
      ================================================== -->
       <section>
-        <div id="diplomatie" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Membre1.png">
+        <div id="diplomatie" class="titre-vert anchor">
           <h1>Diplomatie</h1>
         </div>
         <div class="row-fluid">
@@ -397,7 +397,7 @@ init();
       <!-- Communiqués
         ================================================== -->
       <section>
-        <div id="communiques" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Communique.png">
+        <div id="communiques" class="titre-vert anchor">
           <h1>Communiqu&eacute;s</h1>
         </div>
         <?php 
@@ -409,7 +409,7 @@ init();
         ================================================== -->
       <?php if ($row_Pays['ch_pay_header_presentation'] OR $row_Pays['ch_pay_text_presentation']) { ?>
       <section>
-        <div id="presentation" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Pays1.png">
+        <div id="presentation" class="titre-vert anchor">
           <h1>Pr&eacute;sentation</h1>
         </div>
         <div class="well">
@@ -422,7 +422,7 @@ init();
         ================================================== -->
       <?php if ($row_villes) { ?>
       <section>
-        <div id="villes" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Ville1.png">
+        <div id="villes" class="titre-vert anchor">
           <h1>Liste des villes</h1>
         </div>
         <div id="liste-villes">
@@ -461,7 +461,7 @@ init();
     ================================================== -->
       
       <section>
-        <div id="geographie" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/carte.png">
+        <div id="geographie" class="titre-vert anchor">
           <h1>G&eacute;ographie</h1>
         </div>
         <div id="map" class="well"></div>
@@ -476,7 +476,7 @@ init();
         ================================================== -->
       <?php if ($row_Pays['ch_pay_header_politique'] OR $row_Pays['ch_pay_text_politique']) { ?>
       <section>
-        <div id="politique" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Membre1.png">
+        <div id="politique" class="titre-vert anchor">
           <h1>Politique</h1>
         </div>
         <div class="well">
@@ -488,7 +488,7 @@ init();
         ================================================== -->
       <?php if ($row_Pays['ch_pay_header_histoire'] OR $row_Pays['ch_pay_text_histoire'] OR $row_fait_his) { ?>
       <section>
-        <div id="histoire" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/histoire.png">
+        <div id="histoire" class="titre-vert anchor">
           <h1>Histoire</h1>
         </div>
         <?php if ($row_fait_his) { ?>
@@ -578,7 +578,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
       <!-- Econonomie
         ================================================== -->
       <section>
-        <div id="economie" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/eco.png">
+        <div id="economie" class="titre-vert anchor">
           <h1>Economie</h1>
         </div>
 
@@ -737,7 +737,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         ================================================== -->
       <?php if ($row_Pays['ch_pay_header_transport'] OR $row_Pays['ch_pay_text_transport']) { ?>
       <section>
-        <div id="transport" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Transport.png">
+        <div id="transport" class="titre-vert anchor">
           <h1>Transport</h1>
         </div>
         <div class="well">
@@ -749,7 +749,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         ================================================== -->
       <?php if ($row_Pays['ch_pay_header_sport'] OR $row_Pays['ch_pay_text_sport']) { ?>
       <section>
-        <div id="sport" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/sport.png">
+        <div id="sport" class="titre-vert anchor">
           <h1>Sport</h1>
         </div>
         <div class="well">
@@ -761,7 +761,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
       <!-- Culture
         ================================================== -->
       <section>
-        <div id="culture" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/culture.png">
+        <div id="culture" class="titre-vert anchor">
           <h1>Culture</h1>
         </div>
         <div class="well">
@@ -773,7 +773,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         ================================================== -->
       <?php if ($row_Pays['ch_pay_header_patrimoine'] OR $row_Pays['ch_pay_text_patrimoine'] OR $row_monument) { ?>
       <section>
-        <div id="patrimoine" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/monument1.png">
+        <div id="patrimoine" class="titre-vert anchor">
           <h1>Patrimoine</h1>
         </div>
         <?php if ($row_monument) { ?>
@@ -828,7 +828,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
       <!-- Commentaire
         ================================================== -->
       <section>
-        <div id="commentaires" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Membre1.png" alt="visites">
+        <div id="commentaires" class="titre-vert anchor">
           <h1>Visites</h1>
         </div>
         <?php 

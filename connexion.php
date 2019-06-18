@@ -160,7 +160,7 @@ $mailSuccess = true;
 <div class="container corps-page">
   <div class="row-fluid">
   <div class="titre-vert">
-  <img src="assets/img/IconesBDD/100/connexion.png">
+
       <h1>Connexion au compte</h1>
       </div>
       <div class="row-fluid">

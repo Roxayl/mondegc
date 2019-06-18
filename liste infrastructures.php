@@ -123,7 +123,7 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
 
   <!-- Titre page
         ================================================== -->
-  <div id="titre_institut" class="titre-bleu anchor"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
+  <div id="titre_institut" class="titre-bleu anchor">
     <h1>Liste des infrastructures officielles</h1>
   </div>
 

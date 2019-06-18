@@ -312,7 +312,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
       <!-- Presentation
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="presentation"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
+        <div class="titre-bleu anchor" id="presentation">
           <h1>Pr&eacute;sentation</h1>
         </div>
         <div class="well">
@@ -329,7 +329,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
       <!-- Classements ressources
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="ressources"> <img src="assets/img/IconesBDD/Bleu/100/eco.png">
+        <div class="titre-bleu anchor" id="ressources">
           <h1>Statistiques &eacute;conomiques</h1>
         </div>
        <div class="row-fluid">
@@ -542,7 +542,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
             <!-- Temperance
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="temperance"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
+        <div class="titre-bleu anchor" id="temperance">
           <h1>Projet Tempérance</h1>
         </div>
         <div class="well">
@@ -553,7 +553,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
 	  	   <!-- Bourses mondiales
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="bourses"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
+        <div class="titre-bleu anchor" id="bourses">
           <h1>Bourses mondiales</h1>
         </div>
         <div class="well">
@@ -564,7 +564,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
       <!-- communique officiel
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="communiques"> <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png">
+        <div class="titre-bleu anchor" id="communiques">
           <h1>Communiqu&eacute;s officiels</h1>
         </div>
         <?php 

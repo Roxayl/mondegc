@@ -445,7 +445,7 @@ init();
       <!-- Communiqués
         ================================================== -->
       <section>
-        <div id="communiques" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Communique.png">
+        <div id="communiques" class="titre-vert anchor">
           <h1>Communiqu&eacute;s</h1>
         </div>
         <?php 
@@ -458,7 +458,7 @@ init();
     ================================================== -->
       <?php if ($row_infoVille['ch_vil_header']) { ?>
       <section>
-        <div id="presentation" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Ville1.png">
+        <div id="presentation" class="titre-vert anchor">
           <h1>Pr&eacute;sentation</h1>
         </div>
         <div class="well">
@@ -470,7 +470,7 @@ init();
       <!-- carte
     ================================================== -->
       <section>
-        <div class="titre-vert anchor" id="carte"> <img src="assets/img/IconesBDD/100/carte.png">
+        <div class="titre-vert anchor" id="carte">
           <h1>Carte</h1>
         </div>
         <div>
@@ -500,7 +500,7 @@ init();
     ================================================== -->
       <?php if ($row_infrastructure || $row_monument) { ?>
       <section>
-        <div class="titre-vert anchor" id="Economie"> <img src="assets/img/IconesBDD/100/eco.png">
+        <div class="titre-vert anchor" id="Economie">
           <h1>Économie</h1>
         </div>
         <h3>Balance des ressources</h3>
@@ -542,7 +542,7 @@ init();
       <!-- Journal
     ================================================== -->
       <section>
-        <div class="titre-vert anchor" id="Journal"> <img src="assets/img/IconesBDD/100/Ville1.png">
+        <div class="titre-vert anchor" id="Journal">
           <h1>Journal</h1>
         </div>
         <div class="well">
@@ -557,7 +557,7 @@ init();
     ================================================== -->
     <?php if($row_infoVille['ch_vil_administration']) { ?>
       <section>
-        <div class="titre-vert anchor" id="politique"> <img src="assets/img/IconesBDD/100/Ville1.png">
+        <div class="titre-vert anchor" id="politique">
           <h1>Politique et administration</h1>
         </div>
         <div class="well"> <?php echo $row_infoVille['ch_vil_administration']; ?> </div>
@@ -568,7 +568,7 @@ init();
     ================================================== -->
     <?php if($row_infoVille['ch_vil_transports']) { ?>
       <section>
-        <div class="titre-vert anchor" id="transports"> <img src="assets/img/IconesBDD/100/Ville1.png">
+        <div class="titre-vert anchor" id="transports">
           <h1>Transports</h1>
         </div>
         <div class="well"> <?php echo $row_infoVille['ch_vil_transports']; ?> </div>
@@ -579,7 +579,7 @@ init();
         ================================================== -->
       <?php if ($row_monument || $row_infoVille['ch_vil_culture']) { ?>
       <section>
-        <div id="patrimoine" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/monument1.png">
+        <div id="patrimoine" class="titre-vert anchor">
           <h1>Patrimoine</h1>
         </div>
         <!-- Liste des monuments
@@ -639,7 +639,7 @@ $('#closemodal').click(function() {
       <!-- Commentaire
         ================================================== -->
       <section>
-        <div id="commentaires" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Membre1.png" alt="visites">
+        <div id="commentaires" class="titre-vert anchor">
           <h1>Visites</h1>
         </div>
         <?php 

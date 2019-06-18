@@ -147,7 +147,7 @@ img.olTileImage {
     ================================================== --> 
     <!-- Moderation
      ================================================== -->
-    <div id="infrastructure" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/eco.png">
+    <div id="infrastructure" class="titre-vert anchor">
       <h1>Ajouter une infrastructure</h1>
     </div>
     <div class="alert alert-success">

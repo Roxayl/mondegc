@@ -386,7 +386,7 @@ init();
     </ul>
   </div>
   <!-- Explication  -->
-  <div id="titre" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/carte.png">
+  <div id="titre" class="titre-vert anchor">
     <h1>Modifier la carte du monde GC</h1>
   </div>
   <div class="well">
@@ -401,7 +401,7 @@ init();
       <li>Tout manquement &agrave; ces r&egrave;gles peut faire l'objet d'une mod&eacute;ration de la part de l'institut G&eacute;c&eacute;en de G&eacute;ographie ou du Haut-Conseil.</li>
     </ol>
   <!-- Repartition des ressources  -->
-  <div id="titre" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/carte.png">
+  <div id="titre" class="titre-vert anchor">
     <h1>R&eacute;partition des ressources</h1>
   </div>
   <ul class="listes">

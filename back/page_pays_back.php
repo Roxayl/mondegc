@@ -426,7 +426,7 @@ img.olTileImage {
   <!-- Dirigeants
     ================================================== -->
     <section>
-    <div id="dirigeants" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Pays1.png">
+    <div id="dirigeants" class="titre-vert anchor">
       <h1>Dirigeants</h1>
     </div>
     <table width="539" class="table table-hover">
@@ -472,7 +472,7 @@ img.olTileImage {
       <!-- Debut formulaire Page Pays
         ================================================== -->
       <section class="">
-        <div id="info-generales" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Pays1.png">
+        <div id="info-generales" class="titre-vert anchor">
           <h1>Présentation du pays</h1>
         </div>
           <div class="well">
@@ -794,7 +794,7 @@ img.olTileImage {
     <!-- Personnage
     ================================================== -->
     <section>
-    <div id="personnage" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Membre1.png">
+    <div id="personnage" class="titre-vert anchor">
       <h1>Personnage</h1>
     </div>
     <div class="well">
@@ -828,7 +828,7 @@ img.olTileImage {
       <!-- Liste des Villes du membre
         ================================================== -->
       <section>
-        <div id="villes" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Ville1.png">
+        <div id="villes" class="titre-vert anchor">
           <h1>Villes</h1>
         </div>
 
@@ -971,7 +971,7 @@ img.olTileImage {
       <!-- Routes et campagne
         ================================================== -->
       <section>
-        <div id="routes-campagne" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/carte.png">
+        <div id="routes-campagne" class="titre-vert anchor">
           <h1>Routes et campagne</h1>
         </div>
         <div class="alert alert-success"> Vous pouvez dessiner des routes, des zones agricoles ou des zones naturelles entre vos villes sur la carte de votre pays. Ces zones vont avoir une influence sur l'économie et la population de votre pays </div>
@@ -1038,7 +1038,7 @@ img.olTileImage {
         ================================================== -->
       <?php if ($thisPays->getUserPermission() >= Pays::$permissions['dirigeant']) { // Affichage si sup ou egal à dirigeant ?>
       <section id="mes-communiques">
-        <div id="mes-communiques" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Communique.png">
+        <div id="mes-communiques" class="titre-vert anchor">
           <h1>Communiqu&eacute;s du pays</h1>
         </div>
         <div class="alert alert-success">
@@ -1055,7 +1055,7 @@ include('../php/communiques-back.php'); ?>
         ================================================== -->
       <?php if ($thisPays->getUserPermission() >= Pays::$permissions['dirigeant']) { // Affichage si sup ou egal à dirigeant?>
       <section>
-        <div id="faits-historiques" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/faithistorique.png">
+        <div id="faits-historiques" class="titre-vert anchor">
           <h1>L'histoire du pays</h1>
         </div>
         <div class="alert alert-success">

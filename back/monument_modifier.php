@@ -159,7 +159,7 @@ return true;
     <div class=""> 
       <!-- Moderation
      ================================================== -->
-      <div id="monument" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/monument1.png">
+      <div id="monument" class="titre-vert anchor">
         <h1>Modifier un monument</h1>
       </div>
       <div class="alert alert-success">

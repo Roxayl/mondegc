@@ -157,7 +157,7 @@ init();
       <!-- Presentation
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="presentation"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
+        <div class="titre-bleu anchor" id="presentation">
           <h1>Présentation</h1>
         </div>
         <div class="well">
@@ -172,7 +172,7 @@ init();
       <!-- cartes des pays
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="carte"> <img src="assets/img/IconesBDD/Bleu/100/carte_bleu.png">
+        <div class="titre-bleu anchor" id="carte">
           <h1>Cartes des pays du Monde GC</h1>
         </div>
         <div class="row-fluid">
@@ -192,7 +192,7 @@ init();
       <!-- communique officiel
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="communiques"> <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png">
+        <div class="titre-bleu anchor" id="communiques">
           <h1>Communiqu&eacute;s officiels</h1>
         </div>
         <?php 

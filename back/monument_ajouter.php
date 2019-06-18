@@ -143,7 +143,7 @@ return true;
     <div class=""> 
       <!-- Moderation
      ================================================== -->
-      <div id="monument" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/monument1.png">
+      <div id="monument" class="titre-vert anchor">
         <h1>Ajouter un monument</h1>
       </div>
       <?php if (($_SESSION['statut'] >= 20) AND ($row_users['ch_use_id'] != $_SESSION['user_ID'])) { ?>

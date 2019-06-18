@@ -127,7 +127,7 @@ img.olTileImage {
     <div class=""> 
       <!-- Moderation
      ================================================== -->
-      <div id="fait-historique" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/faithistorique.png">
+      <div id="fait-historique" class="titre-vert anchor"> 
         <h1>Ajouter un fait historique</h1>
       </div>
       <?php if (($_SESSION['statut'] > 1) AND ($row_users['ch_use_id'] != $_SESSION['user_ID'])) { ?>

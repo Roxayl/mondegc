@@ -189,7 +189,7 @@ $totalRows_info_group = mysql_num_rows($info_group);
       <!-- Presentation
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="presentation"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
+        <div class="titre-bleu anchor" id="presentation">
           <h1>Présentation</h1>
         </div>
         <div class="well">
@@ -204,7 +204,7 @@ $totalRows_info_group = mysql_num_rows($info_group);
       <!-- Monument indexe
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="groupes"> <img src="assets/img/IconesBDD/Bleu/100/Membre1_bleu.png">
+        <div class="titre-bleu anchor" id="groupes">
           <h1>Groupes Politiques</h1>
         </div>
         <div class="row-fluid"> 
@@ -304,7 +304,7 @@ $('#closemodal').click(function() {
       <!-- communique officiel
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="communiques"> <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png">
+        <div class="titre-bleu anchor" id="communiques">
           <h1>Communiqu&eacute;s officiels</h1>
         </div>
         <?php 

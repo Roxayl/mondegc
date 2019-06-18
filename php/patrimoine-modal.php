@@ -142,7 +142,7 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
     </div>
   </div>
   <!-- REACTIONS -->
-  <div id="commentaires" class="titre-vert"> <img src="assets/img/IconesBDD/100/Membre1.png" alt="visites">
+  <div id="commentaires" class="titre-vert">
     <h1>Visites</h1>
   </div>
   <?php if ($row_commentaire) { ?>

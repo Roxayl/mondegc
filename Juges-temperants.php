@@ -80,7 +80,7 @@ $totalRows_HautConseil = mysql_num_rows($HautConseil);
 <div class="container">
   <div class="corps-page">
     <div class="row-fluid">
-      <div class="titre-bleu anchor" id="presentation"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
+      <div class="titre-bleu anchor" id="presentation">
         <h1>2 missions pour les juges tempérants</h1>
       </div>
       <h3>Validation des infrastructures</h3>

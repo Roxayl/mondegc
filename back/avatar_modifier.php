@@ -83,7 +83,7 @@ if($thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
     ================================================== -->
 <div class="container corps-page">
   <div class="row-fluid">
- 	<div id="info-generales" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Membre1.png">
+ 	<div id="info-generales" class="titre-vert anchor">
           <h1>Modifier votre avatar</h1>
         </div>
     <p>&nbsp;</p>

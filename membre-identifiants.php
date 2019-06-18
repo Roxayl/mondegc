@@ -117,7 +117,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
       <p>&nbsp;</p>
     </div>
     <div id="categories" class="span10 well">
-      <div class="titre-vert"> <img src="assets/img/IconesBDD/100/connexion.png">
+      <div class="titre-vert">
         <h1>Changement identifiants</h1>
       </div>
       <div class="alert alert-success">

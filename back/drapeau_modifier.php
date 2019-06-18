@@ -69,7 +69,7 @@ if (isset($_POST['paysID'])) {
     ================================================== -->
 <div class="container corps-page">
   <div class="row-fluid">
- 	<div id="info-generales" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Pays1.png">
+ 	<div id="info-generales" class="titre-vert anchor">
           <h1>Modifier le drapeau de votre pays</h1>
         </div>
     <p>&nbsp;</p>

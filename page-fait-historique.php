@@ -184,7 +184,7 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
   <!-- Commentaire
         ================================================== -->
   <section>
-    <div id="commentaires" class="titre-vert anchor"> <img src="assets/img/IconesBDD/100/Membre1.png" alt="visites">
+    <div id="commentaires" class="titre-vert anchor">
       <h1>Visites</h1>
     </div>
     <?php 

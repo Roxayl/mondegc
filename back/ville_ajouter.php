@@ -186,7 +186,7 @@ return true;
       </form>
       <?php }?>
       <div class="clearfix"></div>
-      <div id="pageville" class="titre-vert anchor"> <img src="../assets/img/IconesBDD/100/Ville1.png">
+      <div id="pageville" class="titre-vert anchor"> 
         <h1>Ajouter une ville</h1>
       </div>
       <!-- Debut formulaire -->

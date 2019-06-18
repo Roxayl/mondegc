@@ -123,7 +123,7 @@ img.olTileImage {
 <div class="container corps-page"> 
   <!-- Liste
     ================================================== -->
-  <div class="titre-vert anchor" id="faq"> <img src="assets/img/IconesBDD/100/participer.png">
+  <div class="titre-vert anchor" id="faq">
     <h1>Foire aux questions</h1>
   </div>
   <div class="well">
@@ -176,7 +176,7 @@ img.olTileImage {
     <p> Le  site va te guider pour cr&eacute;er ton pays ou tes villes. Il suffit d'une  bonne dose d'imagination et de cr&eacute;ativit&eacute;. Les formulaires consacr&eacute;s aux  villes te permettent de mettre des images de tes villes cr&eacute;es dans le  jeu. Le plus facile est de commencer par cr&eacute;er les pages qui vont  pr&eacute;senter tes villes pour ensuite imaginer un univers autour de  celles-ci.</p>
     <p>&nbsp;</p>
   </div>
-  <div class="titre-vert anchor" id="charte"> <img src="assets/img/IconesBDD/100/participer.png">
+  <div class="titre-vert anchor" id="charte">
     <h1>Charte</h1>
   </div>
   <div class="well">

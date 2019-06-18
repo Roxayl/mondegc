@@ -281,7 +281,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
       <div class="row-fluid">
         <div class="span2"></div>
         <div class="span8">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/Communique.png">
+          <div class="titre-gris">
             <h3>Nouveau Communiqu&eacute;</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -330,7 +330,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
       <div class="row-fluid">
         <div class="span2"></div>
         <div class="span8">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/Communique.png">
+          <div class="titre-gris">
             <h3>Nouveau Communiqu&eacute;</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -376,7 +376,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
       <div class="row-fluid">
         <div class="span2"></div>
         <div class="span8">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/ocgc.png">
+          <div class="titre-gris">
             <h3>Nouveau Communiqu&eacute;</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -480,7 +480,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
       <div class="row-fluid">
         <div class="span2"></div>
         <div class="span8">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/Pays1.png">
+          <div class="titre-gris">
             <h3>Pays mis &agrave; jour</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -511,7 +511,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
       <div class="row-fluid">
         <div class="span2"></div>
         <div class="span8">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/Ville1.png">
+          <div class="titre-gris">
             <h3>Ville mise &agrave; jour</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -542,7 +542,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
       <div class="row-fluid">
         <div class="span2"></div>
         <div class="span8">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/monument1.png">
+          <div class="titre-gris">
             <h3>Nouveau monument</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -597,7 +597,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
       <div class="row-fluid">
         <div class="span2"></div>
         <div class="span8">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/faithistorique.png">
+          <div class="titre-gris">
             <h3>Nouvelle p&eacute;riode historique</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -628,7 +628,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
       <div class="row-fluid">
         <div class="span2"></div>
         <div class="span8">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/faithistorique.png">
+          <div class="titre-gris">
             <h3>Nouveau personnage historique</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -659,7 +659,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
       <div class="row-fluid">
         <div class="span2"></div>
         <div class="span8">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/faithistorique.png">
+          <div class="titre-gris">
             <h3>Nouveau fait historique</h3>
           </div>
           <div class="row-fluid fond-notification">

@@ -130,7 +130,7 @@ img.olTileImage {
     <!-- liste des communique de l'institut
     ================================================== -->
     <section>
-    <div class="titre-vert anchor" id="titre"> <img src="assets/img/IconesBDD/100/ocgc.png">
+    <div class="titre-vert anchor" id="titre">
       <h1>Communiqués des instituts</h1>
     </div>
 

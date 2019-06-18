@@ -230,7 +230,7 @@ $queryString_pays_arch = sprintf("&totalRows_pays_arch=%d%s", $totalRows_pays_ar
       <!-- Presentation
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="presentation"> <img src="assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
+        <div class="titre-bleu anchor" id="presentation">
           <h1>Présentation</h1>
         </div>
         <div class="well">
@@ -245,7 +245,7 @@ $queryString_pays_arch = sprintf("&totalRows_pays_arch=%d%s", $totalRows_pays_ar
       <!-- Faits historiques indexe
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="fait_hist"> <img src="assets/img/IconesBDD/Bleu/100/faithistorique.png">
+        <div class="titre-bleu anchor" id="fait_hist">
           <h1>&Eacute;l&eacute;ments historiques index&eacute;s</h1>
         </div>
         <div class="row-fluid"> 
@@ -355,7 +355,7 @@ $('#closemodal').click(function() {
       <!-- Pays archive
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="pays-archives"> <img src="assets/img/IconesBDD/Bleu/100/Pays1_bleu.png">
+        <div class="titre-bleu anchor" id="pays-archives">
           <h1>Pays archiv&eacute;s</h1>
           <p class="well">Ces pays ont autrefois occup&eacute;s des emplacements dans le Monde GC. Ils ont influenc&eacute;s les peuples et font maintenant partie de l'histoire de ce monde</p>
         </div>
@@ -405,7 +405,7 @@ $('#closemodal').click(function() {
       <!-- communique officiel
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="communiques"> <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png">
+        <div class="titre-bleu anchor" id="communiques">
           <h1>Communiqu&eacute;s officiels</h1>
         </div>
         <?php 

@@ -132,7 +132,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
       <p>&nbsp;</p>
     </div>
     <div class="span10 well" id="Profil">
-      <div class="titre-vert"> <img src="assets/img/IconesBDD/100/connexion.png">
+      <div class="titre-vert">
         <h1>Inscription dans le Monde GC</h1>
       </div>
       <div class="alert alert-success">

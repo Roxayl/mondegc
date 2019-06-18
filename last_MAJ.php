@@ -238,7 +238,7 @@ do {
 ================================================== -->
     <li class="item">
       <div class="row-fluid">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/Communique.png">
+          <div class="titre-gris">
             <h3>Nouveau communiqu&eacute;</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -284,7 +284,7 @@ do {
 ================================================== -->
     <li class="item">
       <div class="row-fluid">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/Communique.png">
+          <div class="titre-gris">
             <h3>Nouveau communiqu&eacute;</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -327,7 +327,7 @@ do {
 	$lien_institut = "OCGC.php"; }?>
     <li class="item">
       <div class="row-fluid">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/ocgc.png">
+          <div class="titre-gris">
             <h3>Nouveau communiqu&eacute;</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -428,7 +428,7 @@ do {
 ================================================== -->
     <li class="item">
       <div class="row-fluid">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/Pays1.png">
+          <div class="titre-gris">
             <h3>Pays mis &agrave; jour</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -456,7 +456,7 @@ do {
 ================================================== -->
     <li class="item">
       <div class="row-fluid">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/Ville1.png">
+          <div class="titre-gris">
             <h3>Ville mise &agrave; jour</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -484,7 +484,7 @@ do {
 ================================================== -->
     <li class="item">
       <div class="row-fluid">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/monument1.png">
+          <div class="titre-gris">
             <h3>Nouveau monument</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -536,7 +536,7 @@ do {
     <?php if (( $row_LastCommunique['statut'] == 1) and ( $row_LastCommunique['id_element'] != NULL))  {?>
     <li class="item">
       <div class="row-fluid">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/faithistorique.png">
+          <div class="titre-gris">
             <h3>Nouvelle p&eacute;riode historique</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -564,7 +564,7 @@ do {
     <?php } elseif ( $row_LastCommunique['statut'] == 2) {?>
     <li class="item">
       <div class="row-fluid">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/faithistorique.png">
+          <div class="titre-gris">
             <h3>Nouveau personnage historique</h3>
           </div>
           <div class="row-fluid fond-notification">
@@ -592,7 +592,7 @@ do {
     <?php } else { ?>
      <li class="item">
       <div class="row-fluid">
-          <div class="titre-gris"> <img src="assets/img/IconesBDD/100/faithistorique.png">
+          <div class="titre-gris">
             <h3>Nouveau fait historique</h3>
           </div>
           <div class="row-fluid fond-notification">
