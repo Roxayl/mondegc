@@ -159,7 +159,7 @@ class VoteList {
                   JOIN pays ON ID_pays = ch_pay_id
                   WHERE ID_proposal = %s
                   ORDER BY FIELD(ch_pay_continent,
-                    "RFGC", "Aurinea", "Oceania", "Volcania", "Aldesyl", "Philicie")',
+                    "RFGC", "Aurinea", "Oceania", "Volcania", "Aldesyl", "Philicie"), ch_pay_nom ASC',
                 GetSQLValueString($this->proposal->get('id')));
         $mysql_query = mysql_query($query);
         while($row = mysql_fetch_assoc($mysql_query)) {
