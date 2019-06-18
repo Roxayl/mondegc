@@ -26,6 +26,14 @@ if(isset($_SESSION['userObject'])) {
 if(!isset($loginFormAction))
     $loginFormAction = '';
 
+/** Notifications navbar Assemblée générale */
+$navbar_proposalList = new \GenCity\Proposal\ProposalList();
+$navbar_pendingVotes = $navbar_proposalList->getPendingVotes();
+$navbar_userProposalPendingVotes = array();
+if(isset($_SESSION['userObject'])) {
+    $navbar_userProposalPendingVotes = $navbar_proposalList->userProposalPendingVotes($_SESSION['userObject']);
+}
+
 ?>
 
 <div class="navbar navbar-fixed-top">
@@ -194,14 +202,32 @@ if(!isset($loginFormAction))
             <center>
               <a href="OCGC.php" title="Institutions de r&eacute;gulation du monde GC"><i class="icon icon-institut"></i></a>
             </center>
-            <a href="OCGC.php" class="dropdown-toggle" data-toggle="dropdown" title="L'Organisation des Cités Gécéennes">OCGC <b class="caret"></b></a>
+            <a href="OCGC.php" class="dropdown-toggle" data-toggle="dropdown" title="L'Organisation des Cités Gécéennes">OCGC
+            <?php if(count($navbar_userProposalPendingVotes)): ?>
+                <span class="navbar-circle-notification"><img src="assets/img/2019/AGicon.png"></span>
+            <?php endif; ?>
+                <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li class="nav-header">À propos de l'OCGC</li>
               <li><a href="OCGC.php">Présentation de l'OCGC</a></li>
               <li><a href="communiques-ocgc.php">Communiqués publiés</a></li>
               <li class="nav-header">Organes de l'OCGC</li>
               <li><a href="http://vasel.yt/wiki/index.php?title=Conseil_de_l%27OCGC">Conseil de l'OCGC</a></li>
-              <li><a href="assemblee.php">Assemblée générale</a></li>
+              <li><a href="assemblee.php">
+                  Assemblée générale
+                  <?php if(count($navbar_pendingVotes)): ?><br>
+                      <span class="btn-small"><strong><img src="assets/img/2019/AGicon.png"> Session en cours</strong><br>
+                          <?= count($navbar_pendingVotes) ?>
+                          proposition<?= count($navbar_pendingVotes) > 1 ? 's' : '' ?>
+                          actuellement soumis<?= count($navbar_pendingVotes) > 1 ? 'es' : 'e' ?> au vote
+                          <?php if(count($navbar_userProposalPendingVotes)): ?>
+                            <br><span style="color: #ff4e00;">
+                              (dont <?= count($navbar_userProposalPendingVotes) ?> en attente de votre vote)
+                              </span>
+                          <?php endif; ?>
+                      </span>
+                  <?php endif; ?>
+                  </a></li>
               <li class="nav-header">Les comités</li>
               <li><a href="geographie.php">G&eacute;ographie</a></li>
               <li><a href="patrimoine.php">Patrimoine</a></li>

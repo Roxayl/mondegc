@@ -453,6 +453,14 @@ body > .navbar .brand {
 .navbar-haut-conseil > a.btn.btn-primary {
 	margin-right: -4px;
 }
+.navbar-circle-notification {
+    background-color: #ff4e00;
+    display: inline-block;
+    border-radius: 3px;
+    border-color: #fafafa;
+    padding: 4px;
+    margin: -4px 3px;
+}
 
 /* Boutons moderation
 -------------------------------------------------- */

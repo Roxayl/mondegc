@@ -129,7 +129,7 @@ init();
     <div class="span3 bs-docs-sidebar">
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#info-institut">
-          <img src="http://image.noelshack.com/fichiers/2019/24/6/1560607735-ocgc-logo-ag-bis.png">
+          <img src="http://image.noelshack.com/fichiers/2019/25/1/1560724575-ocgc-logo-ag-bis-dark.png">
           <p><strong>Assemblée Générale</strong></p>
           <p><em>Organisation des Cités Gécéennes</em></p>
           </a></li>

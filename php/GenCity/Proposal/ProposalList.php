@@ -1,6 +1,7 @@
 <?php
 
 namespace GenCity\Proposal;
+use GenCity\Monde\User;
 
 
 class ProposalList {
@@ -70,6 +71,20 @@ class ProposalList {
     public function getFinished() {
 
         $query = 'SELECT id FROM ocgc_proposals WHERE debate_end < NOW() AND is_valid = 2';
+        return $this->setListFromQuery($query);
+
+    }
+
+    public function userProposalPendingVotes(User $user) {
+
+        $query = sprintf('SELECT DISTINCT ocgc_proposals.id FROM ocgc_proposals
+          INNER JOIN ocgc_votes ON ID_proposal = ocgc_proposals.id
+          WHERE NOW() BETWEEN debate_start AND debate_end
+            AND ocgc_votes.ID_pays IN(
+                           SELECT ID_pays FROM users_pays WHERE ID_user = %s)
+            AND reponse_choisie IS NULL',
+            GetSQLValueString($user->get('ch_use_id')));
+
         return $this->setListFromQuery($query);
 
     }
