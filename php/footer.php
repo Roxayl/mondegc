@@ -15,10 +15,10 @@
       <li><a href="http://www.generation-city.com/">G&eacute;n&eacute;ration City</a></li>
       <li><a href="http://www.forum-gc.com/">Forum</a></li>
     </ul>
-    <a href="http://www.generation-city.com/"><img src="http://www.generation-city.com/monde/assets/img/logoGC-small.png"></a>
+    <a href="http://www.generation-city.com/"><img src="assets/img/2019/logoGC-small.png"></a>
     <div class="copyright">
-      <p>Copyright &copy; G&eacute;n&eacute;ration-City - 2013 </p>
-      <p>Tous droits r&eacute;serv&eacute;s - Version 1</p>
+      <p>Copyright &copy; G&eacute;n&eacute;ration-City - 2019 </p>
+      <p>Tous droits r&eacute;serv&eacute;s - Version 2</p>
     </div>
   </div>
 </footer>

@@ -1648,6 +1648,15 @@ body > .navbar-fixed-top .brand {
 	visibility: hidden;
 }
 
+/* Titre vert bleu h1
+-------------------------------------------------- */
+.titre-vert h1, .titre-bleu h1 {
+    background-image: url("../img/bg-titre-left.png");
+}
+.titre-fond-blanc h1 {
+    background-image: url("../img/bg-titre-left-blanc.png");
+}
+
 }
 
 
@@ -1886,15 +1895,22 @@ body > .navbar .brand {
 	margin-left: 5px;
 	padding-left: 0px;
 	padding-right: 10px;
-	margin-top: 0px;
+	margin-top: -15px;
+}
+.brand img {
+    width: 190px;
 }
 /* change couleur barre menu*/
 .navbar-inner {
 	background-image: none;
 	background-repeat: no-repeat;
 	background: #417109; /* Old browsers */
-	background: linear-gradient(to bottom, #67b80e 0%, #3c6809 100%); /* W3C */
+	background: linear-gradient(to bottom, #283b57 0%, #1a2638 100%); /* W3C */
 	border-top-width: 1px;
+}
+.navbar .container {
+	background-color: unset;
+	background-image: none;
 }
 /* remonte les icones du menu*/
 .icon-accueil, .icon-carte, .icon-pays, .icon-institut, .icon-evenement, .icon-participer, .icon-generation_city {
