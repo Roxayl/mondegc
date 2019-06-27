@@ -38,12 +38,12 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
                        GetSQLValueString($_POST['ch_use_mail'], "text"),
                        GetSQLValueString($_POST['ch_use_paysID'], "int"),
                        GetSQLValueString($_POST['ch_use_statut'], "int"),
-                       GetSQLValueString($_POST['ch_use_lien_imgpersonnage'], "text"),
-                       GetSQLValueString($_POST['ch_use_predicat_dirigeant'], "text"),
-                       GetSQLValueString($_POST['ch_use_titre_dirigeant'], "text"),
-                       GetSQLValueString($_POST['ch_use_nom_dirigeant'], "text"),
-                       GetSQLValueString($_POST['ch_use_prenom_dirigeant'], "text"),
-                       GetSQLValueString($_POST['ch_use_biographie_dirigeant'], "text"));
+                       '',
+                       '',
+                       '',
+                       '',
+                       '',
+                       '');
 
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
@@ -59,6 +59,24 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
       10
   );
   mysql_query($insert_users_pays) or die(mysql_error());
+
+  // On ajoute une entrée dans la table 'personnages' s'il n'y avait pas encore de perso.
+  $thisPays = new \GenCity\Monde\Pays($_POST['ch_use_paysID']);
+  $thisPersonnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
+  if(!count($thisPersonnage->model)) {
+      // Ajouter le personnage
+      $insert_personnage = sprintf(
+          "INSERT INTO personnage(entity, entity_id,
+                           nom_personnage, predicat, prenom_personnage,
+                           biographie, titre_personnage, lien_img)
+                   VALUES(%s, %s,
+                          '', '', '',
+                          '', '', '')",
+            'pays', GetSQLValueString($_POST['ch_use_paysID'], 'int')
+      );
+      mysql_query($insert_personnage) or die(mysql_error());
+  }
+
   
   // Effacement de la clef sur User_provisoire
   $userprov = $row_user_prov['ch_use_prov_ID'];
