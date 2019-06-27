@@ -25,9 +25,16 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_ville")) {
 
+    $hasUserPermission = isset($_SESSION['userObject']);
+    $thisUser = $_SESSION['userObject'];
+    if($hasUserPermission) {
+        /** @var \GenCity\Monde\User $thisUser */
+        $hasUserPermission = $thisUser->minStatus('OCGC');
+    }
+
     $thisVille = new Ville($_POST['ch_vil_ID']);
     $thisPays = new Pays($thisVille->ch_vil_paysID);
-    if($thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
+    if(!$hasUserPermission && $thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
         getErrorMessage('error', "Vous n'avez pas accès à cette partie.");
     }
 
@@ -334,9 +341,7 @@ return true;
         <li><a href="#mes-communiques">Communiqu&eacute;s officiels</a></li>
         <li><a href="#mes-infrastructures">Infrastructures</a></li>
         <li><a href="#mes-monuments">Monuments</a></li>
-        <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
-        <li><a href="page_pays_back.php">Retour &agrave; mon pays</a></li>
-        <?php }?>
+        <li><a href="page_pays_back.php?paysID=<?= $row_ville['ch_pay_id'] ?>">Retour &agrave; mon pays</a></li>
       </ul>
     </div>
     <!-- END Docs nav

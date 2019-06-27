@@ -62,7 +62,11 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
   mysql_free_result($geometries);
-  $deleteGoTo = "../Carte-modifier.php";
+  if(isset($_GET['is_back'])) {
+      $deleteGoTo = "institut_geographie.php";
+  } else {
+      $deleteGoTo = "../Carte-modifier.php";
+  }
   if (isset($_SERVER['QUERY_STRING'])) {
     $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
     $deleteGoTo .= $_SERVER['QUERY_STRING'];

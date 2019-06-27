@@ -239,6 +239,11 @@ div.editPanel {
     <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
     <button class="btn btn-primary" type="submit" title="modifier les informations sur l'institut"><i class="icon-edit icon-white"></i> Modifier description</button>
   </form>
+
+  <div class="well">
+      <?php renderElement('errormsgs'); ?>
+  </div>
+
   <div class="clearfix"></div>
     <!-- Carte
      ================================================== -->
