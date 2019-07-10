@@ -117,7 +117,7 @@ init();
 ================================================== -->
 <header class="jumbotron jumbotron-institut subhead anchor" id="info-institut">
   <div class="container">
-    <h2 style="text-transform: uppercase">Organisation des Cités Gécéennes</h2>
+    <h2 style="text-transform: uppercase">Organisation des Cités gécéennes</h2>
     <h1>Assemblée générale</h1>
   </div>
 </header>
@@ -131,7 +131,7 @@ init();
         <li class="row-fluid"><a href="#info-institut">
           <img src="http://image.noelshack.com/fichiers/2019/25/1/1560724575-ocgc-logo-ag-bis-dark.png">
           <p><strong>Assemblée Générale</strong></p>
-          <p><em>Organisation des Cités Gécéennes</em></p>
+          <p><em>Organisation des Cités gécéennes</em></p>
           </a></li>
         <li><a href="#presentation">Présentation</a></li>
         <li><a href="#propositions">Propositions</a></li>
@@ -162,6 +162,7 @@ init();
             <h4>Fonctionnement</h4>
             <p>Chaque pays reconnu internationalement est membre de droit de l'Assemblée générale. Elle compte aujourd'hui une vingtaine de pays membres.</p>
             <p>Chaque pays peut faire une proposition à l'AG, qui sera votée en session plénière si le Conseil de l'OCGC valide le projet. L'approbation d'une proposition nécessite la majorité qualifiée de 50%, à l'exception de certaines motions comme la reconnaissance internationale d'un nouveau pays.</p>
+            <p><a href="http://www.forum-gc.com/t6960-ag-sujet-officiel#278448"><i class="icon-globe"></i> Consulter le règlement de l'AG</a></p>
         </div>
         <div class="span4">
             <a href="http://image.noelshack.com/fichiers/2019/21/5/1558707533-organigramme-ocgcbis.png">
