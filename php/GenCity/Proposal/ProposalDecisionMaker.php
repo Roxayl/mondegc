@@ -1,7 +1,6 @@
 <?php
 
 namespace GenCity\Proposal;
-use GenCity\Proposal\VoteList;
 
 
 class ProposalDecisionMaker {
@@ -25,26 +24,41 @@ class ProposalDecisionMaker {
             $results = $this->voteList->getResultsByResponses('reponse_choisie');
 
             if($results[1]['pct'] > (float)$this->proposal->get('threshold') + 0.001) {
-                $acceptedResponses[] = $results[1]['reponse_choisie'];
                 // pour ; acceptée
+                $acceptedResponses[] = $results[1]['reponse_choisie'];
             } else {
-                $acceptedResponses[] = $results[2]['reponse_choisie'];
                 // contre ; refusée
+                $acceptedResponses[] = $results[2]['reponse_choisie'];
             }
 
         } else {
 
             $results = $this->voteList->getResultsByResponses('count');
             if($results[0]['pct'] > (float)$this->proposal->get('threshold') + 0.001) {
-                $acceptedResponses[] = $results[0]['reponse_choisie'];
                 // Réponse #1 en votes
+                $acceptedResponses[] = $results[0]['reponse_choisie'];
             } else {
-                $acceptedResponses[] = $results[0]['reponse_choisie'];
+
                 // Réponse #1 en votes
-                if((int)$results[1]['reponse_choisie'] !== 0) {
-                    $acceptedResponses[] = $results[1]['reponse_choisie'];
-                    // Réponse #2 en votes
+                $acceptedResponses[] = $results[0]['reponse_choisie'];
+
+                $previousResponseNumberVotes = null;
+                // On essaye de voir s'il y a une deuxième réponse qui peut être amené à passer au second tour.
+                for($i = 1; $i < Proposal::$maxResponses; $i++) {
+                    // On ignore les votes blancs/nuls, qui ne doivent pas passer au second tour.
+                    if(!in_array((int)$results[$i]['reponse_choisie'], array(0, 1), true)) {
+                        // Si nombre de votes égal au nombre de votes précédent, on l'ajoute au second tour.
+                        if( is_null($previousResponseNumberVotes) ||
+                            $previousResponseNumberVotes === (int)$results[$i]['nbr_votes'] )
+                        {
+                            $acceptedResponses[] = $results[$i]['reponse_choisie'];
+                            $previousResponseNumberVotes = (int)$results[$i]['nbr_votes'];
+                        } else {
+                            break;
+                        }
+                    }
                 }
+
             }
 
         }
