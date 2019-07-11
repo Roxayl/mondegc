@@ -82,6 +82,7 @@ class ProposalList {
           WHERE NOW() BETWEEN debate_start AND debate_end
             AND ocgc_votes.ID_pays IN(
                            SELECT ID_pays FROM users_pays WHERE ID_user = %s)
+            AND is_valid = 2
             AND reponse_choisie IS NULL',
             GetSQLValueString($user->get('ch_use_id')));
 
