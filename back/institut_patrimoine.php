@@ -434,8 +434,15 @@ $('#closemodal').click(function() {
         <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
           <?php  echo date("d/m/Y", strtotime($row_new_mon['ch_pat_mis_jour'])); ?>
           &agrave; <?php echo date("G:i:s", strtotime($row_new_mon['ch_pat_mis_jour'])); ?> </p>
-        <a class="btn btn-primary" href="../page-monument.php?ch_pat_id=<?php echo $row_new_mon['ch_pat_id']; ?>">Visiter</a>
-        <a class="btn btn-primary" href="../php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?php echo $row_new_mon['ch_pat_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Ajouter à une catégorie">Ajouter à une catégorie</a>
+        <div class="btn-group form-button-inline">
+          <a class="btn btn-primary" href="../php/patrimoine-modal.php?ch_pat_id=<?php echo $row_new_mon['ch_pat_id']; ?>" data-toggle="modal" data-target="#Modal-Monument">Visiter (dans une fenêtre contextuelle)</a>
+          <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../page-monument.php?ch_pat_id=<?php echo $row_new_mon['ch_pat_id']; ?>"> Visiter (lien direct)</a></li>
+          </ul>
+        </div>
+
+        <a class="btn btn-primary btn-margin-left" href="../php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?php echo $row_new_mon['ch_pat_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Ajouter à une catégorie">Ajouter à une catégorie</a>
       </div>
       <!-- Affichage des categories du monument -->
     </li>
@@ -496,8 +503,14 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
         <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
           <?php  echo date("d/m/Y", strtotime($row_classer_mon['ch_pat_mis_jour'])); ?>
           &agrave; <?php echo date("G:i:s", strtotime($row_classer_mon['ch_pat_mis_jour'])); ?> </p>
-        <a class="btn btn-primary" href="../page-monument.php?ch_pat_id=<?php echo $row_classer_mon['ch_disp_mon_id']; ?>">Visiter</a>
-        <a class="btn btn-primary" href="../php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?php echo $row_classer_mon['ch_disp_mon_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Modifier les catégories">Modifier les catégories</a></div>
+         <div class="btn-group form-button-inline">
+          <a class="btn btn-primary" href="../php/patrimoine-modal.php?ch_pat_id=<?php echo $row_classer_mon['ch_disp_mon_id']; ?>" data-toggle="modal" data-target="#Modal-Monument">Visiter (dans une fenêtre contextuelle)</a>
+          <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../page-monument.php?ch_pat_id=<?php echo $row_classer_mon['ch_disp_mon_id']; ?>"> Visiter (lien direct)</a></li>
+          </ul>
+        </div>
+        <a class="btn btn-primary btn-margin-left" href="../php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?php echo $row_classer_mon['ch_disp_mon_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Modifier les catégories">Modifier les catégories</a></div>
       <!-- Affichage des categories du monument -->
       <div class="span4">
         <?php if (($colname_classer_mon != NULL) AND ($colname_classer_mon != "")) { // affiche bouton ajouter si une categorie est choisie ?>
@@ -524,6 +537,7 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
   <?php }?>
   <!-- Modal et script -->
   <div class="modal container fade" id="#Modal-Monument" data-width="760"></div>
+  <div class="modal container fade" id="#Modal-General" data-width="760"></div>
   <script>
 $("a[data-toggle=modal]").click(function (e) {
   lv_target = $(this).attr('data-target')
@@ -532,6 +546,7 @@ $("a[data-toggle=modal]").click(function (e) {
 
 $('#closemodal').click(function() {
     $('#Modal-Monument').modal('hide');
+    $('#Modal-General').modal('hide');
 });
 </script>
   <p>&nbsp;</p>
