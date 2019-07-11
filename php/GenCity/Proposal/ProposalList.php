@@ -70,7 +70,9 @@ class ProposalList {
 
     public function getFinished() {
 
-        $query = 'SELECT id FROM ocgc_proposals WHERE debate_end < NOW() AND is_valid = 2';
+        $query = 'SELECT id FROM ocgc_proposals
+                  WHERE debate_end < NOW() AND is_valid = 2
+                  ORDER BY debate_end DESC, created DESC';
         return $this->setListFromQuery($query);
 
     }

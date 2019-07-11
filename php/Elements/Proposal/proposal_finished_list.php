@@ -21,6 +21,8 @@ $proposalList = $data['proposalList'];
         $info .= '<em>Second tour :</em><br>';
     }
     foreach($decisionFormat as $thisDecision) {
+        if($thisDecision['color'] === '#fafafa')
+            $thisDecision['color'] = '#0a0a0a';
         $info .= '<h4 style="font-style: normal; color: ' . $thisDecision['color'] . ';">'
               . __s($thisDecision['intitule']) . '</h4><br>';
         $bg_color = $thisDecision['color'];
@@ -49,7 +51,8 @@ $proposalList = $data['proposalList'];
           </div>
 
           <div class="span4">
-            <small><em>Proposé le <?= __s(dateFormat($proposal->get('created'))) ?><br>
+            <small><em>Proposée le <?= __s(dateFormat($proposal->get('created'))) ?> et votée le
+                       <?= __s(dateFormat($proposal->get('debate_end'))) ?><br>
                     <?= $info ?></em></small>
           </div>
 

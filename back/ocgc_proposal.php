@@ -241,9 +241,11 @@ include('../php/navbarback.php'); ?>
 
     <!-- ZONE DE DÉBATS -->
     <div class="cta-title pull-right-cta">
+    <?php if(isset($_SESSION['userObject'])): ?>
         <a href="../php/Modal/proposal_debate_edit.php?ID_proposal=<?= $formProposal->get('id') ?>"
            data-toggle="modal" data-target="#Modal-Monument" class="btn btn-primary btn-cta">
             <i class="icon-white icon-edit"></i></a>
+    <?php endif; ?>
     </div>
     <div id="info-generales" class="titre-bleu titre-fond-blanc" style="margin: -20px -19px 0;">
         <h1>Débats</h1>

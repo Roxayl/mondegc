@@ -21,16 +21,16 @@ if($formProposal->getStatus(false) >=
             if($formProposal->getStatus(false) ===
                \GenCity\Proposal\Proposal::allValidationStatus('voteFinished')) {
                 if(count($data['decisionData']) > 1) {
-                    $str = "Un nouveau tour est organisé entre les motions arrivées en tête.";
+                    $str = "Un nouveau tour est organisé entre les modalités arrivées en tête.";
                 } else {
-                    $str = "La motion est acceptée à plus de " . $formProposal->get('threshold') .
-                           "des votes.";
+                    $str = "La modalité est acceptée à plus de " . ($formProposal->get('threshold') * 100) .
+                           "% des votes.";
                 }
             }
 
             else {
                 $str = "Une motion est acceptée lorsqu'elle recueille 50% des votes exprimés. Dans le cas " .
-                       "contraire, un nouveau tour est organisé entre les motions arrivées en tête.";
+                       "contraire, un nouveau tour est organisé entre les modalités arrivées en tête.";
             }
 
             break;
