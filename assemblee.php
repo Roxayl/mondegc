@@ -130,7 +130,7 @@ init();
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#info-institut">
           <img src="http://image.noelshack.com/fichiers/2019/25/1/1560724575-ocgc-logo-ag-bis-dark.png">
-          <p><strong>Assemblée Générale</strong></p>
+          <p><strong>Assemblée générale</strong></p>
           <p><em>Organisation des Cités gécéennes</em></p>
           </a></li>
         <li><a href="#presentation">Présentation</a></li>

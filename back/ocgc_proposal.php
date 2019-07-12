@@ -310,9 +310,10 @@ include('../php/navbarback.php'); ?>
 
             <p>Consultez les détails de cette proposition ci-dessous.</p>
             <p>En tant que membre du Conseil de l'OCGC, vous pouvez accepter ou refuser cette proposition.
-            Vérifiez que cette proposition est conforme à la Charte de l'OCGC. Une proposition est
-            automatiquement acceptée lorsqu'elle n'a pas reçu de réponse de la part du Conseil
-            une semaine après sa création.</p>
+            Vérifiez que cette proposition est conforme au
+            <a href="http://www.forum-gc.com/t6960-ag-sujet-officiel#278448"
+            >règlement de l'Assemblée générale</a>. Une proposition est automatiquement acceptée
+            lorsqu'elle n'a pas reçu de réponse de la part du Conseil une semaine après sa création.</p>
 
         </div>
     </div>
