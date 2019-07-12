@@ -69,7 +69,7 @@ $updateGoTo = 'institut_sport.php';
 else {
 $updateGoTo = 'page_pays_back.php?paysID=' . $paysID;
 }
-$updateGoTo = '../page-communique.php?com_id=' . (int)$_POST['ch_com_element_id'];
+$updateGoTo = '../page-communique.php?com_id=' . (int)$_POST['ch_com_ID'];
 
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
@@ -104,8 +104,10 @@ $nom_organisation = $row_cat_pays['ch_pay_nom'];
 $insigne = $row_cat_pays['ch_pay_lien_imgdrapeau'];
 $soustitre = $row_cat_pays['ch_pay_devise'];
 
-$thisPays = new \GenCity\Monde\Pays($_POST['paysID']);
-$personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
+if(isset($thisPays)) {
+    $thisPays = new \GenCity\Monde\Pays($_POST['paysID']);
+    $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
+}
 
 mysql_free_result($cat_pays);
 }

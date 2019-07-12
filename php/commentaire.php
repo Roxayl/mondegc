@@ -50,7 +50,11 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
       ?>
   <li class="row-fluid anchor" id="commentaireID<?php echo $row_commentaire['ch_com_ID']; ?>"> 
     <div>
-    <div class="span3 img-listes img-avatar"> <img src="<?php echo $row_commentaire['ch_use_lien_imgpersonnage']; ?>"> </div>
+    <div class="span3 img-listes img-avatar">
+        <?php if(isset($persoReaction)): ?>
+          <img src="<?= __s($persoReaction->get('lien_img')) ?>">
+        <?php endif; ?>
+    </div>
     <div class="span9 info-listes">
       <!-- AFFICHAGE OUTILS MODERATION -->
     <div class="pull-right">
@@ -69,7 +73,8 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
     <?php if(isset($persoReaction)): ?>
       <h4><?= __s($persoReaction->get('predicat')) ?> <?= __s($persoReaction->get('prenom_personnage')) ?> <?= __s($persoReaction->get('nom_personnage')) ?></h4>
       <h5>
-          <?= isset($paysReaction) ? '<img class="img-menu-drapeau" src="' . __s($paysReaction->get('ch_pay_lien_imgdrapeau')) . '">
+          <?= isset($paysReaction) ? '<img class="img-menu-drapeau" src="
+            ' . __s($paysReaction->get('ch_pay_lien_imgdrapeau')) . '">
             ' . __s($paysReaction->get('ch_pay_nom')) . ' &#183; ' : '' ?>
           <?= __s($persoReaction->get('titre_personnage')) ?></h5>
       <!-- AFFICHAGE DATE --> 
