@@ -48,7 +48,10 @@ $_POST['ch_his_date_fait2'] == NULL;
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $insertGoTo = "page_pays_back.php";
+  getErrorMessage('success', __s($_POST['ch_his_nom']) . "
+    a été ajouté à vos personnages historiques.");
+
+  $insertGoTo = "page_pays_back.php?paysID=" . (int)$_POST['ch_his_paysID'];
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];

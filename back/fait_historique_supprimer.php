@@ -16,6 +16,12 @@ exit();
 
 // suppression du fait hist
 
+// obtenir infos sur le pays
+$getHistory = mysql_query(sprintf('SELECT ch_his_paysID FROM histoire WHERE ch_his_id = %s',
+    GetSQLValueString($_POST['ch_his_id'])));
+$getHistory = mysql_fetch_assoc($getHistory);
+$thisPays = new \GenCity\Monde\Pays($getHistory['ch_his_paysID']);
+
 if ((isset($_POST['ch_his_id'])) && ($_POST['ch_his_id'] != "")) {
   $deleteSQL = sprintf("DELETE FROM histoire WHERE ch_his_id=%s",
                        GetSQLValueString($_POST['ch_his_id'], "int"));
@@ -28,10 +34,9 @@ $deleteSQL2 = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist
 mysql_select_db($database_maconnexion, $maconnexion);
   $Result2 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
   
+  getErrorMessage('success', "Ce fait historique a été supprimé avec succès.");
 
-
-
-  $deleteGoTo = "page_pays_back.php#faits-historiques";
+  $deleteGoTo = "page_pays_back.php?paysID=" . (int)$thisPays->get('ch_pay_id') . "#faits-historiques";
   if (isset($_SERVER['QUERY_STRING'])) {
     $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
     $deleteGoTo .= $_SERVER['QUERY_STRING'];

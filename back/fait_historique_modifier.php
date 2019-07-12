@@ -44,6 +44,8 @@ $_POST['ch_his_date_fait2'] = NULL;
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
+  getErrorMessage('success', __s($_POST['ch_his_nom']) . " a été modifié avec succès.");
+
   $updateGoTo = "page_pays_back.php?paysID=" . $_POST['ch_his_paysID'] . '#faits-historiques';
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
