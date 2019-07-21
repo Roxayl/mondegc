@@ -16,7 +16,7 @@ exit();
 //R�cup�ration variables
 $colname_pays = $_SESSION['paysID'];
 if (isset($_POST['paysID'])) {
-  $colname_pays = $_POST['paysID'];
+  $colname_pays = (int)$_POST['paysID'];
   unset($_POST['paysID']);
 }
 ?>
@@ -105,7 +105,7 @@ $totalRows_drapeau = mysql_num_rows($drapeau);
           <input name="ThumbMaxwidth" id="ThumbMaxwidth" type="hidden" value="100">
           <input name="SmallThumbMaxwidth" id="SmallThumbMaxwidth" type="hidden" value="25">
           <input type="submit" name="submit" value="Envoyer" class="btn btn-primary"/>
-          <a class="btn btn-primary" href="page_pays_back.php" title="Retour &agrave; la page de gestion de votre pays">Retour</a>
+          <a class="btn btn-primary" href="page_pays_back.php?paysID=<?= $colname_pays ?>" title="Retour &agrave; la page de gestion de votre pays">Retour</a>
         </form>
       </div>
     </section>
