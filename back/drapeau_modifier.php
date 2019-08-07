@@ -14,11 +14,14 @@ exit();
 }
 
 //R�cup�ration variables
-$colname_pays = $_SESSION['paysID'];
+$colname_pays = isset($_SESSION['paysID']) ? $_SESSION['paysID'] : 0;
 if (isset($_POST['paysID'])) {
   $colname_pays = (int)$_POST['paysID'];
   unset($_POST['paysID']);
 }
+
+$thisPays = new \GenCity\Monde\Pays($colname_pays);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -72,7 +75,12 @@ if (isset($_POST['paysID'])) {
  	<div id="info-generales" class="titre-vert anchor">
           <h1>Modifier le drapeau de votre pays</h1>
         </div>
-    <p>&nbsp;</p>
+
+    <ul class="breadcrumb">
+      <li class="active"><a href="page_pays_back.php?paysID=<?= __s($thisPays->get('ch_pay_id')) ?>">Gestion du pays : <?= __s($thisPays->get('ch_pay_nom')) ?></a></li> <span class="divider">/</span>
+      <li class="active">Modifier le drapeau de votre pays</li>
+    </ul>
+
     <section>
       <?php include('../php/upload.php');
 if (isset($uploadconfirm)) {

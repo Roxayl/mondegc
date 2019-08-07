@@ -245,7 +245,7 @@ img.olTileImage {
         </div>
         <div class="controls">
           <button type="submit" class="btn btn-primary">Envoyer</button>
-          &nbsp;&nbsp;<a class="btn btn-danger" href="page_pays_back.php">Annuler</a> </div>
+          &nbsp;&nbsp;<a class="btn btn-danger" href="page_pays_back.php?paysID=<?= __s($paysID) ?>">Annuler</a> </div>
         <input type="hidden" name="MM_insert" value="ajout_fait_his">
         <p>&nbsp;</p>
       </form>

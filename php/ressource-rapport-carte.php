@@ -52,9 +52,9 @@ $row_geometries = mysql_fetch_assoc($geometries);
 		?>
   <div class="row-fluid">
     <div class="titre-gris">
-      <h3 style="margin-left:20px;"><?php echo $label; ?>&nbsp;: <?php echo $surface; ?>km<?php if ($typeZone == 'megapole' OR $typeZone == 'urbaine' OR $typeZone == 'periurbaine' OR $typeZone == 'industrielle' OR $typeZone == 'maraichere' OR $typeZone == 'cerealiere' OR $typeZone == 'elevage' OR $typeZone == 'prairies' OR $typeZone == 'forestiere' OR $typeZone == 'protegee' OR $typeZone == 'forestiere' OR $typeZone == 'marecageuse' OR $typeZone == 'lagunaire') {; ?><sup>2</sup><?php } ?></h3>
+      <h3 style="margin-left:20px;"><?php echo $label; ?>&nbsp;: <?php echo number_format($surface, 0, ',', ' '); ?> km<?php if ($typeZone == 'megapole' OR $typeZone == 'urbaine' OR $typeZone == 'periurbaine' OR $typeZone == 'industrielle' OR $typeZone == 'maraichere' OR $typeZone == 'cerealiere' OR $typeZone == 'elevage' OR $typeZone == 'prairies' OR $typeZone == 'forestiere' OR $typeZone == 'protegee' OR $typeZone == 'forestiere' OR $typeZone == 'marecageuse' OR $typeZone == 'lagunaire') {; ?><sup>2</sup><?php } ?></h3>
     </div>
-    <?php if ($typeZone == 'megapole' OR $typeZone == 'urbaine' OR $typeZone == 'periurbaine' OR $typeZone == 'industrielle' OR $typeZone == 'maraichere' OR $typeZone == 'cerealiere' OR $typeZone == 'elevage' OR $typeZone == 'prairies' OR $typeZone == 'forestiere' OR $typeZone == 'protegee' OR $typeZone == 'forestiere' OR $typeZone == 'marecageuse' OR $typeZone == 'lagunaire') {; ?><p>Population&nbsp;: <?php $chiffre_francais = number_format($population, 0, ',', ' '); echo $chiffre_francais; ?> habitants</p>
+    <?php if ($typeZone == 'megapole' OR $typeZone == 'urbaine' OR $typeZone == 'periurbaine' OR $typeZone == 'industrielle' OR $typeZone == 'maraichere' OR $typeZone == 'cerealiere' OR $typeZone == 'elevage' OR $typeZone == 'prairies' OR $typeZone == 'forestiere' OR $typeZone == 'protegee' OR $typeZone == 'forestiere' OR $typeZone == 'marecageuse' OR $typeZone == 'lagunaire') {; ?><p class="pull-center">Population&nbsp;: <?php $chiffre_francais = number_format($population, 0, ',', ' '); echo $chiffre_francais; ?> habitants</p>
 <?php } ?>
     <div class="span2">&nbsp;</div>
     <ul class="token">
