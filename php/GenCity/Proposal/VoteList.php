@@ -260,8 +260,16 @@ class VoteList {
             $reponseIntitule = $vote->get('reponse_choisie') !== null ?
                 $this->getProposal()->get('reponse_' . $vote->get('reponse_choisie')) : 'Abstention';
 
+            // Définir le nom du pays
+            if($vote->getPaysAuthor()->get('ch_pay_continent') === 'RFGC') {
+                $pays_nom = "République Fédérale de Génération City - " .
+                            $vote->getPaysAuthor()->get('ch_pay_nom');
+            } else {
+                $pays_nom = $vote->getPaysAuthor()->get('ch_pay_nom');
+            }
+
             $return[$vote->get('id')] = array(
-                'paysNom' => $vote->getPaysAuthor()->get('ch_pay_nom'),
+                'paysNom' => $pays_nom,
                 'paysDrapeau' => $vote->getPaysAuthor()->get('ch_pay_lien_imgdrapeau'),
                 'reponseColor' => $this->getColorFromVote($vote),
                 'reponseIntitule' => $reponseIntitule
