@@ -83,7 +83,7 @@ if(!isset($bounds))
 						type: 'png', getURL: overlay_getTileURL,
 						isBaseLayer: true,
 						transitionEffect : "resize",
-						attribution:"&copy; Myname"
+						attribution:"&copy; Boxxy-2014"
 	                });
 				tmsoverlay1.setVisibility(false);	
 	            map.addLayer(tmsoverlay1);
@@ -109,8 +109,18 @@ if(!isset($bounds))
 						attribution:"&copy; Boxxy-2013"
 	                });
 	            map.addLayer(tmsoverlay3);
-  
-  
+
+            // calque GC 2018 (non fonctionnel)
+	            var tmsoverlay4 = new OpenLayers.Layer.TMS( " Geographique (2018 - beta)", "http://www.generation-city.com/monde/Carto/CarteGC_2018/",
+	                {
+	                    serviceVersion: '.', layername: '.', alpha: false,
+						type: 'png', getURL: overlay_getTileURL,
+						isBaseLayer: true,
+						transitionEffect : "resize",
+						attribution:"&copy; Boxxy-2013, Sakuro-2018"
+	                });
+	            map.addLayer(tmsoverlay4);
+
   
             // allow testing of specific renderers via "?renderer=Canvas", etc
             var renderer = OpenLayers.Util.getParameters(window.location.href).renderer;
