@@ -55,8 +55,8 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 			    var mapMinZoom = 0;
 			    var mapMaxZoom = 7;
 				var ll, popupClass, popupContentHTML;
-				var x = '<?php echo $x; ?>' ;
-				var y = '<?php echo $y; ?>' ;  
+				var x = '<?php echo __s($_GET['x']); ?>' ;
+				var y = '<?php echo __s($_GET['y']); ?>' ;
 				var urlicon ='Carto/images/pin.png';
 		        // avoid pink tiles
 		OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
