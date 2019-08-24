@@ -13,7 +13,7 @@ exit();
 }
 
 //Récupération variables
-$colname_paysID = $_POST['paysID'];
+$colname_paysID = $_REQUEST['paysID'];
 
 //Requete Pays
 mysql_select_db($database_maconnexion, $maconnexion);

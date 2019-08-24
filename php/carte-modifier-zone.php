@@ -8,10 +8,11 @@ $query_MarkerPays = sprintf("SELECT ch_pay_id, ch_pay_continent, ch_pay_emplacem
 $MarkerPays = mysql_query($query_MarkerPays, $maconnexion) or die(mysql_error());
 $totalRows_MarkerPays = mysql_num_rows($MarkerPays);
 
+$thisPays = new \GenCity\Monde\Pays($colname_paysID);
 
 //Définition du lieu d'affichage de la carte
 $bounds = "0,0";
-$emplacement = $row_MarkerPays['ch_pay_emplacement'];
+$emplacement = $thisPays->get('ch_pay_emplacement');
 coordEmplacement($emplacement, $x, $y);
 $bounds = $x.",".$y;
 

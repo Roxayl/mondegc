@@ -65,7 +65,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
   if(isset($_GET['is_back'])) {
       $deleteGoTo = "institut_geographie.php";
   } else {
-      $deleteGoTo = "../Carte-modifier.php";
+      $deleteGoTo = "../Carte-modifier.php?paysID=" . (int)$_GET['ch_geo_pay_id'];
   }
   if (isset($_SERVER['QUERY_STRING'])) {
     $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
