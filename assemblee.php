@@ -165,8 +165,8 @@ init();
             <p><a href="http://www.forum-gc.com/t6960-ag-sujet-officiel#278448"><i class="icon-globe"></i> Consulter le règlement de l'AG</a></p>
         </div>
         <div class="span4">
-            <a href="http://image.noelshack.com/fichiers/2019/21/5/1558707533-organigramme-ocgcbis.png">
-              <img src="http://image.noelshack.com/fichiers/2019/21/5/1558707533-organigramme-ocgcbis.png"
+            <a href="http://vasel.yt/wiki/images/e/e5/Organigramme_OCGCbis.png">
+              <img src="http://vasel.yt/wiki/images/e/e5/Organigramme_OCGCbis.png"
                     alt="Schéma représentant le fonctionnement des organes de l'OCGC">
             </a>
         </div>

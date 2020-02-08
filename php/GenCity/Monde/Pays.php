@@ -99,7 +99,7 @@ class Pays extends BaseModel {
               JOIN users ON ch_use_id = ID_user
               WHERE ID_pays = %s
               GROUP BY ch_pay_id
-              HAVING MAX(ch_use_last_log) > DATE_SUB(NOW(), INTERVAL 3 MONTH)',
+              HAVING MAX(ch_use_last_log) > DATE_SUB(NOW(), INTERVAL 4 MONTH)',
             GetSQLValueString($this->get('ch_pay_id'))
             ));
         $results = mysql_fetch_assoc($mysql_query);

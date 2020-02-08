@@ -58,7 +58,7 @@ hr {
 	line-height: 18px;
 }
 .well.well-dark {
-    background-image: url('http://image.noelshack.com/fichiers/2019/21/5/1558706689-gc2020-ag-ocgc-fond.png');
+    background: #102642 url('http://image.noelshack.com/fichiers/2019/21/5/1558706689-gc2020-ag-ocgc-fond.png');
     background-size: cover;
     color: #fafafa;
 }

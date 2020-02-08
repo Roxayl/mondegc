@@ -39,7 +39,7 @@ class PaysList {
           JOIN pays ON ID_pays = ch_pay_id
           WHERE ch_pay_publication != 2
           GROUP BY ch_pay_id
-          HAVING MAX(ch_use_last_log) > DATE_SUB(NOW(), INTERVAL 3 MONTH)';
+          HAVING MAX(ch_use_last_log) > DATE_SUB(NOW(), INTERVAL 4 MONTH)';
         return $this->setListFromQuery($query);
 
     }
