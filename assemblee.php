@@ -60,8 +60,7 @@ $proposalsFinished = $proposalList->getFinished();
 <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url('http://image.noelshack.com/fichiers/2019/14/6/1554565976-assemblee-ocgc.png');
-    background-position: 0 400px;
+	background-image: url('https://romukulot.fr/kaleera/images/fnMcE.png');
 }
 #map {
 	height: 500px;
@@ -129,7 +128,7 @@ init();
     <div class="span3 bs-docs-sidebar">
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#info-institut">
-          <img src="http://image.noelshack.com/fichiers/2019/25/1/1560724575-ocgc-logo-ag-bis-dark.png">
+          <img src="https://romukulot.fr/kaleera/images/7YPwC.png">
           <p><strong>Assemblée générale</strong></p>
           <p><em>Organisation des Cités gécéennes</em></p>
           </a></li>

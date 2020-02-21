@@ -146,7 +146,7 @@ use GenCity\Monde\Pays;use GenCity\Proposal\Vote;
 <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-    background-image: url('http://image.noelshack.com/fichiers/2019/14/6/1554565976-assemblee-ocgc.png');
+    background-image: url('https://romukulot.fr/kaleera/images/fnMcE.png');
 }
 #map {
 	height: 350px;

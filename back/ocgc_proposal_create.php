@@ -314,7 +314,7 @@ include('../php/navbarback.php'); ?>
     </div>
 
     <div class="span4">
-    <div style="height: 700px; background-size: cover; background-position: center; background-image: url('http://image.noelshack.com/fichiers/2019/14/6/1554565976-assemblee-ocgc.png');"></div>
+    <div style="height: 700px; background-size: cover; background-position: center; background-image: url('https://romukulot.fr/kaleera/images/fnMcE.png');"></div>
 
     </div>
 
