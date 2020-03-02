@@ -68,12 +68,22 @@ class ProposalList {
 
     }
 
-    public function getFinished() {
+    public function getFinished($limit = 8, $offset = 0) {
 
         $query = 'SELECT id FROM ocgc_proposals
                   WHERE debate_end < NOW() AND is_valid = 2
-                  ORDER BY debate_end DESC, created DESC';
+                  ORDER BY debate_end DESC, created DESC
+                  LIMIT ' . (int)$limit . ' OFFSET ' . (int)$offset;
         return $this->setListFromQuery($query);
+
+    }
+
+    public function getFinishedTotal() {
+
+        $query = 'SELECT COUNT(*) AS nbrrows FROM ocgc_proposals
+                  WHERE debate_end < NOW() AND is_valid = 2 ';
+        $mysql_query = mysql_query($query);
+        return (int)mysql_fetch_assoc($mysql_query)['nbrrows'];
 
     }
 

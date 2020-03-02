@@ -9,26 +9,46 @@ if(isset($_SESSION['userObject'])) {
     $userPaysAllowedToVote = $thisUser->getCountries(\GenCity\Monde\User::getUserPermission('Dirigeant'));
 }
 
-$paysRFGC = new \GenCity\Monde\Pays(29);
-
 $proposalList = new \GenCity\Proposal\ProposalList();
 
+// Find out how many items are in the table
+$total = $proposalList->getFinishedTotal();
 
-/** @var \GenCity\Proposal\Proposal[] $proposalsPendingVotes */
-$proposalsPendingVotes = $proposalList->getPendingVotes();
-/** @var \GenCity\Proposal\Proposal[] $proposalsPendingDebate */
-$proposalsPendingDebate = $proposalList->getPendingDebate();
-/** @var \GenCity\Proposal\Proposal[] $proposalsPendingValidation */
-$proposalsPendingValidation = $proposalList->getPendingValidation();
+// How many items to list per page
+$limit = 10;
+// How many pages will there be
+$pages = ceil($total / $limit);
+// What page are we currently on?
+$page = min($pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
+    'options' => array(
+        'default'   => 1,
+        'min_range' => 1,
+    ),
+)));
+
+// Calculate the offset for the query
+$offset = ($page - 1)  * $limit;
+
+// Some information to display to the user
+$start = $offset + 1;
+$end = min(($offset + $limit), $total);
+
+// The "back" link
+$prevlink = ($page > 1) ? '<li><a href="?page=1" title="Page 1">&laquo;</a></li> <li><a href="?page=' . ($page - 1) . '" title="Page précédente">&lsaquo;</a></li>' : '<li><span class="disabled">&laquo;</span></li> <li><span class="disabled">&lsaquo;</span></li>';
+
+// The "forward" link
+$nextlink = ($page < $pages) ? '<li><a href="?page=' . ($page + 1) . '" title="Page suivante">&rsaquo;</a></li> <li><a href="?page=' . $pages . '" title="Dernière page">&raquo;</a></li>' : '<li><span class="disabled">&rsaquo;</span></li> <li><span class="disabled">&raquo;</span></li>';
+
 /** @var \GenCity\Proposal\Proposal[] $proposalsFinished */
-$proposalsFinished = $proposalList->getFinished();
+$proposalsFinished = $proposalList->getFinished($limit, $offset);
+
 
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Monde GC - Assemblée générale de l'OCGC</title>
+<title>Monde GC - Toutes les propositions à l'Assemblée générale</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -132,7 +152,6 @@ init();
           <p><strong>Assemblée générale</strong></p>
           <p><em>Organisation des Cités gécéennes</em></p>
           </a></li>
-        <li><a href="#presentation">Présentation</a></li>
         <li><a href="#propositions">Propositions</a></li>
       </ul>
     </div>
@@ -144,80 +163,32 @@ init();
     <div class="span9 corps-page">
     <ul class="breadcrumb">
       <li><a href="OCGC.php">OCGC</a> <span class="divider">/</span></li>
-      <li class="active">Assemblée générale</li>
+      <li><a href="assemblee.php">Assemblée générale</a> <span class="divider">/</span></li>
+      <li class="active">Liste des propositions</li>
     </ul>
-
-    <section id="presentation">
-    <div class="well">
-        <?php renderElement('errormsgs'); ?>
-    <div class="row-fluid">
-        <div class="span8">
-            <p>L'Assemblée générale de l'Organisation des Cités gécéennes (OCGC) est un organe de délibération et de prise de décisions composé de tous les pays officiellement reconnus par la communauté internationale. Son siège se trouve au même endroit que celui de l'OCGC, à Lutèce, la capitale de la
-                <a href="page-pays.php?ch_pay_id=<?= $paysRFGC->get('ch_pay_id') ?>">
-                  <img class="img-menu-drapeau" src="<?= $paysRFGC->get('ch_pay_lien_imgdrapeau') ?>">&nbsp;RFGC</a>.
-            </p>
-            <p><i>Articles détaillés :</i> <a href="http://www.forum-gc.com/f18-partie-privee"><i class="icon-globe"></i> Forum</a> &#183; <a href="http://vasel.yt/wiki/index.php?title=Assembl%C3%A9e_G%C3%A9n%C3%A9rale_de_l%27OCGC"><i class="icon-globe"></i> Wiki</a></p>
-        <br>
-            <h4>Fonctionnement</h4>
-            <p>Chaque pays reconnu internationalement est membre de droit de l'Assemblée générale. Elle compte aujourd'hui une vingtaine de pays membres.</p>
-            <p>Chaque pays peut faire une proposition à l'AG, qui sera votée en session plénière si le Conseil de l'OCGC valide le projet. L'approbation d'une proposition nécessite la majorité qualifiée de 50%, à l'exception de certaines motions comme la reconnaissance internationale d'un nouveau pays.</p>
-            <p><a href="http://www.forum-gc.com/t6960-ag-sujet-officiel#278448"><i class="icon-globe"></i> Consulter le règlement de l'AG</a></p>
-        </div>
-        <div class="span4">
-            <a href="http://vasel.yt/wiki/images/e/e5/Organigramme_OCGCbis.png">
-              <img src="http://vasel.yt/wiki/images/e/e5/Organigramme_OCGCbis.png"
-                    alt="Schéma représentant le fonctionnement des organes de l'OCGC">
-            </a>
-        </div>
-    </div>
-
-    </div>
-    </section>
 
     <section>
 
     <!-- PROPOSITIONS -->
-    <?php if(isset($userPaysAllowedToVote)): ?>
-    <div class="cta-title pull-right-cta">
-        <a href="back/ocgc_proposal_create.php"
-           class="btn btn-primary btn-cta">
-            <i class="icon-white icon-pencil"></i> Lancer une proposition</a>
-    </div>
-    <?php endif; ?>
 
     <div class="titre-bleu" id="propositions">
       <h1>Propositions</h1>
     </div>
 
-    <h3>Propositions actives</h3>
+    <p><a href="assemblee.php#propositions" class="btn btn-primary btn-margin-left"
+        >Voir les propositions actives</a></p>
 
-    <?php if(count($proposalsPendingVotes)): ?>
-        <h4 class="well">Vote en cours</h4>
-        <?php renderElement('Proposal/proposal_active_list', array(
-                'proposalList' => $proposalsPendingVotes
-            )); ?>
-    <?php endif; ?>
-
-    <?php if(count($proposalsPendingDebate)): ?>
-        <h4 class="well">Débat en cours</h4>
-        <?php renderElement('Proposal/proposal_active_list', array(
-                'proposalList' => $proposalsPendingDebate
-            )); ?>
-    <?php endif; ?>
-
-    <?php if(count($proposalsPendingValidation)): ?>
-        <h4 class="well">En attente d'une validation du Conseil de l'OCGC</h4>
-        <?php renderElement('Proposal/proposal_active_list', array(
-                'proposalList' => $proposalsPendingValidation
-            )); ?>
-    <?php endif; ?>
-
-    <?php if( !count($proposalsPendingVotes) && !count($proposalsPendingDebate)
-           && !count($proposalsPendingValidation)): ?>
-        <div class="alert-block alert alert-info">Aucune proposition n'est préparée à l'Assemblée générale actuellement.</div>
-    <?php endif; ?>
+    <?php
+    // Display the paging information
+    echo '<div class="pagination pull-right" style="margin-top: 0; margin-right: 10px;"><ul>',
+        $prevlink,
+        "<li><span class='btn-small'>Page $page sur $pages</span></li>",
+        $nextlink,
+        '</ul></div>';
+    ?>
 
     <h3>Propositions déjà votées</h3>
+
     <?php if(count($proposalsFinished)): ?>
         <?php renderElement('Proposal/proposal_finished_list', array(
                 'proposalList' => $proposalsFinished
@@ -226,9 +197,14 @@ init();
         <p>Aucune proposition votée pour le moment.</p>
     <?php endif; ?>
 
-    <a class="btn btn-primary btn-margin-left" href="ocgc_all_proposals.php"
-        >Voir les propositions plus anciennes</a>
-    <p></p>
+    <?php
+    // Display the paging information
+    echo '<div class="pagination pull-right" style="margin-top: 0; margin-right: 10px;"><ul>',
+        $prevlink,
+        "<li><span class='btn-small'>Page $page sur $pages</span></li>",
+        $nextlink,
+        '</ul></div>';
+    ?>
 
     </section>
 
