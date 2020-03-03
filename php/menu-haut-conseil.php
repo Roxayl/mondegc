@@ -15,6 +15,7 @@
 <a class="btn btn-primary" href="liste-villes.php" title="Liste des villes du monde GC"><i class="icon-list icon-white"></i> Les villes</a>
 <a class="btn btn-primary" href="liste-membres.php" title="Liste des membres"><i class="icon-list icon-white"></i> Les membres</a>
 <a class="btn btn-primary" href="liste-communiques.php" title="Liste des communiqu&eacute;s"><i class="icon-list icon-white"></i> Les communiqu&eacute;s</a>
+<a class="btn btn-primary" href="gestion-pages.php" title="Gestion des contenus du site"><i class="icon-list icon-white"></i> Les pages</a>
 <div class="dropdown">
 <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" title="Ajouter un membre ou un pays"><i class="icon-plus icon-white"></i> <b class="caret"></b></a>
             <ul class="dropdown-menu">
