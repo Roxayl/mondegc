@@ -13,7 +13,17 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
     exit();
 }
 
+/** @var \GenCity\Monde\Page[] $allPages */
 $allPages = \GenCity\Monde\Page::getAllPages();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    foreach($allPages as $thisPage) {
+        $thisContent = $_POST['ch_page_' . $thisPage->this_id];
+        $thisPage->update($thisContent);
+    }
+    getErrorMessage('success', "Les pages ont été modifiées avec succès !");
+    $allPages = \GenCity\Monde\Page::getAllPages();
+}
 
 ?><!DOCTYPE html>
 <html lang="fr">
@@ -63,7 +73,31 @@ $allPages = \GenCity\Monde\Page::getAllPages();
     <h1>Gestion des pages</h1>
   </div>
   <section>
-    <div id="categories">
+    <div class="well" id="categories">
+
+        <?php renderElement('errormsgs'); ?>
+
+        <p>Bienvenue sur la page de gestion des pages (huhu...). Vous pouvez modifier des blocs de texte prédéfinis
+            via le panneau d'administration.</p>
+
+    <form method="POST">
+
+    <?php foreach($allPages as $thisPage): ?>
+
+        <div class="control-group">
+          <label class="control-label" for="ch_page_<?= $thisPage->this_id ?>">
+              <h3><?= $thisPage->this_id ?></h3>
+          </label>
+          <div class="controls">
+            <textarea name="ch_page_<?= $thisPage->this_id ?>" id="ch_page_<?= $thisPage->this_id ?>" class="wysiwyg" rows="15"><?= __s($thisPage->content) ?></textarea>
+          </div>
+        </div>
+
+    <?php endforeach; ?>
+
+    <input type="submit" value="Envoyer" class="btn btn-primary">
+
+    </form>
 
     </div>
   </section>
@@ -83,6 +117,9 @@ $allPages = \GenCity\Monde\Page::getAllPages();
 <script src="../assets/js/application.js"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
+<!-- EDITEUR -->
+<script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript" src="../assets/js/Editeur.js"></script>
  <script type="text/javascript">
       $(function() {
           $('[rel="clickover"]').clickover();})

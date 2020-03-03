@@ -18,7 +18,7 @@ class Page extends BaseModel {
 
         $return = array();
         while($row = mysql_fetch_assoc($query)) {
-            $return = new Page($row['this_id']);
+            $return[] = new Page($row['this_id']);
         }
         return $return;
 
