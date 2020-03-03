@@ -90,7 +90,7 @@ $totalPages_listemembres = ceil($totalRows_listemembres/$maxRows_listemembres)-1
 
   <!-- Page CONTENT
     ================================================== -->
-  <div class="titre-bleu"> <img src="../assets/img/IconesBDD/Bleu/100/Membre1_bleu.png">
+  <div class="titre-bleu">
     <h1>Liste des membres</h1>
   </div>
   <section>

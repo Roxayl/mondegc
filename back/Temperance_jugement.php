@@ -190,7 +190,7 @@ $_SESSION['last_work'] = "institut_economie.php";
   <section class="corps-page"> 
     <!-- Titre page
         ================================================== -->
-    <div id="titre_institut" class="titre-bleu anchor"> <img src="../assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
+    <div id="titre_institut" class="titre-bleu anchor">
       <h1>Projet Tempérance : salle de jugement</h1>
     </div>
     

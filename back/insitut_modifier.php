@@ -134,7 +134,7 @@ img.olTileImage {
 
   <!-- Page CONTENT
     ================================================== -->
-  <div class="titre-bleu"> <img src="../assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
+  <div class="titre-bleu">
     <h1>Modifier la description d'un Institut</h1>
   </div>
   <section>

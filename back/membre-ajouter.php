@@ -163,7 +163,7 @@ $totalRows_pays = mysql_num_rows($pays);
 ================================================== -->
 <div class="container corps-page">
   <?php include('../php/menu-haut-conseil.php'); ?>
-  <div class="titre-bleu"> <img src="../assets/img/IconesBDD/Bleu/100/Membre1_bleu.png" alt="ville">
+  <div class="titre-bleu">
     <h1>Cr&eacute;er un nouveau profil</h1>
   </div>
   <div class="row-fluid">

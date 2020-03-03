@@ -86,7 +86,7 @@ $totalPages_listvilles = ceil($totalRows_listvilles/$maxRows_listvilles)-1;
 <?php include('../php/menu-haut-conseil.php'); ?>
   <!-- Page CONTENT
     ================================================== -->
-  <div class="titre-bleu"> <img src="../assets/img/IconesBDD/Bleu/100/Ville1_bleu.png">
+  <div class="titre-bleu">
     <h1>Liste des villes</h1>
   </div>
   <section>

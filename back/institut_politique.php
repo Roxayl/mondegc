@@ -255,7 +255,7 @@ format: 'hex'});
   
   <!-- Liste des Communiqués
         ================================================== -->
-  <div id="titre_institut" class="titre-bleu anchor"> <img src="../assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
+  <div id="titre_institut" class="titre-bleu anchor">
     <h1>G&eacute;rer l'<?php echo $row_institut['ch_ins_nom']; ?></h1>
   </div>
   <!-- formulaire de modification instituts

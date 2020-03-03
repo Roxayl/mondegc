@@ -203,7 +203,7 @@ format: 'hex'});
     
     <!-- Titre page
         ================================================== -->
-    <div id="titre_institut" class="titre-bleu anchor"> <img src="../assets/img/IconesBDD/Bleu/100/ocgc_bleu.png">
+    <div id="titre_institut" class="titre-bleu anchor">
       <h1>Gérer le <?php echo $row_institut['ch_ins_nom']; ?></h1>
     </div>
     <!-- formulaire de modification instituts

@@ -89,7 +89,7 @@ $totalPages_ListPays = ceil($totalRows_ListPays/$maxRows_ListPays)-1;
 <?php include('../php/menu-haut-conseil.php'); ?>
   <!-- Page CONTENT
     ================================================== -->
-  <div class="titre-bleu"> <img src="../assets/img/IconesBDD/Bleu/100/Pays1_bleu.png">
+  <div class="titre-bleu">
     <h1>Liste des pays</h1>
   </div>
   <section>

@@ -86,7 +86,7 @@ $totalPages_listcommuniques = ceil($totalRows_listcommuniques/$maxRows_listcommu
 <?php include('../php/menu-haut-conseil.php'); ?>
   <!-- Page CONTENT
     ================================================== -->
-  <div class="titre-bleu"> <img src="../assets/img/IconesBDD/Bleu/100/Communique_bleu.png">
+  <div class="titre-bleu">
     <h1>Liste des communiqu&eacute;s</h1>
   </div>
   <section>
