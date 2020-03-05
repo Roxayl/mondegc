@@ -135,7 +135,7 @@ img.olTileImage {
   <!-- Page CONTENT
     ================================================== -->
   <div class="titre-bleu">
-    <h1>Modifier la description d'un Institut</h1>
+    <h1>Modifier la description d'un Comité</h1>
   </div>
   <section>
     <div id="categories">
@@ -143,7 +143,7 @@ img.olTileImage {
   <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="modifier_institut" Id="modifier_institut">
     <div class="alert alert-success">
       <button type="button" class="close" data-dismiss="alert">×</button>
-      Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; l'institut et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Mettez-le &agrave; jour.</div>
+      Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e au Comité et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Mettez-le &agrave; jour.</div>
     <!-- boutons cachés -->
     <input name="ch_ins_ID" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
     <input name="ch_ins_label" type="hidden" value="<?php echo $row_institut['ch_ins_label']; ?>">
@@ -157,7 +157,7 @@ img.olTileImage {
     
     <!-- Nom -->
     <div id="sprytextfield1" class="control-group">
-      <label class="control-label" for="ch_ins_nom">Nom de l'institut <a href="#" rel="clickover" title="Nom de l'institut" data-content="50 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
+      <label class="control-label" for="ch_ins_nom">Nom du Comité <a href="#" rel="clickover" title="Nom de l'institut" data-content="50 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
       <div class="controls">
         <input class="input-xlarge" type="text" id="ch_ins_nom" name="ch_ins_nom" value="<?php echo $row_institut['ch_ins_nom']; ?>">
         <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>
@@ -172,14 +172,14 @@ img.olTileImage {
     </div>
     <!-- Sigle -->
     <div id="sprytextfield2" class="control-group">
-      <label class="control-label" for="ch_ins_sigle">Sigle de l'institut <a href="#" rel="clickover" title="Sigle de l'institut" data-content="10 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
+      <label class="control-label" for="ch_ins_sigle">Sigle du Comité <a href="#" rel="clickover" title="Sigle de l'institut" data-content="10 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
       <div class="controls">
         <input class="input-xlarge" type="text" id="ch_ins_sigle" name="ch_ins_sigle" value="<?php echo $row_institut['ch_ins_sigle']; ?>">
         <span class="textfieldMaxCharsMsg">10 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>
     </div>
     <!-- Logo -->
     <div id="sprytextfield28" class="control-group">
-      <label class="control-label" for="ch_ins_logo">Logo de l'institut <a href="#" rel="clickover" title="Logo de l'institut" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com). L'image du logo sera automatiquement redimensionn&eacute;e en 250 pixel de large et 250 pixels de haut."><i class="icon-info-sign"></i></a></label>
+      <label class="control-label" for="ch_ins_logo">Logo du Comité <a href="#" rel="clickover" title="Logo de l'institut" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com). L'image du logo sera automatiquement redimensionn&eacute;e en 250 pixel de large et 250 pixels de haut."><i class="icon-info-sign"></i></a></label>
       <div class="controls">
         <input class="span9" type="text" id="ch_ins_logo" name="ch_ins_logo" value="<?php echo $row_institut['ch_ins_logo']; ?>" placeholder="">
         <br>
@@ -187,7 +187,7 @@ img.olTileImage {
     </div>
     <!-- Image -->
     <div id="sprytextfield4" class="control-group">
-      <label class="control-label" for="ch_ins_img">Image de l'institut <a href="#" rel="clickover" title="Image de l'institut" data-content="Mettez une image des bâtiments de l'institut. Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)."><i class="icon-info-sign"></i></a></label>
+      <label class="control-label" for="ch_ins_img">Image du Comité <a href="#" rel="clickover" title="Image de l'institut" data-content="Mettez une image des bâtiments de l'institut. Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)."><i class="icon-info-sign"></i></a></label>
       <div class="controls">
         <input class="span9" type="text" id="ch_ins_img" name="ch_ins_img" value="<?php echo $row_institut['ch_ins_img']; ?>" placeholder="">
         <br>

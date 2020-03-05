@@ -134,7 +134,7 @@ format: 'hex'});
   <div class="container">
     <div class="pull-right span5" style="text-align:right;">
       <p>&nbsp;</p>
-      <a href="economie.php" class="btn btn-primary">Retour Institut d'Economie</a> </div>
+      <a href="economie.php" class="btn btn-primary">Retour Comité d'Économie</a> </div>
     <div class="span5 align-left">
       <h2>Qu'est-ce que le projet Temp&eacute;rance&nbsp;?</h2>
       <p><em>"Le projet Temp&eacute;rance est propos&eacute;, comme son nom l'indique, pour  temp&eacute;rer les donn&eacute;es &eacute;conomiques et g&eacute;n&eacute;rales retranscrites par les  membres du forum GC et du site du m&ecirc;me nom. Le but est d'annoncer des  donn&eacute;es en ad&eacute;quation avec les villes ou les pays qui s'y rattachent et  qui sont pr&eacute;sent&eacute;s"</em></p>

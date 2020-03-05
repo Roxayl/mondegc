@@ -89,7 +89,7 @@ format: 'hex'});
   <div class="container">
     <div class="pull-right span5" style="text-align:right;">
       <p>&nbsp;</p>
-      <a href="economie.php" class="btn btn-primary">Retour Institut d'Economie</a> </div>
+      <a href="economie.php" class="btn btn-primary">Retour Comité d'Économie</a> </div>
     <div class="span5 align-left">
       <h2>Qu'est-ce qu'une Bourse mondiale ?</h2>
       <p><em>Votre Bourse mondiale est la vitrine mettant en valeur vos ressources obtenues grâce aux infrastructures et grâce à l'outil "Zoning" du Monde GC. Elle vous permettra d'obtenir des points et une tendance, définissant ainsi votre valeur en bourse, en fonction de votre activité économique et de l'activité des autres membres.</em></p>

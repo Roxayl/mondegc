@@ -186,7 +186,7 @@ $totalRows_pays = mysql_num_rows($pays);
             <?php if ($_SESSION['statut'] >= 30) { ?>
             <label class="radio" for="ch_use_prov_statut_3">
               <input type="radio" name="ch_use_prov_statut" value="20" id="ch_use_prov_statut_3">
-              Membre du Haut-Conseil <a href="#" rel="clickover" title="Haut-Conseil" data-content="Le membre du Haut-Conseil aura acc&egrave;s aux outils de mod&eacute;ration du Monde GC. Il pourra &eacute;galement alimenter les bases de donn&eacute;es au nom des instituts."><i class="icon-info-sign"></i></a></label>
+              Membre du Haut-Conseil <a href="#" rel="clickover" title="Haut-Conseil" data-content="Le membre du Haut-Conseil aura acc&egrave;s aux outils de mod&eacute;ration du Monde GC. Il pourra &eacute;galement alimenter les bases de donn&eacute;es au nom des comités."><i class="icon-info-sign"></i></a></label>
             <br>
             <label class="radio" for="ch_use_prov_statut_4">
               <input type="radio" name="ch_use_prov_statut" value="30" id="ch_use_statut_3">

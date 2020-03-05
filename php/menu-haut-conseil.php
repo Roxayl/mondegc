@@ -1,7 +1,7 @@
 <div class="navbar-haut-conseil">
 <a class="btn btn-primary" href="Haut-Conseil.php" title="Page d'acceuil du Haut Conseil">Haut-Conseil</a>
 <div class="dropdown">
-<a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" title="Institutions de r&eacute;gulation du monde GC"><i class="icon-edit icon-white"></i> Les instituts <b class="caret"></b></a>
+<a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" title="Institutions de r&eacute;gulation du monde GC"><i class="icon-edit icon-white"></i> Les comités <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="../back/institut_OCGC.php">OCGC</a></li>
               <li><a href="../back/institut_geographie.php">G&eacute;ographie</a></li>

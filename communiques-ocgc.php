@@ -49,7 +49,7 @@ $queryString_communiquesPays = sprintf("&totalRows_communiquesPays=%d%s", $total
 <!-- head Html -->
 <head>
 <meta charset="iso-8859-1">
-<title>Monde GC- &eacute;v&eacute;nements</title>
+<title>Monde GC - Communiqués des comités</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -131,12 +131,12 @@ img.olTileImage {
     ================================================== -->
     <section>
     <div class="titre-vert anchor" id="titre">
-      <h1>Communiqués des instituts</h1>
+      <h1>Communiqués des comités</h1>
     </div>
 
     <ul class="breadcrumb">
       <li><a href="OCGC.php">OCGC</a> <span class="divider">/</span></li>
-      <li class="active">Communiqués des instituts</li>
+      <li class="active">Communiqués des comités</li>
     </ul>
 
     <?php do { ?>

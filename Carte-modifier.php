@@ -390,15 +390,15 @@ init();
     <h1>Modifier la carte du monde GC</h1>
   </div>
   <div class="well">
-    <p><strong>Chaque zones ajout&eacute;e sur votre emplacement va avoir une inlfuence sur l'&eacute;conomie de votre pays et modifier vos ressources.</strong> Vous pourvez consulter sur cette page l'influence de chaque zone. N'oubliez pas d'enregistrer syst&eacute;matiquement &agrave; chaque fois que vous modifier ou ajoutez une zone. Vous ne pouvez modifier ou ajouter qu'une seule zone &agrave; la fois.</p>
+    <p><strong>Chaque zone ajout&eacute;e sur votre emplacement va avoir une influence sur l'&eacute;conomie de votre pays et modifier vos ressources.</strong> Vous pouvez consulter sur cette page l'influence de chaque zone. N'oubliez pas d'enregistrer syst&eacute;matiquement &agrave; chaque fois que vous modifiez ou ajoutez une zone. Vous ne pouvez modifier ou ajouter qu'une seule zone &agrave; la fois.</p>
     <ol>
-      <li>Vous devez d&eacute;siner des zones et des routes uniquement dans votre emplacement. Les routes doivent se terminer &agrave; la fronti&egrave;re. A vous de solliciter vos voisins pour qu'ils continuent les trac&eacute;s de leurs c&ocirc;t&eacute;s.</li>
+      <li>Vous devez dessiner des zones et des routes uniquement dans votre emplacement. Les routes doivent se terminer &agrave; la fronti&egrave;re. A vous de solliciter vos voisins pour qu'ils continuent les trac&eacute;s de leurs c&ocirc;t&eacute;s.</li>
       <li>Les zones qui se chevauchent sont interdites.</li>
       <li>Les zones dont les c&ocirc;t&eacute;s se croisent sont interdites.</li>
       <li>Les zones doivent &ecirc;tre trac&eacute;es sur les terres. Il n'existe pas de zone maritimes. Seule exeption : les r&eacute;gions qui peuvent &ecirc;tre trac&eacute;es sur les territoires maritimes en respectant la forme de l'emplacement au large des c&ocirc;tes dans des proportions raisonnables</li>
       <li>Il est possible de tracer des routes maritimes &agrave; l'int&eacute;rieur de votre pays ou pour des itin&eacute;raires internationaux. Les routes maritimes sont trac&eacute;es par l'Institut de G&eacute;c&eacute;en de G&eacute;ographie. Pour avoir une route maritime, vous devez en faire la demande sur le forum. Pour des itini&eacute;raires internationaux, les deux pays doivent faire cette demande.</li>
       <li>En aucun cas, le trac&eacute; d'une zone peut &ecirc;tre le pr&eacute;texte &agrave; la revendication d'un territoire. Le joueur doit d'abord s'assurer qu'il poss&egrave;de bien les terres avant d'y tracer des &eacute;l&eacute;ments.</li>
-      <li>Tout manquement &agrave; ces r&egrave;gles peut faire l'objet d'une mod&eacute;ration de la part de l'institut G&eacute;c&eacute;en de G&eacute;ographie ou du Haut-Conseil.</li>
+      <li>Tout manquement &agrave; ces r&egrave;gles peut faire l'objet d'une mod&eacute;ration de la part du Comité de G&eacute;ographie ou du Conseil de l'OCGC.</li>
     </ol>
   <!-- Repartition des ressources  -->
   <div id="titre" class="titre-vert anchor">
