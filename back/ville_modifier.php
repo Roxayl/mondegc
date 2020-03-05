@@ -744,6 +744,7 @@ include('../php/communiques-back.php'); ?>
         <input name="ville_ID" type="hidden" value="<?php echo $row_ville['ch_vil_ID']; ?>">
         <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une infrastructure</button>
       </form>
+          <a href="infra_select_group.php" class="btn btn-primary">Ajouter une infra (bis)</a>
       <?php } ?>
       <!-- Modal et script -->
       <div class="modal container fade" id="#Modal-Monument"></div>
