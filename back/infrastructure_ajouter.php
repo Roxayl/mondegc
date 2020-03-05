@@ -90,13 +90,19 @@ $colname_inf_off_choisie = "-1";
 if (isset($_POST['liste_inf_officielles'])) {
 $colname_inf_off_choisie = $_POST['liste_inf_officielles'];
 } else {
-$colname_inf_off_choisie = $row_liste_inf_off['ch_inf_off_id'];
+$colname_inf_off_choisie = -1;
 } 
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_inf_off_choisie = sprintf("SELECT * FROM infrastructures_officielles WHERE ch_inf_off_id = %s", GetSQLValueString($colname_inf_off_choisie, "int"));
 $inf_off_choisie = mysql_query($query_inf_off_choisie, $maconnexion) or die(mysql_error());
 $row_inf_off_choisie = mysql_fetch_assoc($inf_off_choisie);
 $totalRows_inf_off_choisie = mysql_num_rows($inf_off_choisie);
+
+if($totalRows_liste_inf_off == 0) {
+    getErrorMessage('error', "Il n'y a pas d'infrastructure de ce type.");
+    header('Location: infra_select_group.php?ville_id=' . __s($thisVille->get('ch_vil_ID')));
+    exit;
+}
 
 ?>
 <!DOCTYPE html>
@@ -118,6 +124,9 @@ $totalRows_inf_off_choisie = mysql_num_rows($inf_off_choisie);
 <link href="../SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/GenerationCity.css" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -182,16 +191,19 @@ img.olTileImage {
       <div class="span6 well">
         
         <!-- choix infrastructure -->
-        <form action="infrastructure_ajouter.php#infrastructure" method="POST" class="form-inline">
+        <form action="infrastructure_ajouter.php#infrastructure" method="POST" id="form-infra-list"
+              class="form-inline">
           <div id="spryselect1" class="control-group">
           <div class="control-label">Choisissez votre infrastructure <a href="#" rel="clickover" title="Infrastructures de la liste officielle" data-content="Vous devez choisir une infrastructure dans la liste officielle. Chaque nouvelle infrastructure va modifier les valeurs de votre économie"><i class="icon-info-sign"></i></a></div>
           <div class="controls">
-          <select name="liste_inf_officielles" id="liste_inf_officielles" onchange="this.form.submit()">
+          <select name="liste_inf_officielles" id="liste_inf_officielles" placeholder="Rechercher une infrastructure...">
+            <option value=""></option>
             <?php do { ?>
             <option value="<?php echo $row_liste_inf_off['ch_inf_off_id']; ?>" <?php if ($colname_inf_off_choisie == $row_liste_inf_off['ch_inf_off_id']) {?>selected<?php } ?>><?php echo $row_liste_inf_off['ch_inf_off_nom']; ?></option>
             <?php } while ($row_liste_inf_off = mysql_fetch_assoc($liste_inf_off)); ?>
           </select>
       <input name="ville_ID" type="hidden" value="<?php echo $ville_ID; ?>">
+      <input name="infra_group_id" type="hidden" value="<?= $infraGroup->get('id') ?>">
         <span class="selectRequiredMsg">Sélectionnez un élément.</span></div>
     </div>
         </form>
@@ -324,6 +336,9 @@ img.olTileImage {
 <script src="../SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
 <script src="../SpryAssets/SpryValidationTextarea.js" type="text/javascript"></script>
 <script src="../SpryAssets/SpryValidationRadio.js" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
 var sprytextfield = new Spry.Widget.ValidationTextField("sprytextfield", "url", {maxChars:250, validateOn:["change"], isRequired:true});
 var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "url", {maxChars:250, validateOn:["change"], isRequired:false});
@@ -332,4 +347,14 @@ var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "url"
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "url", {maxChars:250, validateOn:["change"], isRequired:false});
 var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6", "url", {maxChars:250, validateOn:["change"], isRequired:true});
 var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {minChars:2, validateOn:["change"], maxChars:400, isRequired:false, useCharacterMasking:false});
+
+$(document).ready(function () {
+  $('select').selectize({
+      sortField: 'text',
+      dropdownParent: "body",
+      onChange: function() {
+          $('#form-infra-list').submit();
+      }
+  });
+});
 </script>

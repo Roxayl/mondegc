@@ -96,6 +96,8 @@ img.olTileImage {
       <li class="active">Ajouter une infrastructure</li>
     </ul>
 
+    <?php renderElement('errormsgs'); ?>
+
     <div class="alert alert-success">
       <button type="button" class="close" data-dismiss="alert">×</button>
       Ce formulaire vous permet d'ajouter une infrastructure &agrave; votre ville. Les infrastructures vous permettent de  construire l'&eacute;conomie de votre pays. L'existence de votre infrastructure doit &ecirc;tre prouv&eacute;e par une image. Avant d'&ecirc;tre comptabilis&eacute;e, votre infrastructure sera mod&eacute;r&eacute;e par les juges du projet <a href="../economie.php" title="Lien vers l'Institut Economique Gécéen">Tempérance</a>
@@ -104,12 +106,12 @@ img.olTileImage {
     <div class="well">
       <ul class="thumbnails">
       <?php /** @var \GenCity\Monde\Temperance\InfraGroup $row */
-      foreach($infraGroupList as $row): ?>
+      foreach($infraGroupList as $key => $row): ?>
 
           <li class="span4">
             <div class="thumbnail">
+              <img src="http://vasel.yt/wiki/images/b/bd/Abraxas_vue_officielle.jpg" data-src="holder.js/300x200" alt="">
               <h3><?= __s($row->get('nom_groupe')) ?></h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
               <form action="infrastructure_ajouter.php" method="post">
                 <input name="paysID" type="hidden" value="<?= $thisVille->get('ch_vil_paysID') ?>">
                 <input name="ville_ID" type="hidden" value="<?= $thisVille->get('ch_vil_ID') ?>">
@@ -118,6 +120,11 @@ img.olTileImage {
               </form>
             </div>
           </li>
+
+          <?php if(($key + 1) % 3 === 0): ?>
+        </ul>
+        <ul class="thumbnails">
+          <?php endif; ?>
 
       <?php endforeach; ?>
 
