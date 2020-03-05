@@ -29,6 +29,16 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
+if(!isset($_REQUEST['infra_group_id'])) {
+    throw new InvalidArgumentException("Veuillez spécifier un groupe d'infra.");
+}
+
+$infraGroup = new \GenCity\Monde\Temperance\InfraGroup($_REQUEST['infra_group_id']);
+$thisVille = new \GenCity\Monde\Ville($ville_ID);
+$thisPays = new \GenCity\Monde\Pays($thisVille->get('ch_vil_paysID'));
+/** @var \GenCity\Monde\User $thisUser */
+$thisUser = $_SESSION['userObject'];
+
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_infrastructure")) {
   $insertSQL = sprintf("INSERT INTO infrastructures (ch_inf_label, ch_inf_off_id, ch_inf_villeid, ch_inf_date, ch_inf_statut, ch_inf_lien_image, ch_inf_lien_image2, ch_inf_lien_image3, ch_inf_lien_image4, ch_inf_lien_image5, ch_inf_lien_forum, ch_inf_commentaire, ch_inf_juge, ch_inf_commentaire_juge) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['ch_inf_label'], "text"),
@@ -65,7 +75,12 @@ $totalRows_users = mysql_num_rows($users);
 
 //requete liste infrastructures officielles
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_liste_inf_off = "SELECT * FROM infrastructures_officielles ORDER BY ch_inf_off_nom ASC";
+$query_liste_inf_off = sprintf(
+    "SELECT infrastructures_officielles.* FROM infrastructures_officielles
+     JOIN infrastructures_officielles_groupes ON ID_infra_officielle = ch_inf_off_id
+     WHERE ID_groupes = %s
+     ORDER BY ch_inf_off_nom ASC",
+    GetSQLValueString($infraGroup->get('id'), 'int'));
 $liste_inf_off = mysql_query($query_liste_inf_off, $maconnexion) or die(mysql_error());
 $row_liste_inf_off = mysql_fetch_assoc($liste_inf_off);
 $totalRows_liste_inf_off = mysql_num_rows($liste_inf_off);
@@ -138,7 +153,7 @@ img.olTileImage {
     ================================================== -->
 <?php include('../php/navbarback.php'); ?>
 </header>
-<div class="container" id="overview"> 
+<div class="container corps-page" id="overview">
   
   <!-- Docs nav
     ================================================== -->
@@ -148,13 +163,23 @@ img.olTileImage {
     <!-- Moderation
      ================================================== -->
     <div id="infrastructure" class="titre-vert anchor">
-      <h1>Ajouter une infrastructure</h1>
+      <h1>Ajouter une infrastructure<br>
+        <small><img src="<?= __s((empty($thisVille->get('ch_vil_armoiries')) ? '../assets/img/imagesdefaut/blason.jpg' : $thisVille->get('ch_vil_armoiries')) ) ?>" style="height: 24px; width: 24px;"> Ville de <?= __s($thisVille->get('ch_vil_nom')) ?></small></h1>
     </div>
+
+    <ul class="breadcrumb">
+      <li><a href="page_pays_back.php?paysID=<?= $thisVille->get('ch_vil_paysID') ?>&userID=<?= $thisUser->get('ch_use_id') ?>"
+          >Gestion du pays : <?= __s($thisPays->get('ch_pay_nom')) ?></a> <span class="divider">/</span></li>
+      <li><a href="ville_modifier.php?ville-ID=<?= $thisVille->get('ch_vil_ID') ?>"
+          >Gestion de la ville : <?= __s($thisVille->get('ch_vil_nom')) ?></a> <span class="divider">/</span></li>
+      <li class="active">Ajouter une infrastructure</li>
+    </ul>
+
     <div class="alert alert-success">
       <button type="button" class="close" data-dismiss="alert">×</button>
-      Ce formulaire vous permet d'ajouter une infrastructure &agrave; votre ville. Les infrastructures vous permettent de  construire l'&eacute;conomie de votre pays. L'&eacute;xistence de votre infrastructure doit &ecirc;tre prouv&eacute;e par une image. Avant d'&ecirc;tre comptabilis&eacute;e, votre infrastructure sera mod&eacute;r&eacute;e par les juges du projet <a href="../economie.php" title="Lien vers l'Institut Economique Gécéen">Tempérance</a></div>
+      Ce formulaire vous permet d'ajouter une infrastructure &agrave; votre ville. Les infrastructures vous permettent de  construire l'&eacute;conomie de votre pays. L'existence de votre infrastructure doit &ecirc;tre prouv&eacute;e par une image. Avant d'&ecirc;tre comptabilis&eacute;e, votre infrastructure sera mod&eacute;r&eacute;e par les juges du projet <a href="../economie.php" title="Lien vers l'Institut Economique Gécéen">Tempérance</a></div>
     <div class="row-fluid">
-      <div class="span6  well"> 
+      <div class="span6 well">
         
         <!-- choix infrastructure -->
         <form action="infrastructure_ajouter.php#infrastructure" method="POST" class="form-inline">
@@ -241,7 +266,7 @@ img.olTileImage {
     </form>
     <p>&nbsp;</p>
   </div>
-  <div class="span6">
+  <div class="span6 well" style="background-color: #EDEDED;">
     <div class="row-fluid">
       <div class="span2 img-listes img-avatar"> <img src="<?php echo $row_inf_off_choisie['ch_inf_off_icone']; ?>" alt="icone <?php echo $row_inf_off_choisie['ch_inf_off_nom']; ?>"> </div>
       <div class="span10">

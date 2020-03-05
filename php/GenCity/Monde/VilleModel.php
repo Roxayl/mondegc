@@ -32,7 +32,7 @@ class VilleModel implements ModelStructureInterface {
 
     public function __get($prop) {
 
-        if(!isset($this->info[$prop]))
+        if(!isset($this->info[$prop]) && $this->info[$prop] !== null)
             throw new \Exception("La propriété $prop n'est pas définie pour la classe " . __CLASS__);
         return $this->info[$prop];
 

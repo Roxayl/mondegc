@@ -88,9 +88,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_ville")) {
 
 //requete Villes
 
-if (isset($_POST['ville-ID'])) {
-	$_SESSION['ville_encours'] = $_POST['ville-ID'];
-	unset($_POST['ville-ID']);
+if (isset($_REQUEST['ville-ID'])) {
+	$_SESSION['ville_encours'] = $_REQUEST['ville-ID'];
+	unset($_REQUEST['ville-ID']);
 }
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_ville = sprintf("SELECT * FROM villes INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($_SESSION['ville_encours'], "int"));
@@ -730,21 +730,25 @@ include('../php/communiques-back.php'); ?>
             <?php if ($pageNum_infrastructure < $totalPages_infrastructure) { // Show if not last page ?>
             <a class="btn" href="<?php printf("%s?pageNum_infrastructure=%d%s#mes-infrastructures", $currentPage, min($totalPages_infrastructure, $pageNum_infrastructure + 1), $queryString_infrastructure); ?>"> <i class="icon-forward"></i></a>
             <?php } // Show if not last page ?></p>
-              <form action="infrastructure_ajouter.php" method="post">
+              <!--<form action="infrastructure_ajouter.php" method="post">
                 <input name="paysID" type="hidden" value="<?php echo $row_ville['ch_vil_paysID']; ?>">
                 <input name="ville_ID" type="hidden" value="<?php echo $row_ville['ch_vil_ID']; ?>">
                 <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une infrastructure</button>
-              </form></td>
+              </form>-->
+              <a href="infra_select_group.php?ville_id=<?= $row_ville['ch_vil_ID'] ?>"
+                 class="btn btn-primary btn-margin-left">Ajouter une infra</a>
+            </td>
           </tr>
         </tfoot>
       </table>
       <?php } else { ?>
-      <form action="infrastructure_ajouter.php" method="post">
+      <!--<form action="infrastructure_ajouter.php" method="post">
         <input name="paysID" type="hidden" value="<?php echo $row_ville['ch_vil_paysID']; ?>">
         <input name="ville_ID" type="hidden" value="<?php echo $row_ville['ch_vil_ID']; ?>">
         <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une infrastructure</button>
-      </form>
-          <a href="infra_select_group.php" class="btn btn-primary">Ajouter une infra (bis)</a>
+      </form>-->
+          <a href="infra_select_group.php?ville_id=<?= $row_ville['ch_vil_ID'] ?>"
+             class="btn btn-primary btn-margin-left">Ajouter une infrastructure</a>
       <?php } ?>
       <!-- Modal et script -->
       <div class="modal container fade" id="#Modal-Monument"></div>

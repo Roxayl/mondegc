@@ -13,6 +13,13 @@ if (!($_SESSION['statut'])) {
 
 $infraGroupList = \GenCity\Monde\Temperance\InfraGroup::getAll();
 
+$thisVille = new \GenCity\Monde\Ville($_GET['ville_id']);
+
+$thisPays = new \GenCity\Monde\Pays($thisVille->get('ch_vil_paysID'));
+
+/** @var \GenCity\Monde\User $thisUser */
+$thisUser = $_SESSION['userObject'];
+
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
@@ -77,8 +84,18 @@ img.olTileImage {
     <!-- Moderation
      ================================================== -->
     <div id="infrastructure" class="titre-vert anchor">
-      <h1>Ajouter une infrastructure</h1>
+      <h1>Ajouter une infrastructure<br>
+        <small><img src="<?= __s((empty($thisVille->get('ch_vil_armoiries')) ? '../assets/img/imagesdefaut/blason.jpg' : $thisVille->get('ch_vil_armoiries')) ) ?>" style="height: 24px; width: 24px;"> Ville de <?= __s($thisVille->get('ch_vil_nom')) ?></small></h1>
     </div>
+
+    <ul class="breadcrumb">
+      <li><a href="page_pays_back.php?paysID=<?= $thisVille->get('ch_vil_paysID') ?>&userID=<?= $thisUser->get('ch_use_id') ?>"
+          >Gestion du pays : <?= __s($thisPays->get('ch_pay_nom')) ?></a> <span class="divider">/</span></li>
+      <li><a href="ville_modifier.php?ville-ID=<?= $thisVille->get('ch_vil_ID') ?>"
+          >Gestion de la ville : <?= __s($thisVille->get('ch_vil_nom')) ?></a> <span class="divider">/</span></li>
+      <li class="active">Ajouter une infrastructure</li>
+    </ul>
+
     <div class="alert alert-success">
       <button type="button" class="close" data-dismiss="alert">×</button>
       Ce formulaire vous permet d'ajouter une infrastructure &agrave; votre ville. Les infrastructures vous permettent de  construire l'&eacute;conomie de votre pays. L'existence de votre infrastructure doit &ecirc;tre prouv&eacute;e par une image. Avant d'&ecirc;tre comptabilis&eacute;e, votre infrastructure sera mod&eacute;r&eacute;e par les juges du projet <a href="../economie.php" title="Lien vers l'Institut Economique Gécéen">Tempérance</a>
@@ -86,12 +103,19 @@ img.olTileImage {
 
     <div class="well">
       <ul class="thumbnails">
-      <?php foreach($infraGroupList as $row): ?>
+      <?php /** @var \GenCity\Monde\Temperance\InfraGroup $row */
+      foreach($infraGroupList as $row): ?>
 
           <li class="span4">
             <div class="thumbnail">
-              <h3><?= __s($row->nom_groupe) ?></h3>
+              <h3><?= __s($row->get('nom_groupe')) ?></h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <form action="infrastructure_ajouter.php" method="post">
+                <input name="paysID" type="hidden" value="<?= $thisVille->get('ch_vil_paysID') ?>">
+                <input name="ville_ID" type="hidden" value="<?= $thisVille->get('ch_vil_ID') ?>">
+                <input name="infra_group_id" type="hidden" value="<?= $row->get('id') ?>">
+                <button class="btn btn-primary btn-margin-left" type="submit">Choisir...</button>
+              </form>
             </div>
           </li>
 
