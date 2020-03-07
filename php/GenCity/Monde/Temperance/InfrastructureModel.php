@@ -4,9 +4,9 @@ namespace GenCity\Monde\Temperance;
 use Squirrel\ModelStructureInterface;
 
 
-class InfraGroupModel implements ModelStructureInterface {
+class InfrastructureModel implements ModelStructureInterface {
 
-    static $tableName = 'infrastructures_groupes';
+    static $tableName = 'infrastructures';
     private $info = array();
 
     public function __construct($data = null) {
@@ -21,7 +21,7 @@ class InfraGroupModel implements ModelStructureInterface {
 
     private function populate($id) {
 
-        $query = mysql_query(sprintf('SELECT * FROM infrastructures_groupes WHERE id = %s',
+        $query = mysql_query(sprintf('SELECT * FROM ' . self::$tableName . ' WHERE ch_inf_id %s',
             GetSQLValueString($id, 'int')));
         $result = mysql_fetch_assoc($query);
         return $result;
@@ -41,7 +41,7 @@ class InfraGroupModel implements ModelStructureInterface {
 
     public function __get($prop) {
 
-        if(!isset($this->info[$prop]))
+        if(!isset($this->info[$prop]) && $this->info[$prop] !== null)
             throw new \Exception("La propriété $prop n'est pas définie pour la classe " . __CLASS__);
         return $this->info[$prop];
 

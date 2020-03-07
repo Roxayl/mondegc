@@ -6,6 +6,16 @@ mysql_select_db($database_maconnexion, $maconnexion);
 
 $queries = array();
 
+// Groupes d'infra
+$queries[] = "alter table infrastructures_groupes
+	add url_image varchar(191) not null";
+$queries[] = "alter table infrastructures_groupes
+	add `order` int default 1 not null";
+$queries[] = "alter table infrastructures_groupes
+	add created datetime not null";
+
+$queries[] = 'UPDATE infrastructures_groupes SET created = NOW()';
+
 // Table pages
 $queries[] = "create table if not exists pages
 (

@@ -208,13 +208,14 @@ img.olTileImage {
     </div>
         </form>
     <!-- Debut formulaire -->
-    <form action="<?php echo $editFormAction; ?>" method="POST" class="" name="ajout_infrastructure" Id="ajout_infrastructure" onsubmit='' >
+    <form action="<?php echo $editFormAction; ?>" method="POST" class="" name="ajout_infrastructure" Id="ajout_infrastructure">
       
       <!-- Bouton cachés -->
       <input name="ch_inf_villeid" type="hidden" value="<?php echo $ville_ID; ?>">
       <input name="ch_inf_label" type="hidden" value="infrastructure">
       <input name="ch_inf_off_id" type="hidden" value="<?php echo $colname_inf_off_choisie; ?>">
       <input name="ch_inf_juge" type="hidden" value="">
+      <input name="infra_group_id" type="hidden" value="<?= $infraGroup->get('id') ?>">
       <?php 
 				  $now= date("Y-m-d G:i:s");?>
       <input name="ch_inf_date" type="hidden" value="<?php echo $now; ?>" >
