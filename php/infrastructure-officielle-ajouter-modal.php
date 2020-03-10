@@ -27,6 +27,14 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-inf_off")) {
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
+  $last_id = mysql_insert_id();
+  $insert_group = mysql_query(sprintf('INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle) VALUES(%s, %s)',
+      GetSQLValueString($_POST['groupe_infra']),
+      GetSQLValueString($last_id)
+  ));
+
+  getErrorMessage('success', "Une infrastructure officielle a été ajoutée !");
+
   $insertGoTo = '../back/institut_economie.php';
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
@@ -35,6 +43,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-inf_off")) {
   $adresse = $insertGoTo .'#liste-infrastructures-officielles';
   header(sprintf("Location: %s", $adresse));
 }
+
+// Obtenir tous les groupes d'infrastructures.
+$query_infra_group = 'SELECT * FROM infrastructures_groupes';
+$infra_group = mysql_query($query_infra_group, $maconnexion);
+
 ?>
 
 <!-- Modal Header-->
@@ -65,6 +78,18 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-inf_off")) {
         <input class="input-xxlarge" type="text" id="ch_inf_off_icone" name="ch_inf_off_icone" value="">
         <br />
       <span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
+    </div>
+    <!-- Groupe d'infrastructure -->
+    <div id="sprytextfield1" class="control-group">
+      <label class="control-label" for="groupe_infra">Groupe d'infrastructure</label>
+      <div class="controls">
+          <select name="groupe_infra" id="groupe_infra">
+              <?php while($row_infra_group = mysql_fetch_assoc($infra_group)): ?>
+                <option value="<?= $row_infra_group['id'] ?>"><?= __s($row_infra_group['nom_groupe']) ?>
+                </option>
+              <?php endwhile; ?>
+          </select>
+        <br /></div >
     </div>
     <!-- Règles -->
     <div id="sprytextarea1" class="control-group">

@@ -5,6 +5,8 @@ use Squirrel\BaseModel;
 
 class InfraOfficielle extends BaseModel {
 
+    private $infraGroup = null;
+
     public function __construct($data = null) {
 
         $this->model = new InfraOfficielleModel($data);
@@ -26,6 +28,31 @@ class InfraOfficielle extends BaseModel {
         }
 
         return $return;
+
+    }
+
+    public function getGroup() {
+
+        if($this->infraGroup === null) {
+            $sql = sprintf("SELECT ig.* FROM infrastructures_groupes ig
+              JOIN infrastructures_officielles_groupes iog ON  iog.ID_groupes = ig.id
+              WHERE ID_infra_officielle = %s",
+                GetSQLValueString($this->get('ch_inf_off_id')));
+            $query = mysql_query($sql) or die(mysql_error());
+            $result = mysql_fetch_assoc($query);
+            if($result)
+                $this->infraGroup = new InfraGroup($result);
+        }
+        return $this->infraGroup;
+
+    }
+
+    public function hasGroup() {
+
+        if($this->getGroup() !== null) {
+            return true;
+        }
+        return false;
 
     }
 

@@ -216,6 +216,9 @@ format: 'hex'});
       <button class="btn btn-primary" type="submit" title="modifier les informations sur l'institut"><i class="icon-edit icon-white"></i> Modifier description</button>
     </form>
     <div class="clearfix"></div>
+
+    <?php renderElement('errormsgs'); ?>
+
     <!-- Liste des temperances
      ================================================== -->
     <div class="row-fluid">
@@ -433,7 +436,9 @@ include('../php/communiques-back.php'); ?>
           </form>
         </div>
         <ul class="listes">
-          <?php do { ?>
+          <?php do {
+
+            $thisInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($row_liste_infra_officielles['ch_inf_off_id']); ?>
             <li class="row-fluid"> 
               <!-- ICONE infrastructures -->
               <div class="span2"><img src="<?php echo $row_liste_infra_officielles['ch_inf_off_icone']; ?>" alt="icone <?php echo $row_liste_infra_officielles['ch_inf_off_nom']; ?>"></div>
@@ -443,7 +448,14 @@ include('../php/communiques-back.php'); ?>
                 <a class="pull-right" href="../php/infrastructure-officielle-supprimmer-modal.php?infrastructure_off=<?php echo $row_liste_infra_officielles['ch_inf_off_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer cette infrastructure"><i class="icon-remove"></i></a> <a class="pull-right" href="../php/infrastructure-officielle-modifier-modal.php?infrastructure_off=<?php echo $row_liste_infra_officielles['ch_inf_off_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="modifier cette infrastructure"><i class="icon-pencil"></i></a> 
                 <!-- Desc categorie -->
                 <h4><?php echo $row_liste_infra_officielles['ch_inf_off_nom']; ?></h4>
+
+                <?php if($thisInfraOff->hasGroup()): ?>
+                <p><strong><?= $thisInfraOff->getGroup()->get('nom_groupe') ?></strong></p>
+                <?php else: ?>
+                <p><i style="color: red;">Pas de groupe d'infrastructure. Cette infrastructure n'apparaît pas dans la page d'ajout d'infrastructure.</i></p>
+                <?php endif; ?>
                 <p><?php echo $row_liste_infra_officielles['ch_inf_off_desc']; ?></p>
+
                 <div class="row-fluid">
                   <div class="span3 icone-ressources"> <img src="../assets/img/ressources/budget.png" alt="icone Budget">
                     <p>Budget&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_budget']; ?></strong></p>

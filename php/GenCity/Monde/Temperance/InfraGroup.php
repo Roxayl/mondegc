@@ -65,12 +65,14 @@ class InfraGroup extends BaseModel {
     public function delete() {
 
         $infraList = Infrastructure::getListFromGroup($this);
+        $infraOfficielle = InfraOfficielle::getListFromGroup($this);
 
-        if(count($infraList) > 0) {
+        if(count($infraList) > 0 || count($infraOfficielle) > 0) {
             getErrorMessage("error", "Vous ne pouvez pas supprimer ce groupe
-                d'infrastructure car il existe des infrastructures appartenant à ce groupe
-                d'infrastructures. Assurez-vous qu'aucune infrastructure officielle n'est affiliée
-                à ce groupe avant de continuer.");
+                d'infrastructure car il existe des <strong>infrastructures</strong> ou des
+                <strong>infrastructures officielles</strong> appartenant à ce groupe d'infrastructures.
+                Assurez-vous qu'aucune <strong>infrastructure</strong> ou <strong>infrastructure
+                officielle</strong> n'est affiliée à ce groupe avant de continuer.");
         } else {
 
             $query = sprintf("DELETE FROM infrastructures_groupes WHERE id = %s",

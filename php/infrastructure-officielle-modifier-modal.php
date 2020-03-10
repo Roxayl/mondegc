@@ -36,6 +36,8 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
       GetSQLValueString($_POST['ch_inf_off_id'])
   ));
 
+  getErrorMessage('success', "Une infrastructure officielle a été modifiée !");
+
   $updateGoTo = "../back/institut_economie.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
@@ -55,7 +57,7 @@ if (isset($_GET['infrastructure_off'])) {
   $colname_infra_officielles = $_GET['infrastructure_off'];
 }
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_infra_officielles = sprintf("SELECT * FROM  infrastructures_officielles WHERE ch_inf_off_id = %s", GetSQLValueString($colname_infra_officielles, "int"));
+$query_infra_officielles = sprintf("SELECT * FROM infrastructures_officielles WHERE ch_inf_off_id = %s", GetSQLValueString($colname_infra_officielles, "int"));
 $infra_officielles = mysql_query($query_infra_officielles, $maconnexion) or die(mysql_error());
 $row_infra_officielles = mysql_fetch_assoc($infra_officielles);
 $totalRows_infra_officielles = mysql_num_rows($infra_officielles);
@@ -112,7 +114,7 @@ if(!empty($row_infra_officielles_group)) {
       <div class="controls">
           <select name="groupe_infra" id="groupe_infra">
               <?php while($row_infra_group = mysql_fetch_assoc($infra_group)): ?>
-                <option value="<?= $row_infra_group['id'] ?>" <?= $selected_infra_group == $row_infra_group['id'] ? 'selected' : '' ?>><?= $row_infra_group['nom_groupe'] ?>
+                <option value="<?= $row_infra_group['id'] ?>" <?= $selected_infra_group == $row_infra_group['id'] ? 'selected' : '' ?>><?= __s($row_infra_group['nom_groupe']) ?>
                 </option>
               <?php endwhile; ?>
           </select>
