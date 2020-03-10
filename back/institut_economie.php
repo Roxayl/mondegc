@@ -113,11 +113,14 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 }
 $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officielles=%d%s", $totalRows_liste_infra_officielles, $queryString_liste_infra_officielles);
 
+// Groupes d'infra
+/** @var \GenCity\Monde\Temperance\InfraGroup[] $infraGroupList */
+$infraGroupList = \GenCity\Monde\Temperance\InfraGroup::getAll();
 
 
 $_SESSION['last_work'] = "institut_economie.php";
-?>
-<!DOCTYPE html>
+
+?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
 <head>
@@ -362,6 +365,49 @@ $com_element_id = 5;
 include('../php/communiques-back.php'); ?>
       </div>
     </div>
+
+
+    <!-- Groupe d'infrastructures
+     ================================================== -->
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="titre-gris anchor" id="groupe-infra">
+          <h3>Groupe d'infrastructures</h3>
+        </div>
+
+      <ul class="listes">
+      <?php foreach($infraGroupList as $row):
+
+          /** @var \GenCity\Monde\Temperance\InfraOfficielle[] $thisInfra */
+          $thisInfraOff = \GenCity\Monde\Temperance\InfraOfficielle::getListFromGroup($row); ?>
+
+          <li>
+              <h4><?= __s($row->get('nom_groupe')) ?></h4>
+              <div class="btn-group">
+                  <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                    Voir les infrastructures
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                  <?php foreach($thisInfraOff as $rowInfraOff): ?>
+                    <li><img src="<?= __s($rowInfraOff->get('ch_inf_off_icone')) ?>"
+                             style="height: 26px;" alt="(icone)"
+                        ><?= __s($rowInfraOff->get('ch_inf_off_nom')) ?></li>
+                  <?php endforeach; ?>
+                  <?php if(empty($thisInfraOff)): ?>
+                      <li><i class="icon-exclamation-sign"></i>
+                          Ce groupe d'infrastructures ne regroupe aucune infrastructure officielle.</li>
+                  <?php endif; ?>
+                  </ul>
+              </div>
+          </li>
+
+      <?php endforeach; ?>
+      </ul>
+
+    </div>
+
+
     <!-- Liste des infrastructures officielles
      ================================================== -->
     <div class="row-fluid">

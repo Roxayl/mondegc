@@ -541,6 +541,9 @@ body > .navbar .brand {
 	background-image: none;
 	background-repeat: repeat-x;
 }
+.listes ul.dropdown-menu>li {
+    background: none;
+}
 /* Dropdown Double
 -------------------------------------------------- */
 

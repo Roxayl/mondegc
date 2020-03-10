@@ -4,9 +4,9 @@ namespace GenCity\Monde\Temperance;
 use Squirrel\ModelStructureInterface;
 
 
-class InfrastructureModel implements ModelStructureInterface {
+class InfraOfficielleModel implements ModelStructureInterface {
 
-    static $tableName = 'infrastructures';
+    static $tableName = 'infrastructures_officielles';
     private $info = array();
 
     public function __construct($data = null) {
@@ -21,7 +21,7 @@ class InfrastructureModel implements ModelStructureInterface {
 
     private function populate($id) {
 
-        $query = mysql_query(sprintf('SELECT * FROM ' . self::$tableName . ' WHERE ch_inf_id = %s',
+        $query = mysql_query(sprintf('SELECT * FROM ' . self::$tableName . ' WHERE ch_inf_off_id = %s',
             GetSQLValueString($id, 'int')));
         $result = mysql_fetch_assoc($query);
         return $result;
