@@ -110,7 +110,7 @@ img.olTileImage {
 
           <li class="span4">
             <div class="thumbnail">
-              <img src="http://vasel.yt/wiki/images/b/bd/Abraxas_vue_officielle.jpg" data-src="holder.js/300x200" alt="">
+              <img src="<?= __s($row->get('url_image')) ?>" data-src="holder.js/300x200" alt="">
               <h3><?= __s($row->get('nom_groupe')) ?></h3>
               <form action="infrastructure_ajouter.php" method="post">
                 <input name="paysID" type="hidden" value="<?= $thisVille->get('ch_vil_paysID') ?>">

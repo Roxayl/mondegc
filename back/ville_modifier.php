@@ -736,7 +736,7 @@ include('../php/communiques-back.php'); ?>
                 <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une infrastructure</button>
               </form>-->
               <a href="infra_select_group.php?ville_id=<?= $row_ville['ch_vil_ID'] ?>"
-                 class="btn btn-primary btn-margin-left">Ajouter une infra</a>
+                 class="btn btn-primary btn-margin-left">Ajouter une infrastructure</a>
             </td>
           </tr>
         </tfoot>

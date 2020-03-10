@@ -64,6 +64,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_infrastructur
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
   }
+
+  getErrorMessage('success', "Une infrastructure a été ajoutée avec succès !");
+
   header(sprintf("Location: %s", $insertGoTo));
 }
 //requete user 
@@ -187,9 +190,15 @@ img.olTileImage {
     <div class="alert alert-success">
       <button type="button" class="close" data-dismiss="alert">×</button>
       Ce formulaire vous permet d'ajouter une infrastructure &agrave; votre ville. Les infrastructures vous permettent de  construire l'&eacute;conomie de votre pays. L'existence de votre infrastructure doit &ecirc;tre prouv&eacute;e par une image. Avant d'&ecirc;tre comptabilis&eacute;e, votre infrastructure sera mod&eacute;r&eacute;e par les juges du projet <a href="../economie.php" title="Lien vers l'Institut Economique Gécéen">Tempérance</a></div>
+
+
     <div class="row-fluid">
       <div class="span6 well">
-        
+
+      <h3 style="margin: 0;"><?= __s($infraGroup->get('nom_groupe')) ?>
+      <small style="display: inline;"><a href="infra_select_group.php?ville_id=<?= $thisVille->get('ch_vil_ID') ?>">(Changer)</a></small></h3>
+      <br><br>
+
         <!-- choix infrastructure -->
         <form action="infrastructure_ajouter.php#infrastructure" method="POST" id="form-infra-list"
               class="form-inline">
@@ -230,28 +239,28 @@ img.olTileImage {
       </div>
       <!-- Image2 -->
       <div id="sprytextfield2" class="control-group">
-        <label class="control-label" for="ch_inf_lien_image2">Image de votre infrastructure n°2<a href="#" rel="clickover" title="Image de l'infrastructure" data-content="Image suppl&eacute;mentaire. Ce champ est optionnel."><i class="icon-info-sign"></i></a></label>
+        <label class="control-label" for="ch_inf_lien_image2">Image de votre infrastructure n°2 <a href="#" rel="clickover" title="Image de l'infrastructure" data-content="Image suppl&eacute;mentaire. Ce champ est optionnel."><i class="icon-info-sign"></i></a></label>
         <div class="controls">
           <input class="span12" type="text" id="ch_inf_lien_image2" name="ch_inf_lien_image2" value="">
           <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
       </div>
       <!-- Image -->
       <div id="sprytextfield3" class="control-group">
-        <label class="control-label" for="ch_inf_lien_image3">Image de votre infrastructure n°3<a href="#" rel="clickover" title="Image de l'infrastructure" data-content="Image suppl&eacute;mentaire. Ce champ est optionnel."><i class="icon-info-sign"></i></a></label>
+        <label class="control-label" for="ch_inf_lien_image3">Image de votre infrastructure n°3 <a href="#" rel="clickover" title="Image de l'infrastructure" data-content="Image suppl&eacute;mentaire. Ce champ est optionnel."><i class="icon-info-sign"></i></a></label>
         <div class="controls">
           <input class="span12" type="text" id="ch_inf_lien_image3" name="ch_inf_lien_image3" value="">
           <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
       </div>
       <!-- Image -->
       <div id="sprytextfield4" class="control-group">
-        <label class="control-label" for="ch_inf_lien_image4">Image de votre infrastructure n°4<a href="#" rel="clickover" title="Image de l'infrastructure" data-content="Image suppl&eacute;mentaire. Ce champ est optionnel."><i class="icon-info-sign"></i></a></label>
+        <label class="control-label" for="ch_inf_lien_image4">Image de votre infrastructure n°4 <a href="#" rel="clickover" title="Image de l'infrastructure" data-content="Image suppl&eacute;mentaire. Ce champ est optionnel."><i class="icon-info-sign"></i></a></label>
         <div class="controls">
           <input class="span12" type="text" id="ch_inf_lien_image4" name="ch_inf_lien_image4" value="">
           <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
       </div>
       <!-- Image -->
       <div id="sprytextfield5" class="control-group">
-        <label class="control-label" for="ch_inf_lien_image5">Image de votre infrastructure n°5<a href="#" rel="clickover" title="Image de l'infrastructure" data-content="Image suppl&eacute;mentaire. Ce champ est optionnel."><i class="icon-info-sign"></i></a></label>
+        <label class="control-label" for="ch_inf_lien_image5">Image de votre infrastructure n°5 <a href="#" rel="clickover" title="Image de l'infrastructure" data-content="Image suppl&eacute;mentaire. Ce champ est optionnel."><i class="icon-info-sign"></i></a></label>
         <div class="controls">
           <input class="span12" type="text" id="ch_inf_lien_image5" name="ch_inf_lien_image5" value="">
           <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
@@ -281,11 +290,22 @@ img.olTileImage {
   </div>
   <div class="span6 well" style="background-color: #EDEDED;">
     <div class="row-fluid">
-      <div class="span2 img-listes img-avatar"> <img src="<?php echo $row_inf_off_choisie['ch_inf_off_icone']; ?>" alt="icone <?php echo $row_inf_off_choisie['ch_inf_off_nom']; ?>"> </div>
+
+    <?php if(empty($row_inf_off_choisie['ch_inf_off_nom'])): ?>
+        <div class="span12"><h4>Veuillez choisir une infrastructure.</h4></div>
+
+    <?php else: ?>
+      <div class="span2 img-listes img-avatar">
+          <img src="<?php echo $row_inf_off_choisie['ch_inf_off_icone']; ?>">
+      </div>
       <div class="span10">
         <h2><?php echo $row_inf_off_choisie['ch_inf_off_nom']; ?></h2>
-        <small"><?php echo $row_inf_off_choisie['ch_inf_off_desc']; ?></small> </div>
+        <small"><?php echo $row_inf_off_choisie['ch_inf_off_desc']; ?></small>
+      </div>
+    <?php endif; ?>
+
     </div>
+
     <h3>Influence</h3>
     <div class="row-fluid">
       <div class="span6 well icone-ressources">

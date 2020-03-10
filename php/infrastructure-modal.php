@@ -44,7 +44,7 @@ $row_infrastructure = mysql_fetch_assoc($infrastructure);
             </div>
            <?php } else { ?>
 <div class="alert">
-            <img src="../assets/img/statutinfra_<?php echo $row_infrastructure['ch_inf_statut']; ?>.png" alt="Statut"> En attente de jugement. Son inlfuence n'est pas encore prise en compte.
+            <img src="../assets/img/statutinfra_<?php echo $row_infrastructure['ch_inf_statut']; ?>.png" alt="Statut"> En attente de jugement. Son influence n'est pas encore prise en compte.
             </div><?php }?>
   
     <div class="row-fluid">
