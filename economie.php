@@ -324,7 +324,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
           </div>
           
         </div>
-        <a href="liste infrastructures.php" class="btn btn-primary">Liste des infrastructures officielles</a>
+        <a href="liste infrastructures.php" class="btn btn-primary btn-margin-left">Liste des infrastructures officielles</a>
       </section>
       <!-- Classements ressources
     ================================================== -->

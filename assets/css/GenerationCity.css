@@ -1490,6 +1490,11 @@ table .btn {
 	top: 2px;
 }
 
+.infra-selected {
+    background-color: #FF4E00;
+    color: white;
+}
+
 /* Ajuste images token
 ------------------------- */
 .token-list-eco img{

@@ -10,8 +10,14 @@ include('php/log.php');
 $type_classement = 'ch_inf_off_nom ASC';
 if (isset($_GET['type_classement_inf'])) {
   $type_classement = $_GET['type_classement_inf'];
-} 
+}
 
+$infraGroupList = \GenCity\Monde\Temperance\InfraGroup::getAll();
+if(isset($_GET['group_id'])) {
+    $thisGroup = new \GenCity\Monde\Temperance\InfraGroup($_GET['group_id']);
+} else {
+    $thisGroup = null;
+}
 
 $maxRows_liste_infra_officielles = 10;
 $pageNum_liste_infra_officielles = 0;
@@ -21,7 +27,20 @@ if (isset($_GET['pageNum_liste_infra_officielles'])) {
 $startRow_liste_infra_officielles = $pageNum_liste_infra_officielles * $maxRows_liste_infra_officielles;
 
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_liste_infra_officielles = sprintf("SELECT * FROM infrastructures_officielles ORDER BY $type_classement");
+
+if(is_null($thisGroup)) {
+    $query_liste_infra_officielles = sprintf(
+        "SELECT * FROM infrastructures_officielles ORDER BY %s",
+        mysql_real_escape_string($type_classement));
+} else {
+    $query_liste_infra_officielles = sprintf(
+        "SELECT iof.* FROM infrastructures_officielles iof
+        JOIN infrastructures_officielles_groupes iog ON iof.ch_inf_off_id = iog.ID_infra_officielle
+        WHERE ID_groupes = %s
+        ORDER BY %s",
+        GetSQLValueString($thisGroup->get('id')),
+        mysql_real_escape_string($type_classement));
+}
 $query_limit_liste_infra_officielles = sprintf("%s LIMIT %d, %d", $query_liste_infra_officielles, $startRow_liste_infra_officielles, $maxRows_liste_infra_officielles);
 $liste_infra_officielles = mysql_query($query_limit_liste_infra_officielles, $maconnexion) or die(mysql_error());
 $row_liste_infra_officielles = mysql_fetch_assoc($liste_infra_officielles);
@@ -49,6 +68,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
   }
 }
 $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officielles=%d%s", $totalRows_liste_infra_officielles, $queryString_liste_infra_officielles);
+
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
@@ -109,17 +129,11 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
 <?php include('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
-<div class="container" id="overview"> 
+<div class="container corps-page" id="overview">
   
   <!-- Page CONTENT
     ================================================== -->
-  <section class="corps-page">
 
-  <ul class="breadcrumb">
-      <li><a href="OCGC.php">OCGC</a> <span class="divider">/</span></li>
-      <li><a href="economie.php">Économie</a> <span class="divider">/</span></li>
-      <li class="active">Liste des infrastructures</li>
-    </ul>
 
   <!-- Titre page
         ================================================== -->
@@ -127,13 +141,60 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
     <h1>Liste des infrastructures officielles</h1>
   </div>
 
+    <ul class="breadcrumb">
+      <li><a href="OCGC.php">OCGC</a> <span class="divider">/</span></li>
+      <li><a href="economie.php">Économie</a> <span class="divider">/</span></li>
+      <li class="active">Liste des infrastructures officielles</li>
+    </ul>
+
+  <div class="well" style="margin: 0; padding: 0;">
+      <ul class="thumbnails">
+
+        <li class="span2">
+            <a href="liste%20infrastructures.php" class="thumbnail <?= $thisGroup === null ? 'infra-selected' : '' ?>">
+              <img src="http://generation-city.com/forum/new/img/cat2.jpg" data-src="holder.js/300x200" alt="">
+              <h4>Tout afficher</h4>
+            </a>
+        </li>
+
+      <?php /** @var \GenCity\Monde\Temperance\InfraGroup $row */
+      foreach($infraGroupList as $key => $row): ?>
+
+          <li class="span2">
+            <a href="liste%20infrastructures.php?group_id=<?= $row->get('id') ?>"
+               class="thumbnail <?= isset($_GET['group_id']) && $_GET['group_id'] == $row->get('id') ?
+                                        'infra-selected' : '' ?>">
+              <img src="<?= __s($row->get('url_image')) ?>" data-src="holder.js/300x200" alt="">
+              <h4><?= __s($row->get('nom_groupe')) ?></h4>
+            </a>
+          </li>
+
+          <?php if(($key + 2) % 6 === 0): ?>
+        </ul>
+        <ul class="thumbnails">
+          <?php endif; ?>
+
+      <?php endforeach; ?>
+
+      </ul>
+    </div>
+
 <!-- Liste des infrastructures officielles
      ================================================== -->
 <div class="row-fluid">
   <div class="span12">
-    <!-- Bouton retour -->
-  <div class="pull-right"><a href="economie.php" class="btn btn-primary">Institut d'Economie</a>
 </div>
+
+
+    <p class="pull-right"><small class="pull-right">de <?php echo ($startRow_liste_infra_officielles + 1) ?> &agrave; <?php echo min($startRow_liste_infra_officielles + $maxRows_liste_infra_officielles, $totalRows_liste_infra_officielles) ?> infrastructures sur <?php echo $totalRows_liste_infra_officielles ?>
+      <?php if ($pageNum_liste_infra_officielles > 0) { // Show if not first page ?>
+        <a class="btn" href="<?php printf("%s?pageNum_liste_infra_officielles=%d%s#liste-categories", $currentPage, max(0, $pageNum_liste_infra_officielles - 1), $queryString_liste_infra_officielles); ?>"><i class=" icon-backward"></i></a>
+        <?php } // Show if not first page ?>
+      <?php if ($pageNum_liste_infra_officielles < $totalPages_liste_infra_officielles) { // Show if not last page ?>
+        <a class="btn" href="<?php printf("%s?pageNum_liste_infra_officielles=%d%s#liste-categories", $currentPage, min($totalPages_liste_infra_officielles, $pageNum_liste_infra_officielles + 1), $queryString_liste_infra_officielles); ?>"> <i class="icon-forward"></i></a>
+        <?php } // Show if not last page ?>
+      </small> </p>
+
     <!-- Liste pour choix de classement -->
     <div id="select-categorie">
       <form action="liste infrastructures.php#liste-infrastructures-officielles" method="GET">
@@ -185,7 +246,7 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
     </ul>
     <!-- Pagination de la liste -->
     <p>&nbsp;</p>
-    <p class="pull-right"><small class="pull-right">de <?php echo ($startRow_liste_infra_officielles + 1) ?> &agrave; <?php echo min($startRow_liste_infra_officielles + $maxRows_liste_infra_officielles, $totalRows_liste_infra_officielles) ?> sur <?php echo $totalRows_liste_infra_officielles ?>
+    <p class="pull-right"><small class="pull-right">de <?php echo ($startRow_liste_infra_officielles + 1) ?> &agrave; <?php echo min($startRow_liste_infra_officielles + $maxRows_liste_infra_officielles, $totalRows_liste_infra_officielles) ?> infrastructures sur <?php echo $totalRows_liste_infra_officielles ?>
       <?php if ($pageNum_liste_infra_officielles > 0) { // Show if not first page ?>
         <a class="btn" href="<?php printf("%s?pageNum_liste_infra_officielles=%d%s#liste-categories", $currentPage, max(0, $pageNum_liste_infra_officielles - 1), $queryString_liste_infra_officielles); ?>"><i class=" icon-backward"></i></a>
         <?php } // Show if not first page ?>
@@ -195,7 +256,6 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
       </small> </p>
   <p>&nbsp;</p>
 </div>
-</section>
 </div>
 <!-- END CONTENT
     ================================================== --> 

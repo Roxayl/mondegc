@@ -79,6 +79,9 @@ $queryString_communiquesPays = sprintf("&totalRows_communiquesPays=%d%s", $total
 <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
 <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
+.jumbotron {
+    background-image: url('assets/img/bannieres-instituts/OCGC.png');
+}
 #map {
 	height: 500px;
 	background-color: #fff;
@@ -130,9 +133,12 @@ img.olTileImage {
     <!-- liste des communique de l'institut
     ================================================== -->
     <section>
-    <div class="titre-vert anchor" id="titre">
-      <h1>Communiqués des comités</h1>
-    </div>
+    <header class="jumbotron jumbotron-institut jumbotron-small subhead anchor" id="titre">
+      <div class="container">
+        <h2>Organisation des Cités gécéennes</h2>
+        <h1>Communiqués des comités</h1>
+      </div>
+    </header>
 
     <ul class="breadcrumb">
       <li><a href="OCGC.php">OCGC</a> <span class="divider">/</span></li>
@@ -141,12 +147,11 @@ img.olTileImage {
 
     <?php do { ?>
       <div class="row-fluid" id="communiqueID<?php echo $row_communiquesPays['ch_com_ID']; ?>">
-      <small class="pull-right">
-      <p>Le <?php echo date("d/m/Y", strtotime($row_communiquesPays['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_communiquesPays['ch_com_date'])); ?> par <?php echo $row_communiquesPays['ch_use_login']; ?></p>
-      <p></p></small>
-      <div class="clearfix"></div>
-      <div class="titre-gris">
-      <h3><?php echo $row_communiquesPays['ch_com_titre']; ?></h3>
+      <div class="titre-bleu anchor" id="presentation">
+          <h1><?php echo $row_communiquesPays['ch_com_titre']; ?></h1>
+
+      <p class="pull-right" style="margin-right:10px;">
+          Le <strong><?php echo date("d/m/Y", strtotime($row_communiquesPays['ch_com_date'])); ?></strong> &agrave; <?php echo date("G\hi", strtotime($row_communiquesPays['ch_com_date'])); ?> par <?php echo $row_communiquesPays['ch_use_login']; ?></p>
       </div>
       <div class="well">
 	  <strong><p><?php echo $row_communiquesPays['ch_ins_nom']; ?></p></strong>
