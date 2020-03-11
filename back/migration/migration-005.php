@@ -145,6 +145,7 @@ Si un pays n'a plus d'activité depuis plus de 3 mois, <strong>l'OCGC se réserv
 EOL;
 
 $participer_cadre_content = <<<EOL
+<h1>Carte des territoires libres</h1>
 <h4>Jouer en tant que maire :</h4>
 <p>Pour jouer, vous devez d'abord vous inscrire sur le forum de G&eacute;n&eacute;ration City.  Vous pouvez ensuite int&eacute;grer l'une des 4 r&eacute;gion de la RFGC ou demander &agrave; un dirigeant de rejoindre son pays. En tant que Maire vous pouvez avoir plusieurs villes, les r&eacute;unir au sein d'une r&eacute;gion et participer &agrave; la vie du pays. </p>
 <p>&nbsp;</p>

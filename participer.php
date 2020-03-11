@@ -5,7 +5,7 @@ require_once('Connections/maconnexion.php');
 include('php/log.php');
 
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_Last24H = "SELECT ch_use_login, ch_use_statut, ch_use_paysID FROM users WHERE ch_use_last_log > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY ch_use_login";
+$query_Last24H = "SELECT ch_use_login, ch_use_statut, ch_use_paysID FROM users WHERE ch_use_last_log > DATE_SUB(NOW(), INTERVAL 2 DAY) ORDER BY ch_use_login";
 $Last24H = mysql_query($query_Last24H, $maconnexion) or die(mysql_error());
 $row_Last24H = mysql_fetch_assoc($Last24H);
 $totalRows_Last24H = mysql_num_rows($Last24H);
@@ -94,13 +94,12 @@ img.olTileImage {
       <div class="span9">
         <div id="map"></div>
       </div>
-      <div class="" id="info">
-        <h1>Carte des territoires libres</h1>
+      <div id="info">
 
         <?= $pageParticiperCadre->content() ?>
 
-        <div class="">
-          <h4>Joueurs connect&eacute;s ces derni&egrave;res 24 heures</h4>
+        <div>
+          <h4>Joueurs connect&eacute;s ces derni&egrave;res 48 heures</h4>
           <strong>
           <p>
             <?php do { 
@@ -113,7 +112,8 @@ img.olTileImage {
             <?php } ?>
             <?php } while ($row_Last24H = mysql_fetch_assoc($Last24H)); ?>
           </p>
-          </strong> </div>
+          </strong>
+        </div>
       </div>
   </div>
   </div>
