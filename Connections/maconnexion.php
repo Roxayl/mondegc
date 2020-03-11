@@ -246,28 +246,24 @@ function create_timespan_string_hour($Y, $m, $d, $H, $i, $s)
   $found_first_diff = false;
   if($Y >= 1) {
     $found_first_diff = true;
-    $timespan_string .= pluralize_hour($Y, 'ann&eacute;e').' ';
+    $timespan_string .= pluralize_hour($Y, 'an').', ';
   }
   if($m >= 1 || $found_first_diff) {
     $found_first_diff = true;
-    $timespan_string .= $m.' mois'.' ';
+    $timespan_string .= $m.' mois'.', ';
   }
   if($d >= 1 || $found_first_diff) {
     $found_first_diff = true;
-    $timespan_string .= pluralize_hour($d, 'jour').' ';
+    $timespan_string .= pluralize_hour($d, 'jour').', ';
   }
-  if($H >= 1 || $found_first_diff) {
+  if(($H >= 1 || $found_first_diff) && ($d < 1 && $m < 1 && $Y < 1)) {
     $found_first_diff = true;
-    $timespan_string .= pluralize_hour($H, 'heure').' ';
+    $timespan_string .= pluralize_hour($H, 'heure').', ';
   }
-  if($i >= 1 || $found_first_diff) {
+  if(($i >= 1 || $found_first_diff) && ($H < 1 && $d < 1 && $m < 1 && $Y < 1)) {
     $found_first_diff = true;
     $timespan_string .= pluralize_hour($i, 'minute').' ';
   }
-  if($found_first_diff) {
-    $timespan_string .= 'et ';
-  }
-  $timespan_string .= pluralize_hour($s, 'seconde');
   return $timespan_string;
 }
 
