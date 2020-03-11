@@ -378,6 +378,10 @@ include('../php/communiques-back.php'); ?>
           <h3>Groupe d'infrastructures</h3>
         </div>
 
+      <a class="btn btn-primary btn-margin-left" href="../php/infra_group_modal.php"
+         data-toggle="modal" data-target="#Modal-Monument" title="Créer un groupe d'infra"
+        ><i class="icon-file icon-white"></i> Créer un groupe d'infrastructures</a>
+
       <ul class="listes">
       <?php foreach($infraGroupList as $row):
 
@@ -386,7 +390,7 @@ include('../php/communiques-back.php'); ?>
 
           <li>
               <h4><?= __s($row->get('nom_groupe')) ?></h4>
-              <div class="btn-group">
+              <div class="btn-group" style="display: inline-block;">
                   <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
                     Voir les infrastructures
                     <span class="caret"></span>
@@ -403,6 +407,9 @@ include('../php/communiques-back.php'); ?>
                   <?php endif; ?>
                   </ul>
               </div>
+              <a class="btn btn-primary" href="../php/infra_group_modal.php?group_id=<?= $row->get('id') ?>"
+                 data-toggle="modal" data-target="#Modal-Monument" title="Modifier ce groupe d'infra"
+                ><i class="icon-edit icon-white"></i> Modifier</a>
           </li>
 
       <?php endforeach; ?>

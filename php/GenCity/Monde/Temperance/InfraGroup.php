@@ -13,7 +13,7 @@ class InfraGroup extends BaseModel {
 
     static function getAll() {
 
-        $sql = 'SELECT * FROM infrastructures_groupes';
+        $sql = 'SELECT * FROM infrastructures_groupes ORDER BY `order`, created';
         $query = mysql_query($sql);
 
         $return = array();
@@ -50,7 +50,7 @@ class InfraGroup extends BaseModel {
         $query = 'UPDATE infrastructures_groupes SET ';
 
         foreach($structure as $field => $default) {
-            $query .= ' ' . $field . ' = ' . GetSQLValueString($this->get($field));
+            $query .= ' `' . $field . '` = ' . GetSQLValueString($this->get($field));
             end($structure);
             if($field !== key($structure)) {
                 $query .= ', ';
@@ -58,7 +58,15 @@ class InfraGroup extends BaseModel {
         }
 
         $query .= ' WHERE id = ' . GetSQLValueString($this->get('id'));
-        mysql_query($query);
+        mysql_query($query) or die(mysql_error());
+
+    }
+
+    public function validate() {
+
+        $return = array();
+
+        return $return;
 
     }
 
