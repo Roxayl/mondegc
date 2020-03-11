@@ -76,11 +76,8 @@ class InfraGroup extends BaseModel {
         $infraOfficielle = InfraOfficielle::getListFromGroup($this);
 
         if(count($infraList) > 0 || count($infraOfficielle) > 0) {
-            getErrorMessage("error", "Vous ne pouvez pas supprimer ce groupe
-                d'infrastructure car il existe des <strong>infrastructures</strong> ou des
-                <strong>infrastructures officielles</strong> appartenant à ce groupe d'infrastructures.
-                Assurez-vous qu'aucune <strong>infrastructure</strong> ou <strong>infrastructure
-                officielle</strong> n'est affiliée à ce groupe avant de continuer.");
+            return false;
+
         } else {
 
             $query = sprintf("DELETE FROM infrastructures_groupes WHERE id = %s",
@@ -92,6 +89,7 @@ class InfraGroup extends BaseModel {
             mysql_query($query);
 
             $this->model = null;
+            return true;
 
         }
 
