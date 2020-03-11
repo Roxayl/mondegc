@@ -6,15 +6,20 @@ mysql_select_db($database_maconnexion, $maconnexion);
 
 $queries = array();
 
-// Groupes d'infra
+
+/*************************
+ *                       *
+ *   ÉDITION DE TABLES   *
+ *                       *
+ *************************/
+
+// infrastructures_groupes
 $queries[] = "alter table infrastructures_groupes
 	add url_image varchar(191) not null";
 $queries[] = "alter table infrastructures_groupes
 	add `order` int default 1 not null";
 $queries[] = "alter table infrastructures_groupes
 	add created datetime not null";
-
-$queries[] = 'UPDATE infrastructures_groupes SET created = NOW()';
 
 // Table pages
 $queries[] = "create table if not exists pages
@@ -28,10 +33,123 @@ $queries[] = "create table if not exists pages
     unique (this_id)
 );";
 
+// Exécuter cette première série de requêtes
+foreach($queries as $query) {
+    mysql_query($query) or die(mysql_error());
+}
+
+
+/*************************
+ *                       *
+ *    INFRASTRUCTURES    *
+ *                       *
+ *************************/
+
+$queries = array();
+
+// Vider infrastructures_officielles_groupes
+$queries[] = "TRUNCATE infrastructures_officielles_groupes";
+
+// Nouveaux groupes d'infrastructures
+$queries[] = 'UPDATE infrastructures_groupes SET created = NOW()';
+$queries[] = "UPDATE infrastructures_groupes SET nom_groupe = 'Infra bâtie' WHERE id = 1";
+$queries[] = "UPDATE infrastructures_groupes SET nom_groupe = 'Infra RP' WHERE id = 2";
+$queries[] = "UPDATE infrastructures_groupes SET nom_groupe = 'Labels' WHERE id = 3";
+$queries[] = "UPDATE infrastructures_groupes SET nom_groupe = 'Autres' WHERE id = 4";
+$queries[] = "DELETE FROM infrastructures_groupes WHERE id >= 5";
+
+// Insérer dans infrastructures_officielles_groupes
+$i = 3;
+while($i <= 65) {
+    if($i !== 4 || $i !== 57)
+        $queries[] = "INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle)
+                    VALUES(1, $i)";
+    $i++;
+}
+
+$queries[] = "INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle)
+              VALUES(3, 67)";
+$queries[] = "INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle)
+              VALUES(2, 68)";
+$queries[] = "DELETE FROM infrastructures_officielles WHERE ch_inf_off_id = 69";
+$queries[] = "DELETE FROM infrastructures WHERE ch_inf_off_id = 69";
+
+$i = 70;
+while($i <= 73) {
+    $queries[] = "INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle)
+                  VALUES(1, $i)";
+    $i++;
+}
+
+$i = 74;
+while($i <= 80) {
+    if($i !== 79)
+        $queries[] = "INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle)
+                      VALUES(3, $i)";
+    $i++;
+}
+
+$i = 81;
+while($i <= 84) {
+    $queries[] = "INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle)
+                  VALUES(4, $i)";
+    $i++;
+}
+
+$i = 85;
+while($i <= 86) {
+    $queries[] = "INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle)
+                  VALUES(3, $i)";
+    $i++;
+}
+
+$i = 87;
+while($i <= 95) {
+    $queries[] = "INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle)
+                  VALUES(4, $i)";
+    $i++;
+}
+
+$queries[] = "INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle)
+              VALUES(1, 96)";
+$queries[] = "DELETE FROM infrastructures_officielles WHERE ch_inf_off_id = 98";
+$queries[] = "DELETE FROM infrastructures WHERE ch_inf_off_id = 98";
+$queries[] = "DELETE FROM infrastructures_officielles WHERE ch_inf_off_id = 99";
+$queries[] = "DELETE FROM infrastructures WHERE ch_inf_off_id = 99";
+$queries[] = "INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle)
+              VALUES(1, 100)";
+$queries[] = "DELETE FROM infrastructures_officielles WHERE ch_inf_off_id = 101";
+$queries[] = "DELETE FROM infrastructures WHERE ch_inf_off_id = 101";
+$queries[] = "DELETE FROM infrastructures_officielles WHERE ch_inf_off_id = 102";
+$queries[] = "DELETE FROM infrastructures WHERE ch_inf_off_id = 102";
+$queries[] = "DELETE FROM infrastructures_officielles WHERE ch_inf_off_id = 103";
+$queries[] = "DELETE FROM infrastructures WHERE ch_inf_off_id = 103";
+
+$i = 104;
+while($i <= 128) {
+    $queries[] = "INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle)
+                  VALUES(2, $i)";
+    $i++;
+}
+
+// Exécuter requêtes infra
+foreach($queries as $query) {
+    mysql_query($query) or die(mysql_error());
+}
+
+
+/*************************
+ *                       *
+ *         PAGES         *
+ *                       *
+ *************************/
+
+$queries = array();
+
 $queries[] = "INSERT INTO pages (id, this_id, content, modified) VALUES (1, 'participer', '', '2020-03-03 18:31:41')";
 $queries[] = "INSERT INTO pages (id, this_id, content, modified) VALUES (2, 'participer_cadre', '', '2020-03-03 18:31:51')";
 
-// Exécuter cette première série de requêtes
+// Exécuter requêtes pages
 foreach($queries as $query) {
     mysql_query($query) or die(mysql_error());
 }
