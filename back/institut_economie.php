@@ -273,7 +273,7 @@ $totalRows_nb_juges = mysql_num_rows($nb_juges);
 				 ?>
                 <p>&nbsp;</p>
                 <strong>
-                <p>Nombre de juges ayant voté;: <?php echo $row_nb_juges['nbjuges']; ?></p>
+                <p>Nombre de juges ayant voté : <?php echo $row_nb_juges['nbjuges']; ?></p>
                 </strong>
                 <?php } ?>
               </div>

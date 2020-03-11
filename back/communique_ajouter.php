@@ -265,7 +265,7 @@ if(isset($thisPays)) {
   </div>
   <div class="row-fluid">
    <?php if ($cat == "institut") { ?>
-    <div class="titre-bleu clearfix"> <img src="../assets/img/IconesBDD/Bleu/100/Communique_bleu.png" alt="communiqu&eacute;">
+    <div class="titre-bleu clearfix">
       <h1>Ajouter un communiqu&eacute;</h1>
     </div>
       <?php } else { ?>

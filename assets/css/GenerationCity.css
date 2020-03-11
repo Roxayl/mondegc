@@ -891,13 +891,8 @@ canvas#parliament-chart {
 	z-index: 1;
 }
 .listes li {
-    background: repeating-linear-gradient(
-      108deg,
-      #f8f8f8,
-      #f8f8f8 15px,
-      #f1f1f1 15px,
-      #F1F1F1 30px
-    );
+    background: rgb(249,249,249);
+    background: linear-gradient(90deg, rgba(249,249,249,1) 0%, rgba(241,241,241,1) 10%, rgba(241,241,241,1) 100%);
 	margin-top: 10px;
 	margin-bottom: 0px;
 	padding: 5px;
@@ -1229,9 +1224,21 @@ footer img {
 	margin-bottom: 0px;
 	padding-bottom: 0px;
 }
-td {
-	background-color: #eeeeee;
+
+td:first-child {
+    background: rgb(249,249,249);
+    background: linear-gradient(90deg, rgba(249,249,249,1) 0%, rgba(241,241,241,1) 10%, rgba(241,241,241,1) 100%);
 }
+td {
+    background: rgb(241,241,241);
+}
+
+.table-hover tbody tr:hover td:first-child,
+.table-hover tbody tr:hover th {
+    background: rgb(245,245,245);
+    background: linear-gradient(90deg, rgba(249,249,249,1) 0%, rgba(245,245,245,1) 10%, rgba(245,245,245,1) 100%);
+}
+
 .table th, .table td {
 	border-top: 0px;
 	vertical-align: middle;

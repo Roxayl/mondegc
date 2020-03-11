@@ -254,7 +254,7 @@ $totalRows_user = mysql_num_rows($user);
       </div>
       <?php }?>
       <?php if ($row_communique['ch_com_categorie'] == "institut") { ?>
-    <div class="titre-bleu"> <img src="../assets/img/IconesBDD/Bleu/100/Communique_bleu.png" alt="communiqu&eacute;">
+    <div class="titre-bleu">
       <h1>Modifier un communiqu&eacute;</h1>
       </div>
       <?php }?>
