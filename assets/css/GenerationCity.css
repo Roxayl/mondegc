@@ -1356,6 +1356,13 @@ table .btn {
 	margin-bottom: 3px;
 }
 
+.external-link-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 .liste-transparente .icone-categorie img {
 	max-width: 53px;
 	width:53px;

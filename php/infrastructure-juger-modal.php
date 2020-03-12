@@ -69,7 +69,7 @@ if (isset ($_GET['ch_inf_id'])){
 	}
 
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_infrastructure = sprintf("SELECT ch_inf_id, ch_inf_date, ch_inf_statut, ch_inf_villeid, ch_inf_lien_image, ch_inf_lien_image2, ch_inf_lien_image3, ch_inf_lien_image4, ch_inf_lien_image5, ch_inf_lien_forum, ch_inf_commentaire, ch_inf_commentaire_juge, ch_inf_off_nom, ch_inf_off_desc, ch_inf_off_icone, ch_inf_off_budget, ch_inf_off_Industrie, ch_inf_off_Commerce, ch_inf_off_Agriculture, ch_inf_off_Tourisme, ch_inf_off_Recherche, ch_inf_off_Environnement, ch_inf_off_Education, ch_vil_nom, ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_inf_id = %s ORDER BY ch_inf_date DESC", GetSQLValueString($ch_inf_id, "int"));
+$query_infrastructure = sprintf("SELECT ch_inf_id, ch_inf_date, ch_inf_statut, ch_inf_villeid, nom_infra, ch_inf_lien_image, ch_inf_lien_image2, ch_inf_lien_image3, ch_inf_lien_image4, ch_inf_lien_image5, ch_inf_lien_forum, lien_wiki, ch_inf_commentaire, ch_inf_commentaire_juge, ch_inf_off_nom, ch_inf_off_desc, ch_inf_off_icone, ch_inf_off_budget, ch_inf_off_Industrie, ch_inf_off_Commerce, ch_inf_off_Agriculture, ch_inf_off_Tourisme, ch_inf_off_Recherche, ch_inf_off_Environnement, ch_inf_off_Education, ch_vil_nom, ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_inf_id = %s ORDER BY ch_inf_date DESC", GetSQLValueString($ch_inf_id, "int"));
 $query_limit_infrastructure = sprintf("%s LIMIT %d, %d", $query_infrastructure, $startRow_infrastructure, $maxRows_infrastructure);
 $infrastructure = mysql_query($query_infrastructure, $maconnexion) or die(mysql_error());
 $row_infrastructure = mysql_fetch_assoc($infrastructure);
@@ -117,7 +117,8 @@ $totalRows_ressources_pays = mysql_num_rows($ressources_pays);
     <div class="span2"><img src="<?php echo $row_infrastructure['ch_inf_off_icone']; ?>" alt="icone <?php echo $row_infrastructure['ch_inf_off_nom']; ?>"></div>
     <div class="span10">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel"><?php echo $row_infrastructure['ch_inf_off_nom']; ?></h3>
+      <h3 id="myModalLabel"><?= __s($row_infrastructure['nom_infra']) ?>
+      <small><?php echo $row_infrastructure['ch_inf_off_nom']; ?></small></h3>
       <p><em><?php echo $row_infrastructure['ch_inf_off_desc']; ?></em></p>
     </div>
   </div>
@@ -134,7 +135,7 @@ $totalRows_ressources_pays = mysql_num_rows($ressources_pays);
     <?php }?>
   </div>
   <?php } else { ?>
-  <div class="alert"> <img src="../assets/img/statutinfra_<?php echo $row_infrastructure['ch_inf_statut']; ?>.png" alt="Statut"> En attente de jugement. Son inlfuence n'est pas encore prise en compte. </div>
+  <div class="alert"> <img src="../assets/img/statutinfra_<?php echo $row_infrastructure['ch_inf_statut']; ?>.png" alt="Statut"> En attente de jugement. Son influence n'est pas encore prise en compte. </div>
   <?php }?>
   <div class="row-fluid">
     <div class="span12">
@@ -153,25 +154,25 @@ $totalRows_ressources_pays = mysql_num_rows($ressources_pays);
          <img onClick="ChangeImage(this.src);" class="img-thumb-ressource" src="<?php echo $row_infrastructure['ch_inf_lien_image3']; ?>" alt="image n°3">
          </div>
         <?php } ?>
-        <?php if ($row_infrastructure['ch_inf_lien_image4']) { ?>
-         <div class="span2 list-thumb-ressource">
-         <img onClick="ChangeImage(this.src);" class="img-thumb-ressource" src="<?php echo $row_infrastructure['ch_inf_lien_image4']; ?>" alt="image n°4">
-         </div>
-        <?php } ?>
-        <?php if ($row_infrastructure['ch_inf_lien_image5']) { ?>
-         <div class="span2 list-thumb-ressource">
-         <img onClick="ChangeImage(this.src);" class="img-thumb-ressource" src="<?php echo $row_infrastructure['ch_inf_lien_image5']; ?>" alt="image n°5">
-         </div>
-        <?php } ?>
         </div>
       <div class="well">
         <p>La ville <a href="../page-ville.php?ch_pay_id=<?php echo $row_infrastructure['ch_pay_id']; ?>&ch_ville_id=<?php echo $row_infrastructure['ch_inf_villeid']; ?>"><?php echo $row_infrastructure['ch_vil_nom']; ?></a> du pays <a href="../page-pays.php?ch_pay_id=<?php echo $row_infrastructure['ch_pay_id']; ?>"><?php echo $row_infrastructure['ch_pay_nom']; ?></a> souhaite ajouter cette infrastructure et modifier ses statistiques &eacute;conomiques</p>
-            <strong><p>Commentaire du membre&nbsp;:</p></strong>
+            <strong><p>Description&nbsp;:</p></strong>
     <p><em><?php echo $row_infrastructure['ch_inf_commentaire']; ?></em></p>
-    <?php if ($row_infrastructure['ch_inf_lien_forum']) { ?>
-    <a href="<?php echo $row_infrastructure['ch_inf_lien_forum']; ?>" target="_blank">Lien sur le forum</a>
-    <p>&nbsp;</p>
+    <?php if (!empty($row_infrastructure['ch_inf_lien_forum'])) { ?>
+    <a href="<?php echo $row_infrastructure['ch_inf_lien_forum']; ?>" target="_blank">
+        <div class="external-link-icon"
+             style="background-image:url('http://www.generation-city.com/forum/new/favicon.png');"></div>
+        Lien sur le forum</a>
     <?php } ?>
+    <?php if (!empty($row_infrastructure['lien_wiki'])) { ?>
+        <a href="<?php echo $row_infrastructure['lien_wiki']; ?>" target="_blank">
+        <div class="external-link-icon"
+             style="background-image:url('http://vasel.yt/wiki/resources/assets/favicon.ico');"></div>
+            Lien sur le wiki</a>
+    <?php } ?>
+
+    <p>&nbsp;</p>
    
       </div>
     </div>

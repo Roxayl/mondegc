@@ -26,7 +26,8 @@ $row_infrastructure = mysql_fetch_assoc($infrastructure);
   <div class="modal-header">
   <div class="pull-left"><img style="width:100px; margin-right: 10px; margin-top:-50px;" src="<?php echo $row_infrastructure['ch_inf_off_icone']; ?>" alt="icone <?php echo $row_infrastructure['ch_inf_off_nom']; ?>"></div>
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel"><?php echo $row_infrastructure['ch_inf_off_nom']; ?></h3>
+    <h3 id="myModalLabel"><?= __s($row_infrastructure['nom_infra']) ?>
+        <small><?php echo $row_infrastructure['ch_inf_off_nom']; ?></small></h3>
   </div>
   <div class="modal-body">
   <?php if ($row_infrastructure['ch_inf_statut'] == 2) {?>
@@ -54,31 +55,29 @@ $row_infrastructure = mysql_fetch_assoc($infrastructure);
          <div class="span2 list-thumb-ressource">
          <img onClick="ChangeImage(this.src);" class="img-thumb-ressource" src="<?php echo $row_infrastructure['ch_inf_lien_image']; ?>" alt="image n°1">
          </div>
-     <?php if ($row_infrastructure['ch_inf_lien_image2']) { ?>
+     <?php if (!empty($row_infrastructure['ch_inf_lien_image2'])) { ?>
          <div class="span2 list-thumb-ressource">
          <img onClick="ChangeImage(this.src);" class="img-thumb-ressource" src="<?php echo $row_infrastructure['ch_inf_lien_image2']; ?>" alt="image n°2">
          </div>
         <?php } ?>
-        <?php if ($row_infrastructure['ch_inf_lien_image3']) { ?>
+        <?php if (!empty($row_infrastructure['ch_inf_lien_image3'])) { ?>
         <div class="span2 list-thumb-ressource">
          <img onClick="ChangeImage(this.src);" class="img-thumb-ressource" src="<?php echo $row_infrastructure['ch_inf_lien_image3']; ?>" alt="image n°3">
          </div>
         <?php } ?>
-        <?php if ($row_infrastructure['ch_inf_lien_image4']) { ?>
-         <div class="span2 list-thumb-ressource">
-         <img onClick="ChangeImage(this.src);" class="img-thumb-ressource" src="<?php echo $row_infrastructure['ch_inf_lien_image4']; ?>" alt="image n°4">
-         </div>
-        <?php } ?>
-        <?php if ($row_infrastructure['ch_inf_lien_image5']) { ?>
-         <div class="span2 list-thumb-ressource">
-         <img onClick="ChangeImage(this.src);" class="img-thumb-ressource" src="<?php echo $row_infrastructure['ch_inf_lien_image5']; ?>" alt="image n°5">
-         </div>
-        <?php } ?>
         </div>
-    <strong><p>Commentaire du membre&nbsp;:</p></strong>
-    <p><em><?php echo $row_infrastructure['ch_inf_commentaire']; ?></em></p>
-    <?php if ($row_infrastructure['ch_inf_lien_forum']) { ?>
-    <a href="<?php echo $row_infrastructure['ch_inf_lien_forum']; ?>" target="_blank">Lien sur le forum</a>
+    <p><?php echo $row_infrastructure['ch_inf_commentaire']; ?></p>
+    <?php if (!empty($row_infrastructure['ch_inf_lien_forum'])) { ?>
+    <a href="<?php echo $row_infrastructure['ch_inf_lien_forum']; ?>" target="_blank">
+        <div class="external-link-icon"
+             style="background-image:url('http://www.generation-city.com/forum/new/favicon.png');"></div>
+        Lien sur le forum</a>
+    <?php } ?>
+    <?php if (!empty($row_infrastructure['lien_wiki'])) { ?> -
+    <a href="<?= __s($row_infrastructure['lien_wiki']) ?>" target="_blank">
+        <div class="external-link-icon"
+             style="background-image:url('http://vasel.yt/wiki/resources/assets/favicon.ico');"></div>
+        Lien sur le Wiki GC</a>
     <?php } ?>
     </div>
     <div class="span6">
@@ -95,7 +94,7 @@ $row_infrastructure = mysql_fetch_assoc($infrastructure);
             </div>
             <p>&nbsp;</p>
              <strong><p>R&egrave;gle&nbsp;:</p></strong>
-    <p><em><?php echo $row_infrastructure['ch_inf_off_desc']; ?></em></p>
+        <p><em><small style="color: grey;"><?php echo $row_infrastructure['ch_inf_off_desc']; ?></small></em></p>
     </div>
   </div>
   </div>

@@ -13,6 +13,14 @@ $queries = array();
  *                       *
  *************************/
 
+// infrastructures
+$queries[] = "alter table infrastructures
+	add nom_infra varchar(191) not null after ch_inf_statut";
+$queries[] = "alter table infrastructures
+	add lien_wiki varchar(250) null after ch_inf_lien_forum;
+";
+$queries[] = "alter table infrastructures alter column nom_infra set default ''";
+
 // infrastructures_groupes
 $queries[] = "alter table infrastructures_groupes
 	add url_image varchar(191) not null";
@@ -46,6 +54,12 @@ foreach($queries as $query) {
  *************************/
 
 $queries = array();
+
+// Définir le nom par défaut des infrastructures
+$queries[] = "UPDATE infrastructures inf SET nom_infra = (
+                  SELECT ch_inf_off_nom FROM infrastructures_officielles
+                  WHERE inf.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id
+                )";
 
 // Vider infrastructures_officielles_groupes
 $queries[] = "TRUNCATE infrastructures_officielles_groupes";
