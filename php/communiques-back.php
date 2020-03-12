@@ -59,7 +59,7 @@ $queryString_Liste_communiques = sprintf("&totalRows_Liste_communiques=%d%s", $t
                 <td><img src="../assets/img/statutpays<?php echo $row_Liste_communiques['ch_com_statut']; ?>.png" alt="Statut"></td>
                 <td><?php echo $row_Liste_communiques['ch_com_titre']; ?></td>
                 <td>Le <?php echo date("d/m/Y", strtotime($row_Liste_communiques['ch_com_date_mis_jour'])); ?>
-                &agrave; <?php echo date("G:i:s", strtotime($row_Liste_communiques['ch_com_date_mis_jour'])); ?>
+                &agrave; <?php echo date("G:i", strtotime($row_Liste_communiques['ch_com_date_mis_jour'])); ?>
                 </td>
                 <td><form action="communique_modifier.php" method="post">
                     <?php if(isset($colname_paysID)): ?>

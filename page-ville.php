@@ -477,7 +477,7 @@ init();
           <p>&nbsp;</p>
         </div>
         <div class="row-fluid">
-          <div id="Autresvilles" class="span6">
+          <div id="Autresvilles" class="span5">
             <?php if ($row_Autresvilles) { ?>
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&eacute;lectionnez une autre ville :</p>
             <form class="well" action="page-ville.php#carte" method="get">
@@ -493,7 +493,7 @@ init();
             <?php }?>
             <div id="info"></div>
           </div>
-          <div id="map" class="span6"></div>
+          <div id="map" class="span7"></div>
         </div>
       </section>
       <!-- Economie
@@ -527,7 +527,8 @@ init();
 
                $infraData = array(
                   'id' => $row_infrastructure['ch_inf_id'],
-                  'overlay_text' => 'Infrastructure',
+                  'overlay_image' => $row_infrastructure['ch_inf_off_icone'],
+                  'overlay_text' => $row_infrastructure['nom_infra'],
                   'image' => $row_infrastructure['ch_inf_lien_image'],
                   'nom' => $row_infrastructure['ch_inf_off_nom'],
                   'description' => $row_infrastructure['ch_inf_commentaire']

@@ -24,7 +24,7 @@ $row_infrastructure = mysql_fetch_assoc($infrastructure);
 
 <!-- Modal Header-->
   <div class="modal-header">
-  <div class="pull-left"><img style="width:100px; margin-right: 10px; margin-top:-50px;" src="<?php echo $row_infrastructure['ch_inf_off_icone']; ?>" alt="icone <?php echo $row_infrastructure['ch_inf_off_nom']; ?>"></div>
+  <div class="pull-left"><img style="width:100px; margin-right: 10px; margin-top:-50px;" src="<?php echo $row_infrastructure['ch_inf_off_icone']; ?>" alt="icone"></div>
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel"><?= __s($row_infrastructure['nom_infra']) ?>
         <small><?php echo $row_infrastructure['ch_inf_off_nom']; ?></small></h3>
@@ -66,8 +66,7 @@ $row_infrastructure = mysql_fetch_assoc($infrastructure);
          </div>
         <?php } ?>
         </div>
-    <strong><p>Description&nbsp;:</p></strong>
-    <p><em><?php echo $row_infrastructure['ch_inf_commentaire']; ?></em></p>
+    <p><?= __s($row_infrastructure['ch_inf_commentaire']) ?></p>
     </div>
     <div class="span6">
     <h3>Influence sur l'économie</h3>
@@ -83,7 +82,8 @@ $row_infrastructure = mysql_fetch_assoc($infrastructure);
             </div>
             <p>&nbsp;</p>
              <strong><p>R&egrave;gle&nbsp;:</p></strong>
-    <p><em><?php echo $row_infrastructure['ch_inf_off_desc']; ?></em></p>
+    <p><em><small style="color: grey;"><?php echo $row_infrastructure['ch_inf_off_desc']; ?></small></em></p>
+
     <?php if (!empty($row_infrastructure['ch_inf_lien_forum'])) { ?>
     <a href="<?php echo $row_infrastructure['ch_inf_lien_forum']; ?>" target="_blank">
         <div class="external-link-icon"
