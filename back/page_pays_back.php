@@ -976,49 +976,20 @@ img.olTileImage {
         </div>
         <div class="alert alert-success"> Vous pouvez dessiner des routes, des zones agricoles ou des zones naturelles entre vos villes sur la carte de votre pays. Ces zones vont avoir une influence sur l'économie et la population de votre pays </div>
         <h3>Balance des ressources issues de la carte</h3>
-        <ul class="token">
-          <li class="span1"><a title="Budget"><img src="../assets/img/ressources/Budget.png" alt="icone Budget"></a>
-            <p> <strong>
-              <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_budget_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </strong> </p>
-          </li>
-          <li class="span1"><a title="Industrie"><img src="../assets/img/ressources/Industrie.png" alt="icone Industrie"></a>
-            <p> <strong>
-              <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_industrie_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </strong> </p>
-          </li>
-          <li class="span1"><a title="Commerce"><img src="../assets/img/ressources/Bureau.png" alt="icone Commerce"></a>
-            <p> <strong>
-              <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_commerce_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </strong> </p>
-          </li>
-          <li class="span1"><a title="Agriculture"><img src="../assets/img/ressources/Agriculture.png" alt="icone Agriculture"></a>
-            <p> <strong>
-              <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_agriculture_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </strong> </p>
-          </li>
-          <li class="span1"><a title="Tourisme"><img src="../assets/img/ressources/tourisme.png" alt="icone Tourisme"></a>
-            <p> <strong>
-              <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_tourisme_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </strong> </p>
-          </li>
-          <li class="span1"><a title="Recherche"><img src="../assets/img/ressources/Recherche.png" alt="icone Recherche"></a>
-            <p> <strong>
-              <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_recherche_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </strong> </p>
-          </li>
-          <li class="span1"><a title="Environnement"><img src="../assets/img/ressources/Environnement.png" alt="icone Environnement"></a>
-            <p> <strong>
-              <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_environnement_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </strong> </p>
-          </li>
-          <li class="span1"><a title="Education"><img src="../assets/img/ressources/Education.png" alt="icone Education"></a>
-            <p> <strong>
-              <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_education_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </strong> </p>
-          </li>
-          <li class="span4"> <a class="btn btn-primary" href="../php/ressource-rapport-carte.php?ch_pay_id=<?php echo $colname_paysID ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le d&eacute;tail des ressources">D&eacute;tail</a> </li>
-        </ul>
+
+          <?php $ressources_cartes = array(
+              'budget' => $row_InfoGenerale['ch_pay_budget_carte'],
+              'industrie' => $row_InfoGenerale['ch_pay_industrie_carte'],
+              'commerce' => $row_InfoGenerale['ch_pay_commerce_carte'],
+              'agriculture' => $row_InfoGenerale['ch_pay_agriculture_carte'],
+              'tourisme' => $row_InfoGenerale['ch_pay_recherche_carte'],
+              'recherche' => $row_InfoGenerale['ch_pay_recherche_carte'],
+              'environnement' => $row_InfoGenerale['ch_pay_environnement_carte'],
+              'education' => $row_InfoGenerale['ch_pay_education_carte']
+          ); ?>
+
+          <?php renderResources($ressources_cartes, '../'); ?>
+
         <div class="span12">
           <p>&nbsp;</p>
           <p>Population rurale&nbsp;: <strong>
