@@ -586,150 +586,60 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
           <h1>Economie</h1>
         </div>
 
+          <?php
+
+          $ressources_total = array(
+              'budget' => $row_somme_ressources['budget']+$row_monument_ressources['budget']+$row_Pays['ch_pay_budget_carte'],
+              'industrie' => $row_somme_ressources['industrie']+$row_monument_ressources['industrie']+$row_Pays['ch_pay_industrie_carte'],
+              'commerce' => $row_somme_ressources['commerce']+$row_monument_ressources['commerce']+$row_Pays['ch_pay_commerce_carte'],
+              'agriculture' => $row_somme_ressources['agriculture']+$row_monument_ressources['agriculture']+$row_Pays['ch_pay_agriculture_carte'],
+              'tourisme' => $row_somme_ressources['tourisme']+$row_monument_ressources['tourisme']+$row_Pays['ch_pay_tourisme_carte'],
+              'recherche' => $row_somme_ressources['recherche']+$row_monument_ressources['recherche']+$row_Pays['ch_pay_recherche_carte'],
+              'environnement' => $row_somme_ressources['environnement']+$row_monument_ressources['environnement']+$row_Pays['ch_pay_environnement_carte'],
+              'education' => $row_somme_ressources['education']+$row_monument_ressources['education']+$row_Pays['ch_pay_education_carte']
+          );
+
+          $ressources_villes = array(
+              'budget' => $row_somme_ressources['budget']+$row_monument_ressources['budget'],
+              'industrie' => $row_somme_ressources['industrie']+$row_monument_ressources['industrie'],
+              'commerce' => $row_somme_ressources['commerce']+$row_monument_ressources['commerce'],
+              'agriculture' => $row_somme_ressources['agriculture']+$row_monument_ressources['agriculture'],
+              'tourisme' => $row_somme_ressources['tourisme']+$row_monument_ressources['tourisme'],
+              'recherche' => $row_somme_ressources['recherche']+$row_monument_ressources['recherche'],
+              'environnement' => $row_somme_ressources['environnement']+$row_monument_ressources['environnement'],
+              'education' => $row_somme_ressources['education']+$row_monument_ressources['education']
+          );
+
+          $ressources_cartes = array(
+              'budget' => $row_Pays['ch_pay_budget_carte'],
+              'industrie' => $row_Pays['ch_pay_industrie_carte'],
+              'commerce' => $row_Pays['ch_pay_commerce_carte'],
+              'agriculture' => $row_Pays['ch_pay_agriculture_carte'],
+              'tourisme' => $row_Pays['ch_pay_tourisme_carte'],
+              'recherche' => $row_Pays['ch_pay_recherche_carte'],
+              'environnement' => $row_Pays['ch_pay_environnement_carte'],
+              'education' => $row_Pays['ch_pay_education_carte']
+          );
+          ?>
+
         <div class="row-fluid" style="margin-left: 12px;">
           <h3>Balance totale des ressources</h3>
-          <ul class="token">
-            <li class="span1"><a title="Budget"><img src="assets/img/ressources/Budget.png" alt="icone Budget"></a>
-              <p>
-                <?php $chiffre_francais = number_format(($row_somme_ressources['budget']+$row_monument_ressources['budget']+$row_Pays['ch_pay_budget_carte']), 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-            <li class="span1"><a title="Industrie"><img src="assets/img/ressources/Industrie.png" alt="icone Industrie"></a>
-              <p>
-                <?php $chiffre_francais = number_format(($row_somme_ressources['industrie']+$row_monument_ressources['industrie']+$row_Pays['ch_pay_industrie_carte']), 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-            <li class="span1"><a title="Commerce"><img src="assets/img/ressources/Bureau.png" alt="icone Commerce"></a>
-              <p>
-                <?php $chiffre_francais = number_format(($row_somme_ressources['commerce']+$row_monument_ressources['commerce']+$row_Pays['ch_pay_commerce_carte']), 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-            <li class="span1"><a title="Agriculture"><img src="assets/img/ressources/Agriculture.png" alt="icone Agriculture"></a>
-              <p>
-                <?php $chiffre_francais = number_format(($row_somme_ressources['agriculture']+$row_monument_ressources['agriculture']+$row_Pays['ch_pay_agriculture_carte']), 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-            <li class="span1"><a title="Tourisme"><img src="assets/img/ressources/tourisme.png" alt="icone Tourisme"></a>
-              <p>
-                <?php $chiffre_francais = number_format(($row_somme_ressources['tourisme']+$row_Pays['ch_pay_tourisme_carte']), 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-            <li class="span1"><a title="Recherche"><img src="assets/img/ressources/Recherche.png" alt="icone Recherche"></a>
-              <p>
-                <?php $chiffre_francais = number_format(($row_somme_ressources['recherche']+$row_monument_ressources['tourisme']+$row_Pays['ch_pay_recherche_carte']), 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-            <li class="span1"><a title="Environnement"><img src="assets/img/ressources/Environnement.png" alt="icone Environnement"></a>
-              <p>
-                <?php $chiffre_francais = number_format(($row_somme_ressources['environnement']+$row_monument_ressources['environnement']+$row_Pays['ch_pay_environnement_carte']), 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-            <li class="span1"><a title="Education"><img src="assets/img/ressources/Education.png" alt="icone Education"></a>
-              <p>
-                <?php $chiffre_francais = number_format(($row_somme_ressources['education']+$row_monument_ressources['education']+$row_Pays['ch_pay_education_carte']), 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-          </ul>
+          <?php renderResources($ressources_total); ?>
         </div>
         <div class="row-fluid" style="margin-left: 12px;">
 
           <h3>Détail de la balance des ressources</h3>
             <p></p>
-          <strong>Balance des ressources issues des villes du pays </strong>
-          <ul class="token">
-            <li class="span1"><a title="Budget"><img src="assets/img/ressources/Budget.png" alt="icone Budget"></a>
-              <p>
-                <?php $chiffre_francais = number_format($row_somme_ressources['budget'] + $row_monument_ressources['budget'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-            <li class="span1"><a title="Industrie"><img src="assets/img/ressources/Industrie.png" alt="icone Industrie"></a>
-              <p>
-                <?php $chiffre_francais = number_format($row_somme_ressources['industrie'] + $row_monument_ressources['industrie'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-            <li class="span1"><a title="Commerce"><img src="assets/img/ressources/Bureau.png" alt="icone Commerce"></a>
-              <p>
-                <?php $chiffre_francais = number_format($row_somme_ressources['commerce'] + $row_monument_ressources['commerce'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-            <li class="span1"><a title="Agriculture"><img src="assets/img/ressources/Agriculture.png" alt="icone Agriculture"></a>
-              <p>
-                <?php $chiffre_francais = number_format($row_somme_ressources['agriculture'] + $row_monument_ressources['agriculture'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-            <li class="span1"><a title="Tourisme"><img src="assets/img/ressources/tourisme.png" alt="icone Tourisme"></a>
-              <p>
-                <?php $chiffre_francais = number_format($row_somme_ressources['tourisme'] + $row_monument_ressources['tourisme'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-            <li class="span1"><a title="Recherche"><img src="assets/img/ressources/Recherche.png" alt="icone Recherche"></a>
-              <p>
-                <?php $chiffre_francais = number_format($row_somme_ressources['recherche'] + $row_monument_ressources['recherche'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-            <li class="span1"><a title="Environnement"><img src="assets/img/ressources/Environnement.png" alt="icone Environnement"></a>
-              <p>
-                <?php $chiffre_francais = number_format($row_somme_ressources['environnement'] + $row_monument_ressources['environnement'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-            <li class="span1"><a title="Education"><img src="assets/img/ressources/Education.png" alt="icone Education"></a>
-              <p>
-                <?php $chiffre_francais = number_format($row_somme_ressources['education'] + $row_monument_ressources['education'], 0, ',', ' '); echo $chiffre_francais; ?>
-              </p>
-            </li>
-          </ul>
+          <h4>Balance des ressources issues des villes du pays </h4>
+          <?php renderResources($ressources_villes); ?>
         </div>
         <div class="row-fluid" style="margin-left: 12px;">
             <p></p>
-          <strong>Balance des ressources issues de la carte</strong>
-
-
-          <ul class="token">
-            <li class="span1"><a title="Budget"><img src="assets/img/ressources/Budget.png" alt="icone Budget"></a>
-              <p> <strong>
-                <?php $chiffre_francais = number_format($row_Pays['ch_pay_budget_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-                </strong> </p>
-            </li>
-            <li class="span1"><a title="Industrie"><img src="assets/img/ressources/Industrie.png" alt="icone Industrie"></a>
-              <p> <strong>
-                <?php $chiffre_francais = number_format($row_Pays['ch_pay_industrie_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-                </strong> </p>
-            </li>
-            <li class="span1"><a title="Commerce"><img src="assets/img/ressources/Bureau.png" alt="icone Commerce"></a>
-              <p> <strong>
-                <?php $chiffre_francais = number_format($row_Pays['ch_pay_commerce_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-                </strong> </p>
-            </li>
-            <li class="span1"><a title="Agriculture"><img src="assets/img/ressources/Agriculture.png" alt="icone Agriculture"></a>
-              <p> <strong>
-                <?php $chiffre_francais = number_format($row_Pays['ch_pay_agriculture_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-                </strong> </p>
-            </li>
-            <li class="span1"><a title="Tourisme"><img src="assets/img/ressources/tourisme.png" alt="icone Tourisme"></a>
-              <p> <strong>
-                <?php $chiffre_francais = number_format($row_Pays['ch_pay_tourisme_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-                </strong> </p>
-            </li>
-            <li class="span1"><a title="Recherche"><img src="assets/img/ressources/Recherche.png" alt="icone Recherche"></a>
-              <p> <strong>
-                <?php $chiffre_francais = number_format($row_Pays['ch_pay_recherche_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-                </strong> </p>
-            </li>
-            <li class="span1"><a title="Environnement"><img src="assets/img/ressources/Environnement.png" alt="icone Environnement"></a>
-              <p> <strong>
-                <?php $chiffre_francais = number_format($row_Pays['ch_pay_environnement_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-                </strong> </p>
-            </li>
-            <li class="span1"><a title="Education"><img src="assets/img/ressources/Education.png" alt="icone Education"></a>
-              <p> <strong>
-                <?php $chiffre_francais = number_format($row_Pays['ch_pay_education_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
-                </strong> </p>
-            </li>
-            <li class="span3">
-            </li>
-          </ul>
+          <h4>Balance des ressources issues de la carte</h4>
+          <?php renderResources($ressources_cartes); ?>
         </div>
         <div class="clearfix"></div>
+
         <?php if ($row_Pays['ch_pay_header_economie'] OR $row_Pays['ch_pay_text_economie']) { ?>
         <p>&nbsp;</p>
         <div class="well">

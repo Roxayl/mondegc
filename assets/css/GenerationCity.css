@@ -964,20 +964,50 @@ canvas#parliament-chart {
 .token {
 	text-align: center;
 	font-size: 18px;
-	margin-left: 60px;
+	margin-left: 30px;
+    font-family: "Titillium Web", sans-serif;
 }
 .token li p {
-	text-align: center;
-	background: #dfdfdf;
-	margin: 0;
-	margin-top: -15px;
-	margin-right: -12px;
-	margin-left: -12px;
-	padding: -5px;
-	padding-top: 10px;
+	text-align: left;
 	font-size:13px;
 	font-weight:600;
+    display: inline-block;
 }
+.token img {
+    width: 50px;
+    display: inline-block;
+    position: relative;
+    left: 0;
+    top: -10px;
+}
+.token .infra-nbr-ressource {
+    font-size: 16px;
+}
+.token-budget {
+    color: #ffcd00;
+}
+.token-commerce {
+    color: #2f659a;
+}
+.token-industrie {
+    color: #652f00;
+}
+.token-agriculture {
+    color: #145d19;
+}
+.token-recherche {
+    color: #65659a;
+}
+.token-tourisme  {
+    color: #00cd9a;
+}
+.token-environnement {
+    color: #4ab04e;
+}
+.token-education {
+    color: #9a0065;
+}
+
 /* footer
 -------------------------------------------------- */
 footer {

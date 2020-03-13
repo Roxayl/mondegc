@@ -1166,48 +1166,69 @@ if(!function_exists('renderResources')) {
 
         ?>
         <ul class="token">
-          <li class="span1"><span title="Budget"><img src="assets/img/ressources/Budget.png" alt="icone Budget"></span>
-            <p>
-              <?php echo number_format($resources['budget'], 0, ',', ' '); ?>
+          <li class="span2 token-budget"><span title="Budget"><img src="assets/img/ressources/Budget.png" alt="icone Budget"></span>
+            <p>Budget <br>
+                <span class="infra-nbr-ressource"><?php echo number_format($resources['budget'], 0, ',', ' '); ?></span>
             </p>
           </li>
-          <li class="span1"><span title="Industrie"><img src="assets/img/ressources/Industrie.png" alt="icone Industrie"></span>
-            <p>
-              <?php echo number_format($resources['industrie'], 0, ',', ' '); ?>
+          <li class="span2 token-industrie"><span title="Industrie"><img src="assets/img/ressources/Industrie.png" alt="icone Industrie"></span>
+            <p>Industrie <br>
+                <span class="infra-nbr-ressource"><?php echo number_format($resources['industrie'], 0, ',', ' '); ?></span>
             </p>
           </li>
-          <li class="span1"><span title="Commerce"><img src="assets/img/ressources/Bureau.png" alt="icone Commerce"></span>
-            <p>
-              <?php echo number_format($resources['commerce'], 0, ',', ' '); ?>
+          <li class="span2 token-commerce"><span title="Commerce"><img src="assets/img/ressources/Bureau.png" alt="icone Commerce"></span>
+            <p>Commerce <br>
+                <span class="infra-nbr-ressource"><?php echo number_format($resources['commerce'], 0, ',', ' '); ?></span>
             </p>
           </li>
-          <li class="span1"><span title="Agriculture"><img src="assets/img/ressources/Agriculture.png" alt="icone Agriculture"></span>
-            <p>
-              <?php echo number_format($resources['agriculture'], 0, ',', ' '); ?>
+          <li class="span2 token-agriculture"><span title="Agriculture"><img src="assets/img/ressources/Agriculture.png" alt="icone Agriculture"></span>
+            <p>Agriculture <br>
+                <span class="infra-nbr-ressource"><?php echo number_format($resources['agriculture'], 0, ',', ' '); ?></span>
             </p>
           </li>
-          <li class="span1"><span title="Tourisme"><img src="assets/img/ressources/tourisme.png" alt="icone Tourisme"></span>
-            <p>
-              <?php echo number_format($resources['tourisme'], 0, ',', ' '); ?>
+        </ul>
+        <div class="clearfix"></div>
+        <ul class="token">
+          <li class="span2 token-tourisme"><span title="Tourisme"><img src="assets/img/ressources/tourisme.png" alt="icone Tourisme"></span>
+            <p>Tourisme <br>
+                <span class="infra-nbr-ressource"><?php echo number_format($resources['tourisme'], 0, ',', ' '); ?></span>
             </p>
           </li>
-          <li class="span1"><span title="Recherche"><img src="assets/img/ressources/Recherche.png" alt="icone Recherche"></span>
-            <p>
-              <?php echo number_format($resources['recherche'], 0, ',', ' '); ?>
+          <li class="span2 token-recherche"><span title="Recherche"><img src="assets/img/ressources/Recherche.png" alt="icone Recherche"></span>
+            <p>Recherche <br>
+                <span class="infra-nbr-ressource"><?php echo number_format($resources['recherche'], 0, ',', ' '); ?></span>
             </p>
           </li>
-          <li class="span1"><span title="Environnement"><img src="assets/img/ressources/Environnement.png" alt="icone Environnement"></span>
-            <p>
-              <?php echo number_format($resources['environnement'], 0, ',', ' '); ?>
+          <li class="span2 token-environnement"><span title="Environnement"><img src="assets/img/ressources/Environnement.png" alt="icone Environnement"></span>
+            <p>Environn. <br>
+                <span class="infra-nbr-ressource"><?php echo number_format($resources['environnement'], 0, ',', ' '); ?></span>
             </p>
           </li>
-          <li class="span1"><span title="Education"><img src="assets/img/ressources/Education.png" alt="icone Education"></span>
-            <p>
-              <?php echo number_format($resources['education'], 0, ',', ' '); ?>
+          <li class="span2 token-education"><span title="Education"><img src="assets/img/ressources/Education.png" alt="icone Education"></span>
+            <p>Education <br>
+                <span class="infra-nbr-ressource"><?php echo number_format($resources['education'], 0, ',', ' '); ?></span>
             </p>
           </li>
         </ul>
         <?php
+
+    }
+}
+
+if(!function_exists('getResourceColor')) {
+    function getResourceColor($resource) {
+
+        $colors = array(
+            'agriculture' => '#145d19',
+            'budget' => '#ffcd00',
+            'commerce' => '#2f659a',
+            'education' => '#9a0065',
+            'environnement' => '#4ab04e',
+            'industrie' => '#652f00',
+            'recherche' => '#65659a',
+            'tourisme' => '#00cd9a'
+        );
+        return $colors[$resource];
 
     }
 }

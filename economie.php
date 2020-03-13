@@ -360,15 +360,8 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
           (function($, window, Chart, document, undefined) {
 
               var chartColors = [
-                '#4dc9f6',
-                '#f67019',
-                '#f53794',
-                '#537bc4',
-                '#acc236',
-                '#166a8f',
-                '#00a950',
-                '#58595b',
-                '#8549ba'
+                '<?= getResourceColor($cat) ?>',
+                '<?= getResourceColor($cat) ?>'
             ];
             var i = 0;
 
@@ -431,35 +424,35 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
           <p><i class="icon-globe icon-white"></i> Balance mondiale&nbsp;:</p>
           <?php if ($cat =="budget") { ?>
           <a href="#" title="Budget"><img src="assets/img/ressources/Budget.png" alt="icone Budget"></a>
-          <h3><?php $chiffre_francais = number_format($tot_mon_budget, 0, ',', ' '); echo $chiffre_francais; ?></h3>
+          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_budget, 0, ',', ' '); echo $chiffre_francais; ?></h3>
           <?php } ?>
           <?php if ($cat =="industrie") { ?>
           <a href="#" title="Industrie"><img src="assets/img/ressources/Industrie.png" alt="icone Industrie"></a>
-          <h3><?php $chiffre_francais = number_format($tot_mon_industrie, 0, ',', ' '); echo $chiffre_francais; ?></h3>
+          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_industrie, 0, ',', ' '); echo $chiffre_francais; ?></h3>
           <?php } ?>
           <?php if ($cat =="commerce") { ?>
           <a href="#" title="Commerce"><img src="assets/img/ressources/Bureau.png" alt="icone Commerce"></a>
-          <h3><?php $chiffre_francais = number_format($tot_mon_commerce, 0, ',', ' '); echo $chiffre_francais; ?></h3>
+          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_commerce, 0, ',', ' '); echo $chiffre_francais; ?></h3>
           <?php } ?>
           <?php if ($cat =="agriculture") { ?>
           <a href="#" title="Agriculture"><img src="assets/img/ressources/Agriculture.png" alt="icone Agriculture"></a>
-          <h3><?php $chiffre_francais = number_format($tot_mon_agriculture, 0, ',', ' '); echo $chiffre_francais; ?></h3>
+          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_agriculture, 0, ',', ' '); echo $chiffre_francais; ?></h3>
           <?php } ?>
           <?php if ($cat =="tourisme") { ?>
           <a href="#" title="Tourisme"><img src="assets/img/ressources/tourisme.png" alt="icone Tourisme"></a>
-          <h3><?php $chiffre_francais = number_format($tot_mon_tourisme, 0, ',', ' '); echo $chiffre_francais; ?></h3>
+          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_tourisme, 0, ',', ' '); echo $chiffre_francais; ?></h3>
           <?php } ?>
           <?php if ($cat =="recherche") { ?>
           <a href="#" title="Recherche"><img src="assets/img/ressources/Recherche.png" alt="icone Recherche"></a>
-          <h3><?php $chiffre_francais = number_format($tot_mon_recherche, 0, ',', ' '); echo $chiffre_francais; ?></h3>
+          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_recherche, 0, ',', ' '); echo $chiffre_francais; ?></h3>
           <?php } ?>
           <?php if ($cat =="environnement") { ?>
           <a href="#" title="Environnement"><img src="assets/img/ressources/Environnement.png" alt="icone Environnement"></a>
-          <h3><?php $chiffre_francais = number_format($tot_mon_environnement, 0, ',', ' '); echo $chiffre_francais; ?></h3>
+          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_environnement, 0, ',', ' '); echo $chiffre_francais; ?></h3>
           <?php } ?>
           <?php if ($cat =="education") { ?>
           <a href="#" title="Education"><img src="assets/img/ressources/Education.png" alt="icone Education"></a>
-          <h3><?php $chiffre_francais = number_format($tot_mon_education, 0, ',', ' '); echo $chiffre_francais; ?></h3>
+          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_education, 0, ',', ' '); echo $chiffre_francais; ?></h3>
           <?php } ?>
         </div>
        </div>
@@ -486,22 +479,22 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
             <?php if (($cat =="budget") AND ($row_somme_ressources['budget']!=NULL)) { ?>
             <div class="span1 token-list-eco"> <a href="#" title="Budget"><img src="assets/img/ressources/Budget.png" alt="icone Budget"></a> </div>
             <div class="span3">
-              <h3><?php $chiffre_francais = number_format($row_somme_ressources['budget'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
+              <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($row_somme_ressources['budget'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
             </div>
             <?php } elseif (($cat =="industrie") AND ($row_somme_ressources['industrie']!=NULL)) { ?>
             <div class="span1 token-list-eco"> <a href="#" title="Industrie"><img src="assets/img/ressources/Industrie.png" alt="icone Industrie"></a> </div>
             <div class="span3">
-              <h3><?php $chiffre_francais = number_format($row_somme_ressources['industrie'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
+              <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($row_somme_ressources['industrie'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
             </div>
             <?php } elseif (($cat =="commerce") AND ($row_somme_ressources['commerce']!=NULL)) { ?>
             <div class="span1 token-list-eco"> <a href="#" title="Commerce"><img src="assets/img/ressources/Bureau.png" alt="icone Commerce"></a> </div>
             <div class="span3">
-              <h3><?php $chiffre_francais = number_format($row_somme_ressources['commerce'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
+              <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($row_somme_ressources['commerce'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
             </div>
             <?php } elseif (($cat =="agriculture") AND ($row_somme_ressources['agriculture']!=NULL)) { ?>
             <div class="span1 token-list-eco"> <a href="#" title="Agriculture"><img src="assets/img/ressources/Agriculture.png" alt="icone Agriculture"></a> </div>
             <div class="span3">
-              <h3><?php $chiffre_francais = number_format($row_somme_ressources['agriculture'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
+              <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($row_somme_ressources['agriculture'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
             </div>
             <?php } elseif (($cat =="tourisme") AND ($row_somme_ressources['tourisme']!=NULL)) { ?>
             <div class="span1 token-list-eco"> <a href="#" title="Tourisme"><img src="assets/img/ressources/tourisme.png" alt="icone Tourisme"></a> </div>
@@ -511,17 +504,17 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
             <?php } elseif (($cat =="recherche") AND ($row_somme_ressources['recherche']!=NULL)) { ?>
             <div class="span1 token-list-eco"> <a href="#" title="Recherche"><img src="assets/img/ressources/Recherche.png" alt="icone Recherche"></a> </div>
             <div class="span3">
-              <h3><?php $chiffre_francais = number_format($row_somme_ressources['recherche'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
+              <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($row_somme_ressources['recherche'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
             </div>
             <?php } elseif (($cat =="environnement") AND ($row_somme_ressources['environnement']!=NULL)) { ?>
             <div class="span1 token-list-eco"> <a href="#" title="Environnement"><img src="assets/img/ressources/Environnement.png" alt="icone Environnement"></a> </div>
             <div class="span3">
-              <h3><?php $chiffre_francais = number_format($row_somme_ressources['environnement'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
+              <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($row_somme_ressources['environnement'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
             </div>
             <?php } elseif (($cat =="education") AND ($row_somme_ressources['education']!=NULL)) { ?>
             <div class="span1 token-list-eco"> <a href="#" title="Education"><img src="assets/img/ressources/Education.png" alt="icone Education"></a> </div>
             <div class="span3">
-              <h3><?php $chiffre_francais = number_format($row_somme_ressources['education'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
+              <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($row_somme_ressources['education'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
             </div>
             <?php } else {  ?>
             <div class="span4"><p>NC</p></div>
