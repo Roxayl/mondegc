@@ -29,17 +29,39 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-if(!isset($_REQUEST['infra_group_id'])) {
-    throw new InvalidArgumentException("Veuillez spécifier un groupe d'infra.");
-}
-
-$infraGroup = new \GenCity\Monde\Temperance\InfraGroup($_REQUEST['infra_group_id']);
-$thisVille = new \GenCity\Monde\Ville($ville_ID);
-$thisPays = new \GenCity\Monde\Pays($thisVille->get('ch_vil_paysID'));
 /** @var \GenCity\Monde\User $thisUser */
 $thisUser = $_SESSION['userObject'];
 
-if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_infrastructure")) {
+if(isset($_REQUEST['infra_id']))
+    $form_action = 'edit';
+else
+    $form_action = 'add';
+
+if($form_action === 'edit') {
+
+    $thisInfra = new \GenCity\Monde\Temperance\Infrastructure($_REQUEST['infra_id']);
+    $infraOfficielle = new \GenCity\Monde\Temperance\InfraOfficielle($thisInfra->get('ch_inf_off_id'));
+    $infraGroup = $infraOfficielle->getGroup();
+    $thisVille = new \GenCity\Monde\Ville($thisInfra->get('ch_inf_villeid'));
+    $thisPays = new \GenCity\Monde\Pays($thisVille->get('ch_vil_paysID'));
+
+}
+
+else {
+
+    if(!isset($_REQUEST['infra_group_id'])) {
+        throw new InvalidArgumentException("Veuillez spécifier un groupe d'infra.");
+    }
+
+    $thisInfra = new \GenCity\Monde\Temperance\Infrastructure(null);
+    $infraGroup = new \GenCity\Monde\Temperance\InfraGroup($_REQUEST['infra_group_id']);
+    $thisVille = new \GenCity\Monde\Ville($ville_ID);
+    $thisPays = new \GenCity\Monde\Pays($thisVille->get('ch_vil_paysID'));
+
+}
+
+
+if ($form_action === 'add' && isset($_POST["MM_insert"]) && $_POST["MM_insert"] == "ajout_infrastructure") {
   $insertSQL = sprintf("INSERT INTO infrastructures (ch_inf_label, ch_inf_off_id, ch_inf_villeid, ch_inf_date, ch_inf_statut, nom_infra, ch_inf_lien_image, ch_inf_lien_image2, ch_inf_lien_image3, ch_inf_lien_image4, ch_inf_lien_image5, ch_inf_lien_forum, lien_wiki, ch_inf_commentaire, ch_inf_juge, ch_inf_commentaire_juge) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['ch_inf_label'], "text"),
 					   GetSQLValueString($_POST['ch_inf_off_id'], "int"),
@@ -70,7 +92,44 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_infrastructur
   getErrorMessage('success', "Une infrastructure a été ajoutée avec succès !");
 
   header(sprintf("Location: %s", $insertGoTo));
+  exit;
+
 }
+
+if($form_action === 'edit' && isset($_POST["MM_insert"]) && $_POST["MM_insert"] == "ajout_infrastructure") {
+
+    $formData = array(
+        'nom_infra' => $_POST['nom_infra'],
+        'ch_inf_lien_image' => $_POST['ch_inf_lien_image'],
+        'ch_inf_lien_image2' => $_POST['ch_inf_lien_image2'],
+        'ch_inf_lien_image3' => $_POST['ch_inf_lien_image3'],
+        'ch_inf_lien_forum' => $_POST['ch_inf_lien_forum'],
+        'lien_wiki' => $_POST['lien_wiki']
+    );
+
+    $thisInfra->set('nom_infra', $_POST['nom_infra']);
+    $thisInfra->set('ch_inf_lien_image', $_POST['ch_inf_lien_image']);
+    $thisInfra->set('ch_inf_lien_image2', $_POST['ch_inf_lien_image2']);
+    $thisInfra->set('ch_inf_lien_image3', $_POST['ch_inf_lien_image3']);
+    $thisInfra->set('ch_inf_lien_forum', $_POST['ch_inf_lien_forum']);
+    $thisInfra->set('lien_wiki', $_POST['lien_wiki']);
+
+    $thisInfra->update();
+
+    $insertGoTo = "ville_modifier.php";
+    if (isset($_SERVER['QUERY_STRING'])) {
+        $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+        $insertGoTo .= $_SERVER['QUERY_STRING'];
+    }
+
+    getErrorMessage('success', "L'infrastructure a été modifiée avec succès !");
+
+    header(sprintf("Location: %s", $insertGoTo));
+    exit;
+
+}
+
+
 //requete user 
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($paysID, "int"));
@@ -93,9 +152,11 @@ $totalRows_liste_inf_off = mysql_num_rows($liste_inf_off);
 //requete Infrastructure officielles choisie pour affichage des infos
 $colname_inf_off_choisie = "-1";
 if (isset($_POST['liste_inf_officielles'])) {
-$colname_inf_off_choisie = $_POST['liste_inf_officielles'];
+    $colname_inf_off_choisie = $_POST['liste_inf_officielles'];
+} elseif($form_action === 'edit') {
+    $colname_inf_off_choisie = $thisInfra->get('ch_inf_off_id');
 } else {
-$colname_inf_off_choisie = -1;
+    $colname_inf_off_choisie = -1;
 } 
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_inf_off_choisie = sprintf("SELECT * FROM infrastructures_officielles WHERE ch_inf_off_id = %s", GetSQLValueString($colname_inf_off_choisie, "int"));
@@ -177,7 +238,7 @@ img.olTileImage {
     <!-- Moderation
      ================================================== -->
     <div id="infrastructure" class="titre-vert anchor">
-      <h1>Ajouter une infrastructure<br>
+      <h1><?= $form_action === 'add' ? 'Ajouter' : 'Modifier' ?> une infrastructure<br>
         <small><img src="<?= __s((empty($thisVille->get('ch_vil_armoiries')) ? '../assets/img/imagesdefaut/blason.jpg' : $thisVille->get('ch_vil_armoiries')) ) ?>" style="height: 24px; width: 24px;"> Ville de <?= __s($thisVille->get('ch_vil_nom')) ?></small></h1>
     </div>
 
@@ -189,25 +250,32 @@ img.olTileImage {
       <li class="active">Ajouter une infrastructure</li>
     </ul>
 
+    <?php renderElement('errormsgs'); ?>
+
     <div class="alert alert-success">
       <button type="button" class="close" data-dismiss="alert">×</button>
-      Ce formulaire vous permet d'ajouter une infrastructure &agrave; votre ville. Les infrastructures vous permettent de  construire l'&eacute;conomie de votre pays. L'existence de votre infrastructure doit &ecirc;tre prouv&eacute;e par une image. Avant d'&ecirc;tre comptabilis&eacute;e, votre infrastructure sera mod&eacute;r&eacute;e par les juges du projet <a href="../economie.php" title="Lien vers l'Institut Economique Gécéen">Tempérance</a></div>
+      Ce formulaire vous permet <?= $form_action === 'add' ? 'd\'ajouter' : 'de modifier' ?> une infrastructure &agrave; votre ville. Les infrastructures vous permettent de  construire l'&eacute;conomie de votre pays. L'existence de votre infrastructure doit &ecirc;tre prouv&eacute;e par une image. Avant d'&ecirc;tre comptabilis&eacute;e, votre infrastructure sera mod&eacute;r&eacute;e par les juges du projet <a href="../economie.php" title="Lien vers l'Institut Economique Gécéen">Tempérance</a>.</div>
 
 
     <div class="row-fluid">
       <div class="span6 well">
 
       <h3 style="margin: 0;"><?= __s($infraGroup->get('nom_groupe')) ?>
-      <small style="display: inline;"><a href="infra_select_group.php?ville_id=<?= $thisVille->get('ch_vil_ID') ?>">(Changer)</a></small></h3>
+          <?php if($form_action === 'add'): ?>
+            <small style="display: inline;"><a href="infra_select_group.php?ville_id=<?= $thisVille->get('ch_vil_ID') ?>"
+                >(Changer)</a></small>
+          <?php endif; ?>
+      </h3>
+
       <br><br>
 
         <!-- choix infrastructure -->
         <form action="infrastructure_ajouter.php#infrastructure" method="POST" id="form-infra-list"
               class="form-inline">
           <div id="spryselect1" class="control-group">
-          <div class="control-label">Choisissez votre infrastructure <a href="#" rel="clickover" title="Infrastructures de la liste officielle" data-content="Vous devez choisir une infrastructure dans la liste officielle. Chaque nouvelle infrastructure va modifier les valeurs de votre économie"><i class="icon-info-sign"></i></a></div>
+          <div class="control-label"><h4 style="display: inline-block;">Choisissez votre infrastructure</h4> <a href="#" rel="clickover" title="Infrastructures de la liste officielle" data-content="Vous devez choisir une infrastructure dans la liste officielle. Chaque nouvelle infrastructure va modifier les valeurs de votre économie"><i class="icon-info-sign"></i></a></div>
           <div class="controls">
-          <select name="liste_inf_officielles" id="liste_inf_officielles" placeholder="Rechercher une infrastructure...">
+          <select name="liste_inf_officielles" id="liste_inf_officielles" placeholder="Rechercher une infrastructure..." <?= ($form_action === 'edit') ? 'disabled' : '' ?>>
             <option value=""></option>
             <?php do { ?>
             <option value="<?php echo $row_liste_inf_off['ch_inf_off_id']; ?>" <?php if ($colname_inf_off_choisie == $row_liste_inf_off['ch_inf_off_id']) {?>selected<?php } ?>><?php echo $row_liste_inf_off['ch_inf_off_nom']; ?></option>
@@ -220,6 +288,11 @@ img.olTileImage {
         </form>
     <!-- Debut formulaire -->
     <form action="<?php echo $editFormAction; ?>" method="POST" class="" name="ajout_infrastructure" Id="ajout_infrastructure">
+
+      <!-- En cas d'édition -->
+      <?php if($form_action === 'edit'): ?>
+        <input name="infra_id" type="hidden" value="<?= __s($thisInfra->get('ch_inf_id')) ?>">
+      <?php endif; ?>
       
       <!-- Bouton cachés -->
       <input name="ch_inf_villeid" type="hidden" value="<?php echo $ville_ID; ?>">
@@ -228,12 +301,12 @@ img.olTileImage {
       <input name="ch_inf_juge" type="hidden" value="">
       <input name="infra_group_id" type="hidden" value="<?= $infraGroup->get('id') ?>">
       <?php 
-				  $now= date("Y-m-d G:i:s");?>
+      $now = date("Y-m-d G:i:s");?>
       <input name="ch_inf_date" type="hidden" value="<?php echo $now; ?>" >
       <input name="ch_inf_statut" type="hidden" value="1">
       <input name="ch_inf_commentaire_juge" type="hidden" value="">
 
-      <div id="infra_add_form_container" style="<?= empty($row_inf_off_choisie['ch_inf_off_nom']) ? 'display: none;' : ''; ?>">
+      <div id="infra_add_form_container" style="<?= empty($row_inf_off_choisie['ch_inf_off_nom']) && !isset($_REQUEST['infra_id']) ? 'display: none;' : ''; ?>">
 
           <h4>Informations générales</h4>
 
@@ -241,7 +314,7 @@ img.olTileImage {
           <div id="sprytextfield_nom_infra" class="control-group">
             <label class="control-label" for="nom_infra">Nom de l'infrastructure <a href="#" rel="clickover" title="Nom de l'infrastructure" data-content="Un joli nom pour votre infrastructure ! Ce champ est obligatoire."><i class="icon-info-sign"></i></a></label>
             <div class="controls">
-              <input class="span12" type="text" id="nom_infra" name="nom_infra" value="">
+              <input class="span12" type="text" id="nom_infra" name="nom_infra" value="<?= __s($thisInfra->get('nom_infra')) ?>">
               <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span><span class="textfieldMinCharsMsg">2 caractères minimum.</span></div>
           </div>
 
@@ -249,7 +322,7 @@ img.olTileImage {
           <div class="control-group" id="sprytextarea1">
             <label class="control-label" for="ch_inf_commentaire">Description <a href="#" rel="clickover" title="Pr&eacute;sentation" data-content="Mettez &eacute;ventuellement une description rapide de votre infrastructure pour aider les juges &agrave; accepter votre demande. 400 caract&egrave;res maximum"><i class="icon-info-sign"></i></a></label>
             <div class="controls">
-              <textarea name="ch_inf_commentaire" id="ch_inf_commentaire" class="span12" rows="6"></textarea>
+              <textarea name="ch_inf_commentaire" id="ch_inf_commentaire" class="span12" rows="6"><?= __s($thisInfra->get('ch_inf_commentaire')) ?></textarea>
               <span class="textareaMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textareaMaxCharsMsg">400 caract&egrave;res maximum.</span></div>
           </div>
 
@@ -257,7 +330,7 @@ img.olTileImage {
           <div id="sprytextfield" class="control-group">
             <label class="control-label" for="ch_inf_lien_image">Image de votre infrastructure <a href="#" rel="clickover" title="Image de l'infrastructure" data-content="Copiez un lien vers une image qui prouve la construction de l'infrastructure dans l'un des jeux accept&eacute; par le site du Monde GC. Il vous appartient de veiller &agrave; ce que l'image montre clairement cette infrastructure avec les crit&egrave;res requis. Le moindre doute signifiera un refus. Ce champ est obligatoire."><i class="icon-info-sign"></i></a></label>
             <div class="controls">
-              <input class="span12" type="text" id="ch_inf_lien_image" name="ch_inf_lien_image" value="">
+              <input class="span12" type="text" id="ch_inf_lien_image" name="ch_inf_lien_image" value="<?= __s($thisInfra->get('ch_inf_lien_image')) ?>">
               <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
           </div>
 
@@ -265,7 +338,7 @@ img.olTileImage {
           <div id="sprytextfield2" class="control-group">
             <label class="control-label" for="ch_inf_lien_image2">Image de votre infrastructure n°2 <a href="#" rel="clickover" title="Image de l'infrastructure" data-content="Image suppl&eacute;mentaire. Ce champ est optionnel."><i class="icon-info-sign"></i></a></label>
             <div class="controls">
-              <input class="span12" type="text" id="ch_inf_lien_image2" name="ch_inf_lien_image2" value="">
+              <input class="span12" type="text" id="ch_inf_lien_image2" name="ch_inf_lien_image2" value="<?= __s($thisInfra->get('ch_inf_lien_image2')) ?>">
               <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
           </div>
 
@@ -273,7 +346,7 @@ img.olTileImage {
           <div id="sprytextfield3" class="control-group">
             <label class="control-label" for="ch_inf_lien_image3">Image de votre infrastructure n°3 <a href="#" rel="clickover" title="Image de l'infrastructure" data-content="Image suppl&eacute;mentaire. Ce champ est optionnel."><i class="icon-info-sign"></i></a></label>
             <div class="controls">
-              <input class="span12" type="text" id="ch_inf_lien_image3" name="ch_inf_lien_image3" value="">
+              <input class="span12" type="text" id="ch_inf_lien_image3" name="ch_inf_lien_image3" value="<?= __s($thisInfra->get('ch_inf_lien_image3')) ?>">
               <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
           </div>
 
@@ -287,7 +360,7 @@ img.olTileImage {
                 Lien sur le forum
                 <a href="#" rel="clickover" title="Lien vers la page de pr&eacute;sentation" data-content="L'infrastructure doit obligatoirement appartenir &agrave; une ville pr&eacute;sent&eacute;e sur le forum. Mettez le lien vers la page du sujet o&ugrave; est present&eacute;e votre infrastructure"><i class="icon-info-sign"></i></a></label>
             <div class="controls">
-              <input name="ch_inf_lien_forum" id="ch_inf_lien_forum" class="span12" type="text" value="">
+              <input name="ch_inf_lien_forum" id="ch_inf_lien_forum" class="span12" type="text" value="<?= __s($thisInfra->get('ch_inf_lien_forum')) ?>">
               <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>
           </div>
 
@@ -299,7 +372,7 @@ img.olTileImage {
                 Lien sur le wiki
                 <a href="#" rel="clickover" title="Lien vers le Wiki GC" data-content="Si nécessaire, précisez un lien vers le wiki."><i class="icon-info-sign"></i></a></label>
             <div class="controls">
-              <input name="lien_wiki" id="lien_wiki" class="span12" type="text" value="">
+              <input name="lien_wiki" id="lien_wiki" class="span12" type="text" value="<?= __s($thisInfra->get('lien_wiki')) ?>">
               <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
           </div>
 

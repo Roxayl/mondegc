@@ -29,4 +29,23 @@ class Infrastructure extends BaseModel {
 
     }
 
+    public function update() {
+
+        $structure = $this->model->getStructure();
+
+        $query = 'UPDATE infrastructures SET ';
+
+        foreach($structure as $field => $default) {
+            $query .= ' `' . $field . '` = ' . GetSQLValueString($this->get($field));
+            end($structure);
+            if($field !== key($structure)) {
+                $query .= ', ';
+            }
+        }
+
+        $query .= ' WHERE ch_inf_id = ' . GetSQLValueString($this->get('ch_inf_id'));
+        mysql_query($query) or die(mysql_error());
+
+    }
+
 }

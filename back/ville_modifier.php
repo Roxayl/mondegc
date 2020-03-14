@@ -712,12 +712,15 @@ include('../php/communiques-back.php'); ?>
             <tr <?php if ($row_infrastructure['ch_inf_statut']==1) { ?>style="opacity:0.5;"<?php }?>>
               <td><img src="../assets/img/statutinfra_<?php echo $row_infrastructure['ch_inf_statut']; ?>.png" alt="Statut"></td>
               <td><img src="<?php echo $row_infrastructure['ch_inf_lien_image']; ?>" alt="image de votre construction" width="120px"></td>
-              <td><?php echo $row_infrastructure['ch_inf_off_nom']; ?></td>
-              <td>Le <?php echo date("d/m/Y", strtotime($row_infrastructure['ch_inf_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_infrastructure['ch_inf_date'])); ?></td>
+              <td><?= __s($row_infrastructure['nom_infra']) ?><br>
+                  <small><?php echo $row_infrastructure['ch_inf_off_nom']; ?></small></td>
+              <td>Le <?php echo date("d/m/Y", strtotime($row_infrastructure['ch_inf_date'])); ?> &agrave; <?php echo date("G:i", strtotime($row_infrastructure['ch_inf_date'])); ?></td>
               <td><!-- Boutons visualiser infrastructure --> 
                 <a class="btn modal-fullscreen" href="../php/infrastructure-modal.php?ch_inf_id=<?php echo $row_infrastructure['ch_inf_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir les détails"><i class="icon-eye-open"></i></a></td>
+              <td><!-- Boutons modifier infrastructure -->
+                <a class="btn btn-primary" href="infrastructure_ajouter.php?infra_id=<?= __s($row_infrastructure['ch_inf_id']) ?>" title="Modifier cette infrastructure"><i class="icon-pencil icon-white"></i></a></td>
               <td><!-- Boutons supprimer infrastructure --> 
-                <a class="btn" href="../php/infrastructure-confirmer-supprimer-modal.php?ch_inf_id=<?php echo $row_infrastructure['ch_inf_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer cette infrastructure"><i class="icon-trash"></i></a></td>
+                <a class="btn btn-danger" href="../php/infrastructure-confirmer-supprimer-modal.php?ch_inf_id=<?php echo $row_infrastructure['ch_inf_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer cette infrastructure"><i class="icon-trash icon-white"></i></a></td>
             </tr>
             <?php } while ($row_infrastructure = mysql_fetch_assoc($infrastructure)); ?>
         </tbody>
@@ -788,14 +791,14 @@ $('#closemodal').click(function() {
             <tr>
               <td><img src="../assets/img/statutvil_<?php echo $row_monument['ch_pat_statut']; ?>.png" alt="Statut"></td>
               <td><?php echo $row_monument['ch_pat_nom']; ?></td>
-              <td>Le <?php echo date("d/m/Y", strtotime($row_monument['ch_pat_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_monument['ch_pat_date'])); ?></td>
+              <td>Le <?php echo date("d/m/Y", strtotime($row_monument['ch_pat_date'])); ?> &agrave; <?php echo date("G:i", strtotime($row_monument['ch_pat_date'])); ?></td>
               <td><form action="monument_modifier.php" method="post">
                   <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
-                  <button class="btn" type="submit" title="modifier ce monument"><i class="icon-pencil"></i></button>
+                  <button class="btn btn-primary" type="submit" title="modifier ce monument"><i class="icon-pencil icon-white"></i></button>
                 </form></td>
               <td><form action="monument_confirmation_supprimer.php" method="post">
                   <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
-                  <button class="btn" type="submit" title="supprimer ce monument"><i class="icon-trash"></i></button>
+                  <button class="btn btn-danger" type="submit" title="supprimer ce monument"><i class="icon-trash icon-white"></i></button>
                 </form></td>
             </tr>
             <?php } while ($row_monument = mysql_fetch_assoc($monument)); ?>

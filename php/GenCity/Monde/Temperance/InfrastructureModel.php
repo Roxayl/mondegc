@@ -13,6 +13,8 @@ class InfrastructureModel implements ModelStructureInterface {
 
         if(is_numeric($data)) {
             $this->info = $this->populate($data);
+        } elseif(is_null($data)) {
+            $this->info = $this->getStructure();
         } else {
             $this->info = $data;
         }
