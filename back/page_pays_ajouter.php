@@ -208,7 +208,7 @@ img.olTileImage {
         <br>
         <span class="radioRequiredMsg">Effectuez une sélection.</span></div>
       <h3>Formulaires page pays</h3>
-      <div class="alert alert-success">
+      <div class="alert alert-tips">
         <button type="button" class="close" data-dismiss="alert">×</button>
         Ces formulaires sont destin&eacute;s a &ecirc;tre rempli directement par le dirigeant du pays. Si n&eacute;c&eacute;ssaire, vous pouvez modifier les r&eacute;glages par defaut.</div>
       <div class="accordion" id="accordion2"> 

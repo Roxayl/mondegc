@@ -265,7 +265,7 @@ format: 'hex'});
       <div class="titre-gris" id="mes-communiques" class="anchor">
       <h3>Communiqu&eacute;s</h3>
     </div>
-    <div class="alert alert-success">
+    <div class="alert alert-tips">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       Les communiqu&eacute;s post&eacute;s &agrave; partir de cette page seront consid&eacute;r&eacute;s comme des annonces officielles &eacute;manant de cette institution. Ils seront publiés sur la page de l'institut et dans la partie événement du site. Utilisez les communiqu&eacute;s pour animer le site</div>
     <?php 
@@ -411,10 +411,10 @@ $('#closemodal').click(function() {
 <!-- Liste des monuments non-classés
         ================================================== -->
         <?php if ($row_new_mon) { ?>
-<div class="alert alert-success">
+<div class="alert alert-warning">
         <button type="button" class="close" data-dismiss="alert">×</button>
         <h3>Nouveaux monuments</h3>
-        <p>Les monuments suivant ne sont toujours pas index&eacute;s&nbsp;:</p>
+        <p>Les monuments suivants ne sont toujours pas index&eacute;s&nbsp;:</p>
        <ul class="listes">
     <!-- Requetes pour infos et icones des catégories du monuments -->
     <?php do {  ?>

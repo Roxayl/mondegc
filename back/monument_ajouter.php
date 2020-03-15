@@ -137,7 +137,7 @@ return true;
   
   <!-- Docs nav
     ================================================== -->
-  <div class="row-fluid"> 
+  <div class="row-fluid corps-page">
     <!-- Page CONTENT
     ================================================== -->
     <div class=""> 

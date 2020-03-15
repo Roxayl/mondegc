@@ -358,7 +358,7 @@ $('#closemodal').click(function() {
           <div class="titre-gris" id="mes-communiques" class="anchor">
           <h3>Communiqués</h3>
         </div>
-        <div class="alert alert-success">
+        <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           Les communiqués postés &agrave; partir de cette page seront considérés comme des annonces officielles &eacute;manant de cette institution. Ils seront publiés sur la page de l'institut et dans la partie événement du site. Utilisez les communiqu&eacute;s pour animer le site</div>
         <?php 

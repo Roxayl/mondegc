@@ -860,11 +860,11 @@ img.olTileImage {
                     <a class="btn btn-primary" href="../page-ville.php?ch_pay_id=<?= $row_mesvilles['ch_vil_paysID'] ?>&ch_ville_id=<?= $row_mesvilles['ch_vil_ID'] ?>">Visiter</a>
                 </td>
                 <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
-                <td><form action="ville_modifier.php" method="post">
+                <td><form action="ville_modifier.php" method="GET">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_mesvilles['ch_vil_ID']; ?>">
                     <button class="btn" type="submit" title="modifier la ville"><i class="icon-pencil"></i></button>
                   </form></td>
-                <td><form action="ville_confirmation_supprimer.php" method="post">
+                <td><form action="ville_confirmation_supprimer.php" method="POST">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_mesvilles['ch_vil_ID']; ?>">
                     <button class="btn btn-danger" type="submit" title="supprimer la ville"><i class="icon-trash icon-white"></i></button>
                   </form></td>
@@ -974,7 +974,7 @@ img.olTileImage {
         <div id="routes-campagne" class="titre-vert anchor">
           <h1>Routes et campagne</h1>
         </div>
-        <div class="alert alert-success"> Vous pouvez dessiner des routes, des zones agricoles ou des zones naturelles entre vos villes sur la carte de votre pays. Ces zones vont avoir une influence sur l'économie et la population de votre pays </div>
+        <div class="alert alert-tips"> Vous pouvez dessiner des routes, des zones agricoles ou des zones naturelles entre vos villes sur la carte de votre pays. Ces zones vont avoir une influence sur l'économie et la population de votre pays </div>
         <h3>Balance des ressources issues de la carte</h3>
 
           <?php $ressources_cartes = array(
@@ -1012,7 +1012,7 @@ img.olTileImage {
         <div id="mes-communiques" class="titre-vert anchor">
           <h1>Communiqu&eacute;s du pays</h1>
         </div>
-        <div class="alert alert-success">
+        <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           Lancez un communiqu&eacute; au nom de votre pays. Les communiqu&eacute;s post&eacute;s &agrave; partir de cette page seront consid&eacute;r&eacute;s comme des annonces officielles &eacute;manant du chef votre gouvernement.</div>
         <?php 
@@ -1029,7 +1029,7 @@ include('../php/communiques-back.php'); ?>
         <div id="faits-historiques" class="titre-vert anchor">
           <h1>L'histoire du pays</h1>
         </div>
-        <div class="alert alert-success">
+        <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           Identifiez-ici les éléments de l'histoire de votre pays que vous souhaitez mettre en valeur en leur créant une page dédiée. Ces éléments seront publiés dans la section histoire de la page de votre pays et pourront prétendre faire partie de la grande histoire du Monde GC.</div>
         <?php if ($row_fait_hist) { ?>

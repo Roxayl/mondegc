@@ -269,7 +269,7 @@ if(isset($thisPays)) {
       <h1>Ajouter un communiqu&eacute;</h1>
     </div>
       <?php } else { ?>
-    <div class="titre-vert clearfix"> <img src="../assets/img/IconesBDD/100/Communique.png" alt="communiqu&eacute;">
+    <div class="titre-vert clearfix">
       <h1>Ajouter un communiqu&eacute;</h1>
     </div>
     <?php }?>

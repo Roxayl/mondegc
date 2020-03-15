@@ -98,9 +98,12 @@ img.olTileImage {
 
     <?php renderElement('errormsgs'); ?>
 
-    <div class="alert alert-success">
-      <button type="button" class="close" data-dismiss="alert">×</button>
-      Ce formulaire vous permet d'ajouter une infrastructure &agrave; votre ville. Les infrastructures vous permettent de  construire l'&eacute;conomie de votre pays. L'existence de votre infrastructure doit &ecirc;tre prouv&eacute;e par une image. Avant d'&ecirc;tre comptabilis&eacute;e, votre infrastructure sera mod&eacute;r&eacute;e par les juges du projet <a href="../economie.php" title="Lien vers l'Institut Economique Gécéen">Tempérance</a>
+    <div class="well" style="margin-top: -20px;">
+        <div class="alert alert-tips">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          Les infrastructures sont des éléments de gameplay du Monde GC qui permettent de matérialiser vos créations en leur attribuant des points de 8 catégories, les fameuses ressources Tempérance.
+            <a class="guide-link" href="http://vasel.yt/wiki/index.php?title=GO/Infrastructures#Ajouter_une_infrastructure">Besoin d'aide ? GO!</a>
+        </div>
     </div>
 
     <div class="well">

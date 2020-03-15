@@ -153,7 +153,7 @@ return true;
   
   <!-- Docs nav
     ================================================== -->
-  <div class="row-fluid"> 
+  <div class="row-fluid corps-page">
     <!-- Page CONTENT
     ================================================== -->
     <div class=""> 
@@ -162,7 +162,7 @@ return true;
       <div id="monument" class="titre-vert anchor">
         <h1>Modifier un monument</h1>
       </div>
-      <div class="alert alert-success">
+      <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
           Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; votre monument. Les monuments sont des constructions exceptionelles de votre pays. La promotion des monuments du Monde GC est confi&eacute;e &agrave; <a href="../patrimoine.php" title="lien vers la page consacr&eacute;e &agrave; l'Institut">l'Institut G&eacute;c&eacute;en du Patrimoine</a></div>
       <div class="well">
@@ -263,7 +263,7 @@ return true;
         <hr>
         <h3>Carrousel</h3>
         <!-- Carousel -->
-        <div class="alert alert-success">
+        <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
           Le carrousel est une galerie d'images qui va d&eacute;filer en t&ecirc;te de la page de votre monument. La premi&egrave;re image sera reprise pour illustrer votre monument dans l'ensemble du site.</div>
         <div id="sprytextfield5" class="control-group">

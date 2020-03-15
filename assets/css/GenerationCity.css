@@ -92,7 +92,7 @@ hr {
 h3 {
     font-family: "Titillium Web", "Roboto", sans-serif;
 	font-size: 24px;
-	color: #375c08;
+	color: #102642;
 	font-weight: lighter;
 	font-stretch: semi-condensed;
 	margin-left: 18px;
@@ -1514,6 +1514,23 @@ table .btn {
 	cursor:pointer;
 }
 
+/* alert */
+.alert-tips {
+  color: #888484;
+  background-color: #f0eeec;
+  border-color: #e7e6e9;
+}
+
+/* Guide officiel */
+.guide-link {
+    display: inline-block;
+    background-color: #ffcd00;
+    color: #1a1a1a;
+    padding: 4px 5px;
+    margin: 2px;
+    font-size: 90%;
+}
+
 /* Listes temperance
 ------------------------- */
 
@@ -1538,6 +1555,31 @@ table .btn {
 .infra-selected {
     background-color: #FF4E00;
     color: white;
+}
+.info-infrastructure-off {
+	border: 2px #dfdfdf solid;
+	width: 300px;
+	background-color: white;
+	border-radius: 30px;
+	vertical-align: top;
+	text-align: left;
+	padding: 7px;
+	margin: 0em 0em 0em 1em;
+}
+.info-infrastructure-off h4 {
+	padding: 5px;
+	vertical-align: top;
+	font-weight: 600;
+	font-size: 105% ;
+	text-align: center;
+	background-color: #e7e7e7;
+	border-radius: 25px;
+	border-top-left-radius: 25px;
+	border-top-right-radius: 25px;
+	border-bottom-right-radius: 25px;
+	border-bottom-left-radius: 25px;
+	font-family: 'Titillium Web', 'Linux Libertine', 'Roboto', sans-serif ;
+	color: black;
 }
 
 /* Ajuste images token

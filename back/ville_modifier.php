@@ -391,7 +391,7 @@ return true;
       </div>
       <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_ville" Id="ajout_ville" onsubmit='return verif_champ(document.ajout_ville.form_coord_X.value);'>
         <section>
-          <div class="alert alert-success">
+          <div class="alert alert-tips">
             <button type="button" class="close" data-dismiss="alert">×</button>
             Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; votre ville et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Compl&eacute;tez-le au fur et &agrave; mesure et mettez-le &agrave; jour.</div>
           <!-- boutons cachés -->
@@ -677,7 +677,7 @@ return true;
       <div id="mes-communiques" class="titre-vert anchor">
         <h1>Communiqu&eacute;s</h1>
       </div>
-      <div class="alert alert-success">
+      <div class="alert alert-tips">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         Lancez un communiqu&eacute; au nom de votre ville. Les communiqu&eacute;s post&eacute;s &agrave; partir de cette page seront consid&eacute;r&eacute;s comme des annonces officielles &eacute;manant des services officiels de la ville.</div>
       <?php 
@@ -693,7 +693,7 @@ include('../php/communiques-back.php'); ?>
       <div id="mes-infrastructures" class="titre-vert anchor">
         <h1>Infrastructures</h1>
       </div>
-      <div class="alert alert-success">
+      <div class="alert alert-tips">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         Identifiez-ici les infrastructures que vous avez construite dans votre ville afin qu'elle soient prises en compte dans l'&eacute;conomie de votre pays. Vous devez prouver la construction de chaque infrastructure par une photo. Les infrastructures indentifi&eacute;es seront mod&eacute;r&eacute;es avant d'&ecirc;tre comptabilis&eacute;es.</div>
       <?php if ($row_infrastructure) { ?>
@@ -772,7 +772,7 @@ $('#closemodal').click(function() {
       <div id="mes-monuments" class="titre-vert anchor">
         <h1>Monuments</h1>
       </div>
-      <div class="alert alert-success">
+      <div class="alert alert-tips">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         Identifiez-ici les &eacute;l&eacute;ments de votre ville que vous souhaitez mettre en valeur en leur cr&eacute;ant une page d&eacute;di&eacute;e. Ces &eacute;l&eacute;ments seront publi&eacute;s dans la section patrimoine de la page de votre pays.</div>
       <?php if ($row_monument) { ?>

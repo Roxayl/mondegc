@@ -252,9 +252,13 @@ img.olTileImage {
 
     <?php renderElement('errormsgs'); ?>
 
-    <div class="alert alert-success">
-      <button type="button" class="close" data-dismiss="alert">×</button>
-      Ce formulaire vous permet <?= $form_action === 'add' ? 'd\'ajouter une infrastructure &agrave; votre ville' : 'de modifier une infrastructure' ?>. Les infrastructures vous permettent de  construire l'&eacute;conomie de votre pays. L'existence de votre infrastructure doit &ecirc;tre prouv&eacute;e par une image. Avant d'&ecirc;tre comptabilis&eacute;e, votre infrastructure sera mod&eacute;r&eacute;e par les juges du projet <a href="../economie.php" title="Lien vers l'Institut Economique Gécéen">Tempérance</a>.</div>
+    <div class="well" style="margin-top: -20px;">
+        <div class="alert alert-tips">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          Les infrastructures sont des éléments de gameplay du Monde GC qui permettent de matérialiser vos créations en leur attribuant des points de 8 catégories, les fameuses ressources Tempérance.
+            <a class="guide-link" href="http://vasel.yt/wiki/index.php?title=GO/Infrastructures#Ajouter_une_infrastructure">Besoin d'aide ? GO!</a>
+        </div>
+    </div>
 
 
     <div class="row-fluid">
@@ -382,53 +386,55 @@ img.olTileImage {
       </div>
 
     </form>
-    <form action="ville_modifier.php#mes-infrastructures" method="post" class="form-inline">
+    <form action="ville_modifier.php#mes-infrastructures" method="GET" class="form-inline">
       <input name="villeid" type="hidden" value="<?php echo $ville_ID; ?>">
       <button type="submit" class="btn btn-danger" title="retour &agrave; la page de modification du pays">Annuler</button>
     </form>
     <p>&nbsp;</p>
   </div>
-  <div class="span6 well" style="background-color: #EDEDED;">
-    <div class="row-fluid">
+  <div class="span6 well">
+      <div class="span info-infrastructure-off">
+        <div class="row-fluid">
 
-    <?php if(empty($row_inf_off_choisie['ch_inf_off_nom'])): ?>
-        <div class="span12"><h4>Veuillez choisir une infrastructure.</h4></div>
+        <?php if(empty($row_inf_off_choisie['ch_inf_off_nom'])): ?>
+            <div class="span12"><h3>Veuillez choisir une infrastructure.</h3></div>
 
-    <?php else: ?>
-      <div class="span2 img-listes img-avatar">
-          <img src="<?php echo $row_inf_off_choisie['ch_inf_off_icone']; ?>">
-      </div>
-      <div class="span10">
-        <h2><?php echo $row_inf_off_choisie['ch_inf_off_nom']; ?></h2>
-        <small"><?php echo $row_inf_off_choisie['ch_inf_off_desc']; ?></small>
-      </div>
-    <?php endif; ?>
+        <?php else: ?>
+          <div class="span2 img-listes img-avatar">
+              <img src="<?php echo $row_inf_off_choisie['ch_inf_off_icone']; ?>">
+          </div>
+          <div class="span10">
+            <h2><?php echo $row_inf_off_choisie['ch_inf_off_nom']; ?></h2>
+            <small"><?php echo $row_inf_off_choisie['ch_inf_off_desc']; ?></small>
+          </div>
+        <?php endif; ?>
 
-    </div>
+        </div>
 
-    <h3>Influence</h3>
-    <div class="row-fluid">
-      <div class="span6 well icone-ressources">
-        <img src="../assets/img/ressources/budget.png" alt="icone Budget"><p>Budget&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_budget']; ?></strong></p>
-        <div class="clearfix"></div>
-        <img src="../assets/img/ressources/industrie.png" alt="icone Industrie"><p>Industrie&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Industrie']; ?></strong></p>
-        <div class="clearfix"></div>
-        <img src="../assets/img/ressources/bureau.png" alt="icone Commerce"><p>Commerce&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Commerce']; ?></strong></p>
-        <div class="clearfix"></div>
-        <img src="../assets/img/ressources/agriculture.png" alt="icone Agriculture"><p>Agriculture&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Agriculture']; ?></strong></p>
-        <div class="clearfix"></div>
+        <h4>Influence</h4>
+        <div class="row-fluid">
+          <div class="span6 well icone-ressources">
+            <img src="../assets/img/ressources/budget.png" alt="icone Budget"><p>Budget&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_budget']; ?></strong></p>
+            <div class="clearfix"></div>
+            <img src="../assets/img/ressources/industrie.png" alt="icone Industrie"><p>Industrie&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Industrie']; ?></strong></p>
+            <div class="clearfix"></div>
+            <img src="../assets/img/ressources/bureau.png" alt="icone Commerce"><p>Commerce&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Commerce']; ?></strong></p>
+            <div class="clearfix"></div>
+            <img src="../assets/img/ressources/agriculture.png" alt="icone Agriculture"><p>Agriculture&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Agriculture']; ?></strong></p>
+            <div class="clearfix"></div>
+          </div>
+          <div class="span6 well icone-ressources">
+            <img src="../assets/img/ressources/tourisme.png" alt="icone Tourisme"><p>Tourisme&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Tourisme']; ?></strong></p>
+            <div class="clearfix"></div>
+            <img src="../assets/img/ressources/recherche.png" alt="icone Recherche"><p>Recherche&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Recherche']; ?></strong></p>
+            <div class="clearfix"></div>
+            <img src="../assets/img/ressources/environnement.png" alt="icone Evironnement"><p>Environnement&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Environnement']; ?></strong></p>
+            <div class="clearfix"></div>
+            <img src="../assets/img/ressources/education.png" alt="icone Education"><p>Education&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Education']; ?></strong></p>
+            <div class="clearfix"></div>
+          </div>
+        </div>
       </div>
-      <div class="span6 well icone-ressources">
-        <img src="../assets/img/ressources/tourisme.png" alt="icone Tourisme"><p>Tourisme&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Tourisme']; ?></strong></p>
-        <div class="clearfix"></div>
-        <img src="../assets/img/ressources/recherche.png" alt="icone Recherche"><p>Recherche&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Recherche']; ?></strong></p>
-        <div class="clearfix"></div>
-        <img src="../assets/img/ressources/environnement.png" alt="icone Evironnement"><p>Environnement&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Environnement']; ?></strong></p>
-        <div class="clearfix"></div>
-        <img src="../assets/img/ressources/education.png" alt="icone Education"><p>Education&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Education']; ?></strong></p>
-        <div class="clearfix"></div>
-      </div>
-    </div>
   </div>
 </div>
 <!-- END CONTENT
@@ -436,8 +442,7 @@ img.olTileImage {
 <!-- Footer
     ================================================== -->
 <?php include('../php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -449,7 +454,7 @@ img.olTileImage {
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
+      $(function() {
           $('[rel="clickover"]').clickover();})
     </script>
 <!-- SPRY ASSETS -->
@@ -482,3 +487,5 @@ $(document).ready(function () {
   });
 });
 </script>
+</body>
+</html>
