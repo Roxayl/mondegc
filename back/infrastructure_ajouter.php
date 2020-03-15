@@ -13,14 +13,12 @@ header('Location: ../connexion.php');
 exit();
 }
 
-$paysID = "-1";
-if (isset($_POST['paysID'])) {
-  $paysID = $_POST['paysID'];
-}
-
 $ville_ID = "-1";
-if (isset($_POST['ville_ID'])) {
-  $ville_ID = $_POST['ville_ID'];
+if (isset($_REQUEST['ville_ID'])) {
+  $ville_ID = $_REQUEST['ville_ID'];
+}
+elseif (isset($_REQUEST['ch_inf_villeid'])) {
+  $ville_ID = $_REQUEST['ch_inf_villeid'];
 }
 
 
@@ -59,6 +57,8 @@ else {
     $thisPays = new \GenCity\Monde\Pays($thisVille->get('ch_vil_paysID'));
 
 }
+
+$paysID = $thisPays->get('ch_pay_id');
 
 
 if ($form_action === 'add' && isset($_POST["MM_insert"]) && $_POST["MM_insert"] == "ajout_infrastructure") {
@@ -151,8 +151,8 @@ $totalRows_liste_inf_off = mysql_num_rows($liste_inf_off);
 
 //requete Infrastructure officielles choisie pour affichage des infos
 $colname_inf_off_choisie = "-1";
-if (isset($_POST['liste_inf_officielles'])) {
-    $colname_inf_off_choisie = $_POST['liste_inf_officielles'];
+if (isset($_REQUEST['infra_off_id'])) {
+    $colname_inf_off_choisie = $_REQUEST['infra_off_id'];
 } elseif($form_action === 'edit') {
     $colname_inf_off_choisie = $thisInfra->get('ch_inf_off_id');
 } else {
@@ -176,7 +176,7 @@ if($totalRows_liste_inf_off == 0) {
 <!-- head Html -->
 <head>
 <meta charset="iso-8859-1">
-<title>Ajouter une infrastructure</title>
+<title>Monde GC - <?= $form_action === 'add' ? 'Ajouter' : 'Modifier' ?> une infrastructure</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -254,7 +254,7 @@ img.olTileImage {
 
     <div class="alert alert-success">
       <button type="button" class="close" data-dismiss="alert">×</button>
-      Ce formulaire vous permet <?= $form_action === 'add' ? 'd\'ajouter' : 'de modifier' ?> une infrastructure &agrave; votre ville. Les infrastructures vous permettent de  construire l'&eacute;conomie de votre pays. L'existence de votre infrastructure doit &ecirc;tre prouv&eacute;e par une image. Avant d'&ecirc;tre comptabilis&eacute;e, votre infrastructure sera mod&eacute;r&eacute;e par les juges du projet <a href="../economie.php" title="Lien vers l'Institut Economique Gécéen">Tempérance</a>.</div>
+      Ce formulaire vous permet <?= $form_action === 'add' ? 'd\'ajouter une infrastructure &agrave; votre ville' : 'de modifier une infrastructure' ?>. Les infrastructures vous permettent de  construire l'&eacute;conomie de votre pays. L'existence de votre infrastructure doit &ecirc;tre prouv&eacute;e par une image. Avant d'&ecirc;tre comptabilis&eacute;e, votre infrastructure sera mod&eacute;r&eacute;e par les juges du projet <a href="../economie.php" title="Lien vers l'Institut Economique Gécéen">Tempérance</a>.</div>
 
 
     <div class="row-fluid">
@@ -270,12 +270,12 @@ img.olTileImage {
       <br><br>
 
         <!-- choix infrastructure -->
-        <form action="infrastructure_ajouter.php#infrastructure" method="POST" id="form-infra-list"
+        <form action="infrastructure_ajouter.php#infrastructure" method="GET" id="form-infra-list"
               class="form-inline">
           <div id="spryselect1" class="control-group">
           <div class="control-label"><h4 style="display: inline-block;">Choisissez votre infrastructure</h4> <a href="#" rel="clickover" title="Infrastructures de la liste officielle" data-content="Vous devez choisir une infrastructure dans la liste officielle. Chaque nouvelle infrastructure va modifier les valeurs de votre économie"><i class="icon-info-sign"></i></a></div>
           <div class="controls">
-          <select name="liste_inf_officielles" id="liste_inf_officielles" placeholder="Rechercher une infrastructure..." <?= ($form_action === 'edit') ? 'disabled' : '' ?>>
+          <select name="infra_off_id" id="infra_off_id" placeholder="Rechercher une infrastructure..." <?= ($form_action === 'edit') ? 'disabled' : '' ?>>
             <option value=""></option>
             <?php do { ?>
             <option value="<?php echo $row_liste_inf_off['ch_inf_off_id']; ?>" <?php if ($colname_inf_off_choisie == $row_liste_inf_off['ch_inf_off_id']) {?>selected<?php } ?>><?php echo $row_liste_inf_off['ch_inf_off_nom']; ?></option>
@@ -368,7 +368,7 @@ img.olTileImage {
           <div class="control-group" id="sprytextfield_lien_wiki">
             <label class="control-label" for="lien_wiki">
                 <span class="external-link-icon"
-                 style="background-image:url('http://vasel.yt/wiki/resources/assets/favicon.ico');"></span>
+                 style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></span>
                 Lien sur le wiki
                 <a href="#" rel="clickover" title="Lien vers le Wiki GC" data-content="Si nécessaire, précisez un lien vers le wiki."><i class="icon-info-sign"></i></a></label>
             <div class="controls">
@@ -468,7 +468,7 @@ var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "url"
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "url", {maxChars:250, validateOn:["change"], isRequired:false});
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "url", {maxChars:250, validateOn:["change"], isRequired:false});
 var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6", "url", {maxChars:250, validateOn:["change"], isRequired:true});
-var sprytextfield_lien_wiki = new Spry.Widget.ValidationTextField("sprytextfield_lien_wiki", "url", {maxChars:250, validateOn:["change"]});
+var sprytextfield_lien_wiki = new Spry.Widget.ValidationTextField("sprytextfield_lien_wiki", "url", {maxChars:250, validateOn:["change"], isRequired:false});
 var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {validateOn:["change"], maxChars:400, isRequired:false, useCharacterMasking:false});
 
 $(document).ready(function () {

@@ -1387,6 +1387,7 @@ table .btn {
 }
 
 .external-link-icon {
+    background-size: cover;
     width: 16px;
     height: 16px;
     display: inline-block;

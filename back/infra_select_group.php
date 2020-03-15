@@ -112,8 +112,7 @@ img.olTileImage {
             <div class="thumbnail">
               <img src="<?= __s($row->get('url_image')) ?>" data-src="holder.js/300x200" alt="">
               <h3><?= __s($row->get('nom_groupe')) ?></h3>
-              <form action="infrastructure_ajouter.php" method="post">
-                <input name="paysID" type="hidden" value="<?= $thisVille->get('ch_vil_paysID') ?>">
+              <form action="infrastructure_ajouter.php" method="GET">
                 <input name="ville_ID" type="hidden" value="<?= $thisVille->get('ch_vil_ID') ?>">
                 <input name="infra_group_id" type="hidden" value="<?= $row->get('id') ?>">
                 <button class="btn btn-primary btn-margin-left" type="submit">Choisir...</button>

@@ -168,7 +168,7 @@ $totalRows_ressources_pays = mysql_num_rows($ressources_pays);
     <?php if (!empty($row_infrastructure['lien_wiki'])) { ?>
         <a href="<?php echo $row_infrastructure['lien_wiki']; ?>" target="_blank">
         <div class="external-link-icon"
-             style="background-image:url('http://vasel.yt/wiki/resources/assets/favicon.ico');"></div>
+             style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></div>
             Lien sur le wiki</a>
     <?php } ?>
 
