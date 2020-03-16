@@ -898,6 +898,10 @@ canvas#parliament-chart {
 	padding: 5px;
 	position: relative;
 }
+li.dropdown-li-force {
+    padding: 0;
+    margin: 0;
+}
 .info-listes {
 	display: block;
 	margin-left: 15px;

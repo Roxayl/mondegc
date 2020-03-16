@@ -134,7 +134,7 @@ init();
       <h1>Notifications</h1>
     </div>
     <div class="well">
-        <div class="alert alert-info">Vos notifications arrivent bientôt !</div>
+        <div class="alert alert-info">Vos notifications arrivent bientôt ! Un peu de patience... ;)</div>
     </div>
     </section>
 
@@ -145,21 +145,34 @@ init();
     <h3>Mes pays</h3>
     <div class="well">
         <?php if(empty($listePays)): ?>
-        <p>Vous n'avez pas de pays.</p>
+        <p>Vous n'avez pas de pays. Quelle tristesse !</p>
         <?php endif; ?>
         <ul class="listes">
             <?php foreach($listePays as $pays): ?>
             <li class="row-fluid">
               <div class="">
-                <div class="span2"> <a href="page-pays.php?ch_pay_id=<?= $pays['ch_pay_id']; ?>"><img src="<?= $pays['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau"></a> </div>
+                <div class="span2">
+                    <a href="page-pays.php?ch_pay_id=<?= $pays['ch_pay_id']; ?>"><img src="<?= $pays['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau"></a>
+                </div>
                 <div class="span4">
-                  <h3><?= $pays['ch_pay_nom']; ?></h3>
+                    <h3><?= $pays['ch_pay_nom']; ?></h3>
+                    <div class="btn-group">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                            Actions rapides
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                            <li class="dropdown-li-force"><a tabindex="-1" href="back/communique_ajouter.php?paysID=<?= $pays['ch_pay_id'] ?>&userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>&cat=pays&com_element_id=<?= $pays['ch_pay_id'] ?>">
+                                    <i class="icon-file"></i> Publier un nouveau communiqué</a></li>
+                            <li class="dropdown-li-force divider"></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="span4">
                 </div>
                 <div class="span2">
-                    <a href="page-pays.php?ch_pay_id=<?= $pays['ch_pay_id']; ?>" class="btn btn-primary">Visiter</a>
-                    <a href="back/page_pays_back.php?paysID=<?= $pays['ch_pay_id'] ?>&userID=<?= $thisUser->model->ch_use_id ?>" class="btn btn-primary"><i class="icon-pays-small-white"></i> Gérer mon pays</a>
+                    <a href="page-pays.php?ch_pay_id=<?= $pays['ch_pay_id']; ?>" class="span btn btn-primary">Visiter</a>
+                    <a href="back/page_pays_back.php?paysID=<?= $pays['ch_pay_id'] ?>&userID=<?= $thisUser->model->ch_use_id ?>" class="span btn btn-primary"><i class="icon-pays-small-white"></i> Gérer mon pays</a>
                 </div>
               </div>
             </li>

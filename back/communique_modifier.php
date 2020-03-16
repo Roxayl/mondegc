@@ -211,7 +211,7 @@ $totalRows_user = mysql_num_rows($user);
         <div class="titre-gris">
           <p><?= $personnage->get('predicat') ?></p>
           <h3><?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?></h3>
-          <small><?= $personnage->get('titre_personnage') ?></small> </div>
+          <p><small><?= $personnage->get('titre_personnage') ?></small></p></div>
       </div>
     <?php endif; ?>
       <div class="offset6 span3 thumb">
@@ -241,7 +241,7 @@ $totalRows_user = mysql_num_rows($user);
                 <?php } ?>
         <div class="titre-gris">
           <h3><?php echo $nom_organisation; ?></h3>
-          <small><?php echo $soustitre; ?></small> </div>
+            <p><small><?php echo $soustitre; ?></small></p></div>
         <?php } ?>
       </div>
     </section>
@@ -249,7 +249,7 @@ $totalRows_user = mysql_num_rows($user);
   <div class="row-fluid">
   
     <?php if (($row_communique['ch_com_categorie'] == "pays") || ($row_communique['ch_com_categorie'] == "ville")) { ?>
-    <div class="titre-vert"> <img src="../assets/img/IconesBDD/100/Communique.png" alt="communiqu&eacute;">
+    <div class="titre-vert">
       <h1>Modifier un communiqu&eacute;</h1>
       </div>
       <?php }?>

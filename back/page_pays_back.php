@@ -857,12 +857,13 @@ img.olTileImage {
                   <?php echo $row_mesvilles['ch_vil_nom']; ?></td>
                 <td><?php echo formatNum($row_mesvilles['ch_vil_population']); ?></td>
                 <td>
-                    <a class="btn btn-primary" href="../page-ville.php?ch_pay_id=<?= $row_mesvilles['ch_vil_paysID'] ?>&ch_ville_id=<?= $row_mesvilles['ch_vil_ID'] ?>">Visiter</a>
+                    <a class="btn btn-primary"  style="margin-top: -22px;"
+                       href="../page-ville.php?ch_pay_id=<?= $row_mesvilles['ch_vil_paysID'] ?>&ch_ville_id=<?= $row_mesvilles['ch_vil_ID'] ?>">Visiter</a>
                 </td>
                 <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
                 <td><form action="ville_modifier.php" method="GET">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_mesvilles['ch_vil_ID']; ?>">
-                    <button class="btn" type="submit" title="modifier la ville"><i class="icon-pencil"></i></button>
+                    <button class="btn btn-primary" type="submit" title="modifier la ville"><i class="icon-pencil icon-white"></i></button>
                   </form></td>
                 <td><form action="ville_confirmation_supprimer.php" method="POST">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_mesvilles['ch_vil_ID']; ?>">
@@ -935,14 +936,15 @@ img.olTileImage {
                 <td><?php echo $row_autres_villes['ch_use_login']; ?></td>
                 <td><?php echo formatNum($row_autres_villes['ch_vil_population']); ?></td>
                 <td>
-                    <a class="btn btn-primary" href="../page-ville.php?ch_pay_id=<?= $row_autres_villes['ch_vil_paysID'] ?>&ch_ville_id=<?= $row_autres_villes['ch_vil_ID'] ?>">Visiter</a>
+                    <a class="btn btn-primary" style="margin-top: -22px;"
+                       href="../page-ville.php?ch_pay_id=<?= $row_autres_villes['ch_vil_paysID'] ?>&ch_ville_id=<?= $row_autres_villes['ch_vil_ID'] ?>">Visiter</a>
                 </td>
                 <?php if ($_SESSION['userObject']->minStatus('OCGC') ||
                         $thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) {
                     // Affichage si sup ou egal à dirigeant ?>
                 <td><form action="ville_modifier.php" method="get">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
-                    <button class="btn" type="submit" title="modifier la ville"><i class="icon-pencil"></i></button>
+                    <button class="btn btn-primary" type="submit" title="modifier la ville"><i class="icon-pencil icon-white"></i></button>
                   </form></td>
                 <td><form action="ville_confirmation_supprimer.php" method="post">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">

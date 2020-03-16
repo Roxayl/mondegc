@@ -15,17 +15,17 @@ exit();
 }
 
 $cat = "-1";
-if (isset($_POST['cat'])) {
-  $cat = $_POST['cat'];
+if (isset($_REQUEST['cat'])) {
+  $cat = $_REQUEST['cat'];
 }
 
 if ( $cat == "pays") {
   $colname_elementid = $_SESSION['pays_ID'];
-  if (isset($_POST['com_element_id'])) {
-  $colname_elementid = $_POST['com_element_id'];
-  unset($_POST['com_element_id']);
+  if (isset($_REQUEST['com_element_id'])) {
+  $colname_elementid = $_REQUEST['com_element_id'];
+  unset($_REQUEST['com_element_id']);
 
-  $thisPays = new \GenCity\Monde\Pays($_POST['paysID']);
+  $thisPays = new \GenCity\Monde\Pays($_REQUEST['paysID']);
   $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
 
 }
@@ -47,9 +47,9 @@ mysql_free_result($pays);
 
 if ( $cat == "ville") {
   $colname_elementid = $_SESSION['ville_encours'];
-if (isset($_POST['com_element_id'])) {
-  $colname_elementid = $_POST['com_element_id'];
-  unset($_POST['com_element_id']);
+if (isset($_REQUEST['com_element_id'])) {
+  $colname_elementid = $_REQUEST['com_element_id'];
+  unset($_REQUEST['com_element_id']);
 }  
   
   
@@ -70,9 +70,9 @@ mysql_free_result($villes);
 
 if ( $cat == "institut") {
   $colname_elementid = -1;
-if (isset($_POST['com_element_id'])) {
-  $colname_elementid = $_POST['com_element_id'];
-  unset($_POST['com_element_id']);
+if (isset($_REQUEST['com_element_id'])) {
+  $colname_elementid = $_REQUEST['com_element_id'];
+  unset($_REQUEST['com_element_id']);
 }  
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($colname_elementid, "int"));
@@ -92,9 +92,9 @@ mysql_free_result($institut);
 
 //Récupération variables
 $colname_user = $_SESSION['user_ID'];
-if (isset($_POST['userID'])) {
-  $colname_user = $_POST['userID'];
-  unset($_POST['userID']);
+if (isset($_REQUEST['userID'])) {
+  $colname_user = $_REQUEST['userID'];
+  unset($_REQUEST['userID']);
 }
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_user = sprintf("SELECT ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_user, "int"));
@@ -226,7 +226,7 @@ if(isset($thisPays)) {
         <div class="titre-gris">
           <p><?= $personnage->get('predicat') ?></p>
           <h3><?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?></h3>
-          <small><?= $personnage->get('titre_personnage') ?></small> </div>
+          <p><small><?= $personnage->get('titre_personnage') ?></small></p></div>
       </div>
     <?php endif; ?>
       <div class="offset6 span3 thumb">
@@ -258,7 +258,7 @@ if(isset($thisPays)) {
                 <?php } ?>
         <div class="titre-gris">
           <h3><?php echo $nom_organisation; ?></h3>
-          <small><?php echo $soustitre; ?></small> </div>
+          <p><small><?php echo $soustitre; ?></small></p> </div>
         <?php } ?>
       </div>
     </section>

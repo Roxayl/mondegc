@@ -166,7 +166,7 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
   <a class="btn btn-primary pull-right" href="php/partage-communique.php?com_id=<?php echo $row_communique['ch_com_ID']; ?>" data-toggle="modal" data-target="#myModal" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
   <?php } ?>
   <div class="clearfix"></div>
-  <div class="row-fluid communique"> 
+  <div class="row-fluid communique" style="background-color: #e6eaff; padding: 20px 0;">
     <!-- EN-tête Personnage pour communiquées officiels et commentaire-->
     <div class="span3 thumb">
 
@@ -175,7 +175,7 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
       <div class="titre-gris">
         <p><?= $personnage->get('predicat') ?></p>
         <h3><?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?></h3>
-        <small><?= $personnage->get('titre_personnage') ?></small> </div>
+        <p><small><?= $personnage->get('titre_personnage') ?></small></p></div>
     </div>
       <?php endif; ?>
     <!-- EN-tête Institution pour communiqués officiels-->
@@ -203,7 +203,7 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
                 <?php } ?>
       <div class="titre-gris">
         <h3><?php echo $nom_organisation; ?></h3>
-        <small><?php echo $soustitre; ?></small> </div>
+        <p><small><?php echo $soustitre; ?></small></p></div>
     </div>
   </div>
   <div class="row-fluid"> 
