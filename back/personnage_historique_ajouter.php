@@ -157,7 +157,7 @@ img.olTileImage {
       <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_fait_hist" Id="ajout_fait_his">
         <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
-          Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; un personnage historique. Les personnages historiques construisent l'histoire de votre pays. Veillez &agrave; ce qu'elle soit coh&eacute;rente avec les pays qui vous entourent. La gestions de l'histoire du Monde GC est confi&eacute;e &agrave; <a href="../histoire.php" title="lien vers la page consacr&eacute;e &agrave; l'Institut">l'Institut G&eacute;c&eacute;en d'Histoire</a></div>
+          Ce formulaire contient les informations qui seront affich&eacute;es sur la page consacr&eacute;e &agrave; un personnage historique. Les personnages historiques construisent l'histoire de votre pays. Veillez &agrave; ce qu'elle soit coh&eacute;rente avec les pays qui vous entourent. La gestion de l'histoire du Monde GC est confi&eacute;e au <a href="../histoire.php" title="lien vers la page consacr&eacute;e au Comité">Comité d'Histoire</a>.</div>
         <!-- Bouton cachés -->
         <input name="ch_his_paysID" type="hidden" value="<?php echo $paysID; ?>" >
         <input name="ch_his_label" type="hidden" value="fait_histo">

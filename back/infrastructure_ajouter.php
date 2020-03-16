@@ -400,12 +400,12 @@ img.olTileImage {
             <div class="span12"><h3>Veuillez choisir une infrastructure.</h3></div>
 
         <?php else: ?>
-          <div class="span2 img-listes img-avatar">
+          <div class="span3 img-listes img-avatar">
               <img src="<?php echo $row_inf_off_choisie['ch_inf_off_icone']; ?>">
           </div>
-          <div class="span10">
+          <div class="span9">
             <h2><?php echo $row_inf_off_choisie['ch_inf_off_nom']; ?></h2>
-            <small"><?php echo $row_inf_off_choisie['ch_inf_off_desc']; ?></small>
+            <p><?php echo $row_inf_off_choisie['ch_inf_off_desc']; ?></p>
           </div>
         <?php endif; ?>
 

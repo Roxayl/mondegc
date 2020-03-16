@@ -148,25 +148,7 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
 
     <?php renderElement('errormsgs'); ?>
 
-  <!-- Moderation
-     ================================================== -->
-<?php if (($_SESSION['statut'] >= 20) OR ($row_user['ch_use_id'] == $_SESSION['user_ID'])) { ?>
- <div class="moderation">    
-  <form class="pull-right" action="back/communique_confirmation_supprimer.php" method="post">
-    <input name="communique_ID" type="hidden" value="<?php echo $row_communique['ch_com_ID']; ?>">
-    <button class="btn btn-danger" type="submit" title="supprimer ce communiqu&eacute;"><i class="icon-trash icon-white"></i></button>
-  </form>
-  <form class="pull-right" action="back/communique_modifier.php" method="post">
-    <input name="com_id" type="hidden" value="<?php echo $row_communique['ch_com_ID']; ?>">
-    <button class="btn btn-danger" type="submit" title="modifier ce communiqu&eacute;"><i class="icon-pencil icon-white"></i></button>
-  </form>
-  </div>
-  <?php }?>
-  <?php if ($row_user['ch_use_id'] == $_SESSION['user_ID']) { ?>
-  <a class="btn btn-primary pull-right" href="php/partage-communique.php?com_id=<?php echo $row_communique['ch_com_ID']; ?>" data-toggle="modal" data-target="#myModal" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
-  <?php } ?>
-  <div class="clearfix"></div>
-  <div class="row-fluid communique" style="background-color: #e6eaff; padding: 20px 0;">
+  <div class="row-fluid communique" style="background-color: #e6eaff; padding: 20px 0; margin-top: -10px;">
     <!-- EN-tête Personnage pour communiquées officiels et commentaire-->
     <div class="span3 thumb">
 
@@ -206,7 +188,29 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
         <p><small><?php echo $soustitre; ?></small></p></div>
     </div>
   </div>
-  <div class="row-fluid"> 
+  <div class="row-fluid">
+
+
+  <!-- Moderation
+     ================================================== -->
+<div class="cta-container" style="position: relative; top: 24px; margin-right: -15px;">
+    <?php if (($_SESSION['statut'] >= 20) OR ($row_user['ch_use_id'] == $_SESSION['user_ID'])) { ?>
+     <div class="moderation">
+      <form class="pull-right" action="back/communique_confirmation_supprimer.php" method="post">
+        <input name="communique_ID" type="hidden" value="<?php echo $row_communique['ch_com_ID']; ?>">
+        <button class="btn btn-danger" type="submit" title="supprimer ce communiqu&eacute;"><i class="icon-trash icon-white"></i></button>
+      </form>
+      <form class="pull-right" action="back/communique_modifier.php" method="post">
+        <input name="com_id" type="hidden" value="<?php echo $row_communique['ch_com_ID']; ?>">
+        <button class="btn btn-danger" type="submit" title="modifier ce communiqu&eacute;"><i class="icon-pencil icon-white"></i></button>
+      </form>
+      </div>
+      <?php } ?>
+      <?php if ($row_user['ch_use_id'] == $_SESSION['user_ID']) { ?>
+      <a class="btn btn-primary pull-right" href="php/partage-communique.php?com_id=<?php echo $row_communique['ch_com_ID']; ?>" data-toggle="modal" data-target="#myModal" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
+      <?php } ?>
+</div>
+
     <!-- Titre  -->
     <?php if ( $cat == "institut") {?>
   <div class="titre-bleu">

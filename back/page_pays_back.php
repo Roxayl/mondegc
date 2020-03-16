@@ -1016,7 +1016,7 @@ img.olTileImage {
         </div>
         <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
-          Lancez un communiqu&eacute; au nom de votre pays. Les communiqu&eacute;s post&eacute;s &agrave; partir de cette page seront consid&eacute;r&eacute;s comme des annonces officielles &eacute;manant du chef votre gouvernement.</div>
+          Lancez un communiqu&eacute; au nom de votre pays. Les communiqu&eacute;s post&eacute;s &agrave; partir de cette page seront consid&eacute;r&eacute;s comme des annonces officielles &eacute;manant du chef de votre gouvernement.</div>
         <?php 
 $userID = $row_User['ch_use_id'];
 $com_cat = "pays";
@@ -1107,6 +1107,8 @@ include('../php/communiques-back.php'); ?>
           <button class="btn btn-primary btn-margin-left" type="submit">Ajouter un personnage historique</button>
         </form>
         <?php } ?>
+
+        <p></p>
       </section>
       <?php } // Affichage si sup ou egal à dirigeant ?>
     </div>
