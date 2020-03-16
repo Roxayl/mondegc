@@ -72,6 +72,10 @@ $query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_p
 $users = mysql_query($query_users, $maconnexion) or die(mysql_error());
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
+
+
+$thisPays = new \GenCity\Monde\Pays($row_Fait_his['ch_his_paysID']);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -132,7 +136,7 @@ img.olTileImage {
   
   <!-- Docs nav
     ================================================== -->
-  <div class="row-fluid"> 
+  <div class="row-fluid corps-page">
     <!-- Page CONTENT
     ================================================== -->
     <div class=""> 
@@ -159,11 +163,17 @@ img.olTileImage {
       <?php if ($row_users['ch_use_id'] == $_SESSION['user_ID']) { ?>
       <a class="btn btn-primary pull-right" href="../php/partage-fait-hist.php?ch_his_id=<?php echo $row_Fait_his['ch_his_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
+
+        <ul class="breadcrumb pull-left">
+          <li><a href="page_pays_back.php?paysID=<?= $thisPays->get('ch_pay_id') ?>&userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>">Gestion du pays : <?= __s($thisPays->get('ch_pay_nom')) ?></a> <span class="divider">/</span></li>
+          <li class="active">Modifier un personnage historique</li>
+        </ul>
+
       <div class="clearfix"></div>
       <!-- Debut formulaire -->
       <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_fait_hist" Id="ajout_fait_his">
-        <div class="alert alert-success">
-          <button type="button" class="close" data-dismiss="alert">У</button>
+        <div class="alert alert-tips">
+          <button type="button" class="close" data-dismiss="alert">×</button>
           Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; un fait historique. Les faits historiques construisent l'histoire de votre pays. Veillez a ce qu'elle soit coh&eacute;rente avec les pays qui vous entourent. La gestions de l'histoire du Monde GC est confi&eacute;e &agrave; <a href="../histoire.php" title="lien vers la page consacr&eacute;e &agrave; l'Institut">l'Institut G&eacute;c&eacute;en d'Histoire</a></div>
         <!-- Bouton cachУЉs -->
         <input name="ch_his_id" type="hidden" value="<?php echo $row_Fait_his['ch_his_id']; ?>" >
@@ -261,7 +271,7 @@ img.olTileImage {
         </div>
         <div class="controls">
           <button type="submit" class="btn btn-primary">Envoyer</button>
-          &nbsp;&nbsp;<a class="btn btn-danger" href="page_pays_back.php">Annuler</a> </div>
+          &nbsp;&nbsp;<a class="btn btn-danger" href="page_pays_back.php?paysID=<?= $thisPays->get('ch_pay_id') ?>">Annuler</a> </div>
         <input type="hidden" name="MM_update" value="ajout_fait_hist">
       </form>
       <p>&nbsp;</p>

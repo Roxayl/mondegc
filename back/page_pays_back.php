@@ -533,7 +533,7 @@ img.olTileImage {
             <!-- Informations Générales
         ================================================== -->
             <div class="accordion-group">
-              <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" href="#collapseOne"> Informations G&eacute;n&eacute;rales </a> </div>
+              <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" href="#collapseOne"> Informations g&eacute;n&eacute;rales </a> </div>
               <div id="collapseOne" class="accordion-body collapse">
                 <div class="accordion-inner">
                   <?php if ($_SESSION['statut'] < 20) { ?>

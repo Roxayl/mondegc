@@ -39,7 +39,7 @@ if($thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
 <!-- head Html -->
 <head>
 <meta charset="iso-8859-1">
-<title>Modifier l'avatar</title>
+<title>Monde GC - Modifier l'avatar</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -84,8 +84,13 @@ if($thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
 <div class="container corps-page">
   <div class="row-fluid">
  	<div id="info-generales" class="titre-vert anchor">
-          <h1>Modifier votre avatar</h1>
-        </div>
+        <h1>Modifier l'avatar du personnage</h1>
+    </div>
+
+      <ul class="breadcrumb">
+          <li><a href="page_pays_back.php?paysID=<?= $thisPays->get('ch_pay_id') ?>&userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>">Gestion du pays : <?= __s($thisPays->get('ch_pay_nom')) ?></a> <span class="divider">/</span></li>
+          <li class="active">Modifier l'avatar du personnage</li>
+      </ul>
     <p>&nbsp;</p>
     <section>
       <?php include('../php/upload.php');

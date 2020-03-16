@@ -24,6 +24,9 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
+
+$thisPays = new \GenCity\Monde\Pays($paysID);
+
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_fait_his")) {
 	if ($_POST['ch_his_periode'] == true) {
 $_POST['ch_his_date_fait2'] == NULL;
@@ -124,7 +127,7 @@ img.olTileImage {
   
   <!-- Docs nav
     ================================================== -->
-  <div class="row-fluid"> 
+  <div class="row-fluid corps-page">
     <!-- Page CONTENT
     ================================================== -->
     <div class=""> 
@@ -143,10 +146,16 @@ img.olTileImage {
         <button class="btn btn-danger" type="submit" title="page de gestion du pays"><i class="icon-pays-small-white"></i> Modifier le pays</button>
       </form>
       <?php }?>
+
+        <ul class="breadcrumb pull-left">
+          <li><a href="page_pays_back.php?paysID=<?= $thisPays->get('ch_pay_id') ?>&userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>">Gestion du pays : <?= __s($thisPays->get('ch_pay_nom')) ?></a> <span class="divider">/</span></li>
+          <li class="active">Ajouter un personnage historique</li>
+        </ul>
+
       <div class="clearfix"></div>
       <!-- Debut formulaire -->
       <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_fait_hist" Id="ajout_fait_his">
-        <div class="alert alert-success">
+        <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
           Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; un personnage historique. Les personnages historiques construisent l'histoire de votre pays. Veillez &agrave; ce qu'elle soit coh&eacute;rente avec les pays qui vous entourent. La gestions de l'histoire du Monde GC est confi&eacute;e &agrave; <a href="../histoire.php" title="lien vers la page consacr&eacute;e &agrave; l'Institut">l'Institut G&eacute;c&eacute;en d'Histoire</a></div>
         <!-- Bouton cachés -->
