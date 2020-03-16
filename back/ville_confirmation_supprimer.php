@@ -79,7 +79,7 @@ $totalRows_ch_vil_confimation_suppression = mysql_num_rows($ch_vil_confimation_s
       <input name="ville_ID" type="hidden" value="<?php echo $row_ch_vil_confimation_suppression['ch_vil_ID']; ?>">
       <button type="submit" class="btn btn-large btn-danger" title="supprimer la ville"><i class="icon-trash icon-white"></i> Supprimer</button>
     </form>
-    <form action="ville_modifier.php" method="post" class="form-button-inline">
+    <form action="ville_modifier.php" method="get" class="form-button-inline">
       <input name="ville_ID" type="hidden" value="<?php echo $row_ch_vil_confimation_suppression['ch_vil_ID']; ?>">
       <button type="submit" class="btn btn-large btn-success" title="retour &agrave; la page de modification de la ville">Annuler</button>
     </form>

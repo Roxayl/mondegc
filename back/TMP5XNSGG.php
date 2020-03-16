@@ -9209,7 +9209,7 @@ footer img {
       <input name="monument_ID" type="hidden" value="<?php echo $row_ch_pat_confimation_suppression['ch_pat_id']; ?>">
       <button type="submit" class="btn btn-large btn-danger" title="supprimer le monument"><i class="icon-trash icon-white"></i> Supprimer</button>
     </form>
-    <form action="ville_modifier.php#mes-monuments" method="post" class="form-button-inline">
+    <form action="ville_modifier.php#mes-monuments" method="get" class="form-button-inline">
       <input name="monument_ID" type="hidden" value="<?php echo $row_ch_pat_confimation_suppression['ch_pat_villeID']; ?>">
       <button type="submit" class="btn btn-large btn-success" title="retour &agrave; la page de modification de la ville">Annuler</button>
     </form>

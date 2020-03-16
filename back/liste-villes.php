@@ -122,7 +122,7 @@ $totalPages_listvilles = ceil($totalRows_listvilles/$maxRows_listvilles)-1;
               <td><?php echo $row_listvilles['ch_use_login']; ?></td>
               <td><?php echo $row_listvilles['ch_vil_population']; ?></td>
               <td><?php echo date("d/m/Y � G:i:s", strtotime($row_listvilles['ch_vil_mis_jour'])); ?></td>
-              <td><form action="ville_modifier.php" method="post">
+              <td><form action="ville_modifier.php" method="GET">
                   <input name="ville-ID" type="hidden" value="<?php echo $row_listvilles['ch_vil_ID']; ?>">
                   <button class="btn" type="submit" title="modifier la ville"><i class="icon-pencil"></i></button>
                 </form></td>

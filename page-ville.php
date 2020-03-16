@@ -380,7 +380,7 @@ init();
         <input name="ville-ID" type="hidden" value="<?php echo $row_infoVille['ch_vil_ID']; ?>">
         <button class="btn btn-danger" type="submit" title="supprimer cette ville"><i class="icon-trash icon-white"></i></button>
       </form>
-      <form class="pull-right" action="back/ville_modifier.php" method="post">
+      <form class="pull-right" action="back/ville_modifier.php" method="get">
         <input name="ville-ID" type="hidden" value="<?php echo $row_infoVille['ch_vil_ID']; ?>">
         <button class="btn btn-danger" type="submit" title="modifier la page de cette ville"><i class="icon-pencil icon-white"></i></button>
       </form>

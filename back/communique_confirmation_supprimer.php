@@ -95,17 +95,17 @@ $totalRows_ch_communique_confimation_suppression = mysql_num_rows($ch_communique
       <button type="submit" class="btn btn-large btn-danger" title="supprimer ce communiqu&eacute;"><i class="icon-trash icon-white"></i> Supprimer</button>
     </form>
     <?php if ($row_ch_communique_confimation_suppression['ch_com_categorie'] == "pays") { ?>
-    <form action="page_pays_back.php" method="post" class="form-button-inline">
+    <form action="page_pays_back.php" method="get" class="form-button-inline">
       <input name="paysID" type="hidden" value="<?php echo $row_ch_communique_confimation_suppression['ch_com_element_id']; ?>">
       <button type="submit" class="btn btn-large btn-success" value="Annuler">Annuler</button>
     </form>
     <?php } elseif ($row_ch_communique_confimation_suppression['ch_com_categorie'] == "ville") { ?>
-    <form action="ville_modifier.php" method="post" class="form-button-inline">
+    <form action="ville_modifier.php" method="get" class="form-button-inline">
       <input name="ville-ID" type="hidden" value="<?php echo $row_ch_communique_confimation_suppression['ch_com_element_id']; ?>">
       <button type="submit" class="btn btn-large btn-success" value="Annuler">Annuler</button>
     </form>
     <?php } elseif ($row_ch_communique_confimation_suppression['ch_com_categorie'] == "institut") { ?>
-    <form action="Haut-Conseil.php" method="post" class="form-button-inline">
+    <form action="Haut-Conseil.php" method="get" class="form-button-inline">
       <button type="submit" class="btn btn-large btn-success" value="Annuler">Annuler</button>
     </form>
     <?php } elseif ($row_ch_communique_confimation_suppression['ch_com_categorie'] == "com_pays") { ?>
@@ -113,15 +113,15 @@ $totalRows_ch_communique_confimation_suppression = mysql_num_rows($ch_communique
       <button type="submit" class="btn btn-large btn-success" value="Annuler">Annuler</button>
     </form>
     <?php } elseif ($row_ch_communique_confimation_suppression['ch_com_categorie'] == "com_ville") { ?>
-    <form action="../page-ville.php?ch_ville_id=<?php echo $row_ch_communique_confimation_suppression['ch_com_element_id']; ?>" method="post" class="form-button-inline">
+    <form action="../page-ville.php?ch_ville_id=<?php echo $row_ch_communique_confimation_suppression['ch_com_element_id']; ?>" method="get" class="form-button-inline">
       <button type="submit" class="btn btn-large btn-success" value="Annuler">Annuler</button>
     </form>
     <?php } elseif ($row_ch_communique_confimation_suppression['ch_com_categorie'] == "com_communique") { ?>
-    <form action="../page-communique.php?com_id=<?php echo $row_ch_communique_confimation_suppression['ch_com_element_id']; ?>" method="post" class="form-button-inline">
+    <form action="../page-communique.php?com_id=<?php echo $row_ch_communique_confimation_suppression['ch_com_element_id']; ?>" method="get" class="form-button-inline">
       <button type="submit" class="btn btn-large btn-success" value="Annuler">Annuler</button>
     </form>
     <?php } else { ?>
-    <form action="../index.php" method="post" class="form-button-inline">
+    <form action="../index.php" method="get" class="form-button-inline">
       <button type="submit" class="btn btn-large btn-success" value="Annuler">Annuler</button>
     </form>
     <?php } ?>

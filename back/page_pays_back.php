@@ -940,7 +940,7 @@ img.olTileImage {
                 <?php if ($_SESSION['userObject']->minStatus('OCGC') ||
                         $thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) {
                     // Affichage si sup ou egal à dirigeant ?>
-                <td><form action="ville_modifier.php" method="post">
+                <td><form action="ville_modifier.php" method="get">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
                     <button class="btn" type="submit" title="modifier la ville"><i class="icon-pencil"></i></button>
                   </form></td>

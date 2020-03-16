@@ -387,7 +387,7 @@ img.olTileImage {
 
     </form>
     <form action="ville_modifier.php#mes-infrastructures" method="GET" class="form-inline">
-      <input name="villeid" type="hidden" value="<?php echo $ville_ID; ?>">
+      <input name="villeid" type="hidden" value="<?= $thisVille->get('ch_vil_ID') ?>">
       <button type="submit" class="btn btn-danger" title="retour &agrave; la page de modification du pays">Annuler</button>
     </form>
     <p>&nbsp;</p>

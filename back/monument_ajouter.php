@@ -147,15 +147,15 @@ return true;
         <h1>Ajouter un monument</h1>
       </div>
       <?php if (($_SESSION['statut'] >= 20) AND ($row_users['ch_use_id'] != $_SESSION['user_ID'])) { ?>
-      <form class="pull-right" action="membre-modifier_back.php" method="post">
+      <form class="pull-right" action="membre-modifier_back.php" method="get">
         <input name="userID" type="hidden" value="<?php echo $row_users['ch_use_id']; ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Profil du dirigeant</button>
       </form>
-      <form class="pull-right" action="page_pays_back.php" method="post">
+      <form class="pull-right" action="page_pays_back.php" method="get">
         <input name="paysID" type="hidden" value="<?php echo $paysID; ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du pays"><i class="icon-pays-small-white"></i> Modifier le pays</button>
       </form>
-      <form class="pull-right" action="ville_modifier.php" method="post">
+      <form class="pull-right" action="ville_modifier.php" method="get">
         <input name="ville-ID" type="hidden" value="<?php echo $row_monument['ch_pat_villeID']; ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion de la ville"> Modifier la ville</button>
       </form>
