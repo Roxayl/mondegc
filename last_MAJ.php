@@ -243,7 +243,7 @@ do {
           </div>
           <div class="row-fluid fond-notification">
             <div class="span2 auteur"><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="auteur"></a> </div>
-            <div class="span9 desc"> <small>le
+            <div class="span8 desc"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
@@ -289,7 +289,7 @@ do {
           </div>
           <div class="row-fluid fond-notification">
             <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="auteur"></a> </div>
-            <div class="span9"> <small>le
+            <div class="span8"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>

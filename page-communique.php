@@ -149,17 +149,19 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
     <?php renderElement('errormsgs'); ?>
 
   <div class="row-fluid communique" style="background-color: #e6eaff; padding: 20px 0; margin-top: -10px;">
+
     <!-- EN-tête Personnage pour communiquées officiels et commentaire-->
     <div class="span3 thumb">
-
-        <?php if(isset($personnage)): ?>
-        <img src="<?= $personnage->get('lien_img') ?>" alt="photo <?= $personnage->get('nom_personnage') ?>">
+      <?php if(isset($personnage)): ?>
+      <img src="<?= $personnage->get('lien_img') ?>" alt="photo <?= $personnage->get('nom_personnage') ?>">
       <div class="titre-gris">
         <p><?= $personnage->get('predicat') ?></p>
         <h3><?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?></h3>
-        <p><small><?= $personnage->get('titre_personnage') ?></small></p></div>
-    </div>
+        <p><small><?= $personnage->get('titre_personnage') ?></small></p>
+      </div>
       <?php endif; ?>
+    </div>
+
     <!-- EN-tête Institution pour communiqués officiels-->
     <div class="offset6 span3 thumb">
        <?php if ( $cat == "ville") {?>
@@ -185,31 +187,35 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
                 <?php } ?>
       <div class="titre-gris">
         <h3><?php echo $nom_organisation; ?></h3>
-        <p><small><?php echo $soustitre; ?></small></p></div>
+        <p><small><?php echo $soustitre; ?></small></p>
+      </div>
     </div>
-  </div>
-  <div class="row-fluid">
 
+  </div>
+
+  <div class="row-fluid">
 
   <!-- Moderation
      ================================================== -->
-<div class="cta-container" style="position: relative; top: 24px; margin-right: -15px;">
+  <div class="cta-container" style="position: relative; top: 24px; margin-right: -15px;">
     <?php if (($_SESSION['statut'] >= 20) OR ($row_user['ch_use_id'] == $_SESSION['user_ID'])) { ?>
      <div class="moderation">
       <form class="pull-right" action="back/communique_confirmation_supprimer.php" method="post">
         <input name="communique_ID" type="hidden" value="<?php echo $row_communique['ch_com_ID']; ?>">
-        <button class="btn btn-danger" type="submit" title="supprimer ce communiqu&eacute;"><i class="icon-trash icon-white"></i></button>
+        <button class="btn btn-danger" type="submit" title="supprimer ce communiqu&eacute;"
+            style="margin-left: 5px;"><i class="icon-trash icon-white"></i></button>
       </form>
       <form class="pull-right" action="back/communique_modifier.php" method="post">
         <input name="com_id" type="hidden" value="<?php echo $row_communique['ch_com_ID']; ?>">
-        <button class="btn btn-danger" type="submit" title="modifier ce communiqu&eacute;"><i class="icon-pencil icon-white"></i></button>
+        <button class="btn btn-primary" type="submit" title="modifier ce communiqu&eacute;"
+            style="margin-left: 5px;"><i class="icon-pencil icon-white"></i></button>
       </form>
       </div>
       <?php } ?>
       <?php if ($row_user['ch_use_id'] == $_SESSION['user_ID']) { ?>
       <a class="btn btn-primary pull-right" href="php/partage-communique.php?com_id=<?php echo $row_communique['ch_com_ID']; ?>" data-toggle="modal" data-target="#myModal" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
-</div>
+  </div>
 
     <!-- Titre  -->
     <?php if ( $cat == "institut") {?>

@@ -528,9 +528,9 @@ init();
                $infraData = array(
                   'id' => $row_infrastructure['ch_inf_id'],
                   'overlay_image' => $row_infrastructure['ch_inf_off_icone'],
-                  'overlay_text' => $row_infrastructure['nom_infra'],
+                  'overlay_text' => $row_infrastructure['ch_inf_off_nom'],
                   'image' => $row_infrastructure['ch_inf_lien_image'],
-                  'nom' => $row_infrastructure['ch_inf_off_nom'],
+                  'nom' => $row_infrastructure['nom_infra'],
                   'description' => $row_infrastructure['ch_inf_commentaire']
               );
 
