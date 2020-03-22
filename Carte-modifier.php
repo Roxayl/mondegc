@@ -339,22 +339,22 @@ init();
 	  </h4>
   <div class="row-fluid">
     <ul class="token">
-      <li class="span1"><a title="Budget"><img src="assets/img/ressources/Budget.png" alt="icone Budget"></a>
+      <li class="span1"><a title="Budget"><img src="assets/img/ressources/budget.png" alt="icone Budget"></a>
         <p> <strong>
           <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_budget_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>
       </li>
-      <li class="span1"><a title="Industrie"><img src="assets/img/ressources/Industrie.png" alt="icone Industrie"></a>
+      <li class="span1"><a title="Industrie"><img src="assets/img/ressources/industrie.png" alt="icone Industrie"></a>
         <p> <strong>
           <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_industrie_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>
       </li>
-      <li class="span1"><a title="Commerce"><img src="assets/img/ressources/Bureau.png" alt="icone Commerce"></a>
+      <li class="span1"><a title="Commerce"><img src="assets/img/ressources/bureau.png" alt="icone Commerce"></a>
         <p> <strong>
           <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_commerce_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>
       </li>
-      <li class="span1"><a title="Agriculture"><img src="assets/img/ressources/Agriculture.png" alt="icone Agriculture"></a>
+      <li class="span1"><a title="Agriculture"><img src="assets/img/ressources/agriculture.png" alt="icone Agriculture"></a>
         <p> <strong>
           <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_agriculture_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>
@@ -364,17 +364,17 @@ init();
           <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_tourisme_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>
       </li>
-      <li class="span1"><a title="Recherche"><img src="assets/img/ressources/Recherche.png" alt="icone Recherche"></a>
+      <li class="span1"><a title="Recherche"><img src="assets/img/ressources/recherche.png" alt="icone Recherche"></a>
         <p> <strong>
           <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_recherche_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>
       </li>
-      <li class="span1"><a title="Environnement"><img src="assets/img/ressources/Environnement.png" alt="icone Environnement"></a>
+      <li class="span1"><a title="Environnement"><img src="assets/img/ressources/environnement.png" alt="icone Environnement"></a>
         <p> <strong>
           <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_environnement_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>
       </li>
-      <li class="span1"><a title="Education"><img src="assets/img/ressources/Education.png" alt="icone Education"></a>
+      <li class="span1"><a title="Education"><img src="assets/img/ressources/education.png" alt="icone Education"></a>
         <p> <strong>
           <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_education_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>

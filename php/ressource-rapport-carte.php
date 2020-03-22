@@ -58,22 +58,22 @@ $row_geometries = mysql_fetch_assoc($geometries);
 <?php } ?>
     <div class="span2">&nbsp;</div>
     <ul class="token">
-      <li class="span1"><a title="Budget"><img src="http://www.generation-city.com/monde/assets/img/ressources/Budget.png" alt="icone Budget"></a>
+      <li class="span1"><a title="Budget"><img src="http://www.generation-city.com/monde/assets/img/ressources/budget.png" alt="icone Budget"></a>
         <p>
           <?php $chiffre_francais = number_format($budget, 0, ',', ' '); echo $chiffre_francais; ?>
         </p>
       </li>
-      <li class="span1"><a title="Industrie"><img src="http://www.generation-city.com/monde/assets/img/ressources/Industrie.png" alt="icone Industrie"></a>
+      <li class="span1"><a title="Industrie"><img src="http://www.generation-city.com/monde/assets/img/ressources/industrie.png" alt="icone Industrie"></a>
         <p>
           <?php $chiffre_francais = number_format($industrie, 0, ',', ' '); echo $chiffre_francais; ?>
         </p>
       </li>
-      <li class="span1"><a title="Commerce"><img src="http://www.generation-city.com/monde/assets/img/ressources/Bureau.png" alt="icone Commerce"></a>
+      <li class="span1"><a title="Commerce"><img src="http://www.generation-city.com/monde/assets/img/ressources/bureau.png" alt="icone Commerce"></a>
         <p>
           <?php $chiffre_francais = number_format($commerce, 0, ',', ' '); echo $chiffre_francais; ?>
         </p>
       </li>
-      <li class="span1"><a title="Agriculture"><img src="http://www.generation-city.com/monde/assets/img/ressources/Agriculture.png" alt="icone Agriculture"></a>
+      <li class="span1"><a title="Agriculture"><img src="http://www.generation-city.com/monde/assets/img/ressources/agriculture.png" alt="icone Agriculture"></a>
         <p>
           <?php $chiffre_francais = number_format($agriculture, 0, ',', ' '); echo $chiffre_francais; ?>
         </p>
@@ -83,17 +83,17 @@ $row_geometries = mysql_fetch_assoc($geometries);
           <?php $chiffre_francais = number_format($tourisme, 0, ',', ' '); echo $chiffre_francais; ?>
         </p>
       </li>
-      <li class="span1"><a title="Recherche"><img src="http://www.generation-city.com/monde/assets/img/ressources/Recherche.png" alt="icone Recherche"></a>
+      <li class="span1"><a title="Recherche"><img src="http://www.generation-city.com/monde/assets/img/ressources/recherche.png" alt="icone Recherche"></a>
         <p>
           <?php $chiffre_francais = number_format($recherche, 0, ',', ' '); echo $chiffre_francais; ?>
         </p>
       </li>
-      <li class="span1"><a title="Environnement"><img src="http://www.generation-city.com/monde/assets/img/ressources/Environnement.png" alt="icone Environnement"></a>
+      <li class="span1"><a title="Environnement"><img src="http://www.generation-city.com/monde/assets/img/ressources/environnement.png" alt="icone Environnement"></a>
         <p>
           <?php $chiffre_francais = number_format($environnement, 0, ',', ' '); echo $chiffre_francais; ?>
         </p>
       </li>
-      <li class="span1"><a title="Education"><img src="http://www.generation-city.com/monde/assets/img/ressources/Education.png" alt="icone Education"></a>
+      <li class="span1"><a title="Education"><img src="http://www.generation-city.com/monde/assets/img/ressources/education.png" alt="icone Education"></a>
         <p>
           <?php $chiffre_francais = number_format($education, 0, ',', ' '); echo $chiffre_francais; ?>
         </p>
@@ -109,22 +109,22 @@ $row_geometries = mysql_fetch_assoc($geometries);
     </div>
     <div class="span2">&nbsp;</div>
     <ul class="token">
-      <li class="span1"><a title="Budget"><img src="http://www.generation-city.com/monde/assets/img/ressources/Budget.png" alt="icone Budget"></a>
+      <li class="span1"><a title="Budget"><img src="http://www.generation-city.com/monde/assets/img/ressources/budget.png" alt="icone Budget"></a>
         <p> <strong>
           <?php $chiffre_francais = number_format($tot_budget, 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>
       </li>
-      <li class="span1"><a title="Industrie"><img src="http://www.generation-city.com/monde/assets/img/ressources/Industrie.png" alt="icone Industrie"></a>
+      <li class="span1"><a title="Industrie"><img src="http://www.generation-city.com/monde/assets/img/ressources/industrie.png" alt="icone Industrie"></a>
         <p> <strong>
           <?php $chiffre_francais = number_format($tot_industrie, 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>
       </li>
-      <li class="span1"><a title="Commerce"><img src="http://www.generation-city.com/monde/assets/img/ressources/Bureau.png" alt="icone Commerce"></a>
+      <li class="span1"><a title="Commerce"><img src="http://www.generation-city.com/monde/assets/img/ressources/bureau.png" alt="icone Commerce"></a>
         <p> <strong>
           <?php $chiffre_francais = number_format($tot_commerce, 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>
       </li>
-      <li class="span1"><a title="Agriculture"><img src="http://www.generation-city.com/monde/assets/img/ressources/Agriculture.png" alt="icone Agriculture"></a>
+      <li class="span1"><a title="Agriculture"><img src="http://www.generation-city.com/monde/assets/img/ressources/agriculture.png" alt="icone Agriculture"></a>
         <p> <strong>
           <?php $chiffre_francais = number_format($tot_agriculture, 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>
@@ -134,17 +134,17 @@ $row_geometries = mysql_fetch_assoc($geometries);
           <?php $chiffre_francais = number_format($tot_tourisme, 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>
       </li>
-      <li class="span1"><a title="Recherche"><img src="http://www.generation-city.com/monde/assets/img/ressources/Recherche.png" alt="icone Recherche"></a>
+      <li class="span1"><a title="Recherche"><img src="http://www.generation-city.com/monde/assets/img/ressources/recherche.png" alt="icone Recherche"></a>
         <p> <strong>
           <?php $chiffre_francais = number_format($tot_recherche, 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>
       </li>
-      <li class="span1"><a title="Environnement"><img src="http://www.generation-city.com/monde/assets/img/ressources/Environnement.png" alt="icone Environnement"></a>
+      <li class="span1"><a title="Environnement"><img src="http://www.generation-city.com/monde/assets/img/ressources/environnement.png" alt="icone Environnement"></a>
         <p> <strong>
           <?php $chiffre_francais = number_format($tot_environnement, 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>
       </li>
-      <li class="span1"><a title="Education"><img src="http://www.generation-city.com/monde/assets/img/ressources/Education.png" alt="icone Education"></a>
+      <li class="span1"><a title="Education"><img src="http://www.generation-city.com/monde/assets/img/ressources/education.png" alt="icone Education"></a>
         <p> <strong>
           <?php $chiffre_francais = number_format($tot_education, 0, ',', ' '); echo $chiffre_francais; ?>
           </strong> </p>
