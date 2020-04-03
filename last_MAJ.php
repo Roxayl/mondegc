@@ -19,28 +19,32 @@ INNER JOIN pays ON communique_pays.ch_com_element_id = ch_pay_id
 LEFT JOIN personnage ON(entity_id = ch_pay_id AND entity = 'pays')
 WHERE communique_pays.ch_com_statut = 1 AND communique_pays.ch_com_categorie='pays' OR communique_pays.ch_com_categorie='com_pays' 
 UNION 
-SELECT communique_ville.ch_com_label AS type_notification, communique_ville.ch_com_ID AS id, communique_ville.ch_com_statut AS statut, communique_ville.ch_com_categorie AS sous_categorie, communique_ville.ch_com_element_id AS id_element, communique_ville.ch_com_user_id AS id_auteur, communique_ville.ch_com_date AS date, communique_ville.ch_com_titre AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_vil_ID AS id_institution, ch_vil_nom AS institution, ch_vil_armoiries AS img_institution, ch_vil_paysID AS pays_institution
+SELECT communique_ville.ch_com_label AS type_notification, communique_ville.ch_com_ID AS id, communique_ville.ch_com_statut AS statut, communique_ville.ch_com_categorie AS sous_categorie, communique_ville.ch_com_element_id AS id_element, communique_ville.ch_com_user_id AS id_auteur, communique_ville.ch_com_date AS date, communique_ville.ch_com_titre AS titre, lien_img AS photo_auteur, nom_personnage AS nom_auteur, entity_id AS paysID_auteur, prenom_personnage AS prenom_auteur, titre_personnage AS titre_auteur, ch_vil_ID AS id_institution, ch_vil_nom AS institution, ch_vil_armoiries AS img_institution, ch_vil_paysID AS pays_institution
 FROM communiques communique_ville 
 INNER JOIN villes ON ch_com_element_id = ch_vil_ID 
 INNER JOIN users ON communique_ville.ch_com_user_id = ch_use_id 
+LEFT JOIN personnage ON(entity_id = ch_vil_ID AND entity = 'ville')
 WHERE communique_ville.ch_com_statut = 1 AND communique_ville.ch_com_categorie ='ville' OR communique_ville.ch_com_categorie ='com_ville' 
 UNION 
-SELECT communique_institut.ch_com_label AS type_notification, communique_institut.ch_com_ID AS id, communique_institut.ch_com_statut AS statut, communique_institut.ch_com_categorie AS sous_categorie, communique_institut.ch_com_element_id AS id_element, communique_institut.ch_com_user_id AS id_auteur, communique_institut.ch_com_date AS date, communique_institut.ch_com_titre AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_ins_ID AS id_institution, ch_ins_nom AS institution, ch_ins_logo AS img_institution, ch_ins_ID AS pays_institution
+SELECT communique_institut.ch_com_label AS type_notification, communique_institut.ch_com_ID AS id, communique_institut.ch_com_statut AS statut, communique_institut.ch_com_categorie AS sous_categorie, communique_institut.ch_com_element_id AS id_element, communique_institut.ch_com_user_id AS id_auteur, communique_institut.ch_com_date AS date, communique_institut.ch_com_titre AS titre, lien_img AS photo_auteur, nom_personnage AS nom_auteur, entity_id AS paysID_auteur, prenom_personnage AS prenom_auteur, titre_personnage AS titre_auteur, ch_ins_ID AS id_institution, ch_ins_nom AS institution, ch_ins_logo AS img_institution, ch_ins_ID AS pays_institution
 FROM communiques communique_institut 
 INNER JOIN instituts ON ch_com_element_id = ch_ins_ID 
 INNER JOIN users ON communique_institut.ch_com_user_id = ch_use_id 
+LEFT JOIN personnage ON(entity_id = ch_ins_ID AND entity = 'institut')
 WHERE communique_institut.ch_com_statut = 1 AND communique_institut.ch_com_categorie ='institut' 
 UNION
-SELECT communique_monument.ch_com_label AS type_notification, communique_monument.ch_com_ID AS id, communique_monument.ch_com_statut AS statut, communique_monument.ch_com_categorie AS sous_categorie, communique_monument.ch_com_element_id AS id_element, communique_monument.ch_com_user_id AS id_auteur, communique_monument.ch_com_date AS date, communique_monument.ch_com_titre AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_pat_id AS id_institution, ch_pat_nom AS institution, ch_pat_lien_img1 AS img_institution, ch_pat_paysID AS pays_institution
+SELECT communique_monument.ch_com_label AS type_notification, communique_monument.ch_com_ID AS id, communique_monument.ch_com_statut AS statut, communique_monument.ch_com_categorie AS sous_categorie, communique_monument.ch_com_element_id AS id_element, communique_monument.ch_com_user_id AS id_auteur, communique_monument.ch_com_date AS date, communique_monument.ch_com_titre AS titre, lien_img AS photo_auteur, nom_personnage AS nom_auteur, entity_id AS paysID_auteur, prenom_personnage AS prenom_auteur, titre_personnage AS titre_auteur, ch_pat_id AS id_institution, ch_pat_nom AS institution, ch_pat_lien_img1 AS img_institution, ch_pat_paysID AS pays_institution
 FROM communiques communique_monument 
 INNER JOIN patrimoine ON ch_com_element_id = ch_pat_id
 INNER JOIN users ON communique_monument.ch_com_user_id = ch_use_id 
+LEFT JOIN personnage ON(entity_id = ch_pat_villeID AND entity = 'ville')
 WHERE communique_monument.ch_com_statut = 1 AND communique_monument.ch_com_categorie ='com_monument'
 UNION
-SELECT communique_monument.ch_com_label AS type_notification, communique_monument.ch_com_ID AS id, communique_monument.ch_com_statut AS statut, communique_monument.ch_com_categorie AS sous_categorie, communique_monument.ch_com_element_id AS id_element, communique_monument.ch_com_user_id AS id_auteur, communique_monument.ch_com_date AS date, communique_monument.ch_com_titre AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_his_id AS id_institution, ch_his_nom AS institution, ch_his_lien_img1 AS img_institution, ch_his_paysID AS pays_institution
+SELECT communique_monument.ch_com_label AS type_notification, communique_monument.ch_com_ID AS id, communique_monument.ch_com_statut AS statut, communique_monument.ch_com_categorie AS sous_categorie, communique_monument.ch_com_element_id AS id_element, communique_monument.ch_com_user_id AS id_auteur, communique_monument.ch_com_date AS date, communique_monument.ch_com_titre AS titre, lien_img AS photo_auteur, nom_personnage AS nom_auteur, entity_id AS paysID_auteur, prenom_personnage AS prenom_auteur, titre_personnage AS titre_auteur, ch_his_id AS id_institution, ch_his_nom AS institution, ch_his_lien_img1 AS img_institution, ch_his_paysID AS pays_institution
 FROM communiques communique_monument 
 INNER JOIN histoire ON ch_com_element_id = ch_his_id
 INNER JOIN users ON communique_monument.ch_com_user_id = ch_use_id 
+LEFT JOIN personnage ON(entity_id = ch_his_paysID AND entity = 'pays')
 WHERE communique_monument.ch_com_statut = 1 AND communique_monument.ch_com_categorie ='com_fait_his' 
 UNION  
 SELECT commentaire_emis.ch_com_label AS type_notification, commentaire_emis.ch_com_ID AS id, commentaire_emis.ch_com_statut AS statut, commentaire_emis.ch_com_categorie AS sous_categorie, commentaire_emis.ch_com_element_id AS id_element, commentaire_emis.ch_com_user_id AS id_auteur, commentaire_emis.ch_com_date AS date, commentaire_emis.ch_com_titre AS titre, visiteur.ch_use_lien_imgpersonnage AS photo_auteur, visiteur.ch_use_nom_dirigeant AS nom_auteur, visiteur.ch_use_paysID AS paysID_auteur, visiteur.ch_use_prenom_dirigeant AS prenom_auteur, visiteur.ch_use_titre_dirigeant AS titre_auteur, commentaire_emis.ch_com_element_id AS id_institution, institution.ch_com_titre AS institution, auteur.ch_use_lien_imgpersonnage AS img_institution, institution.ch_com_element_id AS pays_institution
@@ -331,13 +335,13 @@ do {
             <h3>Nouveau communiqu&eacute;</h3>
           </div>
           <div class="row-fluid fond-notification">
-            <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="auteur"></a> </div>
+            <div class="span2 auteur"></div>
             <div class="span8"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-              <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a lanc&eacute; un communiqu&eacute; au nom de l'<a href="<?php echo $lien_institut; ?>"><?php echo $row_LastCommunique['institution']; ?></a> intitul&eacute;&nbsp;:</p>
+              <p>Le <a href="<?php echo $lien_institut; ?>"><?php echo $row_LastCommunique['institution']; ?></a> a publié un nouveau communiqué :</p>
               <h4><a href="page-communique.php?com_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
             </div>
             <div class="span2 auteur">
