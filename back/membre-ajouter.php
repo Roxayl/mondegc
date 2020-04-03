@@ -233,7 +233,7 @@ $totalRows_pays = mysql_num_rows($pays);
           <!-- Bouton envoyer
         ================================================== -->
           <p>&nbsp;</p>
-          <div class="alert alert-success">
+          <div class="alert alert-tips">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <p>Le pseudo doit &ecirc;tre identique &agrave; celui du forum. Le nouveau membre doit ensuite activer son compte en utilisant les informations qui lui ont &eacute;t&eacute; envoy&eacute;es par mail. </p>
           </div>

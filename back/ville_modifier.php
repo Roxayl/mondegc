@@ -595,7 +595,7 @@ return true;
             <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" href="#collapseseven"> Carrousel d'images </a> </div>
             <div id="collapseseven" class="accordion-body collapse">
               <div class="accordion-inner">
-                <div class="alert alert-success">
+                <div class="alert alert-tips">
                   <button type="button" class="close" data-dismiss="alert">×</button>
                   Le carrousel est une galerie d'images qui va d&eacute;filer en t&ecirc;te de la page de votre ville. La premi&egrave;re image sera reprise pour illustrer votre ville dans l'ensemble du site.</div>
                 <div id="sprytextfield5" class="control-group">

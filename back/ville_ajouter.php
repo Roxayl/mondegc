@@ -170,7 +170,7 @@ return true;
     
     <!-- Page CONTENT
     ================================================== -->
-    <div class="span9"> 
+    <div class="span9 corps-page">
       <!-- Moderation
      ================================================== -->
       <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
@@ -191,7 +191,7 @@ return true;
       </div>
       <!-- Debut formulaire -->
       <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_ville" Id="ajout_ville" onsubmit='return verif_champ(document.ajout_ville.form_coord_X.value);' >
-        <div class="alert alert-success">
+        <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
           Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; votre ville et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Compl&eacute;tez-le au fur et &agrave; mesure et mettez-le &agrave; jour.</div>
         <!-- Bouton cachés -->
@@ -320,7 +320,7 @@ return true;
         <hr>
         <h3>Carrousel</h3>
         <!-- Carousel -->
-        <div class="alert alert-success">
+        <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
           Le carrousel est une galerie d'images qui va d&eacute;filer en t&ecirc;te de la page de votre ville. La premi&egrave;re image sera reprise pour illustrer votre ville dans l'ensemble du site.</div>
         <div id="sprytextfield5" class="control-group">

@@ -111,7 +111,7 @@ format: 'hex'});
       </div>
       <div class="well">
         <p>&nbsp;</p>
-        <div class="alert alert-success">
+        <div class="alert alert-tips">
           <p>Certaines de vos ressources seront mises en relation entre elles et comparées avec la moyenne mondiale afin de définir une valeur de départ de votre Bourse. L'équation, qui sera dévoilée très prochainement, permettra une mise à jour spontanée et automatique de cette valeur de départ en fonction de vos infrastructures mises en ligne, mais en les comparant dorénavant à la tendance mondiale.</p>
         </div>
         <ul>
@@ -132,11 +132,11 @@ format: 'hex'});
             <p>Qui dit projet supplémentaire dit mise en place de nouveaux outils intéressants sur le site GC vous permettant de controler au mieux votre Bourse.</p>
           </li>
         </ul>
-        <div class="alert alert-success">
+        <div class="alert alert-tips">
           <h4>Le tableau dynamique</h4>
             <p>La mise en place d'un tableau dynamique à la manière des bourses dans le monde réel afin que vous puissiez suivre la tendance de votre pays, du monde GC et ainsi vous réadapter au marché !</p>
         </div>
-        <div class="alert alert-success">
+        <div class="alert alert-tips">
         <h4> En construction</h4>
           <p>En construction</p>
          </div>

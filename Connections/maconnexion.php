@@ -1278,6 +1278,7 @@ if(!function_exists('showErrorMessage')) {
         else {
             echo '
                 <div class="alert alert-block alert-'.$errorType.'">' .
+                '<button type="button" class="close" data-dismiss="alert">&#215;</button>' .
                 $errorInfo .
                 '</div>';
         }

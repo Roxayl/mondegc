@@ -163,7 +163,7 @@ return true;
       <div class="clearfix"></div>
       <!-- Debut formulaire -->
       <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_monument" Id="ajout_monument" onsubmit='return verif_champ(document.ajout_monument.form_coord_X.value);' >
-        <div class="alert alert-success">
+        <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
           Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; votre monument. Les monuments sont des constructions exceptionelles de votre pays. La promotion des monuments du Monde GC est confi&eacute;e &agrave; <a href="../patrimoine.php" title="lien vers la page consacr&eacute;e &agrave; l'Institut">l'Institut G&eacute;c&eacute;en du Patrimoine</a></div>
         <!-- Bouton cachés -->
@@ -228,7 +228,7 @@ return true;
         <hr>
         <h3>Carrousel</h3>
         <!-- Carousel -->
-        <div class="alert alert-success">
+        <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
           Le carrousel est une galerie d'images qui va d&eacute;filer en t&ecirc;te de la page de votre monument. La premi&egrave;re image sera reprise pour illustrer votre monument dans l'ensemble du site.</div>
         <div id="sprytextfield5" class="control-group">
