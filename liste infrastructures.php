@@ -197,7 +197,13 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
 
     <!-- Liste pour choix de classement -->
     <div id="select-categorie">
-      <form action="liste infrastructures.php#liste-infrastructures-officielles" method="GET">
+      <form action="liste infrastructures.php#liste-infrastructures-officielles"
+            method="GET" class="btn-margin-left">
+
+        <?php if($thisGroup !== null): ?>
+          <input type="hidden" name="group_id" value="<?= $thisGroup->get('id') ?>">
+        <?php endif; ?>
+
         <select name="type_classement_inf" id="type_classement_inf" onchange="this.form.submit()" class="span3">
           <option value="ch_inf_off_nom ASC" <?php if ($type_classement == 'ch_inf_off_nom ASC') {?>selected<?php } ?>>Classer par ordre alphab&eacute;tique</option>
           <option value="ch_inf_off_date DESC" <?php if ($type_classement == 'ch_inf_off_date DESC') {?>selected<?php } ?>>Classer par date de cr&eacute;ation</option>

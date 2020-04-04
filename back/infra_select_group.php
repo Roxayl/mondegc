@@ -13,9 +13,20 @@ if (!($_SESSION['statut'])) {
 
 $infraGroupList = \GenCity\Monde\Temperance\InfraGroup::getAll();
 
-$thisVille = new \GenCity\Monde\Ville($_GET['ville_id']);
+if($_GET['ville_id']) {
 
-$thisPays = new \GenCity\Monde\Pays($thisVille->get('ch_vil_paysID'));
+    $thisVille = new \GenCity\Monde\Ville($_GET['ville_id']);
+    $thisPays = new \GenCity\Monde\Pays($thisVille->get('ch_vil_paysID'));
+
+} else {
+
+    $thisVille = null;
+    $thisPays = new \GenCity\Monde\Pays($_GET['pays_id']);
+    /** @var \GenCity\Monde\Ville[] $listVille */
+    $listVille = \GenCity\Monde\Ville::getListFromPays($thisPays);
+
+}
+
 
 /** @var \GenCity\Monde\User $thisUser */
 $thisUser = $_SESSION['userObject'];
@@ -85,14 +96,23 @@ img.olTileImage {
      ================================================== -->
     <div id="infrastructure" class="titre-vert anchor">
       <h1>Ajouter une infrastructure<br>
-        <small><img src="<?= __s((empty($thisVille->get('ch_vil_armoiries')) ? '../assets/img/imagesdefaut/blason.jpg' : $thisVille->get('ch_vil_armoiries')) ) ?>" style="height: 24px; width: 24px;"> Ville de <?= __s($thisVille->get('ch_vil_nom')) ?></small></h1>
+      <?php if(!is_null($thisVille)): ?>
+        <small><img src="<?= __s((empty($thisVille->get('ch_vil_armoiries')) ? '../assets/img/imagesdefaut/blason.jpg' : $thisVille->get('ch_vil_armoiries')) ) ?>" style="height: 24px; width: 24px;"> Ville de <?= __s($thisVille->get('ch_vil_nom')) ?></small>
+      <?php else: ?>
+          <small>Pays : <?= __s($thisPays->get('ch_pay_nom')) ?></small>
+      <?php endif; ?>
+      </h1>
     </div>
 
     <ul class="breadcrumb">
-      <li><a href="page_pays_back.php?paysID=<?= $thisVille->get('ch_vil_paysID') ?>&userID=<?= $thisUser->get('ch_use_id') ?>"
-          >Gestion du pays : <?= __s($thisPays->get('ch_pay_nom')) ?></a> <span class="divider">/</span></li>
-      <li><a href="ville_modifier.php?ville-ID=<?= $thisVille->get('ch_vil_ID') ?>"
-          >Gestion de la ville : <?= __s($thisVille->get('ch_vil_nom')) ?></a> <span class="divider">/</span></li>
+      <li><a href="page_pays_back.php?paysID=<?= $thisPays->get('ch_pay_id') ?>&userID=<?= $thisUser->get('ch_use_id') ?>"
+          >Gestion du pays : <?= __s($thisPays->get('ch_pay_nom')) ?></a>
+          <span class="divider">/</span></li>
+      <?php if(!is_null($thisVille)): ?>
+        <li><a href="ville_modifier.php?ville-ID=<?= $thisVille->get('ch_vil_ID') ?>"
+            >Gestion de la ville : <?= __s($thisVille->get('ch_vil_nom')) ?></a>
+            <span class="divider">/</span></li>
+      <?php endif; ?>
       <li class="active">Ajouter une infrastructure</li>
     </ul>
 
@@ -106,7 +126,18 @@ img.olTileImage {
         </div>
     </div>
 
-    <div class="well">
+    <?php if(is_null($thisVille)): ?>
+    <div class="alert alert-tips">
+        <label for="select_ville_ID"><h4><i class="icon icon-home"></i> Publier l'infrastructure dans la ville : </h4></label>
+        <select id="select_ville_ID" name="select_ville_ID">
+        <?php foreach($listVille as $ville): ?>
+            <option value="<?= $ville->get('ch_vil_ID') ?>"><?= __s($ville->get('ch_vil_nom')) ?></option>
+        <?php endforeach; ?>
+        </select>
+    </div>
+    <?php endif; ?>
+
+    <div class="well" id="thumbnail-infra-container" style="display: none;">
       <ul class="thumbnails">
       <?php /** @var \GenCity\Monde\Temperance\InfraGroup $row */
       foreach($infraGroupList as $key => $row): ?>
@@ -116,8 +147,10 @@ img.olTileImage {
               <img src="<?= __s($row->get('url_image')) ?>" data-src="holder.js/300x200" alt="">
               <h3><?= __s($row->get('nom_groupe')) ?></h3>
               <form action="infrastructure_ajouter.php" method="GET">
-                <input name="ville_ID" type="hidden" value="<?= $thisVille->get('ch_vil_ID') ?>">
-                <input name="infra_group_id" type="hidden" value="<?= $row->get('id') ?>">
+                <input name="ville_ID" type="hidden" class="infra_ville_id_form"
+                       value="<?= is_null($thisVille) ? 0 : $thisVille->get('ch_vil_ID') ?>">
+                <input name="infra_group_id" type="hidden"
+                       value="<?= $row->get('id') ?>">
                 <button class="btn btn-primary btn-margin-left" type="submit">Choisir...</button>
               </form>
             </div>
@@ -162,5 +195,18 @@ img.olTileImage {
 <script src="../SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
 <script src="../SpryAssets/SpryValidationTextarea.js" type="text/javascript"></script>
 <script src="../SpryAssets/SpryValidationRadio.js" type="text/javascript"></script>
+
+<script>
+    (function($, document, undefined) {
+        var autoselectVille = function() {
+            var value = $('#select_ville_ID option:selected').val();
+            $('.infra_ville_id_form').val(value);
+        };
+
+        autoselectVille();
+        $('#select_ville_ID').on('change', autoselectVille);
+        $('#thumbnail-infra-container').show();
+    }($, document));
+</script>
 </body>
 </html>

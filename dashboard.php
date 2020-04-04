@@ -101,9 +101,11 @@ init();
 <?php $dashboard=true; include('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
-<header class="jumbotron jumbotron-institut subhead anchor" id="info-institut" >
-  <div class="container">
+<header class="jumbotron jumbotron-institut jumbotron-small subhead anchor" id="info-dashboard"
+    style="background: url('https://www.generation-city.com/forum/new/img/cat2.jpg');">
+  <div class="container" style="text-align: center;">
     <h1>Tableau de bord</h1>
+    <h2>.</h2>
   </div>
 </header>
 <div class="container">
@@ -164,6 +166,8 @@ init();
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                             <li class="dropdown-li-force"><a tabindex="-1" href="back/communique_ajouter.php?paysID=<?= $pays['ch_pay_id'] ?>&userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>&cat=pays&com_element_id=<?= $pays['ch_pay_id'] ?>">
                                     <i class="icon-file"></i> Publier un nouveau communiqué</a></li>
+                            <li class="dropdown-li-force"><a tabindex="0" href="back/infra_select_group.php?pays_id=<?= $pays['ch_pay_id'] ?>">
+                                    <i class="icon-home"></i> Ajouter une nouvelle infrastructure</a></li>
                             <li class="dropdown-li-force divider"></li>
                         </ul>
                     </div>
