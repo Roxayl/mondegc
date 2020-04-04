@@ -1451,11 +1451,9 @@ table .btn {
 ------------------------- */
 
 .ressources {
-	background: #1d459e;
-	color: #FFFFFF;
+	background: #cdcdcd;
 }
 .ressources h3 {
-	color: #FFFFFF;
 	font-weight: bolder;
 	line-height:normal;
 }

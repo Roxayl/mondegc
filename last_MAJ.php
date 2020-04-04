@@ -47,11 +47,12 @@ INNER JOIN users ON communique_monument.ch_com_user_id = ch_use_id
 LEFT JOIN personnage ON(entity_id = ch_his_paysID AND entity = 'pays')
 WHERE communique_monument.ch_com_statut = 1 AND communique_monument.ch_com_categorie ='com_fait_his' 
 UNION  
-SELECT commentaire_emis.ch_com_label AS type_notification, commentaire_emis.ch_com_ID AS id, commentaire_emis.ch_com_statut AS statut, commentaire_emis.ch_com_categorie AS sous_categorie, commentaire_emis.ch_com_element_id AS id_element, commentaire_emis.ch_com_user_id AS id_auteur, commentaire_emis.ch_com_date AS date, commentaire_emis.ch_com_titre AS titre, visiteur.ch_use_lien_imgpersonnage AS photo_auteur, visiteur.ch_use_nom_dirigeant AS nom_auteur, visiteur.ch_use_paysID AS paysID_auteur, visiteur.ch_use_prenom_dirigeant AS prenom_auteur, visiteur.ch_use_titre_dirigeant AS titre_auteur, commentaire_emis.ch_com_element_id AS id_institution, institution.ch_com_titre AS institution, auteur.ch_use_lien_imgpersonnage AS img_institution, institution.ch_com_element_id AS pays_institution
-FROM communiques commentaire_emis 
+SELECT commentaire_emis.ch_com_label AS type_notification, commentaire_emis.ch_com_ID AS id, commentaire_emis.ch_com_statut AS statut, commentaire_emis.ch_com_categorie AS sous_categorie, commentaire_emis.ch_com_element_id AS id_element, commentaire_emis.ch_com_user_id AS id_auteur, commentaire_emis.ch_com_date AS date, commentaire_emis.ch_com_titre AS titre, lien_img AS photo_auteur, nom_personnage AS nom_auteur, entity_id AS paysID_auteur, prenom_personnage AS prenom_auteur, titre_personnage AS titre_auteur, commentaire_emis.ch_com_element_id AS id_institution, institution.ch_com_titre AS institution, auteur.ch_use_lien_imgpersonnage AS img_institution, institution.ch_com_element_id AS pays_institution
+FROM communiques commentaire_emis
 INNER JOIN users visiteur ON ch_com_user_id = ch_use_id 
 INNER JOIN communiques institution ON commentaire_emis.ch_com_element_id = institution.ch_com_ID
 INNER JOIN users auteur ON institution.ch_com_user_id = auteur.ch_use_id 
+LEFT JOIN personnage ON(entity_id = institution.ch_com_pays_id AND entity = 'pays')
 WHERE institution.ch_com_statut = 1 AND commentaire_emis.ch_com_categorie ='com_communique'
 UNION 
 SELECT ch_pay_label AS type_notification, ch_pay_id AS id, ch_pay_publication AS statut, ch_pay_label AS sous_categorie, ch_pay_id AS id_element, ch_use_paysID AS id_auteur, ch_pay_mis_jour AS date, ch_pay_nom AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_pay_id AS id_institution, ch_pay_nom AS institution, ch_pay_lien_imgdrapeau AS img_institution, ch_pay_id AS pays_institution
@@ -516,8 +517,8 @@ do {
 ================================================== -->
     <li class="fond-notification item">
       <div class="row-fluid">
-        <div class="span1 auteur"><a href="page-monument.php?ch_pat_id=<?php echo $row_LastCommunique['id']; ?>"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="photo monument"></a> </div>
-        <div class="span10"> <small>le
+        <div class="span2 auteur"><a href="page-monument.php?ch_pat_id=<?php echo $row_LastCommunique['id']; ?>"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="photo monument"></a> </div>
+        <div class="span9"> <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
           &agrave;
           <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
@@ -678,7 +679,7 @@ do {
           &agrave;
           <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
           </small>
-          <p>L'infrastructure <?php echo $row_LastCommunique['titre']; ?> cr&eacute;e dans la ville de <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>"><?php echo $row_LastCommunique['institution']; ?></a> par <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><?php echo $row_LastCommunique['nom_auteur']; ?> <?php echo $row_LastCommunique['prenom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a &eacute;t&eacute; accept&eacute;e par les juges temp&eacute;rants</p>
+          <p>L'infrastructure <?php echo $row_LastCommunique['titre']; ?> cr&eacute;&eacute; dans la ville de <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>"><?php echo $row_LastCommunique['institution']; ?></a> par <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><?php echo $row_LastCommunique['nom_auteur']; ?> <?php echo $row_LastCommunique['prenom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a &eacute;t&eacute; accept&eacute;e par les juges temp&eacute;rants</p>
         </div>
         <div class="span1 auteur icone-categorie">
           <?php if ($row_LastCommunique['img_institution']) {?>

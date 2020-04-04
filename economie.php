@@ -86,14 +86,9 @@ $query_limit_somme_ressources = sprintf("%s LIMIT %d, %d", $query_somme_ressourc
 $somme_ressources = mysql_query($query_limit_somme_ressources);
 $row_somme_ressources = mysql_fetch_assoc($somme_ressources);
 
-
-if (isset($_GET['totalRows_somme_ressources'])) {
-  $totalRows_somme_ressources = $_GET['totalRows_somme_ressources'];
-} else {
-  $all_somme_ressources = mysql_query($query_somme_ressources);
-  $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
-  $totalRows_somme_ressources = mysql_num_rows($all_somme_ressources);
-}
+$all_somme_ressources = mysql_query($query_somme_ressources);
+$row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
+$totalRows_somme_ressources = mysql_num_rows($all_somme_ressources);
 $totalPages_somme_ressources = ceil($totalRows_somme_ressources/$maxRows_somme_ressources)-1;
 
 $queryString_somme_ressources = "";
@@ -237,10 +232,6 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
 	background-image: url('assets/img/bannieres-instituts/IEGC.png');
 }
 </style>
-<!-- CARTE -->
-<script src="assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
-<script src="assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('php/cartepays.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
@@ -357,12 +348,19 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
 
           <script type="text/javascript">
 
+          <?php
+          $graph_colors_list = array();
+          $graph_color_start = -0.250;
+          for($i = 0; $i < $totalRows_somme_ressources; $i++) {
+            $graph_colors_list[] = adjustBrightness(getResourceColor($cat),
+                $graph_color_start);
+            $graph_color_start += 0.016;
+          }
+          ?>
+
           (function($, window, Chart, document, undefined) {
 
-              var chartColors = [
-                '<?= getResourceColor($cat) ?>',
-                '<?= getResourceColor($cat) ?>'
-            ];
+            var chartColors = <?= json_encode($graph_colors_list) ?>;
             var i = 0;
 
             var getColor = function() {
@@ -421,7 +419,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
           
         <!-- affichage ressource et somme mondiale en fonction du choix -->
         <div class="span4 well ressources">
-          <p><i class="icon-globe icon-white"></i> Balance mondiale&nbsp;:</p>
+          <p><i class="icon-globe"></i> Balance mondiale&nbsp;:</p>
           <?php if ($cat =="budget") { ?>
           <a href="#" title="Budget"><img src="assets/img/ressources/budget.png" alt="icone Budget"></a>
           <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_budget, 0, ',', ' '); echo $chiffre_francais; ?></h3>
