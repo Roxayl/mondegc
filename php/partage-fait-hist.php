@@ -1,6 +1,6 @@
 <?php
 
-include('../Connections/maconnexion.php');
+require_once('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 $Fait_hist_ID = "-1";

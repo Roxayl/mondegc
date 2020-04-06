@@ -1,4 +1,4 @@
-<?php include('Connections/maconnexion.php'); ?>
+<?php require_once('Connections/maconnexion.php'); ?>
 <?php 
 //requete liste communiqués
 

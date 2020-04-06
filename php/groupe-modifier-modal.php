@@ -1,6 +1,6 @@
 <?php
 
-include('../Connections/maconnexion.php');
+require_once('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
 

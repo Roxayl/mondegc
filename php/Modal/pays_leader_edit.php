@@ -3,7 +3,7 @@
 use GenCity\Monde\Pays;
 use GenCity\Monde\User;
 
-include('../../Connections/maconnexion.php');
+require_once('../../Connections/maconnexion.php');
 
 header('Content-Type: text/html; charset=utf-8');
 

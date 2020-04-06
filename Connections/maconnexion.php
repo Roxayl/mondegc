@@ -1,9 +1,21 @@
 <?php
-# FileName="Connection_php_mysql.htm"
-# Type="MYSQL"
-# HTTP="true"
+
+/*************************
+ *       Paramètres      *
+ *************************/
 
 defined("DEF_ROOTPATH") or define("DEF_ROOTPATH", str_replace("\\", "/", (substr(__DIR__, -12) == '/Connections' || substr(__DIR__, -12) == '\Connections') ? substr(__DIR__, 0, -12) . '/' : __DIR__ . '/'));
+define("DEF_URI_PATH",
+        ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443
+            ? 'https' : 'http' )
+        . '://' . $_SERVER['HTTP_HOST'] . '/'
+        . ($_SERVER['HTTP_HOST'] === 'localhost' ? 'MondeGC/trunk/' : 'monde/')
+    );
+
+
+/*************************
+ * Librairies (autoload) *
+ *************************/
 
 // Auto-chargement de classes
 spl_autoload_register(function($class) {
@@ -14,6 +26,18 @@ spl_autoload_register(function($class) {
     include(DEF_ROOTPATH.'php/'. $class . '.php');
 });
 
+/*
+ * Début d'implémentation de CSRF-Magic. On le désactive pour le moment en raison de problèmes
+ * qu'il pose au niveau des formulaires dans les popups (AJAX et cie...). */
+/*function csrf_startup() {
+    csrf_conf('rewrite-js', DEF_URI_PATH . 'lib/csrf-magic/csrf-magic.js');
+}
+require_once DEF_ROOTPATH . 'lib/csrf-magic/csrf-magic.php';*/
+
+
+/*************************
+ *    Base de données    *
+ *************************/
 
 if($_SERVER['HTTP_HOST'] === 'localhost') {
     $hostname_maconnexion = "localhost";
@@ -36,8 +60,12 @@ if($_SERVER['HTTP_HOST'] === 'localhost') {
 }
 mysql_select_db($database_maconnexion);
 
+
+/*************************
+ *   Fonctions diverses  *
+ *************************/
+
 //Protection  données envoyées
-if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType = "text", $theDefinedValue = "", $theNotDefinedValue = "")
 {
   if (PHP_VERSION < 6) {
@@ -66,10 +94,8 @@ function GetSQLValueString($theValue, $theType = "text", $theDefinedValue = "", 
   }
   return $theValue;
 }
-}
 
 // *** Fonction calcul de periodes.
-if (!function_exists("get_timespan_string")) {
 function get_timespan_string($older, $newer) {
   $Y1 = $older->format('Y');
   $Y2 = $newer->format('Y');
@@ -164,10 +190,6 @@ function pluralize( $count, $text )
 {
   return $count . ( ( $count == 1 ) ? ( " $text" ) : ( " ${text}s" ) );
 }
-}
-
-
-if (!function_exists("get_timespan_string_hour")) {
 
 function get_timespan_string_hour($older, $newer) {
   $Y1 = $older->format('Y');
@@ -271,10 +293,8 @@ function pluralize_hour( $count, $text )
 {
   return $count . ( ( $count == 1 ) ? ( " $text" ) : ( " ${text}s" ) );
 }
-}
 
 // *** Fonction calcul de notes.
-if (!function_exists("get_note_finale")) {
 function get_note_finale($note) {
 if ($note >= 56) {
 $note_finale = 'A<sup>+</sup>';
@@ -311,10 +331,8 @@ $note_finale = '';
 }
   return $note_finale;
 }
-}
 
 //Affichage date en français pour fait hist
-if (!function_exists("affDate")) {
 function affDate($date){
     $year = substr($date, 0, 4);
     $month = substr($date, 5, 2);
@@ -337,9 +355,7 @@ function affDate($date){
      
     return $str;
 }
-}
 
-if (!function_exists("coordEmplacement")) {
 function coordEmplacement($emplacement, &$x, &$y){
 switch ($emplacement) // placement des markers selon la variable d'emplacement
 { 
@@ -638,9 +654,7 @@ switch ($emplacement) // placement des markers selon la variable d'emplacement
 		$y="0";
 }
 }
-}
 
-if (!function_exists("styleZones")) {
 function styleZones($typeZone, &$fillcolor, &$fillOpacity, &$strokeWidth, &$strokeColor, &$strokeOpacity, &$Trait){
 			if ( $typeZone == "urbaine" ){
 				$fillcolor = "#313131";
@@ -778,9 +792,7 @@ function styleZones($typeZone, &$fillcolor, &$fillOpacity, &$strokeWidth, &$stro
 				$Trait = "solid";
 			}
 }
-}
 
-if (!function_exists("styleVoies")) {
 function styleVoies($typeVoie, &$couleurTrait, &$epaisseurTrait, &$Trait){
 			if ( $typeVoie == "lgv" ){
 				$couleurTrait = "#8a5b9d";
@@ -824,9 +836,7 @@ function styleVoies($typeVoie, &$couleurTrait, &$epaisseurTrait, &$Trait){
 				$Trait = "solid";
 			}
 }
-}
 
-if (!function_exists("tailleVilles")) {
 function tailleVilles($population, &$sizeicon){
         if ($population < 50000) {
 		$sizeicon = 6;
@@ -853,9 +863,7 @@ function tailleVilles($population, &$sizeicon){
 		$sizeicon -= 2;
 		return $sizeicon;
   }
-}
 
-if (!function_exists("ressourcesGeometrie")) {
 function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$commerce, &$agriculture, &$tourisme, &$recherche, &$environnement, &$education, &$label, &$population, &$emploi = 0){
 			if ( $typeZone == "urbaine" ){
 				$label = "Zone urbaine";
@@ -1159,195 +1167,179 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
 				$population = $surface*0;
 			}
 }
+
+function renderResources($resources, $path = '') {
+
+    ?>
+    <ul class="token">
+      <li class="span2 token-budget"><span title="Budget"><img src="<?= $path ?>assets/img/ressources/budget.png" alt="icone Budget"></span>
+        <p>Budget <br>
+            <span class="infra-nbr-ressource"><?php echo number_format($resources['budget'], 0, ',', ' '); ?></span>
+        </p>
+      </li>
+      <li class="span2 token-industrie"><span title="Industrie"><img src="<?= $path ?>assets/img/ressources/industrie.png" alt="icone Industrie"></span>
+        <p>Industrie <br>
+            <span class="infra-nbr-ressource"><?php echo number_format($resources['industrie'], 0, ',', ' '); ?></span>
+        </p>
+      </li>
+      <li class="span2 token-commerce"><span title="Commerce"><img src="<?= $path ?>assets/img/ressources/bureau.png" alt="icone Commerce"></span>
+        <p>Commerce <br>
+            <span class="infra-nbr-ressource"><?php echo number_format($resources['commerce'], 0, ',', ' '); ?></span>
+        </p>
+      </li>
+      <li class="span2 token-agriculture"><span title="Agriculture"><img src="<?= $path ?>assets/img/ressources/agriculture.png" alt="icone Agriculture"></span>
+        <p>Agriculture <br>
+            <span class="infra-nbr-ressource"><?php echo number_format($resources['agriculture'], 0, ',', ' '); ?></span>
+        </p>
+      </li>
+    </ul>
+    <div class="clearfix"></div>
+    <ul class="token">
+      <li class="span2 token-tourisme"><span title="Tourisme"><img src="<?= $path ?>assets/img/ressources/tourisme.png" alt="icone Tourisme"></span>
+        <p>Tourisme <br>
+            <span class="infra-nbr-ressource"><?php echo number_format($resources['tourisme'], 0, ',', ' '); ?></span>
+        </p>
+      </li>
+      <li class="span2 token-recherche"><span title="Recherche"><img src="<?= $path ?>assets/img/ressources/recherche.png" alt="icone Recherche"></span>
+        <p>Recherche <br>
+            <span class="infra-nbr-ressource"><?php echo number_format($resources['recherche'], 0, ',', ' '); ?></span>
+        </p>
+      </li>
+      <li class="span2 token-environnement"><span title="Environnement"><img src="<?= $path ?>assets/img/ressources/environnement.png" alt="icone Environnement"></span>
+        <p>Environn. <br>
+            <span class="infra-nbr-ressource"><?php echo number_format($resources['environnement'], 0, ',', ' '); ?></span>
+        </p>
+      </li>
+      <li class="span2 token-education"><span title="Education"><img src="<?= $path ?>assets/img/ressources/education.png" alt="icone Education"></span>
+        <p>Education <br>
+            <span class="infra-nbr-ressource"><?php echo number_format($resources['education'], 0, ',', ' '); ?></span>
+        </p>
+      </li>
+    </ul>
+    <?php
+
 }
 
-if(!function_exists('renderResources')) {
-    function renderResources($resources, $path = '') {
+function getResourceColor($resource) {
 
-        ?>
-        <ul class="token">
-          <li class="span2 token-budget"><span title="Budget"><img src="<?= $path ?>assets/img/ressources/budget.png" alt="icone Budget"></span>
-            <p>Budget <br>
-                <span class="infra-nbr-ressource"><?php echo number_format($resources['budget'], 0, ',', ' '); ?></span>
-            </p>
-          </li>
-          <li class="span2 token-industrie"><span title="Industrie"><img src="<?= $path ?>assets/img/ressources/industrie.png" alt="icone Industrie"></span>
-            <p>Industrie <br>
-                <span class="infra-nbr-ressource"><?php echo number_format($resources['industrie'], 0, ',', ' '); ?></span>
-            </p>
-          </li>
-          <li class="span2 token-commerce"><span title="Commerce"><img src="<?= $path ?>assets/img/ressources/bureau.png" alt="icone Commerce"></span>
-            <p>Commerce <br>
-                <span class="infra-nbr-ressource"><?php echo number_format($resources['commerce'], 0, ',', ' '); ?></span>
-            </p>
-          </li>
-          <li class="span2 token-agriculture"><span title="Agriculture"><img src="<?= $path ?>assets/img/ressources/agriculture.png" alt="icone Agriculture"></span>
-            <p>Agriculture <br>
-                <span class="infra-nbr-ressource"><?php echo number_format($resources['agriculture'], 0, ',', ' '); ?></span>
-            </p>
-          </li>
-        </ul>
-        <div class="clearfix"></div>
-        <ul class="token">
-          <li class="span2 token-tourisme"><span title="Tourisme"><img src="<?= $path ?>assets/img/ressources/tourisme.png" alt="icone Tourisme"></span>
-            <p>Tourisme <br>
-                <span class="infra-nbr-ressource"><?php echo number_format($resources['tourisme'], 0, ',', ' '); ?></span>
-            </p>
-          </li>
-          <li class="span2 token-recherche"><span title="Recherche"><img src="<?= $path ?>assets/img/ressources/recherche.png" alt="icone Recherche"></span>
-            <p>Recherche <br>
-                <span class="infra-nbr-ressource"><?php echo number_format($resources['recherche'], 0, ',', ' '); ?></span>
-            </p>
-          </li>
-          <li class="span2 token-environnement"><span title="Environnement"><img src="<?= $path ?>assets/img/ressources/environnement.png" alt="icone Environnement"></span>
-            <p>Environn. <br>
-                <span class="infra-nbr-ressource"><?php echo number_format($resources['environnement'], 0, ',', ' '); ?></span>
-            </p>
-          </li>
-          <li class="span2 token-education"><span title="Education"><img src="<?= $path ?>assets/img/ressources/education.png" alt="icone Education"></span>
-            <p>Education <br>
-                <span class="infra-nbr-ressource"><?php echo number_format($resources['education'], 0, ',', ' '); ?></span>
-            </p>
-          </li>
-        </ul>
-        <?php
+    $colors = array(
+        'agriculture' => '#145d19',
+        'budget' => '#ffcd00',
+        'commerce' => '#2f659a',
+        'education' => '#9a0065',
+        'environnement' => '#4ab04e',
+        'industrie' => '#652f00',
+        'recherche' => '#65659a',
+        'tourisme' => '#00cd9a'
+    );
+    return $colors[$resource];
 
+}
+
+/**
+ * Increases or decreases the brightness of a color by a percentage of the current brightness.
+ *
+ * @param   string  $hexCode        Supported formats: `#FFF`, `#FFFFFF`, `FFF`, `FFFFFF`
+ * @param   float   $adjustPercent  A number between -1 and 1. E.g. 0.3 = 30% lighter; -0.4 = 40% darker.
+ *
+ * @return  string
+ */
+function adjustBrightness($hexCode, $adjustPercent) {
+    $hexCode = ltrim($hexCode, '#');
+
+    if (strlen($hexCode) == 3) {
+        $hexCode = $hexCode[0] . $hexCode[0] . $hexCode[1] . $hexCode[1] . $hexCode[2] . $hexCode[2];
     }
-}
 
-if(!function_exists('getResourceColor')) {
-    function getResourceColor($resource) {
+    $hexCode = array_map('hexdec', str_split($hexCode, 2));
 
-        $colors = array(
-            'agriculture' => '#145d19',
-            'budget' => '#ffcd00',
-            'commerce' => '#2f659a',
-            'education' => '#9a0065',
-            'environnement' => '#4ab04e',
-            'industrie' => '#652f00',
-            'recherche' => '#65659a',
-            'tourisme' => '#00cd9a'
-        );
-        return $colors[$resource];
+    foreach ($hexCode as & $color) {
+        $adjustableLimit = $adjustPercent < 0 ? $color : 255 - $color;
+        $adjustAmount = ceil($adjustableLimit * $adjustPercent);
 
+        $color = str_pad(dechex($color + $adjustAmount), 2, '0', STR_PAD_LEFT);
     }
+
+    return '#' . implode($hexCode);
 }
 
-if(!function_exists('adjustBrightness')) {
-    /**
-     * Increases or decreases the brightness of a color by a percentage of the current brightness.
-     *
-     * @param   string  $hexCode        Supported formats: `#FFF`, `#FFFFFF`, `FFF`, `FFFFFF`
-     * @param   float   $adjustPercent  A number between -1 and 1. E.g. 0.3 = 30% lighter; -0.4 = 40% darker.
-     *
-     * @return  string
-     */
-    function adjustBrightness($hexCode, $adjustPercent) {
-        $hexCode = ltrim($hexCode, '#');
+function renderElement($element, $data = null) {
+    if(!is_array($data))
+        $data = array($data);
+    require(__DIR__ . '/../php/Elements/' . $element . '.php');
+}
 
-        if (strlen($hexCode) == 3) {
-            $hexCode = $hexCode[0] . $hexCode[0] . $hexCode[1] . $hexCode[1] . $hexCode[2] . $hexCode[2];
-        }
+function formatNum($number, $decimals = 0) {
+    return number_format($number, $decimals, '.', '&#8239;');
+}
 
-        $hexCode = array_map('hexdec', str_split($hexCode, 2));
+/**
+ * @param string $errorType Type d'erreur.
+ * @param string|array $errorInfo Corps du message.
+ * @param bool $put_on_session Détermine s'il faut stocker le message dans la session. Si ce paramètre est mis à <code>false</code>, le message est directement affiché.
+ */
+function getErrorMessage($errorType, $errorInfo, $put_on_session = true) {
 
-        foreach ($hexCode as & $color) {
-            $adjustableLimit = $adjustPercent < 0 ? $color : 255 - $color;
-            $adjustAmount = ceil($adjustableLimit * $adjustPercent);
+    if(is_array($errorInfo)) $errorInfo = @implode($errorInfo);
 
-            $color = str_pad(dechex($color + $adjustAmount), 2, '0', STR_PAD_LEFT);
-        }
-
-        return '#' . implode($hexCode);
+    if($put_on_session) {
+        $_SESSION['errmsgs'][] =
+            array('msg'      => $errorInfo,
+                  'err_type' => $errorType);
     }
-}
-
-if(!function_exists('renderElement')) {
-    function renderElement($element, $data = null) {
-        if(!is_array($data))
-            $data = array($data);
-        require(__DIR__ . '/../php/Elements/' . $element . '.php');
-    }
-}
-
-if(!function_exists('formatNum')) {
-    function formatNum($number, $decimals = 0) {
-        return number_format($number, $decimals, '.', '&#8239;');
-    }
-}
-
-if(!function_exists('getErrorMessage')) {
-    /**
-     * @param string $errorType Type d'erreur.
-     * @param string|array $errorInfo Corps du message.
-     * @param bool $put_on_session Détermine s'il faut stocker le message dans la session. Si ce paramètre est mis à <code>false</code>, le message est directement affiché.
-     */
-    function getErrorMessage($errorType, $errorInfo, $put_on_session = true) {
-
-        if(is_array($errorInfo)) $errorInfo = @implode($errorInfo);
-
-        if($put_on_session) {
-            $_SESSION['errmsgs'][] =
-                array('msg'      => $errorInfo,
-                      'err_type' => $errorType);
-        }
-        else {
-            showErrorMessage($errorType, $errorInfo);
-        }
-
-    }
-}
-
-if(!function_exists('showErrorMessage')) {
-    function showErrorMessage($errorType, $errorInfo) {
-
-        if($errorType === null) {
-            echo $errorInfo;
-        }
-        else {
-            echo '
-                <div class="alert alert-block alert-'.$errorType.'">' .
-                '<button type="button" class="close" data-dismiss="alert">&#215;</button>' .
-                $errorInfo .
-                '</div>';
-        }
-
-    }
-}
-
-if(!function_exists('dateFormat')) {
-
-    function dateFormat($date, $getTime = false) {
-
-        if(!is_numeric($date)) {
-            $date = strtotime($date);
-        }
-
-        return date('d/m/Y' . ($getTime ? ' à H\hi' : ''), $date);
-
+    else {
+        showErrorMessage($errorType, $errorInfo);
     }
 
 }
 
-if(!function_exists('__s')) {
+function showErrorMessage($errorType, $errorInfo) {
 
-    /**
-     * Filtre un texte avant affichage.
-     * @param string|array $text Texte ou array à traiter.
-     * @return mixed|array|string <code>array</code> ou <code>string</code> en cas de succès. <code>FALSE</code>
-     *                            en cas d'échec.
-     */
-    function __s($text) {
-
-        if(is_array($text)) {
-            return filter_var_array($text, FILTER_SANITIZE_SPECIAL_CHARS);
-        } else {
-            return htmlspecialchars($text, ENT_QUOTES);
-        }
-
+    if($errorType === null) {
+        echo $errorInfo;
+    }
+    else {
+        echo '
+            <div class="alert alert-block alert-'.$errorType.'">' .
+            '<button type="button" class="close" data-dismiss="alert">&#215;</button>' .
+            $errorInfo .
+            '</div>';
     }
 
 }
+
+
+function dateFormat($date, $getTime = false) {
+
+    if(!is_numeric($date)) {
+        $date = strtotime($date);
+    }
+
+    return date('d/m/Y' . ($getTime ? ' à H\hi' : ''), $date);
+
+}
+
+
+/**
+ * Filtre un texte avant affichage.
+ * @param string|array $text Texte ou array à traiter.
+ * @return mixed|array|string <code>array</code> ou <code>string</code> en cas de succès.
+ *  <code>FALSE</code> en cas d'échec.
+ */
+function __s($text) {
+
+    if(is_array($text)) {
+        return filter_var_array($text, FILTER_SANITIZE_SPECIAL_CHARS);
+    } else {
+        return htmlspecialchars($text, ENT_QUOTES);
+    }
+
+}
+
+
+/*************************
+ *        Session        *
+ *************************/
 
 if(!isset($_SESSION))
     session_start();

@@ -1,6 +1,6 @@
 <?php
 
-include('Connections/maconnexion.php'); 
+require_once('Connections/maconnexion.php');
 
 //deconnexion
 include('php/log.php');
