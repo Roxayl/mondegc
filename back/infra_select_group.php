@@ -22,12 +22,11 @@ if($_GET['ville_id']) {
 
     $thisVille = null;
     $thisPays = new \GenCity\Monde\Pays($_GET['pays_id']);
-    /** @var \GenCity\Monde\Ville[] $listVille */
-    $listVille = \GenCity\Monde\Ville::getListFromPays($thisPays);
 
 }
 
-
+/** @var \GenCity\Monde\Ville[] $listVille */
+$listVille = \GenCity\Monde\Ville::getListFromPays($thisPays);
 /** @var \GenCity\Monde\User $thisUser */
 $thisUser = $_SESSION['userObject'];
 
@@ -126,16 +125,17 @@ img.olTileImage {
         </div>
     </div>
 
-    <?php if(is_null($thisVille)): ?>
     <div class="alert alert-tips">
         <label for="select_ville_ID"><h4><i class="icon icon-home"></i> Publier l'infrastructure dans la ville : </h4></label>
         <select id="select_ville_ID" name="select_ville_ID">
         <?php foreach($listVille as $ville): ?>
-            <option value="<?= $ville->get('ch_vil_ID') ?>"><?= __s($ville->get('ch_vil_nom')) ?></option>
+            <option value="<?= $ville->get('ch_vil_ID') ?>"
+                <?= $thisVille !== null && $thisVille->get('ch_vil_ID') === $ville->get('ch_vil_ID')
+                        ? 'selected' : '' ?>
+            ><?= __s($ville->get('ch_vil_nom')) ?></option>
         <?php endforeach; ?>
         </select>
     </div>
-    <?php endif; ?>
 
     <div class="well" id="thumbnail-infra-container" style="display: none;">
       <ul class="thumbnails">

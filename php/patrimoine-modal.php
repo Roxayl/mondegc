@@ -43,7 +43,10 @@ $query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID I
 $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
-} 
+}
+
+$thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
+
 ?>
 
 <!-- Modal Header-->
@@ -51,8 +54,9 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
   <!-- Titre-->
-  <div class="titre-vert"> <img src="assets/img/IconesBDD/100/monument1.png" alt="monument">
-    <h1><?php echo $row_monument['ch_pat_nom']; ?></h1>
+  <div class="titre-vert">
+    <h1><?php echo $row_monument['ch_pat_nom']; ?><br>
+    <small style="font-size: 20px;">Un monument au <?= __s($thisPays->get('ch_pay_nom')) ?></small></h1>
   </div>
 </div>
 <!-- Modal BODY-->
@@ -110,7 +114,7 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
   <div class="well">
     <div class="row-fluid">
       <div class="span8">
-        <p><strong>Pays&nbsp;:</strong> <a class="" href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pat_paysID']; ?>"><?php echo $row_monument['ch_pay_nom']; ?></a></p>
+        <p><strong>Pays&nbsp;:</strong> <img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pat_paysID']; ?>"><?php echo $row_monument['ch_pay_nom']; ?></a></p>
         <p><strong>Ville&nbsp;:</strong> <a class="" href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pat_paysID']; ?>&ch_ville_id=<?php echo $row_monument['ch_pat_villeID']; ?>"><?php echo $row_monument['ch_vil_nom']; ?></a></p>
         <p><?php echo $row_monument['ch_pat_description']; ?></p>
         <!-- Liste des categories di monument -->

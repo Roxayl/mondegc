@@ -41,6 +41,10 @@ $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
 }
 $_SESSION['last_work'] = 'page-monument.php?ch_pat_id='.$row_monument['ch_pat_id'];
+
+
+$thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
+
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
@@ -183,7 +187,7 @@ $_SESSION['last_work'] = 'page-monument.php?ch_pat_id='.$row_monument['ch_pat_id
   </form>
   <form class="pull-right" action="back/monument_modifier.php" method="post">
     <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
-    <button class="btn btn-danger" type="submit" title="modifier ce monument"><i class="icon-pencil icon-white"></i></button>
+    <button class="btn btn-primary" type="submit" title="modifier ce monument"><i class="icon-pencil icon-white"></i></button>
   </form>
   <?php } ?>
   <?php if ($row_users['ch_use_id'] == $_SESSION['user_ID']) { ?>
@@ -192,13 +196,13 @@ $_SESSION['last_work'] = 'page-monument.php?ch_pat_id='.$row_monument['ch_pat_id
   
   <div class="clearfix"></div>
   <div class="modal container fade" id="Modal-Monument"></div>
-  <div class="titre-vert"> <img src="assets/img/IconesBDD/100/monument1.png" alt="monument">
+  <div class="titre-vert">
     <h1><?php echo $row_monument['ch_pat_nom']; ?></h1>
   </div>
   <div class="well">
     <div class="row-fluid">
       <div class="span8">
-        <p><strong>Pays&nbsp;:</strong> <a class="" href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pat_paysID']; ?>"><?php echo $row_monument['ch_pay_nom']; ?></a></p>
+        <p><strong>Pays&nbsp;:</strong> <img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pat_paysID']; ?>"><?php echo $row_monument['ch_pay_nom']; ?></a></p>
         <p><strong>Ville&nbsp;:</strong> <a class="" href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pat_paysID']; ?>&ch_ville_id=<?php echo $row_monument['ch_pat_villeID']; ?>"><?php echo $row_monument['ch_vil_nom']; ?></a></p>
         <p><?php echo $row_monument['ch_pat_description']; ?></p>
         <!-- Liste des categories di monument -->
