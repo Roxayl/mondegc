@@ -26,7 +26,7 @@ if($result_index['IndexIsThere'] == 0) {
 }
 
 $check_index = mysql_query("SELECT COUNT(1) IndexIsThere FROM INFORMATION_SCHEMA.STATISTICS
-  WHERE table_schema=DATABASE() AND table_name='infrastructures' AND index_name='ch_inf_off_id__index'");
+  WHERE table_schema=DATABASE() AND table_name='infrastructures' AND index_name='ch_inf_villeid__index'");
 $result_index = mysql_fetch_assoc($check_index);
 if($result_index['IndexIsThere'] == 0) {
     $queries[] = "create index ch_inf_villeid__index
