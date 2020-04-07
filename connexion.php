@@ -5,6 +5,11 @@ require_once('Connections/maconnexion.php');
 //Connexion et deconnexion
 include('php/log.php');
 
+if(isset($_SESSION['userObject'])) {
+    header('Location: back/membre-modifier_back.php?userID=' . $_SESSION['userObject']->get('ch_use_id'));
+    exit;
+}
+
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "OubliIdentifiant")) {
 
   $mailposte = $_POST['ch_use_mail']; // D�claration de l'adresse de destination.
@@ -51,7 +56,7 @@ if ( $row_Compare_mail ) {
 
 
   
-if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail)) // On filtre les serveurs qui rencontrent des bogues.
+if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn|outlook).[a-z]{2,4}$#", $mail)) // On filtre les serveurs qui rencontrent des bogues.
 {
 	$passage_ligne = "\r\n";
 }
@@ -117,7 +122,7 @@ $mailSuccess = true;
 <!-- head Html -->
 <head>
 <meta charset="iso-8859-1">
-<title>Monde GC-</title>
+<title>Monde GC - Connexion au compte</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -163,6 +168,9 @@ $mailSuccess = true;
 
       <h1>Connexion au compte</h1>
       </div>
+
+      <?php renderElement('errormsgs'); ?>
+
       <div class="row-fluid">
     <section class="span7">
       <p>&nbsp;</p>
@@ -189,8 +197,7 @@ $mailSuccess = true;
     <section class="span4">
     <p>&nbsp;</p>
       <div class="well">
-      <p><b>Vous devez activer les cookies sur votre navigateur pour pouvoir vous connecter</b></p>
-      <p>Le nombre d'emplacements sur la carte du Monde GC &eacute;tant limit&eacute;, seuls les membres du forum de G&eacute;n&eacute;ration City peuvent y participer. Vous pouvez vous inscrire sur le forum <a href="http://www.forum-gc.com/register" title="lien vers la page d'inscription du forum de G�n�ration City" target="new">ici</a>
+          <p>Le nombre d'emplacements sur la carte du Monde GC &eacute;tant limit&eacute;, seuls les membres du <a href="https://forum-gc.com/">forum de G&eacute;n&eacute;ration City</a> peuvent y participer. Vous pouvez vous inscrire sur le forum <a href="http://www.forum-gc.com/register" title="lien vers la page d'inscription du forum de G�n�ration City" target="new">ici</a>.
       </p>
       </div>
       </section>

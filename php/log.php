@@ -179,10 +179,15 @@ if ($loginFoundUser) {
      */
     $_SESSION['userObject'] = new \GenCity\Monde\User($row_LoginRS['ch_use_id']);
 
+    getErrorMessage('success',
+        "Bienvenue " . $_SESSION['userObject']->get('ch_use_login') . ' !');
+
 	header('Location:'.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
 	die;
   	}
   else {
+    getErrorMessage('error',
+        "Votre identifiant ou mot de passe est erroné.");
     header("Location: ". $MM_redirectLoginFailed );
 	die;
   }
@@ -244,6 +249,8 @@ unset($_COOKIE["Session_mondeGC"]);
   }
   
   $logoutGoTo = $_SERVER['PHP_SELF'].'?'.$variables;
+
+  getErrorMessage('success', "Vous vous êtes déconnecté.");
   
   if ($logoutGoTo) {
     header("Location: $logoutGoTo");
