@@ -55,8 +55,9 @@ INNER JOIN users auteur ON institution.ch_com_user_id = auteur.ch_use_id
 LEFT JOIN personnage ON(entity_id = institution.ch_com_pays_id AND entity = 'pays')
 WHERE institution.ch_com_statut = 1 AND commentaire_emis.ch_com_categorie ='com_communique'
 UNION 
-SELECT ch_pay_label AS type_notification, ch_pay_id AS id, ch_pay_publication AS statut, ch_pay_label AS sous_categorie, ch_pay_id AS id_element, ch_use_paysID AS id_auteur, ch_pay_mis_jour AS date, ch_pay_nom AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_pay_id AS id_institution, ch_pay_nom AS institution, ch_pay_lien_imgdrapeau AS img_institution, ch_pay_id AS pays_institution
-FROM pays INNER JOIN users ON ch_use_paysID = ch_pay_id AND ch_use_statut >= 20
+SELECT ch_pay_label AS type_notification, ch_pay_id AS id, ch_pay_publication AS statut, ch_pay_label AS sous_categorie, ch_pay_id AS id_element, ch_pay_id AS id_auteur, ch_pay_mis_jour AS date, ch_pay_nom AS titre, lien_img AS photo_auteur, nom_personnage AS nom_auteur, entity_id AS paysID_auteur, prenom_personnage AS prenom_auteur, titre_personnage AS titre_auteur, ch_pay_id AS id_institution, ch_pay_nom AS institution, ch_pay_lien_imgdrapeau AS img_institution, ch_pay_id AS pays_institution
+FROM pays
+LEFT JOIN personnage ON(entity_id = pays.ch_pay_id AND entity = 'pays')
 WHERE ch_pay_publication = 1
 UNION 
 SELECT ch_vil_label AS type_notification, ch_vil_ID AS id, ch_vil_capitale AS statut, ch_vil_label AS sous_categorie, ch_vil_paysID AS id_element, ch_vil_user AS id_auteur, ch_vil_mis_jour AS date, ch_vil_nom AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_vil_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_vil_ID AS id_institution, ch_vil_nom AS institution, ch_vil_lien_img1 AS img_institution, ch_vil_paysID AS pays_institution
@@ -293,13 +294,13 @@ do {
             <h3>Nouveau communiqu&eacute;</h3>
           </div>
           <div class="row-fluid fond-notification">
-            <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="auteur"></a> </div>
+            <div class="span2 auteur"> </div>
             <div class="span8"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-              <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a lanc&eacute; un communiqu&eacute; au nom de la ville <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>"> <?php echo $row_LastCommunique['institution']; ?></a> intitul&eacute;&nbsp;:</p>
+              <p>La ville <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>"> <?php echo $row_LastCommunique['institution']; ?></a> a publié un communiqué intitul&eacute;&nbsp;:</p>
               <h4><a href="page-communique.php?com_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
             </div>
             <div class="span2 auteur">
@@ -456,7 +457,11 @@ do {
       </div>
     </li>
     <?php } ?>
-    <?php if ( $row_LastCommunique['type_notification'] == "ville") {?>
+    <?php if ( $row_LastCommunique['type_notification'] == "ville") {
+
+        $thisPays = new \GenCity\Monde\Pays($row_LastCommunique['pays_institution']);
+
+        ?>
     <!-- Si c'est une MAJ de VILLE
 ================================================== -->
     <li class="item">
@@ -477,7 +482,7 @@ do {
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-              <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a mis &agrave; jour la page de sa ville&nbsp;:</p>
+              <p>La page de la ville située à <a href="page-pays?ch_pay_id=<?= $thisPays->get('ch_pay_id') ?>"><?= __s($thisPays->get('ch_pay_nom')) ?></a> a été mise à jour :</p>
               <h4><a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
             </div>
         </div>
@@ -717,26 +722,17 @@ do {
 <script>
 $("button").click(function(){
 	$('div#loadmoreajaxloader').show();
-	$.ajaxSetup({
-  contentType: 'application/x-www-form-urlencoded; charset=ISO-8859-1',
-  beforeSend: function(jqXHR) {
-    jqXHR.overrideMimeType('application/x-www-form-urlencoded; charset=ISO-8859-1');
-  }
-});
-        $.ajax({
+    $.ajax({
         url: "<?php printf("last_MAJ.php?pageNum_LastCommunique=%d%s#postswrapper", $currentPage, min($totalPages_LastCommunique, $pageNum_LastCommunique + 1), $queryString_LastCommunique); ?>",
-        success: function(html)
-        {
-            if(html)
-            {
+        success: function(html) {
+            if(html) {
                 $("#postswrapper").append(html);
                 $('div#loadmoreajaxloader').hide();
-            }else
-            {
+            } else {
                 $('div#loadmoreajaxloader').html('<center>No more posts to show.</center>');
             }
         }
-        });
+    });
 });
 </script>
 <?php

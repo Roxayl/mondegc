@@ -118,23 +118,19 @@ $_SESSION['an']=true;
         </div>
         <?php
         $query_communiquesPays = "
-SELECT communique_pays.ch_com_label AS type_notification, communique_pays.ch_com_ID AS id, communique_pays.ch_com_statut AS statut, communique_pays.ch_com_categorie AS sous_categorie, communique_pays.ch_com_element_id AS id_element, communique_pays.ch_com_user_id AS id_auteur, communique_pays.ch_com_date AS date, communique_pays.ch_com_titre AS titre, lien_img AS photo_auteur, nom_personnage AS nom_auteur, entity_id AS paysID_auteur, prenom_personnage AS prenom_auteur, titre_personnage AS titre_auteur, ch_pay_id AS id_institution, ch_pay_nom AS institution, ch_pay_lien_imgdrapeau AS img_institution, ch_pay_id AS pays_institution
+SELECT communique_pays.ch_com_label AS type_notification, communique_pays.ch_com_ID AS id, communique_pays.ch_com_statut AS statut, communique_pays.ch_com_categorie AS sous_categorie, communique_pays.ch_com_element_id AS id_element, communique_pays.ch_com_user_id AS id_auteur, communique_pays.ch_com_date AS date, communique_pays.ch_com_titre AS titre, ch_pay_id AS id_institution, ch_pay_nom AS institution, ch_pay_lien_imgdrapeau AS img_institution, ch_pay_id AS pays_institution, CONCAT('page-pays.php?ch_pay_id=', ch_pay_id) AS elem_url
 FROM communiques communique_pays 
-INNER JOIN users ON communique_pays.ch_com_user_id = ch_use_id 
 INNER JOIN pays ON communique_pays.ch_com_element_id = ch_pay_id
-LEFT JOIN personnage ON (personnage.entity_id = ch_pay_id AND personnage.entity = 'pays')
-WHERE communique_pays.ch_com_statut = 1 AND communique_pays.ch_com_categorie='pays' OR communique_pays.ch_com_categorie='com_pays' 
+WHERE communique_pays.ch_com_statut = 1 AND communique_pays.ch_com_categorie='pays'
 UNION 
-SELECT communique_ville.ch_com_label AS type_notification, communique_ville.ch_com_ID AS id, communique_ville.ch_com_statut AS statut, communique_ville.ch_com_categorie AS sous_categorie, communique_ville.ch_com_element_id AS id_element, communique_ville.ch_com_user_id AS id_auteur, communique_ville.ch_com_date AS date, communique_ville.ch_com_titre AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_vil_ID AS id_institution, ch_vil_nom AS institution, ch_vil_armoiries AS img_institution, ch_vil_paysID AS pays_institution
+SELECT communique_ville.ch_com_label AS type_notification, communique_ville.ch_com_ID AS id, communique_ville.ch_com_statut AS statut, communique_ville.ch_com_categorie AS sous_categorie, communique_ville.ch_com_element_id AS id_element, communique_ville.ch_com_user_id AS id_auteur, communique_ville.ch_com_date AS date, communique_ville.ch_com_titre AS titre, ch_vil_ID AS id_institution, ch_vil_nom AS institution, ch_vil_armoiries AS img_institution, ch_vil_paysID AS pays_institution, CONCAT('page-ville.php?ch_vil_id=', ch_vil_ID) AS elem_url
 FROM communiques communique_ville 
 INNER JOIN villes ON ch_com_element_id = ch_vil_ID 
-INNER JOIN users ON communique_ville.ch_com_user_id = ch_use_id 
-WHERE communique_ville.ch_com_statut = 1 AND communique_ville.ch_com_categorie ='ville' OR communique_ville.ch_com_categorie ='com_ville' 
+WHERE communique_ville.ch_com_statut = 1 AND communique_ville.ch_com_categorie ='ville'
 UNION 
-SELECT communique_institut.ch_com_label AS type_notification, communique_institut.ch_com_ID AS id, communique_institut.ch_com_statut AS statut, communique_institut.ch_com_categorie AS sous_categorie, communique_institut.ch_com_element_id AS id_element, communique_institut.ch_com_user_id AS id_auteur, communique_institut.ch_com_date AS date, communique_institut.ch_com_titre AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_ins_ID AS id_institution, ch_ins_nom AS institution, ch_ins_logo AS img_institution, ch_ins_ID AS pays_institution
+SELECT communique_institut.ch_com_label AS type_notification, communique_institut.ch_com_ID AS id, communique_institut.ch_com_statut AS statut, communique_institut.ch_com_categorie AS sous_categorie, communique_institut.ch_com_element_id AS id_element, communique_institut.ch_com_user_id AS id_auteur, communique_institut.ch_com_date AS date, communique_institut.ch_com_titre AS titre, ch_ins_ID AS id_institution, ch_ins_nom AS institution, ch_ins_logo AS img_institution, ch_ins_ID AS pays_institution, NULL AS elem_url
 FROM communiques communique_institut 
 INNER JOIN instituts ON ch_com_element_id = ch_ins_ID 
-INNER JOIN users ON communique_institut.ch_com_user_id = ch_use_id 
 WHERE communique_institut.ch_com_statut = 1 AND communique_institut.ch_com_categorie ='institut' 
 ORDER BY date DESC LIMIT 0, 15";
         $communiquesPays = mysql_query($query_communiquesPays, $maconnexion) or die(mysql_error());
@@ -150,8 +146,14 @@ ORDER BY date DESC LIMIT 0, 15";
                     <img style="width: 55px;" src="<?= $row_communiquesPays['img_institution'] ?>" />
                 </div>
                 <div class="span10"  style="vertical-align: middle;">
-                    <?= $row_communiquesPays['institution'] ?><br>
-                <small><?php echo date("d/m/Y", strtotime($row_communiquesPays['date'])); ?></small>
+                    <?php if(!is_null($row_communiquesPays['elem_url'])): ?>
+                        <a href="<?= __s($row_communiquesPays['elem_url']) ?>">
+                            <?= __s($row_communiquesPays['institution']) ?></a>
+                    <?php else: ?>
+                        <?= __s($row_communiquesPays['institution']) ?>
+                    <?php endif; ?>
+                <br>
+                <small style="margin: 0; padding: 0;"><?php echo date("d/m/Y", strtotime($row_communiquesPays['date'])); ?></small>
                 </div>
             </div>
             <div class="row" style="padding-left: 15px;">
