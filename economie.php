@@ -197,7 +197,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
 <!-- head Html -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Monde GC- &eacute;conomie</title>
+<title>Monde GC - <?= __s($row_institut['ch_ins_nom']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">

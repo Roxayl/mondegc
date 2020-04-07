@@ -125,7 +125,7 @@ $_SESSION['last_work'] = "institut_economie.php";
 <!-- head Html -->
 <head>
 <meta charset="utf-8">
-<title>Gérer le <?php echo $row_institut['ch_ins_nom']; ?></title>
+<title>Monde GC - Gérer le <?= __s($row_institut['ch_ins_nom']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">

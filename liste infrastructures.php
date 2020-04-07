@@ -74,7 +74,7 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
 <!-- head Html -->
 <head>
 <meta charset="utf-8">
-<title>Liste des infrastructures officielles</title>
+<title>Monde GC - Liste des infrastructures officielles</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">

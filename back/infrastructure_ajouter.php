@@ -247,7 +247,7 @@ img.olTileImage {
           >Gestion du pays : <?= __s($thisPays->get('ch_pay_nom')) ?></a> <span class="divider">/</span></li>
       <li><a href="ville_modifier.php?ville-ID=<?= $thisVille->get('ch_vil_ID') ?>"
           >Gestion de la ville : <?= __s($thisVille->get('ch_vil_nom')) ?></a> <span class="divider">/</span></li>
-      <li class="active">Ajouter une infrastructure</li>
+      <li class="active"><?= $form_action === 'add' ? 'Ajouter' : 'Modifier' ?> une infrastructure</li>
     </ul>
 
     <?php renderElement('errormsgs'); ?>

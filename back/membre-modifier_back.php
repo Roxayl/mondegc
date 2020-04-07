@@ -212,7 +212,7 @@ $row_classer_mem = mysql_fetch_assoc($classer_mem);
 <!-- head Html -->
 <head>
 <meta charset="utf-8">
-<title>Mon profil</title>
+<title>Monde GC - Gérer le compte</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -246,11 +246,6 @@ $row_classer_mem = mysql_fetch_assoc($classer_mem);
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
 <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
 <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-<style>
-.jumbotron {
-	background-image: url('');
-}
-</style>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>
@@ -318,6 +313,9 @@ do {  ?>
 <div id="titre_institut" class="titre-vert anchor"> 
   <h1>G&eacute;rer mon compte</h1>
 </div>
+
+<?php renderElement('errormsgs'); ?>
+
 <!-- Formulaires de modification du personnage
      ================================================== -->
 <?php include('../php/membre-modifier.php'); ?>

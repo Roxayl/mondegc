@@ -159,7 +159,7 @@ $totalRows_user = mysql_num_rows($user);
 <!-- head Html -->
 <head>
 <meta charset="utf-8">
-<title>Modifier un communiqu&eacute;</title>
+<title>Monde GC - Modifier un communiqu&eacute;</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">

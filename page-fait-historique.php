@@ -34,7 +34,7 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
 <!-- head Html -->
 <head>
 <meta charset="utf-8">
-<title>Monde GC- Fait historique</title>
+<title>Monde GC - Fait historique : <?= __s($row_fait_his['ch_his_nom']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">

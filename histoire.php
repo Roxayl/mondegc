@@ -127,7 +127,7 @@ $queryString_pays_arch = sprintf("&totalRows_pays_arch=%d%s", $totalRows_pays_ar
 <!-- head Html -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Monde GC- histoire</title>
+<title>Monde GC - <?= __s($row_institut['ch_ins_nom']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">

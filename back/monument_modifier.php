@@ -90,7 +90,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_monument")
 <!-- head Html -->
 <head>
 <meta charset="iso-8859-1">
-<title>modifier un monument</title>
+<title>Monde GC - Modifier un monument</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">

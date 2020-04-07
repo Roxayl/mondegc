@@ -286,7 +286,7 @@ if(!empty($paysPersonnages)) {
 <!-- head Html -->
 <head>
 <meta charset="utf-8">
-<title>Gestion&nbsp;<?php echo $row_InfoGenerale['ch_pay_nom']; ?></title>
+<title>Monde GC - Gestion&nbsp;: <?= __s($row_InfoGenerale['ch_pay_nom']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">

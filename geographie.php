@@ -30,7 +30,7 @@ $_GET['ch_pay_id'] = $row_liste_pays['ch_pay_id'];
 <!-- head Html -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Monde GC- g&eacute;ographie</title>
+<title>Monde GC - <?= __s($row_institut['ch_ins_nom']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -119,7 +119,7 @@ init();
 ================================================== -->
 <header class="jumbotron jumbotron-institut subhead anchor" id="info-institut" >
   <div class="container">
-    <h1><?php echo $row_institut['ch_ins_nom']; ?></h1>
+    <h1><?= __s($row_institut['ch_ins_nom']) ?></h1>
   </div>
 </header>
 <div class="container"> 
@@ -131,12 +131,12 @@ init();
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#info-institut">
           <?php if ($row_institut['ch_ins_logo']) { ?>
-          <img src="<?php echo $row_institut['ch_ins_logo']; ?>">
+          <img src="<?= __s($row_institut['ch_ins_logo']) ?>">
           <?php } else { ?>
           <img src="assets/img/imagesdefaut/blason.jpg">
           <?php }?>
-          <p><strong><?php echo $row_institut['ch_ins_sigle']; ?></strong></p>
-          <p><em><?php echo $row_institut['ch_ins_nom']; ?></em></p>
+          <p><strong><?= __s($row_institut['ch_ins_sigle']) ?></strong></p>
+          <p><em><?= __s($row_institut['ch_ins_nom']) ?></em></p>
           </a></li>
         <li><a href="#presentation">Pr&eacute;sentation</a></li>
         <li><a href="#carte">Cartes</a></li>
@@ -165,7 +165,7 @@ init();
             <div class="span7">
               <p><?php echo $row_institut['ch_ins_desc']; ?></p>
             </div>
-            <div class="span5"><img src="<?php echo $row_institut['ch_ins_img']; ?>"></div>
+            <div class="span5"><img src="<?= __s($row_institut['ch_ins_img']) ?>"></div>
           </div>
         </div>
       </section>
@@ -182,7 +182,7 @@ init();
         <select name="ch_pay_id" id="ch_pay_id" onchange="this.form.submit()">
           <option value="" <?php if ($_GET['ch_pay_id'] == NULL) {?>selected<?php } ?>>S&eacute;lectionnez un pays&nbsp;</option>
           <?php do { ?>
-          <option value="<?php echo $row_liste_pays['ch_pay_id']; ?>" <?php if ($row_liste_pays['ch_pay_id'] == $_GET['ch_pay_id']) {?>selected<?php } ?>><?php echo $row_liste_pays['ch_pay_nom']; ?></option>
+          <option value="<?php echo $row_liste_pays['ch_pay_id']; ?>" <?php if ($row_liste_pays['ch_pay_id'] == $_GET['ch_pay_id']) {?>selected<?php } ?>><?= __s($row_liste_pays['ch_pay_nom']) ?></option>
           <?php } while ($row_liste_pays = mysql_fetch_assoc($liste_pays)); ?>
         </select>
       </form>

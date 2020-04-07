@@ -120,14 +120,11 @@ if($_SERVER["REMOTE_ADDR"] === '127.0.0.1') {
     ob_end_clean();
 }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml>">
-<html lang="fr">
+<!DOCTYPE html>
 <!-- head Html -->
 <html lang="fr">
 <head>
-<meta charset="iso-8859-1">
-<title>Le Monde GC - La carte</title>
+<title>Monde GC - La carte</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">

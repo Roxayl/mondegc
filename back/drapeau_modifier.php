@@ -27,8 +27,8 @@ $thisPays = new \GenCity\Monde\Pays($colname_pays);
 <html lang="fr">
 <!-- head Html -->
 <head>
-<meta charset="iso-8859-1">
-<title>Modifier le drapeau de mon pays</title>
+<meta charset="utf-8">
+<title>Monde GC - Modifier le drapeau de <?= __s($thisPays->get('ch_pay_nom')) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">

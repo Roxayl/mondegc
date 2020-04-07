@@ -82,8 +82,8 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
 <html lang="fr">
 <!-- head Html -->
 <head>
-<meta charset=utf-8">
-<title>Monde GC- Communiqu&eacute;</title>
+<meta charset="utf-8">
+<title>Monde GC - Communiqu&eacute; : <?= __s($row_communique['ch_com_titre']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">

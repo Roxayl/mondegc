@@ -147,7 +147,7 @@ $row_temperance = mysql_fetch_assoc($temperance);
 <!-- head html -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Monde GC-<?php echo $row_infoVille['ch_vil_nom']; ?></title>
+<title>Monde GC - <?= __s($row_infoVille['ch_vil_nom']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">

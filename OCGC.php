@@ -16,7 +16,7 @@ $totalRows_institut = mysql_num_rows($institut);
 <!-- head Html -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Monde GC- OCGC</title>
+<title>Monde GC - OCGC</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">

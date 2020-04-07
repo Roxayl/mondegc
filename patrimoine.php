@@ -90,7 +90,7 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
 <!-- head Html -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Monde GC- patrimoine</title>
+<title>Monde GC - <?= __s($row_institut['ch_ins_nom']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">

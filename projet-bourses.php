@@ -11,7 +11,7 @@ include('php/log.php');
 <!-- head Html -->
 <head>
 <meta charset="utf-8">
-<title>Bourses mondiales</title>
+<title>Monde GC - Bourses mondiales</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
