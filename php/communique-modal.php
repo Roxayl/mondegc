@@ -96,7 +96,7 @@ $totalRows_commentaire = mysql_num_rows($commentaire);
 <div class="row-fluid"> 
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
   </div>
-  <div class="row-fluid communique"> 
+  <div class="row-fluid communique" style="background-color: #e6eaff; padding: 20px 0; margin-top: -30px;">
     <!-- EN-tête Auteur-->
     <?php if(isset($personnage)): ?>
       <!-- EN-tête Personnage pour communiquées officiels et commentaire-->

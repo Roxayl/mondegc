@@ -67,12 +67,12 @@ $queryString_Liste_communiques = sprintf("&totalRows_Liste_communiques=%d%s", $t
                     <?php endif; ?>
                     <input name="userID" type="hidden" value="<?php echo $userID; ?>">
                     <input name="com_id" type="hidden" value="<?php echo $row_Liste_communiques['ch_com_ID']; ?>">
-                    <button class="btn" type="submit" title="modifier le communiqu&eacute;"><i class="icon-pencil"></i></button>
+                    <button class="btn btn-primary" type="submit" title="modifier le communiqu&eacute;"><i class="icon-pencil icon-white"></i></button>
                   </form></td>
                 <td><form action="communique_confirmation_supprimer.php" method="post">
                     <input name="userID" type="hidden" value="<?php echo $userID; ?>">
                     <input name="communique_ID" type="hidden" value="<?php echo $row_Liste_communiques['ch_com_ID']; ?>">
-                    <button class="btn" type="submit" title="supprimer le communiqu&eacute;"><i class="icon-trash"></i></button>
+                    <button class="btn btn-danger" type="submit" title="supprimer le communiqu&eacute;"><i class="icon-trash icon-white"></i></button>
                   </form></td>
               </tr>
               <?php } while ($row_Liste_communiques = mysql_fetch_assoc($Liste_communiques)); ?>

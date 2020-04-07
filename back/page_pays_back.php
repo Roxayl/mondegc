@@ -5,7 +5,6 @@ use GenCity\Monde\Pays;
 require_once('../Connections/maconnexion.php');
 
  
- 
 //deconnexion
 include('../php/logout.php');
 
@@ -104,7 +103,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
         getErrorMessage('error', "Vous n'avez pas accès à cette partie.");
     }
   
-  $updateGoTo = "page_pays_back.php";
+  $updateGoTo = "page_pays_back.php?paysID=" . (int)$_POST['ch_pay_id'];
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];

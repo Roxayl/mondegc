@@ -136,18 +136,6 @@ FROM communiques communique_institut
 INNER JOIN instituts ON ch_com_element_id = ch_ins_ID 
 INNER JOIN users ON communique_institut.ch_com_user_id = ch_use_id 
 WHERE communique_institut.ch_com_statut = 1 AND communique_institut.ch_com_categorie ='institut' 
-UNION
-SELECT communique_monument.ch_com_label AS type_notification, communique_monument.ch_com_ID AS id, communique_monument.ch_com_statut AS statut, communique_monument.ch_com_categorie AS sous_categorie, communique_monument.ch_com_element_id AS id_element, communique_monument.ch_com_user_id AS id_auteur, communique_monument.ch_com_date AS date, communique_monument.ch_com_titre AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_pat_id AS id_institution, ch_pat_nom AS institution, ch_pat_lien_img1 AS img_institution, ch_pat_paysID AS pays_institution
-FROM communiques communique_monument 
-INNER JOIN patrimoine ON ch_com_element_id = ch_pat_id
-INNER JOIN users ON communique_monument.ch_com_user_id = ch_use_id 
-WHERE communique_monument.ch_com_statut = 1 AND communique_monument.ch_com_categorie ='com_monument'
-UNION
-SELECT communique_monument.ch_com_label AS type_notification, communique_monument.ch_com_ID AS id, communique_monument.ch_com_statut AS statut, communique_monument.ch_com_categorie AS sous_categorie, communique_monument.ch_com_element_id AS id_element, communique_monument.ch_com_user_id AS id_auteur, communique_monument.ch_com_date AS date, communique_monument.ch_com_titre AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_his_id AS id_institution, ch_his_nom AS institution, ch_his_lien_img1 AS img_institution, ch_his_paysID AS pays_institution
-FROM communiques communique_monument 
-INNER JOIN histoire ON ch_com_element_id = ch_his_id
-INNER JOIN users ON communique_monument.ch_com_user_id = ch_use_id 
-WHERE communique_monument.ch_com_statut = 1 AND communique_monument.ch_com_categorie ='com_fait_his'
 ORDER BY date DESC LIMIT 0, 15";
         $communiquesPays = mysql_query($query_communiquesPays, $maconnexion) or die(mysql_error());
         $row_communiquesPays = mysql_fetch_assoc($communiquesPays);
