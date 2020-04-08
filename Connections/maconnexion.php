@@ -26,13 +26,14 @@ spl_autoload_register(function($class) {
     include(DEF_ROOTPATH.'php/'. $class . '.php');
 });
 
-/* CSRF-Magic
- * Début d'implémentation de CSRF-Magic. On le désactive pour le moment en raison de problèmes
- * qu'il pose au niveau des formulaires dans les popups (AJAX et cie...). */
-/*function csrf_startup() {
-    csrf_conf('rewrite-js', DEF_URI_PATH . 'lib/csrf-magic/csrf-magic.js');
+/* CSRF-Magic */
+if(!function_exists('csrf_startup')) {
+    function csrf_startup() {
+        csrf_conf('rewrite-js', DEF_URI_PATH . 'lib/csrf-magic/csrf-magic.js');
+        csrf_conf('rewrite', true);
+    }
 }
-require_once DEF_ROOTPATH . 'lib/csrf-magic/csrf-magic.php';*/
+require_once DEF_ROOTPATH . 'lib/csrf-magic/csrf-magic.php';
 
 /* wrapper mysql_ */
 // wrapper pour les fonctions MySQL pour PHP7
