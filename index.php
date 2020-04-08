@@ -123,7 +123,7 @@ FROM communiques communique_pays
 INNER JOIN pays ON communique_pays.ch_com_element_id = ch_pay_id
 WHERE communique_pays.ch_com_statut = 1 AND communique_pays.ch_com_categorie='pays'
 UNION 
-SELECT communique_ville.ch_com_label AS type_notification, communique_ville.ch_com_ID AS id, communique_ville.ch_com_statut AS statut, communique_ville.ch_com_categorie AS sous_categorie, communique_ville.ch_com_element_id AS id_element, communique_ville.ch_com_user_id AS id_auteur, communique_ville.ch_com_date AS date, communique_ville.ch_com_titre AS titre, ch_vil_ID AS id_institution, ch_vil_nom AS institution, ch_vil_armoiries AS img_institution, ch_vil_paysID AS pays_institution, CONCAT('page-ville.php?ch_vil_id=', ch_vil_ID) AS elem_url
+SELECT communique_ville.ch_com_label AS type_notification, communique_ville.ch_com_ID AS id, communique_ville.ch_com_statut AS statut, communique_ville.ch_com_categorie AS sous_categorie, communique_ville.ch_com_element_id AS id_element, communique_ville.ch_com_user_id AS id_auteur, communique_ville.ch_com_date AS date, communique_ville.ch_com_titre AS titre, ch_vil_ID AS id_institution, ch_vil_nom AS institution, ch_vil_armoiries AS img_institution, ch_vil_paysID AS pays_institution, CONCAT('page-ville.php?ch_ville_id=', ch_vil_ID) AS elem_url
 FROM communiques communique_ville 
 INNER JOIN villes ON ch_com_element_id = ch_vil_ID 
 WHERE communique_ville.ch_com_statut = 1 AND communique_ville.ch_com_categorie ='ville'

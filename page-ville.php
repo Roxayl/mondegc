@@ -141,6 +141,10 @@ $query_temperance = sprintf("SELECT * FROM temperance WHERE ch_temp_element_id =
 $temperance = mysql_query($query_temperance, $maconnexion) or die(mysql_error());
 $row_temperance = mysql_fetch_assoc($temperance);
 }
+
+
+$thisVille = new \GenCity\Monde\Ville($_GET['ch_ville_id']);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -382,7 +386,7 @@ init();
       </form>
       <form class="pull-right" action="back/ville_modifier.php" method="get">
         <input name="ville-ID" type="hidden" value="<?php echo $row_infoVille['ch_vil_ID']; ?>">
-        <button class="btn btn-danger" type="submit" title="modifier la page de cette ville"><i class="icon-pencil icon-white"></i></button>
+        <button class="btn btn-primary" type="submit" title="modifier la page de cette ville"><i class="icon-pencil icon-white"></i></button>
       </form>
       <?php } ?>
       <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
