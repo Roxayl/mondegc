@@ -257,8 +257,9 @@ init();
       <li class="active"><?= $row_Pays['ch_pay_nom'] ?></li>
     </ul>
 
+     <div class="pull-right">
       <?php if ($row_temperance) { ?>
-      <a class="btn btn-primary" href="php/temperance-rapport-pays.php?ch_temp_id=<?php echo $row_temperance['ch_temp_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le d&eacute;tail de cette note">Note des juges&nbsp;: <?php echo get_note_finale($row_temperance['ch_temp_note']); ?>
+      <a class="btn btn-temperance" href="php/temperance-rapport-pays.php?ch_temp_id=<?php echo $row_temperance['ch_temp_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le d&eacute;tail de cette note">Note Tempérance&nbsp;: <?php echo get_note_finale($row_temperance['ch_temp_note']); ?>
       <?php	if ($row_temperance['ch_temp_tendance'] == "sup") { ?>
       <i class="icon-arrow-up icon-white"></i>
       <?php } elseif ($row_temperance['ch_temp_tendance'] == "inf") { ?>
@@ -268,6 +269,8 @@ init();
       <?php } ?>
       </a>
       <?php } ?>
+     </div>
+
       <!-- Si c'est un pays archive
     ================================================== -->
       <?php if ($row_Pays['ch_pay_publication'] == 2) { ?>
@@ -288,7 +291,7 @@ init();
       <form class="pull-right" action="back/page_pays_back.php" method="post">
         <input name="paysID" type="hidden" value="<?php echo $row_Pays['ch_pay_id']; ?>">
         <input name="userID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
-        <button class="btn btn-danger" type="submit" title="modifier la page de ce pays"><i class="icon-pencil icon-white"></i></button>
+        <button class="btn btn-primary" type="submit" title="modifier la page de ce pays"><i class="icon-pencil icon-white"></i></button>
       </form>
       <?php } ?>
       <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>

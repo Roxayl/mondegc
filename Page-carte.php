@@ -486,10 +486,10 @@ div.olControlPanel {
   <!-- Continent RFGC
     ================================================== -->
   <div class="titre-gris anchor" id="RFGC">
-    <h3>Pays RFGC</h3>
+    <h3>Pays : République Fédérale de Génération City</h3>
   </div>
   <div class="stat-continent pull-center">
-    <p><span class="stat"><span class="chiffre"><?php echo $nbpays_RFGC; ?></span> r&eacute;gions</span> <span class="stat"><span class="chiffre"><?php echo $nbvilles_RFGC; ?></span> villes</span> <span class="stat"><span class="chiffre">
+    <p><span class="stat"><span class="chiffre"><?php echo $nbpays_RFGC; ?></span> provinces</span> <span class="stat"><span class="chiffre"><?php echo $nbvilles_RFGC; ?></span> villes</span> <span class="stat"><span class="chiffre">
       <?php 
 	$nbhabitant_francais = number_format($nbhabitants_RFGC, 0, ',', ' ');
 	echo $nbhabitant_francais; ?>

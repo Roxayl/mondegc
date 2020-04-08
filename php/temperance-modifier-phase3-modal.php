@@ -1,7 +1,6 @@
 <?php
 
 require_once('../Connections/maconnexion.php');
-header('Content-Type: text/html; charset=iso-8859-1');
 
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {

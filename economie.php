@@ -541,8 +541,9 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
               <p><a class="btn btn-primary" href="Projet-temperance.php">En savoir plus</a> <a class="btn btn-primary" href="back/Temperance_jugement.php">Juges</a></p>
         </div>
       </section>
-	  	   <!-- Bourses mondiales
+	  <!-- Bourses mondiales
     ================================================== -->
+        <!--
       <section>
         <div class="titre-bleu anchor" id="bourses">
           <h1>Bourses mondiales</h1>
@@ -552,6 +553,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
               <p><a class="btn btn-primary" href="projet-bourses.php">À propos du Projet Bourses</a></p>
         </div>
       </section>
+      -->
       <!-- communique officiel
     ================================================== -->
       <section>

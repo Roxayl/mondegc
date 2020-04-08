@@ -15,8 +15,8 @@ $totalRows_HautConseil = mysql_num_rows($HautConseil);
 <html lang="fr">
 <!-- head Html -->
 <head>
-<meta charset="iso-8859-1">
-<title>Juges temp&eacute;rants</title>
+<meta charset="utf-8">
+<title>Monde GC - Juges temp&eacute;rants</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
