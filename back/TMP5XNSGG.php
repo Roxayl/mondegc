@@ -6879,7 +6879,7 @@ a.badge:hover {
 
 
 </style>
-<link rel="stylesheet" title="D&eacute;sactiv&eacute; pour l'Aper&ccedil;u dans le navigateur : ../assets/css/GenerationCity.css" type="text/css">
+<link rel="stylesheet" title="D&eacute;sactiv&eacute; pour l'Aper&ccedil;u dans le navigateur : ../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" type="text/css">
 <style type="text/css">
 
 /* Add additional stylesheets below

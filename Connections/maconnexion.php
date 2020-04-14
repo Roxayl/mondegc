@@ -15,13 +15,14 @@ define("DEF_URI_PATH",
 // Valeurs par défaut.
 $mondegc_config = array(
     // Activer CSRF Magic et la protection des formulaires automatique contre les attaques CSRF.
-    'enable_csrf_protection' => true
+    'enable_csrf_protection' => true,
+    'version' => "2.4"
 );
 
 // Production.
 if($_SERVER['HTTP_HOST'] !== 'localhost') {
     $mondegc_replace_config = array(
-        'enable_csrf_protection' => true
+        // Variables de configuration en prod.
     );
     $mondegc_config = array_replace($mondegc_config, $mondegc_replace_config);
     unset($mondegc_replace_config);
@@ -65,7 +66,7 @@ if(version_compare(phpversion(), '7.0.0', '>=')) {
 
 if($_SERVER['HTTP_HOST'] === 'localhost') {
     $hostname_maconnexion = "localhost";
-    $database_maconnexion = "mgvx_generationcitycom3";
+    $database_maconnexion = "mondegc_staging";
     $username_maconnexion = "root";
     $password_maconnexion = "";
 }

@@ -84,7 +84,7 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="assets/css/bootstrap-modal.css" rel="stylesheet" type="text/css">
 <link href="assets/css/colorpicker.css" rel="stylesheet" type="text/css">
-<link href="assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>

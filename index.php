@@ -23,12 +23,11 @@ $_SESSION['an']=true;
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Le Monde GC</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
+<meta name="description" content="Le Monde GC rassemble une communauté de joueurs du site Génération City qui ont souhaité s'unir pour construire leur propre monde et développer une nouvelle expérience de jeu.">
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="assets/css/bootstrap-modal.css" rel="stylesheet" type="text/css">
-<link href="assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+<link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- TemplateEndEditable -->
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->

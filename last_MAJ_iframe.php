@@ -1,4 +1,12 @@
-<?php 
+<?php
+
+// La fonction csrf_startup permet ici de désactiver la redirection de l'iframe.
+function csrf_startup() {
+    csrf_conf('rewrite-js', DEF_URI_PATH . 'lib/csrf-magic/csrf-magic.js');
+    csrf_conf('rewrite', true);
+    csrf_conf('frame-breaker', false); // ça, là.
+}
+
 require_once('Connections/maconnexion.php');
 
 // *** Connexion communique categorie pays
@@ -150,7 +158,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 <html>
 <head>
 	<meta http-equiv="content-type" content="text/html" charset="utf-8" />
-	<link href="assets/css/GenerationCity.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 	<link href="../forum/new/MondeGCiframe.css" rel="stylesheet" type="text/css">
 	<title>Monde GC</title>

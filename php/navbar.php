@@ -51,7 +51,7 @@ if(isset($_SESSION['userObject'])) {
         <div><a href="back/membre-modifier_back.php?userID=<?= isset($_SESSION['user_ID']) ? $_SESSION['user_ID'] : '' ?>" class="btn btn-primary" type="submit" title="page de gestion du profil" style="visibility: hidden;"><i class="icon-user-white"></i> Mon profil</a></div>
         <div class="dropdown">
           <a href="dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mes pays</a>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <ul class="dropdown-menu dropdown-mes-pays" role="menu" aria-labelledby="dLabel">
           <?php foreach($nav_userPays as $nav_thisPays): ?>
             <li style="width: 100%;"><a tabindex="-1" href="back/page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>"><img class="img-menu-drapeau" src="<?= $nav_thisPays['ch_pay_lien_imgdrapeau'] ?>"> <?= $nav_thisPays['ch_pay_nom'] ?></a></li>
           <?php endforeach; ?>
@@ -82,7 +82,7 @@ if(isset($_SESSION['userObject'])) {
             <div><a href="back/membre-modifier_back.php?userID=<?= isset($_SESSION['user_ID']) ? $_SESSION['user_ID'] : '' ?>" class="btn btn-primary" type="submit" title="page de gestion du profil" style="visibility: hidden;"><i class="icon-user-white"></i> Mon profil</a></div>
             <div class="dropdown" style="margin-top: -4px;">
               <a href="dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mes pays</a>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+              <ul class="dropdown-menu dropdown-mes-pays" role="menu" aria-labelledby="dLabel">
               <?php foreach($nav_userPays as $nav_thisPays): ?>
                 <li style="width: 100%;"><a tabindex="-1" href="back/page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>"><img class="img-menu-drapeau" src="<?= $nav_thisPays['ch_pay_lien_imgdrapeau'] ?>"> <?= $nav_thisPays['ch_pay_nom'] ?></a></li>
               <?php endforeach; ?>
