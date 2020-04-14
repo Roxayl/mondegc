@@ -108,11 +108,11 @@ $totalRows_villes = mysql_num_rows($villes);
 
 <form action="<?php echo $editFormAction; ?>" name="ajout-temperance" method="POST" class="form-horizontal" id="ajout-temperance">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3 id="myModalLabel">Temp&eacute;rer une ville</h3>
   </div>
   <div class="modal-body"> 
-    <!-- Boutons cach�s -->
+    <!-- Boutons cachés -->
     <?php $now= date("Y-m-d G:i:s");?>
     <input name="ch_temp_label" type="hidden" value="temperance">
     <input name="ch_temp_date" type="hidden" value="<?php echo $now; ?>">
@@ -132,7 +132,7 @@ $totalRows_villes = mysql_num_rows($villes);
     </div>
 <div class="alert alert-danger">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
-      Un mail sera envoy� au maire de la ville pour l'avertir du lancement de la proc&eacute;dure</div>
+      Un mail sera envoyé au maire de la ville pour l'avertir du lancement de la proc&eacute;dure</div>
   </div>
           <input name="ch_temp_statut" type="hidden" value="1">
     <input name="ch_temp_note" type="hidden" value="">

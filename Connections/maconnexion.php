@@ -66,7 +66,7 @@ if(version_compare(phpversion(), '7.0.0', '>=')) {
 
 if($_SERVER['HTTP_HOST'] === 'localhost') {
     $hostname_maconnexion = "localhost";
-    $database_maconnexion = "mondegc_staging";
+    $database_maconnexion = "mgvx_generationcitycom3";
     $username_maconnexion = "root";
     $password_maconnexion = "";
 }
@@ -262,7 +262,7 @@ function get_timespan_string_hour($older, $newer) {
     $m = $m + 12;
   }
   $timespan_string = create_timespan_string_hour($Y, $m, $d, $H, $i, $s);
-  return $timespan_string;
+  return rtrim($timespan_string, ', ');
 }
 
 function get_days_for_previous_month_hour($current_month, $current_year) {

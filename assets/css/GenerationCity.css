@@ -636,6 +636,9 @@ ul.dropdown-menu.dropdown-double > div.drop-colonne-droite > li, ul.dropdown-men
 .img-continent {
 	width: 30px;
 }
+.dropdown-mes-pays {
+    text-align: left;
+}
 /* HEADER
 -------------------------------------------------- */
 

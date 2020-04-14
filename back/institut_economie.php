@@ -285,7 +285,7 @@ $totalRows_nb_juges = mysql_num_rows($nb_juges);
                 <a class="btn btn-primary" href="../php/temperance-modifier-phase3-modal.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>&element=<?php echo $row_liste_temperance['element']; ?>&element_id=<?php echo $row_liste_temperance['element_id']; ?>&nb_juges=<?php echo $row_nb_juges['nbjuges']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="publier la note et le rapport de synth&egrave;se des juges">Clore les votes</a>
                 <?php } elseif ($row_liste_temperance['statut'] == 3) {  // visible si en phase 3
 				if ($row_liste_temperance['element'] == "pays") { ?>
-                <a class="btn btn-primary" href="../php/temperance-rapport-pays.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site">Note&nbsp;: <?php echo get_note_finale($row_liste_temperance['note']); ?>
+                <a class="btn btn-temperance" href="../php/temperance-rapport-pays.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site">Note&nbsp;: <?php echo get_note_finale($row_liste_temperance['note']); ?>
                 <?php	if ($row_liste_temperance['tendance'] == "sup") { ?>
                 <i class="icon-arrow-up icon-white"></i>
                 <?php } elseif ($row_liste_temperance['tendance'] == "inf") { ?>
@@ -296,7 +296,7 @@ $totalRows_nb_juges = mysql_num_rows($nb_juges);
                 </a>
                 <?php }
                 if ($row_liste_temperance['element'] == "ville") { ?>
-                <a class="btn btn-primary" href="../php/temperance-rapport-ville.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site">Note&nbsp;: <?php echo get_note_finale($row_liste_temperance['note']); ?>
+                <a class="btn btn-temperance" href="../php/temperance-rapport-ville.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site">Note&nbsp;: <?php echo get_note_finale($row_liste_temperance['note']); ?>
                 <?php	if ($row_liste_temperance['tendance'] == "sup") { ?>
                 <i class="icon-arrow-up icon-white"></i>
                 <?php } elseif ($row_liste_temperance['tendance'] == "inf") { ?>
