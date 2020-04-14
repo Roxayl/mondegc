@@ -30,7 +30,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
   include_once("php/config.php");
   $password = md5($_POST['ch-use_password'].$salt);
   $insertSQL = sprintf("INSERT INTO users (ch_use_date, ch_use_acces, ch_use_last_log, ch_use_login, ch_use_password, ch_use_mail, ch_use_paysID, ch_use_statut, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_biographie_dirigeant)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, '', '', '', '', '', '')",
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, NULL, NULL, NULL, NULL, NULL, NULL)",
        GetSQLValueString($_POST['ch_use_date'], "date"),
        GetSQLValueString($_POST['ch_use_acces'], "int"),
        GetSQLValueString($_POST['ch_use_last_log'], "date"),
@@ -58,7 +58,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
   // On ajoute une entrée dans la table 'personnages' s'il n'y avait pas encore de perso.
   $thisPays = new \GenCity\Monde\Pays($_POST['ch_use_paysID']);
   $thisPersonnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
-  if(!count($thisPersonnage->model)) {
+  if(is_null($thisPersonnage)) {
       // Ajouter le personnage
       $insert_personnage = sprintf(
           "INSERT INTO personnage(entity, entity_id,

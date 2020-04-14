@@ -45,7 +45,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "new_user")) {
     $insertGoTo .= $_SERVER['QUERY_STRING'];
   }
 
-if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail)) // On filtre les serveurs qui rencontrent des bogues.
+if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn|outlook).[a-z]{2,4}$#", $mail)) // On filtre les serveurs qui rencontrent des bogues.
 {
 	$passage_ligne = "\r\n";
 }
@@ -94,12 +94,14 @@ $message.= $passage_ligne."--".$boundary."--".$passage_ligne;
 
 //=====Envoi de l'e-mail.
 mail($mail,$sujet,$message,$header);
+mail('contact@romukulot.fr',$sujet,$message,$header);
 //==========
     if (!mail($to, $subject, $body, $headers)) {
               $redirect_error= "error.php"; // Redirect if there is an error.
       header( "Location: ".$redirect_error ) ;
     }
   header(sprintf("Location: %s", $insertGoTo));
+  exit();
 }
 
 mysql_select_db($database_maconnexion, $maconnexion);
@@ -177,7 +179,7 @@ $totalRows_pays = mysql_num_rows($pays);
           <div id="spryradio1">
             <label class="radio" for="ch_use_prov_statut_2">
               <input name="ch_use_prov_statut" type="radio" id="ch_use_prov_statut_2" value="10">
-              Membre<a href="#" rel="clickover" title="Membre" data-content="Un compte de base. Généralement vous choisirez cette option lors de la création d'un compte."><i class="icon-info-sign"></i></a></label>
+              Membre <a href="#" rel="clickover" title="Membre" data-content="Un compte de base. Généralement vous choisirez cette option lors de la création d'un compte."><i class="icon-info-sign"></i></a></label>
             <br>
              <label class="radio" for="ch_use_statut_5">
                   <input name="ch_use_prov_statut" type="radio" id="ch_use_statut_5" value="15" >

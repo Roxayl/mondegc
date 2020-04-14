@@ -91,7 +91,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
 ?><!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Haut-Conseil - Nouveau pays</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -147,7 +147,7 @@ img.olTileImage {
   <!-- Debut formulaire Page Pays
         ================================================== -->
   <section>
-    <div id="info-generales" class="titre-bleu anchor"> <img src="../assets/img/IconesBDD/Bleu/100/Pays1_bleu.png">
+    <div id="info-generales" class="titre-bleu anchor">
       <h1>Cr&eacute;er un nouveau pays</h1>
     </div>
     <form action="<?php echo $editFormAction; ?>" name="InfoHeader" method="POST" class="form-horizontal" id="InfoHeader">
@@ -178,6 +178,7 @@ img.olTileImage {
       </div>
       <!-- choix emplacement -->
       <h3>Choisir un emplacement&nbsp;:</h3>
+        <p class="btn-margin-left"><a href="https://romukulot.fr/kaleera/view.php?id=TdrfA" target="_blank">Emplacements supplémentaires</a></p>
       <div id="spryradio2">
         <ul class="Icone-thumb">
           <?php for ($nb_emplacement = 1; $nb_emplacement <= 58; $nb_emplacement++) {?>
