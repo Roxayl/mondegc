@@ -68,10 +68,10 @@ $totalRows_pays = mysql_num_rows($pays);
 ?>
 
 <!-- Modal Header-->
-<!-- Boutons cach�s -->
+<!-- Boutons cachés -->
 <div class="modal-header">
 <div class="pull-left"></div>
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
   <h3 id="myModalLabel">Rapport des juges temp&eacute;rants sur le pays : <a href="../page-pays.php?ch_pay_id=<?php echo $row_pays['ch_pay_id']; ?>" target="_blank"><?php echo $row_pays['ch_pay_nom']; ?></a></h3>
 </div>
 <div class="modal-body">

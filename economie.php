@@ -538,7 +538,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
         </div>
         <div class="well">
               <p>Le projet Tempérance est proposé, comme son nom l'indique, pour tempérer les données économiques et générales retranscrites par les membres du forum GC et du site du même nom. Le but est d'annoncer des données économiques et sociales en adéquation avec les villes ou les pays qui s'y rattachent et qui sont présentés. Cette idée permettrait également de lancer une dynamique sur les deux sites en lançant des challenges et des recherches créatives aux membres pour justifier leurs chiffres. En d'autres termes, ce projet n'est pas conçu pour dévaloriser les conceptions des membres et ne remet pas en cause leur choix de création. Il apporte simplement une conception nouvelle créant une homogénéité des chiffres.</p>
-              <p><a class="btn btn-primary" href="Projet-temperance.php">En savoir plus</a> <a class="btn btn-primary" href="back/Temperance_jugement.php">Juges</a></p>
+              <p><a class="btn btn-primary" href="Projet-temperance.php">En savoir plus</a> <a class="btn btn-primary" href="back/Temperance_jugement.php">Salle de jugement</a></p>
         </div>
       </section>
 	  <!-- Bourses mondiales

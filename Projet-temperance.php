@@ -240,7 +240,7 @@ $totalRows_nb_juges = mysql_num_rows($nb_juges);
               <!-- Boutons modifier -->
               <?php 
 				if ($row_liste_temperance['element'] == "pays") { ?>
-              <a class="btn btn-primary" href="php/temperance-rapport-pays.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site"><?php echo get_note_finale($row_liste_temperance['note']); ?>
+              <a class="btn btn-temperance" href="php/temperance-rapport-pays.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site"><?php echo get_note_finale($row_liste_temperance['note']); ?>
               <?php	if ($row_liste_temperance['tendance'] == "sup") { ?>
               <i class="icon-arrow-up icon-white"></i>
               <?php } elseif ($row_liste_temperance['tendance'] == "inf") { ?>
@@ -251,7 +251,7 @@ $totalRows_nb_juges = mysql_num_rows($nb_juges);
               </a>
               <?php }
                 if ($row_liste_temperance['element'] == "ville") { ?>
-              <a class="btn btn-primary" href="php/temperance-rapport-ville.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site">Note&nbsp;: <?php echo get_note_finale($row_liste_temperance['note']); ?>
+              <a class="btn btn-temperance" href="php/temperance-rapport-ville.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site">Note&nbsp;: <?php echo get_note_finale($row_liste_temperance['note']); ?>
               <?php	if ($row_liste_temperance['tendance'] == "sup") { ?>
               <i class="icon-arrow-up icon-white"></i>
               <?php } elseif ($row_liste_temperance['tendance'] == "inf") { ?>
