@@ -12,6 +12,21 @@ define("DEF_URI_PATH",
         . ($_SERVER['HTTP_HOST'] === 'localhost' ? 'MondeGC/trunk/' : 'monde/')
     );
 
+// Valeurs par défaut.
+$mondegc_config = array(
+    // Activer CSRF Magic et la protection des formulaires automatique contre les attaques CSRF.
+    'enable_csrf_protection' => true
+);
+
+// Production.
+if($_SERVER['HTTP_HOST'] !== 'localhost') {
+    $mondegc_replace_config = array(
+        'enable_csrf_protection' => true
+    );
+    $mondegc_config = array_replace($mondegc_config, $mondegc_replace_config);
+    unset($mondegc_replace_config);
+}
+
 
 /*************************
  * Librairies (autoload) *
@@ -26,14 +41,16 @@ spl_autoload_register(function($class) {
     include(DEF_ROOTPATH.'php/'. $class . '.php');
 });
 
-/* CSRF-Magic */
-if(!function_exists('csrf_startup')) {
-    function csrf_startup() {
-        csrf_conf('rewrite-js', DEF_URI_PATH . 'lib/csrf-magic/csrf-magic.js');
-        csrf_conf('rewrite', true);
+if($mondegc_config['enable_csrf_protection'] === true) {
+    /* CSRF-Magic */
+    if(!function_exists('csrf_startup')) {
+        function csrf_startup() {
+            csrf_conf('rewrite-js', DEF_URI_PATH . 'lib/csrf-magic/csrf-magic.js');
+            csrf_conf('rewrite', true);
+        }
     }
+    require_once DEF_ROOTPATH . 'lib/csrf-magic/csrf-magic.php';
 }
-require_once DEF_ROOTPATH . 'lib/csrf-magic/csrf-magic.php';
 
 /* wrapper mysql_ */
 // wrapper pour les fonctions MySQL pour PHP7
