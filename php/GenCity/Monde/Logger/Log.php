@@ -25,4 +25,39 @@ class Log extends BaseModel {
 
     }
 
+    public function create() {
+
+        $query = 'INSERT INTO log
+          (target, target_id, type_action, user_id, data_changes, created) 
+          VALUES(%s, %s, %s, %s, %s, NOW())';
+
+        $query = sprintf($query,
+            GetSQLValueString($this->get('target')),
+            GetSQLValueString($this->get('target_id')),
+            GetSQLValueString($this->get('type_action')),
+            GetSQLValueString($this->get('user_id')),
+            GetSQLValueString($this->get('data_changes'))
+        );
+
+        mysql_query($query);
+
+    }
+
+    static function createItem($target, $target_id, $type_action, $user_id, $data_changes = null) {
+
+        $modelData = array(
+            'target' => $target,
+            'target_id' => $target_id,
+            'type_action' => $type_action,
+            'user_id' => $user_id,
+            'data_changes' => json_encode($data_changes)
+        );
+        
+        $log = new Log($modelData);
+        $log->create();
+
+        return $log;
+
+    }
+
 }

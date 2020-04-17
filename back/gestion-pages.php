@@ -19,6 +19,10 @@ $allPages = \GenCity\Monde\Page::getAllPages();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach($allPages as $thisPage) {
         $thisContent = $_POST['ch_page_' . $thisPage->this_id];
+        if($thisPage->get('content') !== $thisContent) {
+            \GenCity\Monde\Logger\Log::createItem('pages', $thisPage->get('id'), 'update',
+                $_SESSION['userObject']->get('ch_use_id'), array('old_content' => $thisPage->get('content')));
+        }
         $thisPage->update($thisContent);
     }
     getErrorMessage('success', "Les pages ont été modifiées avec succès !");

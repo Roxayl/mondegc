@@ -75,6 +75,8 @@ $queries[] = "create table if not exists log
     foreign key (user_id) references users (ch_use_id)
       on update set null on delete set null
 )";
+$queries[] = "alter table log
+	add target_id int null after target";
 $queries[] = "create index log_user_id_index
   on log (user_id)";
 
