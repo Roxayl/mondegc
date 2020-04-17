@@ -11,16 +11,20 @@
               <li><a href="../back/institut_politique.php">Politique</a></li>
             </ul>
             </div>
-<a class="btn btn-primary" href="liste-pays.php" title="Liste des pays du monde GC"><i class="icon-list icon-white"></i> Les pays</a>
-<a class="btn btn-primary" href="liste-villes.php" title="Liste des villes du monde GC"><i class="icon-list icon-white"></i> Les villes</a>
-<a class="btn btn-primary" href="liste-membres.php" title="Liste des membres"><i class="icon-list icon-white"></i> Les membres</a>
-<a class="btn btn-primary" href="liste-communiques.php" title="Liste des communiqu&eacute;s"><i class="icon-list icon-white"></i> Les communiqu&eacute;s</a>
-<a class="btn btn-primary" href="gestion-pages.php" title="Gestion des contenus du site"><i class="icon-list icon-white"></i> Les pages</a>
+<a class="btn btn-primary" href="liste-pays.php" title="Liste des pays du monde GC"><i class="icon-list icon-white"></i> Pays</a>
+<a class="btn btn-primary" href="liste-villes.php" title="Liste des villes du monde GC"><i class="icon-list icon-white"></i> Villes</a>
+<a class="btn btn-primary" href="liste-membres.php" title="Liste des membres"><i class="icon-list icon-white"></i> Membres</a>
+<a class="btn btn-primary" href="liste-communiques.php" title="Liste des communiqu&eacute;s"><i class="icon-list icon-white"></i> Communiqués</a>
+<a class="btn btn-primary" href="gestion-pages.php" title="Gestion des contenus du site"><i class="icon-list icon-white"></i> Pages</a>
 <div class="dropdown">
 <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" title="Ajouter un membre ou un pays"><i class="icon-plus icon-white"></i> <b class="caret"></b></a>
             <ul class="dropdown-menu">
+              <li class="nav-header">Nouveau...</li>
               <li><a href="../back/membre-ajouter.php">Nouveau membre</a></li>
               <li><a href="../back/page_pays_ajouter.php">Nouveau pays</a></li>
+              <li class="divider"></li>
+              <li class="nav-header">Avancé</li>
+              <li><a href="../back/logger.php">Journalisation</a></li>
             </ul>
   </div>
         </div>

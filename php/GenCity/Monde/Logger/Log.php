@@ -13,9 +13,10 @@ class Log extends BaseModel {
 
     }
 
-    static function getAll() {
+    static function getAll($limit = 8, $offset = 0) {
 
-        $sql = 'SELECT * FROM ' . LogModel::$tableName . ' ORDER BY created DESC';
+        $sql = 'SELECT * FROM ' . LogModel::$tableName . ' ORDER BY created DESC
+            LIMIT ' . (int)$limit . ' OFFSET ' . (int)$offset;
         $query = mysql_query($sql);
 
         $return = array();
@@ -23,6 +24,14 @@ class Log extends BaseModel {
             $return[] = new Log($row['id']);
         }
         return $return;
+
+    }
+
+    static function getTotal() {
+
+        $query = 'SELECT COUNT(*) AS nbrrows FROM ' . LogModel::$tableName;
+        $mysql_query = mysql_query($query);
+        return (int)mysql_fetch_assoc($mysql_query)['nbrrows'];
 
     }
 
