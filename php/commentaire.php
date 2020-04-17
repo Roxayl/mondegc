@@ -57,15 +57,15 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
     </div>
     <div class="span9 info-listes">
       <!-- AFFICHAGE OUTILS MODERATION -->
-    <div class="pull-right">
+    <div class="cta-container" style="position: relative; top: 3px; margin-right: -15px;">
       <?php if (($_SESSION['statut'] >= 20) OR ($_SESSION['user_ID'] == $row_commentaire['ch_com_user_id'])) { ?>
       <form class="pull-right" action="back/communique_confirmation_supprimer.php" method="post">
         <input name="communique_ID" type="hidden" value="<?php echo $row_commentaire['ch_com_ID']; ?>">
-        <button class="btn" type="submit" title="supprimer le commentaire"><i class="icon-trash"></i></button>
+        <button class="btn btn-danger" type="submit" title="supprimer le commentaire"><i class="icon-trash icon-white"></i></button>
       </form>
       <form class="pull-right" action="back/communique_modifier.php" method="post">
         <input name="com_id" type="hidden" value="<?php echo $row_commentaire['ch_com_ID']; ?>">
-        <button class="btn" type="submit" title="modifier le commentaire"><i class="icon-pencil"></i></button>
+        <button class="btn btn-primary" type="submit" title="modifier le commentaire"><i class="icon-pencil icon-white"></i></button>
       </form>
       <?php } ?>
     </div>
@@ -73,14 +73,13 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
     <?php if(isset($persoReaction)): ?>
       <h4><?= __s($persoReaction->get('predicat')) ?> <?= __s($persoReaction->get('prenom_personnage')) ?> <?= __s($persoReaction->get('nom_personnage')) ?></h4>
       <h5>
-          <?= isset($paysReaction) ? '<img class="img-menu-drapeau" src="
+          <?= isset($paysReaction) ? '<a href="page-pays.php?ch_pay_id=' . $paysReaction->get('ch_pay_id') . '#diplomatie"><img class="img-menu-drapeau" src="
             ' . __s($paysReaction->get('ch_pay_lien_imgdrapeau')) . '">
-            ' . __s($paysReaction->get('ch_pay_nom')) . ' &#183; ' : '' ?>
+            ' . __s($paysReaction->get('ch_pay_nom')) . '</a> &#183; ' : '' ?>
           <?= __s($persoReaction->get('titre_personnage')) ?></h5>
       <!-- AFFICHAGE DATE --> 
       <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_commentaire['ch_com_date'])); ?></small>
       <p><?php echo $row_commentaire['ch_com_contenu']; ?></p>
-      <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?php echo $row_commentaire['ch_use_paysID']; ?>#diplomatie">Afficher la page du pays</a>
 
       <?php else: ?>
       <h4><?php echo $row_commentaire['ch_use_predicat_dirigeant']; ?> <?php echo $row_commentaire['ch_use_prenom_dirigeant']; ?> <?php echo $row_commentaire['ch_use_nom_dirigeant']; ?></h4>
@@ -105,16 +104,20 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
 <a class="btn" href="<?php printf("%s?pageNum_commentaire=%d%s#commentaires", $currentPage, min($totalPages_commentaire, $pageNum_commentaire + 1), $queryString_commentaire); ?>"> <i class="icon-forward"></i></a>
 <?php } // Show if not last page ?>
 </small>
+
 <?php } else { ?>
+<div class="well">
 <?php if ($ch_com_categorie == 'com_pays') { ?>
 <p>Ce pays n'a pas encore de visiteurs</p>
 <?php } else if ($ch_com_categorie == 'com_ville') { ?>
 <p>Cette ville n'a pas encore de visiteurs</p>
 <?php } else if ($ch_com_categorie == 'com_communique') { ?>
-<p>Ce communiqu&eacute; n'as pas encore suscit&eacute; de r&eacute;actions</p>
+<p>Ce communiqu&eacute; n'a pas encore suscit&eacute; de r&eacute;actions</p>
 <?php } else { 
-} 
 } ?>
+</div>
+<?php } ?>
+
 <!-- NOUVEAU COMMENTAIRE SI CONNECTE -->
 <?php if ($_SESSION['connect']) {
 

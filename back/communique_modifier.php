@@ -252,12 +252,15 @@ $totalRows_user = mysql_num_rows($user);
     <div class="titre-vert">
       <h1>Modifier un communiqu&eacute;</h1>
       </div>
-      <?php }?>
-      <?php if ($row_communique['ch_com_categorie'] == "institut") { ?>
+      <?php } else if ($row_communique['ch_com_categorie'] == "institut") { ?>
     <div class="titre-bleu">
       <h1>Modifier un communiqu&eacute;</h1>
       </div>
-      <?php }?>
+      <?php } else { ?>
+      <div class="titre-bleu">
+        <h1>Modifier une réaction</h1>
+      </div>
+      <?php } ?>
     <!-- Debut formulaire -->
     <form action="<?php echo $editFormAction; ?>" method="POST" name="modifier_communique" Id="modifier_communique">
       <!-- Bouton cachés -->
