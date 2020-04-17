@@ -13,6 +13,58 @@ $queries = array();
  *                       *
  *************************/
 
+// Création des tables liées à la gestion des géométries depuis la BDD.
+// Table type_geometries, regroupant les types de tracés de carte.
+$queries[] = "create table if not exists type_geometries
+(
+  id                 int auto_increment
+    primary key,
+  group_id           int                         null,
+  label              varchar(255)                not null,
+  type_geometrie     varchar(50)                 not null,
+  color              varchar(15)                 not null,
+  coef_budget        float(8, 5) default 1.00000 not null,
+  coef_industrie     float(8, 5) default 1.00000 not null,
+  coef_commerce      float(8, 5) default 1.00000 not null,
+  coef_agriculture   float(8, 5) default 1.00000 not null,
+  coef_tourisme      float(8, 5) default 1.00000 not null,
+  coef_recherche     float(8, 5) default 1.00000 not null,
+  coef_environnement float(8, 5) default 1.00000 not null,
+  coef_education     float(8, 5) default 1.00000 not null,
+  coef_population    float(8, 5) default 1.00000 not null,
+  created            datetime                    not null,
+  updated            datetime                    not null,
+  constraint type_geometries_type_geometries_group_id_fk
+    foreign key (group_id) references type_geometries_group (id)
+      on update cascade on delete cascade
+)";
+
+// Table type_geometries_group, correspondant aux groupes de géométries
+// (e.g. "Zones aménagées", "Zones naturelles", "Limites administratives"...)
+$queries[] = "create table if not exists type_geometries_group
+(
+  id       int auto_increment
+    primary key,
+  intitule varchar(50) not null,
+  created  datetime    not null,
+  updated  datetime    not null
+)";
+
+// Ajouter le type de géométrie dans
+$queries[] = "alter table geometries
+	add type_geometrie_id int null after ch_geo_id";
+
+$queries[] = "alter table geometries
+	add constraint geometries_type_geometries_id_fk
+		foreign key (type_geometrie_id) references type_geometries (id)
+			on update set null on delete set null";
+
+// Exécuter la requête
+foreach($queries as $query) {
+    mysql_query($query) or die(mysql_error());
+}
+
+
 // Changer le moteur de BDD de MyISAM à InnoDB.
 $sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES
         WHERE TABLE_SCHEMA = 'mgvx_generationcitycom3' 
