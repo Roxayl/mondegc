@@ -50,14 +50,33 @@ $queries[] = "create table if not exists type_geometries_group
   updated  datetime    not null
 )";
 
-// Ajouter le type de géométrie dans
+// Ajouter le type de géométrie dans la table geometries ainsi que les contraintes.
 $queries[] = "alter table geometries
 	add type_geometrie_id int null after ch_geo_id";
-
 $queries[] = "alter table geometries
 	add constraint geometries_type_geometries_id_fk
 		foreign key (type_geometrie_id) references type_geometries (id)
 			on update set null on delete set null";
+
+// Modifier type ch_use_id dans 'users'
+$queries[] = "alter table users modify ch_use_id int auto_increment";
+
+// Table log pour la journalisation.
+$queries[] = "create table if not exists log
+(
+  id           int auto_increment
+    primary key,
+  target       varchar(100) not null,
+  type_action  varchar(100) not null,
+  user_id      int          null,
+  data_changes text         null,
+  created      datetime     not null,
+  constraint log_users_ch_use_id_fk
+    foreign key (user_id) references users (ch_use_id)
+      on update set null on delete set null
+)";
+$queries[] = "create index log_user_id_index
+  on log (user_id)";
 
 // Exécuter la requête
 foreach($queries as $query) {
