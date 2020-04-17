@@ -1,6 +1,7 @@
 <?php
 
 namespace GenCity\Monde\Temperance;
+use GenCity\Monde\Logger\Log;
 use Squirrel\BaseModel;
 
 class InfraGroup extends BaseModel {
@@ -36,7 +37,7 @@ class InfraGroup extends BaseModel {
             GetSQLValueString($this->get('order'))
         );
 
-        mysql_query($query) or getErrorMessage('error', "Impossible !");
+        mysql_query($query) or die(mysql_error());
 
         // On réinitialise le modèle
         $this->model = new InfraGroupModel(mysql_insert_id());

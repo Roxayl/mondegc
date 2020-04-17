@@ -1,6 +1,7 @@
 <?php
 
 namespace GenCity\Monde\Logger;
+use GenCity\Monde\User;
 use Squirrel\BaseModel;
 
 
@@ -43,7 +44,12 @@ class Log extends BaseModel {
 
     }
 
-    static function createItem($target, $target_id, $type_action, $user_id, $data_changes = null) {
+    static function createItem($target, $target_id, $type_action, $user_id = null, $data_changes = null) {
+
+        /** @var User $_SESSION['userObject'] */
+        if($user_id === null && isset($_SESSION['userObject'])) {
+            $user_id = $_SESSION['userObject']->get('ch_use_id');
+        }
 
         $modelData = array(
             'target' => $target,

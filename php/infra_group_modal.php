@@ -23,8 +23,10 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "infra_group_modal")
         $editInfraGroup = new \GenCity\Monde\Temperance\InfraGroup($_POST['form']);
         $editInfraGroup->set('created', $infraGroup->get('created'));
         $validate = $editInfraGroup->validate();
+        $old_nom_groupe = $editInfraGroup->get('nom_groupe');
         if(empty($validate)) {
             $editInfraGroup->update();
+            \GenCity\Monde\Logger\Log::createItem('infrastructures_groupes', $editInfraGroup->get('id'), 'update', null, array('old_nom_groupe' => $old_nom_groupe));
             getErrorMessage('success', "Ce groupe d'infrastructures a été modifié avec succès !");
         } else {
             getErrorMessage('error', $validate);
@@ -36,6 +38,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "infra_group_modal")
         $validate = $addInfraGroup->validate();
         if(empty($validate)) {
             $addInfraGroup->create();
+            \GenCity\Monde\Logger\Log::createItem('infrastructures_groupes', null, 'insert', null, array('nom_groupe' => $addInfraGroup->get('nom_groupe')));
             getErrorMessage('success', "Un groupe d'infrastructures a été créé avec succès !");
         } else {
             getErrorMessage('error', $validate);

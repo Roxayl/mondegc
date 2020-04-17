@@ -28,7 +28,7 @@ if ((isset($_POST['ch_inf_off_id'])) && ($_POST['ch_inf_off_id'] != "")) {
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result2 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
-
+  \GenCity\Monde\Logger\Log::createItem('infrastructures_officielles', (int)$_POST['ch_inf_off_id'], 'delete', null, null);
 
   $deleteGoTo = "institut_economie.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -41,7 +41,7 @@ if ((isset($_POST['ch_inf_off_id'])) && ($_POST['ch_inf_off_id'] != "")) {
 ?><!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Haut-Conseil - Supprimer un monument</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">

@@ -81,6 +81,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
+  \GenCity\Monde\Logger\Log::createItem('pays', 'insert', null,
+      null, array('ch_pay_nom' => $_POST['ch_pay_nom']));
+
   $insertGoTo = "liste-pays.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";

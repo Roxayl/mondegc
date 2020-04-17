@@ -37,8 +37,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "new_user")) {
                        GetSQLValueString($paysID, "int"),
                        GetSQLValueString($ch_use_prov_statut, "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+
+  \GenCity\Monde\Logger\Log::createItem('users_provisoire', null, 'insert',
+      $_SESSION['userObject']->get('ch_use_id'), array('ch_use_prov_login', $login));
+
   $insertGoTo = 'liste-membres.php';
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";

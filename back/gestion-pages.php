@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $thisContent = $_POST['ch_page_' . $thisPage->this_id];
         if($thisPage->get('content') !== $thisContent) {
             \GenCity\Monde\Logger\Log::createItem('pages', $thisPage->get('id'), 'update',
-                $_SESSION['userObject']->get('ch_use_id'), array('old_content' => $thisPage->get('content')));
+                null, array('old_content' => $thisPage->get('content')));
         }
         $thisPage->update($thisContent);
     }

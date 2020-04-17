@@ -13,7 +13,12 @@ $infraGroup = new \GenCity\Monde\Temperance\InfraGroup($_GET['group_id']);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "infra_group_modal_suppr")) {
 
+    $log_old_data = array('nom_groupe' => $infraGroup->get('nom_groupe'));
+    $log_old_id = $infraGroup->get('id');
+
     if($infraGroup->delete()) {
+        \GenCity\Monde\Logger\Log::createItem('infrastructures_groupes', $log_old_id, 'delete',
+            null, $log_old_data);
         getErrorMessage('success',
             "Groupe d'infra supprimé ! Youhou, le pouvoir de la destruction !");
     } else {
