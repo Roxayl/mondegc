@@ -100,6 +100,16 @@ INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id = infras
 INNER JOIN villes ON ch_inf_villeid = ch_vil_ID
 INNER JOIN users ON ch_vil_user = ch_use_id
 WHERE ch_inf_statut = 2 AND ch_vil_capitale <> 3
+UNION
+SELECT 'vote_ag_finished' AS type_notification, id AS id, is_valid AS statut, 'proposition' AS sous_categorie, id AS id_element, null AS id_auteur, debate_end AS date, question AS titre, null AS photo_auteur, null AS nom_auteur, ID_pays AS paysID_auteur, null AS prenom_auteur, null AS titre_auteur, null AS id_institution, null AS institution, null AS img_institution, null AS pays_institution
+FROM ocgc_proposals
+JOIN pays ON ID_pays = ch_pay_id
+WHERE is_valid = 2 AND debate_end < NOW()
+UNION
+SELECT 'vote_ag_new' AS type_notification, id AS id, is_valid AS statut, 'proposition' AS sous_categorie, id AS id_element, null AS id_auteur, created AS date, question AS titre, null AS photo_auteur, null AS nom_auteur, ID_pays AS paysID_auteur, null AS prenom_auteur, null AS titre_auteur, ch_pay_id AS id_institution, null AS institution, ch_pay_lien_imgdrapeau AS img_institution, ch_pay_nom AS pays_institution
+FROM ocgc_proposals
+JOIN pays ON ID_pays = ch_pay_id
+WHERE is_valid = 2
 ORDER BY date DESC";
 $query_limit_LastCommunique = sprintf("%s LIMIT %d, %d", $query_LastCommunique, $startRow_LastCommunique, $maxRows_LastCommunique);
 $LastCommunique = mysql_query($query_limit_LastCommunique, $maconnexion) or die(mysql_error());
@@ -673,7 +683,7 @@ do {
       </div>
     </li>
     <?php } ?>
-       <?php if ( $row_LastCommunique['type_notification'] == "infrastructure") {?>
+       <?php if ( $row_LastCommunique['type_notification'] == "infrastructure") { ?>
     <!-- Si c'est une nouvelle infrastructure jugee ok
 ================================================== -->
     <li class="fond-notification item">
@@ -696,6 +706,89 @@ do {
       </div>
     </li>
     <?php }
+
+    if ( $row_LastCommunique['type_notification'] == "vote_ag_finished") {
+
+        $thisProposal = new \GenCity\Proposal\Proposal($row_LastCommunique['id_element']);
+        $voteList = $thisProposal->getVote();
+        $decisionMaker = new \GenCity\Proposal\ProposalDecisionMaker($voteList);
+        $decisionFormat = $decisionMaker->outputFormat();
+
+        $bg_color = 'inherit';
+        $text_color = 'inherit';
+        $info = '';
+
+        if(count($decisionFormat) > 1) {
+            $info .= '<em>Second tour :</em> ';
+        }
+
+        $i = 0;
+        foreach($decisionFormat as $thisDecision) {
+            if($thisDecision['color'] === '#fafafa')
+                $thisDecision['color'] = '#0a0a0a';
+            $info .= '<h4 style="font-style: normal; display: inline; color: ' . $thisDecision['color'] . ';">'
+                  . __s($thisDecision['intitule']) . '</h4>';
+            if(++$i !== count($decisionFormat)) {
+                $info .= " / ";
+            }
+            $bg_color = $thisDecision['color'];
+            $text_color = $thisDecision['color'] !== '#fafafa' ? '#fafafa' : '#0a0a0a';
+        }
+        ?>
+    <!-- Si c'est une proposition à l'AG terminée
+================================================== -->
+    <li class="item">
+      <div class="row-fluid">
+          <div class="titre-gris">
+            <h3>Proposition votée</h3>
+          </div>
+          <div class="row-fluid fond-notification">
+            <div class="span2">
+              <a href="assemblee.php"><img src="http://vasel.yt/wiki/images/5/53/Logo-OCGC-AG.png" alt="Logo AG"></a>
+            </div>
+            <div class="span10"> <small>le
+              <?= date("d/m/Y à G:i", strtotime($row_LastCommunique['date'])); ?>
+              </small>
+              <p>L'Assemblée générale a voté sur la proposition suivante :</p>
+              <h4><a href="back/ocgc_proposal.php?id=<?= $row_LastCommunique['id_element'] ?>"><?php echo __s($row_LastCommunique['titre']) ?></a></h4>
+              <div class="btn-margin-left">Résultat : <?= $info ?></div>
+            </div>
+        </div>
+      </div>
+    </li>
+    <?php }
+
+    if ( $row_LastCommunique['type_notification'] == "vote_ag_new") {
+
+        ?>
+    <!-- Si c'est une proposition à l'AG nouvellement créée
+================================================== -->
+    <li class="item">
+      <div class="row-fluid">
+          <div class="titre-gris">
+            <h3>Nouvelle proposition</h3>
+          </div>
+          <div class="row-fluid fond-notification">
+            <div class="span2">
+              <a href="assemblee.php"><img src="http://vasel.yt/wiki/images/5/53/Logo-OCGC-AG.png" alt="Logo AG"></a>
+            </div>
+            <div class="span8"> <small>le
+              <?= date("d/m/Y à G:i", strtotime($row_LastCommunique['date'])); ?>
+              </small>
+                <p><a href="page-pays.php?ch_pay_id=<?= $row_LastCommunique['id_institution'] ?>"><?= __s($row_LastCommunique['pays_institution']) ?></a> a créé une nouvelle proposition portant sur le thème suivant :</p>
+              <h4><a href="back/ocgc_proposal.php?id=<?= $row_LastCommunique['id_element'] ?>"><?php echo __s($row_LastCommunique['titre']) ?></a></h4>
+            </div>
+            <div class="span2">
+              <a href="page-pays.php?ch_pay_id=<?= $row_LastCommunique['id_institution'] ?>">
+                  <img src="<?= __s($row_LastCommunique['img_institution']) ?>"
+                       alt="Logo pays <?= __s($row_LastCommunique['pays_institution']) ?>">
+              </a>
+            </div>
+        </div>
+      </div>
+    </li>
+    <?php }
+
 
 } while ($row_LastCommunique = mysql_fetch_assoc($LastCommunique));?>
 
