@@ -56,7 +56,7 @@ foreach($logs as $log):
     }
 
     $thisData = json_decode($log->get('data_changes'));
-    $thisData = json_encode($thisData, JSON_PRETTY_PRINT);
+    $thisData = json_encode($thisData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     ?>
 
     <div class="proposal-active-container well well-light"
