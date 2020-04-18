@@ -1,7 +1,6 @@
 <?php
 
 namespace GenCity\Monde\Temperance;
-use GenCity\Monde\Logger\Log;
 use Squirrel\BaseModel;
 
 class InfraGroup extends BaseModel {

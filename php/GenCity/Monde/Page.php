@@ -36,6 +36,9 @@ class Page extends BaseModel {
         mysql_query(sprintf($sql,
             GetSQLValueString($content, 'text'),
             GetSQLValueString($this->model->this_id, 'text')));
+
+        $this->set('content', $content);
+
     }
 
 }
