@@ -1,10 +1,16 @@
 <?php
 
+/* *******************
+ * Script de migration
+ * Version cible : 1.2
+ * ******************/
+
 require_once('../../Connections/maconnexion.php');
 
 mysql_select_db($database_maconnexion, $maconnexion);
 
 $queries = array(
+    "ALTER TABLE pays ADD ch_pay_emploi_carte INT NULL DEFAULT 0 AFTER ch_pay_population_carte",
     "UPDATE pays SET ch_pay_emplacement = 44 WHERE ch_pay_id = 30",
     "UPDATE pays SET ch_pay_emplacement = 54 WHERE ch_pay_id = 51",
     "UPDATE pays SET ch_pay_emplacement = 55 WHERE ch_pay_id = 106",

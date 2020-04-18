@@ -1,5 +1,10 @@
 <?php
 
+/* *******************
+ * Script de migration
+ * Version cible : 1.5
+ * ******************/
+
 require_once('../../Connections/maconnexion.php');
 
 mysql_select_db($database_maconnexion, $maconnexion);
@@ -8,10 +13,10 @@ $queries = array();
 
 
 /**********
- * Requêtes à permission avancée : envoyer manuellement à Youcef.
+ * Requêtes à permission avancée.
  **********/
 
-/*// Table infrastructures_groupes
+// Table infrastructures_groupes
 $queries[] = "CREATE TABLE infrastructures_groupes
 (
   id         INT AUTO_INCREMENT
@@ -37,7 +42,7 @@ $queries[] = "CREATE TABLE infrastructures_officielles_groupes
 // Ajouter 3 colonnes à la table villes
 $queries[] = "ALTER TABLE villes ADD ch_vil_transports TEXT NULL";
 $queries[] = "ALTER TABLE villes ADD ch_vil_administration TEXT NULL";
-$queries[] = "ALTER TABLE villes ADD ch_vil_culture TEXT NULL";*/
+$queries[] = "ALTER TABLE villes ADD ch_vil_culture TEXT NULL";
 
 
 /**********

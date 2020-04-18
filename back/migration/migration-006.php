@@ -1,5 +1,10 @@
 <?php
 
+/* *******************
+ * Script de migration
+ * Version cible : 2.3
+ * ******************/
+
 require_once('../../Connections/maconnexion.php');
 
 mysql_select_db($database_maconnexion, $maconnexion);

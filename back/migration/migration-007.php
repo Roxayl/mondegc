@@ -1,5 +1,10 @@
 <?php
 
+/* *******************
+ * Script de migration
+ * Version cible : 2.4
+ * ******************/
+
 require_once('../../Connections/maconnexion.php');
 
 mysql_select_db($database_maconnexion, $maconnexion);
@@ -13,15 +18,16 @@ $queries = array();
  *                       *
  *************************/
 
+/*
 // Création des tables liées à la gestion des géométries depuis la BDD.
 // Table type_geometries, regroupant les types de tracés de carte.
 $queries[] = "create table if not exists type_geometries
 (
   id                 int auto_increment
     primary key,
-  group_id           int                         null,
+  group_id           int                         not null,
   label              varchar(255)                not null,
-  type_geometrie     varchar(50)                 not null,
+  type_geometrie     varchar(50)                 null,
   color              varchar(15)                 not null,
   coef_budget        float(8, 5) default 1.00000 not null,
   coef_industrie     float(8, 5) default 1.00000 not null,
@@ -56,7 +62,7 @@ $queries[] = "alter table geometries
 $queries[] = "alter table geometries
 	add constraint geometries_type_geometries_id_fk
 		foreign key (type_geometrie_id) references type_geometries (id)
-			on update set null on delete set null";
+			on update set null on delete set null";*/
 
 // Modifier type ch_use_id dans 'users'
 $queries[] = "alter table users modify ch_use_id int auto_increment";
