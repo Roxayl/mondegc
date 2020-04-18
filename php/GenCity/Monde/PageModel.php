@@ -28,7 +28,11 @@ class PageModel implements ModelStructureInterface {
 
     }
 
+    public function getInfo() {
 
+        return $this->info;
+
+    }
 
     public function __get($prop) {
 
