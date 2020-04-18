@@ -10,13 +10,23 @@ foreach($logs as $log):
     switch($log->get('type_action')) {
 
         case 'insert':
-            $label_action = ' a ajouté '; break;
+            $label_action = ' a ajouté ';
+            $color = '#ACD9AB';
+            break;
 
         case 'update':
-            $label_action = ' a modifié '; break;
+            $label_action = ' a modifié ';
+            $color = '#D9D38D';
+            break;
 
         case 'delete':
-            $label_action = ' a supprimé '; break;
+            $label_action = ' a supprimé ';
+            $color = '#D9AB9B';
+            break;
+
+        default:
+            $label_action = ' a effectué une action sur ';
+            $color = '#B4BCD9';
 
     }
 
@@ -49,10 +59,13 @@ foreach($logs as $log):
     $thisData = json_encode($thisData, JSON_PRETTY_PRINT);
     ?>
 
-    <div class="proposal-active-container well well-light">
+    <div class="proposal-active-container well well-light"
+         style="border-left: 12px solid <?= $color ?>; border-radius: 5px; margin-bottom: 10px;">
     <div class="row-fluid">
 
-        <p><?= $label ?></p>
+        <h4><?= $label ?></h4>
+
+        <p><br>
         <strong>Élément :</strong> <?= __s($log->get('target')) ?> /
         <strong>Type d'action :</strong> <?= __s($log->get('type_action')) ?> /
         <?php if(!empty($log->get('target_id'))): ?>
@@ -61,10 +74,10 @@ foreach($logs as $log):
         <strong>Utilisateur exécutant l'action :</strong> <?= __s($thisUser->get('ch_use_login')) ?>
             (<?= __s($log->get('user_id')) ?>) /
         <strong>Horodateur :</strong> <?= __s(dateFormat($log->get('created'), true)) ?>
+        </p>
 
         <?php if(!is_null($log->get('data_changes')) && $log->get('data_changes') !== 'null'): ?>
-            <br>
-            <strong>Données supplémentaires :</strong>
+            <p><strong>Données supplémentaires :</strong></p>
             <pre style="width: 95%; max-height: 120px; overflow-y: auto;"><?= __s($thisData) ?></pre>
         <?php endif; ?>
 
