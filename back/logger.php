@@ -110,7 +110,7 @@ $logs = \GenCity\Monde\Logger\Log::getAll($limit, $offset);
             '</ul></div>';
         ?>
 
-        <h3>Éléménts du journal</h3>
+        <h3>Éléments du journal</h3>
 
         <?php if(count($logs)): ?>
 

@@ -7,22 +7,40 @@ foreach($logs as $log):
 
     $thisUser = new \GenCity\Monde\User($log->get('user_id'));
 
+    switch($log->get('type_action')) {
+
+        case 'insert':
+            $label_action = ' a ajouté '; break;
+
+        case 'update':
+            $label_action = ' a modifié '; break;
+
+        case 'delete':
+            $label_action = ' a supprimé '; break;
+
+    }
+
     switch($log->get('target')) {
 
         case 'infrastructures_officielles':
-            $label = __s($thisUser->get('ch_use_login')) . " a apporté des modifications aux infrastructures officielles.";
+            $label = __s($thisUser->get('ch_use_login')) . " $label_action une infrastructure officielle.";
             break;
 
         case 'infrastructures_groupes':
-            $label = __s($thisUser->get('ch_use_login')) . " a modifié a apporté des modifications aux groupes d'infrastructure.";
+            $label = __s($thisUser->get('ch_use_login')) . " $label_action un groupe d'infrastructure.";
             break;
 
         case 'pages':
-            $label = __s($thisUser->get('ch_use_login')) . " a apporté des modifications à une page du site.";
+            $label = __s($thisUser->get('ch_use_login')) . " $label_action une page du site.";
+            break;
+
+        case 'pays':
+            $label = __s($thisUser->get('ch_use_login')) . " $label_action un pays.";
             break;
 
         default:
-            $label = __s($thisUser->get('ch_use_login')) . " a apporté une modification non répertoriée.";
+            $label = __s($thisUser->get('ch_use_login')) . " $label_action un élément (" . __s($log->get('target'))
+                    . ") du site.";
             break;
 
     }

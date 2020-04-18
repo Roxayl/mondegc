@@ -15,6 +15,9 @@ exit();
 	}
 
 if ((isset($_POST['ch_inf_off_id'])) && ($_POST['ch_inf_off_id'] != "")) {
+
+    $thisInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($_POST['ch_inf_off_id']);
+
   $deleteSQL = sprintf("DELETE FROM infrastructures_officielles WHERE ch_inf_off_id=%s",
                        GetSQLValueString($_POST['ch_inf_off_id'], "int"));
 
@@ -28,7 +31,8 @@ if ((isset($_POST['ch_inf_off_id'])) && ($_POST['ch_inf_off_id'] != "")) {
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result2 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
-  \GenCity\Monde\Logger\Log::createItem('infrastructures_officielles', (int)$_POST['ch_inf_off_id'], 'delete', null, null);
+  \GenCity\Monde\Logger\Log::createItem('infrastructures_officielles', (int)$_POST['ch_inf_off_id'],
+      'delete', null, array('entity' => $thisInfraOff->model->getInfo()));
 
   $deleteGoTo = "institut_economie.php";
   if (isset($_SERVER['QUERY_STRING'])) {

@@ -31,7 +31,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-inf_off")) {
       GetSQLValueString($last_id)
   ));
 
-  \GenCity\Monde\Logger\Log::createItem('infrastructures_officielles', (int)$_POST['ch_inf_off_id'], 'insert', null, null);
+  $thisInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($last_id);
+  \GenCity\Monde\Logger\Log::createItem('infrastructures_officielles', (int)$_POST['ch_inf_off_id'],
+      'insert', null, array('entity' => $thisInfraOff->model->getInfo()));
 
   getErrorMessage('success', "Une infrastructure officielle a été ajoutée !");
 

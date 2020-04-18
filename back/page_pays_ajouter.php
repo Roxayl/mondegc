@@ -81,8 +81,12 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  \GenCity\Monde\Logger\Log::createItem('pays', 'insert', null,
-      null, array('ch_pay_nom' => $_POST['ch_pay_nom']));
+  $thisPays = new \GenCity\Monde\Pays(mysql_insert_id());
+
+  getErrorMessage('success', "Nouveau pays ajouté !");
+
+  \GenCity\Monde\Logger\Log::createItem('pays', $thisPays->get('ch_pay_id'), 'insert',
+      null, array('entity' => $thisPays->model->getInfo()));
 
   $insertGoTo = "liste-pays.php";
   if (isset($_SERVER['QUERY_STRING'])) {

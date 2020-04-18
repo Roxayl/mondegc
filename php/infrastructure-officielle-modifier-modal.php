@@ -11,8 +11,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
 
-    $oldData = mysql_query('SELECT * FROM infrastructures_officielles WHERE ch_inf_off_id = ' . GetSQLValueString($_POST['ch_inf_off_id'], 'int'));
-    $oldData = mysql_fetch_assoc($oldData);
+    $oldInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($_POST['ch_inf_off_id']);
 
   $updateSQL = sprintf("UPDATE infrastructures_officielles SET ch_inf_off_label=%s, ch_inf_off_date=%s, ch_inf_off_nom=%s, ch_inf_off_desc=%s, ch_inf_off_icone=%s, ch_inf_off_budget=%s, ch_inf_off_Industrie=%s, ch_inf_off_Commerce=%s, ch_inf_off_Agriculture=%s, ch_inf_off_Tourisme=%s, ch_inf_off_Recherche=%s, ch_inf_off_Environnement=%s, ch_inf_off_Education=%s WHERE ch_inf_off_id=%s",
                        GetSQLValueString($_POST['ch_inf_off_label'], "text"),
@@ -33,6 +32,8 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
+  $newInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($_POST['ch_inf_off_id']);
+
   // Gestion des groupes d'infrastructures
   $delete_group = mysql_query('DELETE FROM infrastructures_officielles_groupes WHERE ID_infra_officielle = ' . mysql_real_escape_string($_POST['ch_inf_off_id']));
   $insert_group = mysql_query(sprintf('INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle) VALUES(%s, %s)',
@@ -41,7 +42,8 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
   ));
 
   \GenCity\Monde\Logger\Log::createItem('infrastructures_officielles', (int)$_POST['ch_inf_off_id'],
-      'update', null, array('old_data' => $oldData));
+      'update', null,
+      array('entity' => $newInfraOff->model->getInfo(), 'old_entity' => $oldInfraOff->model->getInfo()));
 
   getErrorMessage('success', "Une infrastructure officielle a été modifiée !");
 
