@@ -51,6 +51,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_institut")
 
   $newInstitut = new \GenCity\Monde\Institut\Institut($_POST['ch_ins_ID']);
 
+  getErrorMessage('success', "La description de " . __s($newInstitut->get('ch_ins_nom')) .
+      " a été modifiée !");
+
   \GenCity\Monde\Logger\Log::createItem('instituts', $newInstitut->get('ch_ins_ID'), 'update',
       null, array('entity' => $newInstitut->model->getInfo(), 'old_entity' => $oldInstitut->model->getInfo()));
   

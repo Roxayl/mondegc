@@ -252,19 +252,22 @@ format: 'hex'});
     ================================================== -->
   <section class="corps-page">
   <?php include('../php/menu-haut-conseil.php'); ?>
-  
+
+  <!-- formulaire de modification instituts
+     ================================================== -->
+  <form class="pull-right-cta" action="insitut_modifier.php" method="post" style="margin-top: 30px;">
+    <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
+    <button class="btn btn-primary btn-cta" type="submit" title="modifier les informations sur l'institut"><i class="icon-edit icon-white"></i> Modifier la description</button>
+  </form>
   <!-- Liste des Communiqués
         ================================================== -->
   <div id="titre_institut" class="titre-bleu anchor">
     <h1>G&eacute;rer l'<?php echo $row_institut['ch_ins_nom']; ?></h1>
   </div>
-  <!-- formulaire de modification instituts
-     ================================================== -->
-  <form class="pull-right" action="insitut_modifier.php" method="post">
-    <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
-    <button class="btn btn-primary" type="submit" title="modifier les informations sur l'institut"><i class="icon-edit icon-white"></i> Modifier description</button>
-  </form>
   <div class="clearfix"></div>
+
+      <?php renderElement('errormsgs'); ?>
+
   <!-- liste communique de l'institut
      ================================================== -->
   <div class="row-fluid">
