@@ -19,7 +19,16 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
+//requete instituts
+$institut_id = -1;
+if (isset($_POST['institut_id'])) {
+    $institut_id = $_POST['institut_id'];
+  }
+
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_institut")) {
+
+  $oldInstitut = new \GenCity\Monde\Institut\Institut($_POST['ch_ins_ID']);
+
   $updateSQL = sprintf("UPDATE instituts SET ch_ins_label=%s, ch_ins_lien_forum=%s, ch_ins_date_enregistrement=%s, ch_ins_mis_jour=%s, ch_ins_nb_update=%s, ch_ins_user_ID=%s, ch_ins_sigle=%s, ch_ins_nom=%s, ch_ins_statut=%s, ch_ins_logo=%s, ch_ins_img=%s, ch_ins_desc=%s, ch_ins_coord_X=%s, ch_ins_coord_Y=%s WHERE ch_ins_ID=%s",
                        GetSQLValueString($_POST['ch_ins_label'], "text"),
                        GetSQLValueString($_POST['ch_ins_lien_forum'], "text"),
@@ -39,6 +48,11 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_institut")
 
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+
+  $newInstitut = new \GenCity\Monde\Institut\Institut($_POST['ch_ins_ID']);
+
+  \GenCity\Monde\Logger\Log::createItem('instituts', $newInstitut->get('ch_ins_ID'), 'update',
+      null, array('entity' => $newInstitut->model->getInfo(), 'old_entity' => $oldInstitut->model->getInfo()));
   
   if ($_POST['ch_ins_ID']==1) {
     $updateGoTo = "institut_OCGC.php";
@@ -62,12 +76,6 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_institut")
   header(sprintf("Location: %s", $updateGoTo));
 }
 
-//requete instituts
-$institut_id = -1;
-if (isset($_POST['institut_id'])) {
-    $institut_id = $_POST['institut_id'];
-  }
-
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
@@ -82,7 +90,7 @@ $coord_Y = $row_institut['ch_ins_coord_Y'];
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<title>Haut-Conseil - Liste des membres</title>
+<title>Haut-Conseil - Modifier un Comité de l'OCGC</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -143,7 +151,7 @@ img.olTileImage {
   <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="modifier_institut" Id="modifier_institut">
     <div class="alert alert-tips">
       <button type="button" class="close" data-dismiss="alert">×</button>
-      Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e au Comité et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Mettez-le &agrave; jour.</div>
+      Ce formulaire contient les informations qui seront affich&eacute;es sur la page consacr&eacute;e au Comité et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Mettez-le &agrave; jour.</div>
     <!-- boutons cachés -->
     <input name="ch_ins_ID" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
     <input name="ch_ins_label" type="hidden" value="<?php echo $row_institut['ch_ins_label']; ?>">
@@ -227,7 +235,7 @@ img.olTileImage {
     <div class="controls">
       <textarea name="ch_ins_desc" id="ch_ins_desc" class="span6" rows="5"><?php echo $row_institut['ch_ins_desc']; ?></textarea>
       <br>
-      <span class="textareaMaxCharsMsg">800 caract&egrave;res maximum.</span><span class="textareaMinCharsMsg">2 caract&egrave;res minimum.</span>
+      <span class="textareaMaxCharsMsg">2000 caract&egrave;res maximum.</span><span class="textareaMinCharsMsg">2 caract&egrave;res minimum.</span>
     </div>
     </div>
     <div class="controls">
@@ -272,7 +280,7 @@ var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "none
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "url", {maxChars:250, validateOn:["change"], isRequired:false});
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "url", {maxChars:250, validateOn:["change"], isRequired:false});
 var sprytextfield28 = new Spry.Widget.ValidationTextField("sprytextfield28", "url", {maxChars:250, validateOn:["change"], isRequired:false});
-var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:800, minChars:2, validateOn:["change"], isRequired:false, useCharacterMasking:false});
+var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:2000, minChars:2, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
 <?php
 mysql_free_result($institut);?>

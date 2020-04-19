@@ -7,25 +7,27 @@ foreach($logs as $log):
 
     $thisUser = new \GenCity\Monde\User($log->get('user_id'));
 
+    $label = __s($thisUser->get('ch_use_login'));
+
     switch($log->get('type_action')) {
 
         case 'insert':
-            $label_action = ' a ajouté ';
+            $label .= ' a ajouté ';
             $color = '#ACD9AB';
             break;
 
         case 'update':
-            $label_action = ' a modifié ';
+            $label .= ' a modifié ';
             $color = '#D9D38D';
             break;
 
         case 'delete':
-            $label_action = ' a supprimé ';
+            $label .= ' a supprimé ';
             $color = '#D9AB9B';
             break;
 
         default:
-            $label_action = ' a effectué une action sur ';
+            $label .= ' a effectué une action sur ';
             $color = '#B4BCD9';
 
     }
@@ -33,25 +35,23 @@ foreach($logs as $log):
     switch($log->get('target')) {
 
         case 'infrastructures_officielles':
-            $label = __s($thisUser->get('ch_use_login')) . " $label_action une infrastructure officielle.";
-            break;
+            $label .= " une infrastructure officielle."; break;
 
         case 'infrastructures_groupes':
-            $label = __s($thisUser->get('ch_use_login')) . " $label_action un groupe d'infrastructure.";
-            break;
+            $label .= " un groupe d'infrastructure."; break;
 
         case 'pages':
-            $label = __s($thisUser->get('ch_use_login')) . " $label_action une page du site.";
-            break;
+            $label .= " une page du site."; break;
 
         case 'pays':
-            $label = __s($thisUser->get('ch_use_login')) . " $label_action un pays.";
-            break;
+            $label .= " un pays."; break;
+
+        case 'instituts':
+            $label .= " un comité."; break;
 
         default:
             $label = __s($thisUser->get('ch_use_login')) . " $label_action un élément (" . __s($log->get('target'))
                     . ") du site.";
-            break;
 
     }
 
