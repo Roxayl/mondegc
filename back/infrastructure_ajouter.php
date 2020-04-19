@@ -84,11 +84,7 @@ if ($form_action === 'add' && isset($_POST["MM_insert"]) && $_POST["MM_insert"] 
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $insertGoTo = "ville_modifier.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $insertGoTo = "ville_modifier.php?ville-ID=" . (int)$_POST['ch_inf_villeid'];
 
   getErrorMessage('success', "Une infrastructure a été ajoutée avec succès !");
 
@@ -108,11 +104,7 @@ if($form_action === 'edit' && isset($_POST["MM_insert"]) && $_POST["MM_insert"] 
 
     $thisInfra->update();
 
-    $insertGoTo = "ville_modifier.php";
-    if (isset($_SERVER['QUERY_STRING'])) {
-        $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-        $insertGoTo .= $_SERVER['QUERY_STRING'];
-    }
+    $insertGoTo = "ville_modifier.php?ville-ID=" . (int)$thisInfra->get('ch_inf_villeid');
 
     getErrorMessage('success', "L'infrastructure a été modifiée avec succès !");
 
