@@ -79,14 +79,14 @@ $queries[] = "create table if not exists notifications
 (
   id           int auto_increment
     primary key,
-  recipient_id int                  not null,
+  recipient_id int                  null,
   type_notif   varchar(25)          not null,
   element      int                  null,
   unread       tinyint(1) default 1 not null,
   created      datetime             not null,
   constraint notifications_users_ch_use_id_fk
-    foreign key (id) references users (ch_use_id)
-      on update cascade on delete cascade
+    foreign key (recipient_id) references users (ch_use_id)
+      on update set null on delete set null
 )";
 
 $queries[] = "create index notifications_recipient_id_index

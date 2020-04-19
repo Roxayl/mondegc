@@ -10,6 +10,13 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 
+//Requete info infrastructure
+$ch_inf_id = -1 ;
+if (isset($_GET['ch_inf_id'])) {
+	$ch_inf_id = $_GET['ch_inf_id'];
+    $thisInfra = new \GenCity\Monde\Temperance\Infrastructure($ch_inf_id);
+}
+
 //Définition infrastructure selon jugement
 if (isset($_POST['ch_inf_statut_accepter'])) {
  
@@ -24,8 +31,12 @@ if (isset($_POST['ch_inf_statut_accepter'])) {
     $_POST['ch_inf_statut'] = 2;
 }
 
+
 //Actualisation BDD accepter infrastructure après jugement
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "accepter_infrastructure")) {
+
+    $thisInfra = new \GenCity\Monde\Temperance\Infrastructure($_POST['ch_inf_id']);
+
   $updateSQL = sprintf("UPDATE infrastructures SET ch_inf_date=%s, ch_inf_statut=%s, ch_inf_juge=%s, ch_inf_commentaire_juge=%s WHERE ch_inf_id=%s",
                        GetSQLValueString($_POST['ch_inf_date'], "date"),
                        GetSQLValueString($_POST['ch_inf_statut_accepter'], "int"),
@@ -36,6 +47,11 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "accepter_infrastruc
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
+  getErrorMessage('success',
+      '<div style="display: inline-block; background-color: #51a351"><i class="icon-jugement icon-white"></i></div> ' .
+    " L'infrastructure " . __s($thisInfra->get('nom_infra')) .
+    " a été <strong>acceptée</strong> !");
+
   $updateGoTo = "../back/Temperance_jugement.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
@@ -45,6 +61,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "accepter_infrastruc
 
 //Actualisation BDD refuser infrastructure après jugement
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "refuser_infrastructure")) {
+
+    $thisInfra = new \GenCity\Monde\Temperance\Infrastructure($_POST['ch_inf_id']);
+
   $updateSQL = sprintf("UPDATE infrastructures SET ch_inf_date=%s, ch_inf_statut=%s, ch_inf_juge=%s, ch_inf_commentaire_juge=%s WHERE ch_inf_id=%s",
                        GetSQLValueString($_POST['ch_inf_date'], "date"),
                        GetSQLValueString($_POST['ch_inf_statut_refuser'], "int"),
@@ -55,6 +74,11 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "refuser_infrastruct
   mysql_select_db($database_maconnexion, $maconnexion);
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
+  getErrorMessage('success',
+      '<div style="display: inline-block; background-color: #a34643"><i class="icon-jugement icon-white"></i></div> ' .
+    " L'infrastructure " . __s($thisInfra->get('nom_infra')) .
+    " a été <strong>refusée</strong> ! <i>La force de dire non !</i>");
+
   $updateGoTo = "../back/Temperance_jugement.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
@@ -62,11 +86,43 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "refuser_infrastruct
   header(sprintf("Location: %s", $updateGoTo));
 }
 
-//Requete info infrastructure
-$ch_inf_id = -1 ;
-if (isset ($_GET['ch_inf_id'])){
-	$ch_inf_id = $_GET['ch_inf_id'];
-	}
+if(isset($_POST['MM_update'])) {
+
+    if($_POST["MM_update"] == "refuser_infrastructure") {
+        $type_notif = 'infra_juge_refuse';
+    } else {
+        $type_notif = 'infra_juge_accepte';
+    }
+
+  /*** Notification ***/
+  $notification = new \GenCity\Monde\Notification\Notification(null);
+  $notification->set('type_notif', $type_notif);
+  $notification->set('element', (int)$_POST['ch_inf_id']);
+  $recipients = array();
+
+  // On ajoute le créateur de l'infra aux destinataires de la notification.
+  if(!is_null($thisInfra->get('user_creator'))) {
+      $recipients[] = $thisInfra->get('user_creator');
+  }
+
+  // On ajoute les gestionnaires de pays aux destinataires de la notification.
+  $thisVille = new \GenCity\Monde\Ville($thisInfra->get('ch_inf_villeid'));
+  $thisPays = new \GenCity\Monde\Pays($thisVille->get('ch_vil_paysID'));
+  $paysLeaders = $thisPays->getLeaders();
+  $leaders = array_column(
+          $thisPays->getLeaders(), 'ID_user'
+  );
+  foreach($leaders as $leader) {
+      if(!in_array($leader, $recipients))
+          $recipients[] = $leader;
+  }
+
+  // Emettre la notification.
+  $notification->emit($recipients);
+
+  exit;
+
+}
 
 mysql_select_db($database_maconnexion, $maconnexion);
 $query_infrastructure = sprintf("SELECT ch_inf_id, ch_inf_date, ch_inf_statut, ch_inf_villeid, nom_infra, ch_inf_lien_image, ch_inf_lien_image2, ch_inf_lien_image3, ch_inf_lien_image4, ch_inf_lien_image5, ch_inf_lien_forum, lien_wiki, ch_inf_commentaire, ch_inf_commentaire_juge, ch_inf_off_nom, ch_inf_off_desc, ch_inf_off_icone, ch_inf_off_budget, ch_inf_off_Industrie, ch_inf_off_Commerce, ch_inf_off_Agriculture, ch_inf_off_Tourisme, ch_inf_off_Recherche, ch_inf_off_Environnement, ch_inf_off_Education, ch_vil_nom, ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_inf_id = %s ORDER BY ch_inf_date DESC", GetSQLValueString($ch_inf_id, "int"));

@@ -198,6 +198,8 @@ $_SESSION['last_work'] = "institut_economie.php";
       <li><a href="../economie.php">Économie</a> <span class="divider">/</span></li>
       <li class="active">Projet Tempérance : salle de jugement</li>
     </ul>
+
+      <?php renderElement('errormsgs'); ?>
     
     <!-- Liste des infrstructures officielles
      ================================================== -->
@@ -213,7 +215,7 @@ $_SESSION['last_work'] = "institut_economie.php";
       <?php } ?>
     </div>
     <!-- choix ressources  -->
-    <form action="Temperance_jugement.php#liste-infrastructures" method="GET">
+    <form action="Temperance_jugement.php#liste-infrastructures" method="GET" class="btn-margin-left">
       <select name="inf" id="inf" onchange="this.form.submit()" class="span4">
         <option value="1" <?php if ($colname_type_jugement == '1') {?>selected<?php } ?>>Infrastructures non jug&eacute;es</option>
         <option value="2" <?php if ($colname_type_jugement == '2') {?>selected<?php } ?>>Modifier les infrastructures d&eacute;j&agrave; accept&eacute;es</option>
@@ -235,7 +237,7 @@ $_SESSION['last_work'] = "institut_economie.php";
             <a class="pull-right btn btn-primary" href="../php/infrastructure-juger-modal.php?ch_inf_id=<?= __s($row_liste_infrastructures['ch_inf_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="juger cette infrastructure"><i class="icon-jugement"></i> Juger</a>
             <!-- Desc categorie -->
             <div class="icone-categorie pull-left"><img src="<?= __s($row_liste_infrastructures['ch_inf_off_icone']) ?>" alt="icone <?= __s($row_liste_infrastructures['ch_inf_off_nom']) ?>"></div>
-            <h4><?= __s($row_liste_infrastructures['ch_inf_off_nom']) ?></h4>
+            <h4><?= __s($row_liste_infrastructures['nom_infra']) ?></h4>
 
             <small><?= __s($row_liste_infrastructures['ch_inf_off_nom']) ?></small>
             <div class="clearfix"></div>
