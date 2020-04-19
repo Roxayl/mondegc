@@ -62,7 +62,7 @@ $paysID = $thisPays->get('ch_pay_id');
 
 
 if ($form_action === 'add' && isset($_POST["MM_insert"]) && $_POST["MM_insert"] == "ajout_infrastructure") {
-  $insertSQL = sprintf("INSERT INTO infrastructures (ch_inf_label, ch_inf_off_id, ch_inf_villeid, ch_inf_date, ch_inf_statut, nom_infra, ch_inf_lien_image, ch_inf_lien_image2, ch_inf_lien_image3, ch_inf_lien_image4, ch_inf_lien_image5, ch_inf_lien_forum, lien_wiki, ch_inf_commentaire, ch_inf_juge, ch_inf_commentaire_juge) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+  $insertSQL = sprintf("INSERT INTO infrastructures (ch_inf_label, ch_inf_off_id, ch_inf_villeid, ch_inf_date, ch_inf_statut, nom_infra, ch_inf_lien_image, ch_inf_lien_image2, ch_inf_lien_image3, ch_inf_lien_image4, ch_inf_lien_image5, ch_inf_lien_forum, lien_wiki, user_creator, ch_inf_commentaire, ch_inf_juge, ch_inf_commentaire_juge) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['ch_inf_label'], "text"),
 					   GetSQLValueString($_POST['ch_inf_off_id'], "int"),
                        GetSQLValueString($_POST['ch_inf_villeid'], "int"),
@@ -76,6 +76,7 @@ if ($form_action === 'add' && isset($_POST["MM_insert"]) && $_POST["MM_insert"] 
                        GetSQLValueString('', "text"),
                        GetSQLValueString($_POST['ch_inf_lien_forum'], "text"),
                        GetSQLValueString($_POST['lien_wiki'], "text"),
+                       GetSQLValueString($thisUser->get('ch_use_id'), "int"),
                        GetSQLValueString($_POST['ch_inf_commentaire'], "text"),
                        GetSQLValueString($_POST['ch_inf_juge'], "int"),
                        GetSQLValueString($_POST['ch_inf_commentaire_juge'], "text"));
@@ -97,15 +98,6 @@ if ($form_action === 'add' && isset($_POST["MM_insert"]) && $_POST["MM_insert"] 
 }
 
 if($form_action === 'edit' && isset($_POST["MM_insert"]) && $_POST["MM_insert"] == "ajout_infrastructure") {
-
-    $formData = array(
-        'nom_infra' => $_POST['nom_infra'],
-        'ch_inf_lien_image' => $_POST['ch_inf_lien_image'],
-        'ch_inf_lien_image2' => $_POST['ch_inf_lien_image2'],
-        'ch_inf_lien_image3' => $_POST['ch_inf_lien_image3'],
-        'ch_inf_lien_forum' => $_POST['ch_inf_lien_forum'],
-        'lien_wiki' => $_POST['lien_wiki']
-    );
 
     $thisInfra->set('nom_infra', $_POST['nom_infra']);
     $thisInfra->set('ch_inf_lien_image', $_POST['ch_inf_lien_image']);
