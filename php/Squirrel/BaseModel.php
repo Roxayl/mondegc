@@ -36,7 +36,7 @@ class BaseModel {
 
         $structure = $this->model->getStructure();
 
-        $query = 'UPDATE ' . ($this->model)::tableName . ' SET ';
+        $query = 'UPDATE ' . $this->{model::tableName} . ' SET ';
 
         foreach($structure as $field => $default) {
             $query .= ' `' . $field . '` = ' . GetSQLValueString($this->get($field));

@@ -18,17 +18,23 @@ class Pays extends BaseModel {
 
     /**
      * Obtient la liste des dirigeants et co-dirigeants d'un pays.
-     * @return array Renvoie un array contenant la liste des dirigeants.
+     * @param int $minPermission Niveau de permission égal ou supérieur à cette valeur.
+     * @param bool $setObject Détermine si on renvoie un array d'objets {@see \GenCity\Monde\User}.
+     * @return array|User[] Renvoie un array contenant la liste des dirigeants.
      */
-    public function getLeaders($minPermission = 0) {
+    public function getLeaders($minPermission = 0, $setObject = false) {
 
         $where_query = $minPermission > 0 ? ' AND permissions >= ' . GetSQLValueString($minPermission, 'int') : '';
 
-        $query = mysql_query(sprintf('SELECT users_pays.id AS users_pays_ID, permissions, ch_use_login, ch_use_lien_imgpersonnage FROM users JOIN users_pays ON ch_use_id = ID_user AND ID_pays = %s ' . $where_query,
+        $query = mysql_query(sprintf('SELECT users_pays.id AS users_pays_ID, ID_user, permissions, ch_use_login, ch_use_lien_imgpersonnage FROM users JOIN users_pays ON ch_use_id = ID_user AND ID_pays = %s ' . $where_query,
             GetSQLValueString($this->model->ch_pay_id, 'int')));
         $result = array();
-        while($row = mysql_fetch_assoc($query)){
-             $result[] = $row;
+        while($row = mysql_fetch_assoc($query)) {
+            if($setObject) {
+                $result[] = new User($row['ID_user']);
+            } else {
+                $result[] = $row;
+            }
         }
         return $result;
 
