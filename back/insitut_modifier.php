@@ -93,7 +93,7 @@ $coord_Y = $row_institut['ch_ins_coord_Y'];
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<title>Haut-Conseil - Modifier un Comité de l'OCGC</title>
+<title>Haut-Conseil - Modifier un Comité de l'OCGC : <?= __s($row_institut['ch_ins_nom']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -156,28 +156,28 @@ img.olTileImage {
       <button type="button" class="close" data-dismiss="alert">×</button>
       Ce formulaire contient les informations qui seront affich&eacute;es sur la page consacr&eacute;e au Comité et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Mettez-le &agrave; jour.</div>
     <!-- boutons cachés -->
-    <input name="ch_ins_ID" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
-    <input name="ch_ins_label" type="hidden" value="<?php echo $row_institut['ch_ins_label']; ?>">
-    <input name="ch_ins_date_enregistrement" type="hidden" value="<?php echo $row_institut['ch_ins_date_enregistrement']; ?>">
+    <input name="ch_ins_ID" type="hidden" value="<?= __s($row_institut['ch_ins_ID']) ?>">
+    <input name="ch_ins_label" type="hidden" value="<?= __s($row_institut['ch_ins_label']) ?>">
+    <input name="ch_ins_date_enregistrement" type="hidden" value="<?= __s($row_institut['ch_ins_date_enregistrement']) ?>">
     <?php $now = date("Y-m-d G:i:s");
 				  $nbupdate = $row_institut['ch_ins_nb_update']+1; ?>
-    <input name="ch_ins_mis_jour" type="hidden" value="<?php echo $now; ?>" >
-    <input name="ch_ins_nb_update" type="hidden" value="<?php echo $nbupdate; ?>">
-    <input name="ch_ins_user_ID" type="hidden" value="<?php echo $_SESSION['user_ID']; ?>">
-    <input name="ch_ins_statut" type="hidden" value="<?php echo $row_institut['ch_ins_statut']; ?>">
+    <input name="ch_ins_mis_jour" type="hidden" value="<?= __s($now) ?>" >
+    <input name="ch_ins_nb_update" type="hidden" value="<?= __s($nbupdate) ?>">
+    <input name="ch_ins_user_ID" type="hidden" value="<?= __s($_SESSION['user_ID']) ?>">
+    <input name="ch_ins_statut" type="hidden" value="<?= __s($row_institut['ch_ins_statut']) ?>">
     
     <!-- Nom -->
     <div id="sprytextfield1" class="control-group">
       <label class="control-label" for="ch_ins_nom">Nom du Comité <a href="#" rel="clickover" title="Nom de l'institut" data-content="50 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
       <div class="controls">
-        <input class="input-xlarge" type="text" id="ch_ins_nom" name="ch_ins_nom" value="<?php echo $row_institut['ch_ins_nom']; ?>">
+        <input class="input-xlarge" type="text" id="ch_ins_nom" name="ch_ins_nom" value="<?= __s($row_institut['ch_ins_nom']) ?>">
         <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>
     </div>
      <!-- Image -->
     <div id="sprytextfield5" class="control-group">
       <label class="control-label" for="ch_ins_lien_forum">Lien sujet sur le forum <a href="#" rel="clickover" data-placement="bottom" title="Lien du sujet" data-content="250 caract&egrave;res maximum. Copiez/collez ici le lien vers le sujet consacré à votre pays sur le forum. Cette information sevira à poster des messages dans votre sujet directement depuis le site"><i class="icon-info-sign"></i></a></label>
       <div class="controls">
-        <input class="span9" type="text" id="ch_ins_lien_forum" name="ch_ins_lien_forum" value="<?php echo $row_institut['ch_ins_lien_forum']; ?>" placeholder="">
+        <input class="span9" type="text" id="ch_ins_lien_forum" name="ch_ins_lien_forum" value="<?= __s($row_institut['ch_ins_lien_forum']) ?>" placeholder="">
         <br>
         <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
     </div>
@@ -185,14 +185,14 @@ img.olTileImage {
     <div id="sprytextfield2" class="control-group">
       <label class="control-label" for="ch_ins_sigle">Sigle du Comité <a href="#" rel="clickover" title="Sigle de l'institut" data-content="10 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
       <div class="controls">
-        <input class="input-xlarge" type="text" id="ch_ins_sigle" name="ch_ins_sigle" value="<?php echo $row_institut['ch_ins_sigle']; ?>">
+        <input class="input-xlarge" type="text" id="ch_ins_sigle" name="ch_ins_sigle" value="<?= __s($row_institut['ch_ins_sigle']) ?>">
         <span class="textfieldMaxCharsMsg">10 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>
     </div>
     <!-- Logo -->
     <div id="sprytextfield28" class="control-group">
       <label class="control-label" for="ch_ins_logo">Logo du Comité <a href="#" rel="clickover" title="Logo de l'institut" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com). L'image du logo sera automatiquement redimensionn&eacute;e en 250 pixel de large et 250 pixels de haut."><i class="icon-info-sign"></i></a></label>
       <div class="controls">
-        <input class="span9" type="text" id="ch_ins_logo" name="ch_ins_logo" value="<?php echo $row_institut['ch_ins_logo']; ?>" placeholder="">
+        <input class="span9" type="text" id="ch_ins_logo" name="ch_ins_logo" value="<?= __s($row_institut['ch_ins_logo']) ?>" placeholder="">
         <br>
         <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
     </div>
@@ -200,7 +200,7 @@ img.olTileImage {
     <div id="sprytextfield4" class="control-group">
       <label class="control-label" for="ch_ins_img">Image du Comité <a href="#" rel="clickover" title="Image de l'institut" data-content="Mettez une image des bâtiments de l'institut. Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)."><i class="icon-info-sign"></i></a></label>
       <div class="controls">
-        <input class="span9" type="text" id="ch_ins_img" name="ch_ins_img" value="<?php echo $row_institut['ch_ins_img']; ?>" placeholder="">
+        <input class="span9" type="text" id="ch_ins_img" name="ch_ins_img" value="<?= __s($row_institut['ch_ins_img']) ?>" placeholder="">
         <br>
         <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
     </div>
@@ -217,30 +217,31 @@ img.olTileImage {
         <div class="control-group">
           <div class="control-label">Coordonn&eacute;es X <a href="#" rel="clickover" title="Coordonn&eacute;es" data-content="Cliquez sur la carte pour modifier l'emplacement de l'institut"><i class="icon-info-sign"></i></a> =</div>
           <div class="controls">
-            <p id="coord_X"><?php echo $coord_Y; ?></p>
+            <p id="coord_X"><?= __s($coord_Y) ?></p>
           </div>
         </div>
         <div class="control-group">
           <div class="control-label">Coordonn&eacute;es Y <a href="#" rel="clickover" title="Coordonn&eacute;es" data-content="Cliquez sur la carte pour modifier l'emplacement de l'institut"><i class="icon-info-sign"></i></a> =</div>
           <div class="controls">
-            <p id="coord_Y"><?php echo $coord_Y; ?></p>
+            <p id="coord_Y"><?= __s($coord_Y) ?></p>
           </div>
         </div>
       </div>
     </div>
     <p>&nbsp;</p>
     <!-- Coordonnées -->
-    <input type="hidden" name="form_coord_X" id="form_coord_X" value="<?php echo $row_institut['ch_ins_coord_X']; ?>">
-    <input type="hidden" name="form_coord_Y" id="form_coord_Y" value="<?php echo $row_institut['ch_ins_coord_Y']; ?>">
+    <input type="hidden" name="form_coord_X" id="form_coord_X" value="<?= __s($row_institut['ch_ins_coord_X']) ?>">
+    <input type="hidden" name="form_coord_Y" id="form_coord_Y" value="<?= __s($row_institut['ch_ins_coord_Y']) ?>">
     <!-- Description -->
     <div id="sprytextarea1" class="control-group">
       <label class="control-label" for="ch_ins_desc">Description <a href="#" rel="clickover" title="Description" data-content="D&eacute;crivez en quelques mots la mission de l'institut. 800 caractères maximum"><i class="icon-info-sign"></i></a></label>
     <div class="controls">
-      <textarea name="ch_ins_desc" id="ch_ins_desc" class="span6" rows="5"><?php echo $row_institut['ch_ins_desc']; ?></textarea>
+      <textarea name="ch_ins_desc" id="ch_ins_desc" class="wysiwyg" rows="15"><?= __s($row_institut['ch_ins_desc']) ?></textarea>
       <br>
-      <span class="textareaMaxCharsMsg">2000 caract&egrave;res maximum.</span><span class="textareaMinCharsMsg">2 caract&egrave;res minimum.</span>
+      <span class="textareaMaxCharsMsg">5000 caract&egrave;res maximum.</span><span class="textareaMinCharsMsg">2 caract&egrave;res minimum.</span>
     </div>
     </div>
+
     <div class="controls">
       <button type="submit" class="btn btn-primary">Envoyer</button>
     </div>
@@ -277,13 +278,14 @@ img.olTileImage {
 <script src="../SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
 <script src="../SpryAssets/SpryValidationTextarea.js" type="text/javascript"></script>
 <script src="../SpryAssets/SpryValidationRadio.js" type="text/javascript"></script>
+<!-- EDITEUR -->
+<script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript" src="../assets/js/Editeur.js"></script>
 <script type="text/javascript">
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "none", {maxChars:50, validateOn:["change"]});
 var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "none", {maxChars:10, validateOn:["change"]});
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "url", {maxChars:250, validateOn:["change"], isRequired:false});
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "url", {maxChars:250, validateOn:["change"], isRequired:false});
 var sprytextfield28 = new Spry.Widget.ValidationTextField("sprytextfield28", "url", {maxChars:250, validateOn:["change"], isRequired:false});
-var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:2000, minChars:2, validateOn:["change"], isRequired:false, useCharacterMasking:false});
+var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:5000, minChars:2, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
-<?php
-mysql_free_result($institut);?>

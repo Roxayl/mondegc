@@ -142,11 +142,13 @@ img.olTileImage {
         </div>
         <div class="well">
           <div class="row-fluid">
-            <div class="span8">
-              <p><?php echo $row_institut['ch_ins_desc']; ?></p>
-              <p><i>Articles détaillés :</i> <a href="http://www.forum-gc.com/f58-l-ocgc"><i class="icon-globe"></i> Forum</a> &#183; <a href="http://vasel.yt/wiki/index.php?title=Organisation_des_cit%C3%A9s_g%C3%A9c%C3%A9ennes"><i class="icon-globe"></i> Wiki</a></p>
+            <div class="span12">
+              <?php if(!empty($row_institut['ch_ins_img'])): ?>
+                <img alt="Icône de l'institut" class="pull-right" style="width: 35%;"
+                     src="<?= __s($row_institut['ch_ins_img']) ?>">
+              <?php endif; ?>
+              <?php echo $row_institut['ch_ins_desc'] ?>
             </div>
-            <div class="span4"><img src="<?php echo $row_institut['ch_ins_img']; ?>"></div>
           </div>
         </div>
       </section>

@@ -194,10 +194,13 @@ $totalRows_info_group = mysql_num_rows($info_group);
         </div>
         <div class="well">
           <div class="row-fluid">
-            <div class="span7">
-              <p><?php echo $row_institut['ch_ins_desc']; ?></p>
+            <div class="span12">
+              <?php if(!empty($row_institut['ch_ins_img'])): ?>
+                <img alt="Icône de l'institut" class="pull-right" style="width: 35%;"
+                     src="<?= __s($row_institut['ch_ins_img']) ?>">
+              <?php endif; ?>
+              <?php echo $row_institut['ch_ins_desc'] ?>
             </div>
-            <div class="span5"><img src="<?php echo $row_institut['ch_ins_img']; ?>"></div>
           </div>
         </div>
       </section>

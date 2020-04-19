@@ -308,14 +308,23 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
         </div>
         <div class="well">
           <div class="row-fluid">
-            <div class="span7">
-              <p><?php echo $row_institut['ch_ins_desc']; ?></p>
+            <div class="span12">
+              <?php if(!empty($row_institut['ch_ins_img'])): ?>
+                <img alt="Icône de l'institut" class="pull-right" style="width: 35%;"
+                     src="<?= __s($row_institut['ch_ins_img']) ?>">
+              <?php endif; ?>
+              <?php echo $row_institut['ch_ins_desc'] ?>
             </div>
-            <div class="span5"><img src="<?php echo $row_institut['ch_ins_img']; ?>"></div>
           </div>
-          
         </div>
-        <a href="liste infrastructures.php" class="btn btn-primary btn-margin-left">Liste des infrastructures officielles</a>
+        <div class="well">
+          <div class="row-fluid">
+            <div class="span12">
+          <h4>Ressources du Comité :</h4>
+        <a href="liste infrastructures.php" class="btn btn-primary">Liste des infrastructures officielles</a>
+            </div>
+          </div>
+        </div>
       </section>
       <!-- Classements ressources
     ================================================== -->
