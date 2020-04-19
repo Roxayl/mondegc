@@ -198,7 +198,7 @@ class Proposal extends BaseModel {
         // Vérifier la date des débats
 
         $setDebateEnd = DateTime::createFromFormat(self::$date_formatting, $this->get('debate_start'));
-        $setDebateEnd->modify('+2 days');
+        $setDebateEnd->modify('+60 hours');
         $this->set('debate_end', $setDebateEnd->format(self::$date_formatting));
 
         if(!$this->isValidDebateDate()) {
@@ -249,7 +249,7 @@ class Proposal extends BaseModel {
             }
 
             $timeNextDebateStart = strtotime("next friday $start_week_string");
-            $timeNextDebateEnd = strtotime("next sunday $end_week_string");
+            $timeNextDebateEnd = strtotime("next sunday $end_week_string") + (12*60*60); // On ajoute 12 heures.
             $dateNextDebateStart = date(self::$date_formatting, $timeNextDebateStart);
             $dateNextDebateEnd = date(self::$date_formatting, $timeNextDebateEnd);
             if($getDebateEnd) {

@@ -297,8 +297,8 @@ include('../php/navbarback.php'); ?>
                     <?php foreach($formNextDebates as $nextDebate): ?>
                         <option value="<?= $nextDebate['debate_start'] ?>"
                           <?= $form_select_debate_start[$nextDebate['debate_start']] ?>>Du <?=
-                            date('d/m/Y H:i:s', strtotime($nextDebate['debate_start'])); ?> au <?=
-                            date('d/m/Y H:i:s', strtotime($nextDebate['debate_end'])); ?></option>
+                            date('d/m/Y à H:i', strtotime($nextDebate['debate_start'])); ?> au <?=
+                            date('d/m/Y à H:i', strtotime($nextDebate['debate_end'])); ?></option>
                     <?php endforeach; ?>
                     </select>
                 </div>
