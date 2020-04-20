@@ -10,6 +10,8 @@ if(isset($_SESSION['login_user'])) {
     $listePays = $thisUser->getCountries();
 }
 
+$listeInstituts = \GenCity\Monde\Institut\Institut::getAll();
+
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
@@ -144,6 +146,38 @@ init();
     <div class="titre-bleu anchor" id="gestion">
       <h1>Gestion</h1>
     </div>
+
+    <?php if($thisUser->minStatus(\GenCity\Monde\User::getUserPermission("OCGC"))): ?>
+    <small class="pull-right"><i class="icon-info-sign"></i> <i>Vous êtes membre du Conseil de l'OCGC.</i></small>
+    <h3>Conseil de l'OCGC</h3>
+    <div class="well">
+        <div class="row-fluid thumbnails">
+
+        <?php foreach($listeInstituts as $thisInstitut): ?>
+            <div class="span2 thumbnail">
+
+                <img src="<?= __s($thisInstitut->get('ch_ins_logo')) ?>" style="max-height: 60px;"
+                     alt="Logo <?= __s($thisInstitut->get('ch_ins_nom')) ?>">
+                <h4><?= __s($thisInstitut->get('ch_ins_nom')) ?></h4>
+
+                <div class="btn-group">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    Actions
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                    <li class="dropdown-li-force"><a tabindex="-1" href="back/communique_ajouter.php?userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>&cat=institut&com_element_id=<?= $thisInstitut->get('ch_ins_ID') ?>">
+                            <i class="icon-file"></i> Publier un communiqué</a></li>
+                </ul>
+                </div>
+
+            </div>
+        <?php endforeach; ?>
+
+        </div>
+    </div>
+    <?php endif; ?>
+
     <h3>Mes pays</h3>
     <div class="well">
         <?php if(empty($listePays)): ?>
@@ -156,25 +190,26 @@ init();
                 <div class="span2">
                     <a href="page-pays.php?ch_pay_id=<?= $pays['ch_pay_id']; ?>"><img src="<?= $pays['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau"></a>
                 </div>
-                <div class="span4">
+                <div class="span5">
                     <h3><?= $pays['ch_pay_nom']; ?></h3>
                     <div class="btn-group">
                         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                            Actions rapides
+                            Actions
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                            <li class="dropdown-li-force"><a tabindex="-1" href="back/communique_ajouter.php?paysID=<?= $pays['ch_pay_id'] ?>&userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>&cat=pays&com_element_id=<?= $pays['ch_pay_id'] ?>">
-                                    <i class="icon-file"></i> Publier un nouveau communiqué</a></li>
-                            <li class="dropdown-li-force"><a tabindex="0" href="back/infra_select_group.php?pays_id=<?= $pays['ch_pay_id'] ?>">
-                                    <i class="icon-home"></i> Ajouter une nouvelle infrastructure</a></li>
-                            <li class="dropdown-li-force divider"></li>
+                            <li class="dropdown-li-force">
+                                <a tabindex="-1" href="back/communique_ajouter.php?paysID=<?= $pays['ch_pay_id'] ?>&userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>&cat=pays&com_element_id=<?= $pays['ch_pay_id'] ?>">
+                                    <i class="icon-file"></i> Publier un communiqué</a></li>
+                            <li class="dropdown-li-force">
+                                <a tabindex="0" href="back/infra_select_group.php?pays_id=<?= $pays['ch_pay_id'] ?>">
+                                    <i class="icon-home"></i> Ajouter une infrastructure</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="span4">
-                </div>
                 <div class="span2">
+                </div>
+                <div class="span3">
                     <a href="page-pays.php?ch_pay_id=<?= $pays['ch_pay_id']; ?>" class="span btn btn-primary">Visiter</a>
                     <a href="back/page_pays_back.php?paysID=<?= $pays['ch_pay_id'] ?>&userID=<?= $thisUser->model->ch_use_id ?>" class="span btn btn-primary"><i class="icon-pays-small-white"></i> Gérer mon pays</a>
                 </div>
