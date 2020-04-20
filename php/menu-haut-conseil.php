@@ -1,5 +1,5 @@
 <div class="navbar-haut-conseil">
-<a class="btn btn-primary" href="Haut-Conseil.php" title="Page d'acceuil du Haut Conseil">Haut-Conseil</a>
+<a class="btn btn-primary" href="Haut-Conseil.php" title="Page d'acceuil du Conseil de l'OCGC"><i class="icon-edit" style="visibility: hidden;"></i> Conseil de l'OCGC</a>
 <div class="dropdown">
 <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" title="Institutions de r&eacute;gulation du monde GC"><i class="icon-edit icon-white"></i> Les comités <b class="caret"></b></a>
             <ul class="dropdown-menu">

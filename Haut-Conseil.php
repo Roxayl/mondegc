@@ -10,12 +10,15 @@ $query_HautConseil = "SELECT ch_use_login, ch_use_statut FROM users WHERE ch_use
 $HautConseil = mysql_query($query_HautConseil, $maconnexion) or die(mysql_error());
 $row_HautConseil = mysql_fetch_assoc($HautConseil);
 $totalRows_HautConseil = mysql_num_rows($HautConseil);
+
+$pageConseilOCGC = new \GenCity\Monde\Page('conseil_ocgc_desc');
+
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
 <head>
 <meta charset="utf-8">
-<title>Haut-Conseil - Connexion</title>
+<title>Haut-Conseil - Conseil de l'OCGC</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -60,9 +63,8 @@ $totalRows_HautConseil = mysql_num_rows($HautConseil);
       <hr>
     </div>
     <div class="span5 align-left">
-    <h2>Qu'est-ce que le Haut-Conseil&nbsp;?</h2>
-    <p>Le haut-conseil est un espace d�di&eacute; &agrave; la gestion du projet d'un point de vue international. Il s'agit d'un conseil de sages dont la mission est de d�vellopper le monde GC. Les membres sont nomm�s par leurs pairs.</p>
-     <h5>Les membres du Haut-Conseil sont&nbsp;:</h5>
+    <?= $pageConseilOCGC->content() ?>
+     <h5>Les membres du Conseil de l'OCGC sont&nbsp;:</h5>
 	 <?php do { ?>
      <?php if ($row_HautConseil['ch_use_statut']==30) { ?>
      <span><em style="color: #FF4F4F"><?php echo $row_HautConseil['ch_use_login'] ?></em> -</span>
@@ -85,6 +87,3 @@ $totalRows_HautConseil = mysql_num_rows($HautConseil);
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
-<?php
-mysql_free_result($HautConseil);
-?>

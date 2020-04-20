@@ -89,17 +89,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <?php foreach($allPages as $thisPage): ?>
 
-        <div class="control-group">
-          <label class="control-label" for="ch_page_<?= $thisPage->this_id ?>">
-              <h3><?= $thisPage->this_id ?></h3>
-          </label>
-          <div class="controls">
-            <textarea name="ch_page_<?= $thisPage->this_id ?>" id="ch_page_<?= $thisPage->this_id ?>" class="wysiwyg" rows="15"><?= __s($thisPage->content) ?></textarea>
-          </div>
+        <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" href="#collapse_<?= $thisPage->this_id ?>"
+                ><?= $thisPage->this_id ?></a>
+        </div>
+        <div id="collapse_<?= $thisPage->this_id ?>" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="control-group">
+                  <label class="control-label" for="ch_page_<?= $thisPage->this_id ?>">
+                      <?= $thisPage->this_id ?>
+                  </label>
+                  <div class="controls">
+                    <textarea name="ch_page_<?= $thisPage->this_id ?>" id="ch_page_<?= $thisPage->this_id ?>" class="wysiwyg" rows="15"><?= __s($thisPage->content) ?></textarea>
+                  </div>
+                </div>
+            </div>
+        </div>
         </div>
 
     <?php endforeach; ?>
 
+    <br>
     <input type="submit" value="Envoyer" class="btn btn-primary">
 
     </form>

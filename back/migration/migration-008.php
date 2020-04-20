@@ -117,6 +117,8 @@ foreach($queries as $query) {
 
 $queries = array();
 
+$queries[] = "INSERT INTO `pages` (`this_id`, `content`, `modified`) VALUES ('conseil_ocgc_desc', '<h2>Qu''est-ce que le Conseil de l''OCGC&nbsp;?</h2><p>Description du Conseil de l''OCGC.', '2020-04-20 11:44:58')";
+
 // Exécuter la requête
 foreach($queries as $query) {
     mysql_query($query) or die(mysql_error());
