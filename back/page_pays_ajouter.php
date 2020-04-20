@@ -30,6 +30,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
 	if( $_POST['ch_pay_emplacement'] >= 42 and $_POST['ch_pay_emplacement'] <= 56 ){ $ch_pay_continent = "Aldesyl";}
 	if( $_POST['ch_pay_emplacement'] >= 56 and $_POST['ch_pay_emplacement'] <= 57 ){ $ch_pay_continent = "Volcania";}
 	if ($_POST['ch_pay_emplacement'] >= 57 and $_POST['ch_pay_emplacement'] <= 58 ){ $ch_pay_continent = "Aldesyl";}
+	if ($_POST['ch_pay_emplacement'] >= 59){ $ch_pay_continent = "Volcania";}
 
   $insertSQL = sprintf("INSERT INTO pays (ch_pay_id, ch_pay_label, ch_pay_publication, ch_pay_emplacement, ch_pay_lien_forum, ch_pay_continent, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_pay_date, ch_pay_mis_jour, ch_pay_nb_update, ch_pay_forme_etat, ch_pay_capitale, ch_pay_langue_officielle, ch_pay_monnaie, ch_pay_header_presentation, ch_pay_text_presentation, ch_pay_header_geographie, ch_pay_text_geographie, ch_pay_header_politique, ch_pay_text_politique, ch_pay_header_histoire, ch_pay_text_histoire, ch_pay_header_economie, ch_pay_text_economie, ch_pay_header_transport, ch_pay_text_transport, ch_pay_header_sport, ch_pay_text_sport, ch_pay_header_culture, ch_pay_text_culture, ch_pay_header_patrimoine, ch_pay_text_patrimoine, ch_pay_budget_carte, ch_pay_industrie_carte, ch_pay_commerce_carte, ch_pay_agriculture_carte, ch_pay_tourisme_carte, ch_pay_recherche_carte, ch_pay_environnement_carte, ch_pay_education_carte, ch_pay_population_carte, ch_pay_emploi_carte ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['ch_pay_id'], "int"),
@@ -188,7 +189,7 @@ img.olTileImage {
         <p class="btn-margin-left"><a href="https://romukulot.fr/kaleera/view.php?id=TdrfA" target="_blank">Emplacements supplémentaires</a></p>
       <div id="spryradio2">
         <ul class="Icone-thumb">
-          <?php for ($nb_emplacement = 1; $nb_emplacement <= 58; $nb_emplacement++) {?>
+          <?php for ($nb_emplacement = 1; $nb_emplacement <= 59; $nb_emplacement++) {?>
           <li class=""> <img src="../Carto/Emplacements/emplacement<?php echo $nb_emplacement ?>.jpg">
             <label>
               <input type="radio" name="ch_pay_emplacement" value="<?php echo $nb_emplacement ?>" id="ch_pay_emplacement_<?php echo $nb_emplacement ?>">

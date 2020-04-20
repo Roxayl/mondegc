@@ -665,13 +665,18 @@ switch ($emplacement) // placement des markers selon la variable d'emplacement
     break;
 
     case 57:
-        $x="-57";
-        $y="-44";
+        $x="54";
+        $y="-48";
     break;
 
     case 58:
         $x="-73";
         $y="-43.5";
+    break;
+
+    case 59:
+        $x="55";
+        $y="-40.5";
     break;
     
     default:
