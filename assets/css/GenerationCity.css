@@ -310,6 +310,44 @@ input[type="submit"], .btn {
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
 }
 
+.btn-theme-economie {
+	color: #ffffff;
+    background: linear-gradient(to right, #ffe300 0%,#ff5c00 72%);
+    background-size: 200%;
+    border-radius: 20px;
+    border: 0;
+}
+
+.btn-theme-geographie {
+	color: #ffffff;
+    border-radius: 20px;
+    border: 0;
+}
+
+.btn-theme-histoire {
+	color: #ffffff;
+    background: linear-gradient(to right, #00a2ff 0%,#1eff00 72%);
+    background-size: 200%;
+    border-radius: 20px;
+    border: 0;
+}
+
+.btn-theme-patrimoine {
+	color: #ffffff;
+    background: linear-gradient(to right, #004eff 0%,#7e00ff 72%);
+    background-size:200%;
+    border-radius: 20px;
+    border: 0;
+}
+
+.btn-theme-politique {
+	color: #ffffff;
+    background: linear-gradient(to right, #f80000 0%,#d000dd 72%);
+    background-size: 200%;
+    border-radius: 20px;
+    border: 0;
+}
+
 input[type='submit'] {
 	color: #ffffff;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -342,6 +380,26 @@ input[type='submit'] {
   background-image: -moz-linear-gradient(top, #FCC102, #d9a602);
   background-repeat: repeat-x;
 }
+.btn-theme-economie:hover, .btn-theme-economie:active, .btn-theme-economie.active, .btn-theme-economie.disabled, .btn-theme-economie[disabled] {
+    color: #ffffff;
+    background: linear-gradient(to right, #ffe300 0%,#ff5c00 72%);
+}
+.btn-theme-geographie:hover, .btn-theme-geographie:active, .btn-theme-geographie.active, .btn-theme-geographie.disabled, .btn-theme-geographie[disabled] {
+    color: #ffffff;
+}
+.btn-theme-histoire:hover, .btn-theme-histoire:active, .btn-theme-histoire.active, .btn-theme-histoire.disabled, .btn-theme-histoire[disabled] {
+    color: #ffffff;
+    background: linear-gradient(to right, #00a2ff 0%,#1eff00 72%);
+}
+.btn-theme-patrimoine:hover, .btn-theme-patrimoine:active, .btn-theme-patrimoine.active, .btn-theme-patrimoine.disabled, .btn-theme-patrimoine[disabled] {
+    color: #ffffff;
+    background: linear-gradient(to right, #004eff 0%,#7e00ff 72%);
+}
+.btn-theme-politique:hover, .btn-theme-politique:active, .btn-theme-politique.active, .btn-theme-politique.disabled, .btn-theme-politique[disabled] {
+    color: #ffffff;
+    background: linear-gradient(to right, #f80000 0%,#d000dd 72%);
+}
+
 .btn-cta {
     padding: 3px 5px;
 }

@@ -85,7 +85,12 @@ $_SESSION['an']=true;
     </div>
     <div class="Master-link">
       <p class="hidden-phone">Débutez l'exploration&nbsp;:</p>
-      <a href="Page-carte.php" class="btn btn-primary btn-large">Carte</a> <a href="histoire.php" class="btn btn-primary btn-large">Histoire</a> <a href="patrimoine.php" class="btn btn-primary btn-large">Patrimoine</a> <a href="economie.php" class="btn btn-primary btn-large">Economie</a> <a href="politique.php" class="btn btn-primary btn-large">Politique</a> </div>
+      <a href="Page-carte.php" class="btn btn-primary btn-theme-geographie btn-large">Carte</a>
+      <a href="histoire.php" class="btn btn-primary btn-theme-histoire btn-large">Histoire</a>
+      <a href="patrimoine.php" class="btn btn-primary btn-theme-patrimoine btn-large">Patrimoine</a>
+      <a href="economie.php" class="btn btn-primary btn-theme-economie btn-large">Economie</a>
+      <a href="politique.php" class="btn btn-primary btn-theme-politique btn-large">Politique</a>
+    </div>
   </div>
 </div>
 <!-- Bandeau stat
@@ -105,14 +110,16 @@ $_SESSION['an']=true;
 
         <?php renderElement('errormsgs'); ?>
 
-        <div id="actu" class="titre-vert no-bg anchor"> <img src="assets/img/IconesBDD/100/Membre1.png" alt="icone user">
+        <div id="actu" class="titre-vert no-bg anchor">
+          <img src="assets/img/IconesBDD/100/Membre1.png" alt="icone user" style="margin-left: 3px;">
           <h1>Derni&egrave;res actualit&eacute;s</h1>
         </div>
         <?php include('last_MAJ.php'); ?>
     </div>
     <div class="span4" style="background-color: #EDEDED;">
 
-        <div id="actu" class="titre-bleu no-bg anchor"> <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png" alt="icone user">
+        <div id="actu" class="titre-bleu no-bg anchor">
+          <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png" alt="icone user" style="margin-left: 1px;">
           <h1>Communiqués publiés</h1>
         </div>
         <?php
