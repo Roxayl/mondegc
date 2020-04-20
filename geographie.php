@@ -62,7 +62,8 @@ $_GET['ch_pay_id'] = $row_liste_pays['ch_pay_id'];
 <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url('assets/img/bannieres-instituts/Geo.png');
+    background: linear-gradient(to right, #00a2ff 0%,#1eff00 72%);
+    background-size: 200%;
 }
 #map {
 	height: 500px;
@@ -117,7 +118,7 @@ init();
 <?php $institut=true; include('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
-<header class="jumbotron jumbotron-institut subhead anchor" id="info-institut" >
+<header class="jumbotron jumbotron-medium jumbotron-institut subhead anchor" id="info-institut" >
   <div class="container">
     <h1><?= __s($row_institut['ch_ins_nom']) ?></h1>
   </div>

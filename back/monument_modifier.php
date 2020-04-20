@@ -85,6 +85,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_monument")
   }
   header(sprintf("Location: %s", $updateGoTo));
 }
+
+$institutCulture = new \GenCity\Monde\Institut\Institut(\GenCity\Monde\Institut\Institut::$instituts['culture']);
+
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
@@ -164,7 +167,7 @@ return true;
       </div>
       <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
-          Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; votre monument. Les monuments sont des constructions exceptionelles de votre pays. La promotion des monuments du Monde GC est confi&eacute;e &agrave; <a href="../patrimoine.php" title="lien vers la page consacr&eacute;e &agrave; l'Institut">l'Institut G&eacute;c&eacute;en du Patrimoine</a></div>
+          Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; votre monument. Les monuments sont des constructions exceptionelles de votre pays. La promotion des monuments du Monde GC est confi&eacute;e au <a href="../patrimoine.php" title="lien vers la page consacr&eacute;e &agrave; l'Institut"><?= __s($institutCulture->get('ch_ins_nom')) ?></a>.</div>
       <div class="well">
       <?php if (($_SESSION['statut'] >= 20) AND ($row_users['ch_use_id'] != $_SESSION['user_ID'])) { ?>
        <form class="pull-right" action="monument_confirmation_supprimer.php" method="post">

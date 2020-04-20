@@ -175,7 +175,7 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
         <li><a href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>"><?= $row_monument['ch_pay_nom'] ?></a> <span class="divider">/</span></li>
         <li><a href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>#villes">Villes</a> <span class="divider">/</span></li>
         <li><a href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>&ch_ville_id=<?= $row_monument['ch_vil_ID'] ?>"><?= $row_monument['ch_vil_nom'] ?></a> <span class="divider">/</span></li>
-        <li><a href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>&ch_ville_id=<?= $row_monument['ch_vil_ID'] ?>#patrimoine">Patrimoine</a> <span class="divider">/</span></li>
+        <li><a href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>&ch_ville_id=<?= $row_monument['ch_vil_ID'] ?>#patrimoine">Culture</a> <span class="divider">/</span></li>
       <li class="active"><?= $row_monument['ch_pat_nom'] ?></li>
     </ul>
   <!-- Moderation

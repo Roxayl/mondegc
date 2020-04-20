@@ -335,7 +335,7 @@ input[type="submit"], .btn {
 .btn-theme-patrimoine {
 	color: #ffffff;
     background: linear-gradient(to right, #004eff 0%,#7e00ff 72%);
-    background-size:200%;
+    background-size: 200%;
     border-radius: 20px;
     border: 0;
 }
@@ -747,6 +747,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9babbf', end
 	background-size: cover;
 	background-origin: content-box;
 }
+.jumbotron-medium {
+    height: 200px;
+}
 .jumbotron h1 {
 	font-size: 2.5em;
 	line-height: 1em;
@@ -847,6 +850,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9babbf', end
 	color: #182b45;
 	font-weight: 600;
 	text-decoration: underline;
+}
+.liens-rapides.pull-left {
+    left: 10px;
 }
 
 /* Titre vert bleu h1

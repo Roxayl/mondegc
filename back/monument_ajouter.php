@@ -70,6 +70,9 @@ $query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_p
 $users = mysql_query($query_users, $maconnexion) or die(mysql_error());
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
+
+$institutCulture = new \GenCity\Monde\Institut\Institut(\GenCity\Monde\Institut\Institut::$instituts['culture']);
+
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
@@ -165,7 +168,7 @@ return true;
       <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_monument" Id="ajout_monument" onsubmit='return verif_champ(document.ajout_monument.form_coord_X.value);' >
         <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
-          Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; votre monument. Les monuments sont des constructions exceptionelles de votre pays. La promotion des monuments du Monde GC est confi&eacute;e &agrave; <a href="../patrimoine.php" title="lien vers la page consacr&eacute;e &agrave; l'Institut">l'Institut G&eacute;c&eacute;en du Patrimoine</a></div>
+          Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; votre monument. Les monuments sont des constructions exceptionelles de votre pays. La promotion des monuments du Monde GC est confi&eacute;e au <a href="../patrimoine.php" title="lien vers la page consacr&eacute;e &agrave; l'Institut"><?= __s($institutCulture->get('ch_ins_nom')) ?></a>.</div>
         <!-- Bouton cachés -->
         <input name="ch_pat_paysID" type="hidden" value="<?php echo $paysID; ?>" >
         <input name="ch_pat_villeID" type="hidden" value="<?php echo $ville_ID; ?>">

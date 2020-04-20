@@ -806,10 +806,8 @@ do {
     <p>&nbsp;</p>
   </div>
   <?php } // Show if last page ?>
-  <div id="loadmoreajaxloader" style="display:none;">
-    <center>
+  <div id="loadmoreajaxloader" style="display:none; text-align: center; margin: 0 auto;">
       <img src="assets/img/ajax-loader.gif" />
-    </center>
   </div>
 
 <script>

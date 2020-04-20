@@ -5,7 +5,7 @@
             <ul class="dropdown-menu">
               <li><a href="../back/institut_OCGC.php">OCGC</a></li>
               <li><a href="../back/institut_geographie.php">G&eacute;ographie</a></li>
-              <li><a href="../back/institut_patrimoine.php">Patrimoine</a></li>
+              <li><a href="../back/institut_patrimoine.php">Culture</a></li>
               <li><a href="../back/institut_histoire.php">Histoire</a></li>
               <li><a href="../back/institut_economie.php">&Eacute;conomie</a></li>
               <li><a href="../back/institut_politique.php">Politique</a></li>

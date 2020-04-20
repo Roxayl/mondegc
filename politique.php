@@ -118,7 +118,8 @@ $totalRows_info_group = mysql_num_rows($info_group);
 <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url('assets/img/fond_haut-conseil.jpg');
+    background: linear-gradient(to right, #f80000 0%,#d000dd 72%);
+    background-size: 200%;
 }
 </style>
 <!-- BOOTSTRAP -->
@@ -148,7 +149,7 @@ $totalRows_info_group = mysql_num_rows($info_group);
 <?php $institut=true; include('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
-<header class="jumbotron jumbotron-institut subhead anchor" id="info-institut" >
+<header class="jumbotron jumbotron-medium jumbotron-institut subhead anchor" id="info-institut" >
   <div class="container">
     <h1><?php echo $row_institut['ch_ins_nom']; ?></h1>
   </div>

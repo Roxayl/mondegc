@@ -229,7 +229,8 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
 <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url('assets/img/bannieres-instituts/IEGC.png');
+    background: linear-gradient(to right, #ffe300 0%,#ff5c00 72%);
+    background-size: 200%;
 }
 </style>
 <!-- BOOTSTRAP -->
@@ -260,7 +261,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
 <?php $institut=true; include('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
-<header class="jumbotron jumbotron-institut subhead anchor" id="info-institut" >
+<header class="jumbotron jumbotron-medium jumbotron-institut subhead anchor" id="info-institut" >
   <div class="container">
     <h1><?php echo $row_institut['ch_ins_nom']; ?></h1>
   </div>

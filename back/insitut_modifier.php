@@ -190,7 +190,7 @@ img.olTileImage {
     </div>
     <!-- Logo -->
     <div id="sprytextfield28" class="control-group">
-      <label class="control-label" for="ch_ins_logo">Logo du Comité <a href="#" rel="clickover" title="Logo de l'institut" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com). L'image du logo sera automatiquement redimensionn&eacute;e en 250 pixel de large et 250 pixels de haut."><i class="icon-info-sign"></i></a></label>
+      <label class="control-label" for="ch_ins_logo">Logo du Comité <a href="#" rel="clickover" title="Logo du comité" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com). L'image du logo sera automatiquement redimensionn&eacute;e en 250 pixel de large et 250 pixels de haut."><i class="icon-info-sign"></i></a></label>
       <div class="controls">
         <input class="span9" type="text" id="ch_ins_logo" name="ch_ins_logo" value="<?= __s($row_institut['ch_ins_logo']) ?>" placeholder="">
         <br>
@@ -198,7 +198,7 @@ img.olTileImage {
     </div>
     <!-- Image -->
     <div id="sprytextfield4" class="control-group">
-      <label class="control-label" for="ch_ins_img">Image du Comité <a href="#" rel="clickover" title="Image de l'institut" data-content="Mettez une image des bâtiments de l'institut. Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)."><i class="icon-info-sign"></i></a></label>
+      <label class="control-label" for="ch_ins_img">Image du Comité <a href="#" rel="clickover" title="Image de l'institut" data-content="Mettez une image des bâtiments du comité."><i class="icon-info-sign"></i></a></label>
       <div class="controls">
         <input class="span9" type="text" id="ch_ins_img" name="ch_ins_img" value="<?= __s($row_institut['ch_ins_img']) ?>" placeholder="">
         <br>
@@ -206,7 +206,7 @@ img.olTileImage {
     </div>
     <p>&nbsp;</p>
     <!-- Carte -->
-    <div class="control-label">Emplacement <a href="#" rel="clickover" title="Emplacement" data-content="Cliquez sur la carte pour définir le nouvel emplacement de votre ville"><i class="icon-info-sign"></i></a></div>
+    <div class="control-label">Emplacement <a href="#" rel="clickover" title="Emplacement" data-content="Cliquez sur la carte pour définir le nouvel emplacement du comité."><i class="icon-info-sign"></i></a></div>
     <div class="controls">
       <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">carte </button>
     </div>
@@ -215,13 +215,13 @@ img.olTileImage {
         <div id="map"></div>
         <p>&nbsp;</p>
         <div class="control-group">
-          <div class="control-label">Coordonn&eacute;es X <a href="#" rel="clickover" title="Coordonn&eacute;es" data-content="Cliquez sur la carte pour modifier l'emplacement de l'institut"><i class="icon-info-sign"></i></a> =</div>
+          <div class="control-label">Coordonn&eacute;es X <a href="#" rel="clickover" title="Coordonn&eacute;es" data-content="Cliquez sur la carte pour modifier l'emplacement du comité."><i class="icon-info-sign"></i></a> =</div>
           <div class="controls">
             <p id="coord_X"><?= __s($coord_X) ?></p>
           </div>
         </div>
         <div class="control-group">
-          <div class="control-label">Coordonn&eacute;es Y <a href="#" rel="clickover" title="Coordonn&eacute;es" data-content="Cliquez sur la carte pour modifier l'emplacement de l'institut"><i class="icon-info-sign"></i></a> =</div>
+          <div class="control-label">Coordonn&eacute;es Y <a href="#" rel="clickover" title="Coordonn&eacute;es" data-content="Cliquez sur la carte pour modifier l'emplacement du comité."><i class="icon-info-sign"></i></a> =</div>
           <div class="controls">
             <p id="coord_Y"><?= __s($coord_Y) ?></p>
           </div>
@@ -234,11 +234,11 @@ img.olTileImage {
     <input type="hidden" name="form_coord_Y" id="form_coord_Y" value="<?= __s($row_institut['ch_ins_coord_Y']) ?>">
     <!-- Description -->
     <div id="sprytextarea1" class="control-group">
-      <label class="control-label" for="ch_ins_desc">Description <a href="#" rel="clickover" title="Description" data-content="D&eacute;crivez en quelques mots la mission de l'institut. 800 caractères maximum"><i class="icon-info-sign"></i></a></label>
+      <label class="control-label" for="ch_ins_desc">Description <a href="#" rel="clickover" title="Description" data-content="D&eacute;crivez en quelques mots la mission du comité. 6000 caractères maximum"><i class="icon-info-sign"></i></a></label>
     <div class="controls">
       <textarea name="ch_ins_desc" id="ch_ins_desc" class="wysiwyg" rows="15"><?= __s($row_institut['ch_ins_desc']) ?></textarea>
       <br>
-      <span class="textareaMaxCharsMsg">5000 caract&egrave;res maximum.</span><span class="textareaMinCharsMsg">2 caract&egrave;res minimum.</span>
+      <span class="textareaMaxCharsMsg">6000 caract&egrave;res maximum.</span><span class="textareaMinCharsMsg">2 caract&egrave;res minimum.</span>
     </div>
     </div>
 
@@ -287,5 +287,5 @@ var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "none
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "url", {maxChars:250, validateOn:["change"], isRequired:false});
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "url", {maxChars:250, validateOn:["change"], isRequired:false});
 var sprytextfield28 = new Spry.Widget.ValidationTextField("sprytextfield28", "url", {maxChars:250, validateOn:["change"], isRequired:false});
-var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:5000, minChars:2, validateOn:["change"], isRequired:false, useCharacterMasking:false});
+var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:6000, minChars:2, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>

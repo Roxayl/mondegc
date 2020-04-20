@@ -88,7 +88,7 @@ $_SESSION['an']=true;
       <a href="Page-carte.php" class="btn btn-primary btn-theme-geographie btn-large">Carte</a>
       <a href="histoire.php" class="btn btn-primary btn-theme-histoire btn-large">Histoire</a>
       <a href="patrimoine.php" class="btn btn-primary btn-theme-patrimoine btn-large">Culture</a>
-      <a href="economie.php" class="btn btn-primary btn-theme-economie btn-large">Economie</a>
+      <a href="economie.php" class="btn btn-primary btn-theme-economie btn-large">Économie</a>
       <a href="politique.php" class="btn btn-primary btn-theme-politique btn-large">Politique</a>
     </div>
   </div>
@@ -106,13 +106,13 @@ $_SESSION['an']=true;
 ================================================== -->
 
 <div class="row-fluid">
-    <div class="span8" id="postswrapper">
+    <div class="span8" id="postswrapper" style="padding-bottom: 15px;">
 
         <?php renderElement('errormsgs'); ?>
 
         <div id="actu" class="titre-vert no-bg anchor">
           <img src="assets/img/IconesBDD/100/Membre1.png" alt="icone user" style="margin-left: 3px;">
-          <h1>Derni&egrave;res actualit&eacute;s</h1>
+          <h1 style="font-size: 30px;">Derni&egrave;res actualit&eacute;s</h1>
         </div>
         <?php include('last_MAJ.php'); ?>
     </div>
@@ -120,7 +120,7 @@ $_SESSION['an']=true;
 
         <div id="actu" class="titre-bleu no-bg anchor">
           <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png" alt="icone user" style="margin-left: 1px;">
-          <h1>Communiqués publiés</h1>
+          <h1 style="font-size: 30px;">Communiqués publiés</h1>
         </div>
         <?php
         $query_communiquesPays = "
@@ -171,6 +171,7 @@ ORDER BY date DESC LIMIT 0, 15";
         </div>
 
     </div>
+</div>
 </div>
 
 <div class="modal container fade" id="myModal"></div>

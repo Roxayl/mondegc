@@ -158,7 +158,8 @@ $queryString_pays_arch = sprintf("&totalRows_pays_arch=%d%s", $totalRows_pays_ar
 <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url('assets/img/bannieres-instituts/histoire.png');
+    background: linear-gradient(to right, #00a2ff 0%,#1eff00 72%);
+    background-size: 200%;
 }
 </style>
 <!-- BOOTSTRAP -->
@@ -188,7 +189,7 @@ $queryString_pays_arch = sprintf("&totalRows_pays_arch=%d%s", $totalRows_pays_ar
 <?php $institut=true; include('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
-<header class="jumbotron jumbotron-institut subhead anchor" id="info-institut" >
+<header class="jumbotron jumbotron-medium jumbotron-institut subhead anchor" id="info-institut" >
   <div class="container">
     <h1><?php echo $row_institut['ch_ins_nom']; ?></h1>
   </div>
