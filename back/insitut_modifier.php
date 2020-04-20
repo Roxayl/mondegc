@@ -217,7 +217,7 @@ img.olTileImage {
         <div class="control-group">
           <div class="control-label">Coordonn&eacute;es X <a href="#" rel="clickover" title="Coordonn&eacute;es" data-content="Cliquez sur la carte pour modifier l'emplacement de l'institut"><i class="icon-info-sign"></i></a> =</div>
           <div class="controls">
-            <p id="coord_X"><?= __s($coord_Y) ?></p>
+            <p id="coord_X"><?= __s($coord_X) ?></p>
           </div>
         </div>
         <div class="control-group">

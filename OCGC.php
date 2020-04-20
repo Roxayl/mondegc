@@ -144,7 +144,7 @@ img.olTileImage {
           <div class="row-fluid">
             <div class="span12">
               <?php if(!empty($row_institut['ch_ins_img'])): ?>
-                <img alt="Icône de l'institut" class="pull-right" style="width: 35%;"
+                <img alt="Icône de l'institut" class="pull-right" style="width: 35%; margin-left: 15px;"
                      src="<?= __s($row_institut['ch_ins_img']) ?>">
               <?php endif; ?>
               <?php echo $row_institut['ch_ins_desc'] ?>

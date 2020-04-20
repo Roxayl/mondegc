@@ -87,7 +87,7 @@ $_SESSION['an']=true;
       <p class="hidden-phone">Débutez l'exploration&nbsp;:</p>
       <a href="Page-carte.php" class="btn btn-primary btn-theme-geographie btn-large">Carte</a>
       <a href="histoire.php" class="btn btn-primary btn-theme-histoire btn-large">Histoire</a>
-      <a href="patrimoine.php" class="btn btn-primary btn-theme-patrimoine btn-large">Patrimoine</a>
+      <a href="patrimoine.php" class="btn btn-primary btn-theme-patrimoine btn-large">Culture</a>
       <a href="economie.php" class="btn btn-primary btn-theme-economie btn-large">Economie</a>
       <a href="politique.php" class="btn btn-primary btn-theme-politique btn-large">Politique</a>
     </div>

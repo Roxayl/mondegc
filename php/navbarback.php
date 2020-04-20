@@ -231,7 +231,7 @@ if(isset($_SESSION['userObject'])) {
                   </a></li>
               <li class="nav-header">Les comités</li>
               <li><a href="../geographie.php">G&eacute;ographie</a></li>
-              <li><a href="../patrimoine.php">Patrimoine</a></li>
+              <li><a href="../patrimoine.php">Culture</a></li>
               <li><a href="../histoire.php">Histoire</a></li>
               <li><a href="../economie.php">&Eacute;conomie</a></li>
               <li><a href="../politique.php">Politique</a></li>
