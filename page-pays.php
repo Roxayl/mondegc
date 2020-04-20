@@ -217,11 +217,10 @@ init();
           <p><strong><?php echo $row_Pays['ch_pay_nom']; ?></strong></p>
           <p><em>Cr&eacute;&eacute; par <?php echo $row_User['ch_use_login']; ?></em></p>
           </a></li>
-        <li><a href="#diplomatie">Diplomatie</a></li>
-        <li><a href="#communiques">Communiqu&eacute;s</a></li>
-        <?php if ($row_Pays['ch_pay_header_presentation'] OR $row_Pays['ch_pay_text_presentation']) { ?>
+
         <li><a href="#presentation">Pr&eacute;sentation</a></li>
-        <?php } ?>
+        <li><a href="#communiques">Communiqu&eacute;s</a></li>
+        <li><a href="#diplomatie">Diplomatie</a></li>
         <?php if ($row_villes) { ?>
         <li><a href="#villes">Villes</a></li>
         <?php } ?>
@@ -301,28 +300,35 @@ init();
 
       <!-- INfo Generales
      ================================================== -->
-      <section>
+      <section class="pull-right info-infrastructure-off span5" style="margin-right: 10px;">
         <div class="row-fluid">
-          <div class="span4 thumb"> <img src="<?php echo $row_Pays['ch_pay_lien_imgdrapeau']; ?>" alt="Drapeau du pays n°<?php echo $row_Pays['ch_pay_id']; ?>" title="drapeau <?php echo $row_Pays['ch_pay_nom']; ?>"> </div>
-          <div class="span8">
-            <h3>Informations&nbsp;:&nbsp; <?php  echo $currentPage; ?></h3>
+          <div class="span12 thumb">
+              <img src="<?php echo $row_Pays['ch_pay_lien_imgdrapeau']; ?>" alt="Drapeau du pays n°<?php echo $row_Pays['ch_pay_id']; ?>" title="drapeau <?php echo $row_Pays['ch_pay_nom']; ?>">
+              <br>
+              <em><?= __s($row_Pays['ch_pay_devise']) ?></em>
+          </div>
+        </div>
+        <div class="row-fluid">
+          <div class="span12">
+              <br>
+            <h4>Informations</h4>
             <div class="well">
               <p><strong>Date de cr&eacute;ation&nbsp;:&nbsp;</strong> le
                 <?php  echo date("d/m/Y", strtotime($row_Pays['ch_pay_date'])); ?>
               </p>
               <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;:&nbsp;</strong> le
-                <?php  echo date("d/m/Y à G:i:s", strtotime($row_Pays['ch_pay_mis_jour'])); ?>
+                <?php  echo date("d/m/Y", strtotime($row_Pays['ch_pay_mis_jour'])); ?>
               </p>
               <p><strong>Nombre de villes&nbsp;:&nbsp;</strong><?php echo $totalRows_villes ?></p>
-              <p><strong>Population urbaine <a href="#" rel="clickover" title="Population urbaine" data-content="La population urbaine est la somme des populations issues des villes cr&eacute;es dans les jeux"><i class="icon-info-sign"></i></a> &nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($population_pays, 0, ',', ' '); echo $population_pays_francais ?> habitants</p>
-              <p><strong>Population rurale <a href="#" rel="clickover" title="Population rurale" data-content="La population rurale prend en compte la population issue de zones dessin&eacute;es sur la carte"><i class="icon-info-sign"></i></a>&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($row_Pays['ch_pay_population_carte'], 0, ',', ' '); echo $population_pays_francais ?> habitants</p>
-              <p><strong>Population totale&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($population_pays + $row_Pays['ch_pay_population_carte'], 0, ',', ' '); echo $population_pays_francais ?> habitants</p>
+              <p><strong>Population urbaine <a href="#" rel="clickover" title="Population urbaine" data-content="La population urbaine est la somme des populations issues des villes cr&eacute;es dans les jeux"><i class="icon-info-sign"></i></a> &nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($population_pays, 0, ',', ' '); echo $population_pays_francais ?></p>
+              <p><strong>Population rurale <a href="#" rel="clickover" title="Population rurale" data-content="La population rurale prend en compte la population issue de zones dessin&eacute;es sur la carte"><i class="icon-info-sign"></i></a>&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($row_Pays['ch_pay_population_carte'], 0, ',', ' '); echo $population_pays_francais ?></p>
+              <p><strong>Population totale&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($population_pays + $row_Pays['ch_pay_population_carte'], 0, ',', ' '); echo $population_pays_francais ?></p>
               <!-- <p><strong>Population employée&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($row_Pays['ch_pay_emploi_carte'], 0, ',', ' '); echo $population_pays_francais ?> habitants</p>-->
               <p><strong>R&eacute;gime&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_forme_etat']; ?></p>
             </div>
             <!-- type de jeu
      ================================================== -->
-            <h3>R&eacute;alis&eacute; avec&nbsp;:&nbsp;</h3>
+            <h4>R&eacute;alis&eacute; avec&nbsp</h4>
             <div class="well">
               <?php do { ?>
                 <?php if($row_liste_jeux['ch_vil_type_jeu'] == 'CL') { ?>
@@ -344,9 +350,9 @@ init();
           </div>
         </div>
         <div class="row-fluid">
-          <div class="span4 thumb"> <img src="Carto/Emplacements/emplacement<?php echo $row_Pays['ch_pay_emplacement']; ?>.jpg" alt="situation du pays <?php echo $row_Pays['ch_pay_nom']; ?>" title="situation pays <?php echo $row_Pays['ch_pay_nom']; ?>"> </div>
-          <div class="span8">
-            <h3>Situation&nbsp;:&nbsp;</h3>
+          <div class="span12">
+            <h4>Situation&nbsp</h4>
+            <img src="Carto/Emplacements/emplacement<?php echo $row_Pays['ch_pay_emplacement']; ?>.jpg" alt="situation du pays <?php echo $row_Pays['ch_pay_nom']; ?>" title="situation pays <?php echo $row_Pays['ch_pay_nom']; ?>">
             <div class="well">
               <p><strong>Capitale&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_capitale']; ?></p>
               <p><strong>Langues officielles&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_langue_officielle']; ?></p>
@@ -355,6 +361,35 @@ init();
           </div>
         </div>
       </section>
+
+      <!-- Présentation
+        ================================================== -->
+      <section id="presentation" class="anchor">
+        <div class="well">
+          <h5><strong><?php echo $row_Pays['ch_pay_header_presentation']; ?></strong></h5>
+          <?php echo $row_Pays['ch_pay_text_presentation']; ?>
+        </div>
+      </section>
+
+      <!-- Communiqués
+        ================================================== -->
+      <section>
+        <div id="communiques" class="titre-vert anchor">
+          <h1
+          style='
+            background-image: url("assets/img/bg-titre-left.png");
+            background-position: left;'
+          >Communiqu&eacute;s</h1>
+        </div>
+        <div class="span7" style="margin: 0; margin-right: -12px;">
+        <?php 
+	  $ch_com_categorie = 'pays';
+	  $ch_com_element_id = $colname_Pays;
+	  include('php/communiques.php'); ?>
+        </div>
+      </section>
+
+      <div class="clearfix"></div>
       <!-- Diplomatie
      ================================================== -->
       <section>
@@ -362,7 +397,7 @@ init();
           <h1>Diplomatie</h1>
         </div>
         <div class="row-fluid">
-          <div class="span4 thumb">
+          <div class="span3 thumb">
             <?php if (!empty($personnage->get('lien_img'))) {?>
             <img src="<?= $personnage->get('lien_img'); ?>" alt="<?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?>" title="<?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?>">
             <?php } else { ?>
@@ -377,7 +412,7 @@ init();
               <?php } ?>
             </div>
           </div>
-          <div class="span8">
+          <div class="span9">
             <h3>Dirigeant du pays&nbsp;:</h3>
             <div class="well">
               <p><i><?= $personnage->get('predicat') ?></i></p>
@@ -401,29 +436,6 @@ init();
           <?php } ?>
         </div>
       </section>
-      <!-- Communiqués
-        ================================================== -->
-      <section>
-        <div id="communiques" class="titre-vert anchor">
-          <h1>Communiqu&eacute;s</h1>
-        </div>
-        <?php 
-	  $ch_com_categorie = 'pays';
-	  $ch_com_element_id = $colname_Pays;
-	  include('php/communiques.php'); ?>
-      </section>
-      <!-- Présentation
-        ================================================== -->
-      <?php if ($row_Pays['ch_pay_header_presentation'] OR $row_Pays['ch_pay_text_presentation']) { ?>
-      <section>
-        <div id="presentation" class="titre-vert anchor">
-          <h1>Pr&eacute;sentation</h1>
-        </div>
-        <div class="well">
-          <h5><strong><?php echo $row_Pays['ch_pay_header_presentation']; ?></strong></h5>
-          <?php echo $row_Pays['ch_pay_text_presentation']; ?></div>
-      </section>
-      <?php } ?>
       
       <!-- Liste des villes
         ================================================== -->

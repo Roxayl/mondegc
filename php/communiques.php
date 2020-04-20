@@ -94,7 +94,11 @@ $('#closemodal').click(function() {
 });
 </script>
 <?php } else { ?>
-<p>Aucun communiqu&eacute; n'a encore &eacute;t&eacute; &eacute;crit</p>
+<div class="well">
+    <div class="alert alert-tips">
+        <p>Aucun communiqu&eacute; n'a encore &eacute;t&eacute; &eacute;crit.</p>
+    </div>
+</div>
 <?php } ?>
 <?php 
 mysql_free_result($communiques);

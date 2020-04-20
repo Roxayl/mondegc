@@ -238,11 +238,60 @@ div.olControlPanel {
   <p>&nbsp;</p>
   <p>&nbsp;</p>
   <!-- Liste pays
-    ================================================== --> 
+    ================================================== -->
+
+  <!-- Continent RFGC
+    ================================================== -->
+  <div class="titre-gris anchor" id="RFGC">
+    <h2>Pays : République fédérale de Génération City</h2>
+  </div>
+  <div class="stat-continent pull-center">
+    <p><span class="stat"><span class="chiffre"><?php echo $nbpays_RFGC; ?></span> provinces</span> <span class="stat"><span class="chiffre"><?php echo $nbvilles_RFGC; ?></span> villes</span> <span class="stat"><span class="chiffre">
+      <?php
+	$nbhabitant_francais = number_format($nbhabitants_RFGC, 0, ',', ' ');
+	echo $nbhabitant_francais; ?>
+      </span> habitants</span></p>
+  </div>
+  <div class="row-fluid">
+    <div class="span4"> <img src="assets/img/continents/rfgc.png" alt="img-RFGC"> </div>
+    <div class="span8">
+      <ul class="listes liste-pays">
+        <?php do {
+			if ($row_listePays['ch_pay_continent'] == 'RFGC') {
+                	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_listePays['ch_pay_lien_imgdrapeau']))
+					{
+					$row_listePays['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_listePays['ch_pay_lien_imgdrapeau']);
+					}
+		?>
+        <li class="row-fluid">
+          <div class="">
+            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>"><img src="<?php echo $row_listePays['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau"></a> </div>
+            <div class="span4">
+              <h3><?php echo $row_listePays['ch_pay_nom']; ?></h3>
+            </div>
+            <div class="span4">
+              <p>cr&eacute;&eacute; par&nbsp;: <strong><?php echo $row_listePays['ch_use_login']; ?></strong></p>
+              <p>Nombre de villes&nbsp;: <strong><?php echo $row_listePays['nbville']; ?></strong></p>
+              <p>Population&nbsp;: <strong>
+                <?php
+	$nbhabitant_francais = number_format($row_listePays['nbhabitant'], 0, ',', ' ');
+	echo $nbhabitant_francais; ?>
+                habitants</strong></p>
+            </div>
+            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>" class="btn btn-primary">Visiter</a> </div>
+          </div>
+        </li>
+        <?php } } while ($row_listePays = mysql_fetch_assoc($listePays));
+		  mysql_data_seek($listePays,0); ?>
+        <p>&nbsp;</p>
+      </ul>
+    </div>
+  </div>
+
   <!-- Continent Aurinea
     ================================================== -->
   <div class="titre-gris anchor" id="liste-pays">
-    <h3>Continent Aurin&eacute;a</h3>
+    <h2>Continent Aurin&eacute;a</h2>
   </div>
   <div class="stat-continent pull-center">
     <p><span class="stat"><span class="chiffre"> <?php echo $nbpays_Aurinea; ?> </span> pays</span> <span class="stat"><span class="chiffre"> <?php echo $nbvilles_Aurinea; ?> </span> villes</span> <span class="stat"><span class="chiffre">
@@ -300,10 +349,11 @@ div.olControlPanel {
       </ul>
     </div>
   </div>
+
   <!-- Continent Volcania
     ================================================== -->
   <div class="titre-gris anchor" id="Volcania">
-    <h3>Continent Volcania</h3>
+    <h2>Continent Volcania</h2>
   </div>
   <div class="stat-continent pull-center">
     <p><span class="stat"><span class="chiffre"><?php echo $nbpays_Volcania; ?></span> pays</span> <span class="stat"><span class="chiffre"><?php echo $nbvilles_Volcania; ?></span> villes</span> <span class="stat"><span class="chiffre">
@@ -344,10 +394,11 @@ div.olControlPanel {
       </ul>
     </div>
   </div>
+
   <!-- Continent Aldesyl
     ================================================== -->
   <div class="titre-gris anchor" id="Aldesyl">
-    <h3>Continent Aldesyl</h3>
+    <h2>Continent Aldesyl</h2>
   </div>
   <div class="stat-continent pull-center">
     <p><span class="stat"><span class="chiffre"><?php echo $nbpays_Aldesyl; ?></span> pays</span> <span class="stat"><span class="chiffre"><?php echo $nbvilles_Aldesyl; ?></span> villes</span> <span class="stat"><span class="chiffre">
@@ -389,10 +440,11 @@ div.olControlPanel {
       </ul>
     </div>
   </div>
+
   <!-- Continent Oceania
     ================================================== -->
   <div class="titre-gris anchor" id="Oceania">
-    <h3>Continent Oceania</h3>
+    <h2>Continent Oceania</h2>
   </div>
   <div class="stat-continent pull-center">
     <p><span class="stat"><span class="chiffre"><?php echo $nbpays_Oceania; ?></span> pays</span> <span class="stat"><span class="chiffre"><?php echo $nbvilles_Oceania; ?></span> villes</span> <span class="stat"><span class="chiffre">
@@ -436,10 +488,11 @@ div.olControlPanel {
       </ul>
     </div>
   </div>
+
   <!-- Continent Philicie
     ================================================== -->
   <div class="titre-gris anchor" id="Philicie">
-    <h3>Continent Philicie</h3>
+    <h2>Continent Philicie</h2>
   </div>
   <div class="stat-continent pull-center">
     <p><span class="stat"><span class="chiffre"><?php echo $nbpays_Philicie; ?></span> pays</span> <span class="stat"><span class="chiffre"><?php echo $nbvilles_Philicie; ?></span> villes</span> <span class="stat"><span class="chiffre">
@@ -483,54 +536,8 @@ div.olControlPanel {
       </ul>
     </div>
   </div>
-  <!-- Continent RFGC
-    ================================================== -->
-  <div class="titre-gris anchor" id="RFGC">
-    <h3>Pays : République Fédérale de Génération City</h3>
-  </div>
-  <div class="stat-continent pull-center">
-    <p><span class="stat"><span class="chiffre"><?php echo $nbpays_RFGC; ?></span> provinces</span> <span class="stat"><span class="chiffre"><?php echo $nbvilles_RFGC; ?></span> villes</span> <span class="stat"><span class="chiffre">
-      <?php 
-	$nbhabitant_francais = number_format($nbhabitants_RFGC, 0, ',', ' ');
-	echo $nbhabitant_francais; ?>
-      </span> habitants</span></p>
-  </div>
-  <div class="row-fluid">
-    <div class="span4"> <img src="assets/img/continents/rfgc.png" alt="img-RFGC"> </div>
-    <div class="span8">
-      <ul class="listes liste-pays">
-        <?php do { 
-			if ($row_listePays['ch_pay_continent'] == 'RFGC') {
-                	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_listePays['ch_pay_lien_imgdrapeau']))
-					{
-					$row_listePays['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_listePays['ch_pay_lien_imgdrapeau']);
-					}
-		?>
-        <li class="row-fluid">
-          <div class="">
-            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>"><img src="<?php echo $row_listePays['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau"></a> </div>
-            <div class="span4">
-              <h3><?php echo $row_listePays['ch_pay_nom']; ?></h3>
-            </div>
-            <div class="span4">
-              <p>cr&eacute;&eacute; par&nbsp;: <strong><?php echo $row_listePays['ch_use_login']; ?></strong></p>
-              <p>Nombre de villes&nbsp;: <strong><?php echo $row_listePays['nbville']; ?></strong></p>
-              <p>Population&nbsp;: <strong>
-                <?php 
-	$nbhabitant_francais = number_format($row_listePays['nbhabitant'], 0, ',', ' ');
-	echo $nbhabitant_francais; ?>
-                habitants</strong></p>
-            </div>
-            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>" class="btn btn-primary">Visiter</a> </div>
-          </div>
-        </li>
-        <?php } } while ($row_listePays = mysql_fetch_assoc($listePays));
-		  mysql_data_seek($listePays,0); ?>
-        <p>&nbsp;</p>
-      </ul>
-    </div>
-  </div>
 </div>
+
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>

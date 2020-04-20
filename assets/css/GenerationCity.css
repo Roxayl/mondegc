@@ -787,12 +787,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9babbf', end
 
 
 .bandeau-stat {
-	background: repeating-linear-gradient(
+	background: linear-gradient(
       108deg,
-      #223b61,
-      #223b61 15px,
-      #2d4d7f 15px,
-      #2D4D7F 30px
+      #223b61 0%,
+      #223b61 10%,
+      #2d4d7f 30%,
+      #234067 55%,
+      #2d487a 65%,
+      #223b61 80%,
+      #2D4D7F 100%
     );
 	color: #ffffff;
 	border-top-style: solid;
@@ -1162,7 +1165,14 @@ footer img {
 	overflow: auto;
 	text-align: left;
 	height: 500px;
-	background-color: #456dc5;
+    background: linear-gradient(
+      108deg,
+      #223b61 0%,
+      #223b61 10%,
+      #2d4d7f 30%,
+      #223b61 80%,
+      #2D4D7F 100%
+    );
 	line-height: 0.9em;
 	margin: 0px;
 	padding: 0px;
@@ -1257,7 +1267,16 @@ footer img {
 	padding-top: 20px;
 }
 .stat-continent {
-	background-color: #1d459d;
+    background: linear-gradient(
+      108deg,
+      #223b61 0%,
+      #223b61 10%,
+      #2d4d7f 30%,
+      #234067 55%,
+      #2d487a 65%,
+      #223b61 80%,
+      #2D4D7F 100%
+    );
 	color: #FFFFFF;
 	padding: 5px;
 	text-align: center;
@@ -1692,6 +1711,7 @@ table .btn {
 	z-index: 1024;
 }
 .img-jeu {
+    width: 130px;
 	margin-bottom: 10px;
 }
 .img-drapeau-hist {
