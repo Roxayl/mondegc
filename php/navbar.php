@@ -34,6 +34,12 @@ if(isset($_SESSION['userObject'])) {
     $navbar_userProposalPendingVotes = $navbar_proposalList->userProposalPendingVotes($_SESSION['userObject']);
 }
 
+/** Notifications */
+if(isset($_SESSION['userObject'])) {
+    $navbar_userNotifications = new \GenCity\Monde\Notification\UserNotifications($_SESSION['userObject']);
+    $navbar_notifCount = $navbar_userNotifications->getUnreadCount();
+}
+
 ?>
 
 <div class="navbar navbar-fixed-top">
@@ -92,9 +98,11 @@ if(isset($_SESSION['userObject'])) {
             </div>
 
             <div class="dropdown dropdown-notification pull-right" style="margin-top: -4px; margin-right: 5px;">
-              <a href="#" class="btn btn-primary btn-inactive" type="submit"
+              <a href="#" class="btn btn-primary <?= !$navbar_notifCount ? 'btn-inactive' : '' ?>" type="submit"
                  title="Notifications" data-toggle="dropdown">
-                  <i class="icon-bell icon-white"></i></a>
+                  <i class="icon-bell icon-white"></i>
+                  <?= $navbar_notifCount > 0 ? $navbar_notifCount : '' ?>
+              </a>
               <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                   <?php renderElement('Notification/generate_user_notifications'); ?>
               </ul>

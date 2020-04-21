@@ -50,7 +50,7 @@ $_SESSION['an']=true;
 <style>
 .jumbotron {
 	background-image: url('assets/img/2019/GC2020_banniere.png');
-    background-position: 0 -300px;
+    background-position: 0 -240px;
     background-attachment: fixed;
 }
 </style>
@@ -120,6 +120,8 @@ $_SESSION['an']=true;
         <?php include('last_MAJ.php'); ?>
     </div>
     <div class="span4" style="background-color: #EDEDED;">
+
+        <div class="well"></div>
 
         <div id="actu" class="titre-bleu no-bg anchor">
           <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png" alt="icone user" style="margin-left: 1px;">
