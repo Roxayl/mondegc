@@ -49,7 +49,9 @@ $_SESSION['an']=true;
 <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url('http://generation-city.com/forum/new/img/cat2.jpg');
+	background-image: url('assets/img/2019/GC2020_banniere.png');
+    background-position: 0 -300px;
+    background-attachment: fixed;
 }
 </style>
 <!-- Le javascript
@@ -81,7 +83,7 @@ $_SESSION['an']=true;
   <div class="container">
     <div class="header">
       <h1>Bienvenue sur le site du Monde de Génération City</h1>
-      <p><em>Le Monde GC rassemble une communaut&eacute; de joueurs du site G&eacute;n&eacute;ration City qui ont souhait&eacute; s'unir pour construire leur propre monde et d&eacute;velopper <a href="participer.php#faq">une nouvelle expérience de jeu</a>.</em></p>
+      <p><em>Le Monde GC rassemble une communaut&eacute; de joueurs de G&eacute;n&eacute;ration City qui ont souhait&eacute; s'unir pour construire leur propre monde et d&eacute;velopper <a href="participer.php#faq">une nouvelle expérience de jeu</a>.</em></p>
     </div>
     <div class="Master-link">
       <p class="hidden-phone">Débutez l'exploration&nbsp;:</p>
@@ -96,6 +98,7 @@ $_SESSION['an']=true;
 <!-- Bandeau stat
 ================================================== -->
 <?php include('php/bandeauStat.php'); ?>
+
 <!-- Icon Start
 ================================================== -->
 <div class="container corps-page">
