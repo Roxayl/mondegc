@@ -298,11 +298,11 @@ input[type="submit"], .btn {
 .btn-inactive {
   background-color: #bababa;
   *background-color: #bababa;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d8dcf1), to(#bababa));
-  background-image: -webkit-linear-gradient(top, #d8dcf1, #bababa);
-  background-image: -o-linear-gradient(top, #d8dcf1, #bababa);
-  background-image: linear-gradient(to bottom, #d8dcf1, #bababa);
-  background-image: -moz-linear-gradient(top, #d8dcf1, #bababa);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#bebebe), to(#bababa));
+  background-image: -webkit-linear-gradient(top, #bebebe, #bababa);
+  background-image: -o-linear-gradient(top, #bebebe, #bababa);
+  background-image: linear-gradient(to bottom, #bebebe, #bababa);
+  background-image: -moz-linear-gradient(top, #bebebe, #bababa);
 }
 
 .btn-temperance {
@@ -727,6 +727,16 @@ ul.dropdown-menu.dropdown-double > div.drop-colonne-droite > li, ul.dropdown-men
 }
 .dropdown-notification a {
     white-space: normal;
+}
+.notification-unread-pastille {
+    display: none;
+}
+.notification-unread .notification-unread-pastille {
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    background-color: #ff4e00;
 }
 /* HEADER
 -------------------------------------------------- */

@@ -28,6 +28,7 @@ class UserNotifications {
 
         $sql = sprintf('SELECT * FROM notifications
             WHERE recipient_id = %s ' . $where_sql . '
+            ORDER BY id DESC
             LIMIT ' . (int)$limit . ' OFFSET ' . (int)$offset,
             GetSQLValueString($this->user->get('ch_use_id'), 'int')
         );
@@ -42,8 +43,30 @@ class UserNotifications {
 
     }
 
-    public function getUserId() {
-        return $this->user_id;
+    public function markAsRead() {
+
+        $sql = sprintf('UPDATE notifications SET unread = 0
+            WHERE recipient_id = %s',
+            GetSQLValueString($this->user->get('ch_use_id')));
+        $query = mysql_query($sql) or die(mysql_error());
+
+    }
+
+    public function getUser() {
+        return $this->user;
+    }
+
+    public function getUnreadCount() {
+
+        $sql = sprintf('SELECT COUNT(*) AS notifCount FROM notifications
+            WHERE recipient_id = %s AND unread = 1
+            ORDER BY id DESC',
+            GetSQLValueString($this->user->get('ch_use_id'), 'int')
+        );
+        $query = mysql_query($sql) or die(mysql_error());
+
+        return (int)mysql_fetch_assoc($query)['notifCount'];
+
     }
 
 }

@@ -89,6 +89,13 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
   \GenCity\Monde\Logger\Log::createItem('pays', $thisPays->get('ch_pay_id'), 'insert',
       null, array('entity' => $thisPays->model->getInfo()));
 
+  $userList = new \GenCity\Monde\User\UserList();
+  $notification = new \GenCity\Monde\Notification\Notification(array(
+      'type_notif' => 'nv_pays_bienvenue',
+      'element' => $thisPays->get('ch_pay_id')
+  ));
+  $notification->emit($userList->getActive());
+
   $insertGoTo = "liste-pays.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
