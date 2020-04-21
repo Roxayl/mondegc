@@ -5,14 +5,20 @@ namespace GenCity\Monde\Notification;
 
 class UserNotifications {
 
-    private $user_id;
+    private $user;
 
-    public function __construct($user_ID) {
+    public function __construct($user) {
 
-        $this->user_id = $user_ID;
+        $this->user = $user;
 
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @param null $filter
+     * @return Notification[]
+     */
     public function getNotifications($limit = 10, $offset = 0, $filter = null) {
 
         $where_sql = '';
@@ -23,7 +29,7 @@ class UserNotifications {
         $sql = sprintf('SELECT * FROM notifications
             WHERE recipient_id = %s ' . $where_sql . '
             LIMIT ' . (int)$limit . ' OFFSET ' . (int)$offset,
-            GetSQLValueString($this->user_id, 'int')
+            GetSQLValueString($this->user->get('ch_use_id'), 'int')
         );
         $query = mysql_query($sql) or die(mysql_error());
 

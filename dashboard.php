@@ -119,7 +119,6 @@ init();
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#info-dashboard">
           Bienvenue sur votre tableau de bord.</li>
-        <li><a href="#notifications">Notifications</a></li>
         <li><a href="#gestion">Gestion</a></li>
       </ul>
     </div>
@@ -132,15 +131,6 @@ init();
     <ul class="breadcrumb">
       <li class="active">Tableau de bord</li>
     </ul>
-
-    <section>
-    <div class="titre-bleu anchor" id="notifications">
-      <h1>Notifications</h1>
-    </div>
-    <div class="well">
-        <div class="alert alert-info">Vos notifications arrivent bientôt ! Un peu de patience... ;)</div>
-    </div>
-    </section>
 
     <section>
     <div class="titre-bleu anchor" id="gestion">

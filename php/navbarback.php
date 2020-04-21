@@ -81,15 +81,28 @@ if(isset($_SESSION['userObject'])) {
         <!-- Menu gestion une fois connecté desktop/phone -->
         <div class="hidden-tablet navbar-form <?php echo isset($_SESSION['menu_gestion']) ? $_SESSION['menu_gestion'] : '' ?>">
             <div><a href="membre-modifier_back.php?userID=<?= isset($_SESSION['user_ID']) ? $_SESSION['user_ID'] : '' ?>" class="btn btn-primary" type="submit" title="page de gestion du profil" style="visibility: hidden;"><i class="icon-user-white"></i> Mon profil</a></div>
-            <div class="dropdown" style="margin-top: -4px;">
-              <a href="../dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mes pays</a>
+
+            <div class="dropdown pull-right" style="margin-top: -4px;">
+              <a href="../dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="Gérer mes pays"><i class="icon-pays-small-white"></i> Mes pays</a>
               <ul class="dropdown-menu dropdown-mes-pays" role="menu" aria-labelledby="dLabel">
               <?php foreach($nav_userPays as $nav_thisPays): ?>
-                <li style="width: 100%;"><a tabindex="-1" href="page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>"><img class="img-menu-drapeau" src="<?= $nav_thisPays['ch_pay_lien_imgdrapeau'] ?>"> <?= $nav_thisPays['ch_pay_nom'] ?></a></li>
+                <li><a href="../back/page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>">
+                    <img class="img-menu-drapeau" src="<?= $nav_thisPays['ch_pay_lien_imgdrapeau'] ?>"> <?= $nav_thisPays['ch_pay_nom'] ?>
+                </a></li>
               <?php endforeach; ?>
               </ul>
             </div>
-          <div class="offset" style="margin-top: 5px;"><a href="membre-modifier_back.php?userID=<?= isset($_SESSION['user_ID']) ? $_SESSION['user_ID'] : '' ?>" class="Nav-pseudo"><span class="bienvenue"></span><?php echo isset($_SESSION['login_user']) ? $_SESSION['login_user'] : '' ?></a>&nbsp; <a href="<?php echo $logoutAction ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a></div>
+
+            <div class="dropdown dropdown-notification pull-right" style="margin-top: -4px; margin-right: 5px;">
+              <a href="#" class="btn btn-primary btn-inactive" type="submit"
+                 title="Notifications" data-toggle="dropdown">
+                  <i class="icon-bell icon-white"></i></a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                  <?php renderElement('Notification/generate_user_notifications'); ?>
+              </ul>
+            </div>
+
+          <div class="offset" style="margin-top: 36px;"><a href="membre-modifier_back.php?userID=<?= isset($_SESSION['user_ID']) ? $_SESSION['user_ID'] : '' ?>" class="Nav-pseudo"><span class="bienvenue"></span><?php echo isset($_SESSION['login_user']) ? $_SESSION['login_user'] : '' ?></a>&nbsp; <a href="<?php echo $logoutAction ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a></div>
         </div>
         
         <!-- Menu -->

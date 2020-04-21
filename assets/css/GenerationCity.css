@@ -295,6 +295,16 @@ input[type="submit"], .btn {
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
 }
 
+.btn-inactive {
+  background-color: #bababa;
+  *background-color: #bababa;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d8dcf1), to(#bababa));
+  background-image: -webkit-linear-gradient(top, #d8dcf1, #bababa);
+  background-image: -o-linear-gradient(top, #d8dcf1, #bababa);
+  background-image: linear-gradient(to bottom, #d8dcf1, #bababa);
+  background-image: -moz-linear-gradient(top, #d8dcf1, #bababa);
+}
+
 .btn-temperance {
 	color: #ffffff;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -368,6 +378,10 @@ input[type='submit'] {
   color: #ffffff;
   background-color: #ff4e00;
   *background-color: #ff4e00;
+}
+.btn-inactive:hover, .btn-inactive:active, .btn-inactive.active, .btn-inactive.disabled, .btn-inactive[disabled] {
+  background-color: #bababa;
+  *background-color: #bababa;
 }
 .btn-temperance:hover, .btn-temperance:active, .btn-temperance.active, .btn-temperance.disabled, .btn-temperance[disabled] {
   color: #ffffff;
@@ -696,6 +710,23 @@ ul.dropdown-menu.dropdown-double > div.drop-colonne-droite > li, ul.dropdown-men
 }
 .dropdown-mes-pays {
     text-align: left;
+}
+.notification-styler {
+    height: 72px;
+    width: 10px;
+    margin-left: -15px;
+    background-size: 160%;
+}
+.dropdown-notification h4 {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+.dropdown-notification .dropdown-menu {
+    text-align: left;
+    width: 380px;
+}
+.dropdown-notification a {
+    white-space: normal;
 }
 /* HEADER
 -------------------------------------------------- */
