@@ -520,18 +520,29 @@ echo $population_ville_francais; ?></p>
           <h1>Économie</h1>
         </div>
         <h3>Balance des ressources</h3>
-
-          <?php renderResources($total_ressources); ?>
+          <?php
+            renderElement('Temperance/resources', array(
+                'resources' => $total_ressources
+            ));
+          ?>
           <div class="clearfix"></div>
 
         <h3>Détail des ressources</h3>
 
           <h4 style="margin-left: 10px;">Infrastructures</h4>
-          <?php renderResources($row_somme_ressources); ?>
+          <?php
+            renderElement('Temperance/resources', array(
+                'resources' => $row_somme_ressources
+            ));
+          ?>
           <div class="clearfix"></div>
 
           <h4 style="margin-left: 10px;">Patrimoine</h4>
-          <?php renderResources($row_monument_ressources); ?>
+          <?php
+            renderElement('Temperance/resources', array(
+                'resources' => $row_monument_ressources
+            ));
+          ?>
           <div class="clearfix"></div>
         <!-- Liste infrasructures
     ================================================== -->

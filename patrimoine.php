@@ -243,7 +243,11 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
                 <h3><?php echo $row_info_cat['ch_mon_cat_nom']; ?></h3>
                 <p><?php echo $row_info_cat['ch_mon_cat_desc']; ?></p
                 <p><strong>Influence sur l'économie de cette catégorie :</strong></p>
-                  <?php renderResources($row_monument_ressources); ?>
+                  <?php
+                    renderElement('Temperance/resources', array(
+                        'resources' => $row_monument_ressources
+                    ));
+                  ?>
                   <div class="clearfix"></div>
               </div>
               <div class="span2 icone-categorie icone-large"><img src="<?php echo $row_info_cat['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_info_cat['ch_mon_cat_nom']; ?>" style="background-color:<?php echo $row_info_cat['ch_mon_cat_couleur']; ?>;"></div>

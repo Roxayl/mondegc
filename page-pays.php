@@ -644,19 +644,31 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 
         <div class="row-fluid" style="margin-left: 12px;">
           <h3>Balance totale des ressources</h3>
-          <?php renderResources($ressources_total); ?>
+          <?php
+            renderElement('Temperance/resources', array(
+                'resources' => $ressources_total
+            ));
+          ?>
         </div>
         <div class="row-fluid" style="margin-left: 12px;">
 
           <h3>Détail de la balance des ressources</h3>
             <p></p>
           <h4>Balance des ressources issues des villes du pays </h4>
-          <?php renderResources($ressources_villes); ?>
+            <?php
+            renderElement('Temperance/resources', array(
+                'resources' => $ressources_villes
+            ));
+            ?>
         </div>
         <div class="row-fluid" style="margin-left: 12px;">
             <p></p>
           <h4>Balance des ressources issues de la carte</h4>
-          <?php renderResources($ressources_cartes); ?>
+            <?php
+            renderElement('Temperance/resources', array(
+                'resources' => $ressources_cartes
+            ));
+            ?>
         </div>
         <div class="clearfix"></div>
 

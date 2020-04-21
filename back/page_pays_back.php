@@ -990,7 +990,12 @@ img.olTileImage {
               'education' => $row_InfoGenerale['ch_pay_education_carte']
           ); ?>
 
-          <?php renderResources($ressources_cartes, '../'); ?>
+          <?php
+            renderElement('Temperance/resources', array(
+                'resources' => $ressources_cartes,
+                'path' => '../'
+            ));
+          ?>
 
         <div class="span12">
           <p>&nbsp;</p>
