@@ -715,7 +715,7 @@ ul.dropdown-menu.dropdown-double > div.drop-colonne-droite > li, ul.dropdown-men
 .jumbotron .container {
 	position: relative;
 	z-index: 2;
-	height: 260px;
+	height: 220px;
 	overflow: hidden;
 }
 #introheader .container {
@@ -728,7 +728,7 @@ ul.dropdown-menu.dropdown-double > div.drop-colonne-droite > li, ul.dropdown-men
 }
 .jumbotron .container-carousel {
 	position: relative;
-	margin-top: -5px;
+	margin-top: -7px;
 	height: 360px;
 }
 .jumbotron-institut {
@@ -1677,21 +1677,29 @@ table .btn {
 	vertical-align: top;
 	text-align: left;
 	padding: 7px;
-	margin: 0em 0em 0em 1em;
+    margin: 0 10px 0 1em;
+}
+.info-infrastructure-off h2 {
+    margin: 0;
+	padding: 0;
+	vertical-align: top;
+	text-align: center;
+	background: #dfdfdf;
+    border-radius: 25px 25px 0 0;
+	font-family: 'Titillium Web', 'Linux Libertine', 'Roboto', sans-serif;
+	font-weight: 600;
+	color: black;
+	font-size: 125%;
 }
 .info-infrastructure-off h4 {
 	padding: 5px;
 	vertical-align: top;
 	font-weight: 600;
-	font-size: 105% ;
+	font-size: 100%;
 	text-align: center;
 	background-color: #e7e7e7;
 	border-radius: 25px;
-	border-top-left-radius: 25px;
-	border-top-right-radius: 25px;
-	border-bottom-right-radius: 25px;
-	border-bottom-left-radius: 25px;
-	font-family: 'Titillium Web', 'Linux Libertine', 'Roboto', sans-serif ;
+	font-family: 'Titillium Web', 'Linux Libertine', 'Roboto', sans-serif;
 	color: black;
 }
 
@@ -1932,7 +1940,7 @@ body > .navbar-fixed-top .brand {
 
 .jumbotron .container-carousel {
 	position: relative;
-	height: 380px;
+	height: 360px;
 }
 .jumbotron h1 {
 	font-size: 2em;

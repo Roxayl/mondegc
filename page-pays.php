@@ -198,14 +198,13 @@ init();
 ================================================== -->
 <header class="jumbotron subhead anchor" id="pays_stats">
   <div class="container">
-  <?php if($thisPays->get('ch_pay_continent') === 'RFGC'): ?>
-    <h2>République Fédérale de Génération City</h2>
-  <?php endif; ?>
-
+    <?php if($thisPays->get('ch_pay_continent') === 'RFGC'): ?>
+      <h2>République fédérale de Génération City</h2>
+    <?php endif; ?>
     <h1><?php echo $row_Pays['ch_pay_nom']; ?></h1>
-    <p><?php echo $row_Pays['ch_pay_devise']; ?></p>
   </div>
 </header>
+
 <div class="container"> 
   
   <!-- Docs nav
@@ -300,73 +299,82 @@ init();
 
       <!-- INfo Generales
      ================================================== -->
-      <section class="pull-right info-infrastructure-off span5" style="margin-right: 10px;">
-        <div class="row-fluid">
-          <div class="span12 thumb">
-              <img src="<?php echo $row_Pays['ch_pay_lien_imgdrapeau']; ?>" alt="Drapeau du pays n°<?php echo $row_Pays['ch_pay_id']; ?>" title="drapeau <?php echo $row_Pays['ch_pay_nom']; ?>">
-              <br>
-              <em><?= __s($row_Pays['ch_pay_devise']) ?></em>
+      <?php
+      ob_start();
+      ?>
+      <div class="row-fluid">
+        <div class="span12 thumb">
+          <img src="<?php echo $row_Pays['ch_pay_lien_imgdrapeau']; ?>" alt="Drapeau du pays n°<?php echo $row_Pays['ch_pay_id']; ?>" title="drapeau <?php echo $row_Pays['ch_pay_nom']; ?>">
+          <br>
+          <em><?= __s($row_Pays['ch_pay_devise']) ?></em>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="span12">
+          <br>
+          <h4>Informations</h4>
+          <div class="well">
+            <p><strong>Date de cr&eacute;ation&nbsp;:&nbsp;</strong> le
+              <?php  echo date("d/m/Y", strtotime($row_Pays['ch_pay_date'])); ?>
+            </p>
+            <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;:&nbsp;</strong> le
+              <?php  echo date("d/m/Y", strtotime($row_Pays['ch_pay_mis_jour'])); ?>
+            </p>
+            <p><strong>Nombre de villes&nbsp;:&nbsp;</strong><?php echo $totalRows_villes ?></p>
+            <p><strong>Population urbaine <a href="#" rel="clickover" title="Population urbaine" data-content="La population urbaine est la somme des populations issues des villes cr&eacute;es dans les jeux"><i class="icon-info-sign"></i></a> &nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($population_pays, 0, ',', ' '); echo $population_pays_francais ?></p>
+            <p><strong>Population rurale <a href="#" rel="clickover" title="Population rurale" data-content="La population rurale prend en compte la population issue de zones dessin&eacute;es sur la carte"><i class="icon-info-sign"></i></a>&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($row_Pays['ch_pay_population_carte'], 0, ',', ' '); echo $population_pays_francais ?></p>
+            <p><strong>Population totale&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($population_pays + $row_Pays['ch_pay_population_carte'], 0, ',', ' '); echo $population_pays_francais ?></p>
+          <!-- <p><strong>Population employée&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($row_Pays['ch_pay_emploi_carte'], 0, ',', ' '); echo $population_pays_francais ?> habitants</p>-->
+            <p><strong>R&eacute;gime&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_forme_etat']; ?></p>
+          </div>
+          <!-- type de jeu
+ ================================================== -->
+          <h4>R&eacute;alis&eacute; avec&nbsp</h4>
+          <div class="well">
+            <?php do { ?>
+              <?php if($row_liste_jeux['ch_vil_type_jeu'] == 'CL') { ?>
+              <img src="assets/img/jeux-ico/cl.png" class="img-jeu">
+              <?php } elseif ($row_liste_jeux['ch_vil_type_jeu'] == 'CXL'){ ?>
+              <img src="assets/img/jeux-ico/cxl.png" class="img-jeu">
+              <?php } elseif ($row_liste_jeux['ch_vil_type_jeu'] =='SC5'){ ?>
+              <img src="assets/img/jeux-ico/sc5.png" class="img-jeu">
+              <?php } elseif ($row_liste_jeux['ch_vil_type_jeu'] =='SC4'){ ?>
+              <img src="assets/img/jeux-ico/sc4.png" class="img-jeu">
+              <?php } elseif ($row_liste_jeux['ch_vil_type_jeu'] =='SIM'){ ?>
+              <img src="assets/img/jeux-ico/sims.png" class="img-jeu">
+              <?php } elseif ($row_liste_jeux['ch_vil_type_jeu'] =='SKY'){ ?>
+              <img src="assets/img/jeux-ico/skylines.png" class="img-jeu">
+              <?php } ?>
+            <?php } while ($row_liste_jeux = mysql_fetch_assoc($liste_jeux)); ?>
           </div>
         </div>
-        <div class="row-fluid">
-          <div class="span12">
-              <br>
-            <h4>Informations</h4>
-            <div class="well">
-              <p><strong>Date de cr&eacute;ation&nbsp;:&nbsp;</strong> le
-                <?php  echo date("d/m/Y", strtotime($row_Pays['ch_pay_date'])); ?>
-              </p>
-              <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;:&nbsp;</strong> le
-                <?php  echo date("d/m/Y", strtotime($row_Pays['ch_pay_mis_jour'])); ?>
-              </p>
-              <p><strong>Nombre de villes&nbsp;:&nbsp;</strong><?php echo $totalRows_villes ?></p>
-              <p><strong>Population urbaine <a href="#" rel="clickover" title="Population urbaine" data-content="La population urbaine est la somme des populations issues des villes cr&eacute;es dans les jeux"><i class="icon-info-sign"></i></a> &nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($population_pays, 0, ',', ' '); echo $population_pays_francais ?></p>
-              <p><strong>Population rurale <a href="#" rel="clickover" title="Population rurale" data-content="La population rurale prend en compte la population issue de zones dessin&eacute;es sur la carte"><i class="icon-info-sign"></i></a>&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($row_Pays['ch_pay_population_carte'], 0, ',', ' '); echo $population_pays_francais ?></p>
-              <p><strong>Population totale&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($population_pays + $row_Pays['ch_pay_population_carte'], 0, ',', ' '); echo $population_pays_francais ?></p>
-              <!-- <p><strong>Population employée&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($row_Pays['ch_pay_emploi_carte'], 0, ',', ' '); echo $population_pays_francais ?> habitants</p>-->
-              <p><strong>R&eacute;gime&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_forme_etat']; ?></p>
-            </div>
-            <!-- type de jeu
-     ================================================== -->
-            <h4>R&eacute;alis&eacute; avec&nbsp</h4>
-            <div class="well">
-              <?php do { ?>
-                <?php if($row_liste_jeux['ch_vil_type_jeu'] == 'CL') { ?>
-                <img src="assets/img/jeux-ico/cl.png" class="img-jeu">
-                <?php } elseif ($row_liste_jeux['ch_vil_type_jeu'] == 'CXL'){ ?>
-                <img src="assets/img/jeux-ico/cxl.png" class="img-jeu">
-                <?php } elseif ($row_liste_jeux['ch_vil_type_jeu'] =='SC5'){ ?>
-                <img src="assets/img/jeux-ico/sc5.png" class="img-jeu">
-                <?php } elseif ($row_liste_jeux['ch_vil_type_jeu'] =='SC4'){ ?>
-                <img src="assets/img/jeux-ico/sc4.png" class="img-jeu">
-                <?php } elseif ($row_liste_jeux['ch_vil_type_jeu'] =='SIM'){ ?>
-                <img src="assets/img/jeux-ico/sims.png" class="img-jeu">
-                <?php } elseif ($row_liste_jeux['ch_vil_type_jeu'] =='SKY'){ ?>
-                <img src="assets/img/jeux-ico/skylines.png" class="img-jeu">
-                <?php } else { ?>
-                <?php } ?>
-                <?php } while ($row_liste_jeux = mysql_fetch_assoc($liste_jeux)); ?>
-            </div>
+      </div>
+      <div class="row-fluid">
+        <div class="span12">
+          <h4>Situation&nbsp</h4>
+          <img src="Carto/Emplacements/emplacement<?php echo $row_Pays['ch_pay_emplacement']; ?>.jpg" alt="situation du pays <?php echo $row_Pays['ch_pay_nom']; ?>" title="situation pays <?php echo $row_Pays['ch_pay_nom']; ?>">
+          <div class="well">
+            <p><strong>Capitale&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_capitale']; ?></p>
+            <p><strong>Langues officielles&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_langue_officielle']; ?></p>
+            <p><strong>Monnaie&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_monnaie']; ?></p>
           </div>
         </div>
-        <div class="row-fluid">
-          <div class="span12">
-            <h4>Situation&nbsp</h4>
-            <img src="Carto/Emplacements/emplacement<?php echo $row_Pays['ch_pay_emplacement']; ?>.jpg" alt="situation du pays <?php echo $row_Pays['ch_pay_nom']; ?>" title="situation pays <?php echo $row_Pays['ch_pay_nom']; ?>">
-            <div class="well">
-              <p><strong>Capitale&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_capitale']; ?></p>
-              <p><strong>Langues officielles&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_langue_officielle']; ?></p>
-              <p><strong>Monnaie&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_monnaie']; ?></p>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
+
+      <?php
+      $infobox_contents = ob_get_clean();
+
+      renderElement('infobox', array(
+          'title' => __s($row_Pays['ch_pay_nom']),
+          'contents' => $infobox_contents
+      ));
+      ?>
 
       <!-- Présentation
         ================================================== -->
       <section id="presentation" class="anchor">
         <div class="well">
-          <h5><strong><?php echo $row_Pays['ch_pay_header_presentation']; ?></strong></h5>
+          <p><?php echo $row_Pays['ch_pay_header_presentation']; ?></p>
           <?php echo $row_Pays['ch_pay_text_presentation']; ?>
         </div>
       </section>
@@ -375,11 +383,8 @@ init();
         ================================================== -->
       <section>
         <div id="communiques" class="titre-vert anchor">
-          <h1
-          style='
-            background-image: url("assets/img/bg-titre-left.png");
-            background-position: left;'
-          >Communiqu&eacute;s</h1>
+          <h1 style='background-image: url("assets/img/bg-titre-left.png"); background-position: left;'
+            >Communiqu&eacute;s</h1>
         </div>
         <div class="span7" style="margin: 0; margin-right: -12px;">
         <?php 

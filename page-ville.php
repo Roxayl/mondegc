@@ -322,10 +322,8 @@ init();
         <?php if($row_User['ch_use_id'] != $row_Pays['ch_use_id']) { ?>
         <li><a href="#diplomatie">Diplomatie</a></li>
         <?php } ?>
-        <li><a href="#communiques">Communiqu&eacute;s</a></li>
-        <?php if ($row_infoVille['ch_vil_header']) { ?>
         <li><a href="#presentation">Pr&eacute;sentation</a></li>
-        <?php } ?>
+        <li><a href="#communiques">Communiqu&eacute;s</a></li>
         <li><a href="#carte">Carte</a></li>
         <?php if ($row_infrastructure || $row_monument) { ?>
         <li><a href="#Economie">Économie</a></li>
@@ -394,55 +392,76 @@ init();
       <?php } ?>
       <div class="clearfix"></div>
 
+
+      <?php
+      ob_start();
+      ?>
       <!-- Cadre info ville
     ================================================== -->
-      <section>
-        <div class="row-fluid"> 
-          <!-- Armoiries
+    <div class="row-fluid">
+      <!-- Armoiries
+================================================== -->
+      <div class="span12 thumb thumb-ville">
+        <?php if ($row_infoVille['ch_vil_armoiries']) { ?>
+        <img src="<?php echo $row_infoVille['ch_vil_armoiries']; ?>">
+        <?php } else { ?>
+        <img src="assets/img/imagesdefaut/blason.jpg">
+        <?php }?>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <h4>Informations</h4>
+        <div class="well"> <img class="thumb-drapeau" src="<?php echo $row_Pays['ch_pay_lien_imgdrapeau']; ?>">
+          <strong>
+            <?php if ($row_infoVille['ch_vil_capitale']==1) {
+    echo "capitale";
+} else { echo "ville"; } ?>
+            du pays <a href="page-pays.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>"><?php echo $row_Pays['ch_pay_nom']; ?></a></strong>
+          <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;:</strong>
+            <?php  echo date("d/m/Y", strtotime($row_infoVille['ch_vil_mis_jour'])); ?>
+          </p>
+          <p><strong>Date de recensement dans le monde GC&nbsp;:</strong>
+            <?php  echo date("d/m/Y", strtotime($row_infoVille['ch_vil_date_enregistrement'])); ?>
+          </p>
+          <p><strong>Population :</strong>
+            <?php
+$population_ville_francais = number_format($row_infoVille['ch_vil_population'], 0, ',', ' ');
+echo $population_ville_francais; ?></p>
+          <p><strong>Sp&eacute;cialit&eacute;&nbsp;:</strong> <?php echo $row_infoVille['ch_vil_specialite']; ?></p>
+        </div>
+        <h4>R&eacute;alis&eacute;e avec</h4>
+        <div class="well">
+          <?php if($row_infoVille['ch_vil_type_jeu'] == 'CL') { ?>
+          <img src="assets/img/jeux-ico/cl.png" class="img-jeu">
+          <?php } elseif ($row_infoVille['ch_vil_type_jeu'] == 'CXL'){ ?>
+          <img src="assets/img/jeux-ico/cxl.png" class="img-jeu">
+          <?php } elseif ($row_infoVille['ch_vil_type_jeu'] =='SC5'){ ?>
+          <img src="assets/img/jeux-ico/sc5.png" class="img-jeu">
+          <?php } elseif ($row_infoVille['ch_vil_type_jeu'] =='SC4'){ ?>
+          <img src="assets/img/jeux-ico/sc4.png" class="img-jeu">
+          <?php } else { ?>
+          <p>Information sur le jeu manquante</p>
+          <?php } ?>
+        </div>
+      </div>
+    </div>
+
+      <?php
+      $infobox_contents = ob_get_clean();
+
+      renderElement('infobox', array(
+          'title' => __s($row_infoVille['ch_vil_nom']),
+          'contents' => $infobox_contents
+      ));
+      ?>
+
+
+      <!-- Presentation
     ================================================== -->
-          <div class="span4 thumb thumb-ville">
-            <?php if ($row_infoVille['ch_vil_armoiries']) { ?>
-            <img src="<?php echo $row_infoVille['ch_vil_armoiries']; ?>">
-            <?php } else { ?>
-            <img src="assets/img/imagesdefaut/blason.jpg">
-            <?php }?>
-          </div>
-          <div class="span8">
-            <h3>Informations&nbsp;:&nbsp;</h3>
-            <div class="well"> <img class="thumb-drapeau" src="<?php echo $row_Pays['ch_pay_lien_imgdrapeau']; ?>">
-              <h4>
-                <?php if ($row_infoVille['ch_vil_capitale']==1) {
-	    echo "capitale";
-   } else { echo "ville"; } ?>
-                du pays <a href="page-pays.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>"><?php echo $row_Pays['ch_pay_nom']; ?></a></h4>
-              <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;:</strong> le
-                <?php  echo date("d/m/Y à G:i", strtotime($row_infoVille['ch_vil_mis_jour'])); ?>
-              </p>
-              <p><strong>Date de recensement dans le monde GC&nbsp;:</strong> le
-                <?php  echo date("d/m/Y à G:i", strtotime($row_infoVille['ch_vil_date_enregistrement'])); ?>
-              </p>
-              <p><strong>Population&nbsp;:</strong>
-                <?php 
-	$population_ville_francais = number_format($row_infoVille['ch_vil_population'], 0, ',', ' ');
-	echo $population_ville_francais; ?>
-                habitants</p>
-              <p><strong>Sp&eacute;cialit&eacute;&nbsp;:</strong> <?php echo $row_infoVille['ch_vil_specialite']; ?></p>
-            </div>
-            <h3>R&eacute;alis&eacute;e avec&nbsp;:&nbsp;</h3>
-            <div class="well">
-              <?php if($row_infoVille['ch_vil_type_jeu'] == 'CL') { ?>
-              <img src="assets/img/jeux-ico/cl.png" class="img-jeu">
-              <?php } elseif ($row_infoVille['ch_vil_type_jeu'] == 'CXL'){ ?>
-              <img src="assets/img/jeux-ico/cxl.png" class="img-jeu">
-              <?php } elseif ($row_infoVille['ch_vil_type_jeu'] =='SC5'){ ?>
-              <img src="assets/img/jeux-ico/sc5.png" class="img-jeu">
-              <?php } elseif ($row_infoVille['ch_vil_type_jeu'] =='SC4'){ ?>
-              <img src="assets/img/jeux-ico/sc4.png" class="img-jeu">
-              <?php } else { ?>
-              <p>Information sur le jeu manquante</p>
-              <?php } ?>
-            </div>
-          </div>
+      <section id="presentation" class="titre-vert anchor">
+        <div class="well">
+          <p><?php echo $row_infoVille['ch_vil_header']; ?></p>
         </div>
       </section>
 
@@ -450,26 +469,19 @@ init();
         ================================================== -->
       <section>
         <div id="communiques" class="titre-vert anchor">
-          <h1>Communiqu&eacute;s</h1>
+          <h1 style='background-image: url("assets/img/bg-titre-left.png"); background-position: left;'
+            >Communiqu&eacute;s</h1>
         </div>
+        <div class="span7" style="margin: 0; margin-right: -12px;">
         <?php 
 	$ch_com_user_id = $row_User['ch_use_id'];
 	 $ch_com_categorie = 'ville';
 	  $ch_com_element_id = $colname_infoVille;
 	  include('php/communiques.php'); ?>
-      </section>
-      <!-- Presentation
-    ================================================== -->
-      <?php if ($row_infoVille['ch_vil_header']) { ?>
-      <section>
-        <div id="presentation" class="titre-vert anchor">
-          <h1>Pr&eacute;sentation</h1>
-        </div>
-        <div class="well">
-          <p><?php echo $row_infoVille['ch_vil_header']; ?></p>
         </div>
       </section>
-      <?php } ?>
+
+      <div class="clearfix"></div>
       
       <!-- carte
     ================================================== -->
