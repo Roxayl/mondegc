@@ -6,11 +6,19 @@ $userNotifications = new \GenCity\Monde\Notification\UserNotifications($_SESSION
 
 $listNotifications = $userNotifications->getNotifications();
 
+$countUnread = $userNotifications->getUnreadCount();
+
 ?>
 
-<div class="pull-right">
-    <a href="#" class="notification-action-markasread">Tout marquer comme lu</a>
+<?php if($countUnread): ?>
+<div class="pull-right" style="margin-right: 10px; margin-top: -3px;">
+    <form method="POST" action="<?= DEF_URI_PATH ?>back/notifications_manage.php" class="notification-markasread">
+        <input type="hidden" name="mark_unread" value="1">
+        <button class="btn btn-primary" type="submit">Tout marquer comme lu</button>
+    </form>
 </div>
+<?php endif; ?>
+
 <h4 class="btn-margin-left">Notifications </h4>
 
 <?php

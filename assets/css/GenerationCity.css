@@ -724,6 +724,8 @@ ul.dropdown-menu.dropdown-double > div.drop-colonne-droite > li, ul.dropdown-men
 .dropdown-notification .dropdown-menu {
     text-align: left;
     width: 380px;
+    max-height: 600px;
+    overflow-y: auto;
 }
 .dropdown-notification a {
     white-space: normal;

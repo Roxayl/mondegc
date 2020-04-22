@@ -149,7 +149,7 @@ $.ajaxTransport('jsonpi', function(opts, originalOptions, jqXHR) {
       form.appendTo('body').submit()
     }
   }
-})
+});
 
 $(window).scroll(function() {
   if ($(document).scrollTop() > 50) {
@@ -160,3 +160,34 @@ $(window).scroll(function() {
 });
 
 }(window.jQuery);
+
+
+
+$(document).ready(function() {
+
+    var $notification_container = $('.dropdown-notification');
+    var notification_url_request = '/MondeGC/trunk/back/notifications_manage.php';
+
+    $notification_container.find('ul.dropdown-menu').html("<p>Chargement...</p>");
+    $notification_container.find('a[data-toggle="dropdown"]').on('click', function(ev) {
+        $.get(notification_url_request, { fetch: 1 }, function(returnedData) {
+            $notification_container.find('ul.dropdown-menu').html(returnedData);
+        }).fail(function() {
+            $notification_container.find('ul.dropdown-menu').html("Une erreur s'est produite.");
+        });
+    });
+
+    $notification_container.on('submit', 'form.notification-markasread', function(ev) {
+        ev.preventDefault();
+        $.post(notification_url_request, $(this).serialize(), function(returnedData) {
+            $notification_container.find('li').removeClass('notification-unread');
+            $notification_container.find('.notification-count').remove();
+            $notification_container.find('.notification-toggle-btn').addClass('btn-inactive');
+            $notification_container.find('form.notification-markasread').remove();
+        }).fail(function() {
+            $notification_container.find('ul.dropdown-menu').html("Une erreur s'est produite.");
+        });
+        return false;
+    });
+
+});

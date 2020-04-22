@@ -100,13 +100,14 @@ if(isset($_SESSION['userObject'])) {
             </div>
 
             <div class="dropdown dropdown-notification pull-right" style="margin-top: -4px; margin-right: 5px;">
-              <a href="#" class="btn btn-primary <?= !$navbar_notifCount ? 'btn-inactive' : '' ?>" type="submit"
-                 title="Notifications" data-toggle="dropdown">
+              <a href="#" class="btn btn-primary notification-toggle-btn
+                 <?= !$navbar_notifCount ? 'btn-inactive' : '' ?>" type="submit"
+                 title="Notifications" class="button" data-toggle="dropdown">
                   <i class="icon-bell icon-white"></i>
-                  <?= $navbar_notifCount > 0 ? $navbar_notifCount : '' ?>
+                  <span class="notification-count"><?= $navbar_notifCount > 0 ? $navbar_notifCount : '' ?></span>
               </a>
               <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                  <?php renderElement('Notification/generate_user_notifications'); ?>
+
               </ul>
             </div>
 
