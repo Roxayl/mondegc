@@ -174,7 +174,8 @@ $(document).ready(function() {
     var $notification_container = $('.dropdown-notification');
     var notification_url_request = baseurl + 'back/notifications_manage.php';
 
-    $notification_container.find('ul.dropdown-menu').html("<p>Chargement...</p>");
+    $notification_container.find('ul.dropdown-menu').html(
+        "<div class='well'><p><img src='https://squirrel.romukulot.fr/media/icons/ajax-loader2.gif'> Chargement...</p></div>");
     $notification_container.find('a[data-toggle="dropdown"]').on('click', function(ev) {
         $.get(notification_url_request, { fetch: 1 }, function(returnedData) {
             $notification_container.find('ul.dropdown-menu').html(returnedData);

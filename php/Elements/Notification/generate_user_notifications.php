@@ -38,7 +38,7 @@ foreach($listNotifications as $notification):
             $element = new \GenCity\Monde\Temperance\Infrastructure($notification->get('element'));
             $header = "BIEN OUEJ !";
             $text = "Votre infrastructure <strong>" . __s($element->get('nom_infra')) .
-                "</strong> a été accepté par les juges tempérants.";
+                "</strong> a été acceptée par les juges tempérants.";
             $style = "background: linear-gradient(120deg, #ffe300 0%,#ff5c00 72%);";
             $link = DEF_URI_PATH . "back/ville_modifier.php?ville-ID=" . __s($element->get('ch_inf_villeid')) .
                 "#mes-infrastructures";
