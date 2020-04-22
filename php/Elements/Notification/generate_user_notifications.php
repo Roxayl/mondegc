@@ -21,6 +21,12 @@ $countUnread = $userNotifications->getUnreadCount();
 
 <h4 class="btn-margin-left">Notifications </h4>
 
+<?php if(empty($listNotifications)): ?>
+    <div class="well">
+        <p>Vous n'avez pas de notifications récentes. :)</p>
+    </div>
+<?php endif; ?>
+
 <?php
 foreach($listNotifications as $notification):
 

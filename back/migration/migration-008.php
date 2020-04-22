@@ -20,6 +20,8 @@ $queries = array();
 
 /****** géométries *******/
 
+$queries[] = "SET FOREIGN_KEY_CHECKS=0";
+
 // Création des tables liées à la gestion des géométries depuis la BDD.
 // Table type_geometries, regroupant les types de tracés de carte.
 $queries[] = "create table if not exists type_geometries
@@ -115,6 +117,8 @@ $queries = array();
 
 $queries[] = 'alter table pays
 	add lien_wiki varchar(250) null after ch_pay_lien_forum';
+
+$queries[] = "SET FOREIGN_KEY_CHECKS=1";
 
 // Exécuter la requête
 foreach($queries as $query) {
