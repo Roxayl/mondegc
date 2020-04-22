@@ -360,6 +360,27 @@ init();
           </div>
         </div>
       </div>
+        <div class="row-fluid">
+          <div class="span12">
+            <div class="well">
+            <?php if(!empty($row_Pays['ch_pay_lien_forum'])): ?>
+                <a href="<?= __s($row_Pays['ch_pay_lien_forum']) ?>" style="display: inline-block;">
+                  <span class="external-link-icon"
+                        style="background-image:url('https://www.generation-city.com/forum/new/favicon.png');"></span>
+                  Page sur le forum</a>
+            <?php endif; ?>
+            <?php if(!empty($row_Pays['ch_pay_lien_forum']) && !empty($row_Pays['lien_wiki'])): ?>
+             &#183;
+            <?php endif; ?>
+            <?php if(!empty($row_Pays['lien_wiki'])): ?>
+                <a href="<?= __s($row_Pays['lien_wiki']) ?>" style="display: inline-block;">
+                  <span class="external-link-icon"
+                        style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></span>
+                  Article Wiki GC</a>
+            <?php endif; ?>
+            </div>
+          </div>
+        </div>
 
       <?php
       $infobox_contents = ob_get_clean();

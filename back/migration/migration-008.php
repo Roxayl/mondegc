@@ -109,6 +109,19 @@ foreach($queries as $query) {
 }
 
 
+/******* pays *******/
+
+$queries = array();
+
+$queries[] = 'alter table pays
+	add lien_wiki varchar(250) null after ch_pay_lien_forum';
+
+// Exécuter la requête
+foreach($queries as $query) {
+    mysql_query($query) or die(mysql_error());
+}
+
+
 /*************************
  *                       *
  *       REQUÊTES        *

@@ -32,12 +32,13 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
 	if ($_POST['ch_pay_emplacement'] >= 57 and $_POST['ch_pay_emplacement'] <= 58 ){ $ch_pay_continent = "Aldesyl";}
 	if ($_POST['ch_pay_emplacement'] >= 59){ $ch_pay_continent = "Volcania";}
 
-  $insertSQL = sprintf("INSERT INTO pays (ch_pay_id, ch_pay_label, ch_pay_publication, ch_pay_emplacement, ch_pay_lien_forum, ch_pay_continent, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_pay_date, ch_pay_mis_jour, ch_pay_nb_update, ch_pay_forme_etat, ch_pay_capitale, ch_pay_langue_officielle, ch_pay_monnaie, ch_pay_header_presentation, ch_pay_text_presentation, ch_pay_header_geographie, ch_pay_text_geographie, ch_pay_header_politique, ch_pay_text_politique, ch_pay_header_histoire, ch_pay_text_histoire, ch_pay_header_economie, ch_pay_text_economie, ch_pay_header_transport, ch_pay_text_transport, ch_pay_header_sport, ch_pay_text_sport, ch_pay_header_culture, ch_pay_text_culture, ch_pay_header_patrimoine, ch_pay_text_patrimoine, ch_pay_budget_carte, ch_pay_industrie_carte, ch_pay_commerce_carte, ch_pay_agriculture_carte, ch_pay_tourisme_carte, ch_pay_recherche_carte, ch_pay_environnement_carte, ch_pay_education_carte, ch_pay_population_carte, ch_pay_emploi_carte ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+  $insertSQL = sprintf("INSERT INTO pays (ch_pay_id, ch_pay_label, ch_pay_publication, ch_pay_emplacement, ch_pay_lien_forum, lien_wiki, ch_pay_continent, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_pay_date, ch_pay_mis_jour, ch_pay_nb_update, ch_pay_forme_etat, ch_pay_capitale, ch_pay_langue_officielle, ch_pay_monnaie, ch_pay_header_presentation, ch_pay_text_presentation, ch_pay_header_geographie, ch_pay_text_geographie, ch_pay_header_politique, ch_pay_text_politique, ch_pay_header_histoire, ch_pay_text_histoire, ch_pay_header_economie, ch_pay_text_economie, ch_pay_header_transport, ch_pay_text_transport, ch_pay_header_sport, ch_pay_text_sport, ch_pay_header_culture, ch_pay_text_culture, ch_pay_header_patrimoine, ch_pay_text_patrimoine, ch_pay_budget_carte, ch_pay_industrie_carte, ch_pay_commerce_carte, ch_pay_agriculture_carte, ch_pay_tourisme_carte, ch_pay_recherche_carte, ch_pay_environnement_carte, ch_pay_education_carte, ch_pay_population_carte, ch_pay_emploi_carte ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['ch_pay_id'], "int"),
                        GetSQLValueString($_POST['ch_pay_label'], "text"),
                        GetSQLValueString($_POST['ch_pay_publication'], "int"),
                        GetSQLValueString($_POST['ch_pay_emplacement'], "int"),
                        GetSQLValueString($_POST['ch_pay_lien_forum'], "text"),
+                       GetSQLValueString($_POST['lien_wiki'], "text"),
 					   GetSQLValueString($ch_pay_continent, "text"),
                        GetSQLValueString($_POST['ch_pay_nom'], "text"),
                        GetSQLValueString($_POST['ch_pay_devise'], "text"),
@@ -246,6 +247,13 @@ img.olTileImage {
                 <label class="control-label" for="ch_pay_lien_forum">Lien du sujet sur le forum <a href="#" rel="clickover" title="Lien du sujet" data-content="250 caract&egrave;res maximum. Copiez/collez ici le lien vers le sujet consacré à votre pays sur le forum. Cette information sevira à poster des messages dans votre sujet directement depuis le site"><i class="icon-info-sign"></i></a></label>
                 <div class="controls">
                   <input class="input-xlarge" type="text" id="ch_pay_lien_forum" name="ch_pay_lien_forum">
+                  <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res max.</span></div>
+              </div>
+              <!-- Lien Wiki -->
+              <div id="sprytextfield_lien_wiki" class="control-group">
+                <label class="control-label" for="lien_wiki">Lien Wiki GC <a href="#" rel="clickover" data-placement="bottom" title="Lien Wiki GC" data-content="250 caract&egrave;res maximum. Le lien vers le wiki GC."><i class="icon-info-sign"></i></a></label>
+                <div class="controls">
+                  <input class="span12" type="text" id="lien_wiki" name="lien_wiki" value="<?php echo $row_InfoGenerale['lien_wiki']; ?>">
                   <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res max.</span></div>
               </div>
               <!-- Devise -->
@@ -609,6 +617,7 @@ var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7", "none
 var sprytextfield8 = new Spry.Widget.ValidationTextField("sprytextfield8", "none", {isRequired:false, maxChars:50, validateOn:["change"]});
 var sprytextfield9 = new Spry.Widget.ValidationTextField("sprytextfield9", "none", {isRequired:false, maxChars:50, validateOn:["change"]});
 var sprytextfield10 = new Spry.Widget.ValidationTextField("sprytextfield10", "url", {isRequired:false, maxChars:250, validateOn:["change"]});
+var sprytextfield_lien_wiki = new Spry.Widget.ValidationTextField("sprytextfield_lien_wiki", "url", {isRequired:false, maxChars:250, validateOn:["change"]});
 var sprytextarea2 = new Spry.Widget.ValidationTextarea("sprytextarea2", {maxChars:250, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 var sprytextarea3 = new Spry.Widget.ValidationTextarea("sprytextarea3", {maxChars:250, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 var sprytextarea4 = new Spry.Widget.ValidationTextarea("sprytextarea4", {maxChars:250, validateOn:["change"], isRequired:false, useCharacterMasking:false});
