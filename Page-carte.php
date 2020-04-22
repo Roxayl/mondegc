@@ -541,6 +541,7 @@ div.olControlPanel {
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>
+<script src="assets/js/application.js"></script>
 </body>
 </html>
 

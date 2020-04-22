@@ -162,11 +162,17 @@ $(window).scroll(function() {
 }(window.jQuery);
 
 
-
 $(document).ready(function() {
 
+    var environ = window.location.host;
+    if (environ === "localhost") {
+        var baseurl = window.location.protocol + "//" + window.location.host + "/" + "MondeGC/trunk/";
+    } else {
+        var baseurl = window.location.protocol + "//" + window.location.host + "/monde/";
+    }
+
     var $notification_container = $('.dropdown-notification');
-    var notification_url_request = '/MondeGC/trunk/back/notifications_manage.php';
+    var notification_url_request = baseurl + 'back/notifications_manage.php';
 
     $notification_container.find('ul.dropdown-menu').html("<p>Chargement...</p>");
     $notification_container.find('a[data-toggle="dropdown"]').on('click', function(ev) {

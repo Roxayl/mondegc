@@ -34,7 +34,8 @@ foreach($listNotifications as $notification):
             $text = "Votre infrastructure <strong>" . __s($element->get('nom_infra')) .
                 "</strong> a été accepté par les juges tempérants.";
             $style = "background: linear-gradient(120deg, #ffe300 0%,#ff5c00 72%);";
-            $link = DEF_URI_PATH . "page-ville.php?ch_ville_id=" . __s($element->get('ch_inf_villeid')) . "#Economie";
+            $link = DEF_URI_PATH . "back/ville_modifier.php?ville-ID=" . __s($element->get('ch_inf_villeid')) .
+                "#mes-infrastructures";
             break;
 
         case 'infra_juge_refuse':
@@ -44,7 +45,8 @@ foreach($listNotifications as $notification):
                 "</strong> a été refusée par les juges tempérants pour la raison suivante : <br><i>" .
                 __s($element->get('ch_inf_commentaire_juge')) . "</i>";
             $style = "background: linear-gradient(120deg, #ffe300 0%,#ff5c00 72%);";
-            $link = DEF_URI_PATH . "page-ville.php?ch_ville_id=" . __s($element->get('ch_inf_villeid')) . "#Economie";
+            $link = DEF_URI_PATH . "back/ville_modifier.php?ville-ID=" . __s($element->get('ch_inf_villeid')) .
+                "#mes-infrastructures";
             break;
 
         case 'nv_pays_bienvenue':

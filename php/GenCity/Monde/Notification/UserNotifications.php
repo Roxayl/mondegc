@@ -14,22 +14,16 @@ class UserNotifications {
     }
 
     /**
-     * @param int $limit
-     * @param int $offset
-     * @param null $filter
      * @return Notification[]
      */
-    public function getNotifications($limit = 10, $offset = 0, $filter = null) {
-
-        $where_sql = '';
-        if($filter === 'unread') {
-            $where_sql = ' AND unread = 1 ';
-        }
+    public function getNotifications() {
 
         $sql = sprintf('SELECT * FROM notifications
-            WHERE recipient_id = %s ' . $where_sql . '
-            ORDER BY id DESC
-            LIMIT ' . (int)$limit . ' OFFSET ' . (int)$offset,
+            WHERE recipient_id = %s
+              AND (    created > DATE_SUB(NOW(), INTERVAL 3 DAY)
+                    OR (unread = 1 AND created > DATE_SUB(NOW(), INTERVAL 1 MONTH))
+              )
+            ORDER BY id DESC',
             GetSQLValueString($this->user->get('ch_use_id'), 'int')
         );
         $query = mysql_query($sql) or die(mysql_error());
