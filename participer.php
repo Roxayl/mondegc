@@ -54,6 +54,7 @@ $pageParticiperCadre = new \GenCity\Monde\Page('participer_cadre');
 <!-- BOOTSTRAP -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
+<script src="assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script> 
  $( document ).ready(function() {
 init();

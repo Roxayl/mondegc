@@ -541,7 +541,7 @@ div.olControlPanel {
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>
-<script src="assets/js/application.js"></script>
+<script src="assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 </body>
 </html>
 

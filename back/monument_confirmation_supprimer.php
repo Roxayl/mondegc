@@ -98,7 +98,7 @@ $_SESSION['ville_encours'] = $row_ch_pat_confimation_suppression['ch_pat_villeID
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>
 <script src="../assets/js/bootstrap-affix.js"></script>
-<script src="../assets/js/application.js"></script>
+<script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
  <script type="text/javascript">

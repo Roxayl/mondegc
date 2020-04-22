@@ -132,7 +132,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>
 <script src="../assets/js/bootstrap-affix.js"></script>
-<script src="../assets/js/application.js"></script>
+<script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
  <script type="text/javascript">

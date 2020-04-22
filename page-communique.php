@@ -121,7 +121,7 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
 <script src="assets/js/bootstrap-affix.js"></script>
-<script src="assets/js/application.js"></script>
+<script src="assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="assets/js/bootstrap-scrollspy.js"></script>
 <script src="assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">

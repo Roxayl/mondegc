@@ -145,7 +145,7 @@ if (isset($uploadconfirm)) {
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>
 <script src="../assets/js/bootstrap-affix.js"></script>
-<script src="../assets/js/application.js"></script>
+<script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrap-clickover.js"></script>
 <script src="../assets/js/bootstrap-filestyle.min.js"></script>
