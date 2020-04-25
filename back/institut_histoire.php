@@ -115,7 +115,7 @@ FROM dispatch_fait_his_cat as fait
 INNER JOIN histoire ON fait.ch_disp_fait_hist_id = ch_his_id 
 WHERE fait.ch_disp_fait_hist_cat_id = %s OR %s IS NULL AND ch_his_statut = 1 
 GROUP BY fait.ch_disp_fait_hist_id
-ORDER BY fait.ch_disp_FH_date DESC", GetSQLValueString($colname_classer_fait_his, "int"), GetSQLValueString($colname_classer_fait_his, "int"));
+ORDER BY fait.ch_disp_fait_hist_id, fait.ch_disp_FH_date DESC", GetSQLValueString($colname_classer_fait_his, "int"), GetSQLValueString($colname_classer_fait_his, "int"));
 $query_limit_classer_fait_his = sprintf("%s LIMIT %d, %d", $query_classer_fait_his, $startRow_classer_fait_his, $maxRows_classer_fait_his);
 $classer_fait_his = mysql_query($query_limit_classer_fait_his, $maconnexion) or die(mysql_error());
 $row_classer_fait_his = mysql_fetch_assoc($classer_fait_his);

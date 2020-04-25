@@ -110,7 +110,7 @@ $nbhabitants_Aurinea = $nbhabitants_Aurinea + $nbhabitants_RFGC;
 // Liste des pays par continent
 
 mysql_select_db($database_maconnexion, $maconnexion);
-$query_listePays = "SELECT ch_pay_id, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_use_login, (SELECT COUNT(ch_vil_ID) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS nbville, (SELECT SUM(ch_vil_population) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) + ch_pay_population_carte AS nbhabitant FROM pays INNER JOIN users ON ch_use_paysID = ch_pay_id AND ch_use_statut >=10 WHERE ch_pay_publication = 1 Group By ch_pay_id ORDER BY ch_pay_nom ASC";
+$query_listePays = "SELECT ch_pay_id, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_use_login, (SELECT COUNT(ch_vil_ID) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS nbville, (SELECT SUM(ch_vil_population) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) + ch_pay_population_carte AS nbhabitant FROM pays INNER JOIN users ON ch_use_paysID = ch_pay_id AND ch_use_statut >=10 WHERE ch_pay_publication = 1 ORDER BY ch_pay_id, ch_pay_nom ASC";
 $listePays = mysql_query($query_listePays, $maconnexion) or die(mysql_error());
 $row_listePays = mysql_fetch_assoc($listePays);
 $totalRows_listePays = mysql_num_rows($listePays);

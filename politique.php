@@ -44,7 +44,7 @@ FROM dispatch_mem_group as membre
 INNER JOIN users ON membre.ch_disp_mem_id = ch_use_id 
 WHERE membre.ch_disp_group_id = %s OR %s IS NULL AND membre.ch_disp_mem_statut <> 3
 GROUP BY membre.ch_disp_mem_id
-ORDER BY membre.ch_disp_MG_date DESC", GetSQLValueString($colname_classer_mem, "int"), GetSQLValueString($colname_classer_mem, "int"));
+ORDER BY membre.ch_disp_mem_id, membre.ch_disp_MG_date DESC", GetSQLValueString($colname_classer_mem, "int"), GetSQLValueString($colname_classer_mem, "int"));
 $query_limit_classer_mem = sprintf("%s LIMIT %d, %d", $query_classer_mem, $startRow_classer_mem, $maxRows_classer_mem);
 $classer_mem = mysql_query($query_limit_classer_mem, $maconnexion) or die(mysql_error());
 $row_classer_mem = mysql_fetch_assoc($classer_mem);
