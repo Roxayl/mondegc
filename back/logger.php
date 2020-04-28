@@ -1,8 +1,8 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
@@ -83,11 +83,11 @@ $logs = \GenCity\Monde\Logger\Log::getAll($limit, $offset);
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 <!-- Navbar haut-conseil
     ================================================== -->
 <div class="container corps-page">
-<?php include('../php/menu-haut-conseil.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
   <!-- Page CONTENT
     ================================================== -->
   <div class="titre-bleu">
@@ -134,7 +134,7 @@ $logs = \GenCity\Monde\Logger\Log::getAll($limit, $offset);
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 
 <!-- Le javascript
     ================================================== -->

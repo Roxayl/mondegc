@@ -8,13 +8,13 @@ $colname_Pays = "-1";
 if (isset($_GET['ch_pay_id'])) {
   $colname_Pays = $_GET['ch_pay_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_Pays = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_Pays, "int"));
 $Pays = mysql_query($query_Pays, $maconnexion) or die(mysql_error());
 $row_Pays = mysql_fetch_assoc($Pays);
 
 //Recherche des villes du pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_user, ch_vil_date_enregistrement, ch_vil_mis_jour, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_use_login FROM villes INNER JOIN users ON ch_vil_user = ch_use_id WHERE ch_vil_capitale <> 3 AND villes.ch_vil_paysID = %s ORDER BY ch_vil_mis_jour DESC", GetSQLValueString($colname_Pays, "int"));
 $villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
 $row_villes = mysql_fetch_assoc($villes);
@@ -22,7 +22,7 @@ $totalRows_villes = mysql_num_rows($villes);
 
 
 //Addition des populations des villes
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_population = sprintf("SELECT Sum(ch_vil_population) AS population_pays FROM villes WHERE villes.ch_vil_capitale != 3 AND villes.ch_vil_paysID = %s", GetSQLValueString($colname_Pays, "int"));
 $population = mysql_query($query_population, $maconnexion) or die(mysql_error());
 $row_population = mysql_fetch_assoc($population);
@@ -30,7 +30,7 @@ $totalRows_population = mysql_num_rows($population);
 $population_pays = $row_population['population_pays'];
 
 //Connexion base de données utilisateur pour info personnage
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_User = sprintf("SELECT ch_use_id, ch_use_login, (SELECT GROUP_CONCAT(ch_disp_group_id) FROM dispatch_mem_group WHERE ch_use_id = ch_disp_mem_id AND ch_disp_mem_statut != 3) AS listgroup FROM users WHERE ch_use_paysID = %s AND ch_use_statut >= 10", GetSQLValueString($colname_Pays, "int"));
 $User = mysql_query($query_User, $maconnexion) or die(mysql_error());
 $row_User = mysql_fetch_assoc($User);
@@ -41,7 +41,7 @@ $thisPays = new \GenCity\Monde\Pays($colname_Pays);
 $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
 
 //Recherche des monuments du pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_monument = sprintf("SELECT ch_pat_ID, ch_pat_paysID, ch_pat_date, ch_pat_mis_jour, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_description, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine WHERE ch_pat_statut = 1 AND ch_pat_paysID = %s ORDER BY ch_pat_mis_jour DESC", GetSQLValueString($colname_Pays, "int"));
 $monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
 $row_monument = mysql_fetch_assoc($monument);
@@ -55,7 +55,7 @@ $monument_ressources = mysql_query($query_monument_ressources, $maconnexion) or 
 $row_monument_ressources = mysql_fetch_assoc($monument_ressources);
 
 //Recherche des faits historiques du pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_fait_his = sprintf("SELECT ch_his_id, ch_his_paysID, ch_his_date, ch_his_mis_jour, ch_his_nom, ch_his_statut, ch_his_personnage, ch_his_lien_img1, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_description, (SELECT GROUP_CONCAT(ch_disp_fait_hist_cat_id) FROM dispatch_fait_his_cat WHERE ch_his_ID = ch_disp_fait_hist_id) AS listcat FROM histoire WHERE ch_his_statut = 1 AND ch_his_paysID = %s ORDER BY ch_his_date_fait ASC", GetSQLValueString($colname_Pays, "int"));
 $fait_his = mysql_query($query_fait_his, $maconnexion) or die(mysql_error());
 $row_fait_his = mysql_fetch_assoc($fait_his);
@@ -63,7 +63,7 @@ $totalRows_fait_his = mysql_num_rows($fait_his);
 
 //Recherche de la balance des ressources de la ville
 if (isset($colname_Pays)) {
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_somme_ressources = sprintf("SELECT SUM(ch_inf_off_budget) AS budget,SUM(ch_inf_off_Industrie) AS industrie, SUM(ch_inf_off_Commerce) AS commerce, SUM(ch_inf_off_Agriculture) AS agriculture, SUM(ch_inf_off_Tourisme) AS tourisme, SUM(ch_inf_off_Recherche) AS recherche, SUM(ch_inf_off_Environnement) AS environnement, SUM(ch_inf_off_Education) AS education FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_pay_id = %s AND ch_vil_capitale != 3 AND ch_inf_statut = 2", GetSQLValueString($colname_Pays, "int"));
 $somme_ressources = mysql_query($query_somme_ressources, $maconnexion) or die(mysql_error());
 $row_somme_ressources = mysql_fetch_assoc($somme_ressources);
@@ -75,7 +75,7 @@ if (isset($row_User['listgroup'])) {
 $listgroup = $row_User['listgroup'];
 
 //recherche des groupes du membre
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_group = "SELECT * FROM membres_groupes WHERE ch_mem_group_ID In ($listgroup) AND ch_mem_group_statut = 1";
 $liste_group = mysql_query($query_liste_group, $maconnexion) or die(mysql_error());
 $row_liste_group = mysql_fetch_assoc($liste_group);
@@ -83,7 +83,7 @@ $totalRows_liste_group = mysql_num_rows($liste_group);
 }
 
 //recherche de la liste des jeux
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_jeux = sprintf("SELECT ch_vil_type_jeu FROM villes WHERE ch_vil_paysID = %s GROUP BY ch_vil_type_jeu ", GetSQLValueString($colname_Pays, "int"));
 $liste_jeux = mysql_query($query_liste_jeux, $maconnexion) or die(mysql_error());
 $row_liste_jeux = mysql_fetch_assoc($liste_jeux);
@@ -91,13 +91,13 @@ $totalRows_liste_jeux = mysql_num_rows($liste_jeux);
 
 
 //recherche de la note temperance
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_temperance = sprintf("SELECT * FROM temperance WHERE ch_temp_element_id = %s AND ch_temp_element = 'pays' AND ch_temp_statut='3' ORDER BY ch_temp_date DESC", GetSQLValueString($colname_Pays, "int"));
 $temperance = mysql_query($query_temperance, $maconnexion) or die(mysql_error());
 $row_temperance = mysql_fetch_assoc($temperance);
 
 //recherche des mesures des zones de la carte pour calcul ressources
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_type", GetSQLValueString($colname_Pays, "int"));
 $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
 $row_geometries = mysql_fetch_assoc($geometries);
@@ -545,7 +545,7 @@ init();
 			$listcategories = ($row_fait_his['listcat']);
 			if ($row_fait_his['listcat']) {
           
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_fai_cat3 = "SELECT * FROM faithist_categories WHERE ch_fai_cat_ID In ($listcategories) AND ch_fai_cat_statut = 1";
 $liste_fai_cat3 = mysql_query($query_liste_fai_cat3, $maconnexion) or die(mysql_error());
 $row_liste_fai_cat3 = mysql_fetch_assoc($liste_fai_cat3);
@@ -752,7 +752,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 
 			$listcategories = ($row_monument['listcat']);
 			if ($row_monument['listcat']) {
-                mysql_select_db($database_maconnexion, $maconnexion);
+
                 $query_liste_mon_cat3 = "SELECT * FROM monument_categories
                     WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
                 $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());

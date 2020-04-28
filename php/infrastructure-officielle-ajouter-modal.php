@@ -1,5 +1,5 @@
 <?php
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 
 $editFormAction = $_SERVER['PHP_SELF'];
@@ -22,7 +22,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-inf_off")) {
                        GetSQLValueString($_POST['ch_inf_off_Recherche'], "int"),
                        GetSQLValueString($_POST['ch_inf_off_Environnement'], "int"),
                        GetSQLValueString($_POST['ch_inf_off_Education'], "int"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   $last_id = mysql_insert_id();

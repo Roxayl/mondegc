@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
 
@@ -17,7 +17,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mem_groupegor
                        GetSQLValueString($_POST['ch_disp_MG_date'], "date"),
 					   GetSQLValueString($_POST['ch_disp_mem_statut'], "date"));
 					   
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   $insertGoTo = '../back/institut_politique.php?mem_groupID='. $row_mem_group['ch_mem_group_ID'] .'';
@@ -36,7 +36,7 @@ $colname_group_id = "-1";
 if (isset($_GET['mem_groupID'])) {
   $colname_group_id = $_GET['mem_groupID'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_info_membre = sprintf("SELECT ch_use_id, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_titre_dirigeant FROM users WHERE ch_use_id NOT IN (SELECT ch_disp_mem_id FROM dispatch_mem_group WHERE ch_disp_group_id = %s)  ORDER BY ch_use_last_log DESC", GetSQLValueString($colname_group_id, ""));
 $info_membre = mysql_query($query_info_membre, $maconnexion) or die(mysql_error());
 $row_info_membre = mysql_fetch_assoc($info_membre);
@@ -44,7 +44,7 @@ $totalRows_info_membre = mysql_num_rows($info_membre);
 
 
 //requete info cat�gorie
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_mem_group = sprintf("SELECT ch_mem_group_ID, ch_mem_group_nom FROM membres_groupes WHERE ch_mem_group_ID = %s", GetSQLValueString($colname_group_id, "int"));
 $mem_group = mysql_query($query_mem_group, $maconnexion) or die(mysql_error());
 $row_mem_group = mysql_fetch_assoc($mem_group);

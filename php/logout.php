@@ -1,5 +1,6 @@
-<?php 
-require_once('../Connections/maconnexion.php');
+<?php
+
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
@@ -10,7 +11,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 $clefSession = isset($_COOKIE['Session_mondeGC']) ? $_COOKIE['Session_mondeGC'] : null;
 
 if ($clefSession != NULL and $clefSession != "") {
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $Session_user_query=sprintf("SELECT ch_users_session_dispatch_sessionID, ch_use_acces, ch_use_session_id, ch_use_session_connect, ch_use_id, ch_use_login, ch_use_paysID, ch_use_statut, ch_use_last_log, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users_dispatch_session INNER JOIN users_session ON ch_users_session_dispatch_sessionID = ch_use_session_id INNER JOIN users ON ch_use_session_user_ID = ch_use_id WHERE ch_users_session_dispatch_Key =%s",GetSQLValueString($clefSession, "text"));
   $Session_user = mysql_query($Session_user_query, $maconnexion) or die(mysql_error());
   $row_Session_user = mysql_fetch_assoc($Session_user);
@@ -22,13 +23,13 @@ if ($row_Session_user['ch_use_acces'] == NULL) {
 	if ($clefSession != NULL and $clefSession != "") {
 	$deleteSQL = sprintf("DELETE FROM users_dispatch_session WHERE ch_users_session_dispatch_Key=%s",
                        GetSQLValueString($clefSession, "text"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result4 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
   
   $deleteSQL = sprintf("DELETE FROM users_session WHERE ch_use_session_id=%s",
                        GetSQLValueString($row_Session_user['ch_use_session_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result5 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 	}
 
@@ -58,7 +59,7 @@ $_SESSION['user_last_log'] = $now;
 $updateSQL = sprintf("UPDATE users SET ch_use_last_log=%s WHERE ch_use_id=%s",
                        GetSQLValueString($_SESSION['user_last_log'], "date"),
                        GetSQLValueString($_SESSION['user_ID'], "int"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
   
   //declare session variables and assign them
@@ -90,7 +91,7 @@ if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
 // *** Recherche de sessions.
 $clefSession = $_COOKIE['Session_mondeGC'];
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $Session_user_query=sprintf("SELECT ch_use_session_id FROM users_dispatch_session INNER JOIN users_session ON ch_users_session_dispatch_sessionID = ch_use_session_id INNER JOIN users ON ch_use_session_user_ID = ch_use_id WHERE ch_users_session_dispatch_Key =%s",GetSQLValueString($clefSession, "text"));
   $Session_user = mysql_query($Session_user_query, $maconnexion) or die(mysql_error());
   $row_Session_user = mysql_fetch_assoc($Session_user);
@@ -98,13 +99,13 @@ $Session_user_query=sprintf("SELECT ch_use_session_id FROM users_dispatch_sessio
 // ** Effacement des session sur serveur. **
 	$deleteSQL = sprintf("DELETE FROM users_dispatch_session WHERE ch_users_session_dispatch_Key=%s",
                        GetSQLValueString($clefSession, "text"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result4 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
   
   $deleteSQL = sprintf("DELETE FROM users_session WHERE ch_use_session_id=%s",
                        GetSQLValueString($row_Session_user['ch_use_session_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result5 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
   // ** Effacement du cookie. **

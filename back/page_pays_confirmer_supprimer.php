@@ -1,9 +1,9 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=30))
 {
@@ -18,7 +18,7 @@ $colname_Pays = "-1";
 if (isset($_POST['paysID'])) {
   $colname_Pays = $_POST['paysID'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_Pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgheader FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_Pays, "int"));
 $Pays = mysql_query($query_Pays, $maconnexion) or die(mysql_error());
 $row_Pays = mysql_fetch_assoc($Pays);
@@ -62,7 +62,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 <body data-spy="scroll" data-target=".bs-docs-sidebar" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div id="introheader" class="jumbotron">
@@ -83,7 +83,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript
@@ -92,7 +92,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('../php/carteemplacements.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/carteemplacements.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>

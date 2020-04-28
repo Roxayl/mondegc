@@ -1,9 +1,9 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
@@ -25,13 +25,13 @@ $thisPays = new \GenCity\Monde\Pays($getHistory['ch_his_paysID']);
 if ((isset($_POST['ch_his_id'])) && ($_POST['ch_his_id'] != "")) {
   $deleteSQL = sprintf("DELETE FROM histoire WHERE ch_his_id=%s",
                        GetSQLValueString($_POST['ch_his_id'], "int"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
 
 $deleteSQL2 = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_id=%s",
                        GetSQLValueString($_POST['monument_ID'], "int"));
-mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result2 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
   
   getErrorMessage('success', "Ce fait historique a été supprimé avec succès.");
@@ -84,7 +84,7 @@ mysql_select_db($database_maconnexion, $maconnexion);
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron subhead" id="overview">
@@ -95,7 +95,7 @@ mysql_select_db($database_maconnexion, $maconnexion);
 <div class="container corps-page"> </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

@@ -7,7 +7,7 @@ include('php/log.php');
 
 //requete instituts
 $institut_id = 5;
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
@@ -30,7 +30,7 @@ if (isset($_GET['cat'])) {
 } } else {
   $cat = 'commerce';
 } 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_somme_ressources = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, 
 (SELECT SUM(ch_inf_off_budget) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
 + ch_pay_budget_carte 
@@ -110,7 +110,7 @@ $queryString_somme_ressources = sprintf("&totalRows_somme_ressources=%d%s", $tot
 
 
 //calcul ressources mondiales 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_somme_ressources_mondiales = sprintf("SELECT
 (SELECT SUM(ch_inf_off_budget) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
 + ch_pay_budget_carte 

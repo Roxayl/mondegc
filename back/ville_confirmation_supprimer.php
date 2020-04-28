@@ -1,8 +1,8 @@
 <?php
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
@@ -20,7 +20,7 @@ $colname_ch_vil_confimation_suppression = "-1";
 if (isset($_POST['ville-ID'])) {
   $colname_ch_vil_confimation_suppression = $_POST['ville-ID'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_ch_vil_confimation_suppression = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_nom, ch_vil_lien_img1 FROM villes WHERE ch_vil_ID = %s", GetSQLValueString($colname_ch_vil_confimation_suppression, "int"));
 $ch_vil_confimation_suppression = mysql_query($query_ch_vil_confimation_suppression, $maconnexion) or die(mysql_error());
 $row_ch_vil_confimation_suppression = mysql_fetch_assoc($ch_vil_confimation_suppression);
@@ -67,7 +67,7 @@ $totalRows_ch_vil_confimation_suppression = mysql_num_rows($ch_vil_confimation_s
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron subhead" id="overview">
@@ -89,7 +89,7 @@ $totalRows_ch_vil_confimation_suppression = mysql_num_rows($ch_vil_confimation_s
 
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

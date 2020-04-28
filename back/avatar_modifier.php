@@ -2,11 +2,11 @@
 
 use GenCity\Monde\Pays;
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
  
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 if ($_SESSION['statut'])
 {
 } else {
@@ -77,7 +77,7 @@ if($thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 
 <!-- Page CONTENT
     ================================================== -->
@@ -93,12 +93,12 @@ if($thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
       </ul>
     <p>&nbsp;</p>
     <section>
-      <?php include('../php/upload.php');
+      <?php include(DEF_ROOTPATH . 'php/upload.php');
 if (isset($uploadconfirm)) {
   $updateSQL = sprintf("UPDATE personnage SET lien_img=%s WHERE entity='pays' AND entity_id=%s",
                        GetSQLValueString($link, "text"),
                        GetSQLValueString($pays_ID, "int"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
   getErrorMessage('success', "L'avatar a été modifié avec succès !");
@@ -135,7 +135,7 @@ if (isset($uploadconfirm)) {
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

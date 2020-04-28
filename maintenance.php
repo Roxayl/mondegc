@@ -9,7 +9,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "OubliIdentifiant"))
 
   $mail = $_POST['ch_use_mail']; // D�claration de l'adresse de destination.
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_Compare_mail = "SELECT ch_use_id, ch_use_login, ch_use_password, ch_use_mail, ch_use_paysID, ch_use_statut FROM users WHERE ch_use_mail='$mail'";
 $Compare_mail = mysql_query($query_Compare_mail, $maconnexion) or die(mysql_error());
 $row_Compare_mail = mysql_fetch_assoc($Compare_mail);
@@ -41,7 +41,7 @@ if ( $row_Compare_mail ) {
                        GetSQLValueString($paysID, "int"),
                        GetSQLValueString($statut, "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
   $insertGoTo = 'liste-membres.php';
   if (isset($_SERVER['QUERY_STRING'])) {

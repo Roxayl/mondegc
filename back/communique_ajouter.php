@@ -1,9 +1,9 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
  
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
@@ -30,7 +30,7 @@ if ( $cat == "pays") {
 
 }
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
 $query_pays = sprintf("SELECT ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_elementid, "int"));
 $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
 $row_pays = mysql_fetch_assoc($pays);
@@ -53,7 +53,7 @@ if (isset($_REQUEST['com_element_id'])) {
 }  
   
   
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
 $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_nom FROM villes INNER JOIN pays ON villes.ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($colname_elementid, "int"));
 $villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
 $row_villes = mysql_fetch_assoc($villes);
@@ -74,7 +74,7 @@ if (isset($_REQUEST['com_element_id'])) {
   $colname_elementid = $_REQUEST['com_element_id'];
   unset($_REQUEST['com_element_id']);
 }  
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($colname_elementid, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
@@ -96,7 +96,7 @@ if (isset($_REQUEST['userID'])) {
   $colname_user = $_REQUEST['userID'];
   unset($_REQUEST['userID']);
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_user = sprintf("SELECT ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_user, "int"));
 $user = mysql_query($query_user, $maconnexion) or die(mysql_error());
 $row_user = mysql_fetch_assoc($user);
@@ -121,7 +121,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
                        GetSQLValueString($_POST['ch_com_contenu'], "text"),
                        GetSQLValueString($_POST['ch_com_pays_id'], 'int'));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   $last_insert_id = mysql_insert_id();
@@ -213,7 +213,7 @@ if(isset($thisPays)) {
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 
 <!-- Page CONTENT
     ================================================== -->
@@ -320,7 +320,7 @@ if(isset($thisPays)) {
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

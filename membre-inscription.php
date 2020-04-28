@@ -15,7 +15,7 @@ if (isset($_GET['clef'])) {
   $clef = $_GET['clef'];
 }
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_user_prov = sprintf("SELECT * FROM users_provisoire WHERE ch_use_prov_login = %s AND ch_use_prov_clef = %s", GetSQLValueString($login, "text"), GetSQLValueString($clef, "text"));
 $user_prov = mysql_query($query_user_prov, $maconnexion) or die(mysql_error());
 $row_user_prov = mysql_fetch_assoc($user_prov);
@@ -40,7 +40,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
        GetSQLValueString($_POST['ch_use_paysID'], "int"),
        GetSQLValueString($_POST['ch_use_statut'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   $last_user_id = mysql_insert_id();
@@ -79,7 +79,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
    $deleteSQL = sprintf("DELETE FROM users_provisoire WHERE ch_use_prov_ID=%s",
                        GetSQLValueString($userprov, "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
   $insertGoTo = 'index.php';
   if (isset($_SERVER['QUERY_STRING'])) {

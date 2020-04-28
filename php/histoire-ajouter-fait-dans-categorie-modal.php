@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 $editFormAction = $_SERVER['PHP_SELF'];
@@ -15,7 +15,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-fai_categorie
                        GetSQLValueString($_POST['ch_disp_fait_hist_id'], "int"),
                        GetSQLValueString($_POST['ch_disp_FH_date'], "date"));
 					   
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   $insertGoTo = '../back/institut_histoire.php?fai_catID='. $row_fai_cat['ch_his_cat_ID'] .'';
@@ -34,7 +34,7 @@ $colname_classer_fait = "-1";
 if (isset($_GET['fai_catID'])) {
   $colname_classer_fait = $_GET['fai_catID'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_fait_cat = sprintf("SELECT ch_his_id, ch_his_nom FROM histoire WHERE ch_his_id NOT IN (SELECT ch_disp_fait_hist_id FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_cat_id = %s)  ORDER BY ch_his_mis_jour DESC", GetSQLValueString($colname_classer_fait, ""));
 $liste_fait_cat = mysql_query($query_liste_fait_cat, $maconnexion) or die(mysql_error());
 $row_liste_fait_cat = mysql_fetch_assoc($liste_fait_cat);
@@ -42,7 +42,7 @@ $totalRows_liste_fait_cat = mysql_num_rows($liste_fait_cat);
 
 
 //requete info catégorie
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_fai_cat = sprintf("SELECT ch_fai_cat_ID, ch_fai_cat_nom FROM faithist_categories WHERE ch_fai_cat_ID = %s", GetSQLValueString($colname_classer_fait, "int"));
 $fai_cat = mysql_query($query_fai_cat, $maconnexion) or die(mysql_error());
 $row_fai_cat = mysql_fetch_assoc($fai_cat);

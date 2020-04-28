@@ -1,9 +1,9 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
@@ -31,7 +31,7 @@ if (isset($_GET['order_by'])) {
 if (isset($_GET['tri'])) {
   $tri = $_GET['tri'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_ListPays = "SELECT pays.ch_pay_id, pays.ch_pay_publication, pays.ch_pay_continent, pays.ch_pay_emplacement, pays.ch_pay_nom, pays.ch_pay_lien_imgdrapeau, pays.ch_pay_mis_jour FROM pays ORDER BY $order_by $tri";
 $query_limit_ListPays = sprintf("%s LIMIT %d, %d", $query_ListPays, $startRow_ListPays, $maxRows_ListPays);
 $ListPays = mysql_query($query_limit_ListPays, $maconnexion) or die(mysql_error());
@@ -82,11 +82,11 @@ $totalPages_ListPays = ceil($totalRows_ListPays/$maxRows_ListPays)-1;
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 <!-- Navbar haut-conseil
     ================================================== -->
 <div class="container corps-page">
-<?php include('../php/menu-haut-conseil.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
   <!-- Page CONTENT
     ================================================== -->
   <div class="titre-bleu">
@@ -172,7 +172,7 @@ echo '</p>';  ?>
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

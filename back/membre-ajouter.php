@@ -1,9 +1,9 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
@@ -14,7 +14,7 @@ header('Location: ../connexion.php');
 exit();
 	}
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
@@ -107,7 +107,7 @@ mail('contact@romukulot.fr',$sujet,$message,$header);
   exit();
 }
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_pays = "SELECT ch_pay_id, ch_pay_nom FROM pays ORDER BY ch_pay_nom ASC";
 $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
 $row_pays = mysql_fetch_assoc($pays);
@@ -163,11 +163,11 @@ $totalRows_pays = mysql_num_rows($pays);
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container corps-page">
-  <?php include('../php/menu-haut-conseil.php'); ?>
+  <?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
   <div class="titre-bleu">
     <h1>Cr&eacute;er un nouveau profil</h1>
   </div>
@@ -260,7 +260,7 @@ $totalRows_pays = mysql_num_rows($pays);
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

@@ -1,9 +1,9 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
@@ -22,7 +22,7 @@ if (isset($_POST['monument_ID'])) {
   unset($_POST['monument_ID']);
 }
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_monument = sprintf("SELECT * FROM patrimoine WHERE ch_pat_id = %s", GetSQLValueString($monument_ID, "int"));
 $monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
 $row_monument = mysql_fetch_assoc($monument);
@@ -31,7 +31,7 @@ $ville_id = $row_monument['ch_pat_villeID'];
 $paysID = $row_monument['ch_pat_paysID'];
 
 // Connection infos dirigeant pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_users = sprintf("SELECT ch_vil_user, ch_use_id, ch_use_login FROM villes INNER JOIN users ON ch_vil_user=ch_use_id WHERE ch_vil_ID = %s", GetSQLValueString($ville_id, "int"));
 $users = mysql_query($query_users, $maconnexion) or die(mysql_error());
 $row_users = mysql_fetch_assoc($users);
@@ -75,7 +75,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_monument")
                        GetSQLValueString($_POST['ch_pat_description'], "text"),
                        GetSQLValueString($_POST['ch_pat_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
   $updateGoTo = "ville_modifier.php#mes-monuments";
@@ -150,7 +150,7 @@ return true;
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 </header>
 <div class="container" id="overview"> 
   
@@ -345,7 +345,7 @@ return true;
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <?php
@@ -357,7 +357,7 @@ mysql_free_result($monument);
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('../php/carte-ajouter-marqueur.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/carte-ajouter-marqueur.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>

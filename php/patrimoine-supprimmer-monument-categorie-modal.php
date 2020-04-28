@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 
 //requete categories monuments
@@ -9,7 +9,7 @@ $colname_ch_disp_id = "-1";
 if (isset($_GET['ch_disp_id'])) {
   $colname_ch_disp_id = $_GET['ch_disp_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_mon = sprintf("SELECT ch_disp_id, ch_disp_cat_id, ch_disp_mon_id, ch_pat_nom, ch_pat_lien_img1, ch_mon_cat_nom, ch_mon_cat_icon,  	ch_mon_cat_couleur FROM dispatch_mon_cat INNER JOIN patrimoine ON ch_disp_mon_id = ch_pat_id INNER JOIN monument_categories ON ch_disp_cat_id = ch_mon_cat_ID WHERE ch_disp_id = %s", GetSQLValueString($colname_ch_disp_id, "int"));
 $mon = mysql_query($query_mon, $maconnexion) or die(mysql_error());
 $row_mon = mysql_fetch_assoc($mon);

@@ -1,8 +1,8 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
@@ -22,7 +22,7 @@ $colname_User = $_SESSION['Temp_userID'];
 unset($_REQUEST['userID']);
 }
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_User = sprintf("SELECT * FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_User, "int"));
 $User = mysql_query($query_User, $maconnexion) or die(mysql_error());
 $row_User = mysql_fetch_assoc($User);
@@ -35,7 +35,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
-  include("../php/config.php");
+  include(DEF_ROOTPATH . "php/config.php");
   if (isset ($_POST['ch-use_password'])) {
   $hashed_password = md5($_POST['ch-use_password'].$salt);
   unset($_POST['ch-use_password']);
@@ -59,7 +59,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
                        GetSQLValueString($_POST['ch_use_mail'], "text"),
                        GetSQLValueString($_POST['ch_use_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
   $updateGoTo = "membre-modifier_back.php";
@@ -88,7 +88,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
 	$personnageData = mysql_fetch_assoc($selectSQL);
 	$thisPays = new \GenCity\Monde\Pays($personnageData['entity_id']);
 
-    mysql_select_db($database_maconnexion, $maconnexion);
+    
     $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
     $updateGoTo = "page_pays_back.php?paysID={$thisPays->ch_pay_id}";
@@ -119,7 +119,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-groupe")) {
                        GetSQLValueString($_POST['ch_mem_group_icon'], "text"),
 					   GetSQLValueString($_POST['ch_mem_group_couleur'], "text"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 $nouveau_groupe_id = mysql_insert_id(); 
 
@@ -130,7 +130,7 @@ $insertSQL = sprintf("INSERT INTO dispatch_mem_group (ch_disp_group_id, ch_disp_
                        GetSQLValueString($_POST['ch_mem_group_date'], "date"),
                        GetSQLValueString("2", "int"));
 					   
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result2 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
   $insertGoTo = "membre-modifier_back.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -141,7 +141,7 @@ $insertSQL = sprintf("INSERT INTO dispatch_mem_group (ch_disp_group_id, ch_disp_
 }
 
 //requete liste categories membres pour pouvoir selectionner la categorie 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_groupe = sprintf("SELECT ch_disp_mem_statut, ch_mem_group_ID, ch_mem_group_nom, ch_mem_group_desc, ch_mem_group_icon, ch_mem_group_couleur, (SELECT GROUP_CONCAT(membres.ch_disp_mem_id) FROM dispatch_mem_group as membres WHERE grouplist.ch_disp_group_id = membres.ch_disp_group_id AND membres.ch_disp_mem_statut != 3) AS listgroup
 FROM dispatch_mem_group as grouplist LEFT OUTER JOIN membres_groupes ON ch_disp_group_id = ch_mem_group_ID WHERE ch_disp_mem_id=%s AND (ch_disp_mem_statut=1 OR ch_disp_mem_statut=2)", GetSQLValueString($colname_User, "int"));
 $liste_groupe = mysql_query($query_liste_groupe, $maconnexion) or die(mysql_error());
@@ -149,14 +149,14 @@ $row_liste_groupe = mysql_fetch_assoc($liste_groupe);
 $totalRows_liste_groupe = mysql_num_rows($liste_groupe);
 
 //requete liste groupes du membre pour les notifications
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_notifications = sprintf("SELECT ch_disp_mem_statut, ch_disp_group_id FROM dispatch_mem_group WHERE ch_disp_mem_id=%s AND ch_disp_mem_statut=2", GetSQLValueString($colname_User, "int"));
 $liste_notifications = mysql_query($query_liste_notifications, $maconnexion) or die(mysql_error());
 $row_liste_notifications = mysql_fetch_assoc($liste_notifications);
 $totalRows_liste_notifications = mysql_num_rows($liste_notifications);
 
 //requete liste categories membres pour pouvoir selectionner la categorie 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mem_group2 = sprintf("SELECT * FROM membres_groupes LEFT OUTER JOIN dispatch_mem_group ON ch_disp_mem_id = %s AND ch_disp_group_id = ch_mem_group_ID ORDER BY ch_mem_group_mis_jour DESC", GetSQLValueString($colname_User, "int"));
 $liste_mem_group2 = mysql_query($query_liste_mem_group2, $maconnexion) or die(mysql_error());
 $row_liste_mem_group2 = mysql_fetch_assoc($liste_mem_group2);
@@ -182,7 +182,7 @@ if (isset($_GET['mem_groupID'])) {
 } 
 
 //requete infos groupe choisi 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_infoGroupe = sprintf("SELECT ch_mem_group_ID, ch_mem_group_nom, ch_mem_group_desc, ch_mem_group_icon, ch_mem_group_couleur FROM membres_groupes WHERE ch_mem_group_ID = %s", GetSQLValueString($colname_classer_mem, "int"));
 $infoGroupe = mysql_query($query_infoGroupe, $maconnexion) or die(mysql_error());
 $row_infoGroupe = mysql_fetch_assoc($infoGroupe);
@@ -190,7 +190,7 @@ $totalRows_infoGroupe = mysql_num_rows($infoGroupe);
 
 
 //requete infos statut user dans groupe choisi 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_statutGroupeChoisi = sprintf("SELECT ch_disp_mem_statut, ch_disp_mem_id, ch_disp_group_id FROM dispatch_mem_group WHERE ch_disp_group_id = %s AND ch_disp_mem_id = %s", GetSQLValueString($colname_classer_mem, "int"), GetSQLValueString($colname_User, "int"));
 $statutGroupeChoisi = mysql_query($query_statutGroupeChoisi, $maconnexion) or die(mysql_error());
 $row_statutGroupeChoisi = mysql_fetch_assoc($statutGroupeChoisi);
@@ -198,7 +198,7 @@ $totalRows_statutGroupeChoisi = mysql_num_rows($statutGroupeChoisi);
 
 
 //requete liste  membres d'une catégorie
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_classer_mem = sprintf("SELECT ch_disp_MG_id, ch_disp_mem_id, ch_disp_mem_statut, ch_use_id, ch_use_predicat_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_titre_dirigeant, ch_use_last_log, ch_use_lien_imgpersonnage, ch_use_paysID
 FROM dispatch_mem_group 
 INNER JOIN users ON ch_disp_mem_id = ch_use_id 
@@ -282,7 +282,7 @@ format: 'hex'});
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container" id="overview">
@@ -295,7 +295,7 @@ format: 'hex'});
 <?php
   //recherches demande d'adhesion de membre pour notification 
 	   do { 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_notifications = sprintf("SELECT ch_use_id, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant,  ch_disp_mem_statut, ch_disp_MG_id, ch_mem_group_nom FROM dispatch_mem_group INNER JOIN users ON ch_disp_mem_id = ch_use_id INNER JOIN membres_groupes ON ch_mem_group_ID = ch_disp_group_id WHERE ch_disp_group_id = %s AND ch_disp_mem_statut=3", GetSQLValueString($row_liste_notifications['ch_disp_group_id'], "int"));
 $notifications = mysql_query($query_notifications, $maconnexion) or die(mysql_error());
 $row_notifications  = mysql_fetch_assoc($notifications );
@@ -318,7 +318,7 @@ do {  ?>
 
 <!-- Formulaires de modification du personnage
      ================================================== -->
-<?php include('../php/membre-modifier.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/membre-modifier.php'); ?>
 <!-- liste des groupes du membre
      ================================================== -->
 
@@ -334,7 +334,7 @@ do {  ?>
 	   do { 
 		$listgroup = $row_liste_groupe['listgroup'];
 			if (($row_liste_groupe['listgroup']!= "") AND ($row_liste_groupe['listgroup']!= NULL)) {
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_membres_groupe = sprintf("SELECT ch_use_id, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_titre_dirigeant, ch_disp_mem_statut, ch_use_last_log, ch_use_paysID, ch_disp_MG_id FROM users INNER JOIN dispatch_mem_group ON ch_disp_mem_id = ch_use_id AND ch_disp_group_id = %s  WHERE ch_use_id In ($listgroup) ORDER BY ch_use_last_log DESC ", GetSQLValueString($row_liste_groupe['ch_mem_group_ID'], "int"));
 $liste_membres_groupe = mysql_query($query_liste_membres_groupe, $maconnexion) or die(mysql_error());
 $row_liste_membres_groupe = mysql_fetch_assoc($liste_membres_groupe);
@@ -581,7 +581,7 @@ $('#closemodal').click(function() {
 
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <script type="text/javascript">

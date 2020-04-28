@@ -1,13 +1,13 @@
 ﻿<?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 $pays_ID = "-1";
 if (isset($_GET['ch_pay_id'])) {
   $pays_ID = $_GET['ch_pay_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_pay_lien_forum, ch_use_id FROM pays INNER JOIN  users ON ch_use_paysID = ch_pay_id WHERE ch_pay_id = %s AND ch_pay_publication=1", GetSQLValueString($pays_ID, "int"));
 $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
 $row_pays = mysql_fetch_assoc($pays);
@@ -41,7 +41,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
                        GetSQLValueString($_POST['ch_pay_lien_forum'], "text"),
                        GetSQLValueString($_POST['ch_pay_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
     $updateGoTo = "../page-ville.php";
   if (isset($_SERVER['QUERY_STRING'])) {

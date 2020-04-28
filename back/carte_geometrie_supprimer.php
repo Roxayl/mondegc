@@ -1,9 +1,9 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php'); 
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php'); 
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
@@ -18,12 +18,12 @@ if ((isset($_GET['ch_geo_id'])) && ($_GET['ch_geo_id'] != "")) {
   $deleteSQL = sprintf("DELETE FROM geometries WHERE ch_geo_id=%s",
                        GetSQLValueString($_GET['ch_geo_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
   getErrorMessage('success', "La zone a été supprimée.");
 //recherche des mesures des zones de la carte pour calcul ressources
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_type", GetSQLValueString($_GET['ch_geo_pay_id'], "int"));
 $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
 $row_geometries = mysql_fetch_assoc($geometries);
@@ -59,7 +59,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
                        GetSQLValueString($tot_emploi, "int"),
 					   GetSQLValueString($_GET['ch_geo_pay_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
   mysql_free_result($geometries);
   if(isset($_GET['is_back'])) {
@@ -111,7 +111,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 
 <!-- Subhead
 ================================================== -->
@@ -122,7 +122,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

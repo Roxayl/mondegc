@@ -1,11 +1,11 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
-require_once('../Connections/maconnexion.php'); 
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php'); 
 if ($_SESSION['statut'])
 {
 } else {
@@ -54,7 +54,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_ville")) {
                        GetSQLValueString($_POST['ch_vil_header'], "text"),
                        GetSQLValueString($_POST['ch_vil_contenu'], "text"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   $insertGoTo = "page_pays_back.php?paysID=" . (int)$_POST['ch_vil_paysID'] . "#mes-villes";
@@ -66,14 +66,14 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_ville")) {
 }
 
 $User = $_SESSION['user_ID'];
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_id = %s", GetSQLValueString($User, "int"));
 $users = mysql_query($query_users, $maconnexion) or die(mysql_error());
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
 
 //Liste des joueurs pour choisir maire
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_list_users = sprintf("SELECT ch_use_id, ch_use_login FROM users ORDER BY ch_use_login");
 $list_users = mysql_query($query_list_users, $maconnexion) or die(mysql_error());
 $row_list_users = mysql_fetch_assoc($list_users);
@@ -140,7 +140,7 @@ return true;
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header id="info-ville" class="jumbotron subhead anchor">
@@ -397,7 +397,7 @@ return true;
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript
@@ -406,7 +406,7 @@ return true;
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('../php/carte-ajouter-marqueur.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/carte-ajouter-marqueur.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>

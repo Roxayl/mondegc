@@ -1,9 +1,9 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
@@ -29,7 +29,7 @@ if (isset($_GET['order_by'])) {
 if (isset($_GET['tri'])) {
   $tri = $_GET['tri'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_listcommuniques = "SELECT ch_com_ID, ch_com_statut, ch_com_categorie,ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_use_login, ch_use_lien_imgpersonnage FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_categorie = 'pays' OR ch_com_categorie = 'ville' OR ch_com_categorie = 'institut' ORDER BY $order_by $tri";
 $query_limit_listcommuniques = sprintf("%s LIMIT %d, %d", $query_listcommuniques, $startRow_listcommuniques, $maxRows_listcommuniques);
 $listcommuniques = mysql_query($query_limit_listcommuniques, $maconnexion) or die(mysql_error());
@@ -79,11 +79,11 @@ $totalPages_listcommuniques = ceil($totalRows_listcommuniques/$maxRows_listcommu
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 <!-- Navbar haut-conseil
     ================================================== -->
 <div class="container corps-page">
-<?php include('../php/menu-haut-conseil.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
   <!-- Page CONTENT
     ================================================== -->
   <div class="titre-bleu">
@@ -170,7 +170,7 @@ echo '</p>';  ?>
 
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

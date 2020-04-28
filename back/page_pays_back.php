@@ -2,11 +2,9 @@
 
 use GenCity\Monde\Pays;
 
-require_once('../Connections/maconnexion.php');
-
  
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
@@ -28,14 +26,14 @@ $colname_paysID = $_REQUEST['paysID'];
 unset($_REQUEST['paysID']);
 
 //Requete Pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_InfoGenerale = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_paysID, "int"));
 $InfoGenerale = mysql_query($query_InfoGenerale, $maconnexion) or die(mysql_error());
 $row_InfoGenerale = mysql_fetch_assoc($InfoGenerale);
 $totalRows_InfoGenerale = mysql_num_rows($InfoGenerale);
 
 //Requete User
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_User = sprintf("SELECT ch_use_id, ch_use_login, ch_use_statut FROM users WHERE ch_use_paysID = %s AND ch_use_statut >= 10", GetSQLValueString($colname_paysID, "int"));
 $User = mysql_query($query_User, $maconnexion) or die(mysql_error());
 $row_User = mysql_fetch_assoc($User);
@@ -98,7 +96,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
                            GetSQLValueString($_POST['ch_pay_text_patrimoine'], "text"),
                            GetSQLValueString($_POST['ch_pay_id'], "int"));
 
-      mysql_select_db($database_maconnexion, $maconnexion);
+
       $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
       getErrorMessage('success', "Le pays a été modifié avec succès !");
     } else {
@@ -122,7 +120,7 @@ if (isset($_GET['pageNum_mesvilles'])) {
 }
 $startRow_mesvilles = $pageNum_mesvilles * $maxRows_mesvilles;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_mesvilles = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_use_paysID, ch_pay_lien_imgdrapeau, ch_pay_nom FROM villes INNER JOIN users ON ch_vil_user = ch_use_id INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_vil_user= %s AND ch_pay_id = %s ORDER BY ch_vil_date_enregistrement ASC", GetSQLValueString($_SESSION['user_ID'], "int"), GetSQLValueString($colname_paysID, 'int'));
 $query_limit_mesvilles = sprintf("%s LIMIT %d, %d", $query_mesvilles, $startRow_mesvilles, $maxRows_mesvilles);
 $mesvilles = mysql_query($query_limit_mesvilles, $maconnexion) or die(mysql_error());
@@ -160,7 +158,7 @@ if (isset($_GET['pageNum_autres_villes'])) {
 }
 $startRow_autres_villes = $pageNum_autres_villes * $maxRows_autres_villes;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_autres_villes = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_use_login FROM villes INNER JOIN users ON ch_vil_user = ch_use_id WHERE ch_vil_paysID = %s AND ch_vil_user != %s ORDER BY ch_vil_date_enregistrement ASC", GetSQLValueString($colname_paysID, "int"), GetSQLValueString($_SESSION['user_ID'], "int"));
 $query_limit_autres_villes = sprintf("%s LIMIT %d, %d", $query_autres_villes, $startRow_autres_villes, $maxRows_autres_villes);
 $autres_villes = mysql_query($query_limit_autres_villes, $maconnexion) or die(mysql_error());
@@ -202,7 +200,7 @@ if (isset($_GET['pageNum_communiquesPays'])) {
 }
 $startRow_communiquesPays = $pageNum_communiquesPays * $maxRows_communiquesPays;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_communiquesPays = sprintf("SELECT * FROM communiques WHERE communiques.ch_com_categorie = 'pays'  AND communiques.ch_com_element_id = %s", GetSQLValueString($colname_paysID, "int"));
 $query_limit_communiquesPays = sprintf("%s LIMIT %d, %d", $query_communiquesPays, $startRow_communiquesPays, $maxRows_communiquesPays);
 $communiquesPays = mysql_query($query_limit_communiquesPays, $maconnexion) or die(mysql_error());
@@ -242,7 +240,7 @@ if (isset($_GET['pageNum_fait_hist'])) {
 }
 $startRow_fait_hist = $pageNum_fait_hist * $maxRows_fait_hist;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_fait_hist = sprintf("SELECT ch_his_id, ch_his_statut, ch_his_personnage, ch_his_date_fait, ch_his_date_fait2, ch_his_nom FROM  histoire WHERE ch_his_paysID = %s ORDER BY ch_his_date_fait ASC", GetSQLValueString($colname_paysID, "int"));
 $query_limit_fait_hist = sprintf("%s LIMIT %d, %d", $query_fait_hist, $startRow_fait_hist, $maxRows_fait_hist);
 $fait_hist = mysql_query($query_limit_fait_hist, $maconnexion) or die(mysql_error());
@@ -357,7 +355,7 @@ img.olTileImage {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 <?php if ($colname_paysID != NULL AND $row_InfoGenerale['ch_pay_publication'] !=3) { ?>
 <!-- Subhead
 ================================================== -->
@@ -1034,7 +1032,7 @@ img.olTileImage {
 $userID = $row_User['ch_use_id'];
 $com_cat = "pays";
 $com_element_id = $row_InfoGenerale['ch_pay_id'];
-include('../php/communiques-back.php'); ?>
+include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
       </section>
       <?php } // Affichage si sup ou egal à dirigeant ?>
       <!-- Liste des faits historiques
@@ -1250,7 +1248,7 @@ include('../php/communiques-back.php'); ?>
 <?php } ?>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript
@@ -1259,7 +1257,7 @@ include('../php/communiques-back.php'); ?>
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('../php/carteemplacements.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/carteemplacements.php'); ?>
 <script>
 $("a[data-toggle=modal]").click(function (e) {
   lv_target = $(this).attr('data-target')

@@ -9,7 +9,7 @@ if (isset($_GET['pageNum_LastCommunique'])) {
 }
 $startRow_LastCommunique = $pageNum_LastCommunique * $maxRows_LastCommunique;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_LastCommunique = /** @lang MySQL */
     "
 SELECT communique_pays.ch_com_label AS type_notification, communique_pays.ch_com_ID AS id, communique_pays.ch_com_statut AS statut, communique_pays.ch_com_categorie AS sous_categorie, communique_pays.ch_com_element_id AS id_element, communique_pays.ch_com_user_id AS id_auteur, communique_pays.ch_com_date AS date, communique_pays.ch_com_titre AS titre, lien_img AS photo_auteur, nom_personnage AS nom_auteur, entity_id AS paysID_auteur, prenom_personnage AS prenom_auteur, titre_personnage AS titre_auteur, ch_pay_id AS id_institution, ch_pay_nom AS institution, ch_pay_lien_imgdrapeau AS img_institution, ch_pay_id AS pays_institution

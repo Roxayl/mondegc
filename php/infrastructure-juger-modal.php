@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 
@@ -44,7 +44,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "accepter_infrastruc
                        GetSQLValueString($_POST['ch_inf_commentaire_juge'], "text"),
                        GetSQLValueString($_POST['ch_inf_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
   getErrorMessage('success',
@@ -71,7 +71,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "refuser_infrastruct
                        GetSQLValueString($_POST['ch_inf_commentaire_juge'], "text"),
                        GetSQLValueString($_POST['ch_inf_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
   getErrorMessage('success',
@@ -124,7 +124,7 @@ if(isset($_POST['MM_update'])) {
 
 }
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_infrastructure = sprintf("SELECT ch_inf_id, ch_inf_date, ch_inf_statut, ch_inf_villeid, nom_infra, ch_inf_lien_image, ch_inf_lien_image2, ch_inf_lien_image3, ch_inf_lien_image4, ch_inf_lien_image5, ch_inf_lien_forum, infrastructures.lien_wiki, ch_inf_commentaire, ch_inf_commentaire_juge, ch_inf_off_nom, ch_inf_off_desc, ch_inf_off_icone, ch_inf_off_budget, ch_inf_off_Industrie, ch_inf_off_Commerce, ch_inf_off_Agriculture, ch_inf_off_Tourisme, ch_inf_off_Recherche, ch_inf_off_Environnement, ch_inf_off_Education, ch_vil_nom, ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_inf_id = %s ORDER BY ch_inf_date DESC", GetSQLValueString($ch_inf_id, "int"));
 $query_limit_infrastructure = sprintf("%s LIMIT %d, %d", $query_infrastructure, $startRow_infrastructure, $maxRows_infrastructure);
 $infrastructure = mysql_query($query_infrastructure, $maconnexion) or die(mysql_error());
@@ -133,7 +133,7 @@ $row_infrastructure = mysql_fetch_assoc($infrastructure);
 
 //calcul ressources de la ville
 $ville_id = $row_infrastructure['ch_inf_villeid'];
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_ressources_ville = sprintf("SELECT 
 SUM(ch_inf_off_budget) AS sum_ville_budget,
 SUM(ch_inf_off_Industrie) AS sum_ville_industrie,
@@ -151,7 +151,7 @@ $totalRows_ressources_ville = mysql_num_rows($ressources_ville);
 
 //calcul ressources du pays 
 $ch_pay_id = $row_infrastructure['ch_pay_id'];
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_ressources_pays = sprintf("SELECT 
 SUM(ch_inf_off_budget) AS sum_pays_budget,
 SUM(ch_inf_off_Industrie) AS sum_pays_industrie,

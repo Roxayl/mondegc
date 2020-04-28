@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 $editFormAction = $_SERVER['PHP_SELF'];
@@ -21,7 +21,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) 
                        GetSQLValueString($_POST['ch_fai_cat_couleur'], "text"),
                        GetSQLValueString($_POST['ch_fai_cat_ID'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
   $updateGoTo = "../back/institut_histoire.php";
@@ -37,7 +37,7 @@ $colname_liste_fait_cat = "-1";
 if (isset($_GET['fai_cat_id'])) {
   $colname_liste_fait_cat = $_GET['fai_cat_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_fait_cat = sprintf("SELECT * FROM faithist_categories WHERE ch_fai_cat_ID = %s ORDER BY ch_fai_cat_mis_jour DESC", GetSQLValueString($colname_liste_fait_cat, "int"));
 $liste_fait_cat = mysql_query($query_liste_fait_cat, $maconnexion) or die(mysql_error());
 $row_liste_fait_cat = mysql_fetch_assoc($liste_fait_cat);

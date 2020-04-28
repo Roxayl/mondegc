@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
 
@@ -14,14 +14,14 @@ if (isset($_GET['membre_id'])) {
   $colname_membre_id = $_GET['membre_id'];
 }
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_groupe = sprintf("SELECT ch_mem_group_ID, ch_mem_group_nom, ch_mem_group_icon, ch_mem_group_couleur FROM membres_groupes WHERE ch_mem_group_ID = %s", GetSQLValueString($colname_group_id, "int"));
 $groupe = mysql_query($query_groupe, $maconnexion) or die(mysql_error());
 $row_groupe = mysql_fetch_assoc($groupe);
 $totalRows_groupe = mysql_num_rows($groupe);
 $nomGroupe = $row_groupe['ch_mem_group_nom'];
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_list_admin = sprintf("SELECT ch_disp_mem_id, ch_use_mail, ch_use_login FROM dispatch_mem_group INNER JOIN users ON ch_use_id=ch_disp_mem_id WHERE ch_disp_group_id = %s AND ch_disp_mem_statut=2", GetSQLValueString($colname_group_id, "int"));
 $list_admin = mysql_query($query_list_admin, $maconnexion) or die(mysql_error());
 $row_list_admin = mysql_fetch_assoc($list_admin);
@@ -42,7 +42,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajoutgroup")) {
                        GetSQLValueString($_POST['ch_disp_MG_date'], "date"),
                        GetSQLValueString($_POST['ch_disp_mem_statut'], "int"));
 					   
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
   
 do { 

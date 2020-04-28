@@ -1,9 +1,9 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
@@ -19,7 +19,7 @@ $colname_ch_communique_confimation_suppression = "-1";
 if (isset($_POST['communique_ID'])) {
   $colname_ch_communique_confimation_suppression = $_POST['communique_ID'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_ch_communique_confimation_suppression = sprintf("SELECT ch_com_ID, ch_com_titre, ch_com_categorie, ch_com_element_id FROM communiques WHERE ch_com_ID = %s", GetSQLValueString($colname_ch_communique_confimation_suppression, "int"));
 $ch_communique_confimation_suppression = mysql_query($query_ch_communique_confimation_suppression, $maconnexion) or die(mysql_error());
 $row_ch_communique_confimation_suppression = mysql_fetch_assoc($ch_communique_confimation_suppression);
@@ -78,7 +78,7 @@ $totalRows_ch_communique_confimation_suppression = mysql_num_rows($ch_communique
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron subhead" id="overview">
@@ -131,7 +131,7 @@ $totalRows_ch_communique_confimation_suppression = mysql_num_rows($ch_communique
 
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

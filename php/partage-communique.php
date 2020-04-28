@@ -1,13 +1,13 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 $ch_com_id = "-1";
 if (isset($_GET['com_id'])) {
   $ch_com_id = $_GET['com_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_communique = sprintf("SELECT ch_com_ID, ch_com_titre, ch_com_contenu, ch_com_element_id, ch_com_categorie, ch_com_label, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM communiques INNER JOIN users ON ch_use_id = ch_com_user_id WHERE ch_com_ID = %s AND ch_com_statut=1", GetSQLValueString($ch_com_id, "int"));
 $communique = mysql_query($query_communique, $maconnexion) or die(mysql_error());
 $row_communique = mysql_fetch_assoc($communique);
@@ -17,7 +17,7 @@ $elementID = $row_communique['ch_com_element_id'];
 
 //Connexion BBD Pour info sur l'institution emmitrice
 if ( $cat == "pays") {
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_forum FROM pays WHERE ch_pay_id = %s",GetSQLValueString($elementID, "int"));
 $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
 $row_pays = mysql_fetch_assoc($pays);
@@ -41,7 +41,7 @@ mysql_free_result($pays);
 }
 
 if ( $cat == "ville") {
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
 $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_pay_id, ch_pay_lien_forum FROM villes INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($elementID, "int"));
 $villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
 $row_villes = mysql_fetch_assoc($villes);
@@ -66,7 +66,7 @@ mysql_free_result($villes);
 
 
 if ( $cat == "institut") {
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_lien_forum, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($elementID, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
@@ -102,7 +102,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
                        GetSQLValueString($_POST['ch_pay_lien_forum'], "text"),
                        GetSQLValueString($_POST['ch_pay_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
     $updateGoTo = "../page-communique.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -125,7 +125,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut
                        GetSQLValueString($_POST['ch_ins_lien_forum'], "text"),
                        GetSQLValueString($_POST['ch_ins_ID'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
     $updateGoTo = "../page-communique.php";
   if (isset($_SERVER['QUERY_STRING'])) {

@@ -1,9 +1,9 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
@@ -18,7 +18,7 @@ $_SESSION['last_work'] = $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
 
 //requete instituts
 $institut_id = 6;
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
@@ -43,7 +43,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-groupe")) {
                        GetSQLValueString($_POST['ch_mem_group_icon'], "text"),
 					   GetSQLValueString($_POST['ch_mem_group_couleur'], "text"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   $insertGoTo = "institut_politique.php";
@@ -62,7 +62,7 @@ if (isset($_GET['pageNum_liste_mem_group'])) {
 }
 $startRow_liste_mem_group = $pageNum_liste_mem_group * $maxRows_liste_mem_group;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mem_group = "SELECT * FROM membres_groupes ORDER BY ch_mem_group_mis_jour DESC";
 $query_limit_liste_mem_group = sprintf("%s LIMIT %d, %d", $query_liste_mem_group, $startRow_liste_mem_group, $maxRows_liste_mem_group);
 $liste_mem_group = mysql_query($query_limit_liste_mem_group, $maconnexion) or die(mysql_error());
@@ -95,7 +95,7 @@ $queryString_liste_mem_group = sprintf("&totalRows_liste_mem_group=%d%s", $total
 
 
 //requete liste categories membres pour pouvoir selectionner la categorie 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mem_group2 = "SELECT * FROM membres_groupes ORDER BY ch_mem_group_mis_jour DESC";
 $liste_mem_group2 = mysql_query($query_liste_mem_group2, $maconnexion) or die(mysql_error());
 $row_liste_mem_group2 = mysql_fetch_assoc($liste_mem_group2);
@@ -119,7 +119,7 @@ if (isset($_GET['mem_groupID'])) {
 } } else {
   $colname_classer_mem = NULL;
 } 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_classer_mem = sprintf("SELECT membre.ch_disp_MG_id as id, membre.ch_disp_mem_id, membre.ch_disp_mem_statut AS satut_membre, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_titre_dirigeant, ch_use_last_log, ch_use_lien_imgpersonnage, ch_use_paysID, (SELECT GROUP_CONCAT(categories.ch_disp_group_id) FROM dispatch_mem_group as categories WHERE membre.ch_disp_mem_id = categories.ch_disp_mem_id AND categories.ch_disp_mem_statut != 3) AS listgroup
 FROM dispatch_mem_group as membre 
 INNER JOIN users ON membre.ch_disp_mem_id = ch_use_id 
@@ -157,7 +157,7 @@ $queryString_classer_mem = sprintf("&totalRows_classer_mem=%d%s", $totalRows_cla
 
 
 //requete listes membres restants
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mem_restants = sprintf("SELECT ch_use_id AS nb_mem_restants FROM users WHERE ch_use_id NOT IN (SELECT ch_disp_mem_id FROM dispatch_mem_group WHERE ch_disp_group_id = %s OR %s IS NULL)", GetSQLValueString($colname_classer_mem, "int"), GetSQLValueString($colname_classer_mem, "int"));
 $liste_mem_restants = mysql_query($query_liste_mem_restants, $maconnexion) or die(mysql_error());
 $row_liste_mem_restants = mysql_fetch_assoc($liste_mem_restants);
@@ -243,7 +243,7 @@ format: 'hex'});
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container" id="overview"> 
@@ -251,7 +251,7 @@ format: 'hex'});
   <!-- Page CONTENT
     ================================================== -->
   <section class="corps-page">
-  <?php include('../php/menu-haut-conseil.php'); ?>
+  <?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
 
   <!-- formulaire de modification instituts
      ================================================== -->
@@ -282,7 +282,7 @@ format: 'hex'});
 $com_cat = "institut";
 $userID = $_SESSION['user_ID'];
 $com_element_id = 6;
-include('../php/communiques-back.php'); ?>
+include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
   </div>
   <!-- liste des groupes
      ================================================== -->
@@ -432,7 +432,7 @@ $('#closemodal').click(function() {
 			$listgroup = $row_classer_mem['listgroup'];
 			if ($row_classer_mem['listgroup']) {
           
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mem_group3 = "SELECT * FROM membres_groupes WHERE ch_mem_group_ID In ($listgroup)";
 $liste_mem_group3 = mysql_query($query_liste_mem_group3, $maconnexion) or die(mysql_error());
 $row_liste_mem_group3 = mysql_fetch_assoc($liste_mem_group3);
@@ -517,7 +517,7 @@ $('#closemodal').click(function() {
 
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <script type="text/javascript">

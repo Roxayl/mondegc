@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../Connections/maconnexion.php');
+require_once(DEF_ROOTPATH . '../Connections/maconnexion.php');
 
 // renvoyer les données POST à soi-même
 $editFormAction = $_SERVER['PHP_SELF'];

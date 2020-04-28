@@ -1,9 +1,9 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
@@ -31,7 +31,7 @@ if (isset($_GET['pageNum_listemembres'])) {
 }
 $startRow_listemembres = $pageNum_listemembres * $maxRows_listemembres;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_listemembres = "SELECT ch_use_id, ch_use_date, ch_use_last_log, ch_use_login, ch_use_password, ch_use_mail, ch_use_paysID, ch_use_statut, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_biographie_dirigeant FROM users ORDER BY $order_by $tri";
 $query_limit_listemembres = sprintf("%s LIMIT %d, %d", $query_listemembres, $startRow_listemembres, $maxRows_listemembres);
 $listemembres = mysql_query($query_limit_listemembres, $maconnexion) or die(mysql_error());
@@ -82,11 +82,11 @@ $totalPages_listemembres = ceil($totalRows_listemembres/$maxRows_listemembres)-1
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 <!-- Navbar haut-conseil
     ================================================== -->
 <div class="container corps-page">
-<?php include('../php/menu-haut-conseil.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
 
   <!-- Page CONTENT
     ================================================== -->
@@ -169,7 +169,7 @@ echo '</p>';  ?>
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

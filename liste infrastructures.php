@@ -26,7 +26,7 @@ if (isset($_GET['pageNum_liste_infra_officielles'])) {
 }
 $startRow_liste_infra_officielles = $pageNum_liste_infra_officielles * $maxRows_liste_infra_officielles;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 
 if(is_null($thisGroup)) {
     $query_liste_infra_officielles = sprintf(

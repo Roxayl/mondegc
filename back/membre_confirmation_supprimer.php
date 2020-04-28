@@ -1,9 +1,9 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=30))
 {
@@ -18,7 +18,7 @@ $colname_membre = "-1";
 if (isset($_POST['ch_use_id'])) {
   $colname_membre = $_POST['ch_use_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_membre = sprintf("SELECT ch_use_id, ch_use_login, ch_use_lien_imgpersonnage FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_membre, "int"));
 $membre = mysql_query($query_membre, $maconnexion) or die(mysql_error());
 $row_membre = mysql_fetch_assoc($membre);
@@ -63,7 +63,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 
 <!-- Subhead
 ================================================== -->
@@ -86,7 +86,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 <div class="container corps-page"> </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

@@ -5,7 +5,7 @@ require_once('Connections/maconnexion.php');
 //deconnexion
 include('php/log.php');
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_HautConseil = "SELECT ch_use_login, ch_use_statut FROM users WHERE ch_use_statut >= 20 ORDER BY ch_use_login ASC";
 $HautConseil = mysql_query($query_HautConseil, $maconnexion) or die(mysql_error());
 $row_HautConseil = mysql_fetch_assoc($HautConseil);

@@ -16,7 +16,7 @@ exit();
 $colname_paysID = $_REQUEST['paysID'];
 
 //Requete Pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_InfoGenerale = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_paysID, "int"));
 $InfoGenerale = mysql_query($query_InfoGenerale, $maconnexion) or die(mysql_error());
 $row_InfoGenerale = mysql_fetch_assoc($InfoGenerale);
@@ -45,7 +45,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
                            GetSQLValueString($_POST['ch_geo_type'], "text"),
                            GetSQLValueString($_POST['ch_geo_nom'], "text"));
 
-      mysql_select_db($database_maconnexion, $maconnexion);
+
       $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
       getErrorMessage('success', "La zone " . __s($_POST['ch_geo_nom']) . ' a été ajoutée !');
@@ -53,7 +53,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
     }
 
 //recherche des mesures des zones de la carte pour calcul ressources
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_type", GetSQLValueString($colname_paysID, "int"));
 $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
 $row_geometries = mysql_fetch_assoc($geometries);
@@ -88,7 +88,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
                        GetSQLValueString($tot_population, "int"),
                        GetSQLValueString($tot_emploi, "int"),
 					   GetSQLValueString($colname_paysID, "int"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
   mysql_free_result($geometries);
 }
@@ -116,12 +116,12 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature"))
                        GetSQLValueString($_POST['ch_geo_nom'], "text"),
 					   GetSQLValueString($_POST['ch_geo_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
     }
   
   //recherche des mesures des zones de la carte pour calcul ressources
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_type", GetSQLValueString($paysid, "int"));
 $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
 $row_geometries = mysql_fetch_assoc($geometries);
@@ -157,7 +157,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
                        GetSQLValueString($tot_emploi, "int"),
 					   GetSQLValueString($paysid, "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
   mysql_free_result($geometries);
 }

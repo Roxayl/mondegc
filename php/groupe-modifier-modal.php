@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
 
@@ -22,7 +22,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) 
                        GetSQLValueString($_POST['ch_mem_group_couleur'], "text"),
                        GetSQLValueString($_POST['ch_mem_group_ID'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
 if ($_SESSION['last_work'] = "institut_politique.php") {
@@ -42,7 +42,7 @@ $colname_group_membre = "-1";
 if (isset($_GET['mem_group_ID'])) {
   $colname_group_membre = $_GET['mem_group_ID'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_group_membre = sprintf("SELECT * FROM membres_groupes WHERE ch_mem_group_ID = %s ORDER BY ch_mem_group_mis_jour DESC", GetSQLValueString($colname_group_membre, "int"));
 $group_membre = mysql_query($query_group_membre, $maconnexion) or die(mysql_error());
 $row_group_membre = mysql_fetch_assoc($group_membre);

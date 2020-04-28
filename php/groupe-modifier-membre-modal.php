@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
 //requete dispatch
@@ -8,7 +8,7 @@ $colname_info_membre = "-1";
 if (isset($_GET['ch_disp_MG_id'])) {
   $colname_info_membre = $_GET['ch_disp_MG_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_info_dispatch = sprintf("SELECT * FROM dispatch_mem_group WHERE ch_disp_MG_id = %s", GetSQLValueString($colname_info_membre, "int"));
 $info_dispatch = mysql_query($query_info_dispatch, $maconnexion) or die(mysql_error());
 $row_info_dispatch = mysql_fetch_assoc($info_dispatch);
@@ -29,7 +29,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-group")) {
                        GetSQLValueString($_POST['ch_disp_mem_statut'], "int"),
                        GetSQLValueString($_POST['ch_disp_MG_id'], "int"));
 					   
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
   $insertGoTo = $_SESSION['last_work'];

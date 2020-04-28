@@ -1,8 +1,8 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 $_error = false;
 
@@ -192,7 +192,7 @@ img.olTileImage {
 <!-- Navbar
     ================================================== -->
 <?php $institut = true;
-include('../php/navbarback.php'); ?>
+include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 
 <!-- Subhead
 ================================================== -->
@@ -446,7 +446,7 @@ include('../php/navbarback.php'); ?>
 
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>

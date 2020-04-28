@@ -1,8 +1,8 @@
 <?php
 
-require_once('../Connections/maconnexion.php'); 
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php'); 
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
@@ -81,7 +81,7 @@ if ($form_action === 'add' && isset($_POST["MM_insert"]) && $_POST["MM_insert"] 
                        GetSQLValueString($_POST['ch_inf_juge'], "int"),
                        GetSQLValueString($_POST['ch_inf_commentaire_juge'], "text"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   $insertGoTo = "ville_modifier.php?ville-ID=" . (int)$_POST['ch_inf_villeid'];
@@ -115,14 +115,14 @@ if($form_action === 'edit' && isset($_POST["MM_insert"]) && $_POST["MM_insert"] 
 
 
 //requete user 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($paysID, "int"));
 $users = mysql_query($query_users, $maconnexion) or die(mysql_error());
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
 
 //requete liste infrastructures officielles
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_inf_off = sprintf(
     "SELECT infrastructures_officielles.* FROM infrastructures_officielles
      JOIN infrastructures_officielles_groupes ON ID_infra_officielle = ch_inf_off_id
@@ -142,7 +142,7 @@ if (isset($_REQUEST['infra_off_id'])) {
 } else {
     $colname_inf_off_choisie = -1;
 } 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_inf_off_choisie = sprintf("SELECT * FROM infrastructures_officielles WHERE ch_inf_off_id = %s", GetSQLValueString($colname_inf_off_choisie, "int"));
 $inf_off_choisie = mysql_query($query_inf_off_choisie, $maconnexion) or die(mysql_error());
 $row_inf_off_choisie = mysql_fetch_assoc($inf_off_choisie);
@@ -210,7 +210,7 @@ img.olTileImage {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 </header>
 <div class="container corps-page" id="overview">
   
@@ -425,7 +425,7 @@ img.olTileImage {
     ================================================== -->
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 
 <!-- Le javascript
     ================================================== -->

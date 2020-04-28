@@ -9,7 +9,7 @@ include('php/log.php');
 $colname_communique = "-1";
 if (isset($_GET['com_id'])) {
   $colname_communique = $_GET['com_id'];}
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_communique = sprintf("SELECT * FROM communiques WHERE ch_com_ID = %s", GetSQLValueString($colname_communique, "int"));
 $communique = mysql_query($query_communique, $maconnexion) or die(mysql_error());
 $row_communique = mysql_fetch_assoc($communique);
@@ -19,7 +19,7 @@ $elementID = $row_communique['ch_com_element_id'];
 
 //Connexion BBD Pour info sur l'institution emmitrice
 if ( $cat == "pays") {
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
 $query_com_pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau, ch_pay_lien_imgheader FROM pays WHERE ch_pay_id = %s", GetSQLValueString($elementID, "int"));
 $com_pays = mysql_query($query_com_pays, $maconnexion) or die(mysql_error());
 $row_com_pays = mysql_fetch_assoc($com_pays);
@@ -38,7 +38,7 @@ $personnage = \GenCity\Monde\Personnage::constructFromEntity($pays);
 }
 
 if ( $cat == "ville") {
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
 $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_id, ch_pay_nom, ch_vil_lien_img1 FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($elementID, "int"));
 $villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
 $row_villes = mysql_fetch_assoc($villes);
@@ -54,7 +54,7 @@ mysql_free_result($villes);
 }
 
 if ( $cat == "institut") {
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_com_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($elementID, "int"));
 $com_institut = mysql_query($query_com_institut, $maconnexion) or die(mysql_error());
 $row_com_institut = mysql_fetch_assoc($com_institut);
@@ -71,7 +71,7 @@ mysql_free_result($com_institut);
 
 //Connexion BBD user pour info sur l'auteur
 $colname_user = $row_communique['ch_com_user_id'];
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_user = sprintf("SELECT ch_use_id, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_login FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_user, "int"));
 $user = mysql_query($query_user, $maconnexion) or die(mysql_error());
 $row_user = mysql_fetch_assoc($user);

@@ -7,14 +7,14 @@ include('php/log.php');
 
 //requete instituts
 $institut_id = 4;
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
 //requete liste categories fait_hists pour pouvoir selectionner la categorie 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_fai_cat2 = "SELECT * FROM faithist_categories WHERE ch_fai_cat_statut = 1 ORDER BY ch_fai_cat_mis_jour DESC";
 $liste_fai_cat2 = mysql_query($query_liste_fai_cat2, $maconnexion) or die(mysql_error());
 $row_liste_fai_cat2 = mysql_fetch_assoc($liste_fai_cat2);
@@ -38,7 +38,7 @@ if (isset($_GET['fai_catID'])) {
 } } else {
   $colname_classer_fait_hist = NULL;
 } 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_classer_fait_hist = sprintf("SELECT fait.ch_disp_FH_id as id, fait.ch_disp_fait_hist_id, ch_his_nom, ch_his_mis_jour, ch_his_date_fait, ch_his_lien_img1, ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, (SELECT GROUP_CONCAT(categories.ch_disp_fait_hist_cat_id) FROM dispatch_fait_his_cat as categories WHERE fait.ch_disp_fait_hist_id = categories.ch_disp_fait_hist_id) AS listcat
 FROM dispatch_fait_his_cat as fait 
 INNER JOIN histoire ON fait.ch_disp_fait_hist_id = ch_his_id 
@@ -75,7 +75,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 $queryString_classer_fait_hist = sprintf("&totalRows_classer_fait_hist=%d%s", $totalRows_classer_fait_hist, $queryString_classer_fait_hist);
 
 //requete info sur catégorie
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_info_cat = sprintf("SELECT ch_fai_cat_nom, ch_fai_cat_desc, ch_fai_cat_icon, ch_fai_cat_couleur
 FROM faithist_categories
 WHERE ch_fai_cat_ID = %s OR %s IS NULL AND ch_fai_cat_statut = 1", GetSQLValueString($colname_classer_fait_hist, "int"), GetSQLValueString($colname_classer_fait_hist, "int"));
@@ -92,7 +92,7 @@ if (isset($_GET['pageNum_pays_arch'])) {
 }
 $startRow_pays_arch = $pageNum_pays_arch * $maxRows_pays_arch;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_pays_arch = "SELECT ch_pay_id, ch_pay_mis_jour, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau, ch_use_prenom_dirigeant, ch_use_nom_dirigeant, Sum(villes.ch_vil_population) AS ch_pay_population 
 FROM pays LEFT OUTER JOIN villes ON ch_pay_id = ch_vil_paysID AND ch_vil_capitale != 3 LEFT OUTER JOIN users ON ch_use_paysID = ch_pay_id WHERE ch_pay_publication = 2 GROUP BY ch_pay_id ORDER BY ch_pay_id, ch_pay_mis_jour DESC";
 $query_limit_pays_arch = sprintf("%s LIMIT %d, %d", $query_pays_arch, $startRow_pays_arch, $maxRows_pays_arch);
@@ -285,7 +285,7 @@ $queryString_pays_arch = sprintf("&totalRows_pays_arch=%d%s", $totalRows_pays_ar
 			$listcategories = $row_classer_fait_hist['listcat'];
 			if ($row_classer_fait_hist['listcat']) {
           
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_fai_cat3 = "SELECT * FROM faithist_categories WHERE ch_fai_cat_ID In ($listcategories) AND ch_fai_cat_statut=1";
 $liste_fai_cat3 = mysql_query($query_liste_fai_cat3, $maconnexion) or die(mysql_error());
 $row_liste_fai_cat3 = mysql_fetch_assoc($liste_fai_cat3);

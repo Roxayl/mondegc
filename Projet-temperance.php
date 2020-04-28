@@ -18,7 +18,7 @@ if (isset($_GET['pageNum_liste_temperance'])) {
 }
 $startRow_liste_temperance = $pageNum_liste_temperance * $maxRows_liste_temperance;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_temperance = sprintf("SELECT ch_temp_id as id, ch_pay_nom as nom, ch_temp_element as element, ch_temp_element_id as element_id, ch_pay_id as pays_id, ch_temp_date as date, ch_temp_mis_jour as mis_jour, ch_pay_lien_imgdrapeau as image, ch_temp_note as note, ch_temp_tendance as tendance FROM temperance LEFT JOIN pays ON ch_temp_element_id = ch_pay_id WHERE ch_temp_element='pays' AND ch_temp_statut='3'
 UNION
 SELECT ch_temp_id as id, ch_vil_nom as nom, ch_temp_element as element, ch_temp_element_id as element_id, ch_pay_id as pays_id, ch_temp_date as date, ch_temp_mis_jour as mis_jour, ch_vil_armoiries as image, ch_temp_note as note, ch_temp_tendance as tendance FROM temperance LEFT JOIN villes ON ch_temp_element_id = ch_vil_ID LEFT JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_temp_element='ville' AND ch_temp_statut='3'
@@ -204,7 +204,7 @@ format: 'hex'});
           <?php do { 
 $idtemperance = $row_liste_temperance ['id'];
 		// requete nb de juges votants
-				mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_nb_juges = sprintf("SELECT COUNT(ch_not_temp_juge) as nbjuges FROM notation_temperance WHERE ch_not_temp_temperance_id =%s", GetSQLValueString( $idtemperance, "int"));
 $nb_juges = mysql_query($query_nb_juges, $maconnexion) or die(mysql_error());
 $row_nb_juges = mysql_fetch_assoc($nb_juges);

@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 
 $editFormAction = $_SERVER['PHP_SELF'];
@@ -16,7 +16,7 @@ if (isset($_GET['ch_temp_id'])) {
 }
 
 //requete ville
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_ville = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_pay_id, ch_pay_nom FROM temperance INNER JOIN villes ON ch_temp_element_id = ch_vil_ID INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_temp_id=%s", GetSQLValueString( $colname_temperance, "int"));
 $ville = mysql_query($query_ville, $maconnexion) or die(mysql_error());
 $row_ville = mysql_fetch_assoc($ville);
@@ -50,7 +50,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
                        GetSQLValueString($_POST['ch_not_temp_q10'], "int"),
                        GetSQLValueString($_POST['ch_not_temp_q10_com'], "text"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   $insertGoTo = "../back/Temperance_jugement.php";

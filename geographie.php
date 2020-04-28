@@ -7,14 +7,14 @@ include('php/log.php');
 
 //requete instituts
 $institut_id = 2;
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
 //requete liste pays pour pouvoir selectionner le pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_pays = "SELECT ch_pay_id, ch_pay_nom FROM pays WHERE ch_pay_publication = 1 ORDER BY ch_pay_mis_jour DESC";
 $liste_pays = mysql_query($query_liste_pays, $maconnexion) or die(mysql_error());
 $row_liste_pays = mysql_fetch_assoc($liste_pays);

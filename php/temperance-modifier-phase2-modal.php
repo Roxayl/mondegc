@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 
 $editFormAction = $_SERVER['PHP_SELF'];
@@ -24,7 +24,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance"))
                        GetSQLValueString($_POST['ch_temp_mis_jour'], "date"),
 					   GetSQLValueString($_POST['ch_temp_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
   $updateGoTo = "../back/institut_economie.php";

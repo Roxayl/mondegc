@@ -1,9 +1,9 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
@@ -18,13 +18,13 @@ if ((isset($_POST['ch_mem_group_ID'])) && ($_POST['ch_mem_group_ID'] != "")) {
   $deleteSQL = sprintf("DELETE FROM membres_groupes WHERE ch_mem_group_ID=%s",
                        GetSQLValueString($_POST['ch_mem_group_ID'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
   
   $deleteSQL = sprintf("DELETE FROM dispatch_mem_group WHERE ch_disp_group_id=%s",
                        GetSQLValueString($_POST['ch_mem_group_ID'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result2 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
 if ($_SESSION['last_work'] = "institut_politique.php") {
@@ -77,7 +77,7 @@ if ($_SESSION['last_work'] = "institut_politique.php") {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 
 <!-- Subhead
 ================================================== -->
@@ -88,7 +88,7 @@ if ($_SESSION['last_work'] = "institut_politique.php") {
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

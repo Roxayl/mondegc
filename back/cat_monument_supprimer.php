@@ -1,9 +1,9 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php'); 
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php'); 
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
@@ -18,13 +18,13 @@ if ((isset($_POST['ch_mon_cat_ID'])) && ($_POST['ch_mon_cat_ID'] != "")) {
   $deleteSQL = sprintf("DELETE FROM monument_categories WHERE ch_mon_cat_ID=%s",
                        GetSQLValueString($_POST['ch_mon_cat_ID'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
 $deleteSQL = sprintf("DELETE FROM dispatch_mon_cat WHERE ch_disp_cat_id=%s",
                        GetSQLValueString($_POST['ch_mon_cat_ID'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result2 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
 
@@ -73,7 +73,7 @@ $deleteSQL = sprintf("DELETE FROM dispatch_mon_cat WHERE ch_disp_cat_id=%s",
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 
 <!-- Subhead
 ================================================== -->
@@ -84,7 +84,7 @@ $deleteSQL = sprintf("DELETE FROM dispatch_mon_cat WHERE ch_disp_cat_id=%s",
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

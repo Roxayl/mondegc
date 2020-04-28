@@ -1,9 +1,9 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
@@ -32,7 +32,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_communique
                        GetSQLValueString($_POST['ch_com_contenu'], "text"),
                        GetSQLValueString($_POST['ch_com_ID'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
   $this_com_id = (int)$_POST['ch_com_ID'];
@@ -82,7 +82,7 @@ $colname_communique = "-1";
 if (isset($_POST['com_id'])) {
   $colname_communique = $_POST['com_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_communique = sprintf("SELECT * FROM communiques WHERE ch_com_ID = %s", GetSQLValueString($colname_communique, "int"));
 $communique = mysql_query($query_communique, $maconnexion) or die(mysql_error());
 $row_communique = mysql_fetch_assoc($communique);
@@ -92,7 +92,7 @@ $cat = $row_communique['ch_com_categorie'];
 $elementID = $row_communique['ch_com_element_id'];
 
 if ( $cat == "pays") {
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
 $query_cat_pays = sprintf("SELECT ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", GetSQLValueString($elementID, "int"));
 $cat_pays = mysql_query($query_cat_pays, $maconnexion) or die(mysql_error());
 $row_cat_pays = mysql_fetch_assoc($cat_pays);
@@ -113,7 +113,7 @@ mysql_free_result($cat_pays);
 }
 
 if ( $cat == "ville") {
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
 $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_nom FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($elementID, "int"));
 $villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
 $row_villes = mysql_fetch_assoc($villes);
@@ -129,7 +129,7 @@ mysql_free_result($villes);
 }
 
 if ( $cat == "institut") {
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($elementID, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
@@ -149,7 +149,7 @@ if (isset($row_communique['ch_com_user_id'])) {
   $colname_user = $row_communique['ch_com_user_id'];
 }
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_user = sprintf("SELECT ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_user, "int"));
 $user = mysql_query($query_user, $maconnexion) or die(mysql_error());
 $row_user = mysql_fetch_assoc($user);
@@ -198,7 +198,7 @@ $totalRows_user = mysql_num_rows($user);
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 
 <!-- Page CONTENT
     ================================================== -->
@@ -312,7 +312,7 @@ $totalRows_user = mysql_num_rows($user);
 
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

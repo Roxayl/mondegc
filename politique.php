@@ -7,14 +7,14 @@ include('php/log.php');
 
 //requete instituts
 $institut_id = 6;
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
 //requete liste groupes groupess pour pouvoir selectionner la categorie 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mem_group2 = "SELECT * FROM membres_groupes WHERE ch_mem_group_statut = 1  ORDER BY ch_mem_group_mis_jour DESC";
 $liste_mem_group2 = mysql_query($query_liste_mem_group2, $maconnexion) or die(mysql_error());
 $row_liste_mem_group2 = mysql_fetch_assoc($liste_mem_group2);
@@ -38,7 +38,7 @@ if (isset($_GET['mem_groupID'])) {
 } } else {
   $colname_classer_mem = NULL;
 } 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_classer_mem = sprintf("SELECT membre.ch_disp_MG_id as id, membre.ch_disp_mem_id, membre.ch_disp_mem_statut AS satut_membre, ch_use_id, ch_use_last_log, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_titre_dirigeant, ch_use_paysID, ch_use_lien_imgpersonnage, (SELECT GROUP_CONCAT(groupes.ch_disp_group_id) FROM dispatch_mem_group as groupes WHERE membre.ch_disp_mem_id = groupes.ch_disp_mem_id AND groupes.ch_disp_mem_statut != 3) AS listgroup
 FROM dispatch_mem_group as membre 
 INNER JOIN users ON membre.ch_disp_mem_id = ch_use_id 
@@ -75,7 +75,7 @@ $queryString_classer_mem = sprintf("&totalRows_classer_mem=%d%s", $totalRows_cla
 
 
 //requete info sur catégorie
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_info_group = sprintf("SELECT ch_mem_group_nom, ch_mem_group_desc, ch_mem_group_icon, ch_mem_group_couleur
 FROM membres_groupes
 WHERE ch_mem_group_ID = %s OR %s IS NULL AND ch_mem_group_statut = 1", GetSQLValueString($colname_classer_mem, "int"), GetSQLValueString($colname_classer_mem, "int"));
@@ -244,7 +244,7 @@ $totalRows_info_group = mysql_num_rows($info_group);
 			$listgroupes = $row_classer_mem['listgroup'];
 			if ($row_classer_mem['listgroup']) {
           
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mem_group3 = "SELECT * FROM membres_groupes WHERE ch_mem_group_ID In ($listgroupes) AND ch_mem_group_statut=1";
 $liste_mem_group3 = mysql_query($query_liste_mem_group3, $maconnexion) or die(mysql_error());
 $row_liste_mem_group3 = mysql_fetch_assoc($liste_mem_group3);
