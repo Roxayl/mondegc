@@ -38,6 +38,8 @@ if($mondegc_config['hide_errors'] === true) {
  * Librairies (autoload) *
  *************************/
 
+require_once(DEF_ROOTPATH . 'vendor/autoload.php');
+
 // Auto-chargement de classes
 spl_autoload_register(function($class) {
     // On vire l'espace de noms "Squirrel\" dans un nom de classe.

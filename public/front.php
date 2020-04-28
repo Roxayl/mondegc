@@ -1,6 +1,6 @@
 <?php
 
-require_once('Connections/maconnexion.php');
+require_once('../Connections/maconnexion.php');
 
 if(isset($_GET['target'])) {
 

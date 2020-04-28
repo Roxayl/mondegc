@@ -1,0 +1,7 @@
+{
+    "name": "generationcity/mondegc",
+    "description": "Le site du Monde de Generation City",
+    "type": "project",
+    "minimum-stability": "stable",
+    "require": {}
+}

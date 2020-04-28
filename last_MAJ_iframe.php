@@ -7,7 +7,7 @@ function csrf_startup() {
     csrf_conf('frame-breaker', false); // ça, là.
 }
 
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 // *** Connexion communique categorie pays
 $maxRows_LastCommunique = 20;

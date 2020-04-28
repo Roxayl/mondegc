@@ -1,5 +1,5 @@
 <?php
-require_once('Connections/maconnexion.php'); 
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 // Connexion BDD Pays pour afficher markers des pays
 

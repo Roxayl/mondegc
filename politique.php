@@ -1,6 +1,6 @@
 <?php
 
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 //Connexion et deconnexion
 include('php/log.php');
