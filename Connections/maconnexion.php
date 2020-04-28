@@ -73,6 +73,7 @@ $maconnexion = @mysql_pconnect($mondegc_config['db']['hostname'], $mondegc_confi
 
 if($mondegc_config['env'] !== 'production') {
     mysql_set_charset('utf8mb4', $maconnexion);
+    mysql_query("SET SESSION sql_mode = 'TRADITIONAL'");
 }
 mysql_select_db($mondegc_config['db']['database']);
 

@@ -1249,8 +1249,8 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -1299,13 +1299,5 @@ var sprytextfield32 = new Spry.Widget.ValidationTextField("sprytextfield32", "no
 var sprytextfield33 = new Spry.Widget.ValidationTextField("sprytextfield33", "none", {isRequired:false, maxChars:50, validateOn:["change"]});
 var sprytextarea30 = new Spry.Widget.ValidationTextarea("sprytextarea30", {maxChars:500, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
-<?php
-mysql_free_result($mesvilles);
-
-mysql_free_result($communiquesPays);
-
-mysql_free_result($InfoGenerale);
-
-mysql_free_result($User);
-
-mysql_free_result($fait_hist);
+</body>
+</html>
