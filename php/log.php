@@ -89,7 +89,7 @@ if ($clefSession != NULL and $clefSession != "" and !isset($_SESSION['login_user
 
 // *** Si l'utilisateur veut se connecter
 if (isset($_POST['identifiant'])) {
-	include("php/config.php");
+	require(DEF_ROOTPATH . "php/config.php");
   $loginUsername = $_POST['identifiant'];
   $password = md5($_POST['mot_de_passe'].$salt);
   $MM_fldUserAuthorization = "ch_use_paysID";
@@ -327,7 +327,6 @@ do {
 
 $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($row_pays['ch_pay_id'], "int"));
 $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
-$row_geometries = mysql_fetch_assoc($geometries);
 
 //Calcul total des ressources de la carte.
 
@@ -341,7 +340,7 @@ $row_geometries = mysql_fetch_assoc($geometries);
     $tot_education = 0;
     $tot_population = 0;
     $tot_emploi = 0;
-     do { 
+     while ($row_geometries = mysql_fetch_assoc($geometries)) {
 		$surface = $row_geometries['mesure'];
 		$typeZone = $row_geometries['ch_geo_type'];
 		ressourcesGeometrie($surface, $typeZone, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population, $emploi);
@@ -355,7 +354,7 @@ $row_geometries = mysql_fetch_assoc($geometries);
 		$tot_education += $education;
 		$tot_population += $population;
 		$tot_emploi += $emploi;
-		 } while ($row_geometries = mysql_fetch_assoc($geometries));
+	}
 
 //Enregistrement du total des ressources de la carte.
 $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_carte=%s, ch_pay_commerce_carte=%s, ch_pay_agriculture_carte=%s, ch_pay_tourisme_carte=%s, ch_pay_recherche_carte=%s, ch_pay_environnement_carte=%s, ch_pay_education_carte=%s, ch_pay_population_carte=%s, ch_pay_emploi_carte = %s WHERE ch_pay_id=%s",

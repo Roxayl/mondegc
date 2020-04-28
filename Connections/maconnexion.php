@@ -10,7 +10,7 @@ $mondegc_config = array();
 // Environnement.
 if($_SERVER['HTTP_HOST'] === 'localhost') {
     $mondegc_config['env'] = 'localhost';
-} elseif($_SERVER['HTTP_HOST'] === 'mondegc.test') {
+} elseif($_SERVER['HTTP_HOST'] === 'mondegc.test' || $_SERVER['HTTP_HOST'] === 'mondegc-upprisa.test') {
     $mondegc_config['env'] = 'vagrant';
 } else {
     $mondegc_config['env'] = 'production';

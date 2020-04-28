@@ -16,7 +16,7 @@ if(isset($_GET['target'])) {
 
     if($mondegc_config['env'] !== 'production') {
         getErrorMessage('success',
-            "Using front controller.<br>Required path: " . $mondegc_config['front-controller']['require']);
+            "Using front controller (PHP " . phpversion() . ")<br>Required path: " . $mondegc_config['front-controller']['require']);
     }
 
     if(file_exists($mondegc_config['front-controller']['require'])) {
