@@ -74,7 +74,7 @@ SELECT ch_his_label AS type_notification, ch_his_id AS id, ch_his_personnage AS 
 FROM histoire
 INNER JOIN users ON ch_use_paysID = ch_his_paysID AND ch_use_statut >=10
 INNER JOIN pays ON ch_his_paysID = ch_pay_id
-WHERE ch_his_statut = 1 AND ch_pay_publication = 1 AND ch_use_statut >=10
+WHERE ch_his_statut = 1 AND ch_pay_publication = 1 AND ch_use_statut >=10 GROUP BY ch_his_id
 UNION 
 SELECT ch_disp_mon_label AS type_notification, ch_disp_mon_id AS id, ch_mon_cat_statut AS statut, ch_pat_label AS sous_categorie, ch_pat_villeID AS id_element, ch_disp_mon_id AS id_auteur, ch_disp_date AS date, ch_mon_cat_nom AS titre, ch_pat_lien_img1 AS photo_auteur, ch_pat_nom AS nom_auteur, ch_pat_paysID AS paysID_auteur, ch_pat_nom AS prenom_auteur, ch_pat_legende_img1 AS titre_auteur, ch_mon_cat_ID AS id_institution, ch_mon_cat_nom AS institution, ch_mon_cat_icon AS img_institution, ch_mon_cat_couleur AS pays_institution
 FROM dispatch_mon_cat

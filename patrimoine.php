@@ -46,7 +46,7 @@ INNER JOIN villes ON ch_pat_villeID = ch_vil_ID
 INNER JOIN pays ON ch_pat_paysID = ch_pay_id 
 WHERE monument.ch_disp_cat_id = %s OR %s IS NULL AND ch_pat_statut = 1 
 GROUP BY monument.ch_disp_mon_id
-ORDER BY monument.ch_disp_mon_id, monument.ch_disp_date DESC", GetSQLValueString($colname_classer_mon, "int"), GetSQLValueString($colname_classer_mon, "int"));
+ORDER BY monument.ch_disp_date DESC", GetSQLValueString($colname_classer_mon, "int"), GetSQLValueString($colname_classer_mon, "int"));
 $query_limit_classer_mon = sprintf("%s LIMIT %d, %d", $query_classer_mon, $startRow_classer_mon, $maxRows_classer_mon);
 $classer_mon = mysql_query($query_limit_classer_mon, $maconnexion) or die(mysql_error());
 $row_classer_mon = mysql_fetch_assoc($classer_mon);

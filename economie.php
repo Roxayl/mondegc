@@ -160,7 +160,7 @@ AS industrie,
    INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
    INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
  AS education
-FROM pays WHERE ch_pay_publication = 1 GROUP BY ch_pay_id ORDER BY ch_pay_id, %s DESC", GetSQLValueString($cat, "text"));
+FROM pays WHERE ch_pay_publication = 1 GROUP BY ch_pay_id ORDER BY %s DESC", GetSQLValueString($cat, "text"));
 $somme_ressources_mondiales = mysql_query($query_somme_ressources_mondiales, $maconnexion) or die(mysql_error());
 $row_somme_ressources_mondiales = mysql_fetch_assoc($somme_ressources_mondiales);
 $totalRows_somme_ressources_mondiales = mysql_num_rows($somme_ressources_mondiales);

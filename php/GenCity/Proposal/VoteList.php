@@ -86,7 +86,7 @@ class VoteList {
         $listReponses = array_keys($this->proposal->getResponses());
 
         $results = array();
-        $query = sprintf('SELECT reponse_choisie, COUNT(id) AS nbr_votes
+        $query = sprintf('SELECT id, reponse_choisie, COUNT(id) AS nbr_votes
                     FROM ocgc_votes
                     WHERE ID_proposal = %s %s
                     GROUP BY reponse_choisie ',

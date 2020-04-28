@@ -24,7 +24,7 @@ if ((isset($_GET['ch_geo_id'])) && ($_GET['ch_geo_id'] != "")) {
   getErrorMessage('success', "La zone a été supprimée.");
 //recherche des mesures des zones de la carte pour calcul ressources
 
-$query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_type", GetSQLValueString($_GET['ch_geo_pay_id'], "int"));
+$query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($_GET['ch_geo_pay_id'], "int"));
 $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
 $row_geometries = mysql_fetch_assoc($geometries);
 

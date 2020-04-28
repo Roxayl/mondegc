@@ -16,7 +16,7 @@ if (isset($_GET['pageNum_communiquesPays'])) {
 $startRow_communiquesPays = $pageNum_communiquesPays * $maxRows_communiquesPays;
 
 
-$query_communiquesPays = "SELECT article.ch_com_id, COUNT(commentaire.ch_com_id) AS nb_commentaires, article.ch_com_date, article.ch_com_titre, article.ch_com_contenu, ch_use_login, ch_ins_nom, ch_ins_ID FROM communiques AS article INNER JOIN users ON ch_use_id = article.ch_com_user_id INNER JOIN  instituts ON article.ch_com_element_id = ch_ins_ID LEFT OUTER JOIN communiques AS commentaire ON article.ch_com_id = commentaire.ch_com_element_id WHERE article.ch_com_categorie = 'institut' AND article.ch_com_statut = '1' GROUP BY article.ch_com_id ORDER BY article.ch_com_id, article.ch_com_date DESC";
+$query_communiquesPays = "SELECT article.ch_com_id, COUNT(commentaire.ch_com_id) AS nb_commentaires, article.ch_com_date, article.ch_com_titre, article.ch_com_contenu, ch_use_login, ch_ins_nom, ch_ins_ID FROM communiques AS article INNER JOIN users ON ch_use_id = article.ch_com_user_id INNER JOIN  instituts ON article.ch_com_element_id = ch_ins_ID LEFT OUTER JOIN communiques AS commentaire ON article.ch_com_id = commentaire.ch_com_element_id WHERE article.ch_com_categorie = 'institut' AND article.ch_com_statut = '1' GROUP BY article.ch_com_id ORDER BY article.ch_com_date DESC";
 $query_limit_communiquesPays = sprintf("%s LIMIT %d, %d", $query_communiquesPays, $startRow_communiquesPays, $maxRows_communiquesPays);
 $communiquesPays = mysql_query($query_limit_communiquesPays, $maconnexion) or die(mysql_error());
 $row_communiquesPays = mysql_fetch_assoc($communiquesPays);

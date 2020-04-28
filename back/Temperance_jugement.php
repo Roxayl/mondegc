@@ -81,7 +81,7 @@ if (isset($_GET['pageNum_liste_infrastructures'])) {
 $startRow_liste_infrastructures = $pageNum_liste_infrastructures * $maxRows_liste_infrastructures;
 
 
-$query_liste_infrastructures = sprintf("SELECT infrastructures.*, infrastructures_officielles.*, ch_vil_nom, ch_pay_id, ch_pay_nom FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID INNER JOIN pays ON ch_vil_paysID=ch_pay_id WHERE ch_inf_statut=%s ORDER BY $ordre_classement", GetSQLValueString($colname_type_jugement, "text"));
+$query_liste_infrastructures = sprintf("SELECT infrastructures.*, infrastructures_officielles.*, ch_vil_nom, ch_pay_id, ch_pay_nom FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID INNER JOIN pays ON ch_vil_paysID=ch_pay_id WHERE ch_inf_statut=%s GROUP BY ch_inf_id ORDER BY $ordre_classement", GetSQLValueString($colname_type_jugement, "text"));
 $query_limit_liste_infrastructures = sprintf("%s LIMIT %d, %d", $query_liste_infrastructures, $startRow_liste_infrastructures, $maxRows_liste_infrastructures);
 $liste_infrastructures = mysql_query($query_limit_liste_infrastructures, $maconnexion) or die(mysql_error());
 $row_liste_infrastructures = mysql_fetch_assoc($liste_infrastructures);

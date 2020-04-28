@@ -45,7 +45,7 @@ INNER JOIN histoire ON fait.ch_disp_fait_hist_id = ch_his_id
 INNER JOIN pays ON ch_pay_id = ch_his_paysID
 WHERE fait.ch_disp_fait_hist_cat_id = %s OR %s IS NULL AND ch_his_statut = 1 
 GROUP BY fait.ch_disp_fait_hist_id
-ORDER BY ch_disp_fait_hist_id, ch_his_date_fait ASC", GetSQLValueString($colname_classer_fait_hist, "int"), GetSQLValueString($colname_classer_fait_hist, "int"));
+ORDER BY ch_his_date_fait ASC", GetSQLValueString($colname_classer_fait_hist, "int"), GetSQLValueString($colname_classer_fait_hist, "int"));
 $query_limit_classer_fait_hist = sprintf("%s LIMIT %d, %d", $query_classer_fait_hist, $startRow_classer_fait_hist, $maxRows_classer_fait_hist);
 $classer_fait_hist = mysql_query($query_limit_classer_fait_hist, $maconnexion) or die(mysql_error());
 $row_classer_fait_hist = mysql_fetch_assoc($classer_fait_hist);
@@ -94,7 +94,7 @@ $startRow_pays_arch = $pageNum_pays_arch * $maxRows_pays_arch;
 
 
 $query_pays_arch = "SELECT ch_pay_id, ch_pay_mis_jour, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau, ch_use_prenom_dirigeant, ch_use_nom_dirigeant, Sum(villes.ch_vil_population) AS ch_pay_population 
-FROM pays LEFT OUTER JOIN villes ON ch_pay_id = ch_vil_paysID AND ch_vil_capitale != 3 LEFT OUTER JOIN users ON ch_use_paysID = ch_pay_id WHERE ch_pay_publication = 2 GROUP BY ch_pay_id ORDER BY ch_pay_id, ch_pay_mis_jour DESC";
+FROM pays LEFT OUTER JOIN villes ON ch_pay_id = ch_vil_paysID AND ch_vil_capitale != 3 LEFT OUTER JOIN users ON ch_use_paysID = ch_pay_id WHERE ch_pay_publication = 2 GROUP BY ch_pay_id ORDER BY ch_pay_mis_jour DESC";
 $query_limit_pays_arch = sprintf("%s LIMIT %d, %d", $query_pays_arch, $startRow_pays_arch, $maxRows_pays_arch);
 $pays_arch = mysql_query($query_limit_pays_arch, $maconnexion) or die(mysql_error());
 $row_pays_arch = mysql_fetch_assoc($pays_arch);
