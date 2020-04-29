@@ -1,7 +1,15 @@
 RewriteEngine On
-RewriteOptions Inherit
 RewriteBase /
 
+#RewriteCond %{REQUEST_URI} !^/public/
+#RewriteRule ^(.*)$ /public/$1 [L,QSA]
+
+RewriteCond %{REQUEST_URI} ^/upprisa/
+RewriteRule ^(.*)$ public/$1 [L,QSA]
+
+RewriteCond %{REQUEST_URI} !^/upprisa(.*)$
 RewriteRule ^([a-zA-Z0-9\s_-]+)\.php$ public/front.php?target=$1 [nc,L,QSA]
+RewriteCond %{REQUEST_URI} !^/upprisa(.*)$
 RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ public/front.php?target=$1.$2 [nc,L,QSA]
+RewriteCond %{REQUEST_URI} !^/upprisa(.*)$
 RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ public/front.php?target=$1.$2.$3 [nc,L,QSA]
