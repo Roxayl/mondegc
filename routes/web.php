@@ -11,13 +11,8 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/laravel', function () {
     return view('welcome');
 });
 
-Route::get('/test', function () {
-    return view('welcome');
-});
-
-Route::any( "/{path?}", "Legacy\LegacySiteController@index" )
-    ->where( "path", ".*" );
+Route::any( "/{path?}", "Legacy\LegacySiteController@index" )->where( "path", ".*" );

@@ -2,6 +2,10 @@
 
 require_once('../Connections/maconnexion.php');
 
+if($path === '') {
+    $_GET['target'] = 'index';
+}
+
 if(isset($_GET['target'])) {
 
     $mondegc_config['front-controller'] = array();
