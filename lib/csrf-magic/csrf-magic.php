@@ -410,6 +410,10 @@ function csrf_hash($value, $time = null) {
 // Load user configuration
 if (function_exists('csrf_startup')) csrf_startup();
 // Initialize our handler
-if ($GLOBALS['csrf']['rewrite'])     ob_start('csrf_ob_handler');
+
+// On vire le code ci-dessous car on va exécuter cette fonction dans ce qui est retourné par 
+// le front controller du site legacy.
+// if ($GLOBALS['csrf']['rewrite'])     ob_start('csrf_ob_handler');
+
 // Perform check
 if (!$GLOBALS['csrf']['defer'])      csrf_check();

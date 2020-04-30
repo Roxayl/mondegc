@@ -33,7 +33,11 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\StartSession::class,
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \App\Http\Middleware\VerifyCsrfToken::class,
+            
+            // TODO! On annule temporairement la vérification globale des jetons car le middleware
+            // est appelé avant l'appel à LegacySiteController. Solution retenue :
+            // https://laracasts.com/discuss/channels/general-discussion/l5-disable-csrf-middleware-on-certain-routes
+            // \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 

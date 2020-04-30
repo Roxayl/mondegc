@@ -23,9 +23,12 @@ if(isset($_GET['target'])) {
             "Using front controller (PHP " . phpversion() . ")<br>Required path: " . $mondegc_config['front-controller']['require']);
     }
 
+    ob_start();
     if(file_exists($mondegc_config['front-controller']['require'])) {
         @require($mondegc_config['front-controller']['require']);
     }
+    
+    echo csrf_ob_handler(ob_get_clean(), null);
 
 }
 
