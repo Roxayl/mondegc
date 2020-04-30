@@ -18,3 +18,6 @@ Route::get('/', function () {
 Route::get('/test', function () {
     return view('welcome');
 });
+
+Route::any( "/{path?}", "Legacy\LegacySiteController@index" )
+    ->where( "path", ".*" );

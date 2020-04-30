@@ -1,15 +1,33 @@
 RewriteEngine On
-RewriteBase /
+#RewriteBase /
 
-#RewriteCond %{REQUEST_URI} !^/public/
-#RewriteRule ^(.*)$ /public/$1 [L,QSA]
+# Condition : on conserve l'acces direct aux anciens dossiers du site legacy.
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteCond %{REQUEST_URI} !^/assets/
+RewriteCond %{REQUEST_URI} !^/back/
+RewriteCond %{REQUEST_URI} !^/BContact/
+RewriteCond %{REQUEST_URI} !^/Carto/
+RewriteCond %{REQUEST_URI} !^/colorpicker/
+RewriteCond %{REQUEST_URI} !^/datepicker/
+RewriteCond %{REQUEST_URI} !^/lib/
+RewriteCond %{REQUEST_URI} !^/php/
+RewriteCond %{REQUEST_URI} !^/services/
+RewriteCond %{REQUEST_URI} !^/SpryAssets/
+RewriteCond %{REQUEST_URI} !^/userfiles/
+RewriteRule ^(.*)$ /public/$1 [L,QSA]
 
-RewriteCond %{REQUEST_URI} ^/upprisa/
-RewriteRule ^(.*)$ public/$1 [L,QSA]
+# Gerer les accès au site legacy.
+RewriteCond %{REQUEST_FILENAME} \.php$
+RewriteRule ^([a-zA-Z0-9\s_-]+)\.php$ index.php?target=$1 [nc,L,QSA]
+RewriteCond %{REQUEST_FILENAME} \.php$
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ index.php?target=$1.$2 [nc,L,QSA]
+RewriteCond %{REQUEST_FILENAME} \.php$
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ index.php?target=$1.$2.$3 [nc,L,QSA]
 
-RewriteCond %{REQUEST_URI} !^/upprisa(.*)$
-RewriteRule ^([a-zA-Z0-9\s_-]+)\.php$ public/front.php?target=$1 [nc,L,QSA]
-RewriteCond %{REQUEST_URI} !^/upprisa(.*)$
-RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ public/front.php?target=$1.$2 [nc,L,QSA]
-RewriteCond %{REQUEST_URI} !^/upprisa(.*)$
-RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ public/front.php?target=$1.$2.$3 [nc,L,QSA]
+# Gestion front controller sans Laravel (obsolete)
+#RewriteCond %{REQUEST_URI} !^/public(.*)$
+#RewriteRule ^([a-zA-Z0-9\s_-]+)\.php$ public/front.php?target=$1 [nc,L,QSA]
+#RewriteCond %{REQUEST_URI} !^/public(.*)$
+#RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ public/front.php?target=$1.$2 [nc,L,QSA]
+#RewriteCond %{REQUEST_URI} !^/public(.*)$
+#RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ public/front.php?target=$1.$2.$3 [nc,L,QSA]

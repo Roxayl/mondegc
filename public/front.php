@@ -20,7 +20,12 @@ if(isset($_GET['target'])) {
     }
 
     if(file_exists($mondegc_config['front-controller']['require'])) {
-        require($mondegc_config['front-controller']['require']);
+        @require($mondegc_config['front-controller']['require']);
     }
 
+}
+
+else {
+    header("HTTP/1.1 404 Not Found");
+    echo "Page non trouvée.";
 }
