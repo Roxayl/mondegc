@@ -14,15 +14,16 @@ RewriteCond %{REQUEST_URI} !^/php/
 RewriteCond %{REQUEST_URI} !^/services/
 RewriteCond %{REQUEST_URI} !^/SpryAssets/
 RewriteCond %{REQUEST_URI} !^/userfiles/
+RewriteCond %{REQUEST_FILENAME} !\.php$
 RewriteRule ^(.*)$ /public/$1 [L,QSA]
 
 # Gerer les accès au site legacy.
 RewriteCond %{REQUEST_FILENAME} \.php$
-RewriteRule ^([a-zA-Z0-9\s_-]+)\.php$ index.php?target=$1 [nc,L,QSA]
+RewriteRule ^([a-zA-Z0-9\s_-]+)\.php$ public/index.php?target=$1 [nc,L,QSA]
 RewriteCond %{REQUEST_FILENAME} \.php$
-RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ index.php?target=$1.$2 [nc,L,QSA]
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ public/index.php?target=$1.$2 [nc,L,QSA]
 RewriteCond %{REQUEST_FILENAME} \.php$
-RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ index.php?target=$1.$2.$3 [nc,L,QSA]
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ public/index.php?target=$1.$2.$3 [nc,L,QSA]
 
 # Gestion front controller sans Laravel (obsolete)
 #RewriteCond %{REQUEST_URI} !^/public(.*)$
