@@ -153,9 +153,9 @@ $.ajaxTransport('jsonpi', function(opts, originalOptions, jqXHR) {
 
 $(window).scroll(function() {
   if ($(document).scrollTop() > 50) {
-    $('navbar').addClass('shrink');
+    $('div.navbar').addClass('shrink');
   } else {
-    $('navbar').removeClass('shrink');
+    $('div.navbar').removeClass('shrink');
   }
 });
 
