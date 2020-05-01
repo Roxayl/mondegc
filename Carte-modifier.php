@@ -209,7 +209,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
 img.olTileImage {
 	max-width: none;
 }
-}
+
 @media (max-width: 480px) {
 #map {
 	height: 360px;

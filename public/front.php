@@ -28,11 +28,14 @@ if(isset($_GET['target'])) {
         @require($mondegc_config['front-controller']['require']);
     }
     
-    echo csrf_ob_handler(ob_get_clean(), null);
+    return csrf_ob_handler(ob_get_clean(), null);
 
 }
 
 else {
-    header("HTTP/1.1 404 Not Found");
-    echo "Page non trouvée.";
+    header("{$_SERVER['SERVER_PROTOCOL']} 404 Not Found");
+    echo "<!DOCTYPE html>
+    <html><head><title>Monde GC - Nope nope.</title></head>
+    <body><h1>404.</h1><p>Page non trouvée.</p></body>
+    </html>";
 }
