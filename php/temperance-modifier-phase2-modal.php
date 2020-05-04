@@ -29,6 +29,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance"))
   appendQueryString($updateGoTo);
   $adresse = $updateGoTo .'#liste-temperance';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 ?>
 

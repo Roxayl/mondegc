@@ -35,6 +35,7 @@ if ($_SESSION['last_work'] = "institut_politique.php") {
 
   appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

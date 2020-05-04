@@ -45,6 +45,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
   appendQueryString($updateGoTo);
   $adresse = $updateGoTo."?ch_his_id=".$row_fait_hist['ch_his_paysID'];
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 ?>
 <!-- Modal Header si ID sujet correspond  a 4 chiffres-->

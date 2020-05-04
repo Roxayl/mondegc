@@ -87,11 +87,13 @@ mail($mail,$sujet,$message,$header);
       header( "Location: ".$redirect_error ) ;
     }
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
   }
   $adresse = $insertGoTo .'#liste-temperance';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 
 //requete villes

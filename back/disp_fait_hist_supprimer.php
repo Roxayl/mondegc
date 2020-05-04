@@ -28,6 +28,7 @@ if ((isset($_POST['ch_disp_FH_id'])) && ($_POST['ch_disp_FH_id'] != "")) {
   appendQueryString($deleteGoTo);
   $adresse = $deleteGoTo .'#classer-fait-hist';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

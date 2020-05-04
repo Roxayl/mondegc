@@ -98,6 +98,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
   $insertGoTo = DEF_URI_PATH . "back/liste-pays.php";
   appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

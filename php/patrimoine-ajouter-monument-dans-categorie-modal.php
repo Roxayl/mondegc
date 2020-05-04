@@ -21,6 +21,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
   appendQueryString($insertGoTo);
   $adresse = $insertGoTo .'#classer-monument';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 
 

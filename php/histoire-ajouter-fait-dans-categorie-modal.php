@@ -20,6 +20,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-fai_categorie
   appendQueryString($insertGoTo);
   $adresse = $insertGoTo .'#classer-fait-hist';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 
 

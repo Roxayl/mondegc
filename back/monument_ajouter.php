@@ -57,6 +57,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_monument")) {
   $insertGoTo = DEF_URI_PATH . "back/ville_modifier.php";
   appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 
 

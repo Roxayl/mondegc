@@ -26,6 +26,7 @@ if ((isset($_POST['ch_disp_MG_id'])) && ($_POST['ch_disp_MG_id'] != "")) {
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
   $deleteGoTo = $_SESSION['last_work'];
   header(sprintf("Location: %s", $deleteGoTo));
+ exit;
 }
 ?>
 <!DOCTYPE html>

@@ -73,6 +73,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_institut")
   $updateGoTo = DEF_URI_PATH . 'back/' . $updateGoTo;
   appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 

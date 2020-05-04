@@ -52,6 +52,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) 
   $updateGoTo = DEF_URI_PATH . "back/institut_patrimoine.php";
   appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 //requete categories monuments
 

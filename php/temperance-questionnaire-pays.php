@@ -56,6 +56,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
   appendQueryString($insertGoTo);
   $adresse = $insertGoTo .'#liste-temperance';
   header(sprintf("Location: %s", $adresse));
+ exit;
 } ?>
 
 <!-- Modal Header-->

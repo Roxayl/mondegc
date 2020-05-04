@@ -71,6 +71,7 @@ $updateGoTo = '../page-communique.php?com_id=' . (int)$_POST['ch_com_ID'];
 
   appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 $colname_communique = "-1";

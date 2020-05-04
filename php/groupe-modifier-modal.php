@@ -30,6 +30,7 @@ if ($_SESSION['last_work'] = "institut_politique.php") {
   }
   appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 //requete categories monuments
 

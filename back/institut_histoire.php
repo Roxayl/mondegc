@@ -32,6 +32,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-categorie")) 
   $insertGoTo = DEF_URI_PATH . "back/institut_histoire.php";
   appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 
 //requete instituts

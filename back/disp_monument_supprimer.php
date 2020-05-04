@@ -28,6 +28,7 @@ if ((isset($_POST['ch_disp_id'])) && ($_POST['ch_disp_id'] != "")) {
   appendQueryString($deleteGoTo);
   $adresse = $deleteGoTo .'#classer-monument';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

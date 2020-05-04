@@ -156,6 +156,7 @@ $insertGoTo = DEF_URI_PATH . 'back/page_pays_back.php';
 }
   appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 
 

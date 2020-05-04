@@ -39,6 +39,7 @@ $deleteSQL2 = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist
   $deleteGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$thisPays->get('ch_pay_id') . "#faits-historiques";
   appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

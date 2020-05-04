@@ -43,6 +43,7 @@ $deleteSQL2 = sprintf("DELETE FROM dispatch_mon_cat WHERE ch_disp_mon_id=%s",
   $deleteGoTo = DEF_URI_PATH . "back/ville_modifier.php#mes-monuments";
   appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

@@ -25,6 +25,7 @@ if ((isset($_POST['ch_inf_id'])) && ($_POST['ch_inf_id'] != "")) {
 
   appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

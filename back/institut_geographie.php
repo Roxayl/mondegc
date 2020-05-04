@@ -40,6 +40,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
 
   $insertGoTo = DEF_URI_PATH . "back/institut_geographie.php?bounds=".$_POST['ch_geo_bounds'];
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 
 
@@ -61,6 +62,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature"))
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
   $updateGoTo = DEF_URI_PATH . "back/institut_geographie.php?bounds=".$_POST['ch_geo_bounds'];
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 

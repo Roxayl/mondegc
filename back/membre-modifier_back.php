@@ -63,6 +63,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
   $updateGoTo = DEF_URI_PATH . "back/membre-modifier_back.php";
   appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 //Mise a jour profil infos personnage
@@ -89,6 +90,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
     $updateGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID={$thisPays->ch_pay_id}";
     appendQueryString($updateGoTo);
     header(sprintf("Location: %s", $updateGoTo));
+ exit;
     exit;
 }
 
@@ -125,6 +127,7 @@ $insertSQL = sprintf("INSERT INTO dispatch_mem_group (ch_disp_group_id, ch_disp_
   $insertGoTo = DEF_URI_PATH . "back/membre-modifier_back.php";
   appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 
 //requete liste categories membres pour pouvoir selectionner la categorie 

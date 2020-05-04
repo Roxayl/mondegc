@@ -48,6 +48,7 @@ $_POST['ch_his_date_fait2'] = NULL;
   $updateGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_his_paysID'] . '#faits-historiques';
   appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 $colname_Fait_his = "-1";

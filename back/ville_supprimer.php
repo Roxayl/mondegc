@@ -63,6 +63,7 @@ $colname_monumentID = $row_monument['ch_pat_id'];
   $deleteGoTo = DEF_URI_PATH . "back/page_pays_back.php";
   appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

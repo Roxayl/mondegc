@@ -55,6 +55,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "accepter_infrastruc
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
   }
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 //Actualisation BDD refuser infrastructure après jugement
@@ -82,6 +83,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "refuser_infrastruct
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
   }
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 if(isset($_POST['MM_update'])) {

@@ -55,6 +55,7 @@ $_POST['ch_his_date_fait2'] = NULL;
   $insertGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . $_POST['ch_his_paysID'] . '#faits-historiques';
   appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 
 

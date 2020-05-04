@@ -21,6 +21,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mem_groupegor
   appendQueryString($insertGoTo);
   $adresse = $insertGoTo .'#classer-membres';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 
 

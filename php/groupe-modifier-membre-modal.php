@@ -32,6 +32,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-group")) {
 
   $insertGoTo = $_SESSION['last_work'];
   header(sprintf("Location: %s", $_SESSION['last_work']));
+ exit;
 }
 ?>
 

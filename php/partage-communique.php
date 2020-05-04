@@ -106,6 +106,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
   appendQueryString($updateGoTo);
   $adresse = $updateGoTo."?ch_com_ID=".$row_communique['ch_com_ID'];
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 //Mise à jour formulaire institut
@@ -124,6 +125,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut
   appendQueryString($updateGoTo);
   $adresse = $updateGoTo."?ch_com_ID=".$row_communique['ch_com_ID'];
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 ?>
 <!-- Modal Header si ID sujet correspond  a 4 chiffres-->

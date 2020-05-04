@@ -55,6 +55,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
   $insertGoTo = DEF_URI_PATH . 'index.php';
   appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 ?>
 <!DOCTYPE html>

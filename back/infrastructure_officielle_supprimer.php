@@ -38,6 +38,7 @@ if ((isset($_POST['ch_inf_off_id'])) && ($_POST['ch_inf_off_id'] != "")) {
   appendQueryString($deleteGoTo);
   $adresse = $deleteGoTo .'#liste-infrastructures-officielles';
   header(sprintf("Location: %s", $deleteGoTo));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

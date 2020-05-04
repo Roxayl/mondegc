@@ -85,12 +85,14 @@ mail($mail,$sujet,$message,$header);
               $redirect_error= "error.php"; // Redirect if there is an error.
       header( "Location: ".$redirect_error ) ;
     }
-  header(sprintf("Location: %s", $insertGoTo));
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
+  header(sprintf("Location: %s", $insertGoTo));
+  exit;
   }
   $adresse = $insertGoTo .'#liste-temperance';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 
 //requete pays

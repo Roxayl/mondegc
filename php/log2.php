@@ -269,6 +269,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
   $insertGoTo = $url_en_cours;
     $adresse = $insertGoTo .'#commentaires';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 
 // *** Recherche et effacement des sessions de plus d'un mois .

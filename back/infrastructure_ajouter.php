@@ -107,6 +107,7 @@ if($form_action === 'edit' && isset($_POST["MM_insert"]) && $_POST["MM_insert"] 
     getErrorMessage('success', "L'infrastructure a été modifiée avec succès !");
 
     header(sprintf("Location: %s", $insertGoTo));
+ exit;
     exit;
 
 }

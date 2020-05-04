@@ -25,6 +25,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) 
   $updateGoTo = "../back/institut_histoire.php";
   appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 //requete categories faits historiques
 

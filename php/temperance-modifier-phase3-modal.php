@@ -80,6 +80,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance"))
   $adresse = $updateGoTo .'#liste-temperance';
   mysql_free_result($questionnaires);
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 ?>
 

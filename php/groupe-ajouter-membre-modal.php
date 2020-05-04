@@ -111,6 +111,7 @@ if ($_SESSION['last_work'] == "institut_politique.php") {
   appendQueryString($insertGoTo);
   $adresse = $insertGoTo .'#liste-categories';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 ?>
 <!-- Modal Header-->

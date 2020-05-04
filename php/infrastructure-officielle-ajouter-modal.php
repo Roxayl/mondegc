@@ -39,6 +39,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-inf_off")) {
   appendQueryString($insertGoTo);
   $adresse = $insertGoTo .'#liste-infrastructures-officielles';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 
 // Obtenir tous les groupes d'infrastructures.

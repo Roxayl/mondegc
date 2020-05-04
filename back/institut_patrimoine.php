@@ -32,6 +32,7 @@ $insertSQL = sprintf("INSERT INTO monument_categories (ch_mon_cat_label, ch_mon_
   $insertGoTo = DEF_URI_PATH . "back/institut_patrimoine.php";
   appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 					   
 //requete instituts

@@ -79,6 +79,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_monument")
   $updateGoTo = DEF_URI_PATH . "back/ville_modifier.php#mes-monuments";
   appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 $institutCulture = new \GenCity\Monde\Institut\Institut(\GenCity\Monde\Institut\Institut::$instituts['culture']);

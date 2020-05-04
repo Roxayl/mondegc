@@ -58,6 +58,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_ville")) {
   $insertGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_vil_paysID'] . "#mes-villes";
   appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 
 $User = $_SESSION['user_ID'];

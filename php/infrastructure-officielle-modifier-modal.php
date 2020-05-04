@@ -49,6 +49,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
   appendQueryString($updateGoTo);
   $adresse = $updateGoTo .'#liste-infrastructures-officielles';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 
 

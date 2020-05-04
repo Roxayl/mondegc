@@ -24,6 +24,7 @@ if ((isset($_POST['ch_use_id'])) && ($_POST['ch_use_id'] != "")) {
   $deleteGoTo = DEF_URI_PATH . "back/liste-membres.php";
   appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">
