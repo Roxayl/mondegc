@@ -15,7 +15,7 @@ $row_info_dispatch = mysql_fetch_assoc($info_dispatch);
 $totalRows_info_dispatch = mysql_num_rows($info_dispatch);
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }

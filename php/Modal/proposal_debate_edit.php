@@ -3,7 +3,7 @@
 require_once(DEF_ROOTPATH . '../Connections/maconnexion.php');
 
 // renvoyer les données POST à soi-même
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -24,7 +24,7 @@ if(isset($_POST['proposal_debate_edit'])) {
     } else {
         $formProposal->update();
         getErrorMessage('success', "Les liens ont été modifiés avec succès !");
-        header("Location: ../../back/ocgc_proposal.php?id={$formProposal->get('id')}");
+        header(DEF_URI_PATH . "back/ocgc_proposal.php?id={$formProposal->get('id')}");
         exit();
     }
 }

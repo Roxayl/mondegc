@@ -4,7 +4,7 @@ if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Con
 header('Content-Type: text/html; charset=utf-8');
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -52,7 +52,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "accepter_infrastruc
     " L'infrastructure " . __s($thisInfra->get('nom_infra')) .
     " a été <strong>acceptée</strong> !");
 
-  $updateGoTo = "../back/Temperance_jugement.php";
+  $updateGoTo = DEF_URI_PATH . "back/Temperance_jugement.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
   }
@@ -79,7 +79,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "refuser_infrastruct
     " L'infrastructure " . __s($thisInfra->get('nom_infra')) .
     " a été <strong>refusée</strong> ! <i>La force de dire non !</i>");
 
-  $updateGoTo = "../back/Temperance_jugement.php";
+  $updateGoTo = DEF_URI_PATH . "back/Temperance_jugement.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
   }

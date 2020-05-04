@@ -2,7 +2,7 @@
 if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -35,9 +35,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-inf_off")) {
   \GenCity\Monde\Logger\Log::createItem('infrastructures_officielles', $thisInfraOff->get('ch_inf_off_id'),
       'insert', null, array('entity' => $thisInfraOff->model->getInfo()));
 
-  getErrorMessage('success', "Une infrastructure officielle a été ajoutée !");
+  getErrorMessage('success', "Une infrastructure officielle a ï¿½tï¿½ ajoutï¿½e !");
 
-  $insertGoTo = '../back/institut_economie.php';
+  $insertGoTo = DEF_URI_PATH . 'back/institut_economie.php';
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
@@ -56,11 +56,11 @@ $infra_group = mysql_query($query_infra_group, $maconnexion);
 
 <form action="<?php echo $editFormAction; ?>" name="ajout-inf_off" method="POST" class="form-horizontal" id="ajout-inf_off">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
     <h3 id="myModalLabel">Ajouter une infrastructure dans la liste officielle</h3>
   </div>
   <div class="modal-body"> 
-    <!-- Boutons cachés -->
+    <!-- Boutons cachï¿½s -->
     <?php $now= date("Y-m-d G:i:s");?>
     <input name="ch_inf_off_label" type="hidden" value="inf_off">
     <input name="ch_inf_off_date" type="hidden" value="<?php echo $now; ?>">
@@ -93,15 +93,15 @@ $infra_group = mysql_query($query_infra_group, $maconnexion);
           </select>
         <br /></div >
     </div>
-    <!-- Règles -->
+    <!-- Rï¿½gles -->
     <div id="sprytextarea1" class="control-group">
-      <label class="control-label" for="ch_inf_off_desc">Règles </label>
+      <label class="control-label" for="ch_inf_off_desc">Rï¿½gles </label>
       <div class="controls">
         <textarea rows="4" name="ch_inf_off_desc" class="input-xxlarge" id="ch_inf_off_desc"></textarea>
         <br />
         <span class="textareaMaxCharsMsg">2000 caract&egrave;res max.</span><span class="textareaRequiredMsg">Une valeur est requise.</span></div>
     </div>
-    <h3>Influence sur l'économie</h3>
+    <h3>Influence sur l'ï¿½conomie</h3>
     <div class="row-fluid">
     <div class="span6">
      <!-- Ressource1 -->

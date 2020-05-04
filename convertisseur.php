@@ -31,7 +31,7 @@ $simflouz = array(
 
 <div id="monnaie">
 
-<form method="post" action="index.php">
+<form method="post" action="<?= DEF_URI_PATH ?>index.php">
 <fieldset class="choix">
 <legend class="legende">Monnaies à Convertir</legend>
 <div><select name="monnaie1">

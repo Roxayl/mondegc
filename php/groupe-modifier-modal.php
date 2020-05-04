@@ -4,7 +4,7 @@ if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Con
 header('Content-Type: text/html; charset=iso-8859-1');
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -26,9 +26,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) 
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
 if ($_SESSION['last_work'] = "institut_politique.php") {
-  $updateGoTo = "../back/institut_politique.php";
+  $updateGoTo = DEF_URI_PATH . "back/institut_politique.php";
 } else {
-  $updateGoTo = "../back/membre-modifier_back.php";
+  $updateGoTo = DEF_URI_PATH . "back/membre-modifier_back.php";
   }
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";

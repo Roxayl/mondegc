@@ -76,17 +76,17 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
   <!-- Moderation
      ================================================== -->
   <?php if (($_SESSION['statut'] >= 20) OR ($row_fait_his['ch_use_id'] == $_SESSION['user_ID'])) { ?>
-  <form class="pull-right" action="back/fait_historique_confirmation_supprimer.php" method="post">
+  <form class="pull-right" action="<?= DEF_URI_PATH ?>back/fait_historique_confirmation_supprimer.php" method="post">
     <input name="ch_his_id" type="hidden" value="<?php echo $row_fait_his['ch_his_id']; ?>">
     <button class="btn btn-danger" type="submit" title="supprimer ce fait historique"><i class="icon-trash icon-white"></i></button>
   </form>
   <?php if ($row_fait_his['ch_his_personnage'] == 2) { ?>
-  <form class="pull-right" action="back/personnage_historique_modifier.php" method="post">
+  <form class="pull-right" action="<?= DEF_URI_PATH ?>back/personnage_historique_modifier.php" method="post">
     <input name="ch_his_id" type="hidden" value="<?php echo $row_fait_his['ch_his_id']; ?>">
     <button class="btn btn-danger" type="submit" title="modifier ce fait historique"><i class="icon-pencil icon-white"></i></button>
   </form>
   <?php } else {?>
-<form class="pull-right" action="back/fait_historique_modifier.php" method="post">
+<form class="pull-right" action="<?= DEF_URI_PATH ?>back/fait_historique_modifier.php" method="post">
     <input name="ch_his_id" type="hidden" value="<?php echo $row_fait_his['ch_his_id']; ?>">
     <button class="btn btn-danger" type="submit" title="modifier ce fait historique"><i class="icon-pencil icon-white"></i></button>
   </form>

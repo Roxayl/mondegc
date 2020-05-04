@@ -10,7 +10,7 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
@@ -34,7 +34,7 @@ if ((isset($_POST['ch_inf_off_id'])) && ($_POST['ch_inf_off_id'] != "")) {
   \GenCity\Monde\Logger\Log::createItem('infrastructures_officielles', (int)$_POST['ch_inf_off_id'],
       'delete', null, array('entity' => $thisInfraOff->model->getInfo()));
 
-  $deleteGoTo = "institut_economie.php";
+  $deleteGoTo = DEF_URI_PATH . "back/institut_economie.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
     $deleteGoTo .= $_SERVER['QUERY_STRING'];

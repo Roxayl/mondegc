@@ -1,10 +1,9 @@
 <?php
 
-if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
-header('Content-Type: text/html; charset=iso-8859-1');
+if(!isset($mondegc_config['front-controller'])) require_once('../Connections/maconnexion.php');
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -20,7 +19,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mem_groupegor
 
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $insertGoTo = '../back/institut_politique.php?mem_groupID='. $row_mem_group['ch_mem_group_ID'] .'';
+  $insertGoTo = DEF_URI_PATH . 'back/institut_politique.php?mem_groupID='. $row_mem_group['ch_mem_group_ID'] .'';
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];

@@ -9,7 +9,7 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -105,7 +105,7 @@ $totalRows_drapeau = mysql_num_rows($drapeau);
         <p>&nbsp;</p>
         <p>Drapeau du pays <?php echo $row_drapeau['ch_pay_nom']; ?>
         <p>&nbsp;</p>
-        <form action="drapeau_modifier.php" method="post" enctype="multipart/form-data">
+        <form action="<?= DEF_URI_PATH ?>back/drapeau_modifier.php" method="post" enctype="multipart/form-data">
           <input type="file" name="fileToUpload" id="fileToUpload" data-filename-placement="inside" title="Choisir une nouvelle image">
           <input name="userID" id="userID" type="hidden" value="<?php echo $_SESSION['user_ID']; ?>">
           <input name="paysID" id="paysID" type="hidden" value="<?php echo $colname_pays; ?>">

@@ -8,7 +8,7 @@ require_once(DEF_ROOTPATH . '../Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 // renvoyer les données POST à soi-même
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -53,7 +53,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "pays_leader_edit"))
                         Pays::getPermissionName($permissions) . ' !');
     }
 
-    $adresse = '../../back/page_pays_back.php?paysID=' . $result_users_pays['ID_pays'] . '#dirigeants';
+    $adresse = DEF_URI_PATH . 'back/page_pays_back.php?paysID=' . $result_users_pays['ID_pays'] . '#dirigeants';
     header(sprintf("Location: %s", $adresse));
 
     exit;

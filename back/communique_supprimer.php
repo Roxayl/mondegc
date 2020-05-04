@@ -10,7 +10,7 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -25,12 +25,9 @@ if ((isset($_POST['communique-ID'])) && ($_POST['communique-ID'] != "")) {
 
   getErrorMessage('success', "Communiqué supprimé ! Pouf.");
 
-  $deleteGoTo = '../index.php';
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
-  header(sprintf("Location: %s", $deleteGoTo));
+  header(sprintf("Location: %s", legacyPage('index')));
+  exit;
+
 } ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->

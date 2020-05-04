@@ -10,7 +10,7 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=30))
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
@@ -70,11 +70,11 @@ $currentPage = $_SERVER["PHP_SELF"];
     <h1>Attention&nbsp;!</h1>
     <p>Souhaitez-vous r&eacute;ellement supprimer le pays <?php echo $row_Pays['ch_pay_nom']; ?>&nbsp;?</p>
       <p>Cette action sera irr&eacute;versible</p>
-    <form action="page_pays_supprimer.php" method="post" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>back/page_pays_supprimer.php" method="post" class="form-button-inline">
       <input name="Pays_ID" type="hidden" value="<?php echo $row_Pays['ch_pay_id']; ?>">
       <button type="submit" class="btn btn-large btn-danger" title="supprimer le Pays"><i class="icon-trash icon-white"></i> Supprimer</button>
       </form>
-      <form action="page_pays_back.php" method="post" class="form-button-inline">
+      <form action="<?= DEF_URI_PATH ?>back/page_pays_back.php" method="post" class="form-button-inline">
         <input name="paysID" type="hidden" value="<?php echo $row_Pays['ch_pay_id']; ?>">
       <button type="submit" class="btn btn-large btn-success" title="retour &agrave; la page de modification du pays">Annuler</button>
     </form>

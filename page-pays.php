@@ -280,13 +280,13 @@ init();
       <!-- Moderation
      ================================================== -->
       <?php if ($_SESSION['statut'] >= 30) { ?>
-      <form class="pull-right" action="back/page_pays_confirmer_supprimer.php" method="post">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_confirmer_supprimer.php" method="post">
         <input name="paysID" type="hidden" value="<?php echo $row_Pays['ch_pay_id']; ?>">
         <button class="btn btn-danger" type="submit" title="supprimer ce pays"><i class="icon-trash icon-white"></i></button>
       </form>
       <?php } ?>
       <?php if (($_SESSION['statut'] >= 20) OR ($row_User['ch_use_id'] == $_SESSION['user_ID'])) { ?>
-      <form class="pull-right" action="back/page_pays_back.php" method="post">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_back.php" method="post">
         <input name="paysID" type="hidden" value="<?php echo $row_Pays['ch_pay_id']; ?>">
         <input name="userID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
         <button class="btn btn-primary" type="submit" title="modifier la page de ce pays"><i class="icon-pencil icon-white"></i></button>

@@ -12,7 +12,7 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -117,7 +117,7 @@ if (isset($uploadconfirm)) {
         <p>&nbsp;</p>
         <p><?php echo $character['predicat']; ?> <strong><?php echo $character['prenom_personnage']; ?> <?php echo $character['nom_personnage']; ?></strong>
         <p>&nbsp;</p>
-        <form action="avatar_modifier.php?paysID=<?= $thisPays->ch_pay_id ?>" method="post" enctype="multipart/form-data">
+        <form action="<?= DEF_URI_PATH ?>back/avatar_modifier.php?paysID=<?= $thisPays->ch_pay_id ?>" method="post" enctype="multipart/form-data">
           <input type="file" name="fileToUpload" id="fileToUpload" data-filename-placement="inside" title="Choisir une nouvelle image">
           <input name="paysID" id="paysID" type="hidden" value="<?= $thisPays->ch_pay_id ?>">
           <input name="maxwidth" id="maxwidth" type="hidden" value="250">
@@ -156,6 +156,3 @@ $('input[type=file]').bootstrapFileInput();
       $(function() { 
           $('[rel="clickover"]').clickover();})
     </script>
-<?php
-mysql_free_result($avatar);
-?>

@@ -10,11 +10,11 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
-$_SESSION['last_work'] = $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+$_SESSION['last_work'] = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php'.'?'.$_SERVER['QUERY_STRING'];
 
 //requete instituts
 $institut_id = 6;
@@ -26,7 +26,7 @@ $totalRows_institut = mysql_num_rows($institut);
 
 $_SESSION['last_work'] = "institut_economie.php";
 
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -46,7 +46,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-groupe")) {
   
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $insertGoTo = "institut_politique.php";
+  $insertGoTo = DEF_URI_PATH . "back/institut_politique.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
@@ -255,7 +255,7 @@ format: 'hex'});
 
   <!-- formulaire de modification instituts
      ================================================== -->
-  <form class="pull-right-cta" action="insitut_modifier.php" method="post" style="margin-top: 30px;">
+  <form class="pull-right-cta" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post" style="margin-top: 30px;">
     <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
     <button class="btn btn-primary btn-cta" type="submit" title="modifier les informations sur l'institut"><i class="icon-edit icon-white"></i> Modifier la description</button>
   </form>
@@ -415,7 +415,7 @@ $('#closemodal').click(function() {
 <div class="row-fluid"> 
   <!-- Liste pour choix de la categories -->
   <div id="select-categorie">
-    <form action="institut_politique.php#classer-membres" method="GET">
+    <form action="<?= DEF_URI_PATH ?>back/institut_politique.php#classer-membres" method="GET">
       <select name="mem_groupID" id="mem_groupID" onchange="this.form.submit()">
         <option value="" <?php if ($colname_classer_mem == NULL) {?>selected<?php } ?>>S&eacute;lectionnez un groupe&nbsp;</option>
         <?php do { ?>

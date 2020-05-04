@@ -197,7 +197,7 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
 
     <!-- Liste pour choix de classement -->
     <div id="select-categorie">
-      <form action="liste infrastructures.php#liste-infrastructures-officielles"
+      <form action="<?= DEF_URI_PATH ?>liste infrastructures.php#liste-infrastructures-officielles"
             method="GET" class="btn-margin-left">
 
         <?php if($thisGroup !== null): ?>

@@ -10,7 +10,7 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=30))
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
@@ -21,7 +21,7 @@ if ((isset($_POST['ch_use_id'])) && ($_POST['ch_use_id'] != "")) {
   
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
-  $deleteGoTo = "liste-membres.php";
+  $deleteGoTo = DEF_URI_PATH . "back/liste-membres.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
     $deleteGoTo .= $_SERVER['QUERY_STRING'];

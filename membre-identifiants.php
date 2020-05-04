@@ -31,7 +31,7 @@ $UserID = mysql_query($query_UserID, $maconnexion) or die(mysql_error());
 $row_UserID = mysql_fetch_assoc($UserID);
 $totalRows_UserID = mysql_num_rows($UserID);
 
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -54,7 +54,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
 
   
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
-  $insertGoTo = 'index.php';
+  $insertGoTo = DEF_URI_PATH . 'index.php';
   if (isset($_SERVER['QUERY_STRING'])) {
   $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
   $insertGoTo .= $_SERVER['QUERY_STRING'];

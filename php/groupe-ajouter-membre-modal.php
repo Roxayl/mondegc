@@ -29,7 +29,7 @@ $totalRows_list_admin = mysql_num_rows($list_admin);
 
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -106,9 +106,9 @@ mail($mail,$sujet,$message,$header);
 } while ($row_list_admin  = mysql_fetch_assoc($list_admin ));	
 	
 if ($_SESSION['last_work'] == "institut_politique.php") {
-  $insertGoTo = '../back/institut_politique.php?mem_groupID='. $row_info_group['ch_mem_group_ID'] .'';
+  $insertGoTo = DEF_URI_PATH . 'back/institut_politique.php?mem_groupID='. $row_info_group['ch_mem_group_ID'] .'';
 } else {
-  $insertGoTo = '../back/membre-modifier_back.php?mem_groupID='. $row_info_group['ch_mem_group_ID'] .'';
+  $insertGoTo = DEF_URI_PATH . 'back/membre-modifier_back.php?mem_groupID='. $row_info_group['ch_mem_group_ID'] .'';
   }
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";

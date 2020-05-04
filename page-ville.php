@@ -378,11 +378,11 @@ init();
       <!-- Moderation
      ================================================== -->
       <?php if (($_SESSION['statut'] >= 20) OR ($row_User['ch_use_id'] == $_SESSION['user_ID'])) { ?>
-      <form class="pull-right" action="back/ville_confirmation_supprimer.php" method="post">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/ville_confirmation_supprimer.php" method="post">
         <input name="ville-ID" type="hidden" value="<?php echo $row_infoVille['ch_vil_ID']; ?>">
         <button class="btn btn-danger" type="submit" title="supprimer cette ville"><i class="icon-trash icon-white"></i></button>
       </form>
-      <form class="pull-right" action="back/ville_modifier.php" method="get">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="get">
         <input name="ville-ID" type="hidden" value="<?php echo $row_infoVille['ch_vil_ID']; ?>">
         <button class="btn btn-primary" type="submit" title="modifier la page de cette ville"><i class="icon-pencil icon-white"></i></button>
       </form>
@@ -496,7 +496,7 @@ echo $population_ville_francais; ?></p>
           <div id="Autresvilles" class="span5">
             <?php if ($row_Autresvilles) { ?>
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&eacute;lectionnez une autre ville :</p>
-            <form class="well" action="page-ville.php#carte" method="get">
+            <form class="well" action="<?= DEF_URI_PATH ?>page-ville.php#carte" method="get">
               <input type="hidden" name="ch_pay_id" value="<?php echo $row_infoVille['ch_vil_paysID']; ?>" />
               <select name="ch_ville_id" onchange="this.form.submit()">
                 <?php do { ?>

@@ -10,13 +10,13 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
 if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -102,6 +102,7 @@ mail('contact@romukulot.fr',$sujet,$message,$header);
     if (!mail($to, $subject, $body, $headers)) {
               $redirect_error= "error.php"; // Redirect if there is an error.
       header( "Location: ".$redirect_error ) ;
+      exit;
     }
   header(sprintf("Location: %s", $insertGoTo));
   exit();

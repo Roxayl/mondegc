@@ -9,7 +9,7 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -60,7 +60,7 @@ $colname_monumentID = $row_monument['ch_pat_id'];
 } while ($row_monument = mysql_fetch_assoc($monument));
 
   
-  $deleteGoTo = "page_pays_back.php";
+  $deleteGoTo = DEF_URI_PATH . "back/page_pays_back.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
     $deleteGoTo .= $_SERVER['QUERY_STRING'];

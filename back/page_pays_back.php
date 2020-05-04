@@ -13,12 +13,12 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers page de connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
 //Mise a jour parametres donnees personnelles
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -105,7 +105,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
         getErrorMessage('error', "Vous n'avez pas accès à cette partie.");
     }
   
-  $updateGoTo = "page_pays_back.php?paysID=" . (int)$_POST['ch_pay_id'];
+  $updateGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_pay_id'];
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];
@@ -404,7 +404,7 @@ img.olTileImage {
       <!-- Moderation
      ================================================== -->
       <?php if ($_SESSION['userObject']->minStatus('Administrateur')) { ?>
-      <form class="pull-right" action="page_pays_confirmer_supprimer.php" method="post">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_confirmer_supprimer.php" method="post">
       <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
       <button class="btn btn-danger" type="submit" title="supprimer ce pays"><i class="icon-trash icon-white"></i></button>
       </form>
@@ -413,7 +413,7 @@ img.olTileImage {
       <a class="btn btn-primary pull-right" href="../php/partage-pays.php?ch_pay_id=<?php echo $row_InfoGenerale['ch_pay_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Annoncez sur le forum une mise &agrave; jour de votre page"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
       <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
-      <form class="pull-right" action="drapeau_modifier.php" method="post">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/drapeau_modifier.php" method="post">
       <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
       <button class="btn btn-primary" type="submit" title="Chargez une nouvelle image sur le serveur"><i class="icon-pays-small-white"></i> Modifier le drapeau</button>
       </form>
@@ -869,11 +869,11 @@ img.olTileImage {
                        href="../page-ville.php?ch_pay_id=<?= $row_mesvilles['ch_vil_paysID'] ?>&ch_ville_id=<?= $row_mesvilles['ch_vil_ID'] ?>">Visiter</a>
                 </td>
                 <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
-                <td><form action="ville_modifier.php" method="GET">
+                <td><form action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="GET">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_mesvilles['ch_vil_ID']; ?>">
                     <button class="btn btn-primary" type="submit" title="modifier la ville"><i class="icon-pencil icon-white"></i></button>
                   </form></td>
-                <td><form action="ville_confirmation_supprimer.php" method="POST">
+                <td><form action="<?= DEF_URI_PATH ?>back/ville_confirmation_supprimer.php" method="POST">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_mesvilles['ch_vil_ID']; ?>">
                     <button class="btn btn-danger" type="submit" title="supprimer la ville"><i class="icon-trash icon-white"></i></button>
                   </form></td>
@@ -892,7 +892,7 @@ img.olTileImage {
                     <?php } // Show if not last page ?>
                 </p>
               <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
-                <form action="ville_ajouter.php" method="post">
+                <form action="<?= DEF_URI_PATH ?>back/ville_ajouter.php" method="post">
                   <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
                   <input name="user_ID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
                   <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une ville</button>
@@ -904,7 +904,7 @@ img.olTileImage {
         <?php } else { ?>
             <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
                 <h3>Mes villes</h3>
-                <form action="ville_ajouter.php" method="post">
+                <form action="<?= DEF_URI_PATH ?>back/ville_ajouter.php" method="post">
                   <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
                   <input name="user_ID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
                   <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une ville</button>
@@ -950,11 +950,11 @@ img.olTileImage {
                 <?php if ($_SESSION['userObject']->minStatus('OCGC') ||
                         $thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) {
                     // Affichage si sup ou egal à dirigeant ?>
-                <td><form action="ville_modifier.php" method="get">
+                <td><form action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="get">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
                     <button class="btn btn-primary" type="submit" title="modifier la ville"><i class="icon-pencil icon-white"></i></button>
                   </form></td>
-                <td><form action="ville_confirmation_supprimer.php" method="post">
+                <td><form action="<?= DEF_URI_PATH ?>back/ville_confirmation_supprimer.php" method="post">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
                     <button class="btn btn-danger" type="submit" title="supprimer la ville"><i class="icon-trash icon-white"></i></button>
                   </form></td>
@@ -1012,7 +1012,7 @@ img.olTileImage {
             habitants</strong></p>
         </div>
         <div class="span12">
-          <form action="../Carte-modifier.php" method="post">
+          <form action="<?= DEF_URI_PATH ?>Carte-modifier.php" method="post">
             <input name="paysID" type="hidden" value="<?php echo $colname_paysID; ?>">
             <button class="btn btn-primary" type="submit" title="lien vers les outils de dessin">Dessiner sur la carte</button>
           </form>
@@ -1075,14 +1075,14 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
                 <td><strong><?php echo $row_fait_hist['ch_his_nom']; ?></strong></td>
                 <td>Le <?php echo affDate($row_fait_hist['ch_his_date_fait']); ?></td>
                 <td><form action="<?php if ($row_fait_hist['ch_his_personnage'] == 2) {
-					echo "personnage_historique_modifier.php";
+					echo DEF_URI_PATH . "back/personnage_historique_modifier.php";
 					} else {
-					echo "fait_historique_modifier.php";
+					echo DEF_URI_PATH . "back/fait_historique_modifier.php";
 						} ?>" method="post">
                     <input name="ch_his_id" type="hidden" value="<?php echo $row_fait_hist['ch_his_id']; ?>">
                     <button class="btn" type="submit" title="modifier cet &eacute;l&eacute;ment historique"><i class="icon-pencil"></i></button>
                   </form></td>
-                <td><form action="fait_historique_confirmation_supprimer.php" method="post">
+                <td><form action="<?= DEF_URI_PATH ?>back/fait_historique_confirmation_supprimer.php" method="post">
                     <input name="ch_his_id" type="hidden" value="<?php echo $row_fait_hist['ch_his_id']; ?>">
                     <button class="btn" type="submit" title="supprimer ce fait historique"><i class="icon-trash"></i></button>
                   </form></td>
@@ -1099,11 +1099,11 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
                     <a class="btn" href="<?php printf("%s?pageNum_fait_hist=%d%s#mes-fait_hists", $currentPage, min($totalPages_fait_hist, $pageNum_fait_hist + 1), $queryString_fait_hist); ?>"> <i class="icon-forward"></i></a>
                     <?php } // Show if not last page ?>
                 </p>
-                <form action="fait_historique_ajouter.php" method="post" class="form-button-inline">
+                <form action="<?= DEF_URI_PATH ?>back/fait_historique_ajouter.php" method="post" class="form-button-inline">
                   <input name="paysID" type="hidden" value="<?php echo $colname_paysID;?>">
                   <button class="btn btn-primary btn-margin-left" type="submit">Ajouter un fait historique</button>
                 </form>
-                <form action="personnage_historique_ajouter.php" method="post" class="form-button-inline">
+                <form action="<?= DEF_URI_PATH ?>back/personnage_historique_ajouter.php" method="post" class="form-button-inline">
                   <input name="paysID" type="hidden" value="<?php echo $colname_paysID;?>">
                   <button class="btn btn-primary btn-margin-left" type="submit">Ajouter un personnage historique</button>
                 </form></td>
@@ -1111,11 +1111,11 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
           </tfoot>
         </table>
         <?php } else { ?>
-        <form action="fait_historique_ajouter.php" method="post" class="form-button-inline">
+        <form action="<?= DEF_URI_PATH ?>back/fait_historique_ajouter.php" method="post" class="form-button-inline">
           <input name="paysID" type="hidden" value="<?php echo $colname_paysID; ?>">
           <button class="btn btn-primary btn-margin-left" type="submit">Ajouter un fait historique</button>
         </form>
-        <form action="personnage_historique_ajouter.php" method="post" class="form-button-inline">
+        <form action="<?= DEF_URI_PATH ?>back/personnage_historique_ajouter.php" method="post" class="form-button-inline">
           <input name="paysID" type="hidden" value="<?php echo $colname_paysID;?>">
           <button class="btn btn-primary btn-margin-left" type="submit">Ajouter un personnage historique</button>
         </form>
@@ -1137,7 +1137,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
     <h3 id="myModalLabel">Informations Personnage</h3>
   </div>
   <div class="modal-body">
-  <form action="membre-modifier_back.php" name="InfoUser" method="POST" class="form-horizontal" id="InfoUser">
+  <form action="<?= DEF_URI_PATH ?>back/membre-modifier_back.php" name="InfoUser" method="POST" class="form-horizontal" id="InfoUser">
 
       <input name="personnage_id" type="hidden" value="<?php echo $paysPersonnages['id']; ?>">
     <!-- Predicat -->

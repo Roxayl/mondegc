@@ -255,7 +255,7 @@ $queryString_pays_arch = sprintf("&totalRows_pays_arch=%d%s", $totalRows_pays_ar
         <div class="row-fluid"> 
           <!-- Liste pour choix de la categories -->
           <div id="select-categorie">
-            <form action="histoire.php#fait_hist" method="GET">
+            <form action="<?= DEF_URI_PATH ?>histoire.php#fait_hist" method="GET">
               <select name="fai_catID" id="fai_catID" onchange="this.form.submit()">
                 <option value="" <?php if ($colname_classer_fait_hist == NULL) {?>selected<?php } ?>>S&eacute;lectionnez une cat&eacute;gorie&nbsp;</option>
                 <?php do { ?>

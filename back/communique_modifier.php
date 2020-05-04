@@ -10,11 +10,11 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -67,7 +67,7 @@ elseif (( $_POST['ch_com_categorie'] == "institut") AND ( $_POST['ch_com_element
 $updateGoTo = 'institut_sport.php';
 }
 else {
-$updateGoTo = 'page_pays_back.php?paysID=' . $paysID;
+$updateGoTo = DEF_URI_PATH . 'back/page_pays_back.php?paysID=' . $paysID;
 }
 $updateGoTo = '../page-communique.php?com_id=' . (int)$_POST['ch_com_ID'];
 

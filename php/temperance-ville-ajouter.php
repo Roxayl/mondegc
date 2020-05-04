@@ -3,7 +3,7 @@
 if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -21,7 +21,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-temperance"))
   
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $insertGoTo = '../back/institut_economie.php';
+  $insertGoTo = DEF_URI_PATH . 'back/institut_economie.php';
   if (isset($_SERVER['QUERY_STRING'])) {
 $colname_ville = $_POST['ch_temp_element_id'];
 

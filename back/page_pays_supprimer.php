@@ -9,7 +9,7 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=30))
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
@@ -89,7 +89,7 @@ $colname_monumentID = $row_monument['ch_pat_id'];
 
 } while ($row_monument = mysql_fetch_assoc($monument));
 
-  $deleteGoTo = "liste-pays.php";
+  $deleteGoTo = DEF_URI_PATH . "back/liste-pays.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
     $deleteGoTo .= $_SERVER['QUERY_STRING'];

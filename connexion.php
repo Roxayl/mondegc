@@ -6,7 +6,9 @@ if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconn
 include('php/log.php');
 
 if(isset($_SESSION['userObject'])) {
-    header('Location: back/membre-modifier_back.php?userID=' . $_SESSION['userObject']->get('ch_use_id'));
+    $url = legacyPage('back.membre-modifier_back',
+        array('userID' => $_SESSION['userObject']->get('ch_use_id')));
+    header('Location: ' . $url);
     exit;
 }
 

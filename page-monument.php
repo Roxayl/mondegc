@@ -181,11 +181,11 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
   <!-- Moderation
      ================================================== -->
   <?php if (($_SESSION['statut'] >= 20) OR ($row_users['ch_use_id'] == $_SESSION['user_ID'])) { ?>
-  <form class="pull-right" action="back/monument_confirmation_supprimer.php" method="post">
+  <form class="pull-right" action="<?= DEF_URI_PATH ?>back/monument_confirmation_supprimer.php" method="post">
     <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
     <button class="btn btn-danger" type="submit" title="supprimer ce monument"><i class="icon-trash icon-white"></i></button>
   </form>
-  <form class="pull-right" action="back/monument_modifier.php" method="post">
+  <form class="pull-right" action="<?= DEF_URI_PATH ?>back/monument_modifier.php" method="post">
     <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
     <button class="btn btn-primary" type="submit" title="modifier ce monument"><i class="icon-pencil icon-white"></i></button>
   </form>

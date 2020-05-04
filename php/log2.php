@@ -74,17 +74,17 @@ $updateSQL = sprintf("UPDATE users SET ch_use_last_log=%s WHERE ch_use_id=%s",
 if (!isset($_SESSION)) {
   
 }
-$loginFormAction = $_SERVER['PHP_SELF'];
+$loginFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_GET['accesscheck'])) {
   $_SESSION['PrevUrl'] = $_GET['accesscheck'];
 }
 if (isset($_POST['identifiant'])) {
-	include("php/config.php");
+	include(DEF_ROOTPATH . "php/config.php");
   $loginUsername = $_POST['identifiant'];
   $password = md5($_POST['mot_de_passe'].$salt);
   $MM_fldUserAuthorization = "ch_use_paysID";
-  $MM_redirectLoginSuccess = "back/page_pays_back.php";
-  $MM_redirectLoginFailed = "connexion.php";
+  $MM_redirectLoginSuccess = DEF_URI_PATH . "back/page_pays_back.php";
+  $MM_redirectLoginFailed = DEF_URI_PATH . "connexion.php";
   $MM_redirecttoReferrer = true;
 
   
@@ -175,9 +175,11 @@ $updateSQL = sprintf("UPDATE users SET ch_use_last_log=%s WHERE ch_use_id=%s",
       $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
     }
     header("Location: " . $MM_redirectLoginSuccess );
+    exit;
   }
   else {
     header("Location: ". $MM_redirectLoginFailed );
+    exit;
   }
 }
 
@@ -195,7 +197,7 @@ else
 
 
 // ** Logout the current user. **
-$logoutAction = $_SERVER['PHP_SELF']."?doLogout=true";
+$logoutAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php'.'?doLogout=true';
 if ((isset($_SERVER['QUERY_STRING'])) && ($_SERVER['QUERY_STRING'] != "")){
   $logoutAction .="&". htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -238,7 +240,7 @@ unset($_COOKIE["Session_mondeGC"]);
   unset($_SESSION['user_ID']);
   unset($_SESSION['user_last_log']);
   unset($_SESSION['statut']);
-  $logoutGoTo = "index.php";
+  $logoutGoTo = DEF_URI_PATH . "index.php";
   if ($logoutGoTo) {
     header("Location: $logoutGoTo");
     exit;

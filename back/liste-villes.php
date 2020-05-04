@@ -10,7 +10,7 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
@@ -122,13 +122,13 @@ $totalPages_listvilles = ceil($totalRows_listvilles/$maxRows_listvilles)-1;
               <td><?php echo $row_listvilles['ch_use_login']; ?></td>
               <td><?php echo $row_listvilles['ch_vil_population']; ?></td>
               <td><?php echo date("d/m/Y � G:i:s", strtotime($row_listvilles['ch_vil_mis_jour'])); ?></td>
-              <td><form action="ville_modifier.php" method="GET">
+              <td><form action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="GET">
                   <input name="ville-ID" type="hidden" value="<?php echo $row_listvilles['ch_vil_ID']; ?>">
                   <button class="btn" type="submit" title="modifier la ville"><i class="icon-pencil"></i></button>
                 </form></td>
               <?php if ($_SESSION['statut'] >= 30)
 {?>
-              <td><form action="ville_confirmation_supprimer.php" method="post">
+              <td><form action="<?= DEF_URI_PATH ?>back/ville_confirmation_supprimer.php" method="post">
                   <input name="ville-ID" type="hidden" value="<?php echo $row_listvilles['ch_vil_ID']; ?>">
                   <button class="btn" type="submit" title="supprimer la ville"><i class="icon-trash"></i></button>
                 </form></td>

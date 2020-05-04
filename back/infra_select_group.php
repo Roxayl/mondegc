@@ -7,7 +7,7 @@ include(DEF_ROOTPATH . 'php/logout.php');
 if (!($_SESSION['statut'])) {
     // Redirection vers Haut Conseil
     header("Status: 301 Moved Permanently", false, 301);
-    header('Location: ../connexion.php');
+    header('Location: ' . legacyPage('connexion'));
     exit();
 }
 
@@ -146,7 +146,7 @@ img.olTileImage {
             <div class="thumbnail">
               <img src="<?= __s($row->get('url_image')) ?>" data-src="holder.js/300x200" alt="">
               <h3><?= __s($row->get('nom_groupe')) ?></h3>
-              <form action="infrastructure_ajouter.php" method="GET">
+              <form action="<?= DEF_URI_PATH ?>back/infrastructure_ajouter.php" method="GET">
                 <input name="ville_ID" type="hidden" class="infra_ville_id_form"
                        value="<?= is_null($thisVille) ? 0 : $thisVille->get('ch_vil_ID') ?>">
                 <input name="infra_group_id" type="hidden"

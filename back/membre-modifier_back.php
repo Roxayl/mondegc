@@ -9,10 +9,10 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers page de connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
-$_SESSION['last_work'] = $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+$_SESSION['last_work'] = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php'.'?'.$_SERVER['QUERY_STRING'];
 
 //Recuperation variables
 $colname_User = $_SESSION['Temp_userID'];
@@ -29,7 +29,7 @@ $row_User = mysql_fetch_assoc($User);
 $totalRows_User = mysql_num_rows($User);
 
 //Mise a jour parametres donnees personnelles
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -62,7 +62,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
   
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
-  $updateGoTo = "membre-modifier_back.php";
+  $updateGoTo = DEF_URI_PATH . "back/membre-modifier_back.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];
@@ -91,7 +91,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
     
     $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
-    $updateGoTo = "page_pays_back.php?paysID={$thisPays->ch_pay_id}";
+    $updateGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID={$thisPays->ch_pay_id}";
     if (isset($_SERVER['QUERY_STRING'])) {
         $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
         $updateGoTo .= $_SERVER['QUERY_STRING'];
@@ -102,7 +102,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
 
 
 //Ajout de groupe
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -132,7 +132,7 @@ $insertSQL = sprintf("INSERT INTO dispatch_mem_group (ch_disp_group_id, ch_disp_
 					   
   
   $Result2 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
-  $insertGoTo = "membre-modifier_back.php";
+  $insertGoTo = DEF_URI_PATH . "back/membre-modifier_back.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];

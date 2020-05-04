@@ -337,7 +337,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
        <div class="span8 well">
 
         <img class="token-list-eco pull-left" id="main-token-icon-eco" src="assets/img/ressources/<?= $cat === "commerce" ? "bureau" : $cat ?>.png" alt="icone <?= $cat ?>" style="width: 50px;">
-        <form action="economie.php#ressources" method="GET">
+        <form action="<?= DEF_URI_PATH ?>economie.php#ressources" method="GET">
           <select class="btn-large" name="cat" id="cat" onchange="$('#main-token-icon-eco').attr('src', 'https://squirrel.romukulot.fr/media/icons/ajax-loader2.gif'); setTimeout(function() { this.form.submit()}, 100);">
             <option value="">S&eacute;lectionnez une ressource</option>
             <option value="commerce" <?php if ($cat == 'commerce') {?>selected<?php } ?>>Commerce</option>

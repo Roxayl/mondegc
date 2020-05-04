@@ -10,7 +10,7 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -36,7 +36,7 @@ $deleteSQL2 = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist
   
   getErrorMessage('success', "Ce fait historique a été supprimé avec succès.");
 
-  $deleteGoTo = "page_pays_back.php?paysID=" . (int)$thisPays->get('ch_pay_id') . "#faits-historiques";
+  $deleteGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$thisPays->get('ch_pay_id') . "#faits-historiques";
   if (isset($_SERVER['QUERY_STRING'])) {
     $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
     $deleteGoTo .= $_SERVER['QUERY_STRING'];

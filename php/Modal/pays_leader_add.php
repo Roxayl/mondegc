@@ -39,7 +39,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "pays_leader_add")) 
             . Pays::getPermissionName($permissions) . " !");
     }
 
-    $adresse = '../../back/page_pays_back.php?paysID=' . $thisPays->ch_pay_id . '#dirigeants';
+    $adresse = DEF_URI_PATH . 'back/page_pays_back.php?paysID=' . $thisPays->ch_pay_id . '#dirigeants';
     header(sprintf("Location: %s", $adresse));
 
     exit;

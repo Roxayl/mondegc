@@ -9,7 +9,7 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -74,11 +74,11 @@ $_SESSION['ville_encours'] = $row_ch_pat_confimation_suppression['ch_pat_villeID
     <h1>Attention&nbsp;!</h1>
     <p>Souhaitez-vous r&eacute;ellement supprimer <?php echo $row_ch_pat_confimation_suppression['ch_pat_nom']; ?>&nbsp;?</p>
     <p>Cette action sera irr&eacute;versible</p>
-    <form action="monument_supprimer.php" method="post" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>back/monument_supprimer.php" method="post" class="form-button-inline">
       <input name="monument_ID" type="hidden" value="<?php echo $row_ch_pat_confimation_suppression['ch_pat_id']; ?>">
       <button type="submit" class="btn btn-large btn-danger" title="supprimer le monument"><i class="icon-trash icon-white"></i> Supprimer</button>
     </form>
-    <form action="ville_modifier.php#mes-monuments" method="get" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>back/ville_modifier.php#mes-monuments" method="get" class="form-button-inline">
       <input name="monument_ID" type="hidden" value="<?php echo $row_ch_pat_confimation_suppression['ch_pat_villeID']; ?>">
       <button type="submit" class="btn btn-large btn-success" title="retour &agrave; la page de modification de la ville">Annuler</button>
     </form>

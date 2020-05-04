@@ -9,7 +9,7 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -19,7 +19,7 @@ if (isset($_POST['paysID'])) {
 }
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -54,7 +54,7 @@ $_POST['ch_his_date_fait2'] == NULL;
   getErrorMessage('success', __s($_POST['ch_his_nom']) . "
     a été ajouté à vos personnages historiques.");
 
-  $insertGoTo = "page_pays_back.php?paysID=" . (int)$_POST['ch_his_paysID'];
+  $insertGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_his_paysID'];
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
@@ -137,11 +137,11 @@ img.olTileImage {
         <h1>Ajouter un personnage historique</h1>
       </div>
       <?php if (($_SESSION['statut'] > 1) AND ($row_users['ch_use_id'] != $_SESSION['user_ID'])) { ?>
-      <form class="pull-right" action="membre-modifier_back.php" method="post">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/membre-modifier_back.php" method="post">
         <input name="userID" type="hidden" value="<?php echo $row_users['ch_use_id']; ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Profil du dirigeant</button>
       </form>
-      <form class="pull-right" action="page_pays_back.php" method="post">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_back.php" method="post">
         <input name="paysID" type="hidden" value="<?php echo $paysID; ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du pays"><i class="icon-pays-small-white"></i> Modifier le pays</button>
       </form>

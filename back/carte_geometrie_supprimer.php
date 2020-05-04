@@ -10,7 +10,7 @@ if ($_SESSION['statut'])
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
@@ -63,9 +63,9 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
   $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
   mysql_free_result($geometries);
   if(isset($_GET['is_back'])) {
-      $deleteGoTo = "institut_geographie.php";
+      $deleteGoTo = DEF_URI_PATH . "back/institut_geographie.php";
   } else {
-      $deleteGoTo = "../Carte-modifier.php?paysID=" . (int)$_GET['ch_geo_pay_id'];
+      $deleteGoTo = DEF_URI_PATH . "Carte-modifier.php?paysID=" . (int)$_GET['ch_geo_pay_id'];
   }
   if (isset($_SERVER['QUERY_STRING'])) {
     $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";

@@ -1322,6 +1322,16 @@ function filter_filename($name) {
 }
 
 
+function legacyPage($path = '', $params = array()) {
+
+    $url = DEF_URI_PATH;
+    $url .= str_replace('.', '/', $path);
+    $url .= '.php' . (!empty($params) ? '?' : '') . http_build_query($params);
+    return $url;
+
+}
+
+
 /*************************
  *        Session        *
  *************************/

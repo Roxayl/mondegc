@@ -9,11 +9,11 @@ $_error = false;
 if (!($_SESSION['statut']) or $_SESSION['statut'] < 10) {
     // Redirection vers page connexion
     header("Status: 301 Moved Permanently", false, 301);
-    header('Location: ../connexion.php');
+    header('Location: ' . legacyPage('connexion'));
     exit();
 }
 
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_SERVER['QUERY_STRING'])) {
     $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -37,7 +37,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(empty($proposalValidate)) {
         $postProposal->create();
         getErrorMessage('success', "Votre proposition a été créée avec succès !");
-        header('Location: ../assemblee.php');
+        header('Location: ' . legacyPage('assemblee'));
         exit();
     }
 
@@ -146,7 +146,7 @@ include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 
     <div class="span8">
 
-    <form method="POST" action="ocgc_proposal_create.php" class="form-horizontal" id="ProposalForm">
+    <form method="POST" action="<?= DEF_URI_PATH ?>back/ocgc_proposal_create.php" class="form-horizontal" id="ProposalForm">
 
         <h3>Type de proposition</h3>
 

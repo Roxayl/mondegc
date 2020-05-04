@@ -93,7 +93,7 @@ if (isset($_POST['identifiant'])) {
   $loginUsername = $_POST['identifiant'];
   $password = md5($_POST['mot_de_passe'].$salt);
   $MM_fldUserAuthorization = "ch_use_paysID";
-  $MM_redirectLoginFailed = "connexion.php";
+  $MM_redirectLoginFailed = DEF_URI_PATH . "connexion.php";
    
   
   $LoginRS__query=sprintf("SELECT ch_use_login, ch_use_password, ch_use_paysID, ch_use_id, ch_use_last_log, ch_use_statut, ch_use_acces, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users WHERE ch_use_login=%s AND ch_use_password=%s",
@@ -182,7 +182,7 @@ if ($loginFoundUser) {
     getErrorMessage('success',
         "Bienvenue " . $_SESSION['userObject']->get('ch_use_login') . ' !');
 
-	header('Location:'.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+	header('Location:'.DEF_URI_PATH.$mondegc_config['front-controller']['path'].'.php?'.$_SERVER['QUERY_STRING']);
 	die;
   	}
   else {
@@ -206,7 +206,7 @@ else {
 
 
 // ** Logout the current user. **
-$logoutAction = $_SERVER['PHP_SELF']."?doLogout=true";
+$logoutAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'].".php?doLogout=true";
 if ((isset($_SERVER['QUERY_STRING'])) && ($_SERVER['QUERY_STRING'] != "")){
   $logoutAction .="&". htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -248,7 +248,7 @@ unset($_COOKIE["Session_mondeGC"]);
   $variables  = "";
   }
   
-  $logoutGoTo = $_SERVER['PHP_SELF'].'?'.$variables;
+  $logoutGoTo = DEF_URI_PATH.$mondegc_config['front-controller']['path'].'?'.$variables;
 
   getErrorMessage('success', "Vous vous êtes déconnecté.");
   

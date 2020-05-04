@@ -10,7 +10,7 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=30))
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
@@ -73,11 +73,11 @@ $currentPage = $_SERVER["PHP_SELF"];
     <img src="<?php echo $row_membre['ch_use_lien_imgpersonnage']; ?>" width="100px" class="pull-right">
     <p>Souhaitez-vous r&eacute;ellement supprimer le profil du membre <?php echo $row_membre['ch_use_login']; ?>&nbsp;?</p>
     <p>Cette action sera irr&eacute;versible</p>
-    <form action="membre_supprimer.php" method="post" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>back/membre_supprimer.php" method="post" class="form-button-inline">
       <input name="ch_use_id" type="hidden" value="<?php echo $row_membre['ch_use_id']; ?>">
       <button type="submit" class="btn btn-large btn-danger" title="supprimer ce membre"><i class="icon-trash icon-white"></i> Supprimer</button>
     </form>
-    <form action="liste-membres.php" method="post" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>back/liste-membres.php" method="post" class="form-button-inline">
       <input name="userID" type="hidden" value="<?php echo $row_membre['ch_use_id']; ?>">
       <button type="submit" class="btn btn-large btn-success" title="retour &agrave; la lsite des membres">Annuler</button>
     </form>
