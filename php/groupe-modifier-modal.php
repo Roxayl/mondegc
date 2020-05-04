@@ -5,9 +5,7 @@ header('Content-Type: text/html; charset=iso-8859-1');
 
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) {
   $updateSQL = sprintf("UPDATE membres_groupes SET ch_mem_group_label=%s, ch_mem_group_statut=%s, ch_mem_group_date=%s, ch_mem_group_mis_jour=%s, ch_mem_group_nb_update=%s, ch_mem_group_nom=%s, ch_mem_group_desc=%s, ch_mem_group_icon=%s, ch_mem_group_couleur=%s WHERE ch_mem_group_ID=%s",
@@ -30,10 +28,7 @@ if ($_SESSION['last_work'] = "institut_politique.php") {
 } else {
   $updateGoTo = DEF_URI_PATH . "back/membre-modifier_back.php";
   }
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
 }
 //requete categories monuments

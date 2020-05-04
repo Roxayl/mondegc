@@ -25,10 +25,7 @@ if ((isset($_POST['ch_disp_FH_id'])) && ($_POST['ch_disp_FH_id'] != "")) {
   
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
   $deleteGoTo = DEF_URI_PATH . 'back/institut_histoire.php?fai_catID='. $cat .'';
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($deleteGoTo);
   $adresse = $deleteGoTo .'#classer-fait-hist';
   header(sprintf("Location: %s", $adresse));
 }

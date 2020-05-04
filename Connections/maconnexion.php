@@ -1332,6 +1332,19 @@ function legacyPage($path = '', $params = array()) {
 }
 
 
+function appendQueryString(&$url) {
+
+    if(isset($_SERVER['QUERY_STRING'])) {
+        $url .= (strpos($url, '?')) ? "&" : "?";
+        $url .= $_SERVER['QUERY_STRING'];
+    }
+    $url = preg_replace('/(?:&|(\?))' . 'target' . '=[^&]*(?(1)&|)?/i', "$1", $url);
+    $url = rtrim($url, '?');
+    $url = rtrim($url, '&');
+
+}
+
+
 /*************************
  *        Session        *
  *************************/

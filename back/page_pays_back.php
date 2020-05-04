@@ -19,9 +19,7 @@ exit();
 
 //Mise a jour parametres donnees personnelles
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+appendQueryString($editFormAction);
 
 //Récupération variables
 $colname_paysID = $_REQUEST['paysID'];
@@ -106,10 +104,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
     }
   
   $updateGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_pay_id'];
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
   exit;
 }

@@ -19,9 +19,7 @@ if (isset($_POST['paysID'])) {
 }
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+appendQueryString($editFormAction);
 
 
 $thisPays = new \GenCity\Monde\Pays($paysID);
@@ -55,10 +53,7 @@ $_POST['ch_his_date_fait2'] = NULL;
     " avec succès.");
 
   $insertGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . $_POST['ch_his_paysID'] . '#faits-historiques';
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
 }
 

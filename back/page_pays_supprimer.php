@@ -90,10 +90,7 @@ $colname_monumentID = $row_monument['ch_pat_id'];
 } while ($row_monument = mysql_fetch_assoc($monument));
 
   $deleteGoTo = DEF_URI_PATH . "back/liste-pays.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
 }
 ?><!DOCTYPE html>

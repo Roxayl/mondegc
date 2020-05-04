@@ -28,10 +28,7 @@ $deleteSQL = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_
   $Result2 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
   $deleteGoTo = DEF_URI_PATH . "back/institut_histoire.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
 }
 ?><!DOCTYPE html>

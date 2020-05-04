@@ -33,10 +33,7 @@ if ($_SESSION['last_work'] = "institut_politique.php") {
   $deleteGoTo = DEF_URI_PATH . "back/membre-modifier_back.php";
   }
 
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
 }
 ?><!DOCTYPE html>

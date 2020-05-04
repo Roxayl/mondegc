@@ -27,9 +27,7 @@ $totalRows_institut = mysql_num_rows($institut);
 $_SESSION['last_work'] = "institut_economie.php";
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-groupe")) {
   $insertSQL = sprintf("INSERT INTO membres_groupes (ch_mem_group_label, ch_mem_group_statut, ch_mem_group_date, ch_mem_group_mis_jour, ch_mem_group_nb_update, ch_mem_group_nom, ch_mem_group_desc, ch_mem_group_icon, ch_mem_group_couleur) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
@@ -47,10 +45,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-groupe")) {
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   $insertGoTo = DEF_URI_PATH . "back/institut_politique.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
 }
 

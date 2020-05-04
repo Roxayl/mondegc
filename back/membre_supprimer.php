@@ -22,10 +22,7 @@ if ((isset($_POST['ch_use_id'])) && ($_POST['ch_use_id'] != "")) {
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
   $deleteGoTo = DEF_URI_PATH . "back/liste-membres.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
 }
 ?><!DOCTYPE html>

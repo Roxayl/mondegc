@@ -30,10 +30,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-categorie")) 
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   $insertGoTo = DEF_URI_PATH . "back/institut_histoire.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
 }
 

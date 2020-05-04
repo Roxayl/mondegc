@@ -21,9 +21,7 @@ if (isset($_POST['paysID'])) {
 }
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_ville")) {
   $insertSQL = sprintf("INSERT INTO villes (ch_vil_paysID, ch_vil_user, ch_vil_label, ch_vil_date_enregistrement, ch_vil_mis_jour, ch_vil_nb_update, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_type_jeu, ch_vil_nom, ch_vil_armoiries, ch_vil_capitale, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_vil_lien_img2, ch_vil_lien_img3, ch_vil_lien_img4, ch_vil_lien_img5, ch_vil_legende_img1, ch_vil_legende_img2, ch_vil_legende_img3, ch_vil_legende_img4, ch_vil_legende_img5, ch_vil_header, ch_vil_contenu) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
@@ -58,10 +56,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_ville")) {
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   $insertGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_vil_paysID'] . "#mes-villes";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
 }
 

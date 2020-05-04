@@ -37,10 +37,7 @@ $deleteSQL2 = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist
   getErrorMessage('success', "Ce fait historique a été supprimé avec succès.");
 
   $deleteGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$thisPays->get('ch_pay_id') . "#faits-historiques";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
 }
 ?><!DOCTYPE html>

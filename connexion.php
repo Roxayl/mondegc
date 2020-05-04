@@ -51,10 +51,7 @@ if ( $row_Compare_mail ) {
   
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
   $insertGoTo = 'liste-membres.php';
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($insertGoTo);
 
 
   

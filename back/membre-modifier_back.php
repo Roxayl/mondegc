@@ -30,9 +30,7 @@ $totalRows_User = mysql_num_rows($User);
 
 //Mise a jour parametres donnees personnelles
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
   include(DEF_ROOTPATH . "php/config.php");
@@ -63,10 +61,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
   $updateGoTo = DEF_URI_PATH . "back/membre-modifier_back.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
 }
 
@@ -92,10 +87,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
     $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
     $updateGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID={$thisPays->ch_pay_id}";
-    if (isset($_SERVER['QUERY_STRING'])) {
-        $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-        $updateGoTo .= $_SERVER['QUERY_STRING'];
-    }
+    appendQueryString($updateGoTo);
     header(sprintf("Location: %s", $updateGoTo));
     exit;
 }
@@ -103,9 +95,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
 
 //Ajout de groupe
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-groupe")) {
   $insertSQL = sprintf("INSERT INTO membres_groupes (ch_mem_group_label, ch_mem_group_statut, ch_mem_group_date, ch_mem_group_mis_jour, ch_mem_group_nb_update, ch_mem_group_nom, ch_mem_group_desc, ch_mem_group_icon, ch_mem_group_couleur) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
@@ -133,10 +123,7 @@ $insertSQL = sprintf("INSERT INTO dispatch_mem_group (ch_disp_group_id, ch_disp_
   
   $Result2 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
   $insertGoTo = DEF_URI_PATH . "back/membre-modifier_back.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
 }
 

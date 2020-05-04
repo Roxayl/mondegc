@@ -13,9 +13,7 @@ if(isset($_SESSION['userObject']) && $_SESSION['userObject']->minStatus('OCGC'))
 }
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
-if (isset($_SERVER['QUERY_STRING'])) {
-    $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+appendQueryString($editFormAction);
 
 if(isset($_SESSION['userObject'])) {
     $thisUser = new GenCity\Monde\User($_SESSION['user_ID']);

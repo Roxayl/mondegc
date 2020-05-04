@@ -5,9 +5,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+appendQueryString($editFormAction);
 
 $action = isset($_GET['group_id']) ? 'edit' : 'add';
 
@@ -46,10 +44,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "infra_group_modal")
     }
 
     $updateGoTo = DEF_URI_PATH . "back/institut_economie.php";
-    if (isset($_SERVER['QUERY_STRING'])) {
-        $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-        $updateGoTo .= $_SERVER['QUERY_STRING'];
-    }
+    appendQueryString($updateGoTo);
     $adresse = $updateGoTo .'#groupe-infra';
     header(sprintf("Location: %s", $adresse));
     exit;

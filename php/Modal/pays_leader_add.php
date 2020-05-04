@@ -9,9 +9,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 // renvoyer les données POST à soi-même
 $editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+appendQueryString($editFormAction);
 
 $pays_ID = isset($_GET['pays_ID']) ? (int)$_GET['pays_ID'] : 0;
 

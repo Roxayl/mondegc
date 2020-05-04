@@ -23,9 +23,7 @@ elseif (isset($_REQUEST['ch_inf_villeid'])) {
 
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+appendQueryString($editFormAction);
 
 /** @var \GenCity\Monde\User $thisUser */
 $thisUser = $_SESSION['userObject'];

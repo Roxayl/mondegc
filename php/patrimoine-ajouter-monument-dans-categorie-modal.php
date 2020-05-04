@@ -5,9 +5,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie")) {
   $insertSQL = sprintf("INSERT INTO dispatch_mon_cat (ch_disp_cat_id, ch_disp_mon_label, ch_disp_mon_id, ch_disp_date) VALUES (%s, %s, %s, %s)",
@@ -20,10 +18,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   $insertGoTo = DEF_URI_PATH . 'back/institut_patrimoine.php?mon_cat_ID = %s' .$row_mon_cat['ch_mon_cat_ID'].'';
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($insertGoTo);
   $adresse = $insertGoTo .'#classer-monument';
   header(sprintf("Location: %s", $adresse));
 }

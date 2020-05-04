@@ -23,10 +23,7 @@ if ((isset($_POST['ch_inf_id'])) && ($_POST['ch_inf_id'] != "")) {
 
   $deleteGoTo = DEF_URI_PATH . "back/ville_modifier.php";
 
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
 }
 ?><!DOCTYPE html>

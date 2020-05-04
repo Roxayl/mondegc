@@ -14,9 +14,7 @@ if (!($_SESSION['statut']) or $_SESSION['statut'] < 10) {
 }
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
-if (isset($_SERVER['QUERY_STRING'])) {
-    $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+appendQueryString($editFormAction);
 
 $thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
 $userPaysAllowedToVote = $thisUser->getCountries(\GenCity\Monde\User::getUserPermission('Dirigeant'), true);

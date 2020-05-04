@@ -22,9 +22,7 @@ $row_user_prov = mysql_fetch_assoc($user_prov);
 $totalRows_user_prov = mysql_num_rows($user_prov);
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
   include_once("php/config.php");
@@ -82,10 +80,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
   
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
   $insertGoTo = DEF_URI_PATH . 'index.php';
-  if (isset($_SERVER['QUERY_STRING'])) {
-  $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-  $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
 }
 ?>

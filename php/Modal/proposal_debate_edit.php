@@ -4,9 +4,7 @@ require_once(DEF_ROOTPATH . '../Connections/maconnexion.php');
 
 // renvoyer les données POST à soi-même
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+appendQueryString($editFormAction);
 
 if(!isset($_GET['ID_proposal'])) {
     getErrorMessage('error', "Cette proposition n'existe pas.", false);
