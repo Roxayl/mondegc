@@ -9,7 +9,6 @@ if($path === '') {
 }
 
 if(!isset($_GET['target'])) {
-    header("{$_SERVER['SERVER_PROTOCOL']} 404 Not Found");
     throw new NotFoundHttpException("Page non trouvée.");
 }
 
@@ -17,14 +16,13 @@ $mondegc_config['front-controller'] = array();
 
 $mondegc_config['front-controller']['enabled'] = true;
 
-$mondegc_config['front-controller']['path'] = filter_filename($_GET['target']);
-
-$mondegc_config['front-controller']['path'] = str_replace('.', '/', $mondegc_config['front-controller']['path']);
+$mondegc_config['front-controller']['path'] = str_replace('.', '/',
+                                                          filter_filename($_GET['target']));
 
 $mondegc_config['front-controller']['require'] = DEF_ROOTPATH . $mondegc_config['front-controller']['path'] . '.php';
 
 if($mondegc_config['env'] !== 'production') {
-    getErrorMessage('success',
+    getErrorMessage('info',
         "Using front controller (PHP " . phpversion() . ")<br>Required path: " . $mondegc_config['front-controller']['require']);
 }
 
