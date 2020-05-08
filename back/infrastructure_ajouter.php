@@ -99,6 +99,7 @@ if($form_action === 'edit' && isset($_POST["MM_insert"]) && $_POST["MM_insert"] 
     $thisInfra->set('ch_inf_lien_image', $_POST['ch_inf_lien_image']);
     $thisInfra->set('ch_inf_lien_image2', $_POST['ch_inf_lien_image2']);
     $thisInfra->set('ch_inf_lien_image3', $_POST['ch_inf_lien_image3']);
+    $thisInfra->set('ch_inf_commentaire', $_POST['ch_inf_commentaire']);
     $thisInfra->set('ch_inf_lien_forum', $_POST['ch_inf_lien_forum']);
     $thisInfra->set('lien_wiki', $_POST['lien_wiki']);
 
