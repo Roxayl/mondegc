@@ -11,8 +11,12 @@
 |
 */
 
+Auth::routes();
+
 Route::get('/laravel', function () {
     return view('welcome');
 });
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::any( "/{path?}", "Legacy\LegacySiteController@index" )->where( "path", ".*" );
