@@ -12,12 +12,12 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="ch_use_login" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input id="ch_use_login" type="text" class="form-control @error('ch_use_login') is-invalid @enderror" name="ch_use_login" value="{{ old('ch_use_login') }}" required autofocus>
 
-                                @error('email')
+                                @error('ch_use_login')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -26,19 +26,19 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                            <label for="ch_use_password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                <input id="ch_use_password" type="password" class="form-control @error('password') is-invalid @enderror" name="ch_use_password" required autocomplete="current-password">
 
-                                @error('password')
+                                @error('ch_use_password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
                         </div>
-
+                        <!--
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
@@ -49,7 +49,7 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">

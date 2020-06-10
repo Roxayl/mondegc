@@ -317,6 +317,20 @@ $row_pays = mysql_fetch_assoc($pays);
 
 
 /********
+ * LARAVEL
+ * Adaptation des sessions Laravel, pour synchroniser l'auth entre Laravel et Legacy.
+ * La synchronisation est gérée par le middleware \App\Http\Middleware\AuthSynchronizer.
+ */
+// Sessions Laravel
+if(isset($_SESSION['userObject'])) {
+    session()->put('userLegacyId', $_SESSION['userObject']->get('ch_use_id'));
+}
+if(!isset($_SESSION['userObject'])) {
+    session()->forget('userLegacyId');
+}
+
+
+/********
  * ROUTINES
  * Ces instructions sont exécutées à chaque chargement d'une page.
  ********/
