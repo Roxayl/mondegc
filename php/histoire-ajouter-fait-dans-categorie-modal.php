@@ -3,10 +3,8 @@
 if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-fai_categorie")) {
   $insertSQL = sprintf("INSERT INTO dispatch_fait_his_cat (ch_disp_fait_hist_cat_id, ch_disp_FH_label, ch_disp_fait_hist_id, ch_disp_FH_date) VALUES (%s, %s, %s, %s)",
@@ -18,13 +16,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-fai_categorie
   
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $insertGoTo = '../back/institut_histoire.php?fai_catID='. $row_fai_cat['ch_his_cat_ID'] .'';
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $insertGoTo = DEF_URI_PATH . 'back/institut_histoire.php?fai_catID='. $row_fai_cat['ch_his_cat_ID'] .'';
+  appendQueryString($insertGoTo);
   $adresse = $insertGoTo .'#classer-fait-hist';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 
 

@@ -10,7 +10,7 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -90,38 +90,38 @@ $totalRows_ch_communique_confimation_suppression = mysql_num_rows($ch_communique
     <p>Souhaitez-vous r&eacute;ellement supprimer ce commentaire&nbsp;?</p>
     <?php  } ?>
     <p>Cette action sera irr&eacute;versible</p>
-    <form action="communique_supprimer.php" method="post" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>back/communique_supprimer.php" method="post" class="form-button-inline">
       <input name="communique-ID" type="hidden" value="<?php echo $row_ch_communique_confimation_suppression['ch_com_ID']; ?>">
       <button type="submit" class="btn btn-large btn-danger" title="supprimer ce communiqu&eacute;"><i class="icon-trash icon-white"></i> Supprimer</button>
     </form>
     <?php if ($row_ch_communique_confimation_suppression['ch_com_categorie'] == "pays") { ?>
-    <form action="page_pays_back.php" method="get" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>back/page_pays_back.php" method="get" class="form-button-inline">
       <input name="paysID" type="hidden" value="<?php echo $row_ch_communique_confimation_suppression['ch_com_element_id']; ?>">
       <button type="submit" class="btn btn-large btn-success" value="Annuler">Annuler</button>
     </form>
     <?php } elseif ($row_ch_communique_confimation_suppression['ch_com_categorie'] == "ville") { ?>
-    <form action="ville_modifier.php" method="get" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="get" class="form-button-inline">
       <input name="ville-ID" type="hidden" value="<?php echo $row_ch_communique_confimation_suppression['ch_com_element_id']; ?>">
       <button type="submit" class="btn btn-large btn-success" value="Annuler">Annuler</button>
     </form>
     <?php } elseif ($row_ch_communique_confimation_suppression['ch_com_categorie'] == "institut") { ?>
-    <form action="Haut-Conseil.php" method="get" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>back/Haut-Conseil.php" method="get" class="form-button-inline">
       <button type="submit" class="btn btn-large btn-success" value="Annuler">Annuler</button>
     </form>
     <?php } elseif ($row_ch_communique_confimation_suppression['ch_com_categorie'] == "com_pays") { ?>
-    <form action="../page-pays.php?ch_pay_id=<?php echo $row_ch_communique_confimation_suppression['ch_com_element_id']; ?>" method="post" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?php echo $row_ch_communique_confimation_suppression['ch_com_element_id']; ?>" method="post" class="form-button-inline">
       <button type="submit" class="btn btn-large btn-success" value="Annuler">Annuler</button>
     </form>
     <?php } elseif ($row_ch_communique_confimation_suppression['ch_com_categorie'] == "com_ville") { ?>
-    <form action="../page-ville.php?ch_ville_id=<?php echo $row_ch_communique_confimation_suppression['ch_com_element_id']; ?>" method="get" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>page-ville.php?ch_ville_id=<?php echo $row_ch_communique_confimation_suppression['ch_com_element_id']; ?>" method="get" class="form-button-inline">
       <button type="submit" class="btn btn-large btn-success" value="Annuler">Annuler</button>
     </form>
     <?php } elseif ($row_ch_communique_confimation_suppression['ch_com_categorie'] == "com_communique") { ?>
-    <form action="../page-communique.php?com_id=<?php echo $row_ch_communique_confimation_suppression['ch_com_element_id']; ?>" method="get" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>page-communique.php?com_id=<?php echo $row_ch_communique_confimation_suppression['ch_com_element_id']; ?>" method="get" class="form-button-inline">
       <button type="submit" class="btn btn-large btn-success" value="Annuler">Annuler</button>
     </form>
     <?php } else { ?>
-    <form action="../index.php" method="get" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>index.php" method="get" class="form-button-inline">
       <button type="submit" class="btn btn-large btn-success" value="Annuler">Annuler</button>
     </form>
     <?php } ?>

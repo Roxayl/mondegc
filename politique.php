@@ -214,7 +214,7 @@ $totalRows_info_group = mysql_num_rows($info_group);
         <div class="row-fluid"> 
           <!-- Liste pour choix de la groupes -->
           <div id="select-categorie">
-            <form action="politique.php#groupes" method="GET">
+            <form action="<?= DEF_URI_PATH ?>politique.php#groupes" method="GET">
               <select name="mem_groupID" id="mem_groupID" onchange="this.form.submit()">
                 <option value="" <?php if ($colname_classer_mem == NULL) {?>selected<?php } ?>>S&eacute;lectionnez un groupe&nbsp;</option>
                 <?php do { ?>

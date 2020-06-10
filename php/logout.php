@@ -2,10 +2,8 @@
 
 if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 // *** Recherche de sessions.
 $clefSession = isset($_COOKIE['Session_mondeGC']) ? $_COOKIE['Session_mondeGC'] : null;
@@ -81,7 +79,7 @@ $updateSQL = sprintf("UPDATE users SET ch_use_last_log=%s WHERE ch_use_id=%s",
 }}
 
 // ** Logout the current user. **
-$logoutAction = $_SERVER['PHP_SELF']."?doLogout=true";
+$logoutAction = DEF_URI_PATH . $mondegc_config['front-controller']['path']."?doLogout=true";
 if ((isset($_SERVER['QUERY_STRING'])) && ($_SERVER['QUERY_STRING'] != "")){
   $logoutAction .="&". htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -132,17 +130,15 @@ unset($_COOKIE["Session_mondeGC"]);
   unset($_SESSION['user_last_log']);
   unset($_SESSION['statut']);
 	
-  $logoutGoTo = "../index.php";  
+  $logoutGoTo = DEF_URI_PATH . "index.php";
   if ($logoutGoTo) {
     header("Location: $logoutGoTo");
     exit;
   }
 }
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 
 //Stocke URL dans une variable

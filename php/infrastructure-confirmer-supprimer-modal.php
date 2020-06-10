@@ -4,10 +4,8 @@ if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Con
 header('Content-Type: text/html; charset=iso-8859-1');
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 $ch_inf_id = -1 ;
 if (isset ($_GET['ch_inf_id'])){

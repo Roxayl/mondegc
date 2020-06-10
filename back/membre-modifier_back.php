@@ -9,10 +9,10 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers page de connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
-$_SESSION['last_work'] = $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+$_SESSION['last_work'] = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php'.'?'.$_SERVER['QUERY_STRING'];
 
 //Recuperation variables
 $colname_User = $_SESSION['Temp_userID'];
@@ -29,10 +29,8 @@ $row_User = mysql_fetch_assoc($User);
 $totalRows_User = mysql_num_rows($User);
 
 //Mise a jour parametres donnees personnelles
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
   include(DEF_ROOTPATH . "php/config.php");
@@ -62,12 +60,10 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
   
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
-  $updateGoTo = "membre-modifier_back.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $updateGoTo = DEF_URI_PATH . "back/membre-modifier_back.php";
+  appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 //Mise a jour profil infos personnage
@@ -91,21 +87,17 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
     
     $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
-    $updateGoTo = "page_pays_back.php?paysID={$thisPays->ch_pay_id}";
-    if (isset($_SERVER['QUERY_STRING'])) {
-        $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-        $updateGoTo .= $_SERVER['QUERY_STRING'];
-    }
+    $updateGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID={$thisPays->ch_pay_id}";
+    appendQueryString($updateGoTo);
     header(sprintf("Location: %s", $updateGoTo));
+ exit;
     exit;
 }
 
 
 //Ajout de groupe
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-groupe")) {
   $insertSQL = sprintf("INSERT INTO membres_groupes (ch_mem_group_label, ch_mem_group_statut, ch_mem_group_date, ch_mem_group_mis_jour, ch_mem_group_nb_update, ch_mem_group_nom, ch_mem_group_desc, ch_mem_group_icon, ch_mem_group_couleur) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
@@ -132,12 +124,10 @@ $insertSQL = sprintf("INSERT INTO dispatch_mem_group (ch_disp_group_id, ch_disp_
 					   
   
   $Result2 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
-  $insertGoTo = "membre-modifier_back.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $insertGoTo = DEF_URI_PATH . "back/membre-modifier_back.php";
+  appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 
 //requete liste categories membres pour pouvoir selectionner la categorie 

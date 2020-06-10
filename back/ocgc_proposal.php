@@ -12,10 +12,8 @@ if(isset($_SESSION['userObject']) && $_SESSION['userObject']->minStatus('OCGC'))
     $has_ocgc_perm = false;
 }
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-    $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if(isset($_SESSION['userObject'])) {
     $thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
@@ -49,7 +47,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         if(empty($voteValidate)) {
             $postVoteModel->castVote();
             getErrorMessage('success', "Vous avez voté !");
-            header('Location: ocgc_proposal.php?id=' . $formProposal->get('id'));
+            header('Location: ' . DEF_URI_PATH . 'back/ocgc_proposal.php?id=' . $formProposal->get('id'));
             exit();
         }
 
@@ -294,14 +292,14 @@ include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
 
         <div class="well">
 
-            <form method="POST" action="ocgc_proposal.php?id=<?= $formProposal->get('id') ?>"
+            <form method="POST" action="<?= DEF_URI_PATH ?>back/ocgc_proposal.php?id=<?= $formProposal->get('id') ?>"
                   style="display: inline-block;">
                 <input type="hidden" name="proposalValidate[ID_proposal]" value="<?= $formProposal->get('id') ?>">
                 <input type="hidden" name="proposalValidate[is_valid]" value="2">
                 <button type="submit" class="btn btn-success form-button-inline">Accepter</button>
             </form>
 
-            <form method="POST" action="ocgc_proposal.php?id=<?= $formProposal->get('id') ?>"
+            <form method="POST" action="<?= DEF_URI_PATH ?>back/ocgc_proposal.php?id=<?= $formProposal->get('id') ?>"
                   style="display: inline-block;">
                 <input type="hidden" name="proposalValidate[ID_proposal]" value="<?= $formProposal->get('id') ?>">
                 <input type="hidden" name="proposalValidate[is_valid]" value="0">

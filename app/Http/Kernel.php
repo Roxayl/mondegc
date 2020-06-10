@@ -33,6 +33,7 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\StartSession::class,
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\AuthSynchronizer::class,
             
             // TODO! On annule temporairement la vérification globale des jetons car le middleware
             // est appelé avant l'appel à LegacySiteController. Solution retenue :
@@ -80,5 +81,6 @@ class Kernel extends HttpKernel
         \Illuminate\Session\Middleware\AuthenticateSession::class,
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         \Illuminate\Auth\Middleware\Authorize::class,
+        \App\Http\Middleware\AuthSynchronizer::class,
     ];
 }

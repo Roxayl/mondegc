@@ -10,7 +10,7 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	   }
 
@@ -29,12 +29,10 @@ $insertSQL = sprintf("INSERT INTO monument_categories (ch_mon_cat_label, ch_mon_
 
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $insertGoTo = "institut_patrimoine.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $insertGoTo = DEF_URI_PATH . "back/institut_patrimoine.php";
+  appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 					   
 //requete instituts
@@ -250,7 +248,7 @@ format: 'hex'});
         ================================================== -->
   <!-- formulaire de modification instituts
      ================================================== -->
-  <form class="pull-right-cta" action="insitut_modifier.php" method="post" style="margin-top: 30px;">
+  <form class="pull-right-cta" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post" style="margin-top: 30px;">
     <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
     <button class="btn btn-primary btn-cta" type="submit" title="modifier les informations sur l'institut"><i class="icon-edit icon-white"></i> Modifier la description</button>
   </form>
@@ -466,7 +464,7 @@ $('#closemodal').click(function() {
 <div class="row-fluid"> 
   <!-- Liste pour choix de la categories -->
   <div id="select-categorie">
-    <form action="institut_patrimoine.php#classer-monument" method="GET">
+    <form action="<?= DEF_URI_PATH ?>back/institut_patrimoine.php#classer-monument" method="GET">
       <select name="mon_cat_ID" id="mon_cat_ID" onchange="this.form.submit()">
         <option value="" <?php if ($colname_classer_mon == NULL) {?>selected<?php } ?>>S&eacute;lectionnez une cat&eacute;gorie&nbsp;</option>
         <?php do { ?>

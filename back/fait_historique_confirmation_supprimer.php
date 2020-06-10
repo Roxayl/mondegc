@@ -10,7 +10,7 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -73,11 +73,11 @@ $totalRows_ch_his_confimation_suppression = mysql_num_rows($ch_his_confimation_s
     <h1>Attention&nbsp;!</h1>
     <p>Souhaitez-vous r&eacute;ellement supprimer <?php echo $row_ch_his_confimation_suppression['ch_his_nom']; ?>&nbsp;?</p>
     <p>Cette action sera irr&eacute;versible</p>
-    <form action="fait_historique_supprimer.php" method="post" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>back/fait_historique_supprimer.php" method="post" class="form-button-inline">
       <input name="ch_his_id" type="hidden" value="<?php echo $row_ch_his_confimation_suppression['ch_his_id']; ?>">
       <button type="submit" class="btn btn-large btn-danger" title="supprimer le monument"><i class="icon-trash icon-white"></i> Supprimer</button>
     </form>
-    <form action="page_pays_back.php#faits-historiques" method="post" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>back/page_pays_back.php#faits-historiques" method="post" class="form-button-inline">
       <input name="paysID" type="hidden" value="<?php echo $row_ch_his_confimation_suppression['ch_his_paysID']; ?>">
       <button type="submit" class="btn btn-large btn-success" title="retour &agrave; la page de modification du pays">Annuler</button>
     </form>

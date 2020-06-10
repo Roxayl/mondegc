@@ -15,10 +15,8 @@ $row_info_dispatch = mysql_fetch_assoc($info_dispatch);
 $totalRows_info_dispatch = mysql_num_rows($info_dispatch);
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-group")) {
   $updateSQL = sprintf("UPDATE dispatch_mem_group SET ch_disp_group_id=%s, ch_disp_MG_label=%s, ch_disp_mem_id=%s, ch_disp_MG_date=%s, ch_disp_mem_statut=%s WHERE ch_disp_MG_id=%s",
@@ -34,6 +32,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-group")) {
 
   $insertGoTo = $_SESSION['last_work'];
   header(sprintf("Location: %s", $_SESSION['last_work']));
+ exit;
 }
 ?>
 

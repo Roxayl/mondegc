@@ -29,10 +29,8 @@ $totalRows_list_admin = mysql_num_rows($list_admin);
 
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajoutgroup")) {
   $insertSQL = sprintf("INSERT INTO dispatch_mem_group (ch_disp_group_id, ch_disp_MG_label, ch_disp_mem_id, ch_disp_MG_date, ch_disp_mem_statut) VALUES (%s, %s, %s, %s, %s)",
@@ -106,16 +104,14 @@ mail($mail,$sujet,$message,$header);
 } while ($row_list_admin  = mysql_fetch_assoc($list_admin ));	
 	
 if ($_SESSION['last_work'] == "institut_politique.php") {
-  $insertGoTo = '../back/institut_politique.php?mem_groupID='. $row_info_group['ch_mem_group_ID'] .'';
+  $insertGoTo = DEF_URI_PATH . 'back/institut_politique.php?mem_groupID='. $row_info_group['ch_mem_group_ID'] .'';
 } else {
-  $insertGoTo = '../back/membre-modifier_back.php?mem_groupID='. $row_info_group['ch_mem_group_ID'] .'';
+  $insertGoTo = DEF_URI_PATH . 'back/membre-modifier_back.php?mem_groupID='. $row_info_group['ch_mem_group_ID'] .'';
   }
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($insertGoTo);
   $adresse = $insertGoTo .'#liste-categories';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 ?>
 <!-- Modal Header-->

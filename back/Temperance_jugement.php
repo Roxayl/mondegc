@@ -9,7 +9,7 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=15))
 } else {
 	// Redirection vers page connexion
     header("Status: 301 Moved Permanently", false, 301);
-    header('Location: ../Juges-temperants.php');
+    header('Location: ' . legacyPage('Juges-temperants'));
     exit();
 }
 

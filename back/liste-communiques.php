@@ -10,7 +10,7 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
@@ -129,13 +129,13 @@ $totalPages_listcommuniques = ceil($totalRows_listcommuniques/$maxRows_listcommu
               <td><img src="<?php echo $row_listcommuniques['ch_use_lien_imgpersonnage']; ?>" width="50px">
                 <p><?php echo $row_listcommuniques['ch_use_login']; ?></p></td>
               <td><?php echo date("d/m/Y � G:i:s", strtotime($row_listcommuniques['ch_com_date_mis_jour'])); ?></td>
-              <td><form action="communique_modifier.php" method="post">
+              <td><form action="<?= DEF_URI_PATH ?>back/communique_modifier.php" method="post">
                   <input name="com_id" type="hidden" value="<?php echo $row_listcommuniques['ch_com_ID']; ?>">
                   <button class="btn" type="submit" title="modifier le communiqu&eacute;"><i class="icon-pencil"></i></button>
                 </form></td>
               <?php if ($_SESSION['statut'] >= 30)
 {?>
-              <td><form action="communique_confirmation_supprimer.php" method="post">
+              <td><form action="<?= DEF_URI_PATH ?>back/communique_confirmation_supprimer.php" method="post">
                   <input name="communique-ID" type="hidden" value="<?php echo $row_listcommuniques['ch_com_ID']; ?>">
                   <button class="btn" type="submit" title="supprimer le communiqu&eacute;"><i class="icon-trash"></i></button>
                 </form></td>

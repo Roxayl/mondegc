@@ -92,10 +92,8 @@ mysql_free_result($institut);
 
 //Mise à jour formulaire pays
 $paysid = $row_pays['ch_pay_id'];
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
   $updateSQL = sprintf("UPDATE pays SET ch_pay_lien_forum=%s WHERE ch_pay_id=%s",
@@ -104,21 +102,17 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
 
   
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
-    $updateGoTo = "../page-communique.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+    $updateGoTo = DEF_URI_PATH . "page-communique.php";
+  appendQueryString($updateGoTo);
   $adresse = $updateGoTo."?ch_com_ID=".$row_communique['ch_com_ID'];
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 //Mise à jour formulaire institut
 $insid = $row_institut['ch_ins_ID'];
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut")) {
   $updateSQL = sprintf("UPDATE instituts SET ch_ins_lien_forum=%s WHERE ch_ins_ID=%s",
@@ -127,13 +121,11 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut
 
   
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
-    $updateGoTo = "../page-communique.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+    $updateGoTo = DEF_URI_PATH . "page-communique.php";
+  appendQueryString($updateGoTo);
   $adresse = $updateGoTo."?ch_com_ID=".$row_communique['ch_com_ID'];
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 ?>
 <!-- Modal Header si ID sujet correspond  a 4 chiffres-->

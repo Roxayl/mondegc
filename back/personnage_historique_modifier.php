@@ -10,14 +10,12 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_fait_hist")) {
 if ($_POST['ch_his_periode'] == true) {
@@ -47,12 +45,10 @@ $_POST['ch_his_date_fait2'] = NULL;
   getErrorMessage('success', "Votre personnage historique, " . __s($_POST['ch_his_nom']) .
           ", a été modifié avec succès !");
 
-  $updateGoTo = "page_pays_back.php?paysID=" . (int)$_POST['ch_his_paysID'];
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $updateGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_his_paysID'];
+  appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 $colname_Fait_his = "-1";

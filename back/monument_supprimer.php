@@ -10,7 +10,7 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -40,12 +40,10 @@ $deleteSQL2 = sprintf("DELETE FROM dispatch_mon_cat WHERE ch_disp_mon_id=%s",
   $Result2 = mysql_query($deleteSQL2, $maconnexion) or die(mysql_error());
   
 
-  $deleteGoTo = "ville_modifier.php#mes-monuments";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $deleteGoTo = DEF_URI_PATH . "back/ville_modifier.php#mes-monuments";
+  appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

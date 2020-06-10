@@ -10,7 +10,7 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -28,16 +28,14 @@ if ((isset($_POST['ch_mem_group_ID'])) && ($_POST['ch_mem_group_ID'] != "")) {
   $Result2 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
 if ($_SESSION['last_work'] = "institut_politique.php") {
-  $deleteGoTo = "institut_politique.php";
+  $deleteGoTo = DEF_URI_PATH . "back/institut_politique.php";
 } else {
-  $deleteGoTo = "membre-modifier_back.php";
+  $deleteGoTo = DEF_URI_PATH . "back/membre-modifier_back.php";
   }
 
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

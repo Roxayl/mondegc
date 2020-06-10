@@ -10,7 +10,7 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -21,13 +21,11 @@ if ((isset($_POST['ch_temp_id'])) && ($_POST['ch_temp_id'] != "")) {
   
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
-  $deleteGoTo = "institut_economie.php";
+  $deleteGoTo = DEF_URI_PATH . "back/institut_economie.php";
 
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

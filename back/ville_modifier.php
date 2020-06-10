@@ -13,14 +13,12 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_ville")) {
@@ -77,11 +75,8 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_ville")) {
         getErrorMessage('success', "Ville modifiée avec succès.");
     }
 
-  $updateGoTo = "ville_modifier.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $updateGoTo = DEF_URI_PATH . "back/ville_modifier.php";
+  appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
   exit;
 }

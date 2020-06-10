@@ -217,7 +217,7 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
         <div class="row-fluid"> 
           <!-- Liste pour choix de la categories -->
           <div id="select-categorie">
-            <form action="patrimoine.php#monument" method="GET">
+            <form action="<?= DEF_URI_PATH ?>patrimoine.php#monument" method="GET">
               <select name="mon_cat_ID" id="mon_cat_ID" onchange="this.form.submit()">
                 <option value="" <?php if ($colname_classer_mon == NULL) {?>selected<?php } ?>>S&eacute;lectionnez une cat&eacute;gorie&nbsp;</option>
                 <?php do { ?>

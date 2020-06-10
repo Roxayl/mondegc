@@ -336,13 +336,13 @@ div.olControlPanel {
               <h3>R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</h3>
             </div>
             <div class="span4">
-              <p>La RFGC est un pays communautaire ouvert � tous, il est divis� en r�gions</p>
+              <p>La RFGC est un pays communautaire ouvert à tous, il est divisé en deux provinces.</p>
               <p>Nombre de villes&nbsp;: <strong> <?php echo $nbvilles_RFGC; ?> </strong></p>
               <p>Population&nbsp;: <strong>
                 <?php $nbhabitant_francais = number_format($nbhabitants_RFGC, 0, ',', ' '); echo $nbhabitant_francais; ?>
                 habitants</strong></p>
             </div>
-            <div class="span2"> <a href="#RFGC" class="btn btn-primary">Voir les r&eacute;gions</a> </div>
+            <div class="span2"> <a href="#RFGC" class="btn btn-primary">Voir les provinces</a> </div>
           </div>
         </li>
         <p>&nbsp;</p>

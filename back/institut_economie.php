@@ -10,7 +10,7 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../Haut-Conseil.php');
+header('Location: ' . legacyPage('Haut-Conseil'));
 exit();
 	}
 
@@ -206,7 +206,7 @@ format: 'hex'});
 
     <!-- formulaire de modification instituts
      ================================================== -->
-    <form class="pull-right-cta" action="insitut_modifier.php" method="post" style="margin-top: 30px;">
+    <form class="pull-right-cta" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post" style="margin-top: 30px;">
       <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
       <button class="btn btn-primary btn-cta" type="submit" title="modifier les informations sur l'institut"><i class="icon-edit icon-white"></i> Modifier la description</button>
     </form>
@@ -430,7 +430,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
         </div>
         <!-- Liste pour choix de classement -->
         <div id="select-categorie">
-          <form action="institut_economie.php#liste-infrastructures-officielles" method="GET">
+          <form action="<?= DEF_URI_PATH ?>back/institut_economie.php#liste-infrastructures-officielles" method="GET">
             <select name="type_classement_inf" id="type_classement_inf" onchange="this.form.submit()" class="span3">
               <option value="ch_inf_off_nom ASC" <?php if ($type_classement == 'ch_inf_off_nom ASC') {?>selected<?php } ?>>Classer par ordre alphab&eacute;tique</option>
               <option value="ch_inf_off_date DESC" <?php if ($type_classement == 'ch_inf_off_date DESC') {?>selected<?php } ?>>Classer par date de cr&eacute;ation</option>

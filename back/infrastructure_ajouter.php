@@ -9,7 +9,7 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -22,10 +22,8 @@ elseif (isset($_REQUEST['ch_inf_villeid'])) {
 }
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 /** @var \GenCity\Monde\User $thisUser */
 $thisUser = $_SESSION['userObject'];
@@ -84,7 +82,7 @@ if ($form_action === 'add' && isset($_POST["MM_insert"]) && $_POST["MM_insert"] 
   
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $insertGoTo = "ville_modifier.php?ville-ID=" . (int)$_POST['ch_inf_villeid'];
+  $insertGoTo = DEF_URI_PATH . "back/ville_modifier.php?ville-ID=" . (int)$_POST['ch_inf_villeid'];
 
   getErrorMessage('success', "Une infrastructure a été ajoutée avec succès !");
 
@@ -105,11 +103,12 @@ if($form_action === 'edit' && isset($_POST["MM_insert"]) && $_POST["MM_insert"] 
 
     $thisInfra->update();
 
-    $insertGoTo = "ville_modifier.php?ville-ID=" . (int)$thisInfra->get('ch_inf_villeid');
+    $insertGoTo = DEF_URI_PATH . "back/ville_modifier.php?ville-ID=" . (int)$thisInfra->get('ch_inf_villeid');
 
     getErrorMessage('success', "L'infrastructure a été modifiée avec succès !");
 
     header(sprintf("Location: %s", $insertGoTo));
+ exit;
     exit;
 
 }
@@ -151,7 +150,7 @@ $totalRows_inf_off_choisie = mysql_num_rows($inf_off_choisie);
 
 if($totalRows_liste_inf_off == 0) {
     getErrorMessage('error', "Il n'y a pas d'infrastructure de ce type.");
-    header('Location: infra_select_group.php?ville_id=' . __s($thisVille->get('ch_vil_ID')));
+    header('Location: ' . DEF_URI_PATH . 'back/infra_select_group.php?ville_id=' . __s($thisVille->get('ch_vil_ID')));
     exit;
 }
 
@@ -259,7 +258,7 @@ img.olTileImage {
       <br><br>
 
         <!-- choix infrastructure -->
-        <form action="infrastructure_ajouter.php#infrastructure" method="GET" id="form-infra-list"
+        <form action="<?= DEF_URI_PATH ?>back/infrastructure_ajouter.php#infrastructure" method="GET" id="form-infra-list"
               class="form-inline">
           <div id="spryselect1" class="control-group">
           <div class="control-label"><h4 style="display: inline-block;">Choisissez votre infrastructure</h4> <a href="#" rel="clickover" title="Infrastructures de la liste officielle" data-content="Vous devez choisir une infrastructure dans la liste officielle. Chaque nouvelle infrastructure va modifier les valeurs de votre économie"><i class="icon-info-sign"></i></a></div>
@@ -371,7 +370,7 @@ img.olTileImage {
       </div>
 
     </form>
-    <form action="ville_modifier.php#mes-infrastructures" method="GET" class="form-inline">
+    <form action="<?= DEF_URI_PATH ?>back/ville_modifier.php#mes-infrastructures" method="GET" class="form-inline">
       <input name="villeid" type="hidden" value="<?= $thisVille->get('ch_vil_ID') ?>">
       <button type="submit" class="btn btn-danger" title="retour &agrave; la page de modification du pays">Annuler</button>
     </form>

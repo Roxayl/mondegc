@@ -10,7 +10,7 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
@@ -24,13 +24,11 @@ if ((isset($_POST['ch_disp_FH_id'])) && ($_POST['ch_disp_FH_id'] != "")) {
 
   
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
-  $deleteGoTo = '../back/institut_histoire.php?fai_catID='. $cat .'';
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $deleteGoTo = DEF_URI_PATH . 'back/institut_histoire.php?fai_catID='. $cat .'';
+  appendQueryString($deleteGoTo);
   $adresse = $deleteGoTo .'#classer-fait-hist';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

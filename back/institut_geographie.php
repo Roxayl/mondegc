@@ -10,7 +10,7 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
@@ -38,8 +38,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
 
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $insertGoTo = "institut_geographie.php?bounds=".$_POST['ch_geo_bounds'];
+  $insertGoTo = DEF_URI_PATH . "back/institut_geographie.php?bounds=".$_POST['ch_geo_bounds'];
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 
 
@@ -59,8 +60,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature"))
 
 
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
-  $updateGoTo = "institut_geographie.php?bounds=".$_POST['ch_geo_bounds'];
+  $updateGoTo = DEF_URI_PATH . "back/institut_geographie.php?bounds=".$_POST['ch_geo_bounds'];
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 
@@ -230,7 +232,7 @@ div.editPanel {
 
   <!-- formulaire de modification instituts
      ================================================== -->
-  <form class="pull-right-cta" action="insitut_modifier.php" method="post" style="margin-top: 30px;">
+  <form class="pull-right-cta" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post" style="margin-top: 30px;">
     <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
     <button class="btn btn-primary btn-cta" type="submit" title="Modifier les informations sur le Comité"><i class="icon-edit icon-white"></i> Modifier la description</button>
   </form>

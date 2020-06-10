@@ -7,7 +7,7 @@ include(DEF_ROOTPATH . 'php/logout.php');
 if (!isset($_SESSION['userObject'])) {
     // Redirection vers connexion
     header("Status: 301 Moved Permanently", false, 301);
-    header('Location: ../connexion.php');
+    header('Location: ' . legacyPage('connexion'));
     exit();
 }
 

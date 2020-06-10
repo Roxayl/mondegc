@@ -182,7 +182,7 @@ init();
         <div class="row-fluid">
     <!-- Liste pour choix de la categories -->
     <div id="select-categorie">
-      <form action="geographie.php#carte" method="GET">
+      <form action="<?= DEF_URI_PATH ?>geographie.php#carte" method="GET">
         <select name="ch_pay_id" id="ch_pay_id" onchange="this.form.submit()">
           <option value="" <?php if ($_GET['ch_pay_id'] == NULL) {?>selected<?php } ?>>S&eacute;lectionnez un pays&nbsp;</option>
           <?php do { ?>

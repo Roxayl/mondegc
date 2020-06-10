@@ -3,10 +3,8 @@
 if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) {
   $updateSQL = sprintf("UPDATE faithist_categories SET ch_fai_cat_label=%s, ch_fai_cat_statut=%s, ch_fai_cat_date=%s, ch_fai_cat_mis_jour=%s, ch_fai_cat_nb_update=%s, ch_fai_cat_nom=%s, ch_fai_cat_desc=%s, ch_fai_cat_icon=%s, ch_fai_cat_couleur=%s WHERE ch_fai_cat_ID=%s",
@@ -25,11 +23,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) 
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
   $updateGoTo = "../back/institut_histoire.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 //requete categories faits historiques
 

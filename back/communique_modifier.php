@@ -10,14 +10,12 @@ if ($_SESSION['statut'])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_communique")) {
   $updateSQL = sprintf("UPDATE communiques SET ch_com_label=%s, ch_com_statut=%s, ch_com_categorie=%s, ch_com_element_id=%s, ch_com_user_id=%s, ch_com_date=%s, ch_com_date_mis_jour=%s, ch_com_titre=%s, ch_com_contenu=%s WHERE ch_com_ID=%s",
@@ -67,15 +65,13 @@ elseif (( $_POST['ch_com_categorie'] == "institut") AND ( $_POST['ch_com_element
 $updateGoTo = 'institut_sport.php';
 }
 else {
-$updateGoTo = 'page_pays_back.php?paysID=' . $paysID;
+$updateGoTo = DEF_URI_PATH . 'back/page_pays_back.php?paysID=' . $paysID;
 }
 $updateGoTo = '../page-communique.php?com_id=' . (int)$_POST['ch_com_ID'];
 
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 $colname_communique = "-1";

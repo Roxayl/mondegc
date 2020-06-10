@@ -10,7 +10,7 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 } else {
 	// Redirection vers page connexion
     header("Status: 301 Moved Permanently", false, 301);
-    header('Location: ../connexion.php');
+    header('Location: ' . legacyPage('connexion'));
     exit();
 }
 
@@ -138,7 +138,7 @@ $totalPages_ListPays = ceil($totalRows_ListPays/$maxRows_ListPays)-1;
                   <a href="page_pays_back.php?paysID=<?= $row_ListPays['ch_pay_id'] ?>" class="btn" type="submit" title="modifier le pays"><i class="icon-pencil"></i></a></td>
               <?php if ($_SESSION['userObject']->minStatus('Administrateur'))
               {?>
-              <td><form action="page_pays_confirmer_supprimer.php" method="post">
+              <td><form action="<?= DEF_URI_PATH ?>back/page_pays_confirmer_supprimer.php" method="post">
                   <input name="paysID" type="hidden" value="<?php echo $row_ListPays['ch_pay_id']; ?>">
                   <button class="btn" type="submit" title="supprimer le pays"><i class="icon-trash"></i></button>
                 </form></td>

@@ -9,7 +9,7 @@ if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../Haut-Conseil.php');
+header('Location: ' . legacyPage('Haut-Conseil'));
 exit();
 	}
 ?><!DOCTYPE html>
