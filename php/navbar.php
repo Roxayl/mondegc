@@ -9,6 +9,8 @@ if(!isset($institut)) $institut = false;
 if(!isset($participer)) $participer = false;
 if(!isset($generation_city)) $generation_city = false;
 
+$logoutAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'].".php?doLogout=true";
+
 // Tri des pays par continent pour le menu deroulant
 
 $query_menu = "SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_pay_continent FROM pays WHERE ch_pay_publication = 1 ORDER BY ch_pay_nom ASC";

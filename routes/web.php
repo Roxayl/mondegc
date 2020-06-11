@@ -35,6 +35,8 @@ Route::get('/laravel', fn() => view('welcome'));
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('layouttester', 'LayoutTesterController@index');
+
 /*****
  * Legacy
  *****/
