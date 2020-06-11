@@ -8,7 +8,7 @@ if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Con
 header('Content-Type: text/html; charset=utf-8');
 
 // renvoyer les données POST à soi-même
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = DEF_URI_PATH . 'php/Modal/pays_leader_add.php';
 appendQueryString($editFormAction);
 
 $pays_ID = isset($_GET['pays_ID']) ? (int)$_GET['pays_ID'] : 0;
