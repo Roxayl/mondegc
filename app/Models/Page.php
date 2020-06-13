@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Page extends Model
 {
@@ -33,4 +34,16 @@ class Page extends Model
     {
         return url('/admin/pages/'.$this->getKey());
     }
+
+    public function getPageOrFail() {
+
+        // Si la page n'est pas publiée.
+        if(strtotime($this->published_at) > time() || is_null($this->published_at)) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this;
+
+    }
+
 }
