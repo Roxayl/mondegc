@@ -12,7 +12,7 @@
 */
 
 /*****
- * Authentification
+ * Laravel Authentification
  *****/
 // Auth::routes();
 // Authentication Routes...
@@ -36,6 +36,38 @@ Route::get('/laravel', fn() => view('welcome'));
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('layouttester', 'LayoutTesterController@index');
+
+/*****
+ * Craftable
+ *****/
+/* Auto-generated admin routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::get('/admin/admin-users',                            'Admin\AdminUsersController@index');
+    Route::get('/admin/admin-users/create',                     'Admin\AdminUsersController@create');
+    Route::post('/admin/admin-users',                           'Admin\AdminUsersController@store');
+    Route::get('/admin/admin-users/{adminUser}/edit',           'Admin\AdminUsersController@edit')->name('admin/admin-users/edit');
+    Route::post('/admin/admin-users/{adminUser}',               'Admin\AdminUsersController@update')->name('admin/admin-users/update');
+    Route::delete('/admin/admin-users/{adminUser}',             'Admin\AdminUsersController@destroy')->name('admin/admin-users/destroy');
+    Route::get('/admin/admin-users/{adminUser}/resend-activation','Admin\AdminUsersController@resendActivationEmail')->name('admin/admin-users/resendActivationEmail');
+});
+/* Auto-generated profile routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::get('/admin/profile',                                'Admin\ProfileController@editProfile');
+    Route::post('/admin/profile',                               'Admin\ProfileController@updateProfile');
+    Route::get('/admin/password',                               'Admin\ProfileController@editPassword');
+    Route::post('/admin/password',                              'Admin\ProfileController@updatePassword');
+});
+
+/* Auto-generated admin routes */
+Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
+    Route::get('/admin/pages',                                  'Admin\PagesController@index');
+    Route::get('/admin/pages/create',                           'Admin\PagesController@create');
+    Route::post('/admin/pages',                                 'Admin\PagesController@store');
+    Route::get('/admin/pages/{page}/edit',                      'Admin\PagesController@edit')->name('admin/pages/edit');
+    Route::post('/admin/pages/bulk-destroy',                    'Admin\PagesController@bulkDestroy')->name('admin/pages/bulk-destroy');
+    Route::post('/admin/pages/{page}',                          'Admin\PagesController@update')->name('admin/pages/update');
+    Route::delete('/admin/pages/{page}',                        'Admin\PagesController@destroy')->name('admin/pages/destroy');
+});
 
 /*****
  * Legacy
