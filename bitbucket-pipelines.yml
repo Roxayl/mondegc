@@ -6,17 +6,98 @@
 image: php:7.4.4
 
 pipelines:
-  default:
-    - step:
-        caches:
-          - composer
-        script:
-          - apt-get update && apt-get install -y unzip
-          - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-          - composer install
-          - pipe: atlassian/sftp-deploy:0.5.5
-            variables:
-              USER: 'romukulot.fr'
-              SERVER: 'ssh.romukulot.fr'
-              REMOTE_PATH: '/customers/e/d/0/romukulot.fr/httpd.www/monde_staging'
-              PASSWORD: $SSH_PW_ROMUKULOT
+  branches:
+    master:
+      - step:
+          name: NPM
+          image: node:13.14.0
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run production
+          artifacts:
+            - node_modules/**
+      - step:
+          name: Composer
+          image: php:7.4.4
+          caches:
+            - composer
+          script:
+            - apt-get update && apt-get install -y unzip
+            - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+            - composer install --ignore-platform-reqs
+          artifacts:
+            - vendor/**
+      - step:
+          name: FTP Deployment
+          script:
+            - pipe: atlassian/sftp-deploy:0.5.5
+              variables:
+                USER: 'romukulot.fr'
+                SERVER: 'ssh.romukulot.fr'
+                REMOTE_PATH: '/customers/e/d/0/romukulot.fr/httpd.www/monde_staging_master/'
+                PASSWORD: $SSH_PW_ROMUKULOT
+    develop:
+      - step:
+          name: NPM
+          image: node:13.14.0
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run production
+          artifacts:
+            - node_modules/**
+      - step:
+          name: Composer
+          image: php:7.4.4
+          caches:
+            - composer
+          script:
+            - apt-get update && apt-get install -y unzip
+            - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+            - composer install --ignore-platform-reqs
+          artifacts:
+            - vendor/**
+      - step:
+          name: FTP Deployment
+          script:
+            - pipe: atlassian/sftp-deploy:0.5.5
+              variables:
+                USER: 'romukulot.fr'
+                SERVER: 'ssh.romukulot.fr'
+                REMOTE_PATH: '/customers/e/d/0/romukulot.fr/httpd.www/monde_staging_develop/'
+                PASSWORD: $SSH_PW_ROMUKULOT
+  tags:
+    release-*:
+      - step:
+          name: NPM
+          image: node:13.14.0
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run production
+          artifacts:
+            - node_modules/**
+      - step:
+          name: Composer
+          image: php:7.4.4
+          caches:
+            - composer
+          script:
+            - apt-get update && apt-get install -y unzip
+            - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+            - composer install --ignore-platform-reqs
+          artifacts:
+            - vendor/**
+      - step:
+          name: FTP Deployment
+          script:
+            - pipe: atlassian/sftp-deploy:0.5.5
+              variables:
+                USER: 'romukulot.fr'
+                SERVER: 'ssh.romukulot.fr'
+                REMOTE_PATH: '/customers/e/d/0/romukulot.fr/httpd.www/monde_staging_release/'
+                PASSWORD: $SSH_PW_ROMUKULOT
