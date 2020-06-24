@@ -9,16 +9,6 @@ pipelines:
   branches:
     master:
       - step:
-          name: NPM
-          image: node:13.14.0
-          caches:
-            - node
-          script:
-            - npm install
-            - npm run production
-          artifacts:
-            - node_modules/**
-      - step:
           name: Composer
           image: php:7.4.4
           caches:
@@ -39,16 +29,6 @@ pipelines:
                 REMOTE_PATH: '/customers/e/d/0/romukulot.fr/httpd.www/monde_staging_master/'
                 PASSWORD: $SSH_PW_ROMUKULOT
     develop:
-      - step:
-          name: NPM
-          image: node:13.14.0
-          caches:
-            - node
-          script:
-            - npm install
-            - npm run production
-          artifacts:
-            - node_modules/**
       - step:
           name: Composer
           image: php:7.4.4
@@ -71,16 +51,6 @@ pipelines:
                 PASSWORD: $SSH_PW_ROMUKULOT
   tags:
     release-*:
-      - step:
-          name: NPM
-          image: node:13.14.0
-          caches:
-            - node
-          script:
-            - npm install
-            - npm run production
-          artifacts:
-            - node_modules/**
       - step:
           name: Composer
           image: php:7.4.4
