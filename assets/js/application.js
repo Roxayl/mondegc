@@ -168,8 +168,10 @@ $(document).ready(function() {
     var baseurl;
     if (environ === "localhost") { // localhost
         baseurl = window.location.protocol + "//" + window.location.host + "/" + "MondeGC/trunk/";
-    } else if(environ === "mondegc.test" || environ === 'mondegc-upprisa.test') { // vagrant
+    } else if(environ === "mondegc.test") { // vagrant
         baseurl = window.location.protocol + "//" + window.location.host + "/";
+    } else if(environ === "generation-city.test") { // vagrant
+        baseurl = window.location.protocol + "//" + window.location.host + "/mondegc/";
     } else { // production
         baseurl = window.location.protocol + "//" + window.location.host + "/monde/";
     }

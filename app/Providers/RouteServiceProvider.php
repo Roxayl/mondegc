@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -51,7 +52,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
+        // Lorsqu'on accède à une page se terminant par .php, ça veut dire qu'on accède au site legacy.
+        // On ne préfixe pas les urls se terminant par .php pour cette raison.
+        Route::prefix(php_sapi_name() !== 'cli' && substr($_SERVER['REQUEST_URI'], -4) !== '.php' ? env('APP_DIR', '') : '')
+             ->middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
     }

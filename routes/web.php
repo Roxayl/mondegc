@@ -16,9 +16,9 @@
  *****/
 // Auth::routes();
 // Authentication Routes...
-Route::get('login', fn() => redirect('connexion.php'))->name('login');
-Route::post('login', fn() => redirect('connexion.php'));
-Route::post('logout', fn() => redirect('connexion.php?doLogout=true'))->name('logout');
+Route::get('login', function() { return redirect(env('APP_DIR', '') . 'connexion.php'); })->name('login');
+Route::post('login', function() { return redirect(env('APP_DIR', '') . 'connexion.php'); });
+Route::post('logout', function() { return redirect(env('APP_DIR', '') . 'connexion.php?doLogout=true'); })->name('logout');
 // Registration Routes...
 Route::get('register', 'Legacy\LegacySiteController@authFallback')->name('register');
 Route::post('register', 'Legacy\LegacySiteController@authFallback');
@@ -31,7 +31,7 @@ Route::post('password/reset', 'Legacy\LegacySiteController@authFallback');
 /*****
  * Laravel
  *****/
-Route::get('/laravel', fn() => view('welcome'));
+Route::get('/laravel', function() { return view('welcome'); });
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -74,4 +74,4 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
 /*****
  * Legacy
  *****/
-Route::any("/{path?}", "Legacy\LegacySiteController@index")->where( "path", ".*" );
+Route::any("/{path?}", "Legacy\LegacySiteController@index")->where("path", ".*");

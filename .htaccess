@@ -1,21 +1,20 @@
 RewriteEngine On
-#RewriteBase /
 
 # Condition : on conserve l'acces direct aux anciens dossiers du site legacy.
-RewriteCond %{REQUEST_URI} !^/public/
-RewriteCond %{REQUEST_URI} !^/assets/
-RewriteCond %{REQUEST_URI} !^/back/
-RewriteCond %{REQUEST_URI} !^/BContact/
-RewriteCond %{REQUEST_URI} !^/Carto/
-RewriteCond %{REQUEST_URI} !^/colorpicker/
-RewriteCond %{REQUEST_URI} !^/datepicker/
-RewriteCond %{REQUEST_URI} !^/lib/
-RewriteCond %{REQUEST_URI} !^/php/
-RewriteCond %{REQUEST_URI} !^/services/
-RewriteCond %{REQUEST_URI} !^/SpryAssets/
-RewriteCond %{REQUEST_URI} !^/userfiles/
+RewriteCond %{REQUEST_URI} !^/mondegc/public/
+RewriteCond %{REQUEST_URI} !^/mondegc/assets/
+RewriteCond %{REQUEST_URI} !^/mondegc/back/
+RewriteCond %{REQUEST_URI} !^/mondegc/BContact/
+RewriteCond %{REQUEST_URI} !^/mondegc/Carto/
+RewriteCond %{REQUEST_URI} !^/mondegc/colorpicker/
+RewriteCond %{REQUEST_URI} !^/mondegc/datepicker/
+RewriteCond %{REQUEST_URI} !^/mondegc/lib/
+RewriteCond %{REQUEST_URI} !^/mondegc/php/
+RewriteCond %{REQUEST_URI} !^/mondegc/services/
+RewriteCond %{REQUEST_URI} !^/mondegc/SpryAssets/
+RewriteCond %{REQUEST_URI} !^/mondegc/userfiles/
 RewriteCond %{REQUEST_FILENAME} !\.php$
-RewriteRule ^(.*)$ /public/$1 [L,QSA]
+RewriteRule ^(.*)$ /mondegc/public/$1 [L,QSA]
 
 # Gerer les accès au site legacy.
 RewriteCond %{REQUEST_FILENAME} \.php$
