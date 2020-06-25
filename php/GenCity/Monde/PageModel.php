@@ -6,7 +6,7 @@ use Squirrel\ModelStructureInterface;
 
 class PageModel implements ModelStructureInterface {
 
-    static $tableName = 'pages';
+    static $tableName = 'legacy_pages';
     private $info = array();
 
     public function __construct($data = null) {
@@ -21,7 +21,7 @@ class PageModel implements ModelStructureInterface {
 
     private function populate($id) {
 
-        $query = mysql_query(sprintf('SELECT * FROM pages WHERE this_id = %s',
+        $query = mysql_query(sprintf('SELECT * FROM legacy_pages WHERE this_id = %s',
             GetSQLValueString($id, 'text')));
         $result = mysql_fetch_assoc($query);
         return $result;

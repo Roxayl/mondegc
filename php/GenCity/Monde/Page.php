@@ -13,7 +13,7 @@ class Page extends BaseModel {
 
     static function getAllPages() {
 
-        $sql = 'SELECT * FROM pages';
+        $sql = 'SELECT * FROM legacy_pages';
         $query = mysql_query($sql);
 
         $return = array();
@@ -32,7 +32,7 @@ class Page extends BaseModel {
 
     public function update($content) {
 
-        $sql = 'UPDATE pages SET content = %s WHERE this_id = %s';
+        $sql = 'UPDATE legacy_pages SET content = %s WHERE this_id = %s';
         mysql_query(sprintf($sql,
             GetSQLValueString($content, 'text'),
             GetSQLValueString($this->model->this_id, 'text')));
