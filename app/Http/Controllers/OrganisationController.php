@@ -12,22 +12,22 @@ class OrganisationController extends Controller
 
     public function index($id, $slug) {
 
-        $thisOrganisation = Organisation::findOrFail($id);
+        $organisation = Organisation::findOrFail($id);
 
-        if(Str::slug($thisOrganisation->name) !== Str::slug($slug)) {
-            return redirect("organisation/{$thisOrganisation->id}-" .
-                    Str::slug($thisOrganisation->name));
+        if(Str::slug($organisation->name) !== Str::slug($slug)) {
+            return redirect("organisation/{$organisation->id}-" .
+                    Str::slug($organisation->name));
         }
 
-        $members = OrganisationMember::where('organisation_id', $thisOrganisation->id)->get();
+        $members = OrganisationMember::where('organisation_id', $organisation->id)->get();
 
-        $page_title = $thisOrganisation->name;
-        $seo_description = substr($thisOrganisation->text, 0, 255);
+        $page_title = $organisation->name;
+        $seo_description = substr($organisation->text, 0, 255);
         $content = 'test contenu';
-        $title = $thisOrganisation->name;
+        $title = $organisation->name;
 
         return view('organisation.organisationview', compact(
-            ['content', 'title', 'page_title', 'seo_description', 'members']));
+            ['content', 'title', 'page_title', 'seo_description', 'organisation', 'members']));
 
     }
 

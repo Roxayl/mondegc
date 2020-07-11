@@ -34,16 +34,12 @@
     @yield('styles')
 </head>
 
-<body>
+<body @yield('body_attributes')>
     <!-- Navbar
     ================================================== -->
     {!! $navbarProvider::navbar() !!}
 
-    <div class="container corps-page">
-
-        @yield('content')
-
-    </div>
+    @yield('content')
 
     <div class="modal container fade" id="myModal"></div>
 
