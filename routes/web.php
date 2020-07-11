@@ -37,6 +37,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/page/{page}-{url}', 'PageController@index')->name('page-view');
 
+Route::get('/organisation/{id}-{slug}', 'OrganisationController@index')->name('organisation-view');
+
 Route::get('layouttester', 'LayoutTesterController@index');
 
 /*****

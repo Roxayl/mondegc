@@ -22,6 +22,8 @@ $queries[] = "SET FOREIGN_KEY_CHECKS=0";
 
 $queries[] = 'rename table pages to legacy_pages';
 
+$queries[] = 'alter table pays modify ch_pay_id int auto_increment';
+
 $queries[] = 'create table activations
 (
     email      varchar(255)         not null,
@@ -231,6 +233,45 @@ $queries[] = 'create table wysiwyg_media
 
 $queries[] = 'create index wysiwyg_media_wysiwygable_id_index
 	on wysiwyg_media (wysiwygable_id)';
+
+$queries[] = 'create table organisation
+(
+    id         int auto_increment
+        primary key,
+    name       varchar(191) null,
+    logo       varchar(191) null,
+    flag       varchar(191) null,
+    text       text         null,
+    created_at datetime     null,
+    updated_at datetime     null
+)';
+
+$queries[] = 'create index organisation_id_index
+    on organisation (id)';
+
+$queries[] = 'create table organisation_members
+(
+	id int auto_increment,
+	organisation_id int null,
+	pays_id int null,
+    permissions int default 1 not null,
+    created_at datetime     null,
+    updated_at datetime     null,
+	constraint organisation_members_pk
+		primary key (id),
+	constraint organisation_members_organisation_id_fk
+		foreign key (organisation_id) references organisation (id)
+			on update cascade on delete cascade,
+	constraint organisation_members_pays_ch_pay_id_fk
+		foreign key (pays_id) references pays (ch_pay_id)
+			on update cascade on delete cascade
+)';
+
+$queries[] = 'create index organisation_members_organisation_id_index
+	on organisation_members (organisation_id)';
+
+$queries[] = 'create index organisation_members_pays_id_index
+	on organisation_members (pays_id)';
 
 $queries[] = "SET FOREIGN_KEY_CHECKS=1";
 
