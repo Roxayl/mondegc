@@ -38,8 +38,9 @@ class Organisation extends Model
 
 	protected $dates = ['created_at', 'updated_at'];
 
-	public function organisation_members()
+	public function members()
 	{
 		return $this->hasMany(OrganisationMember::class);
 	}
+
 }

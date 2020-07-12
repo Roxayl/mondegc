@@ -11,15 +11,15 @@
 
 @section('body_attributes') data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" @endsection
 
+@section('styles')
+    .jumbotron {
+        background-image: url('{{$organisation->flag}}');
+    }
+@endsection
+
 @section('content')
 
     @parent
-
-    <style>
-        .jumbotron {
-            background-image: url('{{$organisation->flag}}');
-        }
-    </style>
 
     <header class="jumbotron subhead anchor">
         <div class="container">
@@ -32,9 +32,9 @@
 
         <div class="span3 bs-docs-sidebar">
             <ul class="nav nav-list bs-docs-sidenav">
-                <li class="row-fluid"><img src="{{$organisation->logo}}>">
+                <li class="row-fluid"><img src="{{$organisation->logo}}">
                     <p><strong>{{$organisation->name}}</strong></p>
-                    <p><em>{{count($members)}} membre(s)</em></p></li>
+                    <p><em>{{$organisation->members->count()}} membre(s)</em></p></li>
                 <li><a href="#actualites">Actualités</a></li>
                 <li><a href="#presentation">Présentation</a></li>
                 <li><a href="#membres">Membres</a></li>
@@ -44,7 +44,7 @@
         <div class="span9 corps-page">
 
             <ul class="breadcrumb">
-                <li><a href="Page-carte.php#liste-pays">Organisations</a> <span class="divider">/</span></li>
+                <li><a href="{{url('politique.php#organisations')}}">Organisations</a> <span class="divider">/</span></li>
                 <li class="active">{{$organisation->name}}</li>
             </ul>
 
@@ -67,7 +67,7 @@
             <div id="membres" class="titre-vert anchor">
                 <h1>Membres</h1>
             </div>
-            @foreach($members as $member)
+            @foreach($organisation->members as $member)
 
                 @include('blocks.infra_well', ['data' => [
                     'type' => 'members',
