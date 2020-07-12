@@ -15,6 +15,12 @@
 
     @parent
 
+    <style>
+        .jumbotron {
+            background-image: url('{{$organisation->flag}}');
+        }
+    </style>
+
     <header class="jumbotron subhead anchor">
         <div class="container">
             <h1>{{$page_title}}</h1>
@@ -26,9 +32,9 @@
 
         <div class="span3 bs-docs-sidebar">
             <ul class="nav nav-list bs-docs-sidenav">
-                <li class="row-fluid"><img src="ddd">
-                    <p><strong>dddd</strong></p>
-                    <p><em>Créé par dddd</em></p></li>
+                <li class="row-fluid"><img src="{{$organisation->logo}}>">
+                    <p><strong>{{$organisation->name}}</strong></p>
+                    <p><em>{{count($members)}} membre(s)</em></p></li>
                 <li><a href="#actualites">Actualités</a></li>
                 <li><a href="#presentation">Présentation</a></li>
                 <li><a href="#membres">Membres</a></li>
@@ -43,23 +49,36 @@
             </ul>
 
             <div id="actualites" class="titre-vert anchor">
-              <h1>Actualités</h1>
+                <h1>Actualités</h1>
             </div>
-            <p>En cours !</p>
+            <div class="well">
+                <div class="alert alert-info">
+                    En cours !
+                </div>
+            </div>
 
             <div id="presentation" class="titre-vert anchor">
-              <h1>Présentation</h1>
+                <h1>Présentation</h1>
             </div>
-            {!!$content!!}
+            <div class="well">
+                {!!$content!!}
+            </div>
 
             <div id="membres" class="titre-vert anchor">
-              <h1>Membres</h1>
+                <h1>Membres</h1>
             </div>
             @foreach($members as $member)
-                <p>{{ $member->pays->ch_pay_nom }}</p>
-                <i>Membre depuis le {{$member->created_at->format('d/m/Y')}}
-                    (depuis {{$member->created_at->diffInDays(\Carbon\Carbon::now())}} jour(s))
-                </i>
+
+                @include('blocks.infra_well', ['data' => [
+                    'type' => 'members',
+                    'overlay_text' => 'LOL',
+                    'image' => $member->pays->ch_pay_lien_imgdrapeau,
+                    'nom' => $member->pays->ch_pay_nom,
+                    'url' => url('page-pays.php?ch_pay_id=' . $member->pays->ch_pay_id),
+                    'description' => "Membre depuis le {$member->created_at->format('d/m/Y')}
+                    (depuis {$member->created_at->diffInDays(\Carbon\Carbon::now())} jour(s))"
+                ]])
+
             @endforeach
 
         </div>

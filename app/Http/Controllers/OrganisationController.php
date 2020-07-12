@@ -23,11 +23,12 @@ class OrganisationController extends Controller
 
         $page_title = $organisation->name;
         $seo_description = substr($organisation->text, 0, 255);
-        $content = 'test contenu';
+        $content = $organisation->text;
         $title = $organisation->name;
 
         return view('organisation.organisationview', compact(
-            ['content', 'title', 'page_title', 'seo_description', 'organisation', 'members']));
+            ['content', 'title', 'page_title', 'seo_description',
+             'organisation', 'members']));
 
     }
 
