@@ -133,7 +133,7 @@ $colname_monumentID = $row_monument['ch_pat_id'];
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div id="introheader" class="jumbotron">

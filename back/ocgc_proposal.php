@@ -190,7 +190,7 @@ img.olTileImage {
 <!-- Navbar
     ================================================== -->
 <?php $institut = true;
-include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
+include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 
 <!-- Subhead
 ================================================== -->

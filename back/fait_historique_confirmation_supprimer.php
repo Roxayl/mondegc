@@ -65,7 +65,7 @@ $totalRows_ch_his_confimation_suppression = mysql_num_rows($ch_his_confimation_s
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron subhead" id="overview">

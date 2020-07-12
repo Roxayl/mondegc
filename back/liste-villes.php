@@ -79,7 +79,7 @@ $totalPages_listvilles = ceil($totalRows_listvilles/$maxRows_listvilles)-1;
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Navbar haut-conseil
     ================================================== -->
 <div class="container corps-page">

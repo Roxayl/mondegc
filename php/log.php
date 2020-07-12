@@ -242,20 +242,13 @@ unset($_COOKIE["Session_mondeGC"]);
   unset($_SESSION['user_last_log']);
   unset($_SESSION['statut']);
   unset($_SESSION['userObject']);
-  if ($_SERVER['QUERY_STRING'] != "doLogout=true") {
-  $variables = preg_replace('#doLogout=true&(.+)#i', '$1', $_SERVER['QUERY_STRING']);
-  } else {
-  $variables  = "";
-  }
   
-  $logoutGoTo = DEF_URI_PATH.$mondegc_config['front-controller']['path'].'?'.$variables;
+  $logoutGoTo = DEF_URI_PATH . $mondegc_config['front-controller']['path']. '.php';
 
   getErrorMessage('success', "Vous vous êtes déconnecté.");
-  
-  if ($logoutGoTo) {
-    header("Location: $logoutGoTo");
-    exit;
-  }
+
+  header("Location: $logoutGoTo");
+  exit;
 }
 
 

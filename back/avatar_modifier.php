@@ -77,7 +77,7 @@ if($thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 
 <!-- Page CONTENT
     ================================================== -->

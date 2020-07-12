@@ -57,7 +57,7 @@ if(isset($_SESSION['userObject'])) {
       <!-- Menu gestion une fois connecté tablet -->
       <div class="visible-tablet navbar-form menu-gestion menu-gestion-front <?php echo isset($_SESSION['menu_gestion']) ? $_SESSION['menu_gestion'] : '' ?>"><span class="Nav-pseudo"><?php echo isset($_SESSION['login_user']) ? $_SESSION['login_user'] : '' ?>&nbsp;</span>
         <div class="dropdown">
-          <a href="dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mes pays</a>
+          <a href="<?= DEF_URI_PATH ?>dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mes pays</a>
           <ul class="dropdown-menu dropdown-mes-pays" role="menu" aria-labelledby="dLabel">
           <?php foreach($nav_userPays as $nav_thisPays): ?>
             <li style="width: 100%;"><a tabindex="-1" href="back/page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>"><img class="img-menu-drapeau" src="<?= $nav_thisPays['ch_pay_lien_imgdrapeau'] ?>"> <?= $nav_thisPays['ch_pay_nom'] ?></a></li>
@@ -67,7 +67,7 @@ if(isset($_SESSION['userObject'])) {
         <a href="<?php echo $logoutAction ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a> </div>
       <!-- Logo -->
       <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-      <a class="brand" href="index.php"><img src="<?= DEF_URI_PATH ?>assets/img/2019/logo-navbar.png" alt="Le Monde GC" /></a>
+      <a class="brand" href="<?= DEF_URI_PATH ?>index.php"><img src="<?= DEF_URI_PATH ?>assets/img/2019/logo-navbar.png" alt="Le Monde GC" /></a>
       <!-- Collapse -->
       <div class="nav-collapse collapse"> 
         
@@ -89,7 +89,7 @@ if(isset($_SESSION['userObject'])) {
             <div><a href="<?= DEF_URI_PATH ?>back/membre-modifier_back.php?userID=<?= isset($_SESSION['user_ID']) ? $_SESSION['user_ID'] : '' ?>" class="btn btn-primary" type="submit" title="page de gestion du profil" style="visibility: hidden;"><i class="icon-user-white"></i> Mon profil</a></div>
 
             <div class="dropdown pull-right" style="margin-top: -4px;">
-              <a href="dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="Gérer mes pays"><i class="icon-pays-small-white"></i> Mes pays</a>
+              <a href="<?= DEF_URI_PATH ?>dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="Gérer mes pays"><i class="icon-pays-small-white"></i> Mes pays</a>
               <ul class="dropdown-menu dropdown-mes-pays" role="menu" aria-labelledby="dLabel">
               <?php foreach($nav_userPays as $nav_thisPays): ?>
                 <li><a href="<?= DEF_URI_PATH ?>back/page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>">
@@ -119,16 +119,16 @@ if(isset($_SESSION['userObject'])) {
 
           <li class="<?php if ($accueil) { echo('active');} ?>">
             <center>
-              <a href="index.php"><i class="icon icon-accueil"></i></a>
+              <a href="<?= DEF_URI_PATH ?>index.php"><i class="icon icon-accueil"></i></a>
             </center>
-            <a href="index.php">Accueil</a> </li>
+            <a href="<?= DEF_URI_PATH ?>index.php">Accueil</a> </li>
 
         <?php if(isset($_SESSION['userObject'])): ?>
           <li class="<?php if ($dashboard) { echo('active');}  ?>">
             <center>
-              <a href="dashboard.php" title="informations pratiques"><i class="icon icon-evenement"></i></a>
+              <a href="<?= DEF_URI_PATH ?>dashboard.php" title="informations pratiques"><i class="icon icon-evenement"></i></a>
             </center>
-            <a href="dashboard.php" title="informations pratiques">Tableau de bord</a> </li>
+            <a href="<?= DEF_URI_PATH ?>dashboard.php" title="informations pratiques">Tableau de bord</a> </li>
         <?php endif; ?>
 
           <li class="dropdown <?php if ($carte || $menupays) { echo('active');}  ?>">
@@ -236,10 +236,10 @@ if(isset($_SESSION['userObject'])) {
               <li><a href="<?= DEF_URI_PATH ?>communiques-ocgc.php">Communiqués publiés</a></li>
               <li class="nav-header">Organes de l'OCGC</li>
               <li><a href="http://vasel.yt/wiki/index.php?title=Conseil_de_l%27OCGC">Conseil de l'OCGC</a></li>
-              <li><a href="assemblee.php">
+              <li><a href="<?= DEF_URI_PATH ?>assemblee.php">
                   Assemblée générale
                   <?php if(count($navbar_pendingVotes)): ?><br>
-                      <span class="btn-small"><strong><img src="assets/img/2019/AGicon.png"> Session en cours</strong><br>
+                      <span class="btn-small"><strong><img src="<?= DEF_URI_PATH ?>assets/img/2019/AGicon.png"> Session en cours</strong><br>
                           <?= count($navbar_pendingVotes) ?>
                           proposition<?= count($navbar_pendingVotes) > 1 ? 's' : '' ?>
                           actuellement soumis<?= count($navbar_pendingVotes) > 1 ? 'es' : 'e' ?> au vote

@@ -352,7 +352,7 @@ img.olTileImage {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <?php if ($colname_paysID != NULL AND $row_InfoGenerale['ch_pay_publication'] !=3) { ?>
 <!-- Subhead
 ================================================== -->

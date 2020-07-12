@@ -194,7 +194,7 @@ $totalRows_user = mysql_num_rows($user);
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 
 <!-- Page CONTENT
     ================================================== -->

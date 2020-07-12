@@ -66,7 +66,7 @@ $thisPays = new \GenCity\Monde\Pays($colname_pays);
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 
 <!-- Page CONTENT
     ================================================== -->

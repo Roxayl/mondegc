@@ -64,7 +64,7 @@ if ((isset($_POST['ch_use_id'])) && ($_POST['ch_use_id'] != "")) {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 
 <!-- Subhead
 ================================================== -->

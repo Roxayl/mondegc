@@ -70,7 +70,7 @@ $deleteSQL = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 
 <!-- Subhead
 ================================================== -->
