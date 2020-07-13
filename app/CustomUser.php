@@ -5,6 +5,7 @@ namespace App;
 use App\Models\Infrastructure;
 use App\Models\Log;
 use App\Models\Notification;
+use App\Models\Pays;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -62,6 +63,11 @@ class CustomUser extends Authenticatable
 	{
 		return $this->hasMany(Notification::class, 'recipient_id');
 	}
+
+    public function pays()
+    {
+        return $this->belongsToMany(Pays::class, 'users_pays', 'ID_user', 'ID_pays');
+    }
 
     /**
      * Get the name of the unique identifier for the user.

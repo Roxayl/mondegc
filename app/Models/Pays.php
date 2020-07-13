@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\CustomUser;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -143,4 +144,10 @@ class Pays extends Model
 	{
 		return $this->hasMany(OrganisationMember::class, 'pays_id');
 	}
+
+	public function users()
+    {
+        return $this->belongsToMany(CustomUser::class, 'users_pays', 'ID_pays', 'ID_user');
+    }
+
 }

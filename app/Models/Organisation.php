@@ -9,6 +9,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * Class Organisation
@@ -36,11 +37,26 @@ class Organisation extends Model
 		'text'
 	];
 
-	protected $dates = ['created_at', 'updated_at'];
+	static $permissions = [
+	    'owner' => 100,
+        'administrator' => 90,
+        'member' => 80,
+    ];
 
 	public function members()
 	{
 		return $this->hasMany(OrganisationMember::class);
 	}
+
+	public function slug()
+    {
+        return Str::slug($this->name);
+    }
+
+    public function highestPermission()
+    {
+	    //
+
+    }
 
 }
