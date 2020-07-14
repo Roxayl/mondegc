@@ -11,6 +11,7 @@
 |
 */
 
+
 /*****
  * Laravel Authentification
  *****/
@@ -28,23 +29,28 @@ Route::post('password/email', 'Legacy\LegacySiteController@authFallback');
 Route::get('password/reset/{token}', 'Legacy\LegacySiteController@authFallback');
 Route::post('password/reset', 'Legacy\LegacySiteController@authFallback');
 
+
 /*****
  * Laravel
  *****/
+
+/* Default */
 Route::get('/laravel', function() { return view('welcome'); });
-
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('layouttester', 'LayoutTesterController@index');
 
+/* Page */
 Route::get('/page/{page}-{url}', 'PageController@index')->name('page.show');
 
+/* Organisation */
 Route::get('organisation/{id}-{slug}', 'OrganisationController@show')->name('organisation.showslug');
 Route::resource('organisation', 'OrganisationController');
 
-Route::get('layouttester', 'LayoutTesterController@index');
 
 /*****
  * Craftable
  *****/
+
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
     Route::get('/admin/admin-users',                            'Admin\AdminUsersController@index');
@@ -55,6 +61,7 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
     Route::delete('/admin/admin-users/{adminUser}',             'Admin\AdminUsersController@destroy')->name('admin/admin-users/destroy');
     Route::get('/admin/admin-users/{adminUser}/resend-activation','Admin\AdminUsersController@resendActivationEmail')->name('admin/admin-users/resendActivationEmail');
 });
+
 /* Auto-generated profile routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
     Route::get('/admin/profile',                                'Admin\ProfileController@editProfile');
@@ -73,6 +80,7 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
     Route::post('/admin/pages/{page}',                          'Admin\PagesController@update')->name('admin/pages/update');
     Route::delete('/admin/pages/{page}',                        'Admin\PagesController@destroy')->name('admin/pages/destroy');
 });
+
 
 /*****
  * Legacy

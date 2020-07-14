@@ -33,4 +33,9 @@ if(!file_exists($mondegc_config['front-controller']['require'])) {
 ob_start();
 @require($mondegc_config['front-controller']['require']);
 
-return csrf_ob_handler(ob_get_clean(), null);
+if($mondegc_config['enable_csrf_protection']) {
+    return csrf_ob_handler(ob_get_clean(), null);
+} else {
+    return ob_get_clean();
+}
+
