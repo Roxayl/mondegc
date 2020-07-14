@@ -12,9 +12,11 @@
 @section('body_attributes') data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" @endsection
 
 @section('styles')
-    .jumbotron {
-        background-image: url('{{$organisation->flag}}');
-    }
+<style>
+.jumbotron {
+    background-image: url('{{$organisation->flag}}');
+}
+</style>
 @endsection
 
 @section('content')
@@ -43,10 +45,19 @@
 
         <div class="span9 corps-page">
 
-            <ul class="breadcrumb">
+            <ul class="breadcrumb pull-left">
                 <li><a href="{{url('politique.php#organisations')}}">Organisations</a> <span class="divider">/</span></li>
                 <li class="active">{{$organisation->name}}</li>
             </ul>
+
+            <div class="pull-right">
+                <a class="btn btn-primary"
+                   href="{{route('organisation.edit', ['id' => $organisation->id])}}">
+                    <i class="icon-pencil icon-white"></i> Modifier l'organisation
+                </a>
+            </div>
+
+            <div class="clearfix"></div>
 
             <div id="actualites" class="titre-vert anchor">
                 <h1>Actualités</h1>

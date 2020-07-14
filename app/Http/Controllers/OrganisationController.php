@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Organisation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class OrganisationController extends Controller
 {
@@ -14,7 +15,7 @@ class OrganisationController extends Controller
      */
     public function index($id, $slug)
     {
-        //
+        throw new BadRequestHttpException();
     }
 
     /**
@@ -24,7 +25,7 @@ class OrganisationController extends Controller
      */
     public function create()
     {
-        //
+        throw new BadRequestHttpException();
     }
 
     /**
@@ -35,7 +36,7 @@ class OrganisationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        throw new BadRequestHttpException();
     }
 
     /**
@@ -82,11 +83,12 @@ class OrganisationController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        Organisation::where('id', $id)->update($request->except(['_method', '_token']));
+        return redirect()->route('organisation.edit', ['id' => $id])
+            ->with('message', 'success|Organisation mise à jour avec succès !');
     }
 
     /**
@@ -97,7 +99,7 @@ class OrganisationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        throw new BadRequestHttpException();
     }
 
 }
