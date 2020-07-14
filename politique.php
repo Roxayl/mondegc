@@ -142,6 +142,13 @@ $organisations = \App\Models\Organisation::with('members')->get();
 
       <section>
 
+        <?php if(isset($_SESSION['userObject'])): ?>
+        <div class="cta-title pull-right-cta" style="margin-top: 36px;">
+            <a href="<?= route('organisation.create') ?>"
+               class="btn btn-primary btn-cta">
+            <i class="icon-white icon-pencil"></i> Créer une organisation</a>
+        </div>
+        <?php endif; ?>
         <div class="titre-bleu anchor" id="organisations">
           <h1>Organisations</h1>
         </div>

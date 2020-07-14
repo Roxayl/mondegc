@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\CustomUser;
 use App\Models\Organisation;
+use App\Models\OrganisationMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -20,23 +22,35 @@ class OrganisationController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        throw new BadRequestHttpException();
+        $user_id = auth()->user()->ch_use_id;
+        $pays = CustomUser::find($user_id)->pays()->get();
+
+        $title = 'Créer une organisation';
+        $seo_description = 'Créer une nouvelle organisation de pays au sein du Monde GC.';
+        return view('organisation.create', compact(['title', 'seo_description', 'pays']));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        throw new BadRequestHttpException();
+        $organisation = Organisation::create($request->except(['_method', '_token']));
+
+        $memberData = array(
+            'organisation_id' => $organisation->id,
+            'permissions' => Organisation::$permissions['owner'],
+            'pays_id' => $request->pays_id
+        );
+        $member = OrganisationMember::create($memberData);
+
+        return redirect()->route('organisation.show', ['id' => $organisation->id])
+            ->with(['message' => "success|L'organisation a été créée avec succès !"]);
     }
 
     /**
@@ -44,7 +58,6 @@ class OrganisationController extends Controller
      */
     public function show($id, $slug = null)
     {
-
         $organisation = Organisation::with('members')->findOrFail($id);
 
         if(is_null($slug) || Str::slug($organisation->name) !== Str::slug($slug)) {
@@ -60,7 +73,6 @@ class OrganisationController extends Controller
         return view('organisation.show', compact(
             ['content', 'title', 'page_title', 'seo_description',
              'organisation']));
-
     }
 
     /**

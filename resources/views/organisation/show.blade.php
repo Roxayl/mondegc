@@ -57,6 +57,10 @@
                 </a>
             </div>
 
+            <div class="well">
+                {!! App\Services\HelperService::displayAlert() !!}
+            </div>
+
             <div class="clearfix"></div>
 
             <div id="actualites" class="titre-vert anchor">
