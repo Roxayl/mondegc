@@ -25,8 +25,9 @@ class OrganisationController extends Controller
      */
     public function create()
     {
-        $user_id = auth()->user()->ch_use_id;
-        $pays = CustomUser::find($user_id)->pays()->get();
+        $this->authorize('create', Organisation::class);
+
+        $pays = auth()->user()->pays;
 
         $title = 'Créer une organisation';
         $seo_description = 'Créer une nouvelle organisation de pays au sein du Monde GC.';
@@ -40,6 +41,8 @@ class OrganisationController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Organisation::class);
+
         $organisation = Organisation::create($request->except(['_method', '_token']));
 
         $memberData = array(
@@ -83,6 +86,8 @@ class OrganisationController extends Controller
     public function edit($id)
     {
         $organisation = Organisation::with('members')->findOrFail($id);
+        $this->authorize('update', $organisation);
+
         $seo_description = "Modifier la page de l'organisation {$organisation->name}.";
         $title = 'Modifier ' . $organisation->name;
 
@@ -98,7 +103,10 @@ class OrganisationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Organisation::where('id', $id)->update($request->except(['_method', '_token']));
+        $organisation = Organisation::with('members')->findOrFail($id);
+        $this->authorize('update', $organisation);
+
+        $organisation->update($request->except(['_method', '_token']));
         return redirect()->route('organisation.edit', ['id' => $id])
             ->with('message', 'success|Organisation mise à jour avec succès !');
     }

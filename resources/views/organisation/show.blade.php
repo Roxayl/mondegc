@@ -51,10 +51,12 @@
             </ul>
 
             <div class="pull-right">
+                @can('update', $organisation)
                 <a class="btn btn-primary"
                    href="{{route('organisation.edit', ['id' => $organisation->id])}}">
                     <i class="icon-pencil icon-white"></i> Modifier l'organisation
                 </a>
+                @endcan
             </div>
 
             <div class="well">

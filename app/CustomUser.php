@@ -105,4 +105,23 @@ class CustomUser extends Authenticatable
         return $this->ch_use_mail;
     }
 
+    public function hasMinPermission($level) {
+
+        switch($level) {
+            case 'member':
+                $permission = 10; break;
+            case 'juge':
+                $permission = 15; break;
+            case 'ocgc':
+                $permission = 20; break;
+            case 'admin':
+                $permission = 30; break;
+            default:
+                throw new \InvalidArgumentException("Mauvais type de permission.");
+        }
+
+        return $this->ch_use_statut >= $permission;
+
+    }
+
 }
