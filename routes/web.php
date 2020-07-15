@@ -46,6 +46,10 @@ Route::get('/page/{page}-{url}', 'PageController@index')->name('page.show');
 Route::get('organisation/{id}-{slug}', 'OrganisationController@show')->name('organisation.showslug');
 Route::resource('organisation', 'OrganisationController');
 
+/* OrganisationMember */
+Route::get('organisation/{organisation_id}/join', 'Monde\OrganisationMemberController@joinOrganisation')->name('organisation-member.join');
+Route::post('organisation/{organisation_id}/join', 'Monde\OrganisationMemberController@store')->name('organisation-member.store');
+
 
 /*****
  * Craftable

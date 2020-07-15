@@ -81,6 +81,14 @@
                 {!!$content!!}
             </div>
 
+            @if(true) <!-- TODO : gestion des permissions -->
+                <div class="cta-title pull-right-cta" style="margin-top: 30px;">
+                    <a href="<?= route('organisation-member.join', ['organisation_id' => $organisation->id]) ?>"
+                       class="btn btn-primary btn-cta"
+                       data-toggle="modal" data-target="#modal-container">
+                    <i class="icon-white icon-plus-sign"></i> Rejoindre...</a>
+                </div>
+            @endif
             <div id="membres" class="titre-vert anchor">
                 <h1>Membres</h1>
             </div>
