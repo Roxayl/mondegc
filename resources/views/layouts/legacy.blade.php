@@ -41,7 +41,7 @@
 
     @yield('content')
 
-    <div class="modal container fade" id="myModal"></div>
+    <div class="modal container fade" id="modal-container"></div>
 
     <!-- Footer
     ================================================== -->
@@ -78,13 +78,26 @@
     <script src="{{url('assets/js/application.js')}}"></script>
     <script src="{{url('assets/js/bootstrap-scrollspy.js')}}"></script>
     <script src="{{url('assets/js/bootstrapx-clickover.js')}}"></script>
-    <script type="text/javascript">
-          $(function() {
-              $('[rel="clickover"]').clickover();})
-    </script>
     <!-- MODAL -->
     <script src="{{url('assets/js/bootstrap-modalmanager.js')}}"></script>
     <script src="{{url('assets/js/bootstrap-modal.js')}}"></script>
+    <script type="text/javascript">
+    (function(window, document, $, undefined) {
+        $(function() {
+            $('[rel="clickover"]').clickover();
+        })
+
+        /** Modal **/
+        $("a[data-toggle=modal]").click(function (e) {
+            var lv_target = $(this).attr('data-target');
+            var lv_url = $(this).attr('href');
+            $(lv_target).load(lv_url);
+        });
+        $('#closemodal').click(function() {
+            $('#modal-container').modal('hide');
+        });
+    })(window, document, jQuery);
+    </script>
 
     @yield('scripts')
 
