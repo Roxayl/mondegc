@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\CustomUser;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -40,15 +41,26 @@ class OrganisationMember extends Model
 		'pays_id'
 	];
 
-	protected $dates = ['created_at', 'updated_at'];
-
 	public function organisation()
 	{
-		return $this->belongsTo(Organisation::class);
+		return $this->belongsTo(Organisation::class, 'organisation_id');
 	}
 
 	public function pays()
 	{
 		return $this->belongsTo(Pays::class, 'pays_id');
 	}
+
+	public function getPermissionLabel()
+    {
+        switch($this->permissions) {
+            case Organisation::$permissions['owner']: $label = 'Propriétaire'; break;
+            case Organisation::$permissions['administrator']: $label = 'Administrateur'; break;
+            case Organisation::$permissions['member']: $label = 'Membre'; break;
+            case Organisation::$permissions['pending']: $label = 'En attente de validation'; break;
+            default: throw new \InvalidArgumentException("Mauvais type de permission.");
+        }
+
+        return $label;
+    }
 }

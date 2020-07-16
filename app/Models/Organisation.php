@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\CustomUser;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -39,23 +40,38 @@ class Organisation extends Model
 
 	static $permissions = [
 	    'owner' => 100,
-        'administrator' => 90,
-        'member' => 80,
+        'administrator' => 50,
+        'member' => 10,
+        'pending' => 5,
     ];
 
 	public function members()
 	{
-		return $this->hasMany(OrganisationMember::class);
+		return $this->hasMany(OrganisationMember::class)
+            ->where('permissions', '>=', Organisation::$permissions['member']);
 	}
+
+	public function membersPending()
+    {
+	    return $this->hasMany(OrganisationMember::class)
+            ->where('permissions', '<', Organisation::$permissions['member']);
+    }
+
+    public function membersAll()
+    {
+	    return $this->hasMany(OrganisationMember::class);
+    }
 
 	public function slug()
     {
         return Str::slug($this->name);
     }
 
-    public function highestPermission()
-    {
-	    //
+    public function maxPermission(CustomUser $user) {
+
+        $pays = array_column($user->pays()->get()->toArray(), 'ch_pay_id');
+        $permission = $this->membersAll()->whereIn('pays_id', $pays)->max('permissions');
+        return $permission;
 
     }
 

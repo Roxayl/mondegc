@@ -61,7 +61,7 @@ class OrganisationController extends Controller
      */
     public function show($id, $slug = null)
     {
-        $organisation = Organisation::with('members')->findOrFail($id);
+        $organisation = Organisation::with(['members', 'membersPending'])->findOrFail($id);
 
         if(is_null($slug) || Str::slug($organisation->name) !== Str::slug($slug)) {
             return redirect("organisation/{$organisation->id}-" .

@@ -7,6 +7,9 @@
 
 @section('modal_body')
 
+    <p>Une demande d'accès sera formulée au nom du pays choisi. Elle devra être acceptée
+       par un administrateur de l'organisation.</p>
+
     <div class="control-group">
         <label for="pays_id">Rejoindre en tant que :</label>
         <select name="pays_id" id="pays_id">

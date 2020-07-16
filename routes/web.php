@@ -49,6 +49,8 @@ Route::resource('organisation', 'OrganisationController');
 /* OrganisationMember */
 Route::get('organisation/{organisation_id}/join', 'Monde\OrganisationMemberController@joinOrganisation')->name('organisation-member.join');
 Route::post('organisation/{organisation_id}/join', 'Monde\OrganisationMemberController@store')->name('organisation-member.store');
+Route::get('organisation-member/{id}/edit', 'Monde\OrganisationMemberController@edit')->name('organisation-member.edit');
+Route::post('organisation-member/{id}', 'Monde\OrganisationMemberController@update')->name('organisation-member.update');
 
 
 /*****

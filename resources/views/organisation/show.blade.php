@@ -59,11 +59,11 @@
                 @endcan
             </div>
 
+            <div class="clearfix"></div>
+
             <div class="well">
                 {!! App\Services\HelperService::displayAlert() !!}
             </div>
-
-            <div class="clearfix"></div>
 
             <div id="actualites" class="titre-vert anchor">
                 <h1>Actualités</h1>
@@ -94,14 +94,64 @@
             </div>
             @foreach($organisation->members as $member)
 
+                @php
+                $dropdown = [];
+                @endphp
+                @can('update', $member)
+                    @php
+                    $dropdown = [
+                        ['url' => route('organisation-member.edit', ['id' => $member->id]),
+                     'text' => 'Modifier', 'popup' => true]
+                    ];
+                    @endphp
+                @endcan
+                @can('quit', $member)
+                    @php
+                    $dropdown[] = ['url' => '',
+                                   'text' => 'Quitter'];
+                    @endphp
+                @endcan
+
+                @php
+                $description = "
+                    {$member->getPermissionLabel()}<br>
+                    Membre depuis le {$member->created_at->format('d/m/Y')}
+                    (depuis {$member->created_at->diffInDays(\Carbon\Carbon::now())} jour(s))";
+                @endphp
+
                 @include('blocks.infra_well', ['data' => [
                     'type' => 'members',
-                    'overlay_text' => 'LOL',
+                    'overlay_text' => '',
                     'image' => $member->pays->ch_pay_lien_imgdrapeau,
                     'nom' => $member->pays->ch_pay_nom,
                     'url' => url('page-pays.php?ch_pay_id=' . $member->pays->ch_pay_id),
-                    'description' => "Membre depuis le {$member->created_at->format('d/m/Y')}
-                    (depuis {$member->created_at->diffInDays(\Carbon\Carbon::now())} jour(s))"
+                    'description' => $description,
+                    'dropdown' => $dropdown,
+                    'description_escape' => false
+                ]])
+
+            @endforeach
+
+            <h3>Membres en attente</h3>
+            @foreach($organisation->membersPending as $member)
+
+                @php
+                $dropdown = [
+                    ['url' => '',
+                     'text' => 'Accepter'],
+                    ['url' => '',
+                     'text' => 'Refuser']
+                ];
+                @endphp
+
+                @include('blocks.infra_well', ['data' => [
+                    'type' => 'members',
+                    'overlay_text' => '',
+                    'image' => $member->pays->ch_pay_lien_imgdrapeau,
+                    'nom' => $member->pays->ch_pay_nom,
+                    'url' => url('page-pays.php?ch_pay_id=' . $member->pays->ch_pay_id),
+                    'description' => "En attente de validation",
+                    'dropdown' => $dropdown,
                 ]])
 
             @endforeach
