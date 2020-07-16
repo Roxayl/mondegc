@@ -9,11 +9,6 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class OrganisationPolicy
 {
     use HandlesAuthorization;
-
-    public function before(CustomUser $user)
-    {
-        return $user->hasMinPermission('admin');
-    }
     
     /**
      * Determine whether the user can view any organisations.
@@ -58,6 +53,8 @@ class OrganisationPolicy
      */
     public function update(CustomUser $user, Organisation $organisation)
     {
+
+        if($user->hasMinPermission('admin')) return true;
         $pays = array_column($user->pays()->get()->toArray(), 'ch_pay_id');
         return (bool)$organisation->members()->whereIn('pays_id', $pays)
             ->where('permissions', '>=', Organisation::$permissions['administrator'])
@@ -99,4 +96,18 @@ class OrganisationPolicy
     {
         return false;
     }
+
+    /**
+     * Détermine si l'utilisateur peut administrer l'organisation.
+     *
+     * @param  \App\CustomUser  $user
+     * @param  \App\Models\Organisation  $organisation
+     * @return mixed
+     */
+    public function administrate(CustomUser $user, Organisation $organisation) {
+
+        return $organisation->maxPermission($user) >= Organisation::$permissions['administrator'];
+
+    }
+
 }

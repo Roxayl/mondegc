@@ -77,7 +77,7 @@ class OrganisationMemberController extends Controller
 
         $orgMember = OrganisationMember::with(['pays', 'organisation'])->findOrFail($id);
 
-        // $this->authorize('update', $orgMember);
+        $this->authorize('update', $orgMember);
 
         $data = [
             'permissions' => $request->permissions,
@@ -91,12 +91,16 @@ class OrganisationMemberController extends Controller
 
     }
 
-    /*
-     * Accepter une demande d'adhésion à une organisation.
+    /**
+     * Afficher la popup de confirmation pour quitter une organisation.
      */
-    public function accept(Request $request, $id) {
+    public function delete(Request $request, $id) {
 
-        throw new \InvalidArgumentException("Not yet implemented.");
+        $orgMember = OrganisationMember::with(['pays', 'organisation'])->findOrFail($id);
+
+        $this->authorize('quit', $orgMember);
+
+        return view('organisation.member.delete')->with('orgMember', $orgMember);
 
     }
 
@@ -105,7 +109,15 @@ class OrganisationMemberController extends Controller
      */
     public function destroy(Request $request, $id) {
 
-        throw new \InvalidArgumentException("Not yet implemented.");
+        $orgMember = OrganisationMember::with(['pays', 'organisation'])->findOrFail($id);
+
+        $this->authorize('quit', $orgMember);
+
+        $orgMember->delete();
+        return redirect()->route('organisation.showslug',
+            ['id' => $orgMember->organisation_id,
+             'slug' => Str::slug($orgMember->organisation->name)])
+            ->with('message', "success|Le pays a quitté l'organisation avec succès. Byebye, blackbird!");
 
     }
 

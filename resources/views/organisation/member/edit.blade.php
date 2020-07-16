@@ -36,6 +36,7 @@
 @section('popup_start')
     <form method="POST" action="{{route('organisation-member.update', ['id' => $orgMember->id])}}">
     @csrf
+    @method('put')
 @endsection
 
 @section('popup_end')

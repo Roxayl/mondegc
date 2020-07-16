@@ -50,7 +50,9 @@ Route::resource('organisation', 'OrganisationController');
 Route::get('organisation/{organisation_id}/join', 'Monde\OrganisationMemberController@joinOrganisation')->name('organisation-member.join');
 Route::post('organisation/{organisation_id}/join', 'Monde\OrganisationMemberController@store')->name('organisation-member.store');
 Route::get('organisation-member/{id}/edit', 'Monde\OrganisationMemberController@edit')->name('organisation-member.edit');
-Route::post('organisation-member/{id}', 'Monde\OrganisationMemberController@update')->name('organisation-member.update');
+Route::match(['put', 'patch'], 'organisation-member/{id}', 'Monde\OrganisationMemberController@update')->name('organisation-member.update');
+Route::get('organisation-member/{id}/delete', 'Monde\OrganisationMemberController@delete')->name('organisation-member.delete');
+Route::delete('organisation-member/{id}', 'Monde\OrganisationMemberController@destroy')->name('organisation-member.destroy');
 
 
 /*****
