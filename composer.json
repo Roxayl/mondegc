@@ -9,7 +9,8 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
-        "reliese/laravel": "^0.0.16"
+        "reliese/laravel": "^0.0.16",
+        "spatie/laravel-searchable": "^1.6"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
