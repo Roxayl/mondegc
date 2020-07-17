@@ -12,17 +12,16 @@
     <link href="{{URL::to('assets/css/bootstrap-modal.css')}}" rel="stylesheet" type="text/css">
     <link href="{{URL::to('assets/css/GenerationCity.css')}}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-    <!-- TemplateEndEditable -->
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
     <!--[if gte IE 9]>
-      <style type="text/css">
-        .gradient {
-           filter: none;
-        }
-      </style>
+        <style type="text/css">
+            .gradient {
+               filter: none;
+            }
+        </style>
     <![endif]-->
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="{{URL::to('assets/ico/favicon.ico')}}">
@@ -52,7 +51,7 @@
       </div>
       <div>
         <ul class="pull-left liens-rapides">
-          <li><a href="back/Haut-Conseil.php">Conseil de l'OCGC</a></li>
+          <li><a href="{{url('back/Haut-Conseil.php')}}">Conseil de l'OCGC</a></li>
           @if (Auth::check())
           <li><a href="{{ url("index.php?doLogout=true") }}">D&eacute;connexion</a></li>
           @else
@@ -63,7 +62,9 @@
           <li><a href="https://www.generation-city.com/">G&eacute;n&eacute;ration City</a></li>
           <li><a href="https://www.forum-gc.com/">Forum</a></li>
         </ul>
-        <a href="https://www.generation-city.com/"><img src="assets/img/2019/logoGC-small.png"></a>
+        <a href="https://www.generation-city.com/">
+            <img src="{{url('assets/img/2019/logoGC-small.png')}}">
+        </a>
         <div class="copyright">
           <p>Copyright &copy; G&eacute;n&eacute;ration-City - 2019 </p>
           <p>Tous droits r&eacute;serv&eacute;s - Version 2</p>
