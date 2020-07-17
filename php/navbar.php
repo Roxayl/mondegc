@@ -99,15 +99,46 @@ if(isset($_SESSION['userObject'])) {
               </ul>
             </div>
 
-            <div class="dropdown dropdown-notification pull-right" style="margin-top: -4px; margin-right: 5px;">
+            <div class="dropdown dropdown-notification pull-right hidden-phone"
+                 style="margin-top: -4px; margin-right: 5px;">
               <a href="#" class="btn btn-primary notification-toggle-btn
                  <?= !$navbar_notifCount ? 'btn-inactive' : '' ?>" type="submit"
-                 title="Notifications" class="button" data-toggle="dropdown">
+                 title="Notifications" data-toggle="dropdown">
                   <i class="icon-bell icon-white"></i>
                   <span class="notification-count"><?= $navbar_notifCount > 0 ? $navbar_notifCount : '' ?></span>
               </a>
               <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 
+              </ul>
+            </div>
+
+            <div class="dropdown pull-right hidden-phone"
+                 style="margin-top: -4px; margin-right: 5px;">
+              <a href="#" class="btn btn-primary btn-inactive" type="submit"
+                 title="Recherche" data-toggle="dropdown">
+                  <i class="icon-search icon-white"></i>
+              </a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <li>
+                  <form action="<?= DEF_URI_PATH ?>search" method="GET">
+
+                  <div class="well"
+                     style="text-align: center;
+                     background: rgb(249,249,249);
+                     background: linear-gradient(90deg, rgba(249,249,249,1) 0%, rgba(241,241,241,1) 10%, rgba(241,241,241,1) 90%, rgb(231, 231, 231) 100%);
+                     padding: 10px; margin-left: -10px;">
+                    <div class="control-group">
+                        <label class="control-label" for="query">Termes de recherche</label>
+                        <div class="controls">
+                            <input class="input-xlarge" name="query" type="text" id="query"
+                                   value="" maxlength="50">
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Rechercher...">
+                  </div>
+
+                  </form>
+                </li>
               </ul>
             </div>
 

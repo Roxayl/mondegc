@@ -10,6 +10,8 @@ use App\CustomUser;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * Class Pays
@@ -65,11 +67,12 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class Pays extends Model
+class Pays extends Model implements Searchable
 {
 	protected $table = 'pays';
 	protected $primaryKey = 'ch_pay_id';
-	public $timestamps = false;
+    const CREATED_AT = 'ch_pay_date';
+    const UPDATED_AT = 'ch_pay_mis_jour';
 
 	protected $casts = [
 		'ch_pay_publication' => 'bool',
@@ -139,6 +142,13 @@ class Pays extends Model
 		'ch_pay_population_carte',
 		'ch_pay_emploi_carte'
 	];
+
+	public function getSearchResult() : SearchResult
+    {
+	    return new SearchResult(
+	        $this, $this->ch_pay_nom, url('page-pays.php?ch_pay_id=' . $this->ch_pay_id)
+        );
+    }
 
 	public function organisation_members()
 	{

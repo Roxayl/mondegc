@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * Class Organisation
@@ -27,7 +29,7 @@ use Illuminate\Support\Str;
  *
  * @package App\Models
  */
-class Organisation extends Model
+class Organisation extends Model implements Searchable
 {
 	protected $table = 'organisation';
 
@@ -44,6 +46,14 @@ class Organisation extends Model
         'member' => 10,
         'pending' => 5,
     ];
+
+	public function getSearchResult() : SearchResult
+    {
+	    return new SearchResult(
+	        $this, $this->name, route('organisation.showslug',
+                ['id' => $this->id, 'slug' => Str::slug($this->name)])
+        );
+    }
 
 	public function members()
 	{

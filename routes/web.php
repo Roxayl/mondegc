@@ -54,6 +54,9 @@ Route::match(['put', 'patch'], 'organisation-member/{id}', 'Monde\OrganisationMe
 Route::get('organisation-member/{id}/delete', 'Monde\OrganisationMemberController@delete')->name('organisation-member.delete');
 Route::delete('organisation-member/{id}', 'Monde\OrganisationMemberController@destroy')->name('organisation-member.destroy');
 
+/* Search */
+Route::get('search', 'SearchController@index')->name('search');
+
 
 /*****
  * Craftable

@@ -996,6 +996,12 @@ canvas#parliament-chart {
     margin: -90px auto 0;
 }
 
+/* Search */
+.search-results {
+    column-count: 3;
+    column-gap: 20px;
+}
+
 /* Notifications
 -------------------------------------------------- */
 .liste-transparente {
@@ -2109,6 +2115,11 @@ footer li {
 	left: -10px;
 }
 
+.search-results {
+    column-count: 2;
+    column-gap: 18px;
+}
+
 .img-drapeau-hist {
 	width:20px;
 	height:15px;
@@ -2528,6 +2539,10 @@ footer img {
 	text-align:left;
 }
 
+.search-results {
+    column-count: 2;
+}
+
 /* Drapeau sur fait historique
 ------------------------- */
 .img-drapeau-hist {
@@ -2638,6 +2653,9 @@ footer img {
 	padding-bottom: 10px;
 }
 
+.search-results {
+    column-count: 1;
+}
 
 .img-avatar img{
 	max-width: 100px;
