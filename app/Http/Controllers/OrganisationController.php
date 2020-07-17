@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\CustomUser;
 use App\Models\Organisation;
 use App\Models\OrganisationMember;
 use Illuminate\Http\Request;
@@ -15,9 +14,9 @@ class OrganisationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($id, $slug)
+    public function index()
     {
-        throw new BadRequestHttpException();
+        return redirect('politique.php#organisations');
     }
 
     /**

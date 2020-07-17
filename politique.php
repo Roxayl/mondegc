@@ -152,18 +152,17 @@ $organisations = \App\Models\Organisation::with('members')->get();
         <div class="titre-bleu anchor" id="organisations">
           <h1>Organisations</h1>
         </div>
+        <ul class="listes">
+        <?php foreach($organisations as $organisation): ?>
 
-        <div class="well">
-        <?php foreach($organisations as $organisation):
-            ?>
-            <a href="<?= url("organisation/{$organisation->id}-" .
-                \Illuminate\Support\Str::slug($organisation->name)) ?>">
-                <h3><?= $organisation->name ?></h3></a>
-            <p><?= $organisation->members->count() ?> membre(s)</p>
+            <?php renderElement('organisation_list', array(
+                'organisation' => $organisation
+            )); ?>
+
         <?php endforeach; ?>
-        </div>
+        </ul>
 
-          <br><br><br><br>
+        <br><br>
 
       </section>
 
