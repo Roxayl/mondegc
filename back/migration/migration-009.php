@@ -24,6 +24,11 @@ $queries[] = 'rename table pages to legacy_pages';
 
 $queries[] = 'alter table pays modify ch_pay_id int auto_increment';
 
+$queries[] = 'alter table villes
+	add constraint villes_pays_ch_pay_id_fk
+		foreign key (ch_vil_paysID) references pays (ch_pay_id)
+			on update cascade on delete set null';
+
 $queries[] = 'create table activations
 (
     email      varchar(255)         not null,
