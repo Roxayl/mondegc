@@ -72,6 +72,12 @@ class Organisation extends Model implements Searchable
 	    return $this->hasMany(OrganisationMember::class);
     }
 
+    public function temperance() {
+
+	    return $this->hasOne(TemperanceOrganisation::class, 'id', 'id');
+
+    }
+
 	public function slug()
     {
         return Str::slug($this->name);

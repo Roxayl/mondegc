@@ -1722,6 +1722,19 @@ table .btn {
 	top: 2px;
 }
 
+.resource-small-container {
+    font-size: 0.85em;
+}
+.resource-small-inline-block {
+    display: inline-block;
+    font-weight: bold;
+    margin-right: 5px;
+}
+.resource-small-inline-block>img {
+    width: 14px; height: 14px;
+    margin-top: -2px;
+}
+
 .infra-selected {
     background-color: #FF4E00;
     color: white;

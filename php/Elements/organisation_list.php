@@ -20,16 +20,17 @@ $memberCount = $organisation->members->count();
     <div class="span10">
         <div class="pull-right">
             <?php
+            $temperance = $organisation->temperance()->get()->first();
             renderElement('Temperance/resources_small',
                 array('resources' => array(
-                  'budget' => 0,
-                  'industrie' => 0,
-                  'commerce' => 0,
-                  'agriculture' => 0,
-                  'tourisme' => 0,
-                  'recherche' => 0,
-                  'environnement' => 0,
-                  'education' => 0,
+                  'budget' => $temperance->budget,
+                  'industrie' => $temperance->industrie,
+                  'commerce' => $temperance->commerce,
+                  'agriculture' => $temperance->agriculture,
+                  'tourisme' => $temperance->tourisme,
+                  'recherche' => $temperance->recherche,
+                  'environnement' => $temperance->environnement,
+                  'education' => $temperance->education,
                 ))
             ); ?>
         </div>
