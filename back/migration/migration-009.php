@@ -5,8 +5,6 @@
  * Version cible : 2.5
  * ******************/
 
-require_once('../../Connections/maconnexion.php');
-
 mysql_select_db($database_maconnexion, $maconnexion);
 
 $queries = array();
@@ -28,6 +26,19 @@ $queries[] = 'alter table villes
 	add constraint villes_pays_ch_pay_id_fk
 		foreign key (ch_vil_paysID) references pays (ch_pay_id)
 			on update cascade on delete set null';
+
+$queries[] = 'alter table type_geometries change created created_at datetime not null';
+
+$queries[] = 'alter table type_geometries change updated updated_at datetime not null';
+
+$queries[] = 'alter table type_geometries_group change created created_at datetime not null';
+
+$queries[] = 'alter table type_geometries_group change updated updated_at datetime not null';
+
+$queries[] = 'alter table geometries
+	add constraint geometries_pays_ch_pay_id_fk
+		foreign key (ch_geo_pay_id) references pays (ch_pay_id)
+			on update cascade';
 
 $queries[] = 'create table activations
 (
