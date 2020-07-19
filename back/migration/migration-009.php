@@ -560,39 +560,127 @@ $queries[] = /** @lang SQL */
     <<<TAG
 CREATE VIEW `temperance_pays` AS SELECT ch_pay_id AS id, ch_pay_nom AS nom,
 
-       (SELECT SUM(budget) FROM temperance_ville
-         WHERE pays_id = ch_pay_id
-       ) + ch_pay_budget_carte as budget,
+       (COALESCE((SELECT SUM(ch_inf_off_budget) FROM infrastructures
+         INNER JOIN infrastructures_officielles ON
+           infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id
+         INNER JOIN villes ON infrastructures.ch_inf_villeid = villes.ch_vil_ID
+         WHERE villes.ch_vil_paysID = ch_pay_id
+           AND ch_inf_statut = 2
+         ), 0)) +
+       (COALESCE((SELECT SUM(ch_mon_cat_budget) FROM monument_categories
+         INNER JOIN dispatch_mon_cat
+             ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+         INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id
+         INNER JOIN villes ON ch_vil_ID = ch_pat_villeID
+         WHERE villes.ch_vil_paysID = ch_pay_id), 0))
+       + ch_pay_budget_carte as budget,
 
-       (SELECT SUM(agriculture) FROM temperance_ville
-         WHERE pays_id = ch_pay_id
-       ) + ch_pay_agriculture_carte as agriculture,
+       (COALESCE((SELECT SUM(ch_inf_off_Agriculture) FROM infrastructures
+         INNER JOIN infrastructures_officielles ON
+           infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id
+         INNER JOIN villes ON infrastructures.ch_inf_villeid = villes.ch_vil_ID
+         WHERE villes.ch_vil_paysID = ch_pay_id
+           AND ch_inf_statut = 2
+         ), 0)) +
+       (COALESCE((SELECT SUM(ch_mon_cat_agriculture) FROM monument_categories
+         INNER JOIN dispatch_mon_cat
+             ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+         INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id
+         INNER JOIN villes ON ch_vil_ID = ch_pat_villeID
+         WHERE villes.ch_vil_paysID = ch_pay_id), 0))
+       + ch_pay_agriculture_carte as agriculture,
 
-       (SELECT SUM(commerce) FROM temperance_ville
-         WHERE pays_id = ch_pay_id
-       ) + ch_pay_commerce_carte as commerce,
+       (COALESCE((SELECT SUM(ch_inf_off_Commerce) FROM infrastructures
+         INNER JOIN infrastructures_officielles ON
+           infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id
+         INNER JOIN villes ON infrastructures.ch_inf_villeid = villes.ch_vil_ID
+         WHERE villes.ch_vil_paysID = ch_pay_id
+           AND ch_inf_statut = 2
+         ), 0)) +
+       (COALESCE((SELECT SUM(ch_mon_cat_commerce) FROM monument_categories
+         INNER JOIN dispatch_mon_cat
+             ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+         INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id
+         INNER JOIN villes ON ch_vil_ID = ch_pat_villeID
+         WHERE villes.ch_vil_paysID = ch_pay_id), 0))
+       + ch_pay_commerce_carte as commerce,
 
-       (SELECT SUM(education) FROM temperance_ville
-         WHERE pays_id = ch_pay_id
-       ) + ch_pay_education_carte as education,
+       (COALESCE((SELECT SUM(ch_inf_off_Education) FROM infrastructures
+         INNER JOIN infrastructures_officielles ON
+           infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id
+         INNER JOIN villes ON infrastructures.ch_inf_villeid = villes.ch_vil_ID
+         WHERE villes.ch_vil_paysID = ch_pay_id
+           AND ch_inf_statut = 2
+         ), 0)) +
+       (COALESCE((SELECT SUM(ch_mon_cat_education) FROM monument_categories
+         INNER JOIN dispatch_mon_cat
+             ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+         INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id
+         INNER JOIN villes ON ch_vil_ID = ch_pat_villeID
+         WHERE villes.ch_vil_paysID = ch_pay_id), 0))
+       + ch_pay_education_carte as education,
 
-       (SELECT SUM(environnement) FROM temperance_ville
-         WHERE pays_id = ch_pay_id
-       ) + ch_pay_environnement_carte as environnement,
+       (COALESCE((SELECT SUM(ch_inf_off_Environnement) FROM infrastructures
+         INNER JOIN infrastructures_officielles ON
+           infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id
+         INNER JOIN villes ON infrastructures.ch_inf_villeid = villes.ch_vil_ID
+         WHERE villes.ch_vil_paysID = ch_pay_id
+           AND ch_inf_statut = 2
+         ), 0)) +
+       (COALESCE((SELECT SUM(ch_mon_cat_environnement) FROM monument_categories
+         INNER JOIN dispatch_mon_cat
+             ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+         INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id
+         INNER JOIN villes ON ch_vil_ID = ch_pat_villeID
+         WHERE villes.ch_vil_paysID = ch_pay_id), 0))
+       + ch_pay_environnement_carte as environnement,
 
-       (SELECT SUM(industrie) FROM temperance_ville
-         WHERE pays_id = ch_pay_id
-       ) + ch_pay_industrie_carte as industrie,
+       (COALESCE((SELECT SUM(ch_inf_off_Industrie) FROM infrastructures
+         INNER JOIN infrastructures_officielles ON
+           infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id
+         INNER JOIN villes ON infrastructures.ch_inf_villeid = villes.ch_vil_ID
+         WHERE villes.ch_vil_paysID = ch_pay_id
+           AND ch_inf_statut = 2
+         ), 0)) +
+       (COALESCE((SELECT SUM(ch_mon_cat_industrie) FROM monument_categories
+         INNER JOIN dispatch_mon_cat
+             ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+         INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id
+         INNER JOIN villes ON ch_vil_ID = ch_pat_villeID
+         WHERE villes.ch_vil_paysID = ch_pay_id), 0))
+       + ch_pay_industrie_carte as industrie,
 
-       (SELECT SUM(recherche) FROM temperance_ville
-         WHERE pays_id = ch_pay_id
-       ) + ch_pay_recherche_carte as recherche,
+       (COALESCE((SELECT SUM(ch_inf_off_Recherche) FROM infrastructures
+         INNER JOIN infrastructures_officielles ON
+           infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id
+         INNER JOIN villes ON infrastructures.ch_inf_villeid = villes.ch_vil_ID
+         WHERE villes.ch_vil_paysID = ch_pay_id
+           AND ch_inf_statut = 2
+         ), 0)) +
+       (COALESCE((SELECT SUM(ch_mon_cat_recherche) FROM monument_categories
+         INNER JOIN dispatch_mon_cat
+             ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+         INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id
+         INNER JOIN villes ON ch_vil_ID = ch_pat_villeID
+         WHERE villes.ch_vil_paysID = ch_pay_id), 0))
+       + ch_pay_recherche_carte as recherche,
 
-       (SELECT SUM(tourisme) FROM temperance_ville
-         WHERE pays_id = ch_pay_id
-       ) + ch_pay_tourisme_carte as tourisme
+       (COALESCE((SELECT SUM(ch_inf_off_Tourisme) FROM infrastructures
+         INNER JOIN infrastructures_officielles ON
+           infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id
+         INNER JOIN villes ON infrastructures.ch_inf_villeid = villes.ch_vil_ID
+         WHERE villes.ch_vil_paysID = ch_pay_id
+           AND ch_inf_statut = 2
+         ), 0)) +
+       (COALESCE((SELECT SUM(ch_mon_cat_tourisme) FROM monument_categories
+         INNER JOIN dispatch_mon_cat
+             ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
+         INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id
+         INNER JOIN villes ON ch_vil_ID = ch_pat_villeID
+         WHERE villes.ch_vil_paysID = ch_pay_id), 0))
+       + ch_pay_tourisme_carte as tourisme
 
-FROM pays
+FROM pays;
 TAG;
 
 $queries[] = /** @lang SQL */
@@ -609,7 +697,7 @@ CREATE VIEW `temperance_organisation` AS SELECT o.id, o.name,
 FROM organisation_members
 INNER JOIN organisation o on organisation_members.organisation_id = o.id
 INNER JOIN pays p on organisation_members.pays_id = p.ch_pay_id
-LEFT JOIN temperance_pays tp on organisation_members.pays_id = tp.id
+LEFT JOIN temperance_pays_old tp on organisation_members.pays_id = tp.id
 WHERE organisation_members.permissions >= 10
 GROUP BY o.id;
 TAG;

@@ -160,4 +160,9 @@ class Pays extends Model implements Searchable
         return $this->belongsToMany(CustomUser::class, 'users_pays', 'ID_pays', 'ID_user');
     }
 
+    public function temperance()
+    {
+        return $this->hasOne(TemperancePays::class, 'id', 'ch_pay_id');
+    }
+
 }
