@@ -1724,6 +1724,7 @@ table .btn {
 
 .resource-small-container {
     font-size: 0.85em;
+    display: inline-block;
 }
 .resource-small-inline-block {
     display: inline-block;

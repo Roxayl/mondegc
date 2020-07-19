@@ -18,7 +18,7 @@ $memberCount = $organisation->members->count();
     </div>
 
     <div class="span10">
-        <div class="pull-right">
+        <div class="pull-right" style="position: absolute; right: 0;">
             <?php
             $temperance = $organisation->temperance()->get()->first();
             renderElement('Temperance/resources_small',

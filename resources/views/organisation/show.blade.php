@@ -39,6 +39,7 @@
                     <p><em>{{$organisation->members->count()}} membre(s)</em></p></li>
                 <li><a href="#actualites">Actualités</a></li>
                 <li><a href="#presentation">Présentation</a></li>
+                <li><a href="#economie">Économie</a></li>
                 <li><a href="#membres">Membres</a></li>
             </ul>
         </div>
@@ -65,6 +66,7 @@
                 {!! App\Services\HelperService::displayAlert() !!}
             </div>
 
+
             <div id="actualites" class="titre-vert anchor">
                 <h1>Actualités</h1>
             </div>
@@ -74,6 +76,7 @@
                 </div>
             </div>
 
+
             <div id="presentation" class="titre-vert anchor">
                 <h1>Présentation</h1>
             </div>
@@ -81,15 +84,72 @@
                 {!!$content!!}
             </div>
 
+
+            <div id="economie" class="titre-vert anchor">
+                <h1>Économie</h1>
+            </div>
+            @php
+            $temperance = $organisation->temperance()->get()->first()->toArray();
+            @endphp
+            {!! \App\Services\HelperService::renderLegacyElement('Temperance/resources', [
+                'resources' => $temperance
+            ]) !!}
+            <div class="clearfix"></div>
+
+            <div class="well">
+            <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" href="#economie-pays">
+                    Balance économique par pays membre
+                </a>
+            </div>
+            <div id="economie-pays" class="accordion-body collapse">
+                <div class="accordion-inner">
+
+                @php
+                $temperancePays = $organisation->membersWithTemperance()->toArray();
+                @endphp
+                @foreach($temperancePays as $thisPays)
+                    @php
+                        $paysResources = $thisPays['temperance'][0];
+                    @endphp
+                    <div>
+                        <img src="{{ $thisPays['pays']['ch_pay_lien_imgdrapeau'] }}"
+                             class="img-menu-drapeau"
+                             alt="{{ $thisPays['pays']['ch_pay_nom'] }}">
+                        <a href="{{ url('page-pays.php?ch_pay_id=' . $thisPays['pays_id']) }}">
+                            {{ $thisPays['pays']['ch_pay_nom'] }}</a>
+                        {!! \App\Services\HelperService::renderLegacyElement(
+                            'Temperance/resources_small', [
+                                'resources' => [
+                                     'budget' => $paysResources['budget'],
+                                     'industrie' => $paysResources['industrie'],
+                                     'commerce' => $paysResources['commerce'],
+                                     'agriculture' => $paysResources['agriculture'],
+                                     'tourisme' => $paysResources['tourisme'],
+                                     'recherche' => $paysResources['recherche'],
+                                     'environnement' => $paysResources['environnement'],
+                                     'education' => $paysResources['education'],
+                                ]
+                            ]) !!}
+                    </div>
+                @endforeach
+
+                </div>
+            </div>
+            </div>
+            </div>
+
+
             @if(auth()->check())
-                <div class="cta-title pull-right-cta" style="margin-top: 30px;">
+                <div class="cta-title pull-right-cta" style="margin-top: 20px;">
                     <a href="<?= route('organisation-member.join', ['organisation_id' => $organisation->id]) ?>"
                        class="btn btn-primary btn-cta"
                        data-toggle="modal" data-target="#modal-container">
                     <i class="icon-white icon-plus-sign"></i> Rejoindre...</a>
                 </div>
             @endif
-            <div id="membres" class="titre-vert anchor">
+            <div id="membres" class="titre-vert">
                 <h1>Membres</h1>
             </div>
             @foreach($organisation->members as $member)
