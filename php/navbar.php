@@ -10,6 +10,7 @@ if(!isset($participer)) $participer = false;
 if(!isset($generation_city)) $generation_city = false;
 
 $logoutAction = DEF_URI_PATH . "index.php?doLogout=true";
+$loginFormAction = DEF_URI_PATH . 'index.php';
 
 // Tri des pays par continent pour le menu deroulant
 
@@ -88,61 +89,70 @@ if(isset($_SESSION['userObject'])) {
         <div class="hidden-tablet navbar-form <?php echo isset($_SESSION['menu_gestion']) ? $_SESSION['menu_gestion'] : '' ?>">
             <div><a href="<?= DEF_URI_PATH ?>back/membre-modifier_back.php?userID=<?= isset($_SESSION['user_ID']) ? $_SESSION['user_ID'] : '' ?>" class="btn btn-primary" type="submit" title="page de gestion du profil" style="visibility: hidden;"><i class="icon-user-white"></i> Mon profil</a></div>
 
-            <div class="dropdown pull-right" style="margin-top: -4px;">
-              <a href="<?= DEF_URI_PATH ?>dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="Gérer mes pays"><i class="icon-pays-small-white"></i> Mes pays</a>
-              <ul class="dropdown-menu dropdown-mes-pays" role="menu" aria-labelledby="dLabel">
-              <?php foreach($nav_userPays as $nav_thisPays): ?>
-                <li><a href="<?= DEF_URI_PATH ?>back/page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>">
-                    <img class="img-menu-drapeau" src="<?= $nav_thisPays['ch_pay_lien_imgdrapeau'] ?>"> <?= $nav_thisPays['ch_pay_nom'] ?>
-                </a></li>
-              <?php endforeach; ?>
-              </ul>
-            </div>
+        <?php if(isset($_SESSION['userObject'])): ?>
+            <div class="offset" style="margin-top: 35px;">
 
-            <div class="dropdown dropdown-notification pull-right hidden-phone"
-                 style="margin-top: -4px; margin-right: 5px;">
-              <a href="#" class="btn btn-primary notification-toggle-btn
-                 <?= !$navbar_notifCount ? 'btn-inactive' : '' ?>" type="submit"
-                 title="Notifications" data-toggle="dropdown">
-                  <i class="icon-bell icon-white"></i>
-                  <span class="notification-count"><?= $navbar_notifCount > 0 ? $navbar_notifCount : '' ?></span>
-              </a>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <div class="dropdown pull-right">
+                  <a href="<?= DEF_URI_PATH ?>dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="Gérer mes pays"><i class="icon-pays-small-white"></i> Mes pays</a>
+                  <ul class="dropdown-menu dropdown-mes-pays" role="menu" aria-labelledby="dLabel">
+                      <?php foreach($nav_userPays as $nav_thisPays): ?>
+                      <li><a href="<?= DEF_URI_PATH ?>back/page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>" style="padding-left: 5px;">
+                        <img class="img-menu-drapeau" src="<?= $nav_thisPays['ch_pay_lien_imgdrapeau'] ?>"> <?= $nav_thisPays['ch_pay_nom'] ?>
+                         </a></li>
+                      <?php endforeach; ?>
+                      <li class="divider"></li>
+                      <li class="nav-header">Mon compte</li>
+                      <li><div style="margin: 5px;"><small>Connecté en tant que <?= __s($_SESSION['userObject']->get('ch_use_login')) ?></small></div></li>
+                      <li><a href="<?= DEF_URI_PATH ?>back/membre-modifier_back.php?userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>">Gérer mon compte</a></li>
+                      <li><a href="<?= $logoutAction ?>">Se déconnecter</a></li>
+                  </ul>
+                </div>
 
-              </ul>
-            </div>
+                <div class="dropdown pull-right dropdown-notification hidden-phone"
+                     style="margin-right: 4px;">
+                  <a href="#" class="btn btn-primary notification-toggle-btn
+                     <?= !$navbar_notifCount ? 'btn-inactive' : '' ?>" type="submit"
+                     title="Notifications" data-toggle="dropdown">
+                      <i class="icon-bell icon-white"></i>
+                      <span class="notification-count"><?= $navbar_notifCount > 0 ? $navbar_notifCount : '' ?></span>
+                  </a>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 
-            <div class="dropdown pull-right hidden-phone"
-                 style="margin-top: -4px; margin-right: 5px;">
-              <a href="#" class="btn btn-primary btn-inactive" type="submit"
-                 title="Recherche" data-toggle="dropdown">
-                  <i class="icon-search icon-white"></i>
-              </a>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                <li>
-                  <form action="<?= DEF_URI_PATH ?>search" method="GET">
+                  </ul>
+                </div>
 
-                  <div class="well"
-                     style="text-align: center;
-                     background: rgb(249,249,249);
-                     background: linear-gradient(90deg, rgba(249,249,249,1) 0%, rgba(241,241,241,1) 10%, rgba(241,241,241,1) 90%, rgb(231, 231, 231) 100%);
-                     padding: 10px; margin-left: -10px;">
-                    <div class="control-group">
-                        <label class="control-label" for="query">Termes de recherche</label>
-                        <div class="controls">
-                            <input class="input-xlarge" name="query" type="text" id="query"
-                                   value="" maxlength="50">
+                <div class="dropdown pull-right hidden-phone"
+                     style="margin-right: 4px;">
+                  <a href="#" class="btn btn-primary btn-inactive" type="submit"
+                     title="Recherche" data-toggle="dropdown">
+                      <i class="icon-search icon-white"></i>
+                  </a>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li>
+                      <form action="<?= DEF_URI_PATH ?>search" method="GET">
+
+                      <div class="well"
+                         style="text-align: center;
+                         background: rgb(249,249,249);
+                         background: linear-gradient(90deg, rgba(249,249,249,1) 0%, rgba(241,241,241,1) 10%, rgba(241,241,241,1) 90%, rgb(231, 231, 231) 100%);
+                         padding: 10px; margin-left: -10px;">
+                        <div class="control-group">
+                            <label class="control-label" for="query">Termes de recherche</label>
+                            <div class="controls">
+                                <input class="input-xlarge" name="query" type="text" id="query"
+                                       value="" maxlength="50">
+                            </div>
                         </div>
-                    </div>
-                    <input type="submit" class="btn btn-primary" value="Rechercher...">
-                  </div>
+                        <input type="submit" class="btn btn-primary" value="Rechercher...">
+                      </div>
 
-                  </form>
-                </li>
-              </ul>
+                      </form>
+                    </li>
+                  </ul>
+                </div>
             </div>
+            <?php endif; ?>
 
-            <div class="offset" style="margin-top: 36px;"><a href="<?= DEF_URI_PATH ?>back/membre-modifier_back.php?userID=<?= isset($_SESSION['user_ID']) ? $_SESSION['user_ID'] : '' ?>" class="Nav-pseudo"><span class="bienvenue"></span><?php echo isset($_SESSION['login_user']) ? $_SESSION['login_user'] : '' ?></a>&nbsp; <a href="<?php echo $logoutAction ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a></div>
         </div>
         
         <!-- Menu -->
