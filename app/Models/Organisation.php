@@ -22,6 +22,7 @@ use Spatie\Searchable\SearchResult;
  * @property string|null $logo
  * @property string|null $flag
  * @property string|null $text
+ * @property bool $allow_temperance
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
@@ -37,8 +38,17 @@ class Organisation extends Model implements Searchable
 		'name',
 		'logo',
 		'flag',
-		'text'
+		'text',
+        'allow_temperance'
 	];
+
+	protected $casts = [
+        'allow_temperance' => 'boolean',
+    ];
+
+	protected $attributes = [
+        'allow_temperance' => false,
+    ];
 
 	static $permissions = [
 	    'owner' => 100,
@@ -74,7 +84,11 @@ class Organisation extends Model implements Searchable
 
     public function temperance()
     {
-	    return $this->hasOne(TemperanceOrganisation::class, 'id', 'id');
+	    return $this
+            ->hasOne(TemperanceOrganisation::class, 'id', 'id')
+            ->join('organisation', 'organisation.id', '=',
+                   'temperance_organisation.id')
+            ->where('allow_temperance', '=', '1');
     }
 
     public function membersWithTemperance()

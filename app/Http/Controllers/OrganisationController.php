@@ -105,6 +105,8 @@ class OrganisationController extends Controller
         $organisation = Organisation::with('members')->findOrFail($id);
         $this->authorize('update', $organisation);
 
+        $organisation->allow_temperance = $request->has('allow_temperance');
+
         $organisation->update($request->except(['_method', '_token']));
         return redirect()->route('organisation.edit', ['id' => $id])
             ->with('message', 'success|Organisation mise à jour avec succès !');

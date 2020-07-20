@@ -18,6 +18,7 @@ $memberCount = $organisation->members->count();
     </div>
 
     <div class="span10">
+        <?php if($organisation->allow_temperance): ?>
         <div class="pull-right" style="position: absolute; right: 0;">
             <?php
             $temperance = $organisation->temperance()->get()->first();
@@ -34,6 +35,7 @@ $memberCount = $organisation->members->count();
                 ))
             ); ?>
         </div>
+        <?php endif; ?>
         <a href="<?= url("organisation/{$organisation->id}-" .
             \Illuminate\Support\Str::slug($organisation->name)) ?>">
             <h2><?= $organisation->name ?></h2></a>

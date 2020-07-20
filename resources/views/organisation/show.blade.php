@@ -23,7 +23,7 @@
 
     @parent
 
-    <header class="jumbotron subhead anchor">
+    <header class="jumbotron subhead anchor" id="header">
         <div class="container">
             <h1>{{$page_title}}</h1>
         </div>
@@ -34,12 +34,16 @@
 
         <div class="span3 bs-docs-sidebar">
             <ul class="nav nav-list bs-docs-sidenav">
-                <li class="row-fluid"><img src="{{$organisation->logo}}">
+                <li class="row-fluid"><a href="#header">
+                    <img src="{{$organisation->logo}}" alt="Logo de {{$organisation->name}}">
                     <p><strong>{{$organisation->name}}</strong></p>
-                    <p><em>{{$organisation->members->count()}} membre(s)</em></p></li>
+                        <p><em>{{$organisation->members->count()}} membre(s)</em></p>
+                    </a></li>
                 <li><a href="#actualites">Actualités</a></li>
                 <li><a href="#presentation">Présentation</a></li>
+                @if($organisation->allow_temperance)
                 <li><a href="#economie">Économie</a></li>
+                @endif
                 <li><a href="#membres">Membres</a></li>
             </ul>
         </div>
@@ -84,7 +88,7 @@
                 {!!$content!!}
             </div>
 
-
+            @if($organisation->allow_temperance)
             <div id="economie" class="titre-vert anchor">
                 <h1>Économie</h1>
             </div>
@@ -139,6 +143,7 @@
             </div>
             </div>
             </div>
+            @endif
 
 
             @if(auth()->check())

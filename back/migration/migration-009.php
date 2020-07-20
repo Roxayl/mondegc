@@ -262,6 +262,9 @@ $queries[] = 'create table organisation
     updated_at datetime     null
 )';
 
+$queries[] = 'alter table organisation
+	add allow_temperance bool default 0 not null after text';
+
 $queries[] = 'create index organisation_id_index
     on organisation (id)';
 

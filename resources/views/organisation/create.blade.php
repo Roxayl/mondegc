@@ -26,9 +26,9 @@
 <script type="text/javascript" src="{{url('assets/js/tinymce/tinymce.min.js')}}"></script>
 <script type="text/javascript" src="{{url('assets/js/Editeur.js')}}"></script>
 <script type="text/javascript">
-var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "none", {maxChars:60, validateOn:["change"]});
-var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "none", {maxChars:190, validateOn:["change"]});
-var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "none", {maxChars:190, validateOn:["change"]});
+var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "none", {maxChars:60, minChars:2, validateOn:["change"], isRequired:true});
+var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "url", {maxChars:190, validateOn:["change"], isRequired:true});
+var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "url", {maxChars:190, validateOn:["change"], isRequired:false});
 var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:6000, minChars:2, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
 @endsection
@@ -83,6 +83,14 @@ var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChar
                 </div>
 
                 <div id="sprytextfield2" class="control-group">
+                    <label class="control-label" for="flag">URL du drapeau <a href="#" rel="clickover" title="URL du drapeau" data-content="190 caractères maximum."><i class="icon-info-sign"></i></a></label>
+                    <div class="controls">
+                        <input class="input-xxlarge" name="flag" type="text" id="flag" value="{{old('flag')}}" maxlength="190">
+                        <span class="textfieldMaxCharsMsg">190 caractères max.</span>
+                    </div>
+                </div>
+
+                <div id="sprytextfield3" class="control-group">
                     <label class="control-label" for="logo">URL du logo <a href="#" rel="clickover" title="URL du logo" data-content="190 caractères maximum."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
                         <input class="input-xxlarge" name="logo" type="text" id="logo" value="{{old('logo')}}" maxlength="190">
@@ -90,12 +98,11 @@ var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChar
                     </div>
                 </div>
 
-                <div id="sprytextfield3" class="control-group">
-                    <label class="control-label" for="flag">URL du drapeau <a href="#" rel="clickover" title="URL du drapeau" data-content="190 caractères maximum."><i class="icon-info-sign"></i></a></label>
-                    <div class="controls">
-                        <input class="input-xxlarge" name="flag" type="text" id="flag" value="{{old('flag')}}" maxlength="190">
-                        <span class="textfieldMaxCharsMsg">190 caractères max.</span>
-                    </div>
+                <div class="control-group">
+                    <label class="control-label" for="allow_temperance">
+                        <input class="checkbox" name="allow_temperance" type="checkbox" id="allow_temperance" value="1" {{ old('allow_temperance', 0) ? 'checked' : '' }} maxlength="190">
+                        Calculer les données économiques <a href="#" rel="clickover" title="Calculer les données économiques" data-content="Cette case vous permet de définir que vous souhaitez que des statistiques économiques soient générés."><i class="icon-info-sign"></i></a></label>
+                    <div class="controls"></div>
                 </div>
 
                 <div id="sprytextarea1" class="control-group">
