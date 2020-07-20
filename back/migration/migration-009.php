@@ -697,7 +697,7 @@ CREATE VIEW `temperance_organisation` AS SELECT o.id, o.name,
 FROM organisation_members
 INNER JOIN organisation o on organisation_members.organisation_id = o.id
 INNER JOIN pays p on organisation_members.pays_id = p.ch_pay_id
-LEFT JOIN temperance_pays_old tp on organisation_members.pays_id = tp.id
+LEFT JOIN temperance_pays tp on organisation_members.pays_id = tp.id
 WHERE organisation_members.permissions >= 10
 GROUP BY o.id;
 TAG;

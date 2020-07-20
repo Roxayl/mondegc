@@ -520,6 +520,7 @@ echo $population_ville_francais; ?></p>
           <h1>Économie</h1>
         </div>
         <h3>Balance des ressources</h3>
+        <div class="well">
           <?php
             renderElement('Temperance/resources', array(
                 'resources' => $total_ressources
@@ -527,23 +528,33 @@ echo $population_ville_francais; ?></p>
           ?>
           <div class="clearfix"></div>
 
-        <h3>Détail des ressources</h3>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" href="#economie-detail">
+                    Détail de la balance des ressources
+                </a>
+            </div>
+            <div id="economie-detail" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <h4><i class="icon-road"></i> Infrastructures</h4>
+                <?php
+                renderElement('Temperance/resources_small', array(
+                    'resources' => $row_somme_ressources
+                ));
+                ?>
+                <p></p>
+              <h4><i class="icon-star"></i> Patrimoine</h4>
+                <?php
+                renderElement('Temperance/resources_small', array(
+                    'resources' => $row_monument_ressources
+                ));
+                ?>
+                <div class="clearfix"></div>
+            </div>
+            </div>
+          </div>
+        </div>
 
-          <h4 style="margin-left: 10px;">Infrastructures</h4>
-          <?php
-            renderElement('Temperance/resources', array(
-                'resources' => $row_somme_ressources
-            ));
-          ?>
-          <div class="clearfix"></div>
-
-          <h4 style="margin-left: 10px;">Patrimoine</h4>
-          <?php
-            renderElement('Temperance/resources', array(
-                'resources' => $row_monument_ressources
-            ));
-          ?>
-          <div class="clearfix"></div>
         <!-- Liste infrasructures
     ================================================== -->
         <h3>Infrastructures de la ville</h3>
