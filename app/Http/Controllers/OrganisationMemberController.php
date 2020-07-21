@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Monde;
+namespace App\Http\Controllers;
 
 use App\Models\Organisation;
 use App\Models\OrganisationMember;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 
 class OrganisationMemberController extends Controller

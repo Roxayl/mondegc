@@ -40,6 +40,11 @@ $queries[] = 'alter table geometries
 		foreign key (ch_geo_pay_id) references pays (ch_pay_id)
 			on update cascade';
 
+$queries[] = 'alter table communiques
+	add constraint communiques_users_ch_use_id_fk
+		foreign key (ch_com_user_id) references users (ch_use_id)
+			on update cascade';
+
 $queries[] = 'create table activations
 (
     email      varchar(255)         not null,

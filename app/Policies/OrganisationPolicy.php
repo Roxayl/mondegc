@@ -53,12 +53,8 @@ class OrganisationPolicy
      */
     public function update(CustomUser $user, Organisation $organisation)
     {
-
         if($user->hasMinPermission('admin')) return true;
-        $pays = array_column($user->pays()->get()->toArray(), 'ch_pay_id');
-        return (bool)$organisation->members()->whereIn('pays_id', $pays)
-            ->where('permissions', '>=', Organisation::$permissions['administrator'])
-            ->get()->count();
+        return $this->administrate($user, $organisation);
     }
 
     /**
@@ -104,10 +100,9 @@ class OrganisationPolicy
      * @param  \App\Models\Organisation  $organisation
      * @return mixed
      */
-    public function administrate(CustomUser $user, Organisation $organisation) {
-
+    public function administrate(CustomUser $user, Organisation $organisation)
+    {
         return $organisation->maxPermission($user) >= Organisation::$permissions['administrator'];
-
     }
 
 }
