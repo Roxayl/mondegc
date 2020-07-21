@@ -19,54 +19,75 @@ $elementID = $row_communique['ch_com_element_id'];
 
 //Connexion BBD Pour info sur l'institution emmitrice
 if ( $cat == "pays") {
-  
-$query_com_pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau, ch_pay_lien_imgheader FROM pays WHERE ch_pay_id = %s", GetSQLValueString($elementID, "int"));
-$com_pays = mysql_query($query_com_pays, $maconnexion) or die(mysql_error());
-$row_com_pays = mysql_fetch_assoc($com_pays);
-$totalRows_com_pays = mysql_num_rows($com_pays);
+    $query_com_pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau, ch_pay_lien_imgheader FROM pays WHERE ch_pay_id = %s", GetSQLValueString($elementID, "int"));
+    $com_pays = mysql_query($query_com_pays, $maconnexion) or die(mysql_error());
+    $row_com_pays = mysql_fetch_assoc($com_pays);
+    $totalRows_com_pays = mysql_num_rows($com_pays);
 
-$ch_com_categorie = $cat;
-$ch_com_element_id = isset($colname_elementid) ?: 0;
-$nom_organisation = $row_com_pays['ch_pay_nom'];
-$insigne = $row_com_pays['ch_pay_lien_imgdrapeau'];
-$soustitre = $row_com_pays['ch_pay_devise'];
-$background_jumbotron = $row_com_pays['ch_pay_lien_imgheader'];
-mysql_free_result($com_pays);
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = isset($colname_elementid) ?: 0;
+    $nom_organisation = $row_com_pays['ch_pay_nom'];
+    $insigne = $row_com_pays['ch_pay_lien_imgdrapeau'];
+    $soustitre = $row_com_pays['ch_pay_devise'];
+    $background_jumbotron = $row_com_pays['ch_pay_lien_imgheader'];
+    mysql_free_result($com_pays);
 
-$pays = new \GenCity\Monde\Pays($elementID);
-$personnage = \GenCity\Monde\Personnage::constructFromEntity($pays);
+    $pays = new \GenCity\Monde\Pays($elementID);
+    $personnage = \GenCity\Monde\Personnage::constructFromEntity($pays);
 }
 
-if ( $cat == "ville") {
-  
-$query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_id, ch_pay_nom, ch_vil_lien_img1 FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($elementID, "int"));
-$villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
-$row_villes = mysql_fetch_assoc($villes);
-$totalRows_villes = mysql_num_rows($villes);
+elseif ( $cat == "ville") {
+    $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_id, ch_pay_nom, ch_vil_lien_img1 FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($elementID, "int"));
+    $villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
+    $row_villes = mysql_fetch_assoc($villes);
+    $totalRows_villes = mysql_num_rows($villes);
 
-$ch_com_categorie = $cat;
-$ch_com_element_id = $colname_elementid;
-$nom_organisation = $row_villes['ch_vil_nom'];
-$insigne = $row_villes['ch_vil_armoiries'];
-$soustitre = $row_villes['ch_pay_nom'];
-$background_jumbotron = $row_villes['ch_vil_lien_img1'];
-mysql_free_result($villes);
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = $colname_elementid;
+    $nom_organisation = $row_villes['ch_vil_nom'];
+    $insigne = $row_villes['ch_vil_armoiries'];
+    $soustitre = $row_villes['ch_pay_nom'];
+    $background_jumbotron = $row_villes['ch_vil_lien_img1'];
+    mysql_free_result($villes);
 }
 
-if ( $cat == "institut") {
+elseif ( $cat == "institut") {
+    $query_com_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($elementID, "int"));
+    $com_institut = mysql_query($query_com_institut, $maconnexion) or die(mysql_error());
+    $row_com_institut = mysql_fetch_assoc($com_institut);
+    $totalRows_com_institut = mysql_num_rows($com_institut);
 
-$query_com_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($elementID, "int"));
-$com_institut = mysql_query($query_com_institut, $maconnexion) or die(mysql_error());
-$row_com_institut = mysql_fetch_assoc($com_institut);
-$totalRows_com_institut = mysql_num_rows($com_institut);
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = $colname_elementid;
+    $nom_organisation = $row_com_institut['ch_ins_sigle'];
+    $insigne = $row_com_institut['ch_ins_logo'];
+    $soustitre = $row_com_institut['ch_ins_nom'];
+    $background_jumbotron = "assets/img/fond_haut-conseil.jpg";
+    mysql_free_result($com_institut);
+}
 
-$ch_com_categorie = $cat;
-$ch_com_element_id = $colname_elementid;
-$nom_organisation = $row_com_institut['ch_ins_sigle'];
-$insigne = $row_com_institut['ch_ins_logo'];
-$soustitre = $row_com_institut['ch_ins_nom'];
-$background_jumbotron = "assets/img/fond_haut-conseil.jpg";
-mysql_free_result($com_institut);
+elseif($cat == 'organisation') {
+    $organisation = \App\Models\Organisation::findOrFail($row_communique['ch_com_element_id']);
+
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = $colname_elementid;
+    $nom_organisation = $organisation->name;
+    $insigne = $organisation->flag;
+    $soustitre = "Organisation";
+    $background_jumbotron = "assets/img/fond_haut-conseil.jpg";
+}
+
+// Ce code est un bordel. J'ajoute ce qui suit pour pallier à ce code bordélique.
+// Je sais même pas comment le commenter.
+// Il vise à gérer les permissions d'accès dans le cas où le communiqué est une organisation.
+// $check_organisation = true permet d'ignorer cette règle de permission lorsque le
+// communiqué n'est pas lié à une organisation.
+// Franchement Calimero tu déconnes wsh, tu aurais pu faire un effort merde. :aie:
+$check_organisation = true;
+if($cat == 'organisation') {
+    if(!auth()->check() || !auth()->user()->can('administrate', $organisation)) {
+        $check_organisation = false;
+    }
 }
 
 //Connexion BBD user pour info sur l'auteur
@@ -176,7 +197,7 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
         <?php } else { ?>
         <img src="<?php echo $insigne; ?>" alt="drapeau">
         <?php } ?>
-        <?php } elseif ( $cat == "institut") {?>
+        <?php } elseif ( $cat == "institut" || $cat == "organisation") {?>
         <?php if ($insigne == NULL) {?>
         <img src="assets/img/imagesdefaut/blason.jpg" alt="logo">
         <?php } else { ?>
@@ -198,7 +219,7 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
   <!-- Moderation
      ================================================== -->
   <div class="cta-container" style="position: relative; top: 24px; margin-right: -15px;">
-    <?php if (($_SESSION['statut'] >= 20) OR ($row_user['ch_use_id'] == $_SESSION['user_ID'])) { ?>
+    <?php if ($check_organisation && ($_SESSION['statut'] >= 20) OR ($row_user['ch_use_id'] == $_SESSION['user_ID'])) { ?>
      <div class="moderation">
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/communique_confirmation_supprimer.php" method="post">
         <input name="communique_ID" type="hidden" value="<?php echo $row_communique['ch_com_ID']; ?>">
@@ -218,35 +239,24 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
   </div>
 
     <!-- Titre  -->
-    <?php if ( $cat == "institut") {?>
-  <div class="titre-bleu">
-      <h1><?php echo $row_communique['ch_com_titre']; ?></h1>
-    </div>
-  <?php } else { ?>
   <div class="titre-vert">
-      <h1><?php echo $row_communique['ch_com_titre']; ?></h1>
+      <h1><?= __s($row_communique['ch_com_titre']) ?></h1>
     </div>
-  <?php } ?>
     <!-- Contenu -->
     <div class="well"><?php echo $row_communique['ch_com_contenu']; ?></div>
     <!-- Commentaire
         ================================================== -->
     <section>
-    <?php if ( $cat == "institut") {?>
-  <div id="commentaires" class="titre-bleu anchor">
+      <div id="commentaires" class="titre-vert anchor">
         <h1>R&eacute;actions</h1>
       </div>
-  <?php } else { ?>
-  <div id="commentaires" class="titre-vert anchor">
-        <h1>R&eacute;actions</h1>
-      </div>
-  <?php } ?>
       <?php 
 	  $ch_com_categorie = "com_communique";
 	  $ch_com_element_id = $colname_communique;
 	  include('php/commentaire.php'); ?>
     </section>
-            <div class="modal container fade" id="myModal"></div>
+
+    <div class="modal container fade" id="myModal"></div>
 
     <!-- END CONTENT
     ================================================== --> 
@@ -256,7 +266,6 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
     ================================================== -->
 <?php include('php/footer.php'); ?>
 </body>
-</html>
 <script>
 $("a[data-toggle=modal]").click(function (e) {
   lv_target = $(this).attr('data-target')
@@ -265,9 +274,4 @@ $("a[data-toggle=modal]").click(function (e) {
 
 $('.popover-html').popover({ html : true});
 </script>
-<?php
-mysql_free_result($communique);
-
-mysql_free_result($user);
-
-?>
+</html>

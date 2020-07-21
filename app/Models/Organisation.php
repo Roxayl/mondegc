@@ -101,6 +101,12 @@ class Organisation extends Model implements Searchable
             ->get();
     }
 
+    public function communiques()
+    {
+        // TODO: https://laravel.com/docs/5.8/eloquent-relationships#one-to-many-polymorphic-relations
+        return $this->hasMany(Communique::class, 'ch_com_element_id', 'id')->where('ch_com_categorie', '=', 'organisation');
+    }
+
 	public function slug()
     {
         return Str::slug($this->name);

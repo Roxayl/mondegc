@@ -1,82 +1,65 @@
 <?php
 
+use App\Models\Organisation;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 //deconnexion
 include(DEF_ROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'])
-{
-} else {
-// Redirection vers Haut Conseil
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
+if ($_SESSION['statut']) { }
+else {
+    // Redirection vers Haut Conseil
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
 }
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_communique")) {
-  $updateSQL = sprintf("UPDATE communiques SET ch_com_label=%s, ch_com_statut=%s, ch_com_categorie=%s, ch_com_element_id=%s, ch_com_user_id=%s, ch_com_date=%s, ch_com_date_mis_jour=%s, ch_com_titre=%s, ch_com_contenu=%s WHERE ch_com_ID=%s",
-                       GetSQLValueString($_POST['ch_com_label'], "text"),
-                       GetSQLValueString($_POST['ch_com_statut'], "int"),
-                       GetSQLValueString($_POST['ch_com_categorie'], "text"),
-                       GetSQLValueString($_POST['ch_com_element_id'], "int"),
-                       GetSQLValueString($_POST['ch_com_user_id'], "int"),
-                       GetSQLValueString($_POST['ch_com_date'], "date"),
-                       GetSQLValueString($_POST['ch_com_date_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_com_titre'], "text"),
-                       GetSQLValueString($_POST['ch_com_contenu'], "text"),
-                       GetSQLValueString($_POST['ch_com_ID'], "int"));
 
-  
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    if($_POST['ch_com_categorie'] == 'organisation') {
+        $organisation = Organisation::findOrFail($_POST['ch_com_element_id']);
+        if(!auth()->user()->can('update', $organisation)) {
+            throw new AccessDeniedHttpException();
+        }
+    }
 
-  $this_com_id = (int)$_POST['ch_com_ID'];
-  $banner_text = "Votre communiqué a été modifié ! Ouf !<br />";
-  if($_POST['ch_com_ID'] === $_POST['ch_com_element_id']) {
-      $banner_text .= "<a href='page-communique.php?com_id=$this_com_id'>Accéder à votre communiqué</a>";
-  }
-  getErrorMessage('success', $banner_text);
+    $updateSQL = sprintf("UPDATE communiques SET ch_com_label=%s, ch_com_statut=%s, ch_com_categorie=%s, ch_com_element_id=%s, ch_com_user_id=%s, ch_com_date=%s, ch_com_date_mis_jour=%s, ch_com_titre=%s, ch_com_contenu=%s WHERE ch_com_ID=%s",
+           GetSQLValueString($_POST['ch_com_label'], "text"),
+           GetSQLValueString($_POST['ch_com_statut'], "int"),
+           GetSQLValueString($_POST['ch_com_categorie'], "text"),
+           GetSQLValueString($_POST['ch_com_element_id'], "int"),
+           GetSQLValueString($_POST['ch_com_user_id'], "int"),
+           GetSQLValueString($_POST['ch_com_date'], "date"),
+           GetSQLValueString($_POST['ch_com_date_mis_jour'], "date"),
+           GetSQLValueString($_POST['ch_com_titre'], "text"),
+           GetSQLValueString($_POST['ch_com_contenu'], "text"),
+           GetSQLValueString($_POST['ch_com_ID'], "int"));
 
-if ( $_POST['ch_com_categorie'] == "pays") {
-$updateGoTo = 'page_pays_back.php?paysID=' . (int)$_POST['ch_com_pays_id'];
-}
-elseif ( $_POST['ch_com_categorie'] == "ville") {
-$updateGoTo = 'ville_modifier.php';
-}
-elseif (( $_POST['ch_com_categorie'] == "institut") AND ( $_POST['ch_com_element_id'] == 1)) {
-$updateGoTo = 'institut_OCGC.php';
-}
-elseif (( $_POST['ch_com_categorie'] == "institut") AND ( $_POST['ch_com_element_id'] == 2)) {
-$updateGoTo = 'institut_geographie.php';
-}
-elseif (( $_POST['ch_com_categorie'] == "institut") AND ( $_POST['ch_com_element_id'] == 3)) {
-$updateGoTo = 'institut_patrimoine.php';
-}
-elseif (( $_POST['ch_com_categorie'] == "institut") AND ( $_POST['ch_com_element_id'] == 4)) {
-$updateGoTo = 'institut_histoire.php';
-}
-elseif (( $_POST['ch_com_categorie'] == "institut") AND ( $_POST['ch_com_element_id'] == 5)) {
-$updateGoTo = 'institut_economie.php';
-}
-elseif (( $_POST['ch_com_categorie'] == "institut") AND ( $_POST['ch_com_element_id'] == 6)) {
-$updateGoTo = 'institut_sport.php';
-}
-else {
-$updateGoTo = DEF_URI_PATH . 'back/page_pays_back.php?paysID=' . $paysID;
-}
-$updateGoTo = '../page-communique.php?com_id=' . (int)$_POST['ch_com_ID'];
+    $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
-  appendQueryString($updateGoTo);
-  header(sprintf("Location: %s", $updateGoTo));
- exit;
+    $this_com_id = (int)$_POST['ch_com_ID'];
+    $banner_text = "Votre communiqué a été modifié ! Ouf !<br />";
+    if($_POST['ch_com_ID'] === $_POST['ch_com_element_id']) {
+        $banner_text .= "<a href='page-communique.php?com_id=$this_com_id'>Accéder à votre communiqué</a>";
+    }
+    getErrorMessage('success', $banner_text);
+
+    $updateGoTo = DEF_URI_PATH . 'page-communique.php?com_id=' . (int)$_POST['ch_com_ID'];
+
+    appendQueryString($updateGoTo);
+    header(sprintf("Location: %s", $updateGoTo));
+    exit;
 }
 
 $colname_communique = "-1";
-if (isset($_POST['com_id'])) {
-  $colname_communique = $_POST['com_id'];
+if(isset($_POST['com_id'])) {
+   $colname_communique = $_POST['com_id'];
 }
 
 $query_communique = sprintf("SELECT * FROM communiques WHERE ch_com_ID = %s", GetSQLValueString($colname_communique, "int"));
@@ -84,64 +67,77 @@ $communique = mysql_query($query_communique, $maconnexion) or die(mysql_error())
 $row_communique = mysql_fetch_assoc($communique);
 $totalRows_communique = mysql_num_rows($communique);
 
+if(!$totalRows_communique)
+    throw new NotFoundHttpException();
+
 $cat = $row_communique['ch_com_categorie'];
 $elementID = $row_communique['ch_com_element_id'];
 
-if ( $cat == "pays") {
-  
-$query_cat_pays = sprintf("SELECT ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", GetSQLValueString($elementID, "int"));
-$cat_pays = mysql_query($query_cat_pays, $maconnexion) or die(mysql_error());
-$row_cat_pays = mysql_fetch_assoc($cat_pays);
-$totalRows_cat_pays = mysql_num_rows($cat_pays);
+if($cat == "pays") {
+    $query_cat_pays = sprintf("SELECT ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", GetSQLValueString($elementID, "int"));
+    $cat_pays = mysql_query($query_cat_pays, $maconnexion) or die(mysql_error());
+    $row_cat_pays = mysql_fetch_assoc($cat_pays);
+    $totalRows_cat_pays = mysql_num_rows($cat_pays);
 
-$ch_com_categorie = $cat;
-$ch_com_element_id = isset($colname_elementid) ?: 0;
-$nom_organisation = $row_cat_pays['ch_pay_nom'];
-$insigne = $row_cat_pays['ch_pay_lien_imgdrapeau'];
-$soustitre = $row_cat_pays['ch_pay_devise'];
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = $elementID;
+    $nom_organisation = $row_cat_pays['ch_pay_nom'];
+    $insigne = $row_cat_pays['ch_pay_lien_imgdrapeau'];
+    $soustitre = $row_cat_pays['ch_pay_devise'];
 
-if(isset($thisPays)) {
-    $thisPays = new \GenCity\Monde\Pays($_POST['paysID']);
-    $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
+    if(isset($thisPays)) {
+        $thisPays = new \GenCity\Monde\Pays($_POST['paysID']);
+        $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
+    }
+
+    mysql_free_result($cat_pays);
 }
 
-mysql_free_result($cat_pays);
+elseif($cat == "ville") {
+    $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_nom FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($elementID, "int"));
+    $villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
+    $row_villes = mysql_fetch_assoc($villes);
+    $totalRows_villes = mysql_num_rows($villes);
+
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = $elementID;
+    $nom_organisation = $row_villes['ch_vil_nom'];
+    $insigne = $row_villes['ch_vil_armoiries'];
+    $soustitre = "Ville du pays " .$row_villes['ch_pay_nom'];
+
+    mysql_free_result($villes);
 }
 
-if ( $cat == "ville") {
-  
-$query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_nom FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($elementID, "int"));
-$villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
-$row_villes = mysql_fetch_assoc($villes);
-$totalRows_villes = mysql_num_rows($villes);
+elseif($cat == "institut") {
+    $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($elementID, "int"));
+    $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
+    $row_institut = mysql_fetch_assoc($institut);
+    $totalRows_institut = mysql_num_rows($institut);
 
-$ch_com_categorie = $cat;
-$ch_com_element_id = $colname_elementid;
-$nom_organisation = $row_villes['ch_vil_nom'];
-$insigne = $row_villes['ch_vil_armoiries'];
-$soustitre = "Ville du pays " .$row_villes['ch_pay_nom'];
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = $elementID;
+    $nom_organisation = $row_institut['ch_ins_sigle'];
+    $insigne = $row_institut['ch_ins_logo'];
+    $soustitre = $row_institut['ch_ins_nom'];
 
-mysql_free_result($villes);
+    mysql_free_result($institut);
 }
 
-if ( $cat == "institut") {
+if($cat == 'organisation') {
+    $organisation = Organisation::findOrFail($elementID);
+    if(!auth()->user()->can('update', $organisation)) {
+        throw new AccessDeniedHttpException();
+    }
 
-$query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($elementID, "int"));
-$institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
-$row_institut = mysql_fetch_assoc($institut);
-$totalRows_institut = mysql_num_rows($institut);
-
-$ch_com_categorie = $cat;
-$ch_com_element_id = $colname_elementid;
-$nom_organisation = $row_institut['ch_ins_sigle'];
-$insigne = $row_institut['ch_ins_logo'];
-$soustitre = $row_institut['ch_ins_nom'];
-
-mysql_free_result($institut);
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = $elementID;
+    $nom_organisation = $organisation->name;
+    $insigne = $organisation->flag;
+    $soustitre = "Organisation";
 }
 
 $colname_user = "-1";
-if (isset($row_communique['ch_com_user_id'])) {
+if(isset($row_communique['ch_com_user_id'])) {
   $colname_user = $row_communique['ch_com_user_id'];
 }
 
@@ -211,7 +207,7 @@ $totalRows_user = mysql_num_rows($user);
       </div>
     <?php endif; ?>
       <div class="offset6 span3 thumb">
-        <?php if (($row_communique['ch_com_categorie'] == "pays") || ($row_communique['ch_com_categorie'] == "ville") || ($row_communique['ch_com_categorie'] == "institut")) { ?>
+        <?php if (in_array($row_communique['ch_com_categorie'], ['ville', 'pays', 'institut', 'organisation'])) { ?>
         <!-- EN-tête Institution pour communiqués officiels-->
         
         <?php if ( $cat == "ville") {?>
@@ -226,7 +222,7 @@ $totalRows_user = mysql_num_rows($user);
         <?php } else { ?>
         <img src="<?php echo $insigne; ?>" alt="drapeau">
         <?php } ?>
-        <?php } elseif ( $cat == "institut") {?>
+        <?php } elseif ( $cat == "institut" || $cat == 'organisation') {?>
         <?php if ($insigne == NULL) {?>
         <img src="../assets/img/imagesdefaut/blason.jpg" alt="logo">
         <?php } else { ?>
@@ -243,20 +239,20 @@ $totalRows_user = mysql_num_rows($user);
     </section>
   </div>
   <div class="row-fluid">
-  
-    <?php if (($row_communique['ch_com_categorie'] == "pays") || ($row_communique['ch_com_categorie'] == "ville")) { ?>
-    <div class="titre-vert">
-      <h1>Modifier un communiqu&eacute;</h1>
+
+    <?php if (in_array($row_communique['ch_com_categorie'],
+        ['pays', 'ville', 'institut', 'organisation']))
+    { ?>
+      <div class="titre-vert">
+        <h1>Modifier un communiqu&eacute;</h1>
       </div>
-      <?php } else if ($row_communique['ch_com_categorie'] == "institut") { ?>
-    <div class="titre-bleu">
-      <h1>Modifier un communiqu&eacute;</h1>
-      </div>
-      <?php } else { ?>
+    <?php } else { ?>
       <div class="titre-bleu">
         <h1>Modifier une réaction</h1>
       </div>
-      <?php } ?>
+    <?php } ?>
+
+    <div class="well">
     <!-- Debut formulaire -->
     <form action="<?php echo $editFormAction; ?>" method="POST" name="modifier_communique" Id="modifier_communique">
       <!-- Bouton cachés -->
@@ -270,7 +266,7 @@ $totalRows_user = mysql_num_rows($user);
       <input name="ch_com_date" type="hidden" value="<?php echo $row_communique['ch_com_date']; ?>">
       <input name="ch_com_date_mis_jour" type="hidden" value="<?php echo $now; ?>">
       <!-- choix possibilité publication pour communiqués officiels-->
-      <?php if (($row_communique['ch_com_categorie'] == "pays") || ($row_communique['ch_com_categorie'] == "ville") || ($row_communique['ch_com_categorie'] == "institut")) { ?>
+      <?php if (in_array($row_communique['ch_com_categorie'], ['ville', 'pays', 'institut', 'organisation'])) { ?>
       <!-- Statut -->
       <div id="spryradio1" class="form-inline pull-right"> Statut <a href="#" rel="clickover" title="Statut de votre communiqu&eacute;" data-content="
     Publi&eacute; : le communiqu&eacute; sera visible pour les visiteurs du site.
@@ -289,7 +285,7 @@ $totalRows_user = mysql_num_rows($user);
       <?php } ?>
       <div class="span12 clearfix"></div>
       <!-- Titre uniquement dans le cas de communiqués officiels -->
-      <?php if (($row_communique['ch_com_categorie'] == "pays") || ($row_communique['ch_com_categorie'] == "ville") || ($row_communique['ch_com_categorie'] == "institut")) { ?>
+      <?php if (in_array($row_communique['ch_com_categorie'], ['ville', 'pays', 'institut', 'organisation'])) { ?>
       <div id="sprytextfield1">
         <input name="ch_com_titre" type="text" class="span12" id="ch_com_titre" placeholder="Titre" value="<?php echo $row_communique['ch_com_titre']; ?>">
         <span class="textfieldMaxCharsMsg">100 caract&egrave;res max.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res min</span></div>
@@ -301,6 +297,7 @@ $totalRows_user = mysql_num_rows($user);
       <button type="submit" class="btn btn-primary btn-margin-left">Envoyer</button>
       <input type="hidden" name="MM_update" value="modifier_communique">
     </form>
+    </div>
   </div>
 </div>
 <!-- END CONTENT
@@ -309,8 +306,7 @@ $totalRows_user = mysql_num_rows($user);
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -322,7 +318,7 @@ $totalRows_user = mysql_num_rows($user);
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
  <script type="text/javascript">
-      $(function() { 
+      $(function() {
           $('[rel="clickover"]').clickover();})
     </script>
 <!-- EDITEUR -->
@@ -337,8 +333,5 @@ $totalRows_user = mysql_num_rows($user);
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "none", {maxChars:100, validateOn:["change"], minChars:2});
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
 </script>
-<?php
-mysql_free_result($communique);
-
-mysql_free_result($user);
-?>
+</body>
+</html>

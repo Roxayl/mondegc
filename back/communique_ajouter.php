@@ -1,100 +1,114 @@
 <?php
 
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+
 if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
  
 //deconnexion
 include(DEF_ROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'])
-{
-} else {
-// Redirection vers Haut Conseil
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
+if ($_SESSION['statut']) { }
+else {
+    // Redirection vers Haut Conseil
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
 }
 
 $cat = "-1";
 if (isset($_REQUEST['cat'])) {
-  $cat = $_REQUEST['cat'];
+    $cat = $_REQUEST['cat'];
 }
 
-if ( $cat == "pays") {
-  $colname_elementid = $_SESSION['pays_ID'];
-  if (isset($_REQUEST['com_element_id'])) {
-  $colname_elementid = $_REQUEST['com_element_id'];
-  unset($_REQUEST['com_element_id']);
+if($cat == "pays") {
+    $colname_elementid = $_SESSION['pays_ID'];
+    if (isset($_REQUEST['com_element_id'])) {
+        $colname_elementid = $_REQUEST['com_element_id'];
+        unset($_REQUEST['com_element_id']);
 
-  $thisPays = new \GenCity\Monde\Pays($_REQUEST['paysID']);
-  $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
+        $thisPays = new \GenCity\Monde\Pays($_REQUEST['paysID']);
+        $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
+    }
 
+    $query_pays = sprintf("SELECT ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau
+        FROM pays WHERE ch_pay_id = %s",
+        GetSQLValueString($colname_elementid, "int"));
+    $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
+    $row_pays = mysql_fetch_assoc($pays);
+    $totalRows_pays = mysql_num_rows($pays);
+
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = $colname_elementid;
+    $nom_organisation = $row_pays['ch_pay_nom'];
+    $insigne = $row_pays['ch_pay_lien_imgdrapeau'];
+    $soustitre = $row_pays['ch_pay_devise'];
+
+    mysql_free_result($pays);
 }
 
-  
-$query_pays = sprintf("SELECT ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_elementid, "int"));
-$pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
-$row_pays = mysql_fetch_assoc($pays);
-$totalRows_pays = mysql_num_rows($pays);
+elseif($cat == "ville") {
+    $colname_elementid = $_SESSION['ville_encours'];
+    if (isset($_REQUEST['com_element_id'])) {
+        $colname_elementid = $_REQUEST['com_element_id'];
+        unset($_REQUEST['com_element_id']);
+    }
 
-$ch_com_categorie = $cat;
-$ch_com_element_id = $colname_elementid;
-$nom_organisation = $row_pays['ch_pay_nom'];
-$insigne = $row_pays['ch_pay_lien_imgdrapeau'];
-$soustitre = $row_pays['ch_pay_devise'];
+    $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_nom FROM villes INNER JOIN pays ON villes.ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($colname_elementid, "int"));
+    $villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
+    $row_villes = mysql_fetch_assoc($villes);
+    $totalRows_villes = mysql_num_rows($villes);
 
-mysql_free_result($pays);
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = $colname_elementid;
+    $nom_organisation = $row_villes['ch_vil_nom'];
+    $insigne = $row_villes['ch_vil_armoiries'];
+    $soustitre = $row_villes['ch_pay_nom'];
+
+    mysql_free_result($villes);
 }
 
-if ( $cat == "ville") {
-  $colname_elementid = $_SESSION['ville_encours'];
-if (isset($_REQUEST['com_element_id'])) {
-  $colname_elementid = $_REQUEST['com_element_id'];
-  unset($_REQUEST['com_element_id']);
-}  
-  
-  
-  
-$query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_nom FROM villes INNER JOIN pays ON villes.ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($colname_elementid, "int"));
-$villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
-$row_villes = mysql_fetch_assoc($villes);
-$totalRows_villes = mysql_num_rows($villes);
+elseif($cat == "institut") {
+    $colname_elementid = -1;
+    if (isset($_REQUEST['com_element_id'])) {
+        $colname_elementid = $_REQUEST['com_element_id'];
+        unset($_REQUEST['com_element_id']);
+    }
 
-$ch_com_categorie = $cat;
-$ch_com_element_id = $colname_elementid;
-$nom_organisation = $row_villes['ch_vil_nom'];
-$insigne = $row_villes['ch_vil_armoiries'];
-$soustitre = $row_villes['ch_pay_nom'];
+    $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($colname_elementid, "int"));
+    $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
+    $row_institut = mysql_fetch_assoc($institut);
+    $totalRows_institut = mysql_num_rows($institut);
 
-mysql_free_result($villes);
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = $colname_elementid;
+    $nom_organisation = $row_institut['ch_ins_sigle'];
+    $insigne = $row_institut['ch_ins_logo'];
+    $soustitre = $row_institut['ch_ins_nom'];
+
+    mysql_free_result($institut);
 }
 
-if ( $cat == "institut") {
-  $colname_elementid = -1;
-if (isset($_REQUEST['com_element_id'])) {
-  $colname_elementid = $_REQUEST['com_element_id'];
-  unset($_REQUEST['com_element_id']);
-}  
+elseif($cat == "organisation") {
+    $organisation = \App\Models\Organisation::findOrFail($_REQUEST['com_element_id']);
 
-$query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($colname_elementid, "int"));
-$institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
-$row_institut = mysql_fetch_assoc($institut);
-$totalRows_institut = mysql_num_rows($institut);
+    if(!auth()->user()->can('administrate', $organisation)) {
+        throw new AccessDeniedHttpException("Permissions insuffisantes.");
+    }
 
-$ch_com_categorie = $cat;
-$ch_com_element_id = $colname_elementid;
-$nom_organisation = $row_institut['ch_ins_sigle'];
-$insigne = $row_institut['ch_ins_logo'];
-$soustitre = $row_institut['ch_ins_nom'];
-
-mysql_free_result($institut);
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = (int)$_REQUEST['com_element_id'];
+    $colname_elementid = $ch_com_element_id;
+    $nom_organisation = $organisation->name;
+    $insigne = $organisation->flag;
+    $soustitre = 'Organisation';
 }
 
 
 //Récupération variables
 $colname_user = $_SESSION['user_ID'];
 if (isset($_REQUEST['userID'])) {
-  $colname_user = $_REQUEST['userID'];
-  unset($_REQUEST['userID']);
+    $colname_user = $_REQUEST['userID'];
+    unset($_REQUEST['userID']);
 }
 
 $query_user = sprintf("SELECT ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_user, "int"));
@@ -102,17 +116,18 @@ $user = mysql_query($query_user, $maconnexion) or die(mysql_error());
 $row_user = mysql_fetch_assoc($user);
 $totalRows_user = mysql_num_rows($user);
 
-
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 appendQueryString($editFormAction);
 
+/*** Traitement données POST ***/
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique")) {
-  $insertSQL = sprintf("INSERT INTO communiques (ch_com_label, ch_com_statut, ch_com_categorie, ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_com_pays_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+
+    $insertSQL = sprintf("INSERT INTO communiques (ch_com_label, ch_com_statut, ch_com_categorie, ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_com_pays_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['ch_com_label'], "text"),
                        GetSQLValueString($_POST['ch_com_statut'], "int"),
                        GetSQLValueString($_POST['ch_com_categorie'], "text"),
                        GetSQLValueString($_POST['ch_com_element_id'], "int"),
-                       GetSQLValueString($_POST['ch_com_user_id'], "int"),
+                       GetSQLValueString($_SESSION['userObject']->get('ch_use_id'), "int"),
                        GetSQLValueString($_POST['ch_com_date'], "date"),
                        GetSQLValueString($_POST['ch_com_date_mis_jour'], "date"),
                        GetSQLValueString($_POST['ch_com_titre'], "text"),
@@ -120,43 +135,48 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
                        GetSQLValueString($_POST['ch_com_pays_id'], 'int'));
 
   
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+    $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $last_insert_id = mysql_insert_id();
-  $banner_text = "Votre communiqué a été ajouté avec succès !<br />";
-  $banner_text .= "<a href='../page-communique.php?com_id=$last_insert_id'>Accéder à votre communiqué</a>";
-  getErrorMessage('success', $banner_text);
+    $last_insert_id = mysql_insert_id();
+    $banner_text = "Votre communiqué a été ajouté avec succès !<br />";
+    $banner_text .= "<a href='../page-communique.php?com_id=$last_insert_id'>Accéder à votre communiqué</a>";
+    getErrorMessage('success', $banner_text);
 
-if ( $_POST['ch_com_categorie'] == "pays") {
-$insertGoTo = 'page_pays_back.php?paysID=' . (int)$_POST['ch_com_element_id'];
-}
-elseif ( $_POST['ch_com_categorie'] == "ville") {
-$insertGoTo = 'ville_modifier.php';
-}
-elseif (( $_POST['ch_com_categorie'] == "institut") AND ( $_POST['ch_com_element_id'] == 1)) {
-$insertGoTo = 'institut_OCGC.php';
-}
-elseif (( $_POST['ch_com_categorie'] == "institut") AND ( $_POST['ch_com_element_id'] == 2)) {
-$insertGoTo = 'institut_geographie.php';
-}
-elseif (( $_POST['ch_com_categorie'] == "institut") AND ( $_POST['ch_com_element_id'] == 3)) {
-$insertGoTo = 'institut_patrimoine.php';
-}
-elseif (( $_POST['ch_com_categorie'] == "institut") AND ( $_POST['ch_com_element_id'] == 4)) {
-$insertGoTo = 'institut_histoire.php';
-}
-elseif (( $_POST['ch_com_categorie'] == "institut") AND ( $_POST['ch_com_element_id'] == 5)) {
-$insertGoTo = 'institut_economie.php';
-}
-elseif (( $_POST['ch_com_categorie'] == "institut") AND ( $_POST['ch_com_element_id'] == 6)) {
-$insertGoTo = 'institut_sport.php';
-}
-else {
-$insertGoTo = DEF_URI_PATH . 'back/page_pays_back.php';
-}
-  appendQueryString($insertGoTo);
-  header(sprintf("Location: %s", $insertGoTo));
- exit;
+    if($_POST['ch_com_categorie'] == "pays") {
+        $insertGoTo = 'page_pays_back.php?paysID=' . (int)$_POST['ch_com_element_id'];
+    }
+    elseif($_POST['ch_com_categorie'] == "ville") {
+        $insertGoTo = 'ville_modifier.php';
+    }
+    elseif(($_POST['ch_com_categorie'] == "institut") AND ($_POST['ch_com_element_id'] == 1)) {
+        $insertGoTo = 'institut_OCGC.php';
+    }
+    elseif(($_POST['ch_com_categorie'] == "institut") AND ($_POST['ch_com_element_id'] == 2)) {
+        $insertGoTo = 'institut_geographie.php';
+    }
+    elseif(($_POST['ch_com_categorie'] == "institut") AND ($_POST['ch_com_element_id'] == 3)) {
+        $insertGoTo = 'institut_patrimoine.php';
+    }
+    elseif(($_POST['ch_com_categorie'] == "institut") AND ($_POST['ch_com_element_id'] == 4)) {
+        $insertGoTo = 'institut_histoire.php';
+    }
+    elseif(($_POST['ch_com_categorie'] == "institut") AND ($_POST['ch_com_element_id'] == 5)) {
+        $insertGoTo = 'institut_economie.php';
+    }
+    elseif(($_POST['ch_com_categorie'] == "institut") AND ($_POST['ch_com_element_id'] == 6)) {
+        $insertGoTo = 'institut_sport.php';
+    }
+    elseif($_POST['ch_com_categorie'] == "organisation") {
+        $insertGoTo = route('organisation.show', ['id' => $_POST['ch_com_element_id']]);
+    }
+    else {
+        $insertGoTo = DEF_URI_PATH . 'back/page_pays_back.php';
+    }
+    appendQueryString($insertGoTo);
+    header(sprintf("Location: %s", $insertGoTo));
+
+    exit;
+
 }
 
 
@@ -216,17 +236,20 @@ if(isset($thisPays)) {
 <div class="container corps-page">
   <div class="row-fluid communique">
     <section>
-    <?php if(isset($personnage)): ?>
+
       <!-- EN-tête Personnage pour communiquées officiels et commentaire-->
-      <div class="span3 thumb"> <img src="<?= $personnage->get('lien_img') ?>" alt="photo <?= $personnage->get('nom_personnage') ?>">
+      <div class="span3 thumb">
+      <?php if(isset($personnage)): ?>
+          <img src="<?= $personnage->get('lien_img') ?>" alt="photo <?= $personnage->get('nom_personnage') ?>">
         <div class="titre-gris">
           <p><?= $personnage->get('predicat') ?></p>
           <h3><?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?></h3>
           <p><small><?= $personnage->get('titre_personnage') ?></small></p></div>
+      <?php endif; ?>
       </div>
-    <?php endif; ?>
+
       <div class="offset6 span3 thumb">
-        <?php if (($cat == "ville") || ($cat == "pays") || ($cat == "institut")) { ?>
+        <?php if (in_array($cat, ['ville', 'pays', 'institut', 'organisation'])) { ?>
         <!-- EN-tête Institution pour communiqués officiels-->
         
         <!-- EN-tête Institution pour communiqués officiels-->
@@ -249,7 +272,13 @@ if(isset($thisPays)) {
         <?php } else { ?>
         <img src="<?php echo $insigne; ?>" alt="logo">
         <?php }
-		 } else {?>
+		 } elseif ( $cat == "organisation") {?>
+        <?php if ($insigne == NULL) {?>
+        <img src="../assets/img/imagesdefaut/blason.jpg" alt="logo">
+        <?php } else { ?>
+        <img src="<?php echo $insigne; ?>" alt="logo">
+        <?php }
+		 } else { ?>
                 <img src="<?php echo $insigne; ?>">
                 <?php } ?>
         <div class="titre-gris">
@@ -271,7 +300,7 @@ if(isset($thisPays)) {
     <?php }?>
     <!-- Page CONTENT
     ================================================== -->
-    <section class="">
+    <section class="well">
     <!-- Debut formulaire -->
     <form action="" method="POST" name="ajout_communique" Id="ajout_communique">
       <!-- Bouton cachés -->
@@ -286,8 +315,8 @@ if(isset($thisPays)) {
       <input name="ch_com_date_mis_jour" type="hidden" value="<?php echo $now; ?>">
       <!-- Statut -->
       <div id="spryradio1" class="form-inline pull-right"> Statut <a href="#" rel="clickover" title="Statut de votre communiqu&eacute;" data-content="
-    <b>Publi&eacute; :</b> le communiqu&eacute; sera visible pour les visiteurs du site.<br>
-   <b>brouillon :</b> Retrouvez-le dans la liste de vos communiqu&eacute;s."><i class="icon-info-sign"></i></a> &nbsp;
+    Publi&eacute; : le communiqu&eacute; sera visible pour les visiteurs du site. /
+    Brouillon : Retrouvez-le dans la liste de vos communiqu&eacute;s."><i class="icon-info-sign"></i></a> &nbsp;
         <label>
           <input name="ch_com_statut" type="radio" id="ch_vil_capitale_1" value="1" checked="CHECKED">
           Publi&eacute;</label>
@@ -305,7 +334,7 @@ if(isset($thisPays)) {
       <p>&nbsp;</p>
       <textarea rows="20" name="ch_com_contenu" class="wysiwyg" id="ch_com_contenu"></textarea>
       <p>&nbsp;</p>
-      <button type="submit" class="btn btn-primary btn-margin-left">Envoyer</button>
+      <button type="submit" class="btn btn-primary btn-margin-left">Publier</button>
       <input type="hidden" name="MM_insert" value="ajout_communique">
     </form>
   </div>
