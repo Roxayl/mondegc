@@ -9,6 +9,13 @@ mysql_select_db($database_maconnexion, $maconnexion);
 
 $queries = array();
 
+$queries[] = "alter table type_geometries drop column color";
+
+// Exécuter la requête
+foreach($queries as $query) {
+    mysql_query($query) or die(mysql_error());
+}
+
 
 /***** Créer les groupes de géométries *****/
 
@@ -97,10 +104,4 @@ VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, NOW(), NOW())",
     );
     mysql_query($this_query) or die(mysql_error());
 
-}
-
-
-// Exécuter la requête
-foreach($queries as $query) {
-    mysql_query($query) or die(mysql_error());
 }
