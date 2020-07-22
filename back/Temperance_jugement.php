@@ -1,15 +1,15 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=15))
 {
 } else {
 	// Redirection vers page connexion
     header("Status: 301 Moved Permanently", false, 301);
-    header('Location: ../Juges-temperants.php');
+    header('Location: ' . legacyPage('Juges-temperants'));
     exit();
 }
 
@@ -21,7 +21,7 @@ if (isset($_GET['pageNum_liste_temperance'])) {
 }
 $startRow_liste_temperance = $pageNum_liste_temperance * $maxRows_liste_temperance;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_temperance = sprintf("SELECT ch_temp_id as id, ch_pay_nom as nom, ch_temp_element as element, ch_temp_date as date, ch_temp_mis_jour as mis_jour, ch_temp_statut as statut FROM temperance INNER JOIN pays ON ch_temp_element_id = ch_pay_id WHERE ch_temp_id NOT IN (SELECT ch_not_temp_temperance_id FROM notation_temperance WHERE ch_not_temp_juge=%s) AND ch_temp_element='pays' AND ch_temp_statut = 2
 UNION
 SELECT ch_temp_id as id, ch_vil_nom as nom, ch_temp_element as element, ch_temp_date as date, ch_temp_mis_jour as mis_jour, ch_temp_statut as statut FROM temperance INNER JOIN villes ON ch_temp_element_id = ch_vil_ID WHERE ch_temp_id NOT IN (SELECT ch_not_temp_temperance_id FROM notation_temperance WHERE ch_not_temp_juge=%s) AND ch_temp_element='ville' AND ch_temp_statut = 2
@@ -80,7 +80,7 @@ if (isset($_GET['pageNum_liste_infrastructures'])) {
 }
 $startRow_liste_infrastructures = $pageNum_liste_infrastructures * $maxRows_liste_infrastructures;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_infrastructures = sprintf("SELECT infrastructures.*, infrastructures_officielles.*, ch_vil_nom, ch_pay_id, ch_pay_nom FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID INNER JOIN pays ON ch_vil_paysID=ch_pay_id WHERE ch_inf_statut=%s GROUP BY ch_inf_id ORDER BY $ordre_classement", GetSQLValueString($colname_type_jugement, "text"));
 $query_limit_liste_infrastructures = sprintf("%s LIMIT %d, %d", $query_liste_infrastructures, $startRow_liste_infrastructures, $maxRows_liste_infrastructures);
 $liste_infrastructures = mysql_query($query_limit_liste_infrastructures, $maconnexion) or die(mysql_error());
@@ -179,7 +179,7 @@ $_SESSION['last_work'] = "institut_economie.php";
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container" id="overview"> 
@@ -374,7 +374,7 @@ $('#closemodal').click(function() {
 
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <?php

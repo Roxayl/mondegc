@@ -3,15 +3,13 @@
 use GenCity\Monde\Pays;
 use GenCity\Monde\User;
 
-require_once('../../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 header('Content-Type: text/html; charset=utf-8');
 
 // renvoyer les données POST à soi-même
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . 'php/Modal/pays_leader_add.php';
+appendQueryString($editFormAction);
 
 $pays_ID = isset($_GET['pays_ID']) ? (int)$_GET['pays_ID'] : 0;
 
@@ -39,7 +37,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "pays_leader_add")) 
             . Pays::getPermissionName($permissions) . " !");
     }
 
-    $adresse = '../../back/page_pays_back.php?paysID=' . $thisPays->ch_pay_id . '#dirigeants';
+    $adresse = DEF_URI_PATH . 'back/page_pays_back.php?paysID=' . $thisPays->ch_pay_id . '#dirigeants';
     header(sprintf("Location: %s", $adresse));
 
     exit;

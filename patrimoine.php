@@ -1,20 +1,20 @@
 <?php
 
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 //Connexion et deconnexion
 include('php/log.php');
 
 //requete instituts
 $institut_id = 3;
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
 //requete liste categories monuments pour pouvoir selectionner la categorie 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mon_cat2 = "SELECT * FROM monument_categories WHERE ch_mon_cat_statut = 1  ORDER BY ch_mon_cat_couleur ASC";
 $liste_mon_cat2 = mysql_query($query_liste_mon_cat2, $maconnexion) or die(mysql_error());
 $row_liste_mon_cat2 = mysql_fetch_assoc($liste_mon_cat2);
@@ -38,7 +38,7 @@ if (isset($_GET['mon_cat_ID'])) {
 } } else {
   $colname_classer_mon = NULL;
 } 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_classer_mon = sprintf("SELECT monument.ch_disp_id as id, monument.ch_disp_mon_id, ch_pat_nom, ch_pat_description, ch_pat_mis_jour, ch_pat_lien_img1, ch_pat_villeID, ch_pat_paysID, ch_vil_nom, ch_vil_ID, ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, (SELECT GROUP_CONCAT(categories.ch_disp_cat_id) FROM dispatch_mon_cat as categories WHERE monument.ch_disp_mon_id = categories.ch_disp_mon_id) AS listcat
 FROM dispatch_mon_cat as monument 
 INNER JOIN patrimoine ON monument.ch_disp_mon_id = ch_pat_id
@@ -78,7 +78,7 @@ $queryString_classer_mon = sprintf("&totalRows_classer_mon=%d%s", $totalRows_cla
 
 
 //requete info sur catégorie
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_info_cat = sprintf("SELECT ch_mon_cat_ID, ch_mon_cat_nom, ch_mon_cat_desc, ch_mon_cat_icon, ch_mon_cat_couleur
 FROM monument_categories
 WHERE ch_mon_cat_ID = %s OR %s IS NULL AND ch_mon_cat_statut = 1", GetSQLValueString($colname_classer_mon, "int"), GetSQLValueString($colname_classer_mon, "int"));
@@ -217,7 +217,7 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
         <div class="row-fluid"> 
           <!-- Liste pour choix de la categories -->
           <div id="select-categorie">
-            <form action="patrimoine.php#monument" method="GET">
+            <form action="<?= DEF_URI_PATH ?>patrimoine.php#monument" method="GET">
               <select name="mon_cat_ID" id="mon_cat_ID" onchange="this.form.submit()">
                 <option value="" <?php if ($colname_classer_mon == NULL) {?>selected<?php } ?>>S&eacute;lectionnez une cat&eacute;gorie&nbsp;</option>
                 <?php do { ?>
@@ -261,7 +261,7 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
 
 			$listcategories = ($row_classer_mon['listcat']);
 			if ($row_classer_mon['listcat']) {
-                mysql_select_db($database_maconnexion, $maconnexion);
+                
                 $query_liste_mon_cat3 = "SELECT * FROM monument_categories
                     WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
                 $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());

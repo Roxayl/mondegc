@@ -1,6 +1,6 @@
 <?php
 
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 //Connexion et deconnexion
 include('php/log.php');
@@ -10,7 +10,7 @@ $colname_Pays = "-1";
 if (isset($_GET['ch_pay_id'])) {
   $colname_Pays = $_GET['ch_pay_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_Pays = sprintf("SELECT ch_pay_id, ch_pay_publication, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_use_id FROM pays INNER JOIN users ON ch_use_paysID=ch_pay_id AND ch_use_id >=10 WHERE ch_pay_id = %s", GetSQLValueString($colname_Pays, "int"));
 $Pays = mysql_query($query_Pays, $maconnexion) or die(mysql_error());
 $row_Pays = mysql_fetch_assoc($Pays);
@@ -21,14 +21,14 @@ $colname_infoVille = "-1";
 if (isset($_GET['ch_ville_id'])) {
   $colname_infoVille = $_GET['ch_ville_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_infoVille = sprintf("SELECT * FROM villes WHERE ch_vil_ID = %s", GetSQLValueString($colname_infoVille, "int"));
 $infoVille = mysql_query($query_infoVille, $maconnexion) or die(mysql_error());
 $row_infoVille = mysql_fetch_assoc($infoVille);
 $totalRows_infoVille = mysql_num_rows($infoVille);
 
 // *** Connection BDD villes pour chercher les autres villes du meme pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_Autresvilles = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_nom, ch_vil_capitale, ch_vil_population FROM villes WHERE ch_vil_capitale <> 3 AND villes.ch_vil_paysID = %s ORDER BY ch_vil_date_enregistrement ASC", GetSQLValueString($colname_Pays, "int"));
 $Autresvilles = mysql_query($query_Autresvilles, $maconnexion) or die(mysql_error());
 $row_Autresvilles = mysql_fetch_assoc($Autresvilles);
@@ -43,7 +43,7 @@ if ($totalRows_Autresvilles == $row_Autresvilles['ch_vil_ID']) {
 
  //Connexion base de données utilisateur pour info personnage
 $UserID = $row_infoVille['ch_vil_user'];
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_User = sprintf("SELECT ch_use_id, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_biographie_dirigeant, ch_use_login, (SELECT GROUP_CONCAT(ch_disp_group_id) FROM dispatch_mem_group WHERE ch_use_id = ch_disp_mem_id AND ch_disp_mem_statut != 3) AS listgroup FROM users WHERE ch_use_id = %s", GetSQLValueString($UserID, "int"));
 $User = mysql_query($query_User, $maconnexion) or die(mysql_error());
 $row_User = mysql_fetch_assoc($User);
@@ -54,7 +54,7 @@ if (isset($row_User['listgroup'])) {
 $listgroup = $row_User['listgroup'];
 
 //recherche des groupes du membre
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_group = "SELECT * FROM membres_groupes WHERE ch_mem_group_ID In ($listgroup) AND ch_mem_group_statut = 1";
 $liste_group = mysql_query($query_liste_group, $maconnexion) or die(mysql_error());
 $row_liste_group = mysql_fetch_assoc($liste_group);
@@ -62,7 +62,7 @@ $totalRows_liste_group = mysql_num_rows($liste_group);
 }
 
 //Recherche des monuments de la ville
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_monument = sprintf("SELECT ch_pat_ID, ch_pat_paysID, ch_pat_date, ch_pat_mis_jour, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_description, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine WHERE ch_pat_statut = 1 AND ch_pat_villeID = %s ORDER BY ch_pat_mis_jour DESC", GetSQLValueString($colname_infoVille, "int"));
 $monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
 $row_monument = mysql_fetch_assoc($monument);
@@ -73,7 +73,7 @@ $totalRows_monument = mysql_num_rows($monument);
 $villeid = "-1";
 if (isset($row_infoVille['ch_vil_ID'])) {
 $villeid = $row_infoVille['ch_vil_ID'];
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_somme_ressources = sprintf("SELECT SUM(ch_inf_off_budget) AS budget,SUM(ch_inf_off_Industrie) AS industrie, SUM(ch_inf_off_Commerce) AS commerce, SUM(ch_inf_off_Agriculture) AS agriculture, SUM(ch_inf_off_Tourisme) AS tourisme, SUM(ch_inf_off_Recherche) AS recherche, SUM(ch_inf_off_Environnement) AS environnement, SUM(ch_inf_off_Education) AS education FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_ID = %s AND ch_vil_capitale != 3 AND ch_inf_statut = 2", GetSQLValueString($villeid, "int"));
 $somme_ressources = mysql_query($query_somme_ressources, $maconnexion) or die(mysql_error());
 $row_somme_ressources = mysql_fetch_assoc($somme_ressources);
@@ -101,7 +101,7 @@ if (isset($_GET['pageNum_infrastructure'])) {
 }
 $startRow_infrastructure = $pageNum_infrastructure * $maxRows_infrastructure;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_infrastructure = sprintf("SELECT * FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id=infrastructures_officielles.ch_inf_off_id WHERE ch_inf_villeid = %s AND ch_inf_statut =2 ORDER BY ch_inf_date DESC", GetSQLValueString($villeid, "int"));
 $query_limit_infrastructure = sprintf("%s LIMIT %d, %d", $query_infrastructure, $startRow_infrastructure, $maxRows_infrastructure);
 $infrastructure = mysql_query($query_infrastructure, $maconnexion) or die(mysql_error());
@@ -136,7 +136,7 @@ $_SESSION['last_work'] = 'page-ville.php?ch_pay_id='.$row_infoVille['ch_vil_pays
 
 //recherche de la note temperance
 if (isset($colname_Pays)) {
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_temperance = sprintf("SELECT * FROM temperance WHERE ch_temp_element_id = %s AND ch_temp_element = 'ville' AND ch_temp_statut='3'", GetSQLValueString($villeid, "int"));
 $temperance = mysql_query($query_temperance, $maconnexion) or die(mysql_error());
 $row_temperance = mysql_fetch_assoc($temperance);
@@ -378,11 +378,11 @@ init();
       <!-- Moderation
      ================================================== -->
       <?php if (($_SESSION['statut'] >= 20) OR ($row_User['ch_use_id'] == $_SESSION['user_ID'])) { ?>
-      <form class="pull-right" action="back/ville_confirmation_supprimer.php" method="post">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/ville_confirmation_supprimer.php" method="post">
         <input name="ville-ID" type="hidden" value="<?php echo $row_infoVille['ch_vil_ID']; ?>">
         <button class="btn btn-danger" type="submit" title="supprimer cette ville"><i class="icon-trash icon-white"></i></button>
       </form>
-      <form class="pull-right" action="back/ville_modifier.php" method="get">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="get">
         <input name="ville-ID" type="hidden" value="<?php echo $row_infoVille['ch_vil_ID']; ?>">
         <button class="btn btn-primary" type="submit" title="modifier la page de cette ville"><i class="icon-pencil icon-white"></i></button>
       </form>
@@ -496,7 +496,7 @@ echo $population_ville_francais; ?></p>
           <div id="Autresvilles" class="span5">
             <?php if ($row_Autresvilles) { ?>
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&eacute;lectionnez une autre ville :</p>
-            <form class="well" action="page-ville.php#carte" method="get">
+            <form class="well" action="<?= DEF_URI_PATH ?>page-ville.php#carte" method="get">
               <input type="hidden" name="ch_pay_id" value="<?php echo $row_infoVille['ch_vil_paysID']; ?>" />
               <select name="ch_ville_id" onchange="this.form.submit()">
                 <?php do { ?>
@@ -520,6 +520,7 @@ echo $population_ville_francais; ?></p>
           <h1>Économie</h1>
         </div>
         <h3>Balance des ressources</h3>
+        <div class="well">
           <?php
             renderElement('Temperance/resources', array(
                 'resources' => $total_ressources
@@ -527,23 +528,33 @@ echo $population_ville_francais; ?></p>
           ?>
           <div class="clearfix"></div>
 
-        <h3>Détail des ressources</h3>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" href="#economie-detail">
+                    Détail de la balance des ressources
+                </a>
+            </div>
+            <div id="economie-detail" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <h4><i class="icon-road"></i> Infrastructures</h4>
+                <?php
+                renderElement('Temperance/resources_small', array(
+                    'resources' => $row_somme_ressources
+                ));
+                ?>
+                <p></p>
+              <h4><i class="icon-star"></i> Patrimoine</h4>
+                <?php
+                renderElement('Temperance/resources_small', array(
+                    'resources' => $row_monument_ressources
+                ));
+                ?>
+                <div class="clearfix"></div>
+            </div>
+            </div>
+          </div>
+        </div>
 
-          <h4 style="margin-left: 10px;">Infrastructures</h4>
-          <?php
-            renderElement('Temperance/resources', array(
-                'resources' => $row_somme_ressources
-            ));
-          ?>
-          <div class="clearfix"></div>
-
-          <h4 style="margin-left: 10px;">Patrimoine</h4>
-          <?php
-            renderElement('Temperance/resources', array(
-                'resources' => $row_monument_ressources
-            ));
-          ?>
-          <div class="clearfix"></div>
         <!-- Liste infrasructures
     ================================================== -->
         <h3>Infrastructures de la ville</h3>
@@ -618,7 +629,7 @@ echo $population_ville_francais; ?></p>
 
 			$listcategories = ($row_monument['listcat']);
 			if ($row_monument['listcat']) {
-                mysql_select_db($database_maconnexion, $maconnexion);
+                
                 $query_liste_mon_cat3 = "SELECT * FROM monument_categories
                     WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
                 $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());

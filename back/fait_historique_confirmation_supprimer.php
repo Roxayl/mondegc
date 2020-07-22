@@ -1,16 +1,16 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -18,7 +18,7 @@ $colname_ch_his_confimation_suppression = "-1";
 if (isset($_POST['ch_his_id'])) {
   $colname_ch_his_confimation_suppression = $_POST['ch_his_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_ch_his_confimation_suppression = sprintf("SELECT ch_his_id, ch_his_paysID, ch_his_nom, ch_his_lien_img1 FROM histoire WHERE ch_his_id = %s", GetSQLValueString($colname_ch_his_confimation_suppression, "int"));
 $ch_his_confimation_suppression = mysql_query($query_ch_his_confimation_suppression, $maconnexion) or die(mysql_error());
 $row_ch_his_confimation_suppression = mysql_fetch_assoc($ch_his_confimation_suppression);
@@ -65,7 +65,7 @@ $totalRows_ch_his_confimation_suppression = mysql_num_rows($ch_his_confimation_s
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron subhead" id="overview">
@@ -73,11 +73,11 @@ $totalRows_ch_his_confimation_suppression = mysql_num_rows($ch_his_confimation_s
     <h1>Attention&nbsp;!</h1>
     <p>Souhaitez-vous r&eacute;ellement supprimer <?php echo $row_ch_his_confimation_suppression['ch_his_nom']; ?>&nbsp;?</p>
     <p>Cette action sera irr&eacute;versible</p>
-    <form action="fait_historique_supprimer.php" method="post" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>back/fait_historique_supprimer.php" method="post" class="form-button-inline">
       <input name="ch_his_id" type="hidden" value="<?php echo $row_ch_his_confimation_suppression['ch_his_id']; ?>">
       <button type="submit" class="btn btn-large btn-danger" title="supprimer le monument"><i class="icon-trash icon-white"></i> Supprimer</button>
     </form>
-    <form action="page_pays_back.php#faits-historiques" method="post" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>back/page_pays_back.php#faits-historiques" method="post" class="form-button-inline">
       <input name="paysID" type="hidden" value="<?php echo $row_ch_his_confimation_suppression['ch_his_paysID']; ?>">
       <button type="submit" class="btn btn-large btn-success" title="retour &agrave; la page de modification du pays">Annuler</button>
     </form>
@@ -87,7 +87,7 @@ $totalRows_ch_his_confimation_suppression = mysql_num_rows($ch_his_confimation_s
 
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

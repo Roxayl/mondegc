@@ -1,6 +1,6 @@
 <?php
 
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 //Connexion et deconnexion
 include('php/log.php');
@@ -10,7 +10,7 @@ $colname_fait_his = "-1";
 if (isset($_GET['ch_his_id'])) {
   $colname_fait_his = $_GET['ch_his_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_fait_his = sprintf("SELECT ch_his_id, ch_his_label, ch_his_statut, ch_his_profession, ch_his_personnage, ch_his_paysID, ch_his_date, ch_his_mis_jour, ch_his_nb_update, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_nom, ch_his_lien_img1, ch_his_legende_img1, ch_his_description, ch_his_contenu, ch_pay_id, ch_pay_nom, ch_use_id, (SELECT GROUP_CONCAT(ch_disp_fait_hist_cat_id) FROM dispatch_fait_his_cat WHERE ch_his_ID = ch_disp_fait_hist_id) AS listcat FROM histoire INNER JOIN pays ON ch_his_paysID = ch_pay_id INNER JOIN users ON ch_pay_id = ch_use_paysID WHERE ch_his_id = %s", GetSQLValueString($colname_fait_his, "int"));
 $fait_his = mysql_query($query_fait_his, $maconnexion) or die(mysql_error());
 $row_fait_his = mysql_fetch_assoc($fait_his);
@@ -20,7 +20,7 @@ $totalRows_fait_his = mysql_num_rows($fait_his);
 $listcategories = ($row_fait_his['listcat']);
 			if ($row_fait_his['listcat']) {
           
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_fai_cat3 = "SELECT * FROM faithist_categories WHERE ch_fai_cat_ID In ($listcategories) AND ch_fai_cat_statut = 1";
 $liste_fai_cat3 = mysql_query($query_liste_fai_cat3, $maconnexion) or die(mysql_error());
 $row_liste_fai_cat3 = mysql_fetch_assoc($liste_fai_cat3);
@@ -76,17 +76,17 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
   <!-- Moderation
      ================================================== -->
   <?php if (($_SESSION['statut'] >= 20) OR ($row_fait_his['ch_use_id'] == $_SESSION['user_ID'])) { ?>
-  <form class="pull-right" action="back/fait_historique_confirmation_supprimer.php" method="post">
+  <form class="pull-right" action="<?= DEF_URI_PATH ?>back/fait_historique_confirmation_supprimer.php" method="post">
     <input name="ch_his_id" type="hidden" value="<?php echo $row_fait_his['ch_his_id']; ?>">
     <button class="btn btn-danger" type="submit" title="supprimer ce fait historique"><i class="icon-trash icon-white"></i></button>
   </form>
   <?php if ($row_fait_his['ch_his_personnage'] == 2) { ?>
-  <form class="pull-right" action="back/personnage_historique_modifier.php" method="post">
+  <form class="pull-right" action="<?= DEF_URI_PATH ?>back/personnage_historique_modifier.php" method="post">
     <input name="ch_his_id" type="hidden" value="<?php echo $row_fait_his['ch_his_id']; ?>">
     <button class="btn btn-danger" type="submit" title="modifier ce fait historique"><i class="icon-pencil icon-white"></i></button>
   </form>
   <?php } else {?>
-<form class="pull-right" action="back/fait_historique_modifier.php" method="post">
+<form class="pull-right" action="<?= DEF_URI_PATH ?>back/fait_historique_modifier.php" method="post">
     <input name="ch_his_id" type="hidden" value="<?php echo $row_fait_his['ch_his_id']; ?>">
     <button class="btn btn-danger" type="submit" title="modifier ce fait historique"><i class="icon-pencil icon-white"></i></button>
   </form>

@@ -1,22 +1,22 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
 //requete instituts
 $institut_id = 2;
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
@@ -35,11 +35,12 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
                        GetSQLValueString($_POST['ch_geo_type'], "text"),
                        GetSQLValueString($_POST['ch_geo_nom'], "text"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $insertGoTo = "institut_geographie.php?bounds=".$_POST['ch_geo_bounds'];
+  $insertGoTo = DEF_URI_PATH . "back/institut_geographie.php?bounds=".$_POST['ch_geo_bounds'];
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 
 
@@ -57,10 +58,11 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature"))
                        GetSQLValueString($_POST['ch_geo_nom'], "text"),
 					   GetSQLValueString($_POST['ch_geo_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
-  $updateGoTo = "institut_geographie.php?bounds=".$_POST['ch_geo_bounds'];
+  $updateGoTo = DEF_URI_PATH . "back/institut_geographie.php?bounds=".$_POST['ch_geo_bounds'];
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 
@@ -199,7 +201,7 @@ div.editPanel {
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include("../php/carte-modifier-zone-institut.php"); ?>
+<?php include(DEF_ROOTPATH . "php/carte-modifier-zone-institut.php"); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>
@@ -218,7 +220,7 @@ div.editPanel {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container" id="overview"> 
@@ -226,11 +228,11 @@ div.editPanel {
   <!-- Page CONTENT
     ================================================== -->
   <section class="corps-page">
-  <?php include('../php/menu-haut-conseil.php'); ?>
+  <?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
 
   <!-- formulaire de modification instituts
      ================================================== -->
-  <form class="pull-right-cta" action="insitut_modifier.php" method="post" style="margin-top: 30px;">
+  <form class="pull-right-cta" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post" style="margin-top: 30px;">
     <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
     <button class="btn btn-primary btn-cta" type="submit" title="Modifier les informations sur le Comité"><i class="icon-edit icon-white"></i> Modifier la description</button>
   </form>
@@ -277,7 +279,7 @@ div.editPanel {
 $com_cat = "institut";
 $userID = $_SESSION['user_ID'];
 $com_element_id = 2;
-include('../php/communiques-back.php'); ?>
+include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
   </div>
   
   </div>
@@ -288,7 +290,7 @@ include('../php/communiques-back.php'); ?>
 
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <?php

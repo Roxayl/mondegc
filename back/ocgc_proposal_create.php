@@ -1,22 +1,20 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 $_error = false;
 
 if (!($_SESSION['statut']) or $_SESSION['statut'] < 10) {
     // Redirection vers page connexion
     header("Status: 301 Moved Permanently", false, 301);
-    header('Location: ../connexion.php');
+    header('Location: ' . legacyPage('connexion'));
     exit();
 }
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-    $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 $thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
 $userPaysAllowedToVote = $thisUser->getCountries(\GenCity\Monde\User::getUserPermission('Dirigeant'), true);
@@ -37,7 +35,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(empty($proposalValidate)) {
         $postProposal->create();
         getErrorMessage('success', "Votre proposition a été créée avec succès !");
-        header('Location: ../assemblee.php');
+        header('Location: ' . legacyPage('assemblee'));
         exit();
     }
 
@@ -120,7 +118,7 @@ img.olTileImage {
 <!-- Navbar
     ================================================== -->
 <?php $institut = true;
-include('../php/navbarback.php'); ?>
+include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container corps-page">
@@ -146,7 +144,7 @@ include('../php/navbarback.php'); ?>
 
     <div class="span8">
 
-    <form method="POST" action="ocgc_proposal_create.php" class="form-horizontal" id="ProposalForm">
+    <form method="POST" action="<?= DEF_URI_PATH ?>back/ocgc_proposal_create.php" class="form-horizontal" id="ProposalForm">
 
         <h3>Type de proposition</h3>
 
@@ -331,7 +329,7 @@ include('../php/navbarback.php'); ?>
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>

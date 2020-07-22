@@ -1,16 +1,16 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php'); 
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php'); 
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
@@ -22,15 +22,13 @@ if ((isset($_POST['ch_disp_FH_id'])) && ($_POST['ch_disp_FH_id'] != "")) {
   $deleteSQL = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_FH_id=%s",
                        GetSQLValueString($_POST['ch_disp_FH_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
-  $deleteGoTo = '../back/institut_histoire.php?fai_catID='. $cat .'';
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $deleteGoTo = DEF_URI_PATH . 'back/institut_histoire.php?fai_catID='. $cat .'';
+  appendQueryString($deleteGoTo);
   $adresse = $deleteGoTo .'#classer-fait-hist';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">
@@ -70,7 +68,7 @@ if ((isset($_POST['ch_disp_FH_id'])) && ($_POST['ch_disp_FH_id'] != "")) {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 
 <!-- Subhead
 ================================================== -->
@@ -81,7 +79,7 @@ if ((isset($_POST['ch_disp_FH_id'])) && ($_POST['ch_disp_FH_id'] != "")) {
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

@@ -1,6 +1,6 @@
 ﻿<?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 
@@ -8,7 +8,7 @@ $ville_ID = "-1";
 if (isset($_GET['ch_vil_ID'])) {
   $ville_ID = $_GET['ch_vil_ID'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_lien_img1, ch_vil_user, ch_vil_paysID, ch_pay_lien_forum, ch_use_id FROM villes INNER JOIN pays ON ch_vil_paysID = ch_pay_id LEFT JOIN  users ON ch_use_paysID = ch_vil_paysID WHERE ch_vil_ID = %s AND ch_vil_capitale<>3", GetSQLValueString($ville_ID, "int"));
 $villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
 $row_villes = mysql_fetch_assoc($villes);
@@ -32,25 +32,21 @@ $id_trouve= false;
 
 $paysid = $row_villes['ch_vil_paysID'];
 //Mise à jour formulaire pays
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
   $updateSQL = sprintf("UPDATE pays SET ch_pay_lien_forum=%s WHERE ch_pay_id=%s",
                        GetSQLValueString($_POST['ch_pay_lien_forum'], "text"),
                        GetSQLValueString($_POST['ch_pay_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
-    $updateGoTo = "../page-ville.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+    $updateGoTo = DEF_URI_PATH . "page-ville.php";
+  appendQueryString($updateGoTo);
   $adresse = $updateGoTo."?ch_pay_id=".$row_villes['ch_vil_paysID']."&ch_ville_id=".$row_villes['ch_vil_ID'];
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 ?>
 <!-- Modal Header si ID sujet correspond  a 4 chiffres-->

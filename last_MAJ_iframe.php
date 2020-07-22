@@ -7,7 +7,7 @@ function csrf_startup() {
     csrf_conf('frame-breaker', false); // ça, là.
 }
 
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 // *** Connexion communique categorie pays
 $maxRows_LastCommunique = 20;
@@ -17,7 +17,7 @@ if (isset($_GET['pageNum_LastCommunique'])) {
 }
 $startRow_LastCommunique = $pageNum_LastCommunique * $maxRows_LastCommunique;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_LastCommunique = "
 SELECT communique_pays.ch_com_label AS type_notification, communique_pays.ch_com_ID AS id, communique_pays.ch_com_statut AS statut, communique_pays.ch_com_categorie AS sous_categorie, communique_pays.ch_com_element_id AS id_element, communique_pays.ch_com_user_id AS id_auteur, communique_pays.ch_com_date AS date, communique_pays.ch_com_titre AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_pay_id AS id_institution, ch_pay_nom AS institution, ch_pay_lien_imgdrapeau AS img_institution, ch_pay_id AS pays_institution
 FROM communiques communique_pays 

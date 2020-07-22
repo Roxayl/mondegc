@@ -1,16 +1,16 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=30))
 {
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
@@ -18,7 +18,7 @@ $colname_Pays = "-1";
 if (isset($_POST['paysID'])) {
   $colname_Pays = $_POST['paysID'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_Pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgheader FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_Pays, "int"));
 $Pays = mysql_query($query_Pays, $maconnexion) or die(mysql_error());
 $row_Pays = mysql_fetch_assoc($Pays);
@@ -62,7 +62,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 <body data-spy="scroll" data-target=".bs-docs-sidebar" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div id="introheader" class="jumbotron">
@@ -70,11 +70,11 @@ $currentPage = $_SERVER["PHP_SELF"];
     <h1>Attention&nbsp;!</h1>
     <p>Souhaitez-vous r&eacute;ellement supprimer le pays <?php echo $row_Pays['ch_pay_nom']; ?>&nbsp;?</p>
       <p>Cette action sera irr&eacute;versible</p>
-    <form action="page_pays_supprimer.php" method="post" class="form-button-inline">
+    <form action="<?= DEF_URI_PATH ?>back/page_pays_supprimer.php" method="post" class="form-button-inline">
       <input name="Pays_ID" type="hidden" value="<?php echo $row_Pays['ch_pay_id']; ?>">
       <button type="submit" class="btn btn-large btn-danger" title="supprimer le Pays"><i class="icon-trash icon-white"></i> Supprimer</button>
       </form>
-      <form action="page_pays_back.php" method="post" class="form-button-inline">
+      <form action="<?= DEF_URI_PATH ?>back/page_pays_back.php" method="post" class="form-button-inline">
         <input name="paysID" type="hidden" value="<?php echo $row_Pays['ch_pay_id']; ?>">
       <button type="submit" class="btn btn-large btn-success" title="retour &agrave; la page de modification du pays">Annuler</button>
     </form>
@@ -83,7 +83,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript
@@ -92,7 +92,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('../php/carteemplacements.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/carteemplacements.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>

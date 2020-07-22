@@ -1,16 +1,15 @@
 <?php
 
-
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../Haut-Conseil.php');
+header('Location: ' . legacyPage('Haut-Conseil'));
 exit();
 	}
 ?><!DOCTYPE html>
@@ -51,7 +50,7 @@ exit();
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div id="introheader" class="jumbotron masthead">
@@ -59,7 +58,7 @@ exit();
     <!-- Navbar haut-conseil
     ================================================== -->
     <div style="text-align:left">
-      <?php include('../php/menu-haut-conseil.php'); ?>
+      <?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
     </div>
     <h1>Conseil de l'OCGC</h1>
     <p><i>Bienvenue <?= __s($_SESSION['login_user']) ?>, membre du Conseil de l'OCGC</i></p>
@@ -67,7 +66,7 @@ exit();
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

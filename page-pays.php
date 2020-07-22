@@ -1,5 +1,8 @@
 <?php
-require_once('Connections/maconnexion.php');
+
+use Illuminate\Support\Str;
+
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 //Connexion et deconnexion
 include('php/log.php');
@@ -8,13 +11,13 @@ $colname_Pays = "-1";
 if (isset($_GET['ch_pay_id'])) {
   $colname_Pays = $_GET['ch_pay_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_Pays = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_Pays, "int"));
 $Pays = mysql_query($query_Pays, $maconnexion) or die(mysql_error());
 $row_Pays = mysql_fetch_assoc($Pays);
 
 //Recherche des villes du pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_user, ch_vil_date_enregistrement, ch_vil_mis_jour, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_use_login FROM villes INNER JOIN users ON ch_vil_user = ch_use_id WHERE ch_vil_capitale <> 3 AND villes.ch_vil_paysID = %s ORDER BY ch_vil_mis_jour DESC", GetSQLValueString($colname_Pays, "int"));
 $villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
 $row_villes = mysql_fetch_assoc($villes);
@@ -22,7 +25,7 @@ $totalRows_villes = mysql_num_rows($villes);
 
 
 //Addition des populations des villes
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_population = sprintf("SELECT Sum(ch_vil_population) AS population_pays FROM villes WHERE villes.ch_vil_capitale != 3 AND villes.ch_vil_paysID = %s", GetSQLValueString($colname_Pays, "int"));
 $population = mysql_query($query_population, $maconnexion) or die(mysql_error());
 $row_population = mysql_fetch_assoc($population);
@@ -30,7 +33,7 @@ $totalRows_population = mysql_num_rows($population);
 $population_pays = $row_population['population_pays'];
 
 //Connexion base de données utilisateur pour info personnage
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_User = sprintf("SELECT ch_use_id, ch_use_login, (SELECT GROUP_CONCAT(ch_disp_group_id) FROM dispatch_mem_group WHERE ch_use_id = ch_disp_mem_id AND ch_disp_mem_statut != 3) AS listgroup FROM users WHERE ch_use_paysID = %s AND ch_use_statut >= 10", GetSQLValueString($colname_Pays, "int"));
 $User = mysql_query($query_User, $maconnexion) or die(mysql_error());
 $row_User = mysql_fetch_assoc($User);
@@ -41,7 +44,7 @@ $thisPays = new \GenCity\Monde\Pays($colname_Pays);
 $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
 
 //Recherche des monuments du pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_monument = sprintf("SELECT ch_pat_ID, ch_pat_paysID, ch_pat_date, ch_pat_mis_jour, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_description, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine WHERE ch_pat_statut = 1 AND ch_pat_paysID = %s ORDER BY ch_pat_mis_jour DESC", GetSQLValueString($colname_Pays, "int"));
 $monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
 $row_monument = mysql_fetch_assoc($monument);
@@ -55,7 +58,7 @@ $monument_ressources = mysql_query($query_monument_ressources, $maconnexion) or 
 $row_monument_ressources = mysql_fetch_assoc($monument_ressources);
 
 //Recherche des faits historiques du pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_fait_his = sprintf("SELECT ch_his_id, ch_his_paysID, ch_his_date, ch_his_mis_jour, ch_his_nom, ch_his_statut, ch_his_personnage, ch_his_lien_img1, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_description, (SELECT GROUP_CONCAT(ch_disp_fait_hist_cat_id) FROM dispatch_fait_his_cat WHERE ch_his_ID = ch_disp_fait_hist_id) AS listcat FROM histoire WHERE ch_his_statut = 1 AND ch_his_paysID = %s ORDER BY ch_his_date_fait ASC", GetSQLValueString($colname_Pays, "int"));
 $fait_his = mysql_query($query_fait_his, $maconnexion) or die(mysql_error());
 $row_fait_his = mysql_fetch_assoc($fait_his);
@@ -63,27 +66,14 @@ $totalRows_fait_his = mysql_num_rows($fait_his);
 
 //Recherche de la balance des ressources de la ville
 if (isset($colname_Pays)) {
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_somme_ressources = sprintf("SELECT SUM(ch_inf_off_budget) AS budget,SUM(ch_inf_off_Industrie) AS industrie, SUM(ch_inf_off_Commerce) AS commerce, SUM(ch_inf_off_Agriculture) AS agriculture, SUM(ch_inf_off_Tourisme) AS tourisme, SUM(ch_inf_off_Recherche) AS recherche, SUM(ch_inf_off_Environnement) AS environnement, SUM(ch_inf_off_Education) AS education FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_pay_id = %s AND ch_vil_capitale != 3 AND ch_inf_statut = 2", GetSQLValueString($colname_Pays, "int"));
 $somme_ressources = mysql_query($query_somme_ressources, $maconnexion) or die(mysql_error());
 $row_somme_ressources = mysql_fetch_assoc($somme_ressources);
 }
 
-
-$listgroup = "-1";
-if (isset($row_User['listgroup'])) {
-$listgroup = $row_User['listgroup'];
-
-//recherche des groupes du membre
-mysql_select_db($database_maconnexion, $maconnexion);
-$query_liste_group = "SELECT * FROM membres_groupes WHERE ch_mem_group_ID In ($listgroup) AND ch_mem_group_statut = 1";
-$liste_group = mysql_query($query_liste_group, $maconnexion) or die(mysql_error());
-$row_liste_group = mysql_fetch_assoc($liste_group);
-$totalRows_liste_group = mysql_num_rows($liste_group);
-}
-
 //recherche de la liste des jeux
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_jeux = sprintf("SELECT ch_vil_type_jeu FROM villes WHERE ch_vil_paysID = %s GROUP BY ch_vil_type_jeu ", GetSQLValueString($colname_Pays, "int"));
 $liste_jeux = mysql_query($query_liste_jeux, $maconnexion) or die(mysql_error());
 $row_liste_jeux = mysql_fetch_assoc($liste_jeux);
@@ -91,16 +81,19 @@ $totalRows_liste_jeux = mysql_num_rows($liste_jeux);
 
 
 //recherche de la note temperance
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_temperance = sprintf("SELECT * FROM temperance WHERE ch_temp_element_id = %s AND ch_temp_element = 'pays' AND ch_temp_statut='3' ORDER BY ch_temp_date DESC", GetSQLValueString($colname_Pays, "int"));
 $temperance = mysql_query($query_temperance, $maconnexion) or die(mysql_error());
 $row_temperance = mysql_fetch_assoc($temperance);
 
 //recherche des mesures des zones de la carte pour calcul ressources
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($colname_Pays, "int"));
 $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
 $row_geometries = mysql_fetch_assoc($geometries);
+
+// Obtention des organisations
+$orgMember = \App\Models\OrganisationMember::with('organisation')->where('pays_id', '=', $colname_Pays)->get();
 
 $_SESSION['last_work'] = 'page-pays.php?ch_pay_id='.$row_Pays['ch_pay_id'];
 ?>
@@ -230,7 +223,7 @@ init();
         <?php if ($row_Pays['ch_pay_header_histoire'] OR $row_Pays['ch_pay_text_histoire'] OR $row_fait_his) { ?>
         <li><a href="#histoire">Histoire</a></li>
         <?php } ?>
-        <li><a href="#economie">Economie</a></li>
+        <li><a href="#economie">Économie</a></li>
         <?php if ($row_Pays['ch_pay_header_transport'] OR $row_Pays['ch_pay_text_transport']) { ?>
         <li><a href="#transport">Transport</a></li>
         <?php } ?>
@@ -280,13 +273,13 @@ init();
       <!-- Moderation
      ================================================== -->
       <?php if ($_SESSION['statut'] >= 30) { ?>
-      <form class="pull-right" action="back/page_pays_confirmer_supprimer.php" method="post">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_confirmer_supprimer.php" method="post">
         <input name="paysID" type="hidden" value="<?php echo $row_Pays['ch_pay_id']; ?>">
         <button class="btn btn-danger" type="submit" title="supprimer ce pays"><i class="icon-trash icon-white"></i></button>
       </form>
       <?php } ?>
       <?php if (($_SESSION['statut'] >= 20) OR ($row_User['ch_use_id'] == $_SESSION['user_ID'])) { ?>
-      <form class="pull-right" action="back/page_pays_back.php" method="post">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_back.php" method="post">
         <input name="paysID" type="hidden" value="<?php echo $row_Pays['ch_pay_id']; ?>">
         <input name="userID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
         <button class="btn btn-primary" type="submit" title="modifier la page de ce pays"><i class="icon-pencil icon-white"></i></button>
@@ -422,45 +415,66 @@ init();
         <div id="diplomatie" class="titre-vert anchor">
           <h1>Diplomatie</h1>
         </div>
+
+        <div class="well">
+        <h4>Dirigeant</h4>
+
         <div class="row-fluid">
-          <div class="span3 thumb">
-            <?php if (!empty($personnage->get('lien_img'))) {?>
-            <img src="<?= $personnage->get('lien_img'); ?>" alt="<?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?>" title="<?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?>">
-            <?php } else { ?>
-            <img src="assets/img/imagesdefaut/personnage.jpg" alt="personnage par default">
-            <?php } ?>
+          <div class="span3">
+            <?php if (!empty($personnage->get('lien_img'))): ?>
+                <img src="<?= __s($personnage->get('lien_img')) ?>"
+                     alt="<?= __s($personnage->get('prenom_personnage')) ?>
+                          <?= __s($personnage->get('nom_personnage')) ?>"
+                     title="<?= __s($personnage->get('prenom_personnage')) ?>
+                            <?= __s($personnage->get('nom_personnage')) ?>">
+            <?php else: ?>
+                <img src="assets/img/imagesdefaut/personnage.jpg" alt="personnage par default">
+            <?php endif; ?>
             <div class="titre-gris">
-              <?php if (!empty($personnage->get('prenom_personnage')) OR !empty($personnage->get('nom_personnage')))
-              { ?>
-                  <h3><?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?></h3>
-              <?php } else { ?>
+              <?php if (!empty($personnage->get('prenom_personnage'))
+                     OR !empty($personnage->get('nom_personnage'))): ?>
+                  <h3><?= __s($personnage->get('prenom_personnage')) ?>
+                      <?= __s($personnage->get('nom_personnage')) ?></h3>
+              <?php else: ?>
                 <h3>Pas de dirigeant</h3>
-              <?php } ?>
+              <?php endif; ?>
             </div>
           </div>
           <div class="span9">
-            <h3>Dirigeant du pays&nbsp;:</h3>
             <div class="well">
-              <p><i><?= $personnage->get('predicat') ?></i></p>
-              <p><i><?= $personnage->get('titre_personnage') ?></i></p>
+              <p><i><?= __s($personnage->get('predicat')) ?></i></p>
+              <p><i><?= __s($personnage->get('titre_personnage')) ?></i></p>
             </div>
-            <?php if ($row_User['listgroup']) { ?>
-            <h3>Groupes politiques</h3>
-            <div class="row-fluid">
-              <?php do { ?>
-                <!-- Icone et popover de la categorie -->
-                <div class="span2 icone-categorie"><a href="#" rel="clickover" title="<?php echo $row_liste_group['ch_mem_group_nom']; ?>" data-placement="top" data-content="<?php echo $row_liste_group['ch_mem_group_desc']; ?>"><img src="<?php echo $row_liste_group['ch_mem_group_icon']; ?>" alt="icone <?php echo $row_liste_group['ch_mem_group_nom']; ?>" style="background-color:<?php echo $row_liste_group['ch_mem_group_couleur']; ?>;"></a></div>
-                <?php } while ($row_liste_group = mysql_fetch_assoc($liste_group)); ?>
-            </div>
-            <?php } ?>
-            <?php if (!empty($personnage->get('biographie'))) { ?>
-            <h3>Biographie&nbsp;:</h3>
+            <?php if (!empty($personnage->get('biographie'))): ?>
             <div class="well">
-              <p><?= $personnage->get('biographie') ?></p>
+              <p><?= __s($personnage->get('biographie')) ?></p>
             </div>
           </div>
-          <?php } ?>
+          <?php endif; ?>
         </div>
+
+        <?php if(count($orgMember)): ?>
+        <h4>Organisations</h4>
+        <p><?= $thisPays->get('ch_pay_nom') ?> est membre des organisations suivantes :</p>
+        <ul style="list-style-type: none;">
+        <?php foreach($orgMember as $thisMembership): ?>
+            <li>
+                <img src="<?= __s($thisMembership->organisation->flag) ?>"
+                     alt="Drapeau de <?= __s($thisMembership->organisation->name) ?>"
+                     class="img-menu-drapeau">
+                <a href="<?= route('organisation.showslug', [
+                    'id' => $thisMembership->organisation->id,
+                    'slug' => Str::slug($thisMembership->organisation->name)
+                ]) ?>">
+                    <?= __s($thisMembership->organisation->name) ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+        </ul>
+        <?php endif; ?>
+
+        </div>
+
       </section>
       
       <!-- Liste des villes
@@ -545,7 +559,7 @@ init();
 			$listcategories = ($row_fait_his['listcat']);
 			if ($row_fait_his['listcat']) {
           
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_fai_cat3 = "SELECT * FROM faithist_categories WHERE ch_fai_cat_ID In ($listcategories) AND ch_fai_cat_statut = 1";
 $liste_fai_cat3 = mysql_query($query_liste_fai_cat3, $maconnexion) or die(mysql_error());
 $row_liste_fai_cat3 = mysql_fetch_assoc($liste_fai_cat3);
@@ -620,11 +634,11 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         <?php } ?>
       </section>
       <?php } ?>
-      <!-- Econonomie
+      <!-- Economie
         ================================================== -->
       <section>
         <div id="economie" class="titre-vert anchor">
-          <h1>Economie</h1>
+          <h1>Économie</h1>
         </div>
 
           <?php
@@ -663,35 +677,42 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
           );
           ?>
 
-        <div class="row-fluid" style="margin-left: 12px;">
+        <div class="well">
           <h3>Balance totale des ressources</h3>
           <?php
             renderElement('Temperance/resources', array(
                 'resources' => $ressources_total
             ));
           ?>
-        </div>
-        <div class="row-fluid" style="margin-left: 12px;">
+          <div class="clearfix"></div>
 
-          <h3>Détail de la balance des ressources</h3>
-            <p></p>
-          <h4>Balance des ressources issues des villes du pays </h4>
-            <?php
-            renderElement('Temperance/resources', array(
-                'resources' => $ressources_villes
-            ));
-            ?>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" href="#economie-pays">
+                    Détail de la balance des ressources
+                </a>
+            </div>
+            <div id="economie-pays" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <h4><i class="icon-road"></i> Balance des ressources issues des villes du pays </h4>
+                <?php
+                renderElement('Temperance/resources_small', array(
+                    'resources' => $ressources_villes
+                ));
+                ?>
+                <p></p>
+              <h4><i class="icon-map-marker"></i> Balance des ressources issues de la carte</h4>
+                <?php
+                renderElement('Temperance/resources_small', array(
+                    'resources' => $ressources_cartes
+                ));
+                ?>
+                <div class="clearfix"></div>
+            </div>
+            </div>
+          </div>
+
         </div>
-        <div class="row-fluid" style="margin-left: 12px;">
-            <p></p>
-          <h4>Balance des ressources issues de la carte</h4>
-            <?php
-            renderElement('Temperance/resources', array(
-                'resources' => $ressources_cartes
-            ));
-            ?>
-        </div>
-        <div class="clearfix"></div>
 
         <?php if ($row_Pays['ch_pay_header_economie'] OR $row_Pays['ch_pay_text_economie']) { ?>
         <p>&nbsp;</p>
@@ -752,7 +773,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 
 			$listcategories = ($row_monument['listcat']);
 			if ($row_monument['listcat']) {
-                mysql_select_db($database_maconnexion, $maconnexion);
+
                 $query_liste_mon_cat3 = "SELECT * FROM monument_categories
                     WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
                 $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
@@ -812,8 +833,6 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 
 <!-- Footer
     ================================================== -->
-</body>
-</html>
 <script>
 $("a[data-toggle=modal]").click(function (e) {
   lv_target = $(this).attr('data-target')
@@ -826,24 +845,5 @@ $('#closemodal').click(function() {
 
 $('.popover-html').popover({ html : true});
 </script>
-<?php
-mysql_free_result($Pays);
-
-mysql_free_result($villes);
-
-mysql_free_result($User);
-
-mysql_free_result($monument);
-
-mysql_free_result($fait_his);
-
-mysql_free_result($somme_ressources);
-
-mysql_free_result($temperance);
-
-mysql_free_result($liste_jeux);
-
-if (isset($row_User['listgroup'])) {
-mysql_free_result($liste_group);
-}
-?>
+</body>
+</html>

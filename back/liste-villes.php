@@ -1,16 +1,16 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
@@ -29,7 +29,7 @@ if (isset($_GET['order_by'])) {
 if (isset($_GET['tri'])) {
   $tri = $_GET['tri'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_listvilles = "SELECT villes.ch_vil_ID, villes.ch_vil_paysID, villes.ch_vil_mis_jour, villes.ch_vil_nom, villes.ch_vil_capitale, villes.ch_vil_population, pays.ch_pay_id, pays.ch_pay_nom, ch_use_login FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id INNER JOIN users ON ch_vil_user = ch_use_id ORDER BY $order_by $tri";
 $query_limit_listvilles = sprintf("%s LIMIT %d, %d", $query_listvilles, $startRow_listvilles, $maxRows_listvilles);
 $listvilles = mysql_query($query_limit_listvilles, $maconnexion) or die(mysql_error());
@@ -79,11 +79,11 @@ $totalPages_listvilles = ceil($totalRows_listvilles/$maxRows_listvilles)-1;
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Navbar haut-conseil
     ================================================== -->
 <div class="container corps-page">
-<?php include('../php/menu-haut-conseil.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
   <!-- Page CONTENT
     ================================================== -->
   <div class="titre-bleu">
@@ -122,13 +122,13 @@ $totalPages_listvilles = ceil($totalRows_listvilles/$maxRows_listvilles)-1;
               <td><?php echo $row_listvilles['ch_use_login']; ?></td>
               <td><?php echo $row_listvilles['ch_vil_population']; ?></td>
               <td><?php echo date("d/m/Y � G:i:s", strtotime($row_listvilles['ch_vil_mis_jour'])); ?></td>
-              <td><form action="ville_modifier.php" method="GET">
+              <td><form action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="GET">
                   <input name="ville-ID" type="hidden" value="<?php echo $row_listvilles['ch_vil_ID']; ?>">
                   <button class="btn" type="submit" title="modifier la ville"><i class="icon-pencil"></i></button>
                 </form></td>
               <?php if ($_SESSION['statut'] >= 30)
 {?>
-              <td><form action="ville_confirmation_supprimer.php" method="post">
+              <td><form action="<?= DEF_URI_PATH ?>back/ville_confirmation_supprimer.php" method="post">
                   <input name="ville-ID" type="hidden" value="<?php echo $row_listvilles['ch_vil_ID']; ?>">
                   <button class="btn" type="submit" title="supprimer la ville"><i class="icon-trash"></i></button>
                 </form></td>
@@ -162,7 +162,7 @@ echo '</p>';  ?>
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

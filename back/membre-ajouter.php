@@ -1,25 +1,23 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "new_user")) {
 
@@ -43,10 +41,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "new_user")) {
       $_SESSION['userObject']->get('ch_use_id'), array('data', array('ch_use_prov_login' => $login)));
 
   $insertGoTo = 'liste-membres.php';
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($insertGoTo);
 
 if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn|outlook).[a-z]{2,4}$#", $mail)) // On filtre les serveurs qui rencontrent des bogues.
 {
@@ -102,12 +97,13 @@ mail('contact@romukulot.fr',$sujet,$message,$header);
     if (!mail($to, $subject, $body, $headers)) {
               $redirect_error= "error.php"; // Redirect if there is an error.
       header( "Location: ".$redirect_error ) ;
+      exit;
     }
   header(sprintf("Location: %s", $insertGoTo));
   exit();
 }
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_pays = "SELECT ch_pay_id, ch_pay_nom FROM pays ORDER BY ch_pay_nom ASC";
 $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
 $row_pays = mysql_fetch_assoc($pays);
@@ -163,11 +159,11 @@ $totalRows_pays = mysql_num_rows($pays);
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container corps-page">
-  <?php include('../php/menu-haut-conseil.php'); ?>
+  <?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
   <div class="titre-bleu">
     <h1>Cr&eacute;er un nouveau profil</h1>
   </div>
@@ -260,7 +256,7 @@ $totalRows_pays = mysql_num_rows($pays);
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

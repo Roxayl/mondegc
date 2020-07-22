@@ -2,17 +2,17 @@
 
 use GenCity\Monde\Pays;
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
  
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 if ($_SESSION['statut'])
 {
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -77,7 +77,7 @@ if($thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 
 <!-- Page CONTENT
     ================================================== -->
@@ -93,12 +93,12 @@ if($thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
       </ul>
     <p>&nbsp;</p>
     <section>
-      <?php include('../php/upload.php');
+      <?php include(DEF_ROOTPATH . 'php/upload.php');
 if (isset($uploadconfirm)) {
   $updateSQL = sprintf("UPDATE personnage SET lien_img=%s WHERE entity='pays' AND entity_id=%s",
                        GetSQLValueString($link, "text"),
                        GetSQLValueString($pays_ID, "int"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
   getErrorMessage('success', "L'avatar a été modifié avec succès !");
@@ -117,7 +117,7 @@ if (isset($uploadconfirm)) {
         <p>&nbsp;</p>
         <p><?php echo $character['predicat']; ?> <strong><?php echo $character['prenom_personnage']; ?> <?php echo $character['nom_personnage']; ?></strong>
         <p>&nbsp;</p>
-        <form action="avatar_modifier.php?paysID=<?= $thisPays->ch_pay_id ?>" method="post" enctype="multipart/form-data">
+        <form action="<?= DEF_URI_PATH ?>back/avatar_modifier.php?paysID=<?= $thisPays->ch_pay_id ?>" method="post" enctype="multipart/form-data">
           <input type="file" name="fileToUpload" id="fileToUpload" data-filename-placement="inside" title="Choisir une nouvelle image">
           <input name="paysID" id="paysID" type="hidden" value="<?= $thisPays->ch_pay_id ?>">
           <input name="maxwidth" id="maxwidth" type="hidden" value="250">
@@ -135,7 +135,7 @@ if (isset($uploadconfirm)) {
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript
@@ -156,6 +156,3 @@ $('input[type=file]').bootstrapFileInput();
       $(function() { 
           $('[rel="clickover"]').clickover();})
     </script>
-<?php
-mysql_free_result($avatar);
-?>

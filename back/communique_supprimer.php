@@ -1,16 +1,16 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -20,17 +20,14 @@ if ((isset($_POST['communique-ID'])) && ($_POST['communique-ID'] != "")) {
   $deleteSQL = sprintf("DELETE FROM communiques WHERE ch_com_ID=%s",
                        GetSQLValueString($_POST['communique-ID'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
   getErrorMessage('success', "Communiqué supprimé ! Pouf.");
 
-  $deleteGoTo = '../index.php';
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
-  header(sprintf("Location: %s", $deleteGoTo));
+  header(sprintf("Location: %s", legacyPage('index')));
+  exit;
+
 } ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
@@ -107,7 +104,7 @@ if ((isset($_POST['communique-ID'])) && ($_POST['communique-ID'] != "")) {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron subhead" id="overview">
@@ -118,7 +115,7 @@ if ((isset($_POST['communique-ID'])) && ($_POST['communique-ID'] != "")) {
 <div class="container corps-page"> </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

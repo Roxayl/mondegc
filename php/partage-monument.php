@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 //Protection  données envoyées
 if (!function_exists("GetSQLValueString")) {
@@ -39,7 +39,7 @@ $monument_ID = "-1";
 if (isset($_GET['ch_pat_id'])) {
   $monument_ID = $_GET['ch_pat_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_monument = sprintf("SELECT ch_pat_id, ch_pat_nom, ch_pat_lien_img1, ch_pat_description, ch_pat_paysID, ch_pay_lien_forum, ch_vil_user, ch_use_id  FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID LEFT JOIN users ON ch_pat_paysID = ch_use_paysID WHERE ch_pat_id = %s AND ch_pat_statut=1", GetSQLValueString($monument_ID, "int"));
 $monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
 $row_monument = mysql_fetch_assoc($monument);
@@ -63,25 +63,21 @@ $id_trouve= false;
 
 $paysid = $row_monument['ch_pat_paysID'];
 //Mise à jour formulaire pays
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
   $updateSQL = sprintf("UPDATE pays SET ch_pay_lien_forum=%s WHERE ch_pay_id=%s",
                        GetSQLValueString($_POST['ch_pay_lien_forum'], "text"),
                        GetSQLValueString($_POST['ch_pay_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
-    $updateGoTo = "../page-monument.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+    $updateGoTo = DEF_URI_PATH . "page-monument.php";
+  appendQueryString($updateGoTo);
   $adresse = $updateGoTo."?ch_pat_id=".$row_monument['ch_pat_id'];
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 ?>
 <!-- Modal Header si ID sujet correspond  a 4 chiffres-->

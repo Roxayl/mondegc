@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
 
@@ -10,7 +10,7 @@ $colname_ch_disp_MG_id = "-1";
 if (isset($_GET['ch_disp_MG_id'])) {
   $colname_ch_disp_MG_id = $_GET['ch_disp_MG_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_mon = sprintf("SELECT ch_disp_MG_id, ch_disp_mem_statut, ch_disp_group_id, ch_disp_mem_id, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_titre_dirigeant, ch_use_lien_imgpersonnage, ch_mem_group_nom, ch_mem_group_icon, ch_mem_group_couleur FROM dispatch_mem_group INNER JOIN users ON ch_disp_mem_id = ch_use_id INNER JOIN membres_groupes ON ch_disp_group_id = ch_mem_group_ID WHERE ch_disp_MG_id = %s", GetSQLValueString($colname_ch_disp_MG_id, "int"));
 $mon = mysql_query($query_mon, $maconnexion) or die(mysql_error());
 $row_mon = mysql_fetch_assoc($mon);

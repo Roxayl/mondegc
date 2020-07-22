@@ -3,24 +3,22 @@
 use GenCity\Monde\Pays;
 use GenCity\Monde\Ville;
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_ville")) {
@@ -71,17 +69,14 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_ville")) {
                        GetSQLValueString($_POST['ch_vil_culture'], "text"),
 					   GetSQLValueString($_POST['ch_vil_ID'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
         getErrorMessage('success', "Ville modifiée avec succès.");
     }
 
-  $updateGoTo = "ville_modifier.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $updateGoTo = DEF_URI_PATH . "back/ville_modifier.php";
+  appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
   exit;
 }
@@ -92,7 +87,7 @@ if (isset($_REQUEST['ville-ID'])) {
 	$_SESSION['ville_encours'] = $_REQUEST['ville-ID'];
 	unset($_REQUEST['ville-ID']);
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_ville = sprintf("SELECT * FROM villes INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($_SESSION['ville_encours'], "int"));
 $ville = mysql_query($query_ville, $maconnexion) or die(mysql_error());
 $row_ville = mysql_fetch_assoc($ville);
@@ -110,7 +105,7 @@ if (isset($_GET['pageNum_infrastructure'])) {
 }
 $startRow_infrastructure = $pageNum_infrastructure * $maxRows_infrastructure;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_infrastructure = sprintf("SELECT * FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id=infrastructures_officielles.ch_inf_off_id WHERE ch_inf_villeid = %s ORDER BY ch_inf_date DESC", GetSQLValueString($_SESSION['ville_encours'], "int"));
 $query_limit_infrastructure = sprintf("%s LIMIT %d, %d", $query_infrastructure, $startRow_infrastructure, $maxRows_infrastructure);
 $infrastructure = mysql_query($query_limit_infrastructure, $maconnexion) or die(mysql_error());
@@ -148,7 +143,7 @@ if (isset($_GET['pageNum_monument'])) {
 }
 $startRow_monument = $pageNum_monument * $maxRows_monument;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_monument = sprintf("SELECT * FROM patrimoine WHERE ch_pat_villeID = %s ORDER BY ch_pat_mis_jour DESC", GetSQLValueString($_SESSION['ville_encours'], "int"));
 $query_limit_monument = sprintf("%s LIMIT %d, %d", $query_monument, $startRow_monument, $maxRows_monument);
 $monument = mysql_query($query_limit_monument, $maconnexion) or die(mysql_error());
@@ -181,7 +176,7 @@ $queryString_monument = sprintf("&totalRows_monument=%d%s", $totalRows_monument,
 
 //Requete User
 $UserID = $row_ville['ch_vil_user'];
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_User = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_id = %s", GetSQLValueString($UserID, "int"));
 $User = mysql_query($query_User, $maconnexion) or die(mysql_error());
 $row_User = mysql_fetch_assoc($User);
@@ -190,7 +185,7 @@ $totalRows_User = mysql_num_rows($User);
 $_SESSION['last_work'] = "ville_modifier.php";
 
 //Liste des joueurs pour choisir maire
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_list_users = sprintf("SELECT ch_use_id, ch_use_login FROM users ORDER BY ch_use_login");
 $list_users = mysql_query($query_list_users, $maconnexion) or die(mysql_error());
 $row_list_users = mysql_fetch_assoc($list_users);
@@ -263,7 +258,7 @@ return true;
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header id="info-ville" class="jumbotron subhead anchor"> 
@@ -685,7 +680,7 @@ return true;
 $userID = $row_User['ch_use_id'];
 $com_cat = "ville";
 $com_element_id = $row_ville['ch_vil_ID'];
-include('../php/communiques-back.php'); ?>
+include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
     </section>
     
     <!-- Liste des infrastructures
@@ -837,7 +832,7 @@ $('#closemodal').click(function() {
 <div class="modal container fade" id="Modal-Monument"></div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript
@@ -846,7 +841,7 @@ $('#closemodal').click(function() {
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('../php/carte-ajouter-marqueur.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/carte-ajouter-marqueur.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>

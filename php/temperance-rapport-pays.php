@@ -1,11 +1,9 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 //recuperation ID element
 $ch_temp_id = "-1";
@@ -14,7 +12,7 @@ if (isset($_GET['ch_temp_id'])) {
 }
 
 //requete temperance
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_temperance = sprintf("SELECT * FROM notation_temperance WHERE ch_not_temp_temperance_id=%s", GetSQLValueString( $ch_temp_id, "int"));
 $temperance = mysql_query($query_temperance, $maconnexion) or die(mysql_error());
 $row_temperance = mysql_fetch_assoc($temperance);
@@ -60,7 +58,7 @@ ${'commentaireQ10auteurcom'.$i}= $row_temperance ['ch_not_temp_juge'];
 } while ($row_temperance = mysql_fetch_assoc($temperance));
 
 //requete pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom FROM temperance INNER JOIN pays ON ch_temp_element_id = ch_pay_id WHERE ch_temp_id=%s", GetSQLValueString($ch_temp_id, "int"));
 $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
 $row_pays = mysql_fetch_assoc($pays);

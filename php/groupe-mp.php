@@ -1,13 +1,13 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
 $group_ID = "-1";
 if (isset($_GET['ch_mem_group_ID'])) {
   $group_ID = $_GET['ch_mem_group_ID'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_group = sprintf("SELECT ch_disp_mem_id, ch_use_paysID, ch_use_login, ch_use_lien_imgpersonnage, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_id, ch_pay_lien_imgdrapeau FROM dispatch_mem_group INNER JOIN users ON ch_disp_mem_id = ch_use_id INNER JOIN pays ON ch_use_paysID = ch_pay_id WHERE ch_disp_group_id = %s AND ch_pay_publication=1", GetSQLValueString($group_ID, "int"));
 $group = mysql_query($query_group, $maconnexion) or die(mysql_error());
 $row_group = mysql_fetch_assoc($group);
@@ -15,7 +15,7 @@ $totalRows_group = mysql_num_rows($group);
 
 
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_group_info = sprintf("SELECT ch_mem_group_nom, ch_mem_group_icon, ch_mem_group_couleur FROM membres_groupes WHERE ch_mem_group_ID = %s", GetSQLValueString($group_ID, "int"));
 $group_info = mysql_query($query_group_info, $maconnexion) or die(mysql_error());
 $row_group_info = mysql_fetch_assoc($group_info);

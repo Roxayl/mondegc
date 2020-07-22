@@ -1,5 +1,5 @@
 <?php
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 
 //Connexion et deconnexion
@@ -7,7 +7,7 @@ include('php/log.php');
 
 //requete instituts
 $institut_id = 5;
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
@@ -30,7 +30,7 @@ if (isset($_GET['cat'])) {
 } } else {
   $cat = 'commerce';
 } 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_somme_ressources = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, 
 (SELECT SUM(ch_inf_off_budget) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
 + ch_pay_budget_carte 
@@ -110,7 +110,7 @@ $queryString_somme_ressources = sprintf("&totalRows_somme_ressources=%d%s", $tot
 
 
 //calcul ressources mondiales 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_somme_ressources_mondiales = sprintf("SELECT
 (SELECT SUM(ch_inf_off_budget) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
 + ch_pay_budget_carte 
@@ -336,9 +336,9 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
        <div class="row-fluid">
        <div class="span8 well">
 
-        <img class="token-list-eco pull-left" id="main-token-icon-eco" src="assets/img/ressources/<?= $cat === "commerce" ? "bureau" : $cat ?>.png" alt="icone <?= $cat ?>" style="width: 50px;">
-        <form action="economie.php#ressources" method="GET">
-          <select class="btn-large" name="cat" id="cat" onchange="$('#main-token-icon-eco').attr('src', 'https://squirrel.romukulot.fr/media/icons/ajax-loader2.gif'); setTimeout(function() { this.form.submit()}, 100);">
+        <img class="token-list-eco pull-left" id="main-token-icon-eco" src="assets/img/ressources/<?= __s($cat) ?>.png" alt="icone <?= __s($cat) ?>" style="width: 50px;">
+        <form id="resources-form" action="<?= DEF_URI_PATH ?>economie.php#ressources" method="GET">
+          <select class="btn-large" name="cat" id="cat" onchange="$('#main-token-icon-eco').attr('src', 'https://squirrel.romukulot.fr/media/icons/ajax-loader2.gif'); setTimeout(function() { $('#resources-form').submit()}, 100);">
             <option value="">S&eacute;lectionnez une ressource</option>
             <option value="commerce" <?php if ($cat == 'commerce') {?>selected<?php } ?>>Commerce</option>
 			<option value="industrie" <?php if ($cat == 'industrie') {?>selected<?php } ?>>Industrie</option>

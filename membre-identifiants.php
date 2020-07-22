@@ -1,5 +1,5 @@
 <?php
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 
 //Connexion et deconnexion
@@ -15,7 +15,7 @@ if (isset($_GET['clef'])) {
   $clef = $_GET['clef'];
 }
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_user_prov = sprintf("SELECT * FROM users_provisoire WHERE ch_use_prov_login = %s AND ch_use_prov_clef = %s", GetSQLValueString($login, "text"), GetSQLValueString($clef, "text"));
 $user_prov = mysql_query($query_user_prov, $maconnexion) or die(mysql_error());
 $row_user_prov = mysql_fetch_assoc($user_prov);
@@ -25,16 +25,14 @@ $colname_UserID = "-1";
 if (isset($row_user_prov['ch_use_prov_login'])) {
   $colname_UserID = $row_user_prov['ch_use_prov_login'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_UserID = sprintf("SELECT ch_use_id FROM users WHERE ch_use_login = %s", GetSQLValueString($colname_UserID, "text"));
 $UserID = mysql_query($query_UserID, $maconnexion) or die(mysql_error());
 $row_UserID = mysql_fetch_assoc($UserID);
 $totalRows_UserID = mysql_num_rows($UserID);
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
   include_once("php/config.php");
@@ -44,7 +42,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
                        GetSQLValueString($password, "text"),
                        GetSQLValueString($_POST['ch_use_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
   
   // Effacement de la clef sur User_provisoire
@@ -52,21 +50,19 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
    $deleteSQL = sprintf("DELETE FROM users_provisoire WHERE ch_use_prov_ID=%s",
                        GetSQLValueString($userprov, "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
-  $insertGoTo = 'index.php';
-  if (isset($_SERVER['QUERY_STRING'])) {
-  $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-  $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $insertGoTo = DEF_URI_PATH . 'index.php';
+  appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Monde GC-</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">

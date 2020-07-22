@@ -1,12 +1,10 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-temperance")) {
   $insertSQL = sprintf("INSERT INTO temperance (ch_temp_label, ch_temp_date, ch_temp_mis_jour, ch_temp_element, ch_temp_element_id, ch_temp_statut, ch_temp_note, ch_temp_tendance) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
@@ -18,15 +16,15 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-temperance"))
                        GetSQLValueString($_POST['ch_temp_statut'], "int"),
                        GetSQLValueString($_POST['ch_temp_note'], "int"),
 					   GetSQLValueString($_POST['ch_temp_tendance'], "text"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $insertGoTo = '../back/institut_economie.php';
+  $insertGoTo = DEF_URI_PATH . 'back/institut_economie.php';
   if (isset($_SERVER['QUERY_STRING'])) {
 
 $colname_pays = $_POST['ch_temp_element_id'];
 //requete pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_mail = sprintf("SELECT ch_pay_nom, ch_use_mail FROM pays INNER JOIN users ON ch_pay_id=ch_use_paysID WHERE ch_pay_id=%s", GetSQLValueString($colname_pays, "int"));
 $mail = mysql_query($query_mail, $maconnexion) or die(mysql_error());
 $row_mail = mysql_fetch_assoc($mail);
@@ -87,16 +85,18 @@ mail($mail,$sujet,$message,$header);
               $redirect_error= "error.php"; // Redirect if there is an error.
       header( "Location: ".$redirect_error ) ;
     }
-  header(sprintf("Location: %s", $insertGoTo));
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
+  header(sprintf("Location: %s", $insertGoTo));
+  exit;
   }
   $adresse = $insertGoTo .'#liste-temperance';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 
 //requete pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_pays = "SELECT ch_pay_id, ch_pay_nom FROM pays WHERE ch_pay_publication=1 ORDER BY ch_pay_nom";
 $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
 $row_pays = mysql_fetch_assoc($pays);

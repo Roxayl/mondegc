@@ -1,11 +1,11 @@
 <?php
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 // *** Recherche de sessions.
 $clefSession = $_COOKIE['Session_mondeGC'];
 
 if ($clefSession != NULL and $clefSession != "") {
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $Session_user_query=sprintf("SELECT ch_users_session_dispatch_sessionID, ch_use_session_id, ch_use_session_connect, ch_use_id, ch_use_login, ch_use_paysID, ch_use_statut, ch_use_acces, ch_use_last_log, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users_dispatch_session INNER JOIN users_session ON ch_users_session_dispatch_sessionID = ch_use_session_id INNER JOIN users ON ch_use_session_user_ID = ch_use_id WHERE ch_users_session_dispatch_Key =%s",GetSQLValueString($clefSession, "text"));
   $Session_user = mysql_query($Session_user_query, $maconnexion) or die(mysql_error());
   $row_Session_user = mysql_fetch_assoc($Session_user);
@@ -17,13 +17,13 @@ if ($row_Session_user['ch_use_acces'] == NULL) {
 	if ($clefSession != NULL and $clefSession != "") {
 	$deleteSQL = sprintf("DELETE FROM users_dispatch_session WHERE ch_users_session_dispatch_Key=%s",
                        GetSQLValueString($clefSession, "text"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result4 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
   
   $deleteSQL = sprintf("DELETE FROM users_session WHERE ch_use_session_id=%s",
                        GetSQLValueString($row_Session_user['ch_use_session_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result5 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 	}
 
@@ -51,7 +51,7 @@ $_SESSION['user_last_log'] = $now;
 $updateSQL = sprintf("UPDATE users SET ch_use_last_log=%s WHERE ch_use_id=%s",
                        GetSQLValueString($_SESSION['user_last_log'], "date"),
                        GetSQLValueString($_SESSION['user_ID'], "int"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
   
   //declare session variables and assign them
@@ -74,19 +74,19 @@ $updateSQL = sprintf("UPDATE users SET ch_use_last_log=%s WHERE ch_use_id=%s",
 if (!isset($_SESSION)) {
   
 }
-$loginFormAction = $_SERVER['PHP_SELF'];
+$loginFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 if (isset($_GET['accesscheck'])) {
   $_SESSION['PrevUrl'] = $_GET['accesscheck'];
 }
 if (isset($_POST['identifiant'])) {
-	include("php/config.php");
+	include(DEF_ROOTPATH . "php/config.php");
   $loginUsername = $_POST['identifiant'];
   $password = md5($_POST['mot_de_passe'].$salt);
   $MM_fldUserAuthorization = "ch_use_paysID";
-  $MM_redirectLoginSuccess = "back/page_pays_back.php";
-  $MM_redirectLoginFailed = "connexion.php";
+  $MM_redirectLoginSuccess = DEF_URI_PATH . "back/page_pays_back.php";
+  $MM_redirectLoginFailed = DEF_URI_PATH . "connexion.php";
   $MM_redirecttoReferrer = true;
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   
   $LoginRS__query=sprintf("SELECT ch_use_login, ch_use_password, ch_use_paysID, ch_use_id, ch_use_last_log, ch_use_statut, ch_use_acces, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users WHERE ch_use_login=%s AND ch_use_password=%s",
   GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text"));
@@ -132,7 +132,7 @@ if ($row_LoginRS['ch_use_acces'] == NULL) {
                        GetSQLValueString($connect, "int"),
                        GetSQLValueString($now, "date"));
 
-	mysql_select_db($database_maconnexion, $maconnexion);
+
 	$Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
   
 	$Id_Session = mysql_insert_id();
@@ -140,7 +140,7 @@ if ($row_LoginRS['ch_use_acces'] == NULL) {
                        GetSQLValueString($code_aleatoire, "text"),
                        GetSQLValueString($Id_Session, "int"));
 
-	mysql_select_db($database_maconnexion, $maconnexion);
+
 	$Result2 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
     
 	// *** Creation du cookie
@@ -168,16 +168,18 @@ setcookie('Session_mondeGC', $code_aleatoire, time() + 30*24*3600, null, null, f
 $updateSQL = sprintf("UPDATE users SET ch_use_last_log=%s WHERE ch_use_id=%s",
                        GetSQLValueString($now, "date"),
                        GetSQLValueString($row_LoginRS['ch_use_id'], "int"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result3 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
     if (isset($_SESSION['PrevUrl']) && true) {
       $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
     }
     header("Location: " . $MM_redirectLoginSuccess );
+    exit;
   }
   else {
     header("Location: ". $MM_redirectLoginFailed );
+    exit;
   }
 }
 
@@ -195,7 +197,7 @@ else
 
 
 // ** Logout the current user. **
-$logoutAction = $_SERVER['PHP_SELF']."?doLogout=true";
+$logoutAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php'.'?doLogout=true';
 if ((isset($_SERVER['QUERY_STRING'])) && ($_SERVER['QUERY_STRING'] != "")){
   $logoutAction .="&". htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -206,13 +208,13 @@ if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
 	if ($clefSession != NULL and $clefSession != "") {
 	$deleteSQL = sprintf("DELETE FROM users_dispatch_session WHERE ch_users_session_dispatch_Key=%s",
                        GetSQLValueString($clefSession, "text"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result4 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
   
   $deleteSQL = sprintf("DELETE FROM users_session WHERE ch_use_session_id=%s",
                        GetSQLValueString($row_Session_user['ch_use_session_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result5 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 	}
 
@@ -238,7 +240,7 @@ unset($_COOKIE["Session_mondeGC"]);
   unset($_SESSION['user_ID']);
   unset($_SESSION['user_last_log']);
   unset($_SESSION['statut']);
-  $logoutGoTo = "index.php";
+  $logoutGoTo = DEF_URI_PATH . "index.php";
   if ($logoutGoTo) {
     header("Location: $logoutGoTo");
     exit;
@@ -261,12 +263,13 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
                        GetSQLValueString($_POST['ch_com_titre'], "text"),
                        GetSQLValueString($_POST['ch_com_contenu'], "text"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result3 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   $insertGoTo = $url_en_cours;
     $adresse = $insertGoTo .'#commentaires';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 
 // *** Recherche et effacement des sessions de plus d'un mois .
@@ -280,13 +283,13 @@ $Session_expire_query=sprintf("SELECT ch_use_session_id FROM users_session WHERE
 	$ID_session_expire = $row_Session_expire['ch_use_session_id'];
 	$deleteSQL = sprintf("DELETE FROM users_session WHERE ch_use_session_id=%s",
                        GetSQLValueString($ID_session_expire, "int"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result6 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
   
   $deleteSQL1 = sprintf("DELETE FROM users_dispatch_session WHERE ch_users_session_dispatch_sessionID=%s",
                        GetSQLValueString($ID_session_expire, "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result7 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 	}
 	
@@ -295,14 +298,14 @@ $Session_expire_query=sprintf("SELECT ch_use_session_id FROM users_session WHERE
 $url_en_cours = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_pays = "SELECT ch_pay_id FROM pays";
 $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
 $row_pays = mysql_fetch_assoc($pays);
 
 do { 
 //recherche des mesures des zones de la carte pour calcul ressources
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($row_pays['ch_pay_id'], "int"));
 $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
 $row_geometries = mysql_fetch_assoc($geometries);
@@ -337,7 +340,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
                        GetSQLValueString($tot_population, "int"),
                        GetSQLValueString($tot_emploi, "int"),
 					   GetSQLValueString($row_pays['ch_pay_id'], "int"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
   mysql_free_result($geometries);
   

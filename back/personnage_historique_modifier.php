@@ -1,23 +1,21 @@
 ﻿<?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_fait_hist")) {
 if ($_POST['ch_his_periode'] == true) {
@@ -41,25 +39,23 @@ $_POST['ch_his_date_fait2'] = NULL;
                        GetSQLValueString($_POST['ch_his_contenu'], "text"),
                        GetSQLValueString($_POST['ch_his_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
   getErrorMessage('success', "Votre personnage historique, " . __s($_POST['ch_his_nom']) .
           ", a été modifié avec succès !");
 
-  $updateGoTo = "page_pays_back.php?paysID=" . (int)$_POST['ch_his_paysID'];
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $updateGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_his_paysID'];
+  appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 $colname_Fait_his = "-1";
 if (isset($_POST['ch_his_id'])) {
   $colname_Fait_his = $_POST['ch_his_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_Fait_his = sprintf("SELECT * FROM histoire WHERE ch_his_id = %s", GetSQLValueString($colname_Fait_his, "int"));
 $Fait_his = mysql_query($query_Fait_his, $maconnexion) or die(mysql_error());
 $row_Fait_his = mysql_fetch_assoc($Fait_his);
@@ -67,7 +63,7 @@ $totalRows_Fait_his = mysql_num_rows($Fait_his);
 
 
 // Connection infos dirigeant pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($row_Fait_his['ch_his_paysID'], "int"));
 $users = mysql_query($query_users, $maconnexion) or die(mysql_error());
 $row_users = mysql_fetch_assoc($users);
@@ -130,7 +126,7 @@ img.olTileImage {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 </header>
 <div class="container" id="overview"> 
   
@@ -283,7 +279,7 @@ img.olTileImage {
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <?php
@@ -297,7 +293,7 @@ mysql_free_result($Fait_his);
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('../php/carte-ajouter-marqueur.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/carte-ajouter-marqueur.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>

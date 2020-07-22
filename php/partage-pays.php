@@ -1,13 +1,13 @@
 ﻿<?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 $pays_ID = "-1";
 if (isset($_GET['ch_pay_id'])) {
   $pays_ID = $_GET['ch_pay_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_pay_lien_forum, ch_use_id FROM pays INNER JOIN  users ON ch_use_paysID = ch_pay_id WHERE ch_pay_id = %s AND ch_pay_publication=1", GetSQLValueString($pays_ID, "int"));
 $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
 $row_pays = mysql_fetch_assoc($pays);
@@ -31,25 +31,21 @@ $id_trouve= false;
 
 $paysid = $row_pays['ch_pay_id'];
 //Mise à jour formulaire pays
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
   $updateSQL = sprintf("UPDATE pays SET ch_pay_lien_forum=%s WHERE ch_pay_id=%s",
                        GetSQLValueString($_POST['ch_pay_lien_forum'], "text"),
                        GetSQLValueString($_POST['ch_pay_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
-    $updateGoTo = "../page-ville.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+    $updateGoTo = DEF_URI_PATH . "page-ville.php";
+  appendQueryString($updateGoTo);
   $adresse = $updateGoTo."?ch_pay_id=".$row_villes['ch_vil_paysID']."&ch_ville_id=".$row_villes['ch_vil_ID'];
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 ?>
 <!-- Modal Header si ID sujet correspond  a 4 chiffres-->

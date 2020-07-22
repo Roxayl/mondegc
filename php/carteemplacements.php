@@ -1,9 +1,9 @@
 <?php
-require_once('../Connections/maconnexion.php'); 
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php'); 
 
 // Connexion BDD Pays pour afficher markers des pays
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_MarkerPays = "SELECT ch_pay_id, ch_pay_continent, ch_pay_emplacement, ch_pay_nom, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_pay_header_presentation, ch_pay_mis_jour, ch_use_lien_imgpersonnage, Sum(villes.ch_vil_population) AS ch_pay_population, Count(villes.ch_vil_ID) AS ch_pay_nbvilles FROM pays LEFT JOIN villes ON ch_pay_id = ch_vil_paysID AND ch_vil_capitale != 3 LEFT JOIN users ON pays.ch_pay_id = users.ch_use_paysID WHERE ch_pay_publication = 1 GROUP BY ch_pay_id ORDER BY ch_pay_nom ASC";
 $MarkerPays = mysql_query($query_MarkerPays, $maconnexion) or die(mysql_error());
 $row_MarkerPays = mysql_fetch_assoc($MarkerPays);

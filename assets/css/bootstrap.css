@@ -4316,6 +4316,8 @@ input[type="submit"].btn.btn-mini {
 
 .navbar-fixed-top {
   top: 0;
+  transition-property: top; /* added */
+  transition-duration: 0.25s; /* added */
 }
 
 .navbar-fixed-top .navbar-inner,

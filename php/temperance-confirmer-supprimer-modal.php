@@ -1,19 +1,17 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 $ch_temp_id = -1 ;
 if (isset ($_GET['ch_temp_id'])){
 	$ch_temp_id = $_GET['ch_temp_id'];
 	}
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_temperance = sprintf("SELECT * FROM temperance WHERE ch_temp_id = %s", GetSQLValueString($ch_temp_id, "int"));
 $query_limit_temperance = sprintf("%s LIMIT %d, %d", $query_temperance, $startRow_temperance, $maxRows_temperance);
 $temperance = mysql_query($query_temperance, $maconnexion) or die(mysql_error());

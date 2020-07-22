@@ -1,5 +1,5 @@
 <?php
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 //Connexion et deconnexion
 include('php/log.php');
@@ -133,6 +133,11 @@ SELECT communique_pays.ch_com_label AS type_notification, communique_pays.ch_com
 FROM communiques communique_pays 
 INNER JOIN pays ON communique_pays.ch_com_element_id = ch_pay_id
 WHERE communique_pays.ch_com_statut = 1 AND communique_pays.ch_com_categorie='pays'
+UNION 
+SELECT communique_organisation.ch_com_label AS type_notification, communique_organisation.ch_com_ID AS id, communique_organisation.ch_com_statut AS statut, communique_organisation.ch_com_categorie AS sous_categorie, communique_organisation.ch_com_element_id AS id_element, communique_organisation.ch_com_user_id AS id_auteur, communique_organisation.ch_com_date AS date, communique_organisation.ch_com_titre AS titre, organisation.id AS id_institution, organisation.name AS institution, organisation.flag AS img_institution, organisation.id AS pays_institution, CONCAT('organisation/', organisation.id) AS elem_url
+FROM communiques communique_organisation 
+INNER JOIN organisation ON ch_com_element_id = organisation.id 
+WHERE communique_organisation.ch_com_statut = 1 AND communique_organisation.ch_com_categorie ='organisation'
 UNION 
 SELECT communique_ville.ch_com_label AS type_notification, communique_ville.ch_com_ID AS id, communique_ville.ch_com_statut AS statut, communique_ville.ch_com_categorie AS sous_categorie, communique_ville.ch_com_element_id AS id_element, communique_ville.ch_com_user_id AS id_auteur, communique_ville.ch_com_date AS date, communique_ville.ch_com_titre AS titre, ch_vil_ID AS id_institution, ch_vil_nom AS institution, ch_vil_armoiries AS img_institution, ch_vil_paysID AS pays_institution, CONCAT('page-ville.php?ch_ville_id=', ch_vil_ID) AS elem_url
 FROM communiques communique_ville 

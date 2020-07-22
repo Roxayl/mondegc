@@ -1,13 +1,11 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) {
   $updateSQL = sprintf("UPDATE membres_groupes SET ch_mem_group_label=%s, ch_mem_group_statut=%s, ch_mem_group_date=%s, ch_mem_group_mis_jour=%s, ch_mem_group_nb_update=%s, ch_mem_group_nom=%s, ch_mem_group_desc=%s, ch_mem_group_icon=%s, ch_mem_group_couleur=%s WHERE ch_mem_group_ID=%s",
@@ -22,19 +20,17 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) 
                        GetSQLValueString($_POST['ch_mem_group_couleur'], "text"),
                        GetSQLValueString($_POST['ch_mem_group_ID'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
 if ($_SESSION['last_work'] = "institut_politique.php") {
-  $updateGoTo = "../back/institut_politique.php";
+  $updateGoTo = DEF_URI_PATH . "back/institut_politique.php";
 } else {
-  $updateGoTo = "../back/membre-modifier_back.php";
+  $updateGoTo = DEF_URI_PATH . "back/membre-modifier_back.php";
   }
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 //requete categories monuments
 
@@ -42,7 +38,7 @@ $colname_group_membre = "-1";
 if (isset($_GET['mem_group_ID'])) {
   $colname_group_membre = $_GET['mem_group_ID'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_group_membre = sprintf("SELECT * FROM membres_groupes WHERE ch_mem_group_ID = %s ORDER BY ch_mem_group_mis_jour DESC", GetSQLValueString($colname_group_membre, "int"));
 $group_membre = mysql_query($query_group_membre, $maconnexion) or die(mysql_error());
 $row_group_membre = mysql_fetch_assoc($group_membre);

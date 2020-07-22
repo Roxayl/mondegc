@@ -1,22 +1,22 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../Haut-Conseil.php');
+header('Location: ' . legacyPage('Haut-Conseil'));
 exit();
 	}
 
 //requete instituts
 $institut_id = 5;
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
@@ -35,7 +35,7 @@ if (isset($_GET['pageNum_liste_temperance'])) {
 }
 $startRow_liste_temperance = $pageNum_liste_temperance * $maxRows_liste_temperance;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_temperance = sprintf("SELECT ch_temp_id as id, ch_pay_nom as nom, ch_temp_element as element, ch_temp_element_id as element_id, ch_temp_date as date, ch_temp_mis_jour as mis_jour, ch_temp_statut as statut, ch_temp_note as note, ch_temp_tendance as tendance FROM temperance LEFT JOIN pays ON ch_temp_element_id = ch_pay_id WHERE ch_temp_element='pays'
 UNION
 SELECT ch_temp_id as id, ch_vil_nom as nom, ch_temp_element as element, ch_temp_element_id as element_id, ch_temp_date as date, ch_temp_mis_jour as mis_jour, ch_temp_statut as statut, ch_temp_note as note, ch_temp_tendance as tendance FROM temperance LEFT JOIN villes ON ch_temp_element_id = ch_vil_ID WHERE ch_temp_element='ville'
@@ -83,7 +83,7 @@ if (isset($_GET['pageNum_liste_infra_officielles'])) {
 }
 $startRow_liste_infra_officielles = $pageNum_liste_infra_officielles * $maxRows_liste_infra_officielles;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_infra_officielles = sprintf("SELECT * FROM infrastructures_officielles ORDER BY $type_classement");
 $query_limit_liste_infra_officielles = sprintf("%s LIMIT %d, %d", $query_liste_infra_officielles, $startRow_liste_infra_officielles, $maxRows_liste_infra_officielles);
 $liste_infra_officielles = mysql_query($query_limit_liste_infra_officielles, $maconnexion) or die(mysql_error());
@@ -194,7 +194,7 @@ format: 'hex'});
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container" id="overview"> 
@@ -202,11 +202,11 @@ format: 'hex'});
   <!-- Page CONTENT
     ================================================== -->
   <section class="corps-page">
-    <?php include('../php/menu-haut-conseil.php'); ?>
+    <?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
 
     <!-- formulaire de modification instituts
      ================================================== -->
-    <form class="pull-right-cta" action="insitut_modifier.php" method="post" style="margin-top: 30px;">
+    <form class="pull-right-cta" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post" style="margin-top: 30px;">
       <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
       <button class="btn btn-primary btn-cta" type="submit" title="modifier les informations sur l'institut"><i class="icon-edit icon-white"></i> Modifier la description</button>
     </form>
@@ -265,7 +265,7 @@ format: 'hex'});
                 <?php if (($row_liste_temperance['statut'] == 2) OR ($row_liste_temperance['statut'] == 3))  { // visible si en phase 2
 				$idtemperance = $row_liste_temperance ['id'];
 				// requete nb de juges votants
-				mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_nb_juges = sprintf("SELECT COUNT(ch_not_temp_juge) as nbjuges FROM notation_temperance WHERE ch_not_temp_temperance_id =%s", GetSQLValueString( $idtemperance, "int"));
 $nb_juges = mysql_query($query_nb_juges, $maconnexion) or die(mysql_error());
 $row_nb_juges = mysql_fetch_assoc($nb_juges);
@@ -365,7 +365,7 @@ $('#closemodal').click(function() {
 $com_cat = "institut";
 $userID = $_SESSION['user_ID'];
 $com_element_id = 5;
-include('../php/communiques-back.php'); ?>
+include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
       </div>
     </div>
 
@@ -430,7 +430,7 @@ include('../php/communiques-back.php'); ?>
         </div>
         <!-- Liste pour choix de classement -->
         <div id="select-categorie">
-          <form action="institut_economie.php#liste-infrastructures-officielles" method="GET">
+          <form action="<?= DEF_URI_PATH ?>back/institut_economie.php#liste-infrastructures-officielles" method="GET">
             <select name="type_classement_inf" id="type_classement_inf" onchange="this.form.submit()" class="span3">
               <option value="ch_inf_off_nom ASC" <?php if ($type_classement == 'ch_inf_off_nom ASC') {?>selected<?php } ?>>Classer par ordre alphab&eacute;tique</option>
               <option value="ch_inf_off_date DESC" <?php if ($type_classement == 'ch_inf_off_date DESC') {?>selected<?php } ?>>Classer par date de cr&eacute;ation</option>
@@ -543,7 +543,7 @@ $('#closemodal').click(function() {
 
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <?php

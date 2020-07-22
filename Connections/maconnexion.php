@@ -3,35 +3,42 @@
 /*************************
  *       Paramètres      *
  *************************/
+ 
+// Variables de configuration.
+$mondegc_config = array();
 
+// Environnement.
+if($_SERVER['HTTP_HOST'] === 'localhost') {
+    $mondegc_config['env'] = 'localhost';
+} elseif($_SERVER['HTTP_HOST'] === 'mondegc.test' || $_SERVER['HTTP_HOST'] === 'generation-city.test') {
+    $mondegc_config['env'] = 'vagrant';
+} else {
+    $mondegc_config['env'] = 'production';
+}
+
+// Importer la configuration en fonction de l'environnement.
+require('config.' . $mondegc_config['env'] . '.php');
+
+// Chemins
 defined("DEF_ROOTPATH") or define("DEF_ROOTPATH", str_replace("\\", "/", (substr(__DIR__, -12) == '/Connections' || substr(__DIR__, -12) == '\Connections') ? substr(__DIR__, 0, -12) . '/' : __DIR__ . '/'));
 define("DEF_URI_PATH",
         ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443
             ? 'https' : 'http' )
         . '://' . $_SERVER['HTTP_HOST'] . '/'
-        . ($_SERVER['HTTP_HOST'] === 'localhost' ? 'MondeGC/trunk/' : 'monde/')
+        . $mondegc_config['path']
     );
 
-// Valeurs par défaut.
-$mondegc_config = array(
-    // Activer CSRF Magic et la protection des formulaires automatique contre les attaques CSRF.
-    'enable_csrf_protection' => true,
-    'version' => "2.4"
-);
-
-// Production.
-if($_SERVER['HTTP_HOST'] !== 'localhost') {
-    $mondegc_replace_config = array(
-        // Variables de configuration en prod.
-    );
-    $mondegc_config = array_replace($mondegc_config, $mondegc_replace_config);
-    unset($mondegc_replace_config);
+// Masquer les messages d'erreur.
+if($mondegc_config['hide_errors'] === true) {
+    error_reporting(0);
 }
 
 
 /*************************
  * Librairies (autoload) *
  *************************/
+
+require_once(DEF_ROOTPATH . 'vendor/autoload.php');
 
 // Auto-chargement de classes
 spl_autoload_register(function($class) {
@@ -64,26 +71,13 @@ if(version_compare(phpversion(), '7.0.0', '>=')) {
  *    Base de données    *
  *************************/
 
-if($_SERVER['HTTP_HOST'] === 'localhost') {
-    $hostname_maconnexion = "localhost";
-    $database_maconnexion = "mgvx_generationcitycom3";
-    $username_maconnexion = "root";
-    $password_maconnexion = "";
-}
-else {
-    $hostname_maconnexion = "mgvx.myd.infomaniak.com";
-    $database_maconnexion = "mgvx_generationcitycom3";
-    $username_maconnexion = "mgvx_monde";
-    $password_maconnexion = "NewMonde";
-}
+$maconnexion = @mysql_pconnect($mondegc_config['db']['hostname'], $mondegc_config['db']['username'], $mondegc_config['db']['password']) or trigger_error(mysql_error(), E_USER_ERROR);
 
-
-$maconnexion = @mysql_pconnect($hostname_maconnexion, $username_maconnexion, $password_maconnexion) or trigger_error(mysql_error(),E_USER_ERROR);
-
-if($_SERVER['HTTP_HOST'] === 'localhost') {
-    mysql_set_charset('utf8',$maconnexion);
+if($mondegc_config['env'] !== 'production') {
+    mysql_set_charset('utf8mb4', $maconnexion);
+    mysql_query("SET SESSION sql_mode = 'TRADITIONAL'");
 }
-mysql_select_db($database_maconnexion);
+mysql_select_db($mondegc_config['db']['database']);
 
 
 /*************************
@@ -1311,6 +1305,42 @@ function __s($text) {
     } else {
         return htmlspecialchars($text, ENT_QUOTES);
     }
+
+}
+
+
+function filter_filename($name) {
+    // remove illegal file system characters https://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words
+    $name = str_replace(array_merge(
+        array_map('chr', range(0, 31)),
+        array('<', '>', ':', '"', '/', '\\', '|', '?', '*')
+    ), '', $name);
+    // maximise filename length to 255 bytes http://serverfault.com/a/9548/44086
+    $ext = pathinfo($name, PATHINFO_EXTENSION);
+    $name= mb_strcut(pathinfo($name, PATHINFO_FILENAME), 0, 255 - ($ext ? strlen($ext) + 1 : 0), mb_detect_encoding($name)) . ($ext ? '.' . $ext : '');
+    return $name;
+}
+
+
+function legacyPage($path = '', $params = array()) {
+
+    $url = DEF_URI_PATH;
+    $url .= str_replace('.', '/', $path);
+    $url .= '.php' . (!empty($params) ? '?' : '') . http_build_query($params);
+    return $url;
+
+}
+
+
+function appendQueryString(&$url) {
+
+    if(isset($_SERVER['QUERY_STRING'])) {
+        $url .= (strpos($url, '?')) ? "&" : "?";
+        $url .= $_SERVER['QUERY_STRING'];
+    }
+    $url = preg_replace('/(?:&|(\?))' . 'target' . '=[^&]*(?(1)&|)?/i', "$1", $url);
+    $url = rtrim($url, '?');
+    $url = rtrim($url, '&');
 
 }
 

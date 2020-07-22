@@ -1,5 +1,5 @@
 <?php 
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 
 // *** Connexion communique categorie pays
@@ -11,7 +11,7 @@ if (isset($_GET['pageNum_LastCommuniquePays'])) {
 }
 $startRow_LastCommuniquePays = $pageNum_LastCommuniquePays * $maxRows_LastCommuniquePays;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_LastCommuniquePays = "SELECT ch_com_ID, ch_com_statut, ch_com_categorie, ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_titre, ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_use_lien_imgpersonnage, ch_use_nom_dirigeant, ch_use_paysID, ch_use_prenom_dirigeant, ch_use_titre_dirigeant FROM communiques INNER JOIN pays ON ch_com_element_id = ch_pay_id INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_statut = 1 AND ch_com_categorie='pays' OR ch_com_categorie='com_pays' ORDER BY ch_com_date DESC";
 $query_limit_LastCommuniquePays = sprintf("%s LIMIT %d, %d", $query_LastCommuniquePays, $startRow_LastCommuniquePays, $maxRows_LastCommuniquePays);
 $LastCommuniquePays = mysql_query($query_limit_LastCommuniquePays, $maconnexion) or die(mysql_error());
@@ -34,7 +34,7 @@ if (isset($_GET['pageNum_LastCommuniqueVilles'])) {
 }
 $startRow_LastCommuniqueVilles = $pageNum_LastCommuniqueVilles * $maxRows_LastCommuniqueVilles;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_LastCommuniqueVilles = "SELECT ch_com_ID, ch_com_statut, ch_com_categorie, ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_titre, ch_vil_ID, ch_vil_paysID, ch_vil_nom, ch_vil_armoiries, ch_use_lien_imgpersonnage, ch_use_nom_dirigeant, ch_use_paysID, ch_use_prenom_dirigeant, ch_use_titre_dirigeant FROM communiques INNER JOIN villes ON ch_com_element_id = ch_vil_ID INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_statut = 1 AND ch_com_categorie ='ville' OR ch_com_categorie ='com_ville' ORDER BY ch_com_date DESC";
 $query_limit_LastCommuniqueVilles = sprintf("%s LIMIT %d, %d", $query_LastCommuniqueVilles, $startRow_LastCommuniqueVilles, $maxRows_LastCommuniqueVilles);
 $LastCommuniqueVilles = mysql_query($query_limit_LastCommuniqueVilles, $maconnexion) or die(mysql_error());
@@ -57,7 +57,7 @@ if (isset($_GET['pageNum_LastCommuniqueReaction'])) {
 }
 $startRow_LastCommuniqueReaction = $pageNum_LastCommuniqueReaction * $maxRows_LastCommuniqueReaction;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_LastCommuniqueReaction = "SELECT ch_com_ID, ch_com_statut, ch_com_categorie, ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_titre, ch_use_lien_imgpersonnage, ch_use_nom_dirigeant, ch_use_paysID, ch_use_prenom_dirigeant, ch_use_titre_dirigeant FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_statut = 1 AND ch_com_categorie ='com_communique' ORDER BY ch_com_date DESC";
 $query_limit_LastCommuniqueReaction = sprintf("%s LIMIT %d, %d", $query_LastCommuniqueReaction, $startRow_LastCommuniqueReaction, $maxRows_LastCommuniqueReaction);
 $LastCommuniqueReaction = mysql_query($query_limit_LastCommuniqueReaction, $maconnexion) or die(mysql_error());

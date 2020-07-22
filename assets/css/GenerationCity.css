@@ -479,6 +479,11 @@ input[type='submit'] {
     font-size: 0.935em;
     margin: 5px 1px 6px;
 }
+.shrink {
+    top: -71px;
+    transition-property: top;
+    transition-duration: 0.4s;
+}
 /* logo monde GC */
 body > .navbar .brand {
 	padding-right: 0;
@@ -991,6 +996,12 @@ canvas#parliament-chart {
     margin: -90px auto 0;
 }
 
+/* Search */
+.search-results {
+    column-count: 3;
+    column-gap: 20px;
+}
+
 /* Notifications
 -------------------------------------------------- */
 .liste-transparente {
@@ -1397,7 +1408,7 @@ footer img {
 	background: #2d4d7f;
 }
 .bs-docs-sidenav.affix {
-	top: 250px;
+	top: 160px;
 }
 .bs-docs-sidenav.affix-bottom {
 	position: absolute;
@@ -1709,6 +1720,20 @@ table .btn {
 .liste-temp div em{
 	position:relative;
 	top: 2px;
+}
+
+.resource-small-container {
+    font-size: 0.85em;
+    display: inline-block;
+}
+.resource-small-inline-block {
+    display: inline-block;
+    font-weight: bold;
+    margin-right: 5px;
+}
+.resource-small-inline-block>img {
+    width: 14px; height: 14px;
+    margin-top: -2px;
 }
 
 .infra-selected {
@@ -2102,6 +2127,11 @@ footer li {
 	width:39px;
 	position: relative;
 	left: -10px;
+}
+
+.search-results {
+    column-count: 2;
+    column-gap: 18px;
 }
 
 .img-drapeau-hist {
@@ -2523,6 +2553,10 @@ footer img {
 	text-align:left;
 }
 
+.search-results {
+    column-count: 2;
+}
+
 /* Drapeau sur fait historique
 ------------------------- */
 .img-drapeau-hist {
@@ -2633,6 +2667,9 @@ footer img {
 	padding-bottom: 10px;
 }
 
+.search-results {
+    column-count: 1;
+}
 
 .img-avatar img{
 	max-width: 100px;

@@ -1,14 +1,14 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=uft-8');
 
 //Connexion BBD Communique
 $colname_communique = "-1";
 if (isset($_GET['com_id'])) {
   $colname_communique = $_GET['com_id'];}
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_communique = sprintf("SELECT * FROM communiques WHERE ch_com_ID = %s", GetSQLValueString($colname_communique, "int"));
 $communique = mysql_query($query_communique, $maconnexion) or die(mysql_error());
 $row_communique = mysql_fetch_assoc($communique);
@@ -18,7 +18,7 @@ $elementID = $row_communique['ch_com_element_id'];
 
 //Connexion BBD Pour info sur l'institution emmitrice
 if ( $cat == "pays") {
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
 $query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau, ch_pay_lien_imgheader FROM pays WHERE ch_pay_id = %s", GetSQLValueString($elementID, "int"));
 $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
 $row_pays = mysql_fetch_assoc($pays);
@@ -37,7 +37,7 @@ $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
 }
 
 if ( $cat == "ville") {
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
 $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_id, ch_pay_nom, ch_vil_lien_img1 FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($elementID, "int"));
 $villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
 $row_villes = mysql_fetch_assoc($villes);
@@ -54,7 +54,7 @@ mysql_free_result($villes);
 
 
 if ( $cat == "institut") {
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($elementID, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
@@ -75,7 +75,7 @@ if (isset($row_communique['ch_com_user_id'])) {
   $colname_user = $row_communique['ch_com_user_id'];
 }
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_user = sprintf("SELECT ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_login FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_user, "int"));
 $user = mysql_query($query_user, $maconnexion) or die(mysql_error());
 $row_user = mysql_fetch_assoc($user);
@@ -85,7 +85,7 @@ $totalRows_user = mysql_num_rows($user);
 $ch_com_categorie = "com_communique";
 $ch_com_element_id = $colname_communique;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_commentaire = sprintf("SELECT ch_com_ID, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_com_pays_id AS ch_use_paysID, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_categorie = %s AND ch_com_element_id = %s ORDER BY ch_com_date DESC", GetSQLValueString($ch_com_categorie, "text"), GetSQLValueString($ch_com_element_id, "int"));
 $commentaire = mysql_query($query_commentaire, $maconnexion) or die(mysql_error());
 $row_commentaire = mysql_fetch_assoc($commentaire);

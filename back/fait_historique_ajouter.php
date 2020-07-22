@@ -1,15 +1,15 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -18,10 +18,8 @@ if (isset($_POST['paysID'])) {
   $paysID = $_POST['paysID'];
 }
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 
 $thisPays = new \GenCity\Monde\Pays($paysID);
@@ -48,22 +46,20 @@ $_POST['ch_his_date_fait2'] = NULL;
                        GetSQLValueString($_POST['ch_his_description'], "text"),
                        GetSQLValueString($_POST['ch_his_contenu'], "text"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   getErrorMessage('success', __s($_POST['ch_his_nom']) . " a été ajouté comme fait historique" .
     " avec succès.");
 
-  $insertGoTo = "page_pays_back.php?paysID=" . $_POST['ch_his_paysID'] . '#faits-historiques';
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $insertGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . $_POST['ch_his_paysID'] . '#faits-historiques';
+  appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($paysID, "int"));
 $users = mysql_query($query_users, $maconnexion) or die(mysql_error());
 $row_users = mysql_fetch_assoc($users);
@@ -121,7 +117,7 @@ img.olTileImage {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 </header>
 <div class="container" id="overview"> 
   
@@ -137,11 +133,11 @@ img.olTileImage {
         <h1>Ajouter un fait historique</h1>
       </div>
       <?php if (($_SESSION['statut'] > 1) AND ($row_users['ch_use_id'] != $_SESSION['user_ID'])) { ?>
-      <form class="pull-right" action="membre-modifier_back.php" method="post">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/membre-modifier_back.php" method="post">
         <input name="userID" type="hidden" value="<?php echo $row_users['ch_use_id']; ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Profil du dirigeant</button>
       </form>
-      <form class="pull-right" action="page_pays_back.php" method="post">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_back.php" method="post">
         <input name="paysID" type="hidden" value="<?php echo $paysID; ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du pays"><i class="icon-pays-small-white"></i> Modifier le pays</button>
       </form>
@@ -252,7 +248,7 @@ img.olTileImage {
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript
@@ -261,7 +257,7 @@ img.olTileImage {
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('../php/carte-ajouter-marqueur.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/carte-ajouter-marqueur.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>

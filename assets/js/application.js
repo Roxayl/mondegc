@@ -153,9 +153,9 @@ $.ajaxTransport('jsonpi', function(opts, originalOptions, jqXHR) {
 
 $(window).scroll(function() {
   if ($(document).scrollTop() > 50) {
-    $('navbar').addClass('shrink');
+    $('div.navbar').addClass('shrink');
   } else {
-    $('navbar').removeClass('shrink');
+    $('div.navbar').removeClass('shrink');
   }
 });
 
@@ -165,10 +165,15 @@ $(window).scroll(function() {
 $(document).ready(function() {
 
     var environ = window.location.host;
-    if (environ === "localhost") {
-        var baseurl = window.location.protocol + "//" + window.location.host + "/" + "MondeGC/trunk/";
-    } else {
-        var baseurl = window.location.protocol + "//" + window.location.host + "/monde/";
+    var baseurl;
+    if (environ === "localhost") { // localhost
+        baseurl = window.location.protocol + "//" + window.location.host + "/" + "MondeGC/trunk/";
+    } else if(environ === "mondegc.test") { // vagrant
+        baseurl = window.location.protocol + "//" + window.location.host + "/";
+    } else if(environ === "generation-city.test") { // vagrant
+        baseurl = window.location.protocol + "//" + window.location.host + "/mondegc/";
+    } else { // production
+        baseurl = window.location.protocol + "//" + window.location.host + "/monde/";
     }
 
     var $notification_container = $('.dropdown-notification');

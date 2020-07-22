@@ -1,16 +1,16 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -22,7 +22,7 @@ if (isset($_POST['monument_ID'])) {
   unset($_POST['monument_ID']);
 }
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_monument = sprintf("SELECT * FROM patrimoine WHERE ch_pat_id = %s", GetSQLValueString($monument_ID, "int"));
 $monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
 $row_monument = mysql_fetch_assoc($monument);
@@ -31,7 +31,7 @@ $ville_id = $row_monument['ch_pat_villeID'];
 $paysID = $row_monument['ch_pat_paysID'];
 
 // Connection infos dirigeant pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_users = sprintf("SELECT ch_vil_user, ch_use_id, ch_use_login FROM villes INNER JOIN users ON ch_vil_user=ch_use_id WHERE ch_vil_ID = %s", GetSQLValueString($ville_id, "int"));
 $users = mysql_query($query_users, $maconnexion) or die(mysql_error());
 $row_users = mysql_fetch_assoc($users);
@@ -45,10 +45,8 @@ $coord_Y = $row_monument['ch_pat_coord_Y'];
 
 
 // Mise a jour fiche patrimoine
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_monument")) {
   $updateSQL = sprintf("UPDATE patrimoine SET ch_pat_label=%s, ch_pat_statut=%s, ch_pat_paysID=%s, ch_pat_villeID=%s, ch_pat_date=%s, ch_pat_mis_jour=%s, ch_pat_nb_update=%s, ch_pat_coord_X=%s, ch_pat_coord_Y=%s, ch_pat_nom=%s, ch_pat_lien_img1=%s, ch_pat_lien_img2=%s, ch_pat_lien_img3=%s, ch_pat_lien_img4=%s, ch_pat_lien_img5=%s, ch_pat_legende_img1=%s, ch_pat_legende_img2=%s, ch_pat_legende_img3=%s, ch_pat_legende_img4=%s, ch_pat_legende_img5=%s, ch_pat_description=%s WHERE ch_pat_id=%s",
@@ -75,15 +73,13 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_monument")
                        GetSQLValueString($_POST['ch_pat_description'], "text"),
                        GetSQLValueString($_POST['ch_pat_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
-  $updateGoTo = "ville_modifier.php#mes-monuments";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $updateGoTo = DEF_URI_PATH . "back/ville_modifier.php#mes-monuments";
+  appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 
 $institutCulture = new \GenCity\Monde\Institut\Institut(\GenCity\Monde\Institut\Institut::$instituts['culture']);
@@ -150,7 +146,7 @@ return true;
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 </header>
 <div class="container" id="overview"> 
   
@@ -170,24 +166,24 @@ return true;
           Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; votre monument. Les monuments sont des constructions exceptionelles de votre pays. La promotion des monuments du Monde GC est confi&eacute;e au <a href="../patrimoine.php" title="lien vers la page consacr&eacute;e &agrave; l'Institut"><?= __s($institutCulture->get('ch_ins_nom')) ?></a>.</div>
       <div class="well">
       <?php if (($_SESSION['statut'] >= 20) AND ($row_users['ch_use_id'] != $_SESSION['user_ID'])) { ?>
-       <form class="pull-right" action="monument_confirmation_supprimer.php" method="post">
+       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/monument_confirmation_supprimer.php" method="post">
         <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
         <button class="btn btn-danger" type="submit" title="supprimer ce monument"><i class="icon-trash icon-white"></i></button>
       </form>
-      <form class="pull-right" action="membre-modifier_back.php" method="get">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/membre-modifier_back.php" method="get">
         <input name="userID" type="hidden" value="<?php echo $row_users['ch_use_id']; ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Profil du dirigeant</button>
       </form>
-      <form class="pull-right" action="page_pays_back.php" method="get">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_back.php" method="get">
         <input name="paysID" type="hidden" value="<?php echo $row_monument['ch_pat_paysID']; ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du pays"><i class="icon-pays-small-white"></i> Modifier le pays</button>
       </form>
-      <form class="pull-right" action="ville_modifier.php" method="get">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="get">
         <input name="ville-ID" type="hidden" value="<?php echo $row_monument['ch_pat_villeID']; ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion de la ville"> Modifier la ville</button>
       </form>
       <?php } else {?>
-       <form class="pull-right" action="monument_confirmation_supprimer.php" method="post">
+       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/monument_confirmation_supprimer.php" method="post">
         <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
         <button class="btn btn-danger" type="submit" title="supprimer ce monument"><i class="icon-trash icon-white"></i></button>
       </form>
@@ -345,7 +341,7 @@ return true;
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <?php
@@ -357,7 +353,7 @@ mysql_free_result($monument);
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('../php/carte-ajouter-marqueur.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/carte-ajouter-marqueur.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>

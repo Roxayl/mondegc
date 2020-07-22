@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 
 
@@ -10,7 +10,7 @@ $colname_liste_mon_cat = "-1";
 if (isset($_GET['mon_cat_id'])) {
   $colname_liste_mon_cat = $_GET['mon_cat_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mon_cat = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_ID = %s ORDER BY ch_mon_cat_mis_jour DESC", GetSQLValueString($colname_liste_mon_cat, "int"));
 $liste_mon_cat = mysql_query($query_liste_mon_cat, $maconnexion) or die(mysql_error());
 $row_liste_mon_cat = mysql_fetch_assoc($liste_mon_cat);

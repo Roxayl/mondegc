@@ -1,15 +1,15 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
  
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 if ($_SESSION['statut'])
 {
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
@@ -66,7 +66,7 @@ $thisPays = new \GenCity\Monde\Pays($colname_pays);
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 
 <!-- Page CONTENT
     ================================================== -->
@@ -82,16 +82,16 @@ $thisPays = new \GenCity\Monde\Pays($colname_pays);
     </ul>
 
     <section>
-      <?php include('../php/upload.php');
+      <?php include(DEF_ROOTPATH . 'php/upload.php');
 if (isset($uploadconfirm)) {
   $updateSQL = sprintf("UPDATE pays SET ch_pay_lien_imgdrapeau=%s WHERE ch_pay_id=%s",
                        GetSQLValueString($link, "text"),
                        GetSQLValueString($colname_pays, "int"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 }
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_drapeau = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_pays, "int"));
 $drapeau = mysql_query($query_drapeau, $maconnexion) or die(mysql_error());
 $row_drapeau = mysql_fetch_assoc($drapeau);
@@ -105,7 +105,7 @@ $totalRows_drapeau = mysql_num_rows($drapeau);
         <p>&nbsp;</p>
         <p>Drapeau du pays <?php echo $row_drapeau['ch_pay_nom']; ?>
         <p>&nbsp;</p>
-        <form action="drapeau_modifier.php" method="post" enctype="multipart/form-data">
+        <form action="<?= DEF_URI_PATH ?>back/drapeau_modifier.php" method="post" enctype="multipart/form-data">
           <input type="file" name="fileToUpload" id="fileToUpload" data-filename-placement="inside" title="Choisir une nouvelle image">
           <input name="userID" id="userID" type="hidden" value="<?php echo $_SESSION['user_ID']; ?>">
           <input name="paysID" id="paysID" type="hidden" value="<?php echo $colname_pays; ?>">
@@ -123,7 +123,7 @@ $totalRows_drapeau = mysql_num_rows($drapeau);
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript

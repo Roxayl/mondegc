@@ -1,5 +1,5 @@
 <?php
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 
 //Connexion et deconnexion
@@ -26,7 +26,7 @@ if (isset($_GET['pageNum_liste_infra_officielles'])) {
 }
 $startRow_liste_infra_officielles = $pageNum_liste_infra_officielles * $maxRows_liste_infra_officielles;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 
 if(is_null($thisGroup)) {
     $query_liste_infra_officielles = sprintf(
@@ -197,7 +197,7 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
 
     <!-- Liste pour choix de classement -->
     <div id="select-categorie">
-      <form action="liste infrastructures.php#liste-infrastructures-officielles"
+      <form action="<?= DEF_URI_PATH ?>liste infrastructures.php#liste-infrastructures-officielles"
             method="GET" class="btn-margin-left">
 
         <?php if($thisGroup !== null): ?>

@@ -1,13 +1,13 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 $Fait_hist_ID = "-1";
 if (isset($_GET['ch_his_id'])) {
   $Fait_hist_ID = $_GET['ch_his_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_fait_hist = sprintf("SELECT ch_his_id, ch_his_nom, ch_his_lien_img1, ch_his_description, ch_his_paysID, ch_pay_lien_forum FROM histoire INNER JOIN pays ON ch_his_paysID = ch_pay_id WHERE ch_his_id = %s AND ch_his_statut=1", GetSQLValueString($Fait_hist_ID, "int"));
 $fait_hist = mysql_query($query_fait_hist, $maconnexion) or die(mysql_error());
 $row_fait_hist = mysql_fetch_assoc($fait_hist);
@@ -31,25 +31,21 @@ $id_trouve= false;
 
 $paysid = $row_fait_hist['ch_his_paysID'];
 //Mise à jour formulaire pays
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
   $updateSQL = sprintf("UPDATE pays SET ch_pay_lien_forum=%s WHERE ch_pay_id=%s",
                        GetSQLValueString($_POST['ch_pay_lien_forum'], "text"),
                        GetSQLValueString($_POST['ch_pay_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
-    $updateGoTo = "../page-fait-historique.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+    $updateGoTo = DEF_URI_PATH . "page-fait-historique.php";
+  appendQueryString($updateGoTo);
   $adresse = $updateGoTo."?ch_his_id=".$row_fait_hist['ch_his_paysID'];
   header(sprintf("Location: %s", $updateGoTo));
+ exit;
 }
 ?>
 <!-- Modal Header si ID sujet correspond  a 4 chiffres-->

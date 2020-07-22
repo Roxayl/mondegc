@@ -1,18 +1,18 @@
 <?php
-require_once('Connections/maconnexion.php'); 
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php'); 
 
 $colname_MarkerVilles = "-1";
 if (isset($_GET['ch_pay_id'])) {
   $colname_MarkerVilles = $_GET['ch_pay_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_MarkerVilles = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_mis_jour, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_armoiries, ch_vil_mis_jour, ch_vil_capitale, ch_use_lien_imgpersonnage, ch_use_login, ch_use_id, ch_vil_nom, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_pay_emplacement, ch_pay_nom, ch_pay_lien_imgdrapeau FROM villes INNER JOIN pays ON ch_pay_id = ch_vil_paysID INNER JOIN users on ch_vil_user=ch_use_id WHERE ch_vil_paysID = %s AND ch_vil_capitale<>3", GetSQLValueString($colname_MarkerVilles, "int"));
 $MarkerVilles = mysql_query($query_MarkerVilles, $maconnexion) or die(mysql_error());
 $row_MarkerVilles = mysql_fetch_assoc($MarkerVilles);
 $totalRows_MarkerVilles = mysql_num_rows($MarkerVilles);
 
 // Connexion BDD Monument pour afficher markers des monuments
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_MarkerMonument = sprintf("SELECT ch_pat_id, ch_pat_paysID, ch_pat_villeID, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_mis_jour, ch_pat_nom, ch_pat_lien_img1, ch_vil_armoiries, ch_vil_ID, ch_vil_nom, ch_vil_capitale, pays.ch_pay_id, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_id = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN villes ON  ch_pat_villeID=villes.ch_vil_ID INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE ch_pat_statut=1 AND ch_vil_capitale <> 3 AND pays.ch_pay_publication = 1 AND ch_vil_paysID = %s ORDER BY ch_pat_id ASC", GetSQLValueString($colname_MarkerVilles, "int"));
 $MarkerMonument = mysql_query($query_MarkerMonument, $maconnexion) or die(mysql_error());
 $row_MarkerMonument = mysql_fetch_assoc($MarkerMonument);
@@ -23,14 +23,14 @@ coordEmplacement($emplacement, $x, $y);
 
 
 // Connexion BDD gometries pour afficher zones des pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_ZonesPays = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_type, ch_geo_nom, ch_geo_mesure, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'polygon'";
 $ZonesPays = mysql_query($query_ZonesPays, $maconnexion) or die(mysql_error());
 $row_ZonesPays = mysql_fetch_assoc($ZonesPays);
 $totalRows_ZonesPays = mysql_num_rows($ZonesPays);
 
 // Connexion BDD gometries pour afficher voies des pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_VoiesPays = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_type, ch_geo_nom, ch_geo_mesure, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'line'";
 $VoiesPays = mysql_query($query_VoiesPays, $maconnexion) or die(mysql_error());
 $row_VoiesPays = mysql_fetch_assoc($VoiesPays);
@@ -448,7 +448,7 @@ $Specialiteville = str_replace ( '-', ' ', $row_MarkerVilles['ch_vil_specialite'
 			
 $listcategories = $row_MarkerMonument['listcat'];
 			if ($row_MarkerMonument['listcat']) {
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
 $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);

@@ -1,13 +1,11 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
 
@@ -29,7 +27,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
                        GetSQLValueString($_POST['ch_inf_off_Education'], "int"),
                        GetSQLValueString($_POST['ch_inf_off_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+  
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
   $newInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($_POST['ch_inf_off_id']);
@@ -47,13 +45,11 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
 
   getErrorMessage('success', "Une infrastructure officielle a été modifiée !");
 
-  $updateGoTo = "../back/institut_economie.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $updateGoTo = DEF_URI_PATH . "back/institut_economie.php";
+  appendQueryString($updateGoTo);
   $adresse = $updateGoTo .'#liste-infrastructures-officielles';
   header(sprintf("Location: %s", $adresse));
+ exit;
 }
 
 
@@ -65,7 +61,7 @@ $colname_infra_officielles = "-1";
 if (isset($_GET['infrastructure_off'])) {
   $colname_infra_officielles = $_GET['infrastructure_off'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_infra_officielles = sprintf("SELECT * FROM infrastructures_officielles WHERE ch_inf_off_id = %s", GetSQLValueString($colname_infra_officielles, "int"));
 $infra_officielles = mysql_query($query_infra_officielles, $maconnexion) or die(mysql_error());
 $row_infra_officielles = mysql_fetch_assoc($infra_officielles);

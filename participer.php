@@ -1,10 +1,10 @@
-<?php require_once('Connections/maconnexion.php');
+<?php if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
  
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 //Connexion et deconnexion
 include('php/log.php');
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_Last24H = "SELECT ch_use_login, ch_use_statut, ch_use_paysID FROM users WHERE ch_use_last_log > DATE_SUB(NOW(), INTERVAL 2 DAY) ORDER BY ch_use_login";
 $Last24H = mysql_query($query_Last24H, $maconnexion) or die(mysql_error());
 $row_Last24H = mysql_fetch_assoc($Last24H);

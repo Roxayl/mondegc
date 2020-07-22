@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 
 //requete categories monuments
@@ -9,7 +9,7 @@ $colname_infra_officielles = "-1";
 if (isset($_GET['infrastructure_off'])) {
   $colname_infra_officielles = $_GET['infrastructure_off'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_infra_officielles = sprintf("SELECT * FROM infrastructures_officielles WHERE ch_inf_off_id = %s", GetSQLValueString($colname_infra_officielles, "int"));
 $infra_officielles = mysql_query($query_infra_officielles, $maconnexion) or die(mysql_error());
 $row_infra_officielles = mysql_fetch_assoc($infra_officielles);

@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=iso-8859-1');
 
 //requete categories monuments
@@ -9,7 +9,7 @@ $colname_membres_groupes = "-1";
 if (isset($_GET['mem_group_ID'])) {
   $colname_membres_groupes = $_GET['mem_group_ID'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_membres_groupes = sprintf("SELECT * FROM membres_groupes WHERE ch_mem_group_ID = %s ORDER BY ch_mem_group_mis_jour DESC", GetSQLValueString($colname_membres_groupes, "int"));
 $membres_groupes = mysql_query($query_membres_groupes, $maconnexion) or die(mysql_error());
 $row_membres_groupes = mysql_fetch_assoc($membres_groupes);

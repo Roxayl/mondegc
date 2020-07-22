@@ -1,4 +1,4 @@
-<?php require_once('Connections/maconnexion.php'); ?>
+<?php if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php'); ?>
 <?php 
 //requete liste communiqués
 
@@ -9,7 +9,7 @@ if (isset($_GET['pageNum_communiques'])) {
 }
 $startRow_communiques = $pageNum_communiques * $maxRows_communiques;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_communiques = sprintf("SELECT * FROM communiques WHERE communiques.ch_com_categorie = '$ch_com_categorie'  AND communiques.ch_com_element_id = %s AND communiques.ch_com_statut = '1' ORDER BY ch_com_date DESC", GetSQLValueString($ch_com_element_id, "int"));
 $query_limit_communiques = sprintf("%s LIMIT %d, %d", $query_communiques, $startRow_communiques, $maxRows_communiques);
 $communiques = mysql_query($query_limit_communiques, $maconnexion) or die(mysql_error());

@@ -1,16 +1,16 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	   }
 
@@ -26,20 +26,18 @@ $insertSQL = sprintf("INSERT INTO monument_categories (ch_mon_cat_label, ch_mon_
                        GetSQLValueString($_POST['ch_mon_cat_icon'], "text"),
 					   GetSQLValueString($_POST['ch_mon_cat_couleur'], "text"));
 					   
-mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $insertGoTo = "institut_patrimoine.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $insertGoTo = DEF_URI_PATH . "back/institut_patrimoine.php";
+  appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 					   
 //requete instituts
 $institut_id = 3;
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
@@ -53,7 +51,7 @@ if (isset($_GET['pageNum_liste_mon_cat'])) {
 }
 $startRow_liste_mon_cat = $pageNum_liste_mon_cat * $maxRows_liste_mon_cat;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mon_cat = "SELECT * FROM monument_categories ORDER BY ch_mon_cat_mis_jour DESC";
 $query_limit_liste_mon_cat = sprintf("%s LIMIT %d, %d", $query_liste_mon_cat, $startRow_liste_mon_cat, $maxRows_liste_mon_cat);
 $liste_mon_cat = mysql_query($query_limit_liste_mon_cat, $maconnexion) or die(mysql_error());
@@ -84,7 +82,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 $queryString_liste_mon_cat = sprintf("&totalRows_liste_mon_cat=%d%s", $totalRows_liste_mon_cat, $queryString_liste_mon_cat);
 
 //requete liste categories monuments pour pouvoir selectionner la categorie 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mon_cat2 = "SELECT * FROM monument_categories ORDER BY ch_mon_cat_mis_jour DESC";
 $liste_mon_cat2 = mysql_query($query_liste_mon_cat2, $maconnexion) or die(mysql_error());
 $row_liste_mon_cat2 = mysql_fetch_assoc($liste_mon_cat2);
@@ -108,7 +106,7 @@ if (isset($_GET['mon_cat_ID'])) {
 } } else {
   $colname_classer_mon = NULL;
 } 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_classer_mon = sprintf("SELECT monument.ch_disp_id as id, monument.ch_disp_mon_id, ch_pat_nom, ch_pat_mis_jour, ch_pat_lien_img1, (SELECT GROUP_CONCAT(categories.ch_disp_cat_id) FROM dispatch_mon_cat as categories WHERE monument.ch_disp_mon_id = categories.ch_disp_mon_id) AS listcat
 FROM dispatch_mon_cat as monument 
 INNER JOIN patrimoine ON monument.ch_disp_mon_id = ch_pat_id 
@@ -146,14 +144,14 @@ $queryString_classer_mon = sprintf("&totalRows_classer_mon=%d%s", $totalRows_cla
 
 
 //requete listes monuments restants
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mon_restants = sprintf("SELECT ch_pat_id AS nb_mon_restants FROM patrimoine WHERE ch_pat_id NOT IN (SELECT ch_disp_mon_id FROM dispatch_mon_cat WHERE ch_disp_cat_id = %s OR %s IS NULL)", GetSQLValueString($colname_classer_mon, "int"), GetSQLValueString($colname_classer_mon, "int"));
 $liste_mon_restants = mysql_query($query_liste_mon_restants, $maconnexion) or die(mysql_error());
 $row_liste_mon_restants = mysql_fetch_assoc($liste_mon_restants);
 $totalRows_liste_mon_restants = mysql_num_rows($liste_mon_restants);
 
 //requete listes monuments non classés
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_new_mon = "SELECT ch_pat_id, ch_pat_lien_img1, ch_pat_nom, ch_pat_mis_jour FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id WHERE ch_pat_id NOT IN (
         SELECT ch_disp_mon_id FROM dispatch_mon_cat ) AND ch_pay_publication = 1 ORDER BY ch_pat_nom ASC";
 $new_mon = mysql_query($query_new_mon, $maconnexion) or die(mysql_error());
@@ -236,7 +234,7 @@ format: 'hex'});
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container" id="overview"> 
@@ -244,13 +242,13 @@ format: 'hex'});
   <!-- Page CONTENT
     ================================================== -->
   <section class="corps-page">
-  <?php include('../php/menu-haut-conseil.php'); ?>
+  <?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
   
   <!-- Liste des Communiqués
         ================================================== -->
   <!-- formulaire de modification instituts
      ================================================== -->
-  <form class="pull-right-cta" action="insitut_modifier.php" method="post" style="margin-top: 30px;">
+  <form class="pull-right-cta" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post" style="margin-top: 30px;">
     <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
     <button class="btn btn-primary btn-cta" type="submit" title="modifier les informations sur l'institut"><i class="icon-edit icon-white"></i> Modifier la description</button>
   </form>
@@ -275,7 +273,7 @@ format: 'hex'});
 $com_cat = "institut";
 $userID = $_SESSION['user_ID'];
 $com_element_id = 3;
-include('../php/communiques-back.php'); ?>
+include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
   </div>
   <!-- Categorie monuments
      ================================================== -->
@@ -466,7 +464,7 @@ $('#closemodal').click(function() {
 <div class="row-fluid"> 
   <!-- Liste pour choix de la categories -->
   <div id="select-categorie">
-    <form action="institut_patrimoine.php#classer-monument" method="GET">
+    <form action="<?= DEF_URI_PATH ?>back/institut_patrimoine.php#classer-monument" method="GET">
       <select name="mon_cat_ID" id="mon_cat_ID" onchange="this.form.submit()">
         <option value="" <?php if ($colname_classer_mon == NULL) {?>selected<?php } ?>>S&eacute;lectionnez une cat&eacute;gorie&nbsp;</option>
         <?php do { ?>
@@ -483,7 +481,7 @@ $('#closemodal').click(function() {
 			$listcategories = $row_classer_mon['listcat'];
 			if ($row_classer_mon['listcat']) {
           
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories)";
 $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
@@ -570,7 +568,7 @@ $('#closemodal').click(function() {
 
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <script type="text/javascript">

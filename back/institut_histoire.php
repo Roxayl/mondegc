@@ -1,16 +1,16 @@
 <?php
 
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
 } else {
 	// Redirection vers page connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
@@ -26,20 +26,18 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-categorie")) 
                        GetSQLValueString($_POST['ch_fai_cat_icon'], "text"),
 					   GetSQLValueString($_POST['ch_fai_cat_couleur'], "text"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $insertGoTo = "institut_histoire.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $insertGoTo = DEF_URI_PATH . "back/institut_histoire.php";
+  appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
+ exit;
 }
 
 //requete instituts
 $institut_id = 4;
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
@@ -53,7 +51,7 @@ if (isset($_GET['pageNum_liste_fait_cat'])) {
 }
 $startRow_liste_fait_cat = $pageNum_liste_fait_cat * $maxRows_liste_fait_cat;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_fait_cat = "SELECT * FROM faithist_categories ORDER BY ch_fai_cat_mis_jour DESC";
 $query_limit_liste_fait_cat = sprintf("%s LIMIT %d, %d", $query_liste_fait_cat, $startRow_liste_fait_cat, $maxRows_liste_fait_cat);
 $liste_fait_cat = mysql_query($query_limit_liste_fait_cat, $maconnexion) or die(mysql_error());
@@ -85,7 +83,7 @@ $queryString_liste_fait_cat = sprintf("&totalRows_liste_fait_cat=%d%s", $totalRo
 
 
 //requete liste categories faits hist pour pouvoir selectionner la categorie 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_fait_cat2 = "SELECT * FROM faithist_categories ORDER BY ch_fai_cat_mis_jour DESC";
 $liste_fait_cat2 = mysql_query($query_liste_fait_cat2, $maconnexion) or die(mysql_error());
 $row_liste_fait_cat2 = mysql_fetch_assoc($liste_fait_cat2);
@@ -109,7 +107,7 @@ if (isset($_GET['fai_catID'])) {
 } } else {
   $colname_classer_fait_his = NULL;
 } 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_classer_fait_his = sprintf("SELECT fait.ch_disp_FH_id as id, fait.ch_disp_fait_hist_id, ch_his_nom, ch_his_mis_jour, ch_his_lien_img1, (SELECT GROUP_CONCAT(categories.ch_disp_fait_hist_cat_id) FROM dispatch_fait_his_cat as categories WHERE fait.ch_disp_fait_hist_id = categories.ch_disp_fait_hist_id) AS listcat
 FROM dispatch_fait_his_cat as fait 
 INNER JOIN histoire ON fait.ch_disp_fait_hist_id = ch_his_id 
@@ -146,7 +144,7 @@ $queryString_classer_fait_his = sprintf("&totalRows_classer_fait_his=%d%s", $tot
 
 
 //requete listes faits restants
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_fait_restants = sprintf("SELECT ch_his_id AS nb_faits_restants FROM histoire WHERE ch_his_id NOT IN (SELECT ch_disp_fait_hist_id FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_cat_id = %s OR %s IS NULL)", GetSQLValueString($colname_classer_fait_his, "int"), GetSQLValueString($colname_classer_fait_his, "int"));
 $liste_fait_restants = mysql_query($query_liste_fait_restants, $maconnexion) or die(mysql_error());
 $row_liste_fait_restants = mysql_fetch_assoc($liste_fait_restants);
@@ -154,7 +152,7 @@ $totalRows_liste_fait_restants = mysql_num_rows($liste_fait_restants);
 
 
 //requete listes faits hist non classés
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_new_fait = "SELECT ch_his_id, ch_his_lien_img1, ch_his_nom, ch_his_mis_jour FROM histoire INNER JOIN pays ON ch_his_paysID = ch_pay_id WHERE ch_his_id NOT IN (
         SELECT ch_disp_fait_hist_id FROM dispatch_fait_his_cat ) AND ch_pay_publication = 1 ORDER BY ch_his_mis_jour DESC";
 $new_fait = mysql_query($query_new_fait, $maconnexion) or die(mysql_error());
@@ -238,7 +236,7 @@ format: 'hex'});
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container" id="overview"> 
@@ -246,11 +244,11 @@ format: 'hex'});
   <!-- Page CONTENT
     ================================================== -->
   <section class="corps-page">
-  <?php include('../php/menu-haut-conseil.php'); ?>
+  <?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
 
   <!-- formulaire de modification instituts
      ================================================== -->
-  <form class="pull-right-cta" action="insitut_modifier.php" method="post" style="margin-top: 30px;">
+  <form class="pull-right-cta" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post" style="margin-top: 30px;">
     <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
     <button class="btn btn-primary btn-cta" type="submit" title="modifier les informations sur l'institut"><i class="icon-edit icon-white"></i> Modifier la description</button>
   </form>
@@ -277,7 +275,7 @@ format: 'hex'});
 $com_cat = "institut";
 $userID = $_SESSION['user_ID'];
 $com_element_id = 4;
-include('../php/communiques-back.php'); ?>
+include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
   </div>
   <!-- Categorie monuments
      ================================================== -->
@@ -445,7 +443,7 @@ $('#closemodal').click(function() {
 <div class="row-fluid"> 
   <!-- Liste pour choix de la categories -->
   <div id="select-categorie">
-    <form action="institut_histoire.php#classer-fait-hist" method="GET">
+    <form action="<?= DEF_URI_PATH ?>back/institut_histoire.php#classer-fait-hist" method="GET">
       <select name="fai_catID" id="fai_catID" onchange="this.form.submit()">
         <option value="" <?php if ($colname_classer_fait_his == NULL) {?>selected<?php } ?>>S&eacute;lectionnez une cat&eacute;gorie&nbsp;</option>
         <?php do { ?>
@@ -462,7 +460,7 @@ $('#closemodal').click(function() {
 			$listcategories = $row_classer_fait_his['listcat'];
 			if ($row_classer_fait_his['listcat']) {
           
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_fait_cat3 = "SELECT * FROM faithist_categories WHERE ch_fai_cat_ID In ($listcategories)";
 $liste_fait_cat3 = mysql_query($query_liste_fait_cat3, $maconnexion) or die(mysql_error());
 $row_liste_fait_cat3 = mysql_fetch_assoc($liste_fait_cat3);
@@ -540,7 +538,7 @@ $('#closemodal').click(function() {
 
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <script type="text/javascript">

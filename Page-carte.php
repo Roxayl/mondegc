@@ -1,5 +1,5 @@
 <?php 
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 //Connexion et deconnexion
 include('php/log.php');
@@ -10,13 +10,13 @@ if($_SERVER["REMOTE_ADDR"] === '127.0.0.1') {
 }
 
 // Calcul des statistiques
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_stat_pays = "SELECT ch_pay_id, ch_pay_continent, ch_pay_population_carte FROM pays WHERE ch_pay_publication = 1";
 $stat_pays = mysql_query($query_stat_pays, $maconnexion) or die(mysql_error());
 $row_stat_pays = mysql_fetch_assoc($stat_pays);
 $totalRows_stat_pays = mysql_num_rows($stat_pays);
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_stat_ville = "SELECT COUNT(ch_vil_ID) AS nbville, ch_pay_continent, SUM(ch_vil_population) AS nbhabitant FROM villes INNER JOIN pays ON ch_pay_id = ch_vil_paysID WHERE ch_vil_capitale != 3 AND ch_pay_publication = 1 GROUP BY ch_pay_id";
 $stat_ville = mysql_query($query_stat_ville, $maconnexion) or die(mysql_error());
 $row_stat_ville = mysql_fetch_assoc($stat_ville);
@@ -109,7 +109,7 @@ $nbhabitants_Aurinea = $nbhabitants_Aurinea + $nbhabitants_RFGC;
 
 // Liste des pays par continent
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_listePays = "SELECT ch_pay_id, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_use_login, (SELECT COUNT(ch_vil_ID) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS nbville, (SELECT SUM(ch_vil_population) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) + ch_pay_population_carte AS nbhabitant FROM pays INNER JOIN users ON ch_use_paysID = ch_pay_id AND ch_use_statut >=10 WHERE ch_pay_publication = 1 Group By ch_pay_id ORDER BY ch_pay_nom ASC";
 $listePays = mysql_query($query_listePays, $maconnexion) or die(mysql_error());
 $row_listePays = mysql_fetch_assoc($listePays);
@@ -336,13 +336,13 @@ div.olControlPanel {
               <h3>R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</h3>
             </div>
             <div class="span4">
-              <p>La RFGC est un pays communautaire ouvert � tous, il est divis� en r�gions</p>
+              <p>La RFGC est un pays communautaire ouvert à tous, il est divisé en deux provinces.</p>
               <p>Nombre de villes&nbsp;: <strong> <?php echo $nbvilles_RFGC; ?> </strong></p>
               <p>Population&nbsp;: <strong>
                 <?php $nbhabitant_francais = number_format($nbhabitants_RFGC, 0, ',', ' '); echo $nbhabitant_francais; ?>
                 habitants</strong></p>
             </div>
-            <div class="span2"> <a href="#RFGC" class="btn btn-primary">Voir les r&eacute;gions</a> </div>
+            <div class="span2"> <a href="#RFGC" class="btn btn-primary">Voir les provinces</a> </div>
           </div>
         </li>
         <p>&nbsp;</p>

@@ -1,13 +1,13 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if (!($_SESSION['statut'])) {
     // Redirection vers Haut Conseil
     header("Status: 301 Moved Permanently", false, 301);
-    header('Location: ../connexion.php');
+    header('Location: ' . legacyPage('connexion'));
     exit();
 }
 
@@ -82,7 +82,7 @@ img.olTileImage {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 
 <div class="container corps-page">
 
@@ -146,7 +146,7 @@ img.olTileImage {
             <div class="thumbnail">
               <img src="<?= __s($row->get('url_image')) ?>" data-src="holder.js/300x200" alt="">
               <h3><?= __s($row->get('nom_groupe')) ?></h3>
-              <form action="infrastructure_ajouter.php" method="GET">
+              <form action="<?= DEF_URI_PATH ?>back/infrastructure_ajouter.php" method="GET">
                 <input name="ville_ID" type="hidden" class="infra_ville_id_form"
                        value="<?= is_null($thisVille) ? 0 : $thisVille->get('ch_vil_ID') ?>">
                 <input name="infra_group_id" type="hidden"
@@ -175,7 +175,7 @@ img.olTileImage {
     ================================================== -->
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->

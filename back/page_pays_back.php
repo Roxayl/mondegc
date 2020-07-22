@@ -1,41 +1,39 @@
 <?php
 
-use GenCity\Monde\Pays;
+if(!isset($mondegc_config['front-controller'])) require_once('../Connections/maconnexion.php');
 
-require_once('../Connections/maconnexion.php');
+use GenCity\Monde\Pays;
 
  
 //deconnexion
-include('../php/logout.php');
+include(DEF_ROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
 } else {
 // Redirection vers page de connexion
 header("Status: 301 Moved Permanently", false, 301);
-header('Location: ../connexion.php');
+header('Location: ' . legacyPage('connexion'));
 exit();
 }
 
 //Mise a jour parametres donnees personnelles
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 //Récupération variables
 $colname_paysID = $_REQUEST['paysID'];
 unset($_REQUEST['paysID']);
 
 //Requete Pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_InfoGenerale = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_paysID, "int"));
 $InfoGenerale = mysql_query($query_InfoGenerale, $maconnexion) or die(mysql_error());
 $row_InfoGenerale = mysql_fetch_assoc($InfoGenerale);
 $totalRows_InfoGenerale = mysql_num_rows($InfoGenerale);
 
 //Requete User
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_User = sprintf("SELECT ch_use_id, ch_use_login, ch_use_statut FROM users WHERE ch_use_paysID = %s AND ch_use_statut >= 10", GetSQLValueString($colname_paysID, "int"));
 $User = mysql_query($query_User, $maconnexion) or die(mysql_error());
 $row_User = mysql_fetch_assoc($User);
@@ -98,18 +96,15 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
                            GetSQLValueString($_POST['ch_pay_text_patrimoine'], "text"),
                            GetSQLValueString($_POST['ch_pay_id'], "int"));
 
-      mysql_select_db($database_maconnexion, $maconnexion);
+
       $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
       getErrorMessage('success', "Le pays a été modifié avec succès !");
     } else {
         getErrorMessage('error', "Vous n'avez pas accès à cette partie.");
     }
   
-  $updateGoTo = "page_pays_back.php?paysID=" . (int)$_POST['ch_pay_id'];
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $updateGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_pay_id'];
+  appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
   exit;
 }
@@ -122,7 +117,7 @@ if (isset($_GET['pageNum_mesvilles'])) {
 }
 $startRow_mesvilles = $pageNum_mesvilles * $maxRows_mesvilles;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_mesvilles = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_use_paysID, ch_pay_lien_imgdrapeau, ch_pay_nom FROM villes INNER JOIN users ON ch_vil_user = ch_use_id INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_vil_user= %s AND ch_pay_id = %s ORDER BY ch_vil_date_enregistrement ASC", GetSQLValueString($_SESSION['user_ID'], "int"), GetSQLValueString($colname_paysID, 'int'));
 $query_limit_mesvilles = sprintf("%s LIMIT %d, %d", $query_mesvilles, $startRow_mesvilles, $maxRows_mesvilles);
 $mesvilles = mysql_query($query_limit_mesvilles, $maconnexion) or die(mysql_error());
@@ -160,7 +155,7 @@ if (isset($_GET['pageNum_autres_villes'])) {
 }
 $startRow_autres_villes = $pageNum_autres_villes * $maxRows_autres_villes;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_autres_villes = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_use_login FROM villes INNER JOIN users ON ch_vil_user = ch_use_id WHERE ch_vil_paysID = %s AND ch_vil_user != %s ORDER BY ch_vil_date_enregistrement ASC", GetSQLValueString($colname_paysID, "int"), GetSQLValueString($_SESSION['user_ID'], "int"));
 $query_limit_autres_villes = sprintf("%s LIMIT %d, %d", $query_autres_villes, $startRow_autres_villes, $maxRows_autres_villes);
 $autres_villes = mysql_query($query_limit_autres_villes, $maconnexion) or die(mysql_error());
@@ -202,7 +197,7 @@ if (isset($_GET['pageNum_communiquesPays'])) {
 }
 $startRow_communiquesPays = $pageNum_communiquesPays * $maxRows_communiquesPays;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_communiquesPays = sprintf("SELECT * FROM communiques WHERE communiques.ch_com_categorie = 'pays'  AND communiques.ch_com_element_id = %s", GetSQLValueString($colname_paysID, "int"));
 $query_limit_communiquesPays = sprintf("%s LIMIT %d, %d", $query_communiquesPays, $startRow_communiquesPays, $maxRows_communiquesPays);
 $communiquesPays = mysql_query($query_limit_communiquesPays, $maconnexion) or die(mysql_error());
@@ -242,7 +237,7 @@ if (isset($_GET['pageNum_fait_hist'])) {
 }
 $startRow_fait_hist = $pageNum_fait_hist * $maxRows_fait_hist;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_fait_hist = sprintf("SELECT ch_his_id, ch_his_statut, ch_his_personnage, ch_his_date_fait, ch_his_date_fait2, ch_his_nom FROM  histoire WHERE ch_his_paysID = %s ORDER BY ch_his_date_fait ASC", GetSQLValueString($colname_paysID, "int"));
 $query_limit_fait_hist = sprintf("%s LIMIT %d, %d", $query_fait_hist, $startRow_fait_hist, $maxRows_fait_hist);
 $fait_hist = mysql_query($query_limit_fait_hist, $maconnexion) or die(mysql_error());
@@ -357,7 +352,7 @@ img.olTileImage {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('../php/navbarback.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <?php if ($colname_paysID != NULL AND $row_InfoGenerale['ch_pay_publication'] !=3) { ?>
 <!-- Subhead
 ================================================== -->
@@ -404,7 +399,7 @@ img.olTileImage {
       <!-- Moderation
      ================================================== -->
       <?php if ($_SESSION['userObject']->minStatus('Administrateur')) { ?>
-      <form class="pull-right" action="page_pays_confirmer_supprimer.php" method="post">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_confirmer_supprimer.php" method="post">
       <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
       <button class="btn btn-danger" type="submit" title="supprimer ce pays"><i class="icon-trash icon-white"></i></button>
       </form>
@@ -413,7 +408,7 @@ img.olTileImage {
       <a class="btn btn-primary pull-right" href="../php/partage-pays.php?ch_pay_id=<?php echo $row_InfoGenerale['ch_pay_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Annoncez sur le forum une mise &agrave; jour de votre page"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
       <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
-      <form class="pull-right" action="drapeau_modifier.php" method="post">
+      <form class="pull-right" action="<?= DEF_URI_PATH ?>back/drapeau_modifier.php" method="post">
       <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
       <button class="btn btn-primary" type="submit" title="Chargez une nouvelle image sur le serveur"><i class="icon-pays-small-white"></i> Modifier le drapeau</button>
       </form>
@@ -869,11 +864,11 @@ img.olTileImage {
                        href="../page-ville.php?ch_pay_id=<?= $row_mesvilles['ch_vil_paysID'] ?>&ch_ville_id=<?= $row_mesvilles['ch_vil_ID'] ?>">Visiter</a>
                 </td>
                 <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
-                <td><form action="ville_modifier.php" method="GET">
+                <td><form action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="GET">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_mesvilles['ch_vil_ID']; ?>">
                     <button class="btn btn-primary" type="submit" title="modifier la ville"><i class="icon-pencil icon-white"></i></button>
                   </form></td>
-                <td><form action="ville_confirmation_supprimer.php" method="POST">
+                <td><form action="<?= DEF_URI_PATH ?>back/ville_confirmation_supprimer.php" method="POST">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_mesvilles['ch_vil_ID']; ?>">
                     <button class="btn btn-danger" type="submit" title="supprimer la ville"><i class="icon-trash icon-white"></i></button>
                   </form></td>
@@ -892,7 +887,7 @@ img.olTileImage {
                     <?php } // Show if not last page ?>
                 </p>
               <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
-                <form action="ville_ajouter.php" method="post">
+                <form action="<?= DEF_URI_PATH ?>back/ville_ajouter.php" method="post">
                   <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
                   <input name="user_ID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
                   <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une ville</button>
@@ -904,7 +899,7 @@ img.olTileImage {
         <?php } else { ?>
             <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
                 <h3>Mes villes</h3>
-                <form action="ville_ajouter.php" method="post">
+                <form action="<?= DEF_URI_PATH ?>back/ville_ajouter.php" method="post">
                   <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
                   <input name="user_ID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
                   <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une ville</button>
@@ -950,11 +945,11 @@ img.olTileImage {
                 <?php if ($_SESSION['userObject']->minStatus('OCGC') ||
                         $thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) {
                     // Affichage si sup ou egal à dirigeant ?>
-                <td><form action="ville_modifier.php" method="get">
+                <td><form action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="get">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
                     <button class="btn btn-primary" type="submit" title="modifier la ville"><i class="icon-pencil icon-white"></i></button>
                   </form></td>
-                <td><form action="ville_confirmation_supprimer.php" method="post">
+                <td><form action="<?= DEF_URI_PATH ?>back/ville_confirmation_supprimer.php" method="post">
                     <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
                     <button class="btn btn-danger" type="submit" title="supprimer la ville"><i class="icon-trash icon-white"></i></button>
                   </form></td>
@@ -1012,7 +1007,7 @@ img.olTileImage {
             habitants</strong></p>
         </div>
         <div class="span12">
-          <form action="../Carte-modifier.php" method="post">
+          <form action="<?= DEF_URI_PATH ?>Carte-modifier.php" method="post">
             <input name="paysID" type="hidden" value="<?php echo $colname_paysID; ?>">
             <button class="btn btn-primary" type="submit" title="lien vers les outils de dessin">Dessiner sur la carte</button>
           </form>
@@ -1034,7 +1029,7 @@ img.olTileImage {
 $userID = $row_User['ch_use_id'];
 $com_cat = "pays";
 $com_element_id = $row_InfoGenerale['ch_pay_id'];
-include('../php/communiques-back.php'); ?>
+include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
       </section>
       <?php } // Affichage si sup ou egal à dirigeant ?>
       <!-- Liste des faits historiques
@@ -1075,14 +1070,14 @@ include('../php/communiques-back.php'); ?>
                 <td><strong><?php echo $row_fait_hist['ch_his_nom']; ?></strong></td>
                 <td>Le <?php echo affDate($row_fait_hist['ch_his_date_fait']); ?></td>
                 <td><form action="<?php if ($row_fait_hist['ch_his_personnage'] == 2) {
-					echo "personnage_historique_modifier.php";
+					echo DEF_URI_PATH . "back/personnage_historique_modifier.php";
 					} else {
-					echo "fait_historique_modifier.php";
+					echo DEF_URI_PATH . "back/fait_historique_modifier.php";
 						} ?>" method="post">
                     <input name="ch_his_id" type="hidden" value="<?php echo $row_fait_hist['ch_his_id']; ?>">
                     <button class="btn" type="submit" title="modifier cet &eacute;l&eacute;ment historique"><i class="icon-pencil"></i></button>
                   </form></td>
-                <td><form action="fait_historique_confirmation_supprimer.php" method="post">
+                <td><form action="<?= DEF_URI_PATH ?>back/fait_historique_confirmation_supprimer.php" method="post">
                     <input name="ch_his_id" type="hidden" value="<?php echo $row_fait_hist['ch_his_id']; ?>">
                     <button class="btn" type="submit" title="supprimer ce fait historique"><i class="icon-trash"></i></button>
                   </form></td>
@@ -1099,11 +1094,11 @@ include('../php/communiques-back.php'); ?>
                     <a class="btn" href="<?php printf("%s?pageNum_fait_hist=%d%s#mes-fait_hists", $currentPage, min($totalPages_fait_hist, $pageNum_fait_hist + 1), $queryString_fait_hist); ?>"> <i class="icon-forward"></i></a>
                     <?php } // Show if not last page ?>
                 </p>
-                <form action="fait_historique_ajouter.php" method="post" class="form-button-inline">
+                <form action="<?= DEF_URI_PATH ?>back/fait_historique_ajouter.php" method="post" class="form-button-inline">
                   <input name="paysID" type="hidden" value="<?php echo $colname_paysID;?>">
                   <button class="btn btn-primary btn-margin-left" type="submit">Ajouter un fait historique</button>
                 </form>
-                <form action="personnage_historique_ajouter.php" method="post" class="form-button-inline">
+                <form action="<?= DEF_URI_PATH ?>back/personnage_historique_ajouter.php" method="post" class="form-button-inline">
                   <input name="paysID" type="hidden" value="<?php echo $colname_paysID;?>">
                   <button class="btn btn-primary btn-margin-left" type="submit">Ajouter un personnage historique</button>
                 </form></td>
@@ -1111,11 +1106,11 @@ include('../php/communiques-back.php'); ?>
           </tfoot>
         </table>
         <?php } else { ?>
-        <form action="fait_historique_ajouter.php" method="post" class="form-button-inline">
+        <form action="<?= DEF_URI_PATH ?>back/fait_historique_ajouter.php" method="post" class="form-button-inline">
           <input name="paysID" type="hidden" value="<?php echo $colname_paysID; ?>">
           <button class="btn btn-primary btn-margin-left" type="submit">Ajouter un fait historique</button>
         </form>
-        <form action="personnage_historique_ajouter.php" method="post" class="form-button-inline">
+        <form action="<?= DEF_URI_PATH ?>back/personnage_historique_ajouter.php" method="post" class="form-button-inline">
           <input name="paysID" type="hidden" value="<?php echo $colname_paysID;?>">
           <button class="btn btn-primary btn-margin-left" type="submit">Ajouter un personnage historique</button>
         </form>
@@ -1137,7 +1132,7 @@ include('../php/communiques-back.php'); ?>
     <h3 id="myModalLabel">Informations Personnage</h3>
   </div>
   <div class="modal-body">
-  <form action="membre-modifier_back.php" name="InfoUser" method="POST" class="form-horizontal" id="InfoUser">
+  <form action="<?= DEF_URI_PATH ?>back/membre-modifier_back.php" name="InfoUser" method="POST" class="form-horizontal" id="InfoUser">
 
       <input name="personnage_id" type="hidden" value="<?php echo $paysPersonnages['id']; ?>">
     <!-- Predicat -->
@@ -1250,16 +1245,16 @@ include('../php/communiques-back.php'); ?>
 <?php } ?>
 <!-- Footer
     ================================================== -->
-<?php include('../php/footerback.php'); ?>
-</body>
-</html>
+<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('../php/carteemplacements.php'); ?>
+<?php include(DEF_ROOTPATH . 'php/carteemplacements.php'); ?>
 <script>
 $("a[data-toggle=modal]").click(function (e) {
   lv_target = $(this).attr('data-target')
@@ -1301,13 +1296,5 @@ var sprytextfield32 = new Spry.Widget.ValidationTextField("sprytextfield32", "no
 var sprytextfield33 = new Spry.Widget.ValidationTextField("sprytextfield33", "none", {isRequired:false, maxChars:50, validateOn:["change"]});
 var sprytextarea30 = new Spry.Widget.ValidationTextarea("sprytextarea30", {maxChars:500, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
-<?php
-mysql_free_result($mesvilles);
-
-mysql_free_result($communiquesPays);
-
-mysql_free_result($InfoGenerale);
-
-mysql_free_result($User);
-
-mysql_free_result($fait_hist);
+</body>
+</html>

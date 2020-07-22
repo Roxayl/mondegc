@@ -1,4 +1,4 @@
-<?php require_once('../Connections/maconnexion.php'); ?>
+<?php if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php'); ?>
 <?php
     
 
@@ -21,7 +21,7 @@ break;
 }
 
 //Liste pays pour moderation
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_pays = "SELECT ch_pay_id, ch_pay_nom FROM pays ORDER BY ch_pay_nom ASC";
 $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
 $row_pays = mysql_fetch_assoc($pays);

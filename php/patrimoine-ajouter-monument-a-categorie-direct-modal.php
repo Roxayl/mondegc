@@ -1,20 +1,18 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 // renvoyer les données POST à soi-même
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 $mon_ID = isset($_GET['mon_id']) ? (int)$_GET['mon_id'] : 0;
 
 // Traitement données POST
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie_direct")) {
 
-    mysql_select_db($database_maconnexion, $maconnexion);
+    
 
     $new_cat_list = empty($_POST['ch_disp_cat_id']) ? array() : $_POST['ch_disp_cat_id'];
 
@@ -55,11 +53,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
         }
     }
 
-    $insertGoTo = '../back/institut_patrimoine.php?mon_cat_ID=' .$row_mon_cat['ch_mon_cat_ID'].'';
-    if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-    }
+    $insertGoTo = DEF_URI_PATH . 'back/institut_patrimoine.php?mon_cat_ID=' .$row_mon_cat['ch_mon_cat_ID'].'';
+    appendQueryString($insertGoTo);
     $adresse = $insertGoTo .'#classer-monument';
     header(sprintf("Location: %s", $adresse));
 
@@ -69,13 +64,13 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
 
 
 //requete monument
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mon_cat = sprintf("SELECT ch_pat_id, ch_pat_nom FROM patrimoine WHERE ch_pat_id = %s", GetSQLValueString($mon_ID, ""));
 $liste_mon_cat = mysql_query($query_liste_mon_cat, $maconnexion) or die(mysql_error());
 $this_mon_cat = mysql_fetch_assoc($liste_mon_cat);
 
 //requete tous catégories
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_mon_cat = sprintf("SELECT ch_mon_cat_ID, ch_mon_cat_nom FROM monument_categories", GetSQLValueString($mon_ID, "int"));
 $mon_cat = mysql_query($query_mon_cat, $maconnexion) or die(mysql_error());
 $row_mon_cat = mysql_fetch_assoc($mon_cat);

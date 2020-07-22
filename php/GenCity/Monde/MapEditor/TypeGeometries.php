@@ -14,7 +14,7 @@ class TypeGeometries extends BaseModel {
 
     static function getAll() {
 
-        $sql = 'SELECT * FROM type_geometries ORDER BY created';
+        $sql = 'SELECT * FROM type_geometries ORDER BY created_at';
         $query = mysql_query($sql);
 
         $return = array();

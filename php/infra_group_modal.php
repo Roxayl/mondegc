@@ -1,13 +1,11 @@
 <?php
 
-require_once('../Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+appendQueryString($editFormAction);
 
 $action = isset($_GET['group_id']) ? 'edit' : 'add';
 
@@ -45,11 +43,8 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "infra_group_modal")
         }
     }
 
-    $updateGoTo = "../back/institut_economie.php";
-    if (isset($_SERVER['QUERY_STRING'])) {
-        $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-        $updateGoTo .= $_SERVER['QUERY_STRING'];
-    }
+    $updateGoTo = DEF_URI_PATH . "back/institut_economie.php";
+    appendQueryString($updateGoTo);
     $adresse = $updateGoTo .'#groupe-infra';
     header(sprintf("Location: %s", $adresse));
     exit;

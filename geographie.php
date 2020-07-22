@@ -1,5 +1,5 @@
 <?php
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 
 //Connexion et deconnexion
@@ -7,14 +7,14 @@ include('php/log.php');
 
 //requete instituts
 $institut_id = 2;
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
 //requete liste pays pour pouvoir selectionner le pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_pays = "SELECT ch_pay_id, ch_pay_nom FROM pays WHERE ch_pay_publication = 1 ORDER BY ch_pay_mis_jour DESC";
 $liste_pays = mysql_query($query_liste_pays, $maconnexion) or die(mysql_error());
 $row_liste_pays = mysql_fetch_assoc($liste_pays);
@@ -182,7 +182,7 @@ init();
         <div class="row-fluid">
     <!-- Liste pour choix de la categories -->
     <div id="select-categorie">
-      <form action="geographie.php#carte" method="GET">
+      <form action="<?= DEF_URI_PATH ?>geographie.php#carte" method="GET">
         <select name="ch_pay_id" id="ch_pay_id" onchange="this.form.submit()">
           <option value="" <?php if ($_GET['ch_pay_id'] == NULL) {?>selected<?php } ?>>S&eacute;lectionnez un pays&nbsp;</option>
           <?php do { ?>

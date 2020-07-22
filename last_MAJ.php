@@ -1,5 +1,5 @@
 <?php 
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
     
 // *** Connexion communique categorie pays
 $maxRows_LastCommunique = 20;
@@ -9,7 +9,7 @@ if (isset($_GET['pageNum_LastCommunique'])) {
 }
 $startRow_LastCommunique = $pageNum_LastCommunique * $maxRows_LastCommunique;
 
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_LastCommunique = /** @lang MySQL */
     "
 SELECT communique_pays.ch_com_label AS type_notification, communique_pays.ch_com_ID AS id, communique_pays.ch_com_statut AS statut, communique_pays.ch_com_categorie AS sous_categorie, communique_pays.ch_com_element_id AS id_element, communique_pays.ch_com_user_id AS id_auteur, communique_pays.ch_com_date AS date, communique_pays.ch_com_titre AS titre, lien_img AS photo_auteur, nom_personnage AS nom_auteur, entity_id AS paysID_auteur, prenom_personnage AS prenom_auteur, titre_personnage AS titre_auteur, ch_pay_id AS id_institution, ch_pay_nom AS institution, ch_pay_lien_imgdrapeau AS img_institution, ch_pay_id AS pays_institution
@@ -24,7 +24,13 @@ FROM communiques communique_ville
 INNER JOIN villes ON ch_com_element_id = ch_vil_ID 
 INNER JOIN users ON communique_ville.ch_com_user_id = ch_use_id 
 LEFT JOIN personnage ON(entity_id = ch_vil_ID AND entity = 'ville')
-WHERE communique_ville.ch_com_statut = 1 AND communique_ville.ch_com_categorie ='ville' OR communique_ville.ch_com_categorie ='com_ville' 
+WHERE communique_ville.ch_com_statut = 1 AND communique_ville.ch_com_categorie ='ville' OR communique_ville.ch_com_categorie ='com_ville'
+UNION 
+SELECT communique_organisation.ch_com_label AS communique_organisation, communique_organisation.ch_com_ID AS id, communique_organisation.ch_com_statut AS statut, communique_organisation.ch_com_categorie AS sous_categorie, communique_organisation.ch_com_element_id AS id_element, communique_organisation.ch_com_user_id AS id_auteur, communique_organisation.ch_com_date AS date, communique_organisation.ch_com_titre AS titre, lien_img AS photo_auteur, nom_personnage AS nom_auteur, entity_id AS paysID_auteur, prenom_personnage AS prenom_auteur, titre_personnage AS titre_auteur, organisation.id AS id_institution, organisation.name AS institution, organisation.flag AS img_institution, organisation.id AS pays_institution
+FROM communiques communique_organisation 
+INNER JOIN organisation ON communique_organisation.ch_com_element_id = organisation.id
+LEFT JOIN personnage ON(entity_id = organisation.id AND entity = 'ville')
+WHERE communique_organisation.ch_com_statut = 1 AND communique_organisation.ch_com_categorie ='organisation' OR communique_organisation.ch_com_categorie ='com_organisation'
 UNION 
 SELECT communique_institut.ch_com_label AS type_notification, communique_institut.ch_com_ID AS id, communique_institut.ch_com_statut AS statut, communique_institut.ch_com_categorie AS sous_categorie, communique_institut.ch_com_element_id AS id_element, communique_institut.ch_com_user_id AS id_auteur, communique_institut.ch_com_date AS date, communique_institut.ch_com_titre AS titre, lien_img AS photo_auteur, nom_personnage AS nom_auteur, entity_id AS paysID_auteur, prenom_personnage AS prenom_auteur, titre_personnage AS titre_auteur, ch_ins_ID AS id_institution, ch_ins_nom AS institution, ch_ins_logo AS img_institution, ch_ins_ID AS pays_institution
 FROM communiques communique_institut 
@@ -272,6 +278,30 @@ do {
       </div>
     </li>
     <?php } ?>
+
+    <?php if ( $row_LastCommunique['sous_categorie'] == "organisation") {?>
+    <!-- Si c'est un communique d'organisation
+================================================== -->
+    <li class="item">
+      <div class="row-fluid">
+          <div class="titre-gris">
+            <h3>Nouveau communiqu&eacute;</h3>
+          </div>
+          <div class="row-fluid fond-notification">
+            <div class="span10 desc"> <small>le
+              <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
+              &agrave;
+              <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
+              </small>
+              <p><a href="<?= route('organisation.showslug', ['id' => $row_LastCommunique['id_institution'], 'slug' => \Illuminate\Support\Str::slug($row_LastCommunique['institution'])]) ?>"><?= __s($row_LastCommunique['institution']) ?></a> a publié un communiqué :</p>
+              <h4><a href="page-communique.php?com_id=<?= $row_LastCommunique['id'] ?>"> <?= __s($row_LastCommunique['titre']) ?> </a> </h4>
+            </div>
+            <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?= __s($row_LastCommunique['id_institution']) ?>"><img src="<?= __s($row_LastCommunique['img_institution']) ?>" alt="Drapeau de <?= __s($row_LastCommunique['institution']) ?>"></a> </div>
+        </div>
+      </div>
+    </li>
+    <?php } ?>
+
     <?php if ( $row_LastCommunique['sous_categorie'] == "com_ville") {?>
     <!-- Si c'est un commentaire sur la ville
 ================================================== -->

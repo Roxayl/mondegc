@@ -8,7 +8,7 @@ if ($_SESSION["statut"])
 } else {
 // Redirection vers Haut Conseil
 header("Status: 301 Moved Permanently", false, 301);
-header("Location: connexion.php");
+header(sprintf("Location: %s", legacyPage('connexion')));
 exit();
 }
 
@@ -16,7 +16,7 @@ exit();
 $colname_paysID = $_REQUEST['paysID'];
 
 //Requete Pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_InfoGenerale = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_paysID, "int"));
 $InfoGenerale = mysql_query($query_InfoGenerale, $maconnexion) or die(mysql_error());
 $row_InfoGenerale = mysql_fetch_assoc($InfoGenerale);
@@ -45,7 +45,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
                            GetSQLValueString($_POST['ch_geo_type'], "text"),
                            GetSQLValueString($_POST['ch_geo_nom'], "text"));
 
-      mysql_select_db($database_maconnexion, $maconnexion);
+
       $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
       getErrorMessage('success', "La zone " . __s($_POST['ch_geo_nom']) . ' a été ajoutée !');
@@ -53,13 +53,13 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
     }
 
 //recherche des mesures des zones de la carte pour calcul ressources
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($colname_paysID, "int"));
 $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
-$row_geometries = mysql_fetch_assoc($geometries);
 
 //Calcul total des ressources de la carte.
-     do { 
+    $tot_industrie = $tot_commerce = $tot_agriculture = $tot_tourisme = $tot_recherche = $tot_environnement = $tot_education = $tot_emploi = 0;
+     while ($row_geometries = mysql_fetch_assoc($geometries)) {
 		$surface = $row_geometries['mesure'];
 		$typeZone = $row_geometries['ch_geo_type'];
 		ressourcesGeometrie($surface, $typeZone, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population, $emploi);
@@ -73,7 +73,7 @@ $row_geometries = mysql_fetch_assoc($geometries);
 		$tot_education = $tot_education + $education;
 		$tot_population = $tot_population + $population;
 		$tot_emploi = $tot_emploi + $emploi;
-		 } while ($row_geometries = mysql_fetch_assoc($geometries));
+     }
 
 //Enregistrement du total des ressources de la carte.
 $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_carte=%s, ch_pay_commerce_carte=%s, ch_pay_agriculture_carte=%s, ch_pay_tourisme_carte=%s, ch_pay_recherche_carte=%s, ch_pay_environnement_carte=%s, ch_pay_education_carte=%s, ch_pay_population_carte=%s, ch_pay_emploi_carte=%s WHERE ch_pay_id=%s",
@@ -88,7 +88,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
                        GetSQLValueString($tot_population, "int"),
                        GetSQLValueString($tot_emploi, "int"),
 					   GetSQLValueString($colname_paysID, "int"));
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
   mysql_free_result($geometries);
 }
@@ -116,18 +116,17 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature"))
                        GetSQLValueString($_POST['ch_geo_nom'], "text"),
 					   GetSQLValueString($_POST['ch_geo_id'], "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
     }
   
   //recherche des mesures des zones de la carte pour calcul ressources
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($paysid, "int"));
 $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
-$row_geometries = mysql_fetch_assoc($geometries);
 
 //Calcul total des ressources de la carte.
-     do { 
+     while ($row_geometries = mysql_fetch_assoc($geometries)) {
 		$surface = $row_geometries['mesure'];
 		$typeZone = $row_geometries['ch_geo_type'];
 		ressourcesGeometrie($surface, $typeZone, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population);
@@ -141,7 +140,7 @@ $row_geometries = mysql_fetch_assoc($geometries);
 		$tot_education = $tot_education + $education;
 		$tot_population = $tot_population + $population;
 		$tot_emploi = $tot_emploi + $emploi;
-		 } while ($row_geometries = mysql_fetch_assoc($geometries));
+     }
 
 //Enregistrement du total des ressources de la carte.
 $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_carte=%s, ch_pay_commerce_carte=%s, ch_pay_agriculture_carte=%s, ch_pay_tourisme_carte=%s, ch_pay_recherche_carte=%s, ch_pay_environnement_carte=%s, ch_pay_education_carte=%s, ch_pay_population_carte=%s, ch_pay_emploi_carte=%s WHERE ch_pay_id=%s",
@@ -157,15 +156,13 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
                        GetSQLValueString($tot_emploi, "int"),
 					   GetSQLValueString($paysid, "int"));
 
-  mysql_select_db($database_maconnexion, $maconnexion);
+
   $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
   mysql_free_result($geometries);
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml>">
-<html lang="fr">
-<!-- head Html -->
 <html lang="fr">
 <head>
 <meta charset="utf-8">
@@ -209,7 +206,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
 img.olTileImage {
 	max-width: none;
 }
-}
+
 @media (max-width: 480px) {
 #map {
 	height: 360px;

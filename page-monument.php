@@ -1,6 +1,6 @@
 <?php
 
-require_once('Connections/maconnexion.php');
+if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 //Connexion et deconnexion
 include('php/log.php');
@@ -10,7 +10,7 @@ $colname_monument = "-1";
 if (isset($_GET['ch_pat_id'])) {
   $colname_monument = $_GET['ch_pat_id'];
 }
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_monument = sprintf("SELECT ch_pat_id, ch_pat_label, ch_pat_statut, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nb_update, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_nom, ch_pat_lien_img1, ch_pat_lien_img2, ch_pat_lien_img3, ch_pat_lien_img4, ch_pat_lien_img5, ch_pat_legende_img1, ch_pat_legende_img2, ch_pat_legende_img3, ch_pat_legende_img4, ch_pat_legende_img5, ch_pat_description, ch_pay_id, ch_pay_nom, ch_vil_ID, ch_vil_nom, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID WHERE ch_pat_id = %s", GetSQLValueString($colname_monument, "int"));
 $monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
 $row_monument = mysql_fetch_assoc($monument);
@@ -24,7 +24,7 @@ $monument_ressources = mysql_query($query_monument_ressources, $maconnexion) or 
 $row_monument_ressources = mysql_fetch_assoc($monument_ressources);
 
 // Connection infos dirigeant pays
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($row_monument['ch_pat_paysID'], "int"));
 $users = mysql_query($query_users, $maconnexion) or die(mysql_error());
 $row_users = mysql_fetch_assoc($users);
@@ -34,7 +34,7 @@ $totalRows_users = mysql_num_rows($users);
 $listcategories = ($row_monument['listcat']);
 			if ($row_monument['listcat']) {
           
-mysql_select_db($database_maconnexion, $maconnexion);
+
 $query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
 $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
@@ -181,11 +181,11 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
   <!-- Moderation
      ================================================== -->
   <?php if (($_SESSION['statut'] >= 20) OR ($row_users['ch_use_id'] == $_SESSION['user_ID'])) { ?>
-  <form class="pull-right" action="back/monument_confirmation_supprimer.php" method="post">
+  <form class="pull-right" action="<?= DEF_URI_PATH ?>back/monument_confirmation_supprimer.php" method="post">
     <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
     <button class="btn btn-danger" type="submit" title="supprimer ce monument"><i class="icon-trash icon-white"></i></button>
   </form>
-  <form class="pull-right" action="back/monument_modifier.php" method="post">
+  <form class="pull-right" action="<?= DEF_URI_PATH ?>back/monument_modifier.php" method="post">
     <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
     <button class="btn btn-primary" type="submit" title="modifier ce monument"><i class="icon-pencil icon-white"></i></button>
   </form>
