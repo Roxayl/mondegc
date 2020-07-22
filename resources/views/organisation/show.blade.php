@@ -74,7 +74,7 @@
 
             @can('administrate', $organisation)
                 <div class="cta-title pull-right-cta" style="margin-top: 20px;">
-                    <a href="<?= url('/back/communique_ajouter.php?userID='.
+                    <a href="<?= url('back/communique_ajouter.php?userID='.
                         auth()->user()->ch_use_id . '&cat=organisation&com_element_id=' .
                         $organisation->id) ?>" class="btn btn-primary btn-cta">
                         <i class="icon-white icon-plus-sign"></i>
@@ -97,7 +97,7 @@
                 <tr>
                     <td></td>
                     <td>
-                <a href="{{ url('/page-communique.php?com_id=' . $communique->ch_com_ID) }}">
+                <a href="{{ url('page-communique.php?com_id=' . $communique->ch_com_ID) }}">
                     {{ $communique->ch_com_titre }}</a>
                     </td>
                     <td>{{ $communique->ch_com_date->format('d/m/Y') }}</td>

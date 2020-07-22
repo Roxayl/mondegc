@@ -126,9 +126,9 @@ $queries[] = 'create table media
 	mime_type varchar(255) null,
 	disk varchar(255) not null,
 	size bigint unsigned not null,
-	manipulations json not null,
-	custom_properties json not null,
-	responsive_images json not null,
+	manipulations text not null,
+	custom_properties text not null,
+	responsive_images text not null,
 	order_column int unsigned null,
 	created_at timestamp null,
 	updated_at timestamp null
@@ -228,8 +228,8 @@ $queries[] = 'create table translations
 	namespace varchar(255) default \'*\' not null,
 	`group` varchar(255) not null,
 	`key` text not null,
-	text json not null,
-	metadata json null,
+	text text not null,
+	metadata text null,
 	created_at timestamp null,
 	updated_at timestamp null,
 	deleted_at timestamp null
@@ -707,7 +707,7 @@ INNER JOIN organisation o on organisation_members.organisation_id = o.id
 INNER JOIN pays p on organisation_members.pays_id = p.ch_pay_id
 LEFT JOIN temperance_pays tp on organisation_members.pays_id = tp.id
 WHERE organisation_members.permissions >= 10
-GROUP BY o.id;
+GROUP BY o.id, o.name;
 TAG;
 
 // Exécuter la requête
