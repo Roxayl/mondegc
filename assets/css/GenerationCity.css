@@ -305,6 +305,15 @@ input[type="submit"], .btn {
   background-image: -moz-linear-gradient(top, #bebebe, #bababa);
 }
 
+.btn-transparent, .btn-transparent:hover, .btn-transparent:active, .btn-transparent.active, .btn-transparent.disabled, .btn-transparent[disabled] {
+    color: #ffffff;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    box-shadow: none;
+    background-image: none;
+    background-color: transparent;
+    border: none;
+}
+
 .btn-temperance {
 	color: #ffffff;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);

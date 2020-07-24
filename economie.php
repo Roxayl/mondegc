@@ -330,6 +330,16 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
       <!-- Classements ressources
     ================================================== -->
       <section>
+
+        <div class="cta-title pull-right-cta dropdown" style="margin-top: 36px;">
+            <a href="#" class="btn btn-primary btn-cta" data-toggle="dropdown">
+                <i class="icon-white icon-arrow-down"></i>
+                Exporter</a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="<?= route('data-export.temperance-pays') ?>">Statistiques des pays<br><small>Fichier CSV - Inclut toutes les ressources</small></a></li>
+                <li><a href="<?= route('data-export.temperance-organisation') ?>">Statistiques des organisations<br><small>Fichier CSV - Inclut toutes les ressources</small></a></li>
+            </ul>
+        </div>
         <div class="titre-bleu anchor" id="ressources">
           <h1>Statistiques &eacute;conomiques</h1>
         </div>

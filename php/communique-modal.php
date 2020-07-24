@@ -7,7 +7,8 @@ header('Content-Type: text/html; charset=uft-8');
 //Connexion BBD Communique
 $colname_communique = "-1";
 if (isset($_GET['com_id'])) {
-  $colname_communique = $_GET['com_id'];}
+    $colname_communique = $_GET['com_id'];
+}
 
 $query_communique = sprintf("SELECT * FROM communiques WHERE ch_com_ID = %s", GetSQLValueString($colname_communique, "int"));
 $communique = mysql_query($query_communique, $maconnexion) or die(mysql_error());
@@ -18,55 +19,60 @@ $elementID = $row_communique['ch_com_element_id'];
 
 //Connexion BBD Pour info sur l'institution emmitrice
 if ( $cat == "pays") {
-  
-$query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau, ch_pay_lien_imgheader FROM pays WHERE ch_pay_id = %s", GetSQLValueString($elementID, "int"));
-$pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
-$row_pays = mysql_fetch_assoc($pays);
-$totalRows_pays = mysql_num_rows($pays);
+    $query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau, ch_pay_lien_imgheader FROM pays WHERE ch_pay_id = %s", GetSQLValueString($elementID, "int"));
+    $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
+    $row_pays = mysql_fetch_assoc($pays);
+    $totalRows_pays = mysql_num_rows($pays);
 
-$ch_com_categorie = $cat;
-$ch_com_element_id = isset($colname_elementid) ?: 0;
-$nom_organisation = $row_pays['ch_pay_nom'];
-$insigne = $row_pays['ch_pay_lien_imgdrapeau'];
-$soustitre = $row_pays['ch_pay_devise'];
-$background_jumbotron = $row_pays['ch_pay_lien_imgheader'];
-mysql_free_result($pays);
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = isset($colname_elementid) ?: 0;
+    $nom_organisation = $row_pays['ch_pay_nom'];
+    $insigne = $row_pays['ch_pay_lien_imgdrapeau'];
+    $soustitre = $row_pays['ch_pay_devise'];
+    $background_jumbotron = $row_pays['ch_pay_lien_imgheader'];
+    mysql_free_result($pays);
 
-$thisPays = new \GenCity\Monde\Pays($elementID);
-$personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
+    $thisPays = new \GenCity\Monde\Pays($elementID);
+    $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
 }
 
-if ( $cat == "ville") {
-  
-$query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_id, ch_pay_nom, ch_vil_lien_img1 FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($elementID, "int"));
-$villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
-$row_villes = mysql_fetch_assoc($villes);
-$totalRows_villes = mysql_num_rows($villes);
+elseif ( $cat == "ville") {
+    $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_id, ch_pay_nom, ch_vil_lien_img1 FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($elementID, "int"));
+    $villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
+    $row_villes = mysql_fetch_assoc($villes);
+    $totalRows_villes = mysql_num_rows($villes);
 
-$ch_com_categorie = $cat;
-$ch_com_element_id = $colname_elementid;
-$nom_organisation = $row_villes['ch_vil_nom'];
-$insigne = $row_villes['ch_vil_armoiries'];
-$soustitre = $row_villes['ch_pay_nom'];
-$background_jumbotron = $row_villes['ch_vil_lien_img1'];
-mysql_free_result($villes);
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = $colname_elementid;
+    $nom_organisation = $row_villes['ch_vil_nom'];
+    $insigne = $row_villes['ch_vil_armoiries'];
+    $soustitre = $row_villes['ch_pay_nom'];
+    $background_jumbotron = $row_villes['ch_vil_lien_img1'];
+    mysql_free_result($villes);
 }
 
+elseif ( $cat == "institut") {
+    $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($elementID, "int"));
+    $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
+    $row_institut = mysql_fetch_assoc($institut);
+    $totalRows_institut = mysql_num_rows($institut);
 
-if ( $cat == "institut") {
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = $colname_elementid;
+    $nom_organisation = $row_institut['ch_ins_sigle'];
+    $insigne = $row_institut['ch_ins_logo'];
+    $soustitre = $row_institut['ch_ins_nom'];
+    $background_jumbotron = DEF_URI_PATH . "assets/img/fond_haut-conseil.jpg";
+    mysql_free_result($institut);
+}
 
-$query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($elementID, "int"));
-$institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
-$row_institut = mysql_fetch_assoc($institut);
-$totalRows_institut = mysql_num_rows($institut);
-
-$ch_com_categorie = $cat;
-$ch_com_element_id = $colname_elementid;
-$nom_organisation = $row_institut['ch_ins_sigle'];
-$insigne = $row_institut['ch_ins_logo'];
-$soustitre = $row_institut['ch_ins_nom'];
-$background_jumbotron = "assets/img/fond_haut-conseil.jpg";
-mysql_free_result($institut);
+elseif($cat == 'organisation') {
+    $organisation = \App\Models\Organisation::findOrFail($elementID);
+    $ch_com_categorie = $cat;
+    $ch_com_element_id = $colname_elementid;
+    $nom_organisation = $organisation->name;
+    $insigne = $organisation->flag;
+    $soustitre = "Organisation";
 }
 
 //Connexion BBD user pour info sur l'auteur
@@ -90,6 +96,16 @@ $query_commentaire = sprintf("SELECT ch_com_ID, ch_com_user_id, ch_com_date, ch_
 $commentaire = mysql_query($query_commentaire, $maconnexion) or die(mysql_error());
 $row_commentaire = mysql_fetch_assoc($commentaire);
 $totalRows_commentaire = mysql_num_rows($commentaire);
+
+
+// Vérif permission orga.
+$check_organisation = true;
+if($cat == 'organisation') {
+    if(!auth()->check() || !auth()->user()->can('administrate', $organisation)) {
+        $check_organisation = false;
+    }
+}
+
 ?>
 <!-- Modal Header-->
 <div class="modal-header">
@@ -111,55 +127,43 @@ $totalRows_commentaire = mysql_num_rows($commentaire);
     <div class="offset8 span2 thumb">
       <?php if ( $cat == "ville") {?>
       <?php if ($insigne == NULL) {?>
-      <img src="assets/img/imagesdefaut/blason.jpg" alt="armoirie">
+      <img src="<?= DEF_URI_PATH ?>assets/img/imagesdefaut/blason.jpg" alt="armoirie">
       <?php } else { ?>
-      <img src="<?php echo $insigne; ?>" alt="armoirie">
+      <img src="<?= __s($insigne) ?>" alt="armoirie">
       <?php } ?>
       <?php } elseif ( $cat == "pays") {?>
       <?php if ($insigne == NULL) {?>
-      <img src="assets/img/imagesdefaut/drapeau.jpg" alt="drapeau">
+      <img src="<?= DEF_URI_PATH ?>assets/img/imagesdefaut/drapeau.jpg" alt="drapeau">
       <?php } else { ?>
-      <img src="<?php echo $insigne; ?>" alt="drapeau">
+      <img src="<?= __s($insigne) ?>" alt="drapeau">
       <?php } ?>
-      <?php } elseif ( $cat == "institut") {?>
+      <?php } elseif ( $cat == "institut" || $cat == 'organisation') {?>
       <?php if ($insigne == NULL) {?>
-      <img src="assets/img/imagesdefaut/blason.jpg" alt="logo">
+      <img src="<?= DEF_URI_PATH ?>assets/img/imagesdefaut/blason.jpg" alt="logo">
       <?php } else { ?>
-      <img src="<?php echo $insigne; ?>" alt="logo">
+      <img src="<?= __s($insigne) ?>" alt="logo">
       <?php }
 		 } else {?>
-      <img src="<?php echo $insigne; ?>">
+      <img src="<?= __s($insigne) ?>">
       <?php } ?>
       <div class="titre-gris">
-        <h3><?php echo $nom_organisation; ?></h3>
-        <small><?php echo $soustitre; ?></small> </div>
+        <h3><?= __s($nom_organisation) ?></h3>
+        <small><?= __s($soustitre) ?></small> </div>
     </div>
   </div>
 </div>
 <!-- Modal BODY-->
 
 <div class="modal-body corps-page">
-<?php if ( $cat == "institut") {?>
-  <div class="titre-bleu">
-    <h1><?php echo $row_communique['ch_com_titre']; ?></h1>
-  </div>
-  <?php } else { ?>
   <div class="titre-vert">
-    <h1><?php echo $row_communique['ch_com_titre']; ?></h1>
+    <h1><?= __s($row_communique['ch_com_titre']) ?></h1>
   </div>
-  <?php } ?>
   <div class="well"><?php echo $row_communique['ch_com_contenu']; ?></div>
   
   <!-- REACTIONS -->
-  <?php if ( $cat == "institut") {?>
-  <div id="commentaires" class="titre-bleu anchor">
-    <h1>R&eacute;actions</h1>
-  </div>
-  <?php } else { ?>
   <div id="commentaires" class="titre-vert anchor">
     <h1>R&eacute;actions</h1>
   </div>
-  <?php } ?>
   <?php if ($row_commentaire) { ?>
   <ul class="listes">
     <?php do {
@@ -173,7 +177,7 @@ $totalRows_commentaire = mysql_num_rows($commentaire);
         <div class="span2 img-listes"> <img src="<?php echo $row_commentaire['ch_use_lien_imgpersonnage']; ?>"> </div>
         <div class="span10 info-listes">
          <div class="pull-right">
-          <?php if (($_SESSION['statut'] >= 20) OR ($_SESSION['user_ID'] == $row_commentaire['ch_com_user_id'])) { ?>
+          <?php if ($check_organisation && ($_SESSION['statut'] >= 20) OR ($_SESSION['user_ID'] == $row_commentaire['ch_com_user_id'])) { ?>
           <form class="pull-right" action="back/communique_confirmation_supprimer.php" method="post">
             <input name="communique-ID" type="hidden" value="<?php echo $row_commentaire['ch_com_ID']; ?>">
             <button class="btn" type="submit" title="supprimer le commentaire"><i class="icon-trash"></i></button>

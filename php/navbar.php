@@ -123,7 +123,7 @@ if(isset($_SESSION['userObject'])) {
 
                 <div class="dropdown pull-right hidden-phone"
                      style="margin-right: 4px;">
-                  <a href="#" class="btn btn-primary btn-inactive" type="submit"
+                  <a href="#" class="btn btn-transparent" type="submit"
                      title="Recherche" data-toggle="dropdown">
                       <i class="icon-search icon-white"></i>
                   </a>
@@ -268,7 +268,7 @@ if(isset($_SESSION['userObject'])) {
             </center>
             <a href="<?= DEF_URI_PATH ?>OCGC.php" class="dropdown-toggle" data-toggle="dropdown" title="L'Organisation des Cités Gécéennes">OCGC
             <?php if(count($navbar_userProposalPendingVotes)): ?>
-                <span class="navbar-circle-notification"><img src="assets/img/2019/AGicon.png"></span>
+                <span class="navbar-circle-notification"><img src="<?= DEF_URI_PATH ?>assets/img/2019/AGicon.png"></span>
             <?php endif; ?>
                 <b class="caret"></b></a>
             <ul class="dropdown-menu">

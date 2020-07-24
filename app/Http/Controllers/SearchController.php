@@ -6,14 +6,13 @@ use App\Models\Organisation;
 use App\Models\Pays;
 use App\Models\Ville;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 use Spatie\Searchable\Search;
 
 class SearchController extends Controller
 {
     public function index(Request $request) {
 
-        $query = Input::get('query', '');
+        $query = $request->input('query', '');
         if(empty($query)) {
             return view('search.search');
         }

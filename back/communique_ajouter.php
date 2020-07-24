@@ -122,6 +122,14 @@ appendQueryString($editFormAction);
 /*** Traitement données POST ***/
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique")) {
 
+    if($_POST['ch_com_categorie'] == "organisation") {
+        $organisation = \App\Models\Organisation::findOrFail($_REQUEST['com_element_id']);
+        if(!auth()->check() || !auth()->user()->can('administrate', $organisation)) {
+            throw new AccessDeniedHttpException("Vous ne pouvez pas ajouter de communiqué.");
+        }
+        $insertGoTo = route('organisation.showslug', ['id' => $organisation->id, 'slug' => \Illuminate\Support\Str::slug($organisation->name)]);
+    }
+
     $insertSQL = sprintf("INSERT INTO communiques (ch_com_label, ch_com_statut, ch_com_categorie, ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_com_pays_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['ch_com_label'], "text"),
                        GetSQLValueString($_POST['ch_com_statut'], "int"),
@@ -165,9 +173,6 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
     }
     elseif(($_POST['ch_com_categorie'] == "institut") AND ($_POST['ch_com_element_id'] == 6)) {
         $insertGoTo = 'institut_sport.php';
-    }
-    elseif($_POST['ch_com_categorie'] == "organisation") {
-        $insertGoTo = route('organisation.show', ['id' => $_POST['ch_com_element_id']]);
     }
     else {
         $insertGoTo = DEF_URI_PATH . 'back/page_pays_back.php';
