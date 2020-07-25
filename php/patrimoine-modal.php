@@ -135,17 +135,17 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
         <?php } else { ?>
         <p>Ce monument ne fait partie d'aucune cat&eacute;gorie.</p>
         <?php }?>
-
+          <br>
         <p><strong>Influence sur l'économie :</strong></p>
           <?php
-            renderElement('Temperance/resources', array(
+            renderElement('Temperance/resources_small', array(
                 'resources' => $row_monument_ressources
             ));
           ?>
           <div class="clearfix"></div>
       </div>
       <div class="span4">
-        <iframe width="100%" height="300px" frameborder="0" scrolling="no" src="Iframeposition.php?x=<?php echo $row_monument['ch_pat_coord_X']; ?>&y=<?php echo $row_monument['ch_pat_coord_Y']; ?>" name="iframe"></iframe>
+        <iframe width="100%" height="300px" frameborder="0" scrolling="no" src="<?= DEF_URI_PATH ?>Iframeposition.php?x=<?= __s($row_monument['ch_pat_coord_X']) ?>&y=<?= __s($row_monument['ch_pat_coord_Y']) ?>" name="iframe"></iframe>
       </div>
     </div>
   </div>

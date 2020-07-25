@@ -697,7 +697,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
         <thead>
           <tr class="tablehead">
             <th width="5%" scope="col"><a href="#" rel="clickover" title="Statut de votre infrastructure" data-content="L'infrastructure est modérée par les juges tempérants et peut-être refus&eacute;e"><i class="icon-globe"></i></a></th>
-            <th colspan="2" width="64%" scope="col">Type d'infrastructure</th>
+            <th colspan="2" width="64%" scope="col">Nom</th>
             <th width="23%" scope="col">Date</th>
             <th width="4%" scope="col">&nbsp;</th>
             <th width="4%" scope="col">&nbsp;</th>
@@ -707,10 +707,13 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
           <?php do { ?>
             <tr <?php if ($row_infrastructure['ch_inf_statut']==1) { ?>style="opacity:0.5;"<?php }?>>
               <td><img src="../assets/img/statutinfra_<?php echo $row_infrastructure['ch_inf_statut']; ?>.png" alt="Statut"></td>
-              <td><img src="<?php echo $row_infrastructure['ch_inf_lien_image']; ?>" alt="image de votre construction" width="120px"></td>
+              <td><img src="<?= __s($row_infrastructure['ch_inf_lien_image']) ?>" alt="image de votre construction" width="120px"></td>
               <td><?= __s($row_infrastructure['nom_infra']) ?><br>
-                  <small><?php echo $row_infrastructure['ch_inf_off_nom']; ?></small></td>
-              <td>Le <?php echo date("d/m/Y", strtotime($row_infrastructure['ch_inf_date'])); ?> &agrave; <?php echo date("G:i", strtotime($row_infrastructure['ch_inf_date'])); ?></td>
+                  <small>
+                      <img src="<?= __s($row_infrastructure['']) ?>" alt="">
+                      <?= __s($row_infrastructure['ch_inf_off_nom']) ?>
+                  </small></td>
+              <td><?php echo date("d/m/Y", strtotime($row_infrastructure['ch_inf_date'])); ?></td>
               <td><!-- Boutons visualiser infrastructure --> 
                 <a class="btn modal-fullscreen" href="../php/infrastructure-modal.php?ch_inf_id=<?php echo $row_infrastructure['ch_inf_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir les détails"><i class="icon-eye-open"></i></a></td>
               <td><!-- Boutons modifier infrastructure -->
@@ -770,14 +773,15 @@ $('#closemodal').click(function() {
       </div>
       <div class="alert alert-tips">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        Identifiez-ici les &eacute;l&eacute;ments de votre ville que vous souhaitez mettre en valeur en leur cr&eacute;ant une page d&eacute;di&eacute;e. Ces &eacute;l&eacute;ments seront publi&eacute;s dans la section patrimoine de la page de votre pays.</div>
+        Identifiez-ici les &eacute;l&eacute;ments de votre ville que vous souhaitez mettre en valeur en leur cr&eacute;ant une page d&eacute;di&eacute;e. Ces &eacute;l&eacute;ments seront publi&eacute;s dans la section Culture de la page de votre pays.</div>
       <?php if ($row_monument) { ?>
       <table width="539" class="table table-hover">
         <thead>
           <tr class="tablehead">
             <th width="5%" scope="col"><a href="#" rel="clickover" title="Statut de votre monument" data-content="Un monument peut-&ecirc;tre publi&eacute;e sur votre page pays ou masqu&eacute;e."><i class="icon-globe"></i></a></th>
-            <th width="64%" scope="col">Nom</th>
-            <th width="23%" scope="col">Date</th>
+            <th width="62%" scope="col">Nom</th>
+            <th width="21%" scope="col">Date</th>
+            <th width="4%" scope="col">&nbsp;</th>
             <th width="4%" scope="col">&nbsp;</th>
             <th width="4%" scope="col">&nbsp;</th>
           </tr>
@@ -786,13 +790,16 @@ $('#closemodal').click(function() {
           <?php do { ?>
             <tr>
               <td><img src="../assets/img/statutvil_<?php echo $row_monument['ch_pat_statut']; ?>.png" alt="Statut"></td>
-              <td><?php echo $row_monument['ch_pat_nom']; ?></td>
-              <td>Le <?php echo date("d/m/Y", strtotime($row_monument['ch_pat_date'])); ?> &agrave; <?php echo date("G:i", strtotime($row_monument['ch_pat_date'])); ?></td>
+              <td><?= __s($row_monument['ch_pat_nom']) ?></td>
+              <td><?php echo date("d/m/Y", strtotime($row_monument['ch_pat_date'])); ?></td>
+              <td>
+                  <a class="btn modal-fullscreen" href="../php/patrimoine-modal.php?ch_pat_id=<?php echo $row_monument['ch_pat_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Voir les détails" style="margin-top: -22px;"><i class="icon-eye-open"></i></a>
+              </td>
               <td><form action="monument_modifier.php" method="post">
                   <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
                   <button class="btn btn-primary" type="submit" title="modifier ce monument"><i class="icon-pencil icon-white"></i></button>
                 </form></td>
-              <td><form action="monument_confirmation_supprimer.php" method="post">
+              <td><form action="monument_confirmation_supprimer.php" method="post"">
                   <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
                   <button class="btn btn-danger" type="submit" title="supprimer ce monument"><i class="icon-trash icon-white"></i></button>
                 </form></td>
@@ -803,7 +810,7 @@ $('#closemodal').click(function() {
           <tr>
             <td colspan="5"><p class="pull-right">de <?php echo ($startRow_monument + 1) ?> &agrave; <?php echo min($startRow_monument + $maxRows_monument, $totalRows_monument) ?> sur <?php echo $totalRows_monument ?>
                 <?php if ($pageNum_monument > 0) { // Show if not first page ?>
-                  <a class="btn" href="<?php printf("%s?pageNum_monument=%d%s#mes-monuments", $currentPage, max(0, $pageNum_monument - 1), $queryString_monument); ?>"><i class=" icon-backward"></i> </a>
+                  <a class="btn" href="<?php printf("%s?pageNum_monument=%d%s#mes-monuments", (int)$currentPage, max(0, $pageNum_monument - 1), $queryString_monument); ?>"><i class=" icon-backward"></i> </a>
                   <?php } // Show if not first page ?>
                 <?php if ($pageNum_monument < $totalPages_monument) { // Show if not last page ?>
                   <a class="btn" href="<?php printf("%s?pageNum_monument=%d%s#mes-monuments", $currentPage, min($totalPages_monument, $pageNum_monument + 1), $queryString_monument); ?>"> <i class="icon-forward"></i></a>
@@ -833,8 +840,8 @@ $('#closemodal').click(function() {
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -850,12 +857,12 @@ $('#closemodal').click(function() {
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
+$(function() {
+    $('[rel="clickover"]').clickover();})
 </script>
-<script> 
- $( document ).ready(function() {
-init();
+<script>
+$( document ).ready(function() {
+    init();
 });
 </script>
 <!-- MODAL -->
@@ -895,9 +902,5 @@ var sprytextfield14 = new Spry.Widget.ValidationTextField("sprytextfield14", "no
 var sprytextfield28 = new Spry.Widget.ValidationTextField("sprytextfield28", "url", {maxChars:250, validateOn:["change"], isRequired:false});
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
 </script>
-<?php
-mysql_free_result($ville);
-mysql_free_result($User);
-mysql_free_result($infrastructure);
-mysql_free_result($monument);
-?>
+</body>
+</html>

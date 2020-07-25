@@ -117,42 +117,42 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
   <div class="container container-carousel">
     <?php if ($row_monument['ch_pat_lien_img1'] OR $row_monument['ch_pat_lien_img2'] OR $row_monument['ch_pat_lien_img3'] OR $row_monument['ch_pat_lien_img4'] OR $row_monument['ch_pat_lien_img5']) { ?>
     <div class="titre-caroussel-container">
-        <h1 class="titre-caroussel"><?php echo $row_monument['ch_pat_nom']; ?></h1>
+        <h1 class="titre-caroussel"><?= __s($row_monument['ch_pat_nom']) ?></h1>
     </div>
     <section id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
         <?php if ($row_monument['ch_pat_lien_img1']) { ?>
         <div class="item active" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img1']; ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_monument['ch_pat_legende_img1']; ?></p>
+            <p><?= __s($row_monument['ch_pat_legende_img1']) ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_monument['ch_pat_lien_img2']) { ?>
         <div class="item" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img2']; ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_monument['ch_pat_legende_img2']; ?></p>
+            <p><?= __s($row_monument['ch_pat_legende_img2']) ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_monument['ch_pat_lien_img3']) { ?>
         <div class="item" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img3']; ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_monument['ch_pat_legende_img3']; ?></p>
+            <p><?= __s($row_monument['ch_pat_legende_img3']) ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_monument['ch_pat_lien_img4']) { ?>
         <div class="item" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img4']; ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_monument['ch_pat_legende_img4']; ?></p>
+            <p><?= __s($row_monument['ch_pat_legende_img4']) ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_monument['ch_pat_lien_img5']) { ?>
         <div class="item" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img5']; ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_monument['ch_pat_legende_img5']; ?></p>
+            <p><?= __s($row_monument['ch_pat_legende_img5']) ?></p>
           </div>
         </div>
         <?php } ?>
@@ -161,7 +161,7 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
     <!-- Titre si pas de carrousel
     ================================================== -->
     <?php } else { ?>
-    <h1><?php echo $row_monument['ch_pat_nom']; ?></h1>
+    <h1><?= __s($row_monument['ch_pat_nom']) ?></h1>
     <?php } ?>
   </div>
 </header>
@@ -174,7 +174,7 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
         <li><a href="Page-carte.php#liste-pays">Pays</a> <span class="divider">/</span></li>
         <li><a href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>"><?= $row_monument['ch_pay_nom'] ?></a> <span class="divider">/</span></li>
         <li><a href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>#villes">Villes</a> <span class="divider">/</span></li>
-        <li><a href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>&ch_ville_id=<?= $row_monument['ch_vil_ID'] ?>"><?= $row_monument['ch_vil_nom'] ?></a> <span class="divider">/</span></li>
+        <li><a href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>&ch_ville_id=<?= $row_monument['ch_vil_ID'] ?>"><?= __s($row_monument['ch_vil_nom']) ?></a> <span class="divider">/</span></li>
         <li><a href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>&ch_ville_id=<?= $row_monument['ch_vil_ID'] ?>#patrimoine">Culture</a> <span class="divider">/</span></li>
       <li class="active"><?= $row_monument['ch_pat_nom'] ?></li>
     </ul>
@@ -197,23 +197,23 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
   <div class="clearfix"></div>
   <div class="modal container fade" id="Modal-Monument"></div>
   <div class="titre-vert">
-    <h1><?php echo $row_monument['ch_pat_nom']; ?></h1>
+    <h1><?= __s($row_monument['ch_pat_nom']) ?></h1>
   </div>
   <div class="well">
     <div class="row-fluid">
       <div class="span8">
-        <p><strong>Pays&nbsp;:</strong> <img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pat_paysID']; ?>"><?php echo $row_monument['ch_pay_nom']; ?></a></p>
-        <p><strong>Ville&nbsp;:</strong> <a class="" href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pat_paysID']; ?>&ch_ville_id=<?php echo $row_monument['ch_pat_villeID']; ?>"><?php echo $row_monument['ch_vil_nom']; ?></a></p>
-        <p><?php echo $row_monument['ch_pat_description']; ?></p>
+        <p><strong>Pays&nbsp;:</strong> <img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pat_paysID']; ?>"><?= __s($row_monument['ch_pay_nom']) ?></a></p>
+        <p><strong>Ville&nbsp;:</strong> <a class="" href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pat_paysID']; ?>&ch_ville_id=<?php echo $row_monument['ch_pat_villeID']; ?>"><?= __s($row_monument['ch_vil_nom']) ?></a></p>
+        <p><?= __s($row_monument['ch_pat_description']) ?></p>
         <!-- Liste des categories di monument -->
         <p><strong>Cat&eacute;gories&nbsp;:</strong></p>
         <?php if ($row_monument['listcat']) { ?>
         <ul class="listes">
           <?php do { ?>
             <li class="row-fluid">
-              <div class="span1 icone-categorie"><img src="<?php echo $row_liste_mon_cat3['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" style="background-color:<?php echo $row_liste_mon_cat3['ch_mon_cat_couleur']; ?>;"></div>
+              <div class="span1 icone-categorie"><img src="<?= __s($row_liste_mon_cat3['ch_mon_cat_icon']) ?>" alt="icone <?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?>" style="background-color:<?= __s($row_liste_mon_cat3['ch_mon_cat_couleur']) ?>;"></div>
               <div class="span7">
-                <p><strong><a href="patrimoine.php?mon_catID=<?php echo $row_liste_mon_cat3['ch_mon_cat_ID']; ?>#monument"><?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?></a></strong></p>
+                <p><strong><a href="patrimoine.php?mon_catID=<?php echo $row_liste_mon_cat3['ch_mon_cat_ID']; ?>#monument"><?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?></a></strong></p>
               </div>
             </li>
             <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); ?>
@@ -222,17 +222,17 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
       <?php } else { ?>
       <p>Ce monument ne fait partie d'aucune cat&eacute;gorie.</p>
       <?php }?>
-
+        <br>
         <p><strong>Influence sur l'économie :</strong></p>
             <?php
-            renderElement('Temperance/resources', array(
+            renderElement('Temperance/resources_small', array(
                 'resources' => $row_monument_ressources
             ));
             ?>
           <div class="clearfix"></div>
       </div>
     <div class="span4">
-      <iframe width="100%" height="300px" frameborder="0" scrolling="no" src="Iframeposition.php?x=<?php echo $row_monument['ch_pat_coord_X']; ?>&y=<?php echo $row_monument['ch_pat_coord_Y']; ?>" name="iframe"></iframe>
+      <iframe width="100%" height="300px" frameborder="0" scrolling="no" src="<?= DEF_URI_PATH ?>Iframeposition.php?x=<?= __s($row_monument['ch_pat_coord_X']) ?>&y=<?= __s($row_monument['ch_pat_coord_Y']) ?>" name="iframe"></iframe>
     </div>
   </div>
 </div>
