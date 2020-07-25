@@ -336,7 +336,7 @@ init();
         <li><a href="#transports">Transports</a></li>
         <?php } ?>
         <?php if ($row_monument || $row_infoVille['ch_vil_culture']) { ?>
-        <li><a href="#patrimoine">Patrimoine</a></li>
+        <li><a href="#patrimoine">Culture</a></li>
         <?php } ?>
         <li><a href="#commentaires">Visites</a></li>
         <li><a href="page-pays.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>"><?php echo $row_Pays['ch_pay_nom']; ?></a></li>
@@ -543,7 +543,7 @@ echo $population_ville_francais; ?></p>
                 ));
                 ?>
                 <p></p>
-              <h4><i class="icon-star"></i> Patrimoine</h4>
+              <h4><i class="icon-star"></i> Culture</h4>
                 <?php
                 renderElement('Temperance/resources_small', array(
                     'resources' => $row_monument_ressources
@@ -619,7 +619,7 @@ echo $population_ville_francais; ?></p>
       <?php if ($row_monument || $row_infoVille['ch_vil_culture']) { ?>
       <section>
         <div id="patrimoine" class="titre-vert anchor">
-          <h1>Patrimoine</h1>
+          <h1>Culture</h1>
         </div>
         <!-- Liste des monuments
         ================================================== -->

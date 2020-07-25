@@ -96,7 +96,7 @@ var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChar
 
             <div class="well">
 
-            <form method="POST" action="{{route('organisation.update', ['id' => $organisation->id])}}">
+            <form method="POST" action="{{route('organisation.update', ['organisation' => $organisation->id])}}">
 
                 @method('patch')
 
