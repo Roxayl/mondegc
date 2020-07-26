@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\CustomUser;
 use App\Models\Organisation;
 use App\Models\OrganisationMember;
+use App\Notifications\OrganisationMemberJoined;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 class OrganisationMemberController extends Controller
@@ -32,7 +35,7 @@ class OrganisationMemberController extends Controller
      */
     public function store(Request $request, $organisation_id) {
 
-        $organisation = Organisation::with('members')->findOrFail($organisation_id);
+        $organisation = Organisation::findOrFail($organisation_id);
 
         // Vérifier si le membre existe déjà
         $memberAlreadyExists = (bool)$organisation->membersAll()
@@ -49,9 +52,13 @@ class OrganisationMemberController extends Controller
             'pays_id' => $request->get('pays_id'),
             'permissions' => Organisation::$permissions['pending'],
         ];
-        OrganisationMember::create($data);
+        $thisMember = OrganisationMember::create($data);
+
+        $users = $organisation->adminUsers();
+        Notification::send($users, new OrganisationMemberJoined($thisMember));
+
         return redirect()->back()
-            ->with('message', "success|Le pays a rejoint l'organisation avec succès !");
+            ->with('message', "success|Votre demande d'adhésion a été formulée.");
 
     }
 

@@ -107,6 +107,31 @@ class Organisation extends Model implements Searchable
         return $this->hasMany(Communique::class, 'ch_com_element_id', 'id')->where('ch_com_categorie', '=', 'organisation');
     }
 
+    public function adminUsers() {
+
+        $members = $this->hasMany(OrganisationMember::class)
+            ->where('permissions', '>=',
+                Organisation::$permissions['administrator'])->get();
+
+        $pays = [];
+        $users = [];
+        foreach($members as $member) {
+            if(!in_array($member->pays_id, $pays)) {
+                $pays[] = $member->pays_id;
+                $users_pays = UsersPays::where('ID_pays', '=', $member->pays_id)->get();
+                foreach($users_pays as $user_pays) {
+                    if(!in_array($user_pays->ID_user, $users)) {
+                        $users[] = $user_pays->ID_user;
+                    }
+                }
+            }
+        }
+
+        $query = CustomUser::whereIn('ch_use_id', $users)->get();
+        return $query;
+
+    }
+
 	public function slug()
     {
         return Str::slug($this->name);
