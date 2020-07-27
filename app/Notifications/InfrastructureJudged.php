@@ -5,7 +5,6 @@ namespace App\Notifications;
 use App\Models\Infrastructure;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class InfrastructureJudged extends Notification
@@ -34,27 +33,7 @@ class InfrastructureJudged extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
-    }
-
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
-    {
-        if($this->accepted)
-            $message = 'Une de vos infrastructures a été acceptée ' .
-                       'par les juges tempérants.';
-        else
-            $message = 'Une de vos infrastructures a été refusée ' .
-                       'par les juges tempérants.';
-        return (new MailMessage)
-                ->line($message)
-                ->action("Voir l'infrastructure", url('/'))
-                ->line('À bientôt sur le Monde GC.');
+        return ['database'];
     }
 
     /**

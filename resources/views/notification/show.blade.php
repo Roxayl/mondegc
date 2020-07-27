@@ -1,6 +1,7 @@
 @php
 
 use App\Models\Infrastructure;
+use App\Models\Organisation;
 use App\Models\OrganisationMember;
 use App\Models\Pays;
 
@@ -26,11 +27,27 @@ use App\Models\Pays;
 
     switch($notification->type) {
 
+        case 'App\Notifications\PaysRegistered':
+            $element = Pays::find($notification->data['pays_id']);
+            if(empty($element)) { $continue = true; }
+            else {
+                $header = "NOUVEAU PAYS";
+                $text = "Un nouveau pays, <strong>"
+                      . htmlspecialchars($element->ch_pay_nom) . "</strong>"
+                      . ", a rejoint le concert des nations gécéennes. "
+                      . "Souhaitez-lui la bienvenue au sein du Monde GC.";
+                $link = url('page-pays.php?ch_pay_id='
+                      . __s($element->ch_pay_id) . "#commentaires");
+                $style = "background-color: #ff4e00;";
+            }
+            break;
+
         case 'App\Notifications\InfrastructureJudged':
             $element = Infrastructure::with('ville')
                         ->find($notification->data['infrastructure_id']);
+            if(empty($element)) { $continue = true; }
 
-            if($notification->data['accepted']) {
+            elseif($notification->data['accepted']) {
                 $header = "BIEN OUEJ !";
                 $text = "Votre infrastructure <strong>"
                       . htmlspecialchars($element->nom_infra) . "</strong> à "
@@ -56,27 +73,56 @@ use App\Models\Pays;
             }
             break;
 
-        case 'App\Notifications\PaysRegistered':
-            $element = Pays::find($notification->data['pays_id']);
-            $header = "NOUVEAU PAYS";
-            $text = "Un nouveau pays, <strong>"
-                  . htmlspecialchars($element->ch_pay_nom) . "</strong>"
-                  . ", a rejoint le concert des nations gécéennes. "
-                  . "Souhaitez-lui la bienvenue au sein du Monde GC.";
-            $link = url('page-pays.php?ch_pay_id='
-                  . __s($element->ch_pay_id) . "#commentaires");
-            $style = "background-color: #ff4e00;";
-            break;
-
         case 'App\Notifications\OrganisationMemberJoined':
             $element = OrganisationMember::with(['pays', 'organisation'])
                 ->find($notification->data['organisation_member_id']);
-            $header = "DEMANDE D'ADMISSION REÇUE";
-            $text = "<strong>" . htmlspecialchars($element->pays->ch_pay_nom) . "</strong>"
-                  . " a demandé à intégrer l'organisation <strong>"
-                  . htmlspecialchars($element->organisation->name) . "</strong>. "
-                  . "Vous pouvez accepter ou refuser sa candidature.";
-            $link = route('organisation.show', ['organisation' => $element->organisation_id]);
+            if(empty($element)) { $continue = true; }
+
+            else {
+                $header = "DEMANDE D'ADMISSION REÇUE";
+                $text = "<strong>" . htmlspecialchars($element->pays->ch_pay_nom) . "</strong>"
+                      . " a demandé à intégrer l'organisation <strong>"
+                      . htmlspecialchars($element->organisation->name) . "</strong>. "
+                      . "Vous pouvez accepter ou refuser sa candidature.";
+                $link = route('organisation.show', ['organisation' => $element->organisation_id]);
+                $style = "background: linear-gradient(120deg, #EA0A0A 0%,#BE0FDC 72%);";
+            }
+            break;
+
+        case 'App\Notifications\OrganisationMemberPermissionChanged':
+            $element = OrganisationMember::with(['pays', 'organisation'])
+                ->find($notification->data['organisation_member_id']);
+            if(empty($element)) { $continue = true; }
+
+            elseif($notification->data['action'] === 'promotedAdministrator') {
+                $header = "PROMOTION !";
+                $text = "<strong>" . htmlspecialchars($element->pays->ch_pay_nom) . "</strong>"
+                      . " a été promu Administrateur de l'organisation <strong>"
+                      . htmlspecialchars($element->organisation->name) . "</strong>.";
+                $link = route('organisation.show', ['organisation' => $element->organisation_id]);
+                $style = "background: linear-gradient(120deg, #EA0A0A 0%,#BE0FDC 72%);";
+            }
+            elseif($notification->data['action'] === 'accepted') {
+                $header = "UN NOUVEAU !";
+                $text = "<strong>" . htmlspecialchars($element->pays->ch_pay_nom) . "</strong>"
+                      . " a rejoint l'organisation <strong>"
+                      . htmlspecialchars($element->organisation->name) . "</strong>.";
+                $link = route('organisation.show', ['organisation' => $element->organisation_id]);
+                $style = "background: linear-gradient(120deg, #EA0A0A 0%,#BE0FDC 72%);";
+            }
+            else {
+                $continue = true;
+            }
+            break;
+
+        case 'App\Notifications\OrganisationMemberQuit':
+            $pays = Pays::find($notification->data['pays_id']);
+            $organisation = Organisation::find($notification->data['organisation_id']);
+            $header = "BYE.";
+            $text = "<strong>" . htmlspecialchars($pays->ch_pay_nom) . "</strong>"
+                  . " a quitté l'organisation <strong>"
+                  . htmlspecialchars($organisation->name) . "</strong>.";
+            $link = route('organisation.show', ['organisation' => $organisation->id]);
             $style = "background: linear-gradient(120deg, #EA0A0A 0%,#BE0FDC 72%);";
             break;
 

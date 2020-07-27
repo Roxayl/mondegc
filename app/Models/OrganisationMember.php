@@ -6,9 +6,12 @@
 
 namespace App\Models;
 
-use App\CustomUser;
+use App\Notifications\OrganisationMemberJoined;
+use App\Notifications\OrganisationMemberPermissionChanged;
+use App\Notifications\OrganisationMemberQuit;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Notification;
 
 /**
  * Class OrganisationMember
@@ -72,5 +75,65 @@ class OrganisationMember extends Model
         }
 
         return $label;
+    }
+
+    public function sendNotifications(Model $oldMember = null) {
+
+        $oldPermission = !is_null($oldMember) ?
+            (int)$oldMember->permissions : $this->permissions;
+
+        // Pays en attente de validation rejetée.
+        // Notifiés : Dirigeants du pays.
+        if($oldPermission === Organisation::$permissions['pending'] && !$this->exists)
+        {
+            $pays = Pays::find($this->pays_id);
+            $organisation = Organisation::find($this->organisation_id);
+            $users = $pays->users;
+            Notification::send($users,
+                new OrganisationMemberQuit($pays, $organisation));
+        }
+
+        // Pays en attente de validation acceptée.
+        // Notifiés : Utilisateurs membres de l'organisation.
+        elseif($oldPermission === Organisation::$permissions['pending'] &&
+               $this->permissions === Organisation::$permissions['member'])
+        {
+            $users = Organisation::find(
+                $this->organisation_id)->adminUsers(Organisation::$permissions['member']);
+            Notification::send($users,
+                new OrganisationMemberPermissionChanged($this, 'accepted'));
+        }
+
+        // Pays en attente de validation, à modérer par un administateur.
+        // Notifiés : Administrateurs de l'organisation.
+        elseif($this->permissions === Organisation::$permissions['pending'])
+        {
+            $users = Organisation::find($this->organisation_id)->adminUsers();
+            Notification::send($users, new OrganisationMemberJoined($this));
+        }
+
+        // Pays devenu administrateur.
+        // Notifiés : Utilisateurs membres de l'organisation.
+        elseif($oldPermission >= Organisation::$permissions['member']
+            && $this->permissions === Organisation::$permissions['administrator'])
+        {
+            $users = Organisation::find(
+                $this->organisation_id)->adminUsers(Organisation::$permissions['member']);
+            Notification::send($users,
+                new OrganisationMemberPermissionChanged($this,
+                    'promotedAdministrator'));
+        }
+
+        // Pays ayant quitté l'organisation.
+        // Notifiés : Utilisateurs membres de l'organisation.
+        elseif(!$this->exists) {
+            $users = Organisation::find(
+                $this->organisation_id)->adminUsers(Organisation::$permissions['member']);
+            $pays = Pays::find($this->pays_id);
+            $organisation = Organisation::find($this->organisation_id);
+            Notification::send($users,
+                new OrganisationMemberQuit($pays, $organisation));
+        }
+
     }
 }

@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\CustomUser;
 use App\Models\Organisation;
 use App\Models\OrganisationMember;
-use App\Notifications\OrganisationMemberJoined;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 class OrganisationMemberController extends Controller
@@ -54,8 +51,7 @@ class OrganisationMemberController extends Controller
         ];
         $thisMember = OrganisationMember::create($data);
 
-        $users = $organisation->adminUsers();
-        Notification::send($users, new OrganisationMemberJoined($thisMember));
+        $thisMember->sendNotifications();
 
         return redirect()->back()
             ->with('message', "success|Votre demande d'adhésion a été formulée.");
@@ -85,10 +81,13 @@ class OrganisationMemberController extends Controller
 
         $this->authorize('update', $orgMember);
 
-        $data = [
+        $oldOrgMember = $orgMember->replicate();
+
+        $orgMember->update([
             'permissions' => $request->permissions,
-        ];
-        $orgMember->update($data);
+        ]);
+
+        $orgMember->sendNotifications($oldOrgMember);
 
         return redirect()->route('organisation.showslug',
             ['id' => $orgMember->organisation_id,
@@ -119,7 +118,12 @@ class OrganisationMemberController extends Controller
 
         $this->authorize('quit', $orgMember);
 
+        $oldOrgMember = $orgMember->replicate();
+
         $orgMember->delete();
+
+        $orgMember->sendNotifications($oldOrgMember);
+
         return redirect()->route('organisation.showslug',
             ['id' => $orgMember->organisation_id,
              'slug' => Str::slug($orgMember->organisation->name)])

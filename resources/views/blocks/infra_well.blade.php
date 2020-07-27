@@ -39,9 +39,11 @@
                                     @method($dropdown['method'])
                                 @endif
                                 @foreach($dropdown['data'] as $dataName => $dataValue)
-                                        <input type="hidden" name="{{$dataName}}" value="{{$dataValue}}">
+                                        <input type="hidden" name="{{$dataName}}"
+                                               value="{{$dataValue}}">
                                 @endforeach
-                                <input type="submit" class="btn btn-primary" value="{{$dropdown['button']}}">
+                                <button type="submit" class="btn btn-primary"
+                                    >{{ $dropdown['button'] }}</button>
                             </form>
                         </li>
                     @endif

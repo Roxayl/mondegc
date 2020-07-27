@@ -2,25 +2,29 @@
 
 namespace App\Notifications;
 
-use App\Models\OrganisationMember;
+use App\Models\Organisation;
+use App\Models\Pays;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class OrganisationMemberJoined extends Notification
+class OrganisationMemberQuit extends Notification
 {
     use Queueable;
 
-    private ?OrganisationMember $organisation_member;
+    private ?Pays $pays;
+    private ?Organisation $organisation;
 
     /**
      * Create a new notification instance.
      *
-     * @param OrganisationMember $organisation_member
+     * @param Pays $pays
+     * @param Organisation $organisation
      */
-    public function __construct(OrganisationMember $organisation_member)
+    public function __construct(Pays $pays, Organisation $organisation)
     {
-        $this->organisation_member = $organisation_member;
+        $this->pays = $pays;
+        $this->organisation = $organisation;
     }
 
     /**
@@ -43,7 +47,8 @@ class OrganisationMemberJoined extends Notification
     public function toArray($notifiable)
     {
         return [
-            'organisation_member_id' => $this->organisation_member->id
+            'organisation_id' => $this->organisation->id,
+            'pays_id' => $this->pays->ch_pay_id,
         ];
     }
 }

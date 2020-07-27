@@ -107,11 +107,14 @@ class Organisation extends Model implements Searchable
         return $this->hasMany(Communique::class, 'ch_com_element_id', 'id')->where('ch_com_categorie', '=', 'organisation');
     }
 
-    public function adminUsers() {
+    public function adminUsers($permission = null) {
+
+	    if($permission === null)
+	        $permission = self::$permissions['administrator'];
 
         $members = $this->hasMany(OrganisationMember::class)
-            ->where('permissions', '>=',
-                Organisation::$permissions['administrator'])->get();
+            ->where('permissions', '>=', $permission)
+            ->get();
 
         $pays = [];
         $users = [];
