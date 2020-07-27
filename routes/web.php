@@ -57,6 +57,10 @@ Route::delete('organisation-member/{id}', 'OrganisationMemberController@destroy'
 /* Search */
 Route::get('search', 'SearchController@index')->name('search');
 
+/* Notification */
+Route::get('user/notifications', 'NotificationController@index')->name('notification');
+Route::post('user/notifications/mark-as-read', 'NotificationController@markAsRead')->name('notification.mark-as-read');
+
 /* DataExporter */
 Route::get('data-export/temperance-pays', 'DataExporterController@temperancePays')->name('data-export.temperance-pays');
 Route::get('data-export/temperance-organisation', 'DataExporterController@temperanceOrganisation')->name('data-export.temperance-organisation');
