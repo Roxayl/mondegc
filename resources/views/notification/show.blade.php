@@ -26,50 +26,52 @@ use App\Models\Pays;
 
     switch($notification->type) {
 
-        case 'infra_juge_accepte':
-            $element = Infrastructure
-                        ::find($notification->data['infrastructure_id']);
-            $header = "BIEN OUEJ !";
-            $text = "Votre infrastructure <strong>"
-                  . htmlspecialchars($element->get('nom_infra')) . "</strong>"
-                  . " a été acceptée par les juges tempérants.";
-            $style = "background: linear-gradient(120deg, #ffe300 0%,#ff5c00 72%);";
-            $link = url("back/ville_modifier.php?ville-ID="
-                  . urlencode($element->get('ch_inf_villeid'))
-                  . "#mes-infrastructures");
+        case 'App\Notifications\InfrastructureJudged':
+            $element = Infrastructure::with('ville')
+                        ->find($notification->data['infrastructure_id']);
+
+            if($notification->data['accepted']) {
+                $header = "BIEN OUEJ !";
+                $text = "Votre infrastructure <strong>"
+                      . htmlspecialchars($element->nom_infra) . "</strong> à "
+                      . htmlspecialchars($element->ville->ch_vil_nom)
+                      . " a été acceptée par les juges tempérants.";
+                $style = "background: linear-gradient(120deg, #ffe300 0%,#ff5c00 72%);";
+                $link = url("back/ville_modifier.php?ville-ID="
+                      . urlencode($element->ch_inf_villeid)
+                      . "#mes-infrastructures");
+            }
+            else {
+                $header = "TRY AGAIN...";
+                $text = "Votre infrastructure <strong>"
+                      . htmlspecialchars($element->nom_infra) . "</strong> à "
+                      . htmlspecialchars($element->ville->ch_vil_nom)
+                      . " a été refusée par les juges tempérants pour la raison suivante :"
+                      . "<br><i>"
+                      . htmlspecialchars($element->ch_inf_commentaire_juge) . "</i>";
+                $style = "background: linear-gradient(120deg, #ffe300 0%,#ff5c00 72%);";
+                $link = url("back/ville_modifier.php?ville-ID="
+                      . urlencode($element->ch_inf_villeid)
+                      . "#mes-infrastructures");
+            }
             break;
 
-        case 'infra_juge_refuse':
-            $element = Infrastructure
-                        ::find($notification->data['infrastructure_id']);
-            $header = "TRY AGAIN...";
-            $text = "Votre infrastructure <strong>"
-                  . htmlspecialchars($element->nom_infra) . "</strong>"
-                  . " a été refusée par les juges tempérants pour la raison suivante :"
-                  . "<br><i>"
-                  . htmlspecialchars($element->ch_inf_commentaire_juge) . "</i>";
-            $style = "background: linear-gradient(120deg, #ffe300 0%,#ff5c00 72%);";
-            $link = url("back/ville_modifier.php?ville-ID="
-                  . urlencode($element->get('ch_inf_villeid'))
-                  . "#mes-infrastructures");
-            break;
-
-        case 'nv_pays_bienvenue':
+        case 'App\Notifications\PaysRegistered':
             $element = Pays::find($notification->data['pays_id']);
             $header = "NOUVEAU PAYS";
             $text = "Un nouveau pays, <strong>"
-                  . htmlspecialchars($element->get('ch_pay_nom')) . "</strong>"
+                  . htmlspecialchars($element->ch_pay_nom) . "</strong>"
                   . ", a rejoint le concert des nations gécéennes. "
                   . "Souhaitez-lui la bienvenue au sein du Monde GC.";
             $link = url('page-pays.php?ch_pay_id='
-                  . __s($element->get('ch_pay_id')) . "#commentaires");
+                  . __s($element->ch_pay_id) . "#commentaires");
             $style = "background-color: #ff4e00;";
             break;
 
         case 'App\Notifications\OrganisationMemberJoined':
             $element = OrganisationMember::with(['pays', 'organisation'])
                 ->find($notification->data['organisation_member_id']);
-            $header = "DEMANDE D'ADMISSION";
+            $header = "DEMANDE D'ADMISSION REÇUE";
             $text = "<strong>" . htmlspecialchars($element->pays->ch_pay_nom) . "</strong>"
                   . " a demandé à intégrer l'organisation <strong>"
                   . htmlspecialchars($element->organisation->name) . "</strong>. "

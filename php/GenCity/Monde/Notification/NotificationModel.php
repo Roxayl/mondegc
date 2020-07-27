@@ -6,7 +6,7 @@ use Squirrel\ModelStructure;
 
 class NotificationModel extends ModelStructure {
 
-    static $tableName = 'notifications';
+    static $tableName = 'notifications_legacy';
     static $primary_key = 'id';
 
 }

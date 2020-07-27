@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\CustomUser;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,7 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $ch_inf_juge
  * @property string|null $ch_inf_commentaire_juge
  * 
- * @property User $user
+ * @property CustomUser $user
  *
  * @package App\Models
  */
@@ -73,8 +74,13 @@ class Infrastructure extends Model
 		'ch_inf_commentaire_juge'
 	];
 
+	public function ville()
+    {
+        return $this->belongsTo(Ville::class, 'ch_inf_villeid');
+    }
+
 	public function user()
 	{
-		return $this->belongsTo(User::class, 'user_creator');
+		return $this->belongsTo(CustomUser::class, 'user_creator');
 	}
 }

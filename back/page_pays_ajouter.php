@@ -1,5 +1,10 @@
 <?php
 
+use App\CustomUser;
+use App\Models\Pays;
+use App\Notifications\PaysRegistered;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Notification;
 
 if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
@@ -80,14 +85,16 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
 
 
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
-
-  $thisPays = new \GenCity\Monde\Pays(mysql_insert_id());
+  $this_pays_id = mysql_insert_id();
 
   getErrorMessage('success', "Nouveau pays ajouté !");
 
+  // Journalisation
+  $thisPays = new \GenCity\Monde\Pays($this_pays_id);
   \GenCity\Monde\Logger\Log::createItem('pays', $thisPays->get('ch_pay_id'), 'insert',
       null, array('entity' => $thisPays->model->getInfo()));
 
+  // Ancien système de notification.
   $userList = new \GenCity\Monde\User\UserList();
   $notification = new \GenCity\Monde\Notification\Notification(array(
       'type_notif' => 'nv_pays_bienvenue',
@@ -95,10 +102,17 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
   ));
   $notification->emit($userList->getActive());
 
+  // Nouveau système de notification basé sur Laravel.
+  $eloquentPays = Pays::find($this_pays_id);
+
+  $date_inactive = Carbon::today()->subMonths(4);
+  $activeUsers = CustomUser::where('ch_use_last_log', '>', $date_inactive)->get();
+  Notification::send($activeUsers, new PaysRegistered($eloquentPays));
+
   $insertGoTo = DEF_URI_PATH . "back/liste-pays.php";
   appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
- exit;
+  exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">
