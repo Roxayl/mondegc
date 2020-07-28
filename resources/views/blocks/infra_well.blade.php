@@ -17,9 +17,9 @@
 
         @if(isset($data['dropdown']) && count($data['dropdown']))
         <div class="dropdown pull-right" style="margin-top: -5px;">
-            <a href="#" class="btn btn-primary notification-toggle-btn" type="submit"
-                 title="Notifications" class="button" data-toggle="dropdown">
-                    <i class="icon-chevron-down icon-white"></i>
+            <a href="#" class="btn btn-primary btn-transparent" type="submit"
+                 title="Options" data-toggle="dropdown">
+                    <i class="icon-chevron-down"></i>
             </a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                 @foreach($data['dropdown'] as $key => $dropdown)

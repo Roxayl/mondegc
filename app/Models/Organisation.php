@@ -8,6 +8,7 @@ namespace App\Models;
 
 use App\CustomUser;
 use Carbon\Carbon;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -55,6 +56,7 @@ class Organisation extends Model implements Searchable
         'administrator' => 50,
         'member' => 10,
         'pending' => 5,
+        'invited' => 2,
     ];
 
 	public function getSearchResult() : SearchResult
@@ -74,7 +76,23 @@ class Organisation extends Model implements Searchable
 	public function membersPending()
     {
 	    return $this->hasMany(OrganisationMember::class)
-            ->where('permissions', '<', Organisation::$permissions['member']);
+            ->where('permissions', '=', Organisation::$permissions['pending']);
+    }
+
+    public function membersInvited(?Authenticatable $user)
+    {
+        if(is_null($user)) {
+    	    return $this->hasMany(OrganisationMember::class)
+                ->where('permissions', '=', Organisation::$permissions['invited']);
+        }
+        else {
+            return $this->hasMany(OrganisationMember::class)
+                ->join('users_pays', 'pays_id', '=', 'ID_pays')
+                ->select('organisation_members.*')
+                ->where('organisation_members.permissions', '=',
+                        Organisation::$permissions['invited'])
+                ->where('ID_user', '=', $user->ch_use_id);
+        }
     }
 
     public function membersAll()

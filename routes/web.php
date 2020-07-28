@@ -49,6 +49,8 @@ Route::resource('organisation', 'OrganisationController');
 /* OrganisationMember */
 Route::get('organisation/{organisation_id}/join', 'OrganisationMemberController@joinOrganisation')->name('organisation-member.join');
 Route::post('organisation/{organisation_id}/join', 'OrganisationMemberController@store')->name('organisation-member.store');
+Route::get('organisation/{organisation_id}/invite', 'OrganisationMemberController@invite')->name('organisation-member.invite');
+Route::post('organisation/{organisation_id}/invite', 'OrganisationMemberController@sendInvitation')->name('organisation-member.send-invitation');
 Route::get('organisation-member/{id}/edit', 'OrganisationMemberController@edit')->name('organisation-member.edit');
 Route::match(['put', 'patch'], 'organisation-member/{id}', 'OrganisationMemberController@update')->name('organisation-member.update');
 Route::get('organisation-member/{id}/delete', 'OrganisationMemberController@delete')->name('organisation-member.delete');

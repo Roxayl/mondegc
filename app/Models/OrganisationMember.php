@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Notifications\OrganisationMemberInvited;
 use App\Notifications\OrganisationMemberJoined;
 use App\Notifications\OrganisationMemberPermissionChanged;
 use App\Notifications\OrganisationMemberQuit;
@@ -67,11 +68,19 @@ class OrganisationMember extends Model
 	public function getPermissionLabel()
     {
         switch($this->permissions) {
-            case Organisation::$permissions['owner']: $label = 'Propriétaire'; break;
-            case Organisation::$permissions['administrator']: $label = 'Administrateur'; break;
-            case Organisation::$permissions['member']: $label = 'Membre'; break;
-            case Organisation::$permissions['pending']: $label = 'En attente de validation'; break;
-            default: throw new \InvalidArgumentException("Mauvais type de permission.");
+            case Organisation::$permissions['owner']:
+                $label = 'Propriétaire'; break;
+            case Organisation::$permissions['administrator']:
+                $label = 'Administrateur'; break;
+            case Organisation::$permissions['member']:
+                $label = 'Membre'; break;
+            case Organisation::$permissions['pending']:
+                $label = 'En attente de validation'; break;
+            case Organisation::$permissions['invited']:
+                $label = 'Invitation envoyée'; break;
+            default:
+                throw new \InvalidArgumentException(
+                    "Mauvais type de permission.");
         }
 
         return $label;
@@ -93,10 +102,12 @@ class OrganisationMember extends Model
                 new OrganisationMemberQuit($pays, $organisation));
         }
 
-        // Pays en attente de validation acceptée.
+        // Pays en attente de validation acceptée, ou invitation acceptée.
         // Notifiés : Utilisateurs membres de l'organisation.
-        elseif($oldPermission === Organisation::$permissions['pending'] &&
-               $this->permissions === Organisation::$permissions['member'])
+        elseif( ($oldPermission === Organisation::$permissions['pending'] ||
+                 $oldPermission === Organisation::$permissions['invited'])
+                &&
+                 $this->permissions === Organisation::$permissions['member'])
         {
             $users = Organisation::find(
                 $this->organisation_id)->adminUsers(Organisation::$permissions['member']);
@@ -110,6 +121,15 @@ class OrganisationMember extends Model
         {
             $users = Organisation::find($this->organisation_id)->adminUsers();
             Notification::send($users, new OrganisationMemberJoined($this));
+        }
+
+        // Pays invité à rejoindre l'organisation.
+        // Notifiés : Utilisateurs gérant le pays invité.
+        elseif($this->permissions === Organisation::$permissions['invited'])
+        {
+            $pays = Pays::find($this->pays_id);
+            $users = $pays->users;
+            Notification::send($users, new OrganisationMemberInvited($this));
         }
 
         // Pays devenu administrateur.

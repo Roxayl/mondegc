@@ -69,7 +69,10 @@ use Spatie\Searchable\SearchResult;
  */
 class Pays extends Model implements Searchable
 {
-	protected $table = 'pays';
+    /**
+     * @var array|int[]
+     */
+    protected $table = 'pays';
 	protected $primaryKey = 'ch_pay_id';
     const CREATED_AT = 'ch_pay_date';
     const UPDATED_AT = 'ch_pay_mis_jour';
@@ -142,6 +145,11 @@ class Pays extends Model implements Searchable
 		'ch_pay_population_carte',
 		'ch_pay_emploi_carte'
 	];
+
+	public static array $statut = [
+	    'active' => 1,
+        'archived' => 2,
+    ];
 
 	public function getSearchResult() : SearchResult
     {

@@ -89,6 +89,22 @@ use App\Models\Pays;
             }
             break;
 
+        case 'App\Notifications\OrganisationMemberInvited':
+            $element = OrganisationMember::with(['pays', 'organisation'])
+                ->find($notification->data['organisation_member_id']);
+            if(empty($element)) { $continue = true; }
+
+            else {
+                $header = "INVITATION REÇUE";
+                $text = "<strong>" . htmlspecialchars($element->pays->ch_pay_nom) . "</strong>"
+                      . " a été invité à rejoindre l'organisation <strong>"
+                      . htmlspecialchars($element->organisation->name) . "</strong>. "
+                      . "Vous pouvez accepter ou refuser cette invitation.";
+                $link = route('organisation.show', ['organisation' => $element->organisation_id]);
+                $style = "background: linear-gradient(120deg, #EA0A0A 0%,#BE0FDC 72%);";
+            }
+            break;
+
         case 'App\Notifications\OrganisationMemberPermissionChanged':
             $element = OrganisationMember::with(['pays', 'organisation'])
                 ->find($notification->data['organisation_member_id']);
