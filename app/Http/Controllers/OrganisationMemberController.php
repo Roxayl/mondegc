@@ -4,15 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Organisation;
 use App\Models\OrganisationMember;
+use App\Models\Pays;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class OrganisationMemberController extends Controller
 {
 
-    public function __construct() {
-
+    public function __construct()
+    {
         $this->middleware('require-ajax', ['only' => ['joinOrganisation', 'edit']]);
+    }
+
+    private function checkMemberAlreadyExists(Request $request, Organisation $organisation) {
+
+        // Vérifier si le membre existe déjà
+        $memberAlreadyExists = (bool)$organisation->membersAll()
+            ->where('pays_id', '=', $request->get('pays_id'))
+            ->get()
+            ->count();
+
+        if($memberAlreadyExists) {
+            throw new \InvalidArgumentException("Ce pays est déjà membre de cette "
+               . "organisation ou vous avez déjà formulé une demande d'adhésion.");
+        }
 
     }
 
@@ -32,26 +47,52 @@ class OrganisationMemberController extends Controller
      */
     public function store(Request $request, $organisation_id) {
 
-        $organisation = Organisation::with('members')->findOrFail($organisation_id);
+        $organisation = Organisation::findOrFail($organisation_id);
 
-        // Vérifier si le membre existe déjà
-        $memberAlreadyExists = (bool)$organisation->membersAll()
-            ->where('pays_id', '=', $request->get('pays_id'))->get()->count();
-        if($memberAlreadyExists) {
-            return redirect()->route('organisation.showslug', ['id' => $organisation_id,
-                'slug' => Str::slug($organisation->name)])
-                ->with('message', "error|Ce pays est déjà membre de cette organisation ou
-                        vous avez déjà formulé une demande d'adhésion.");
-        }
+        $this->checkMemberAlreadyExists($request, $organisation);
 
         $data = [
             'organisation_id' => $organisation_id,
             'pays_id' => $request->get('pays_id'),
             'permissions' => Organisation::$permissions['pending'],
         ];
-        OrganisationMember::create($data);
+        $thisMember = OrganisationMember::create($data);
+
+        $thisMember->sendNotifications();
+
         return redirect()->back()
-            ->with('message', "success|Le pays a rejoint l'organisation avec succès !");
+            ->with('message', "success|Votre demande d'adhésion a été formulée.");
+
+    }
+
+    public function invite(Request $request, $organisation_id) {
+
+        $organisation = Organisation::with('members')->findOrFail($organisation_id);
+        $pays = Pays::where('ch_pay_publication', '=', Pays::$statut['active'])->get();
+        return view('organisation.member.invite', compact(['organisation', 'pays']));
+
+    }
+
+    public function sendInvitation(Request $request, $organisation_id) {
+
+        $organisation = Organisation::findOrFail($organisation_id);
+
+        $this->authorize('administrate', $organisation);
+        $this->checkMemberAlreadyExists($request, $organisation);
+
+        $data = [
+            'organisation_id' => $organisation_id,
+            'pays_id' => $request->get('pays_id'),
+            'permissions' => Organisation::$permissions['invited'],
+        ];
+        /** @var OrganisationMember $thisMember */
+        $thisMember = OrganisationMember::create($data);
+
+        $thisMember->sendNotifications();
+
+        return redirect()->back()
+            ->with('message', "success|Ce pays a été invité.");
+
 
     }
 
@@ -78,10 +119,13 @@ class OrganisationMemberController extends Controller
 
         $this->authorize('update', $orgMember);
 
-        $data = [
+        $oldOrgMember = $orgMember->replicate();
+
+        $orgMember->update([
             'permissions' => $request->permissions,
-        ];
-        $orgMember->update($data);
+        ]);
+
+        $orgMember->sendNotifications($oldOrgMember);
 
         return redirect()->route('organisation.showslug',
             ['id' => $orgMember->organisation_id,
@@ -112,7 +156,12 @@ class OrganisationMemberController extends Controller
 
         $this->authorize('quit', $orgMember);
 
+        $oldOrgMember = $orgMember->replicate();
+
         $orgMember->delete();
+
+        $orgMember->sendNotifications($oldOrgMember);
+
         return redirect()->route('organisation.showslug',
             ['id' => $orgMember->organisation_id,
              'slug' => Str::slug($orgMember->organisation->name)])

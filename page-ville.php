@@ -5,17 +5,6 @@ if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconn
 //Connexion et deconnexion
 include('php/log.php');
 
-// *** Connection BDD pays pour afficher les infos du pays de la ville
-$colname_Pays = "-1";
-if (isset($_GET['ch_pay_id'])) {
-  $colname_Pays = $_GET['ch_pay_id'];
-}
-
-$query_Pays = sprintf("SELECT ch_pay_id, ch_pay_publication, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_use_id FROM pays INNER JOIN users ON ch_use_paysID=ch_pay_id AND ch_use_id >=10 WHERE ch_pay_id = %s", GetSQLValueString($colname_Pays, "int"));
-$Pays = mysql_query($query_Pays, $maconnexion) or die(mysql_error());
-$row_Pays = mysql_fetch_assoc($Pays);
-$totalRows_Pays = mysql_num_rows($Pays);
-
 // *** Connection BDD ville pour afficher les infos de la ville
 $colname_infoVille = "-1";
 if (isset($_GET['ch_ville_id'])) {
@@ -26,6 +15,14 @@ $query_infoVille = sprintf("SELECT * FROM villes WHERE ch_vil_ID = %s", GetSQLVa
 $infoVille = mysql_query($query_infoVille, $maconnexion) or die(mysql_error());
 $row_infoVille = mysql_fetch_assoc($infoVille);
 $totalRows_infoVille = mysql_num_rows($infoVille);
+
+$query_Pays = sprintf("SELECT ch_pay_id, ch_pay_publication, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_use_id FROM pays INNER JOIN users ON ch_use_paysID=ch_pay_id AND ch_use_id >=10 WHERE ch_pay_id = %s", GetSQLValueString($row_infoVille['ch_vil_paysID'], "int"));
+$Pays = mysql_query($query_Pays, $maconnexion) or die(mysql_error());
+$row_Pays = mysql_fetch_assoc($Pays);
+$totalRows_Pays = mysql_num_rows($Pays);
+
+// *** Connection BDD pays pour afficher les infos du pays de la ville
+$colname_Pays = $row_infoVille['ch_vil_paysID'];
 
 // *** Connection BDD villes pour chercher les autres villes du meme pays
 

@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\CustomUser;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $data_changes
  * @property Carbon $created
  * 
- * @property User $user
+ * @property CustomUser $user
  *
  * @package App\Models
  */
@@ -49,6 +50,6 @@ class Log extends Model
 
 	public function user()
 	{
-		return $this->belongsTo(User::class);
+		return $this->belongsTo(CustomUser::class);
 	}
 }

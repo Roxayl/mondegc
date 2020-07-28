@@ -38,9 +38,8 @@ if(isset($_SESSION['userObject'])) {
 }
 
 /** Notifications */
-if(isset($_SESSION['userObject'])) {
-    $navbar_userNotifications = new \GenCity\Monde\Notification\UserNotifications($_SESSION['userObject']);
-    $navbar_notifCount = $navbar_userNotifications->getUnreadCount();
+if(auth()->check()) {
+    $navbar_notifCount = auth()->user()->unreadNotifications->count();
 }
 
 ?>
@@ -110,8 +109,8 @@ if(isset($_SESSION['userObject'])) {
 
                 <div class="dropdown pull-right dropdown-notification hidden-phone"
                      style="margin-right: 4px;">
-                  <a href="#" class="btn btn-primary notification-toggle-btn
-                     <?= !$navbar_notifCount ? 'btn-inactive' : '' ?>" type="submit"
+                  <a href="#" class="btn notification-toggle-btn
+                     <?= !$navbar_notifCount ? 'btn-transparent' : 'btn-primary' ?>" type="submit"
                      title="Notifications" data-toggle="dropdown">
                       <i class="icon-bell icon-white"></i>
                       <span class="notification-count"><?= $navbar_notifCount > 0 ? $navbar_notifCount : '' ?></span>

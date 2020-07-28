@@ -34,6 +34,18 @@ if ( $cat == "pays") {
 
     $pays = new \GenCity\Monde\Pays($elementID);
     $personnage = \GenCity\Monde\Personnage::constructFromEntity($pays);
+
+    $breadcrumb_content = [
+        [ 'url' => url('http://mondegc.test/Page-carte.php#liste-pays'),
+          'text' => "Pays" ],
+        [ 'url' => url('page-pays.php?ch_pay_id=' . $pays->get('ch_pay_id')),
+          'text' => $pays->get('ch_pay_nom')
+        ],
+        [ 'url' => url('page-pays.php?ch_pay_id=' . $pays->get('ch_pay_id')) . '#communiques',
+          'text' => "Communiqués"
+        ],
+        [ 'text' => $row_communique['ch_com_titre'] ],
+    ];
 }
 
 elseif ( $cat == "ville") {
@@ -49,6 +61,26 @@ elseif ( $cat == "ville") {
     $soustitre = $row_villes['ch_pay_nom'];
     $background_jumbotron = $row_villes['ch_vil_lien_img1'];
     mysql_free_result($villes);
+
+    $villePays = new \GenCity\Monde\Pays($row_villes['ch_pay_id']);
+
+    $breadcrumb_content = [
+        [ 'url' => url('http://mondegc.test/Page-carte.php#liste-pays'),
+          'text' => "Pays" ],
+        [ 'url' => url('page-pays.php?ch_pay_id=' . $villePays->get('ch_pay_id')),
+          'text' => $villePays->get('ch_pay_nom')
+        ],
+        [ 'url' => url('page-pays.php?ch_pay_id=' . $villePays->get('ch_pay_id')) . '#villes',
+          'text' => "Villes"
+        ],
+        [ 'url' => url('page-ville.php?ch_ville_id=' . $row_villes['ch_vil_ID']),
+          'text' => $row_villes['ch_vil_nom']
+        ],
+        [ 'url' => url('page-ville.php?ch_ville_id=' . $row_villes['ch_vil_ID'] . '#communiques'),
+          'text' => "Communiqués"
+        ],
+        [ 'text' => $row_communique['ch_com_titre'] ],
+    ];
 }
 
 elseif ( $cat == "institut") {
@@ -75,6 +107,22 @@ elseif($cat == 'organisation') {
     $insigne = $organisation->flag;
     $soustitre = "Organisation";
     $background_jumbotron = "assets/img/fond_haut-conseil.jpg";
+    $breadcrumb_content = [
+        [ 'url' => url('politique.php#organisations'), 'text' => "Organisations" ],
+        [ 'url' => route('organisation.showslug', [
+                'id' => $organisation->id,
+                'slug' => \Illuminate\Support\Str::slug($organisation->name)
+        ]),
+          'text' => $organisation->name
+        ],
+        [ 'url' => route('organisation.showslug', [
+                'id' => $organisation->id,
+                'slug' => \Illuminate\Support\Str::slug($organisation->name)
+        ]) . '#actualites',
+          'text' => 'Communiqués'
+        ],
+        [ 'text' => $row_communique['ch_com_titre'] ],
+    ];
 }
 
 // Ce code est un bordel. J'ajoute ce qui suit pour pallier à ce code bordélique.
@@ -99,6 +147,7 @@ $row_user = mysql_fetch_assoc($user);
 $totalRows_user = mysql_num_rows($user);
 
 $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_ID'];
+
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
@@ -168,6 +217,19 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
 <div class="container corps-page">
 
     <?php renderElement('errormsgs'); ?>
+
+    <?php if(isset($breadcrumb_content)): ?>
+        <ul class="breadcrumb" style="padding-top: 0;">
+            <?php foreach($breadcrumb_content as $breadcrumb): ?>
+            <li <?= !isset($breadcrumb['url']) ? 'class="active"' : '' ?>>
+                <?= isset($breadcrumb['url']) ? '<a href="' . __s($breadcrumb['url']) . '">' : '' ?>
+                    <?= __s($breadcrumb['text']) ?>
+                <?= isset($breadcrumb['url']) ? '</a>' : '' ?>
+                <?= isset($breadcrumb['url']) ? '<span class="divider">/</span>' : '' ?>
+            </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
 
   <div class="row-fluid communique" style="background-color: #e6eaff; padding: 20px 0; margin-top: -10px;">
 

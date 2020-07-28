@@ -1,5 +1,10 @@
 <?php
 
+use App\CustomUser;
+use App\Models\Infrastructure;
+use App\Notifications\InfrastructureJudged;
+use Illuminate\Support\Facades\Notification;
+
 if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
@@ -49,13 +54,6 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "accepter_infrastruc
       '<div style="display: inline-block; background-color: #51a351"><i class="icon-jugement icon-white"></i></div> ' .
     " L'infrastructure " . __s($thisInfra->get('nom_infra')) .
     " a été <strong>acceptée</strong> !");
-
-  $updateGoTo = DEF_URI_PATH . "back/Temperance_jugement.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-  }
-  header(sprintf("Location: %s", $updateGoTo));
- exit;
 }
 
 //Actualisation BDD refuser infrastructure après jugement
@@ -78,12 +76,6 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "refuser_infrastruct
     " L'infrastructure " . __s($thisInfra->get('nom_infra')) .
     " a été <strong>refusée</strong> ! <i>La force de dire non !</i>");
 
-  $updateGoTo = DEF_URI_PATH . "back/Temperance_jugement.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-  }
-  header(sprintf("Location: %s", $updateGoTo));
- exit;
 }
 
 if(isset($_POST['MM_update'])) {
@@ -94,33 +86,42 @@ if(isset($_POST['MM_update'])) {
         $type_notif = 'infra_juge_accepte';
     }
 
-  /*** Notification ***/
-  $notification = new \GenCity\Monde\Notification\Notification(null);
-  $notification->set('type_notif', $type_notif);
-  $notification->set('element', (int)$_POST['ch_inf_id']);
-  $recipients = array();
+    /*** Notification ***/
+    $notification = new \GenCity\Monde\Notification\Notification(null);
+    $notification->set('type_notif', $type_notif);
+    $notification->set('element', (int)$_POST['ch_inf_id']);
+    $recipients = array();
 
-  // On ajoute le créateur de l'infra aux destinataires de la notification.
-  if(!is_null($thisInfra->get('user_creator'))) {
+    // On ajoute le créateur de l'infra aux destinataires de la notification.
+    if(!is_null($thisInfra->get('user_creator'))) {
       $recipients[] = $thisInfra->get('user_creator');
-  }
+    }
 
-  // On ajoute les gestionnaires de pays aux destinataires de la notification.
-  $thisVille = new \GenCity\Monde\Ville($thisInfra->get('ch_inf_villeid'));
-  $thisPays = new \GenCity\Monde\Pays($thisVille->get('ch_vil_paysID'));
-  $paysLeaders = $thisPays->getLeaders();
-  $leaders = array_column(
+    // On ajoute les gestionnaires de pays aux destinataires de la notification.
+    $thisVille = new \GenCity\Monde\Ville($thisInfra->get('ch_inf_villeid'));
+    $thisPays = new \GenCity\Monde\Pays($thisVille->get('ch_vil_paysID'));
+    $paysLeaders = $thisPays->getLeaders();
+    $leaders = array_column(
           $thisPays->getLeaders(), 'ID_user'
-  );
-  foreach($leaders as $leader) {
+    );
+    foreach($leaders as $leader) {
       if(!in_array($leader, $recipients))
           $recipients[] = $leader;
-  }
+    }
+    $notification->emit($recipients);
 
-  // Emettre la notification.
-  $notification->emit($recipients);
+    // Nouveau système de notification basé sur Laravel.
+    $eloquentInfrastructure = Infrastructure::find($_POST['ch_inf_id']);
+    $userList = CustomUser::whereIn('ch_use_id', $recipients)->get();
+    Notification::send($userList, new InfrastructureJudged($eloquentInfrastructure));
 
-  exit;
+    // Redirection
+    $updateGoTo = DEF_URI_PATH . "back/Temperance_jugement.php";
+    if (isset($_SERVER['QUERY_STRING'])) {
+    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
+    }
+    header(sprintf("Location: %s", $updateGoTo));
+    exit;
 
 }
 

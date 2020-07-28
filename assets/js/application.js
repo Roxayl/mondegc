@@ -177,12 +177,12 @@ $(document).ready(function() {
     }
 
     var $notification_container = $('.dropdown-notification');
-    var notification_url_request = baseurl + 'back/notifications_manage.php';
+    var notification_url_request = baseurl + 'user/notifications';
 
     $notification_container.find('ul.dropdown-menu').html(
         "<div class='well'><p><img src='https://squirrel.romukulot.fr/media/icons/ajax-loader2.gif'> Chargement...</p></div>");
     $notification_container.find('a[data-toggle="dropdown"]').on('click', function(ev) {
-        $.get(notification_url_request, { fetch: 1 }, function(returnedData) {
+        $.get(notification_url_request, function(returnedData) {
             $notification_container.find('ul.dropdown-menu').html(returnedData);
         }).fail(function() {
             $notification_container.find('ul.dropdown-menu').html("Une erreur s'est produite.");
@@ -191,10 +191,11 @@ $(document).ready(function() {
 
     $notification_container.on('submit', 'form.notification-markasread', function(ev) {
         ev.preventDefault();
-        $.post(notification_url_request, $(this).serialize(), function(returnedData) {
+        $(ev.target).find('button').attr('value', 'Chargement...');
+        $.post($(this).attr('action'), $(this).serialize(), function(returnedData) {
             $notification_container.find('li').removeClass('notification-unread');
             $notification_container.find('.notification-count').remove();
-            $notification_container.find('.notification-toggle-btn').addClass('btn-inactive');
+            $notification_container.find('.notification-toggle-btn').addClass('btn-transparent').removeClass('btn-primary');
             $notification_container.find('form.notification-markasread').remove();
         }).fail(function() {
             $notification_container.find('ul.dropdown-menu').html("Une erreur s'est produite.");

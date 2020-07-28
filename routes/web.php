@@ -49,6 +49,8 @@ Route::resource('organisation', 'OrganisationController');
 /* OrganisationMember */
 Route::get('organisation/{organisation_id}/join', 'OrganisationMemberController@joinOrganisation')->name('organisation-member.join');
 Route::post('organisation/{organisation_id}/join', 'OrganisationMemberController@store')->name('organisation-member.store');
+Route::get('organisation/{organisation_id}/invite', 'OrganisationMemberController@invite')->name('organisation-member.invite');
+Route::post('organisation/{organisation_id}/invite', 'OrganisationMemberController@sendInvitation')->name('organisation-member.send-invitation');
 Route::get('organisation-member/{id}/edit', 'OrganisationMemberController@edit')->name('organisation-member.edit');
 Route::match(['put', 'patch'], 'organisation-member/{id}', 'OrganisationMemberController@update')->name('organisation-member.update');
 Route::get('organisation-member/{id}/delete', 'OrganisationMemberController@delete')->name('organisation-member.delete');
@@ -57,8 +59,13 @@ Route::delete('organisation-member/{id}', 'OrganisationMemberController@destroy'
 /* Search */
 Route::get('search', 'SearchController@index')->name('search');
 
+/* Notification */
+Route::get('user/notifications', 'NotificationController@index')->name('notification');
+Route::post('user/notifications/mark-as-read', 'NotificationController@markAsRead')->name('notification.mark-as-read');
+
 /* DataExporter */
 Route::get('data-export/temperance-pays', 'DataExporterController@temperancePays')->name('data-export.temperance-pays');
+Route::get('data-export/temperance-pays-all', 'DataExporterController@temperancePaysAll')->name('data-export.temperance-pays-all');
 Route::get('data-export/temperance-organisation', 'DataExporterController@temperanceOrganisation')->name('data-export.temperance-organisation');
 
 

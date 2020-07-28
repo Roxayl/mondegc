@@ -45,7 +45,27 @@
                 @if($organisation->allow_temperance)
                 <li><a href="#economie">Économie</a></li>
                 @endif
-                <li><a href="#membres">Membres</a></li>
+                <li>
+                    <a href="#membres">Membres
+                    @can('administrate', $organisation)
+                        @if($organisation->membersPending->count())
+                            <div class="badge badge-warning" style="display: inline-block;">
+                                {{ $organisation->membersPending->count() }}
+                                {{ \Illuminate\Support\Str::plural('demande',
+                                    $organisation->membersPending->count()) }} d'adhésion
+                            </div>
+                        @endif
+                    @endcan
+                    @if($members_invited->count())
+                        <div class="badge badge-warning" style="display: inline-block;">
+                            {{ $members_invited->count() }}
+                            {{ \Illuminate\Support\Str::plural('invitation',
+                                $organisation->membersPending->count()) }} en attente
+                        </div>
+                    @endif
+
+                    </a>
+                </li>
             </ul>
         </div>
 
@@ -178,14 +198,24 @@
             @endif
 
 
+            <div class="cta-container"
+                 style="position: relative; top: 20px; margin-right: -15px;">
+            @can('administrate', $organisation)
+                <a href="<?= route('organisation-member.invite',
+                             ['organisation_id' => $organisation->id]) ?>"
+                   class="btn btn-primary btn-cta pull-right"
+                   data-toggle="modal" data-target="#modal-container">
+                <i class="icon-white icon-envelope"></i> Inviter...</a>
+            @endcan
             @if(auth()->check())
-                <div class="cta-title pull-right-cta" style="margin-top: 20px;">
-                    <a href="<?= route('organisation-member.join', ['organisation_id' => $organisation->id]) ?>"
-                       class="btn btn-primary btn-cta"
-                       data-toggle="modal" data-target="#modal-container">
-                    <i class="icon-white icon-plus-sign"></i> Rejoindre...</a>
-                </div>
+                <a href="<?= route('organisation-member.join',
+                             ['organisation_id' => $organisation->id]) ?>"
+                   class="btn btn-primary btn-cta pull-right" style="margin-right: 8px;"
+                   data-toggle="modal" data-target="#modal-container">
+                <i class="icon-white icon-plus-sign"></i> Rejoindre...</a>
             @endif
+            </div>
+
             <div id="membres" class="titre-vert">
                 <h1>Membres</h1>
             </div>
@@ -237,8 +267,55 @@
 
             @endforeach
 
+            @if($members_invited->count())
+                <h3>
+                    Invitations reçues
+                    <span class="label label-warning">{{$members_invited->count()}}</span>
+                </h3>
+                @foreach($members_invited as $member)
+
+                    @php
+                    $dropdown = [
+                        [
+                            'type' => 'form',
+                            'method' => 'PUT',
+                            'action' => route('organisation-member.update', ['id' => $member->id]),
+                            'data' => [
+                                 'permissions' => \App\Models\Organisation::$permissions['member'],
+                             ],
+                            'button' => "Accepter l'invitation",
+                        ],
+                        [
+                            'type' => 'form',
+                            'method' => 'DELETE',
+                            'action' => route('organisation-member.destroy', ['id' => $member->id]),
+                            'data' => [],
+                            'button' => "Rejeter l'invitation"
+                        ],
+                    ];
+                    @endphp
+
+                    @include('blocks.infra_well', ['data' => [
+                        'type' => 'members',
+                        'overlay_text' => '',
+                        'image' => $member->pays->ch_pay_lien_imgdrapeau,
+                        'nom' => $member->pays->ch_pay_nom,
+                        'url' => url('page-pays.php?ch_pay_id=' . $member->pays->ch_pay_id),
+                        'description' => "Invitation reçue",
+                        'dropdown' => $dropdown,
+                    ]])
+
+                @endforeach
+            @endif
+
             @can('administrate', $organisation)
-                <h3>Membres en attente</h3>
+                <h3>Membres en attente
+                    @if($organisation->membersPending->count())
+                        <span class="label label-warning">
+                        {{ $organisation->membersPending->count() }}
+                        </span>
+                    @endif
+                </h3>
                 @foreach($organisation->membersPending as $member)
 
                     @php

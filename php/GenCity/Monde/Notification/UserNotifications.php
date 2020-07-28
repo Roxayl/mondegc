@@ -18,7 +18,7 @@ class UserNotifications {
      */
     public function getNotifications() {
 
-        $sql = sprintf('SELECT * FROM notifications
+        $sql = sprintf('SELECT * FROM notifications_legacy
             WHERE recipient_id = %s
               AND (    created > DATE_SUB(NOW(), INTERVAL 3 DAY)
                     OR (unread = 1 AND created > DATE_SUB(NOW(), INTERVAL 1 MONTH))
@@ -39,7 +39,7 @@ class UserNotifications {
 
     public function markAsRead() {
 
-        $sql = sprintf('UPDATE notifications SET unread = 0
+        $sql = sprintf('UPDATE notifications_legacy SET unread = 0
             WHERE recipient_id = %s',
             GetSQLValueString($this->user->get('ch_use_id')));
         $query = mysql_query($sql) or die(mysql_error());
@@ -52,7 +52,7 @@ class UserNotifications {
 
     public function getUnreadCount() {
 
-        $sql = sprintf('SELECT COUNT(*) AS notifCount FROM notifications
+        $sql = sprintf('SELECT COUNT(*) AS notifCount FROM notifications_legacy
             WHERE recipient_id = %s AND unread = 1
             ORDER BY id DESC',
             GetSQLValueString($this->user->get('ch_use_id'), 'int')

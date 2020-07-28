@@ -74,9 +74,14 @@ class OrganisationController extends Controller
         $content = $organisation->text;
         $title = $organisation->name;
 
+        $members_invited = collect();
+        if(auth()->check()) {
+            $members_invited = $organisation->membersInvited(auth()->user())->get();
+        }
+
         return view('organisation.show', compact(
             ['content', 'title', 'page_title', 'seo_description',
-             'organisation']));
+             'organisation', 'members_invited']));
     }
 
     /**

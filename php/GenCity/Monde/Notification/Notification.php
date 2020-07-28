@@ -14,7 +14,7 @@ class Notification extends BaseModel {
 
     protected function create() {
 
-        $query = 'INSERT INTO notifications
+        $query = 'INSERT INTO notifications_legacy
           (recipient_id, type_notif, element, created)
           VALUES(%s, %s, %s, NOW())';
 
