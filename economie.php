@@ -336,7 +336,8 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
                 <i class="icon-white icon-arrow-down"></i>
                 Exporter</a>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="<?= route('data-export.temperance-pays') ?>">Statistiques des pays<br><small>Fichier CSV - Inclut toutes les ressources</small></a></li>
+                <li><a href="<?= route('data-export.temperance-pays') ?>">Statistiques des pays (existants)<br><small>Fichier CSV - Inclut toutes les ressources</small></a></li>
+                <li><a href="<?= route('data-export.temperance-pays-all') ?>">Statistiques des pays (existants et archivés)<br><small>Fichier CSV - Inclut toutes les ressources</small></a></li>
                 <li><a href="<?= route('data-export.temperance-organisation') ?>">Statistiques des organisations<br><small>Fichier CSV - Inclut toutes les ressources</small></a></li>
             </ul>
         </div>

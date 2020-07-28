@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pays;
 use App\Models\TemperanceOrganisation;
 use App\Models\TemperancePays;
 use Carbon\Carbon;
@@ -38,8 +39,17 @@ class DataExporterController extends Controller
 
     public function temperancePays(Request $request)
     {
-        $data = TemperancePays::all()->toArray();
+        $data = TemperancePays::join('pays', 'id', '=', 'ch_pay_id')
+            ->select('temperance_pays.*')
+            ->where('ch_pay_publication', '=', Pays::$statut['active'])
+            ->get()->toArray();
         return $this->exportToCsv('temperance-pays', $data);
+    }
+
+    public function temperancePaysAll(Request $request)
+    {
+        $data = TemperancePays::all()->toArray();
+        return $this->exportToCsv('temperance-pays-archive', $data);
     }
 
     public function temperanceOrganisation(Request $request)

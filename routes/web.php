@@ -65,6 +65,7 @@ Route::post('user/notifications/mark-as-read', 'NotificationController@markAsRea
 
 /* DataExporter */
 Route::get('data-export/temperance-pays', 'DataExporterController@temperancePays')->name('data-export.temperance-pays');
+Route::get('data-export/temperance-pays-all', 'DataExporterController@temperancePaysAll')->name('data-export.temperance-pays-all');
 Route::get('data-export/temperance-organisation', 'DataExporterController@temperanceOrganisation')->name('data-export.temperance-organisation');
 
 
