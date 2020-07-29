@@ -6,7 +6,6 @@
 
 namespace App\Models;
 
-use App\CustomUser;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**

@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\CustomUser;
+use App\Models\CustomUser;
 use App\Models\Organisation;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -13,7 +13,7 @@ class OrganisationPolicy
     /**
      * Determine whether the user can view any organisations.
      *
-     * @param  \App\CustomUser  $user
+     * @param  \App\Models\CustomUser  $user
      * @return mixed
      */
     public function viewAny(CustomUser $user)
@@ -24,7 +24,7 @@ class OrganisationPolicy
     /**
      * Determine whether the user can view the organisation.
      *
-     * @param  \App\CustomUser  $user
+     * @param  \App\Models\CustomUser  $user
      * @param  \App\Models\Organisation  $organisation
      * @return mixed
      */
@@ -36,7 +36,7 @@ class OrganisationPolicy
     /**
      * Determine whether the user can create organisations.
      *
-     * @param  \App\CustomUser  $user
+     * @param  \App\Models\CustomUser  $user
      * @return mixed
      */
     public function create(CustomUser $user)
@@ -47,7 +47,7 @@ class OrganisationPolicy
     /**
      * Determine whether the user can update the organisation.
      *
-     * @param  \App\CustomUser  $user
+     * @param  \App\Models\CustomUser  $user
      * @param  \App\Models\Organisation  $organisation
      * @return mixed
      */
@@ -60,7 +60,7 @@ class OrganisationPolicy
     /**
      * Determine whether the user can delete the organisation.
      *
-     * @param  \App\CustomUser  $user
+     * @param  \App\Models\CustomUser  $user
      * @param  \App\Models\Organisation  $organisation
      * @return mixed
      */
@@ -72,7 +72,7 @@ class OrganisationPolicy
     /**
      * Determine whether the user can restore the organisation.
      *
-     * @param  \App\CustomUser  $user
+     * @param  \App\Models\CustomUser  $user
      * @param  \App\Models\Organisation  $organisation
      * @return mixed
      */
@@ -84,7 +84,7 @@ class OrganisationPolicy
     /**
      * Determine whether the user can permanently delete the organisation.
      *
-     * @param  \App\CustomUser  $user
+     * @param  \App\Models\CustomUser  $user
      * @param  \App\Models\Organisation  $organisation
      * @return mixed
      */
@@ -96,7 +96,7 @@ class OrganisationPolicy
     /**
      * Détermine si l'utilisateur peut administrer l'organisation.
      *
-     * @param  \App\CustomUser  $user
+     * @param  \App\Models\CustomUser  $user
      * @param  \App\Models\Organisation  $organisation
      * @return mixed
      */

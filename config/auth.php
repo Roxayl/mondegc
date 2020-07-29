@@ -36,26 +36,22 @@ return [
     */
 
     'guards' => [
+        // Guard par défaut
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users', // provider users par défaut
+        ],
+        // Craftable
         'admin' => [
             'driver' => 'session',
             'provider' => 'admin_users',
         ],
-        
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
-
+        // API
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
             'hash' => false,
         ],
-
-        // 'web' => [
-        //  'driver' => 'session',
-        //  'provider' => 'users',
-        // ],
     ],
 
     /*
@@ -76,23 +72,16 @@ return [
     */
 
     'providers' => [
+        // Provider par défaut
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\CustomUser::class,
+        ],
+        // Craftable
         'admin_users' => [
             'driver' => 'eloquent',
             'model' => Brackets\AdminAuth\Models\AdminUser::class,
-        ], 
-        
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\CustomUser::class,
-        ]
-        // 'users' => [
-        //     'driver' => 'eloquent',
-        //     'model' => App\User::class,
-        // ],
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        ],
     ],
 
     /*
@@ -116,17 +105,11 @@ return [
             'table' => 'admin_password_resets',
             'expire' => 60,
         ],
-        
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
         ],
-        /*'users' => [
-            'provider' => 'users',
-            'table' => 'password_resets',
-            'expire' => 60,
-        ],*/
     ],
 
 ];

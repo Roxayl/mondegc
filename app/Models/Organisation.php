@@ -6,7 +6,6 @@
 
 namespace App\Models;
 
-use App\CustomUser;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
