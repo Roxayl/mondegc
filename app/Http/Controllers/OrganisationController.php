@@ -27,10 +27,7 @@ class OrganisationController extends Controller
         $this->authorize('create', Organisation::class);
 
         $pays = auth()->user()->pays;
-
-        $title = 'Créer une organisation';
-        $seo_description = 'Créer une nouvelle organisation de pays au sein du Monde GC.';
-        return view('organisation.create', compact(['title', 'seo_description', 'pays']));
+        return view('organisation.create')->with('pays', $pays);
     }
 
     /**
@@ -52,7 +49,7 @@ class OrganisationController extends Controller
         $member = OrganisationMember::create($memberData);
 
         return redirect()->route('organisation.showslug',
-              ['id' => $organisation->id, 'slug' => Str::slug($organisation->name)])
+              ['id' => $organisation->id, 'slug' => $organisation->slug()])
             ->with(['message' => "success|L'organisation a été créée avec succès !"]);
     }
 
@@ -64,24 +61,17 @@ class OrganisationController extends Controller
         $organisation = Organisation::with(['members', 'membersPending', 'communiques'])
             ->findOrFail($id);
 
-        if(is_null($slug) || Str::slug($organisation->name) !== Str::slug($slug)) {
+        if(is_null($slug) || $organisation->slug() !== Str::slug($slug)) {
             return redirect()->route('organisation.showslug',
-                ['id' => $organisation->id, 'slug' => Str::slug($organisation->name)]);
+                ['id' => $organisation->id, 'slug' => $organisation->slug()]);
         }
-
-        $page_title = $organisation->name;
-        $seo_description = substr($organisation->text, 0, 255);
-        $content = $organisation->text;
-        $title = $organisation->name;
 
         $members_invited = collect();
         if(auth()->check()) {
             $members_invited = $organisation->membersInvited(auth()->user())->get();
         }
 
-        return view('organisation.show', compact(
-            ['content', 'title', 'page_title', 'seo_description',
-             'organisation', 'members_invited']));
+        return view('organisation.show', compact(['organisation', 'members_invited']));
     }
 
     /**
@@ -94,11 +84,7 @@ class OrganisationController extends Controller
         $organisation = Organisation::with('members')->findOrFail($id);
         $this->authorize('update', $organisation);
 
-        $seo_description = "Modifier la page de l'organisation {$organisation->name}.";
-        $title = 'Modifier ' . $organisation->name;
-
-        return view('organisation.edit',
-            compact(['organisation', 'title', 'seo_description']));
+        return view('organisation.edit')->with('organisation', $organisation);
     }
 
     /**

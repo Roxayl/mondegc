@@ -111,13 +111,13 @@ elseif($cat == 'organisation') {
         [ 'url' => url('politique.php#organisations'), 'text' => "Organisations" ],
         [ 'url' => route('organisation.showslug', [
                 'id' => $organisation->id,
-                'slug' => \Illuminate\Support\Str::slug($organisation->name)
+                'slug' => $organisation->slug()
         ]),
           'text' => $organisation->name
         ],
         [ 'url' => route('organisation.showslug', [
                 'id' => $organisation->id,
-                'slug' => \Illuminate\Support\Str::slug($organisation->name)
+                'slug' => $organisation->slug()
         ]) . '#actualites',
           'text' => 'Communiqués'
         ],

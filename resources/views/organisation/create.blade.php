@@ -2,11 +2,11 @@
 @extends('layouts.legacy')
 
 @section('title')
-    {{$title}}
+    Créer une organisation
 @endsection
 
 @section('seodescription')
-    {{$seo_description}}
+    Créer une nouvelle organisation de pays au sein du Monde GC.
 @endsection
 
 @section('body_attributes') data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" @endsection

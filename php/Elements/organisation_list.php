@@ -36,8 +36,7 @@ $memberCount = $organisation->members->count();
             ); ?>
         </div>
         <?php endif; ?>
-        <a href="<?= url("organisation/{$organisation->id}-" .
-            \Illuminate\Support\Str::slug($organisation->name)) ?>">
+        <a href="<?= url("organisation/{$organisation->id}-" . $organisation->slug()) ?>">
             <h2><?= $organisation->name ?></h2></a>
         <p>
             <?= $memberCount ?>
