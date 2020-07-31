@@ -60,7 +60,7 @@ Route::delete('organisation-member/{id}', 'OrganisationMemberController@destroy'
 Route::get('search', 'SearchController@index')->name('search');
 
 /* Map */
-Route::get('map-explore', 'MapController@explore')->name('map.explore');
+Route::get('map', 'MapController@explore')->name('map');
 
 /* Notification */
 Route::get('user/notifications', 'NotificationController@index')->name('notification');
