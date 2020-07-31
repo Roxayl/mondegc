@@ -59,6 +59,9 @@ Route::delete('organisation-member/{id}', 'OrganisationMemberController@destroy'
 /* Search */
 Route::get('search', 'SearchController@index')->name('search');
 
+/* Map */
+Route::get('map-explore', 'MapController@explore')->name('map.explore');
+
 /* Notification */
 Route::get('user/notifications', 'NotificationController@index')->name('notification');
 Route::post('user/notifications/mark-as-read', 'NotificationController@markAsRead')->name('notification.mark-as-read');
