@@ -32,12 +32,11 @@ class Kernel extends HttpKernel
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            // On n'utilise a priori pas le middleware ci-dessous pour le moment,
+            // donc on le désactive.
+            // \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\AuthSynchronizer::class,
-            
-            // TODO! On annule temporairement la vérification globale des jetons car le middleware
-            // est appelé avant l'appel à LegacySiteController. Solution retenue :
-            // https://laracasts.com/discuss/channels/general-discussion/l5-disable-csrf-middleware-on-certain-routes
+            // On désactive la vérification CSRF ici car on l'utilise comme middleware route.
             // \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
@@ -65,6 +64,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'csrf' => \App\Http\Middleware\VerifyCsrfToken::class,
 
         // App middleware
         'require-ajax' => \App\Http\Middleware\RequireAjax::class,
