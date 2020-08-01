@@ -2,11 +2,11 @@
 @extends('layouts.legacy')
 
 @section('title')
-    {{$title}}
+    Modifier {{ $organisation->name }}
 @endsection
 
 @section('seodescription')
-    {{$seo_description}}
+    Modifier la page de l'organisation {{ $organisation->name }}.
 @endsection
 
 @section('body_attributes') data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" @endsection
@@ -68,9 +68,9 @@ var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChar
                 <li><a href="{{url('politique.php#organisations')}}">Organisations</a>
                     <span class="divider">/</span></li>
                 <li>
-                    <a href="{{route('organisation.showslug',
+                    <a href="{{ route('organisation.showslug',
                         ['id' => $organisation->id,
-                         'slug' => $organisation->slug()])}}"
+                         'slug' => $organisation->slug()]) }}"
                         >{{$organisation->name}}</a>
                     <span class="divider">/</span></li>
                 <li class="active">Modifier</li>

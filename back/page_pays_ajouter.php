@@ -1,6 +1,6 @@
 <?php
 
-use App\CustomUser;
+use App\Models\CustomUser;
 use App\Models\Pays;
 use App\Notifications\PaysRegistered;
 use Carbon\Carbon;

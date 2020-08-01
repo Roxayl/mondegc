@@ -2,11 +2,11 @@
 @extends('layouts.legacy')
 
 @section('title')
-    {{$title}}
+    {{ $page->title }}
 @endsection
 
 @section('seodescription')
-    {{$seo_description}}
+    {{ $page->seodescription }}
 @endsection
 
 @section('content')
@@ -14,11 +14,11 @@
     @parent
 
     <div class="titre-bleu anchor">
-      <h1>{{$page_title}}</h1>
+      <h1>{{ $page->title }}</h1>
     </div>
 
     <div class="well">
-        {!!$content!!}
+        {!! $page->content !!}
     </div>
 
 @endsection

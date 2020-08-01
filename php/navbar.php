@@ -178,7 +178,8 @@ if(auth()->check()) {
             <a href="<?= DEF_URI_PATH ?>Page-carte.php" class="dropdown-toggle" data-toggle="dropdown" title="liste des pays class&eacute;s par continent">Carte et pays <b class="caret hidden-phone"></b></a>
             <ul class="dropdown-menu dropdown-double hidden-phone">
               <div class="drop-colonne-gauche">
-                <li class="nav-lien-carte" href="page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><a href="<?= DEF_URI_PATH ?>Page-carte.php"><div><h3>Explorer la carte</h3></div></a></li>
+                <li class="nav-lien-carte"><a href="<?= DEF_URI_PATH ?>map"><div><h3>Explorer la carte</h3></div></a></li>
+                <li><a href="<?= DEF_URI_PATH ?>Page-carte.php"><i class="icon-list"></i> Voir la liste des pays</a></li>
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Aurinea.png" class="img-continent"> R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</li>
                 <?php 
 				do { 

@@ -11,7 +11,6 @@
 |
 */
 
-
 /*****
  * Laravel Authentification
  *****/
@@ -59,6 +58,9 @@ Route::delete('organisation-member/{id}', 'OrganisationMemberController@destroy'
 /* Search */
 Route::get('search', 'SearchController@index')->name('search');
 
+/* Map */
+Route::get('map', 'MapController@explore')->name('map');
+
 /* Notification */
 Route::get('user/notifications', 'NotificationController@index')->name('notification');
 Route::post('user/notifications/mark-as-read', 'NotificationController@markAsRead')->name('notification.mark-as-read');
@@ -102,9 +104,3 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
     Route::post('/admin/pages/{page}',                          'Admin\PagesController@update')->name('admin/pages/update');
     Route::delete('/admin/pages/{page}',                        'Admin\PagesController@destroy')->name('admin/pages/destroy');
 });
-
-
-/*****
- * Legacy
- *****/
-Route::any("/{path?}", "Legacy\LegacySiteController@index")->where("path", ".*");

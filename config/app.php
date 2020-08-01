@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'MondeGC'),
+    'name' => env('APP_NAME', 'Monde GC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,9 +52,21 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://mondegc-upprisa.test'),
+    'url' => env('APP_URL', 'http://mondegc.test'),
 
     'asset_url' => env('ASSET_URL', null),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Installation dans un sous-répertoire (custom)
+    |--------------------------------------------------------------------------
+    |
+    | Détermine le chemin si le site est installé dans un sous-répertoire
+    | public.
+    |
+    */
+
+    'directory_path' => env('APP_DIR', ''),
 
     /*
     |--------------------------------------------------------------------------

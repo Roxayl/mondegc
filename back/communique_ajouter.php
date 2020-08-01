@@ -127,7 +127,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
         if(!auth()->check() || !auth()->user()->can('administrate', $organisation)) {
             throw new AccessDeniedHttpException("Vous ne pouvez pas ajouter de communiqué.");
         }
-        $insertGoTo = route('organisation.showslug', ['id' => $organisation->id, 'slug' => \Illuminate\Support\Str::slug($organisation->name)]);
+        $insertGoTo = route('organisation.showslug',
+            ['id' => $organisation->id, 'slug' => $organisation->slug()]);
     }
 
     $insertSQL = sprintf("INSERT INTO communiques (ch_com_label, ch_com_statut, ch_com_categorie, ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_com_pays_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
@@ -141,13 +142,13 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
                        GetSQLValueString($_POST['ch_com_titre'], "text"),
                        GetSQLValueString($_POST['ch_com_contenu'], "text"),
                        GetSQLValueString($_POST['ch_com_pays_id'], 'int'));
-
   
     $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
     $last_insert_id = mysql_insert_id();
     $banner_text = "Votre communiqué a été ajouté avec succès !<br />";
-    $banner_text .= "<a href='../page-communique.php?com_id=$last_insert_id'>Accéder à votre communiqué</a>";
+    $banner_text .= '<a href="' . DEF_URI_PATH . 'page-communique.php?com_id='
+                 . $last_insert_id . '">Accéder à votre communiqué</a>';
     getErrorMessage('success', $banner_text);
 
     if($_POST['ch_com_categorie'] == "pays") {
@@ -174,8 +175,14 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
     elseif(($_POST['ch_com_categorie'] == "institut") AND ($_POST['ch_com_element_id'] == 6)) {
         $insertGoTo = 'institut_sport.php';
     }
+    elseif($_POST['ch_com_categorie'] == "organisation") {
+        $insertGoTo = route('organisation.showslug', [
+                'id' => $organisation->id,
+                'slug' => $organisation->slug()
+        ]);
+    }
     else {
-        $insertGoTo = DEF_URI_PATH . 'back/page_pays_back.php';
+        $insertGoTo = DEF_URI_PATH;
     }
     appendQueryString($insertGoTo);
     header(sprintf("Location: %s", $insertGoTo));

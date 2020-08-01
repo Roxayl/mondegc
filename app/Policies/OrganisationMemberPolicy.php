@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\CustomUser;
+use App\Models\CustomUser;
 use App\Models\Organisation;
 use App\Models\OrganisationMember;
 use Illuminate\Auth\Access\HandlesAuthorization;

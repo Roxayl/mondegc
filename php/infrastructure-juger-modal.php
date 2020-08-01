@@ -1,6 +1,6 @@
 <?php
 
-use App\CustomUser;
+use App\Models\CustomUser;
 use App\Models\Infrastructure;
 use App\Notifications\InfrastructureJudged;
 use Illuminate\Support\Facades\Notification;

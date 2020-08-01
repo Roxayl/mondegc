@@ -9,19 +9,13 @@ class PageController extends Controller {
 
     public function index($page, $url) {
 
-        $thisPage = Page::findOrFail($page)->getPageOrFail();
+        $page = Page::findOrFail($page)->getPageOrFail();
 
-        if(trim($thisPage->url) !== trim($url)) {
-            return redirect("page/{$thisPage->id}-{$thisPage->url}");
+        if(trim($page->url) !== trim($url)) {
+            return redirect("page/{$page->id}-{$page->url}");
         }
 
-        $page_title = $thisPage->title;
-        $seo_description = $thisPage->seodescription;
-        $content = $thisPage->content;
-        $title = $page_title;
-
-        return view('page', compact(
-            ['content', 'title', 'page_title', 'seo_description']));
+        return view('page')->with('page', $page);
 
     }
 

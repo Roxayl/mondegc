@@ -2,11 +2,11 @@
 @extends('layouts.legacy')
 
 @section('title')
-    {{$title}}
+    {{ $organisation->name }}
 @endsection
 
 @section('seodescription')
-    {{$seo_description}}
+    {{ substr($organisation->text, 0, 255) }}
 @endsection
 
 @section('body_attributes') data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" @endsection
@@ -25,7 +25,7 @@
 
     <header class="jumbotron subhead anchor" id="header">
         <div class="container">
-            <h1>{{$page_title}}</h1>
+            <h1>{{ $organisation->name }}</h1>
         </div>
     </header>
 
@@ -137,7 +137,7 @@
                 <h1>Présentation</h1>
             </div>
             <div class="well">
-                {!!$content!!}
+                {!! $organisation->text !!}
             </div>
 
             @if($organisation->allow_temperance)

@@ -8,16 +8,29 @@
 $mondegc_config = array();
 
 // Environnement.
-if($_SERVER['HTTP_HOST'] === 'localhost') {
-    $mondegc_config['env'] = 'localhost';
-} elseif($_SERVER['HTTP_HOST'] === 'mondegc.test' || $_SERVER['HTTP_HOST'] === 'generation-city.test') {
-    $mondegc_config['env'] = 'vagrant';
+if(\Illuminate\Support\Facades\App::environment() === 'local') {
+    if($_SERVER['HTTP_HOST'] === 'localhost') {
+        $mondegc_config['env'] = 'localhost';
+    } else {
+        $mondegc_config['env'] = 'vagrant';
+    }
 } else {
     $mondegc_config['env'] = 'production';
 }
 
-// Importer la configuration en fonction de l'environnement.
-require('config.' . $mondegc_config['env'] . '.php');
+// Définir la configuration depuis Laravel.
+$mondegc_config['version'] = config('legacy.version');
+$mondegc_config['hide_errors'] = config('legacy.hide_errors');
+$mondegc_config['enable_csrf_protection'] = config('legacy.enable_csrf_protection');
+$mondegc_config['db'] = array(
+    'hostname' => config('database.connections.mysql.host'),
+    'username' => config('database.connections.mysql.username'),
+    'password' => config('database.connections.mysql.password'),
+    'database' => config('database.connections.mysql.database'),
+);
+$mondegc_config['path'] = !empty(config('app.directory_path'))
+                        ? config('app.directory_path') . '/'
+                        : '';
 
 // Chemins
 defined("DEF_ROOTPATH") or define("DEF_ROOTPATH", str_replace("\\", "/", (substr(__DIR__, -12) == '/Connections' || substr(__DIR__, -12) == '\Connections') ? substr(__DIR__, 0, -12) . '/' : __DIR__ . '/'));

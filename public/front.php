@@ -12,7 +12,7 @@ if(!isset($_GET['target'])) {
     throw new NotFoundHttpException("Page non trouvée.");
 }
 
-$mondegc_config['front-controller'] = array();
+$mondegc_config['front-controller'] = [];
 
 $mondegc_config['front-controller']['enabled'] = true;
 
@@ -21,7 +21,7 @@ $mondegc_config['front-controller']['path'] = str_replace('.', '/',
 
 $mondegc_config['front-controller']['require'] = DEF_ROOTPATH . $mondegc_config['front-controller']['path'] . '.php';
 
-if($mondegc_config['env'] !== 'production') {
+if(isset($mondegc_config['env']) && $mondegc_config['env'] !== 'production') {
     getErrorMessage('info',
         "Using front controller (PHP " . phpversion() . ")<br>Required path: " . $mondegc_config['front-controller']['require']);
 }
@@ -33,7 +33,7 @@ if(!file_exists($mondegc_config['front-controller']['require'])) {
 ob_start();
 @require($mondegc_config['front-controller']['require']);
 
-if($mondegc_config['enable_csrf_protection']) {
+if(isset($mondegc_config['enable_csrf_protection']) && $mondegc_config['enable_csrf_protection']) {
     return csrf_ob_handler(ob_get_clean(), null);
 } else {
     return ob_get_clean();

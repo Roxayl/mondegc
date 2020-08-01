@@ -22,7 +22,8 @@ if(isset($_POST['proposal_debate_edit'])) {
     } else {
         $formProposal->update();
         getErrorMessage('success', "Les liens ont été modifiés avec succès !");
-        header(DEF_URI_PATH . "back/ocgc_proposal.php?id={$formProposal->get('id')}");
+        header("Location:" . DEF_URI_PATH .
+               "back/ocgc_proposal.php?id={$formProposal->get('id')}");
         exit();
     }
 }
@@ -37,6 +38,9 @@ if(isset($_POST['proposal_debate_edit'])) {
 
   <div class="modal-body">
 
+      <?php if($mondegc_config['enable_csrf_protection']): ?>
+      <input type="hidden" name="<?= $GLOBALS['csrf']['input-name'] ?>" value="<?= __s(csrf_get_tokens()) ?>">
+      <?php endif; ?>
       <input name="proposal_debate_edit[ID_proposal]" type="hidden" value="<?= $formProposal->get('id') ?>">
 
       <div class="control-group">

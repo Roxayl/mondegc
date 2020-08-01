@@ -1,11 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Models\Infrastructure;
-use App\Models\Log;
-use App\Models\NotificationLegacy;
-use App\Models\Pays;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
