@@ -40,7 +40,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapLegacyRoutes();
     }
 
     /**
@@ -52,12 +52,25 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        // Lorsqu'on accède à une page se terminant par .php, ça veut dire qu'on accède au site legacy.
-        // On ne préfixe pas les urls se terminant par .php pour cette raison.
-        Route::prefix(php_sapi_name() !== 'cli' && substr($_SERVER['REQUEST_URI'], -4) !== '.php' ? env('APP_DIR', '') : '')
+        Route::prefix(config('app.directory_path', ''))
              ->middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
+    }
+
+    /**
+     * Define the "legacy" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapLegacyRoutes()
+    {
+        // On ne préfixe pas les URLs vers le site legacy.
+        Route::middleware('legacy')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/legacy.php'));
     }
 
     /**

@@ -11,8 +11,6 @@
 |
 */
 
-Route::middleware(['csrf'])->group(function() {
-
 /*****
  * Laravel Authentification
  *****/
@@ -106,11 +104,3 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
     Route::post('/admin/pages/{page}',                          'Admin\PagesController@update')->name('admin/pages/update');
     Route::delete('/admin/pages/{page}',                        'Admin\PagesController@destroy')->name('admin/pages/destroy');
 });
-
-}); // end csrf middleware group
-
-
-/*****
- * Legacy
- *****/
-Route::any("/{path?}", "Legacy\LegacySiteController@index")->where("path", ".*");

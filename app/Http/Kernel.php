@@ -31,13 +31,17 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
-            // \Illuminate\Session\Middleware\AuthenticateSession::class,
-            // On n'utilise a priori pas le middleware ci-dessous pour le moment,
-            // donc on le désactive.
-            // \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\AuthSynchronizer::class,
-            // On désactive la vérification CSRF ici car on l'utilise comme middleware route.
-            // \App\Http\Middleware\VerifyCsrfToken::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
+
+        'legacy' => [ // même chose que web, sans la protection CSRF.
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \App\Http\Middleware\AuthSynchronizer::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
