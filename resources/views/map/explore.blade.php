@@ -61,7 +61,7 @@
         function updateHeight() {
             var navbar_height = $('.navbar-inner').height() ;
             var window_height = window.innerHeight;
-            var set_height = window_height - navbar_height + 20;
+            var set_height = window_height - navbar_height + 5;
             $('#map, #info').height(set_height);
             console.log(navbar_height, window_height, set_height);
         }
@@ -69,6 +69,10 @@
         $(window).on('resize', updateHeight);
         init();
     </script>
+@endsection
+
+@section('body_attributes') 
+    style="overflow: hidden;"
 @endsection
 
 @section('content')
@@ -84,9 +88,12 @@
                 <div id="map"></div>
               </div>
               <div class="" id="info">
-                <h1>Carte du Monde de G&eacute;n&eacute;ration City</h1>
+                <h1>Carte du Monde</h1>
                 <p>&nbsp;</p>
-                <h4>cliquez sur la carte</h4>
+                <h4>Cliquez sur un élément de la carte pour en savoir plus.</h4>
+                <div class="well">
+                  <a href="<?= url('Page-carte.php') ?>">Afficher la liste des pays</a>
+                </div>
               </div>
             </div>
           </div>
