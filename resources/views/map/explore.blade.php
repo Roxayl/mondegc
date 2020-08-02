@@ -27,7 +27,6 @@
     }
     div.olControlPanel {
         top: 65px;
-        left: 10px;
         position: absolute;
         background: none repeat scroll 0 0 rgba(255, 255, 255, 0.4);
         border-radius: 4px;
