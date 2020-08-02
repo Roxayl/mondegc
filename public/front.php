@@ -4,7 +4,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 require_once('../Connections/maconnexion.php');
 
-if($path === '') {
+if($path === config('app.directory_path')) {
     $_GET['target'] = 'index';
 }
 
