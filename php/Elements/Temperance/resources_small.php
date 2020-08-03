@@ -18,7 +18,7 @@ $resources = $data['resources'];
         ?>
     <div class="resource-small-inline-block token-<?= htmlspecialchars($key) ?>"
          title="<?= \Illuminate\Support\Str::ucfirst($key) ?>">
-        <img src="<?= url("/assets/img/ressources/" . htmlspecialchars($key) . ".png") ?>"
+        <img src="<?= url("assets/img/ressources/" . htmlspecialchars($key) . ".png") ?>"
              alt="<?= htmlspecialchars($key) ?>">
         <?= number_format((float)$value, 0, ',', '&#160;') ?>
     </div>

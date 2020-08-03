@@ -875,9 +875,7 @@ function styleVoies($typeVoie, &$couleurTrait, &$epaisseurTrait, &$Trait){
 }
 
 function tailleVilles($population, &$sizeicon){
-        if ($population < 50000) {
-		$sizeicon = 6;
-        } elseif ($population <= 100000) { 
+        if ($population <= 100000) {
 		$sizeicon  = 7;
 		} elseif ($population <= 250000) { 
 		$sizeicon = 8;
@@ -897,7 +895,7 @@ function tailleVilles($population, &$sizeicon){
 		$sizeicon = 6;
 		}
 		// Romu: on réduit globalement la taille des icônes villes
-		$sizeicon -= 2;
+		$sizeicon -= 3;
 		return $sizeicon;
   }
 
