@@ -1,8 +1,5 @@
 <?php
 
-if(!isset($mondegc_config['front-controller'])) require_once('../Connections/maconnexion.php');
-
-
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 appendQueryString($editFormAction);
 

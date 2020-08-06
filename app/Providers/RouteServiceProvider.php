@@ -52,7 +52,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::prefix(config('app.directory_path', ''))
+        $prefix = '';
+        if(php_sapi_name() !== "cli") {
+            $prefix = config('app.directory_path', '');
+        }
+        Route::prefix($prefix)
              ->middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));

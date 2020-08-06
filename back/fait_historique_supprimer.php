@@ -1,17 +1,12 @@
 <?php
 
-
-if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
 include(DEF_ROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'])
-{
-} else {
-// Redirection vers Haut Conseil
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
+if(!isset($_SESSION['userObject'])) {
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
 }
 
 // suppression du fait hist

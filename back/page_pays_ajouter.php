@@ -6,7 +6,7 @@ use App\Notifications\PaysRegistered;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 
-if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
+
 //deconnexion
 include(DEF_ROOTPATH . 'php/logout.php');
 

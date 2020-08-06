@@ -49,6 +49,9 @@ if(auth()->check()) {
     <div class="container">
       <!-- Formulaire connexion Tablettes -->
       <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="connexion" class="navbar-form pull-right visible-tablet <?php echo $_SESSION['menu_connexion']; ?>">
+        <input type="hidden" name="__csrf_magic" value="<?= csrf_get_tokens() ?>">
+        <input type="hidden" name="_token"
+                 value="<?= \Illuminate\Support\Facades\Session::token() ?>">
         <input class="span2" type="text" placeholder="Identifiant" name="identifiant"  id="identifiant">
         <input class="span2" type="password" placeholder="Mot de passe" name="mot_de_passe" id="mot_de_passe">
         <button type="submit" class="btn btn-connexion">connexion</button>
@@ -73,13 +76,16 @@ if(auth()->check()) {
         
         <!-- Formulaire connexion desktop / mobile -->
         <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="connexion" class="navbar-form hidden-tablet <?php echo $_SESSION['menu_connexion']; ?>">
-          <div class="">
+          <input type="hidden" name="__csrf_magic" value="<?= csrf_get_tokens() ?>">
+          <input type="hidden" name="_token"
+                 value="<?= \Illuminate\Support\Facades\Session::token() ?>">
+          <div>
             <input class="span2" type="text" placeholder="Identifiant" name="identifiant"  id="identifiant">
           </div>
-          <div class="">
+          <div>
             <input class="span2" type="password" placeholder="Mot de passe" name="mot_de_passe" id="mot_de_passe">
           </div>
-          <div class="">
+          <div>
             <button type="submit" class="span2 btn btn-connexion">Connexion</button>
           </div>
         </form>

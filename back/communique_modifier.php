@@ -4,7 +4,6 @@ use App\Models\Organisation;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 
 //deconnexion
 include(DEF_ROOTPATH . 'php/logout.php');

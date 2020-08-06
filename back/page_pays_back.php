@@ -1,9 +1,6 @@
 <?php
 
-if(!isset($mondegc_config['front-controller'])) require_once('../Connections/maconnexion.php');
-
 use GenCity\Monde\Pays;
-
  
 //deconnexion
 include(DEF_ROOTPATH . 'php/logout.php');

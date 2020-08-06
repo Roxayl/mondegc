@@ -1,5 +1,4 @@
 <?php
-if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 // Connexion BDD Pays pour afficher markers des pays
 
@@ -11,10 +10,15 @@ $totalRows_MarkerPays = mysql_num_rows($MarkerPays);
 
 // Connexion BDD Villes pour afficher markers des villes
 
-$query_MarkerVilles = "SELECT ch_vil_ID, ch_vil_paysID, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_mis_jour, ch_vil_armoiries, ch_vil_nom, ch_vil_capitale, ch_vil_specialite, ch_vil_population, ch_vil_lien_img1, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE ch_vil_capitale <> 3 AND pays.ch_pay_publication = 1 ORDER BY ch_vil_paysID ASC";
+$query_MarkerVilles = "SELECT ch_vil_ID, ch_vil_paysID, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_mis_jour, ch_vil_armoiries, ch_vil_nom, ch_vil_capitale, ch_vil_specialite, ch_vil_population, ch_vil_lien_img1, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE (ch_vil_capitale = 1 OR ch_vil_population >= 1500000) AND pays.ch_pay_publication = 1 ORDER BY ch_vil_paysID ASC";
 $MarkerVilles = mysql_query($query_MarkerVilles, $maconnexion) or die(mysql_error());
 $row_MarkerVilles = mysql_fetch_assoc($MarkerVilles);
 $totalRows_MarkerVilles = mysql_num_rows($MarkerVilles);
+
+$query_MarkerVillesPetites = "SELECT ch_vil_ID, ch_vil_paysID, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_mis_jour, ch_vil_armoiries, ch_vil_nom, ch_vil_capitale, ch_vil_specialite, ch_vil_population, ch_vil_lien_img1, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE (ch_vil_capitale = 2 AND ch_vil_population < 1500000) AND pays.ch_pay_publication = 1 ORDER BY ch_vil_paysID ASC";
+$MarkerVillesPetites = mysql_query($query_MarkerVillesPetites, $maconnexion) or die(mysql_error());
+$row_MarkerVillesPetites = mysql_fetch_assoc($MarkerVillesPetites);
+$totalRows_MarkerVillesPetites = mysql_num_rows($MarkerVillesPetites);
 
 // Connexion BDD Monument pour afficher markers des monuments
 
@@ -50,18 +54,29 @@ $ZonesPays = mysql_query($query_ZonesPays, $maconnexion) or die(mysql_error());
 $row_ZonesPays = mysql_fetch_assoc($ZonesPays);
 $totalRows_ZonesPays = mysql_num_rows($ZonesPays);
 
-// Connexion BDD gometries pour afficher voies des pays
+// Connexion BDD gometries pour afficher frontières
+$query_frontieres = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_use_login, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'line' AND ch_geo_type='frontiere' ";
+$frontieres = mysql_query($query_frontieres, $maconnexion) or die(mysql_error());
+$row_frontieres = mysql_fetch_assoc($frontieres);
+$totalRows_frontieres = mysql_num_rows($frontieres);
 
-$query_VoiesPays = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_use_login, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'line' AND ch_geo_type='frontiere' ";
-$VoiesPays = mysql_query($query_VoiesPays, $maconnexion) or die(mysql_error());
-$row_VoiesPays = mysql_fetch_assoc($VoiesPays);
-$totalRows_VoiesPays = mysql_num_rows($VoiesPays);
+// Connexion BDD gometries pour afficher voies des pays (grandes)
+$query_VoiesPaysGrandes = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_use_login, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'line' AND ch_geo_type!='frontiere' AND (ch_geo_type='autoroute' OR ch_geo_type='voieexpress')";
+$VoiesPaysGrandes = mysql_query($query_VoiesPaysGrandes, $maconnexion) or die(mysql_error());
+$row_VoiesPaysGrandesGrandes = mysql_fetch_assoc($VoiesPaysGrandes);
+$totalRows_VoiesPaysGrandes = mysql_num_rows($VoiesPaysGrandes);
+
+// Connexion BDD gometries pour afficher voies des pays (petites)
+$query_VoiesPaysPetites = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_use_login, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'line' AND ch_geo_type!='frontiere' AND ch_geo_type!='autoroute' AND ch_geo_type!='voieexpress'";
+$VoiesPaysPetites = mysql_query($query_VoiesPaysPetites, $maconnexion) or die(mysql_error());
+$row_VoiesPaysPetites = mysql_fetch_assoc($VoiesPaysPetites);
+$totalRows_VoiesPaysPetites = mysql_num_rows($VoiesPaysPetites);
 ?>
 <script type="text/javascript">
     var map;
     var mapBounds = new OpenLayers.Bounds(-180.0, -89.9811063294, 180.0, 90.0);
     var mapMinZoom = 0;
-    var mapMaxZoom = 6;
+    var mapMaxZoom = 7;
 
     // avoid pink tiles
     OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
@@ -83,13 +98,15 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
                     mouseWheelOptions: {interval: 100}
                 })
             ],
-            numZoomLevels: 6,
+            numZoomLevels: mapMaxZoom,
             projection: new OpenLayers.Projection("EPSG:4326"),
             maxResolution: 0.703125,
             maxExtent: new OpenLayers.Bounds(-180.0, -90.0, 180.0, 90.0)
         };
 
         map = new OpenLayers.Map('map', options);
+
+        var pf, format;
 
 
         /******************
@@ -167,7 +184,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
         /** TERRES **/
 
         // calque vector terres
-        var vectorsTerres = new OpenLayers.Layer.Vector(" Terres", {
+        var vTerres = new OpenLayers.Layer.Vector(" Terres", {
             styleMap: new OpenLayers.StyleMap({
                 "default": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
                     fillColor: "${couleur}",
@@ -191,10 +208,10 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
             maxResolution: map.getResolutionForZoom(0),
             renderers: renderer
         });
-        map.addLayer(vectorsTerres);
+        map.addLayer(vTerres);
 
         // Ajout geometries zones terres
-        var format = new OpenLayers.Format.WKT({
+        format = new OpenLayers.Format.WKT({
             'internalProjection': map.baseLayer.projection,
             'externalProjection': new OpenLayers.Projection("EPSG:4326")
         });
@@ -203,24 +220,18 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
         $typeZone = $row_ZonesTerres['ch_geo_type'];
         styleZones($typeZone, $fillcolor, $fillOpacity, $strokeWidth, $strokeColor, $strokeOpacity, $Trait);
         ?>
-        var polygonFeature = format.read("<?php echo $row_ZonesTerres['ch_geo_wkt']; ?>");
-        polygonFeature.attributes = {
-            couleur: "<?php echo $fillcolor; ?>",
-            epaisseurTrait: "<?php echo $strokeWidth; ?>",
-            opaciteCouleur: "<?php echo $fillOpacity; ?>",
-            couleurTrait: "<?php echo $strokeColor; ?>",
-            opaciteTrait: "<?php echo $strokeOpacity; ?>",
-            Trait: "<?php echo $Trait; ?>",
-            name: "<?php echo $Nomzone; ?>"
+        pf = format.read("<?php echo $row_ZonesTerres['ch_geo_wkt']; ?>");
+        pf.attributes = {
+            couleur: "<?php echo $fillcolor; ?>", epaisseurTrait: "<?php echo $strokeWidth; ?>", opaciteCouleur: "<?php echo $fillOpacity; ?>", couleurTrait: "<?php echo $strokeColor; ?>", opaciteTrait: "<?php echo $strokeOpacity; ?>", Trait: "<?php echo $Trait; ?>", name: "<?php echo $Nomzone; ?>"
         }
-        vectorsTerres.addFeatures([polygonFeature]);
-        <?php }; ?>
+        vTerres.addFeatures([pf]);
+        <?php } ?>
 
 
         /** ZONES ADMINISTRATIVES **/
 
         // calque vector modifier zones administratives
-        var vectorsAdministrations = new OpenLayers.Layer.Vector(" R&eacute;gions", {
+        var vAdministrations = new OpenLayers.Layer.Vector(" R&eacute;gions", {
             styleMap: new OpenLayers.StyleMap({
                 "default": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
                     fillColor: "${couleur}",
@@ -244,10 +255,10 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
             maxResolution: map.getResolutionForZoom(3),
             renderers: renderer
         });
-        map.addLayer(vectorsAdministrations);
+        map.addLayer(vAdministrations);
 
         // Ajout geometries zones administratives
-        var format = new OpenLayers.Format.WKT({
+        format = new OpenLayers.Format.WKT({
             'internalProjection': map.baseLayer.projection,
             'externalProjection': new OpenLayers.Projection("EPSG:4326")
         });
@@ -256,24 +267,18 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
         $typeZone = $row_ZonesAdministratives['ch_geo_type'];
         styleZones($typeZone, $fillcolor, $fillOpacity, $strokeWidth, $strokeColor, $strokeOpacity, $Trait);
         ?>
-        var polygonFeature = format.read("<?php echo $row_ZonesAdministratives['ch_geo_wkt']; ?>");
-        polygonFeature.attributes = {
-            couleur: "<?php echo $fillcolor; ?>",
-            epaisseurTrait: "<?php echo $strokeWidth; ?>",
-            opaciteCouleur: "<?php echo $fillOpacity; ?>",
-            couleurTrait: "<?php echo $strokeColor; ?>",
-            opaciteTrait: "<?php echo $strokeOpacity; ?>",
-            Trait: "<?php echo $Trait; ?>",
-            name: "<?php echo $Nomzone; ?>"
+        pf = format.read("<?php echo $row_ZonesAdministratives['ch_geo_wkt']; ?>");
+        pf.attributes = {
+            couleur: "<?php echo $fillcolor; ?>", epaisseurTrait: "<?php echo $strokeWidth; ?>", opaciteCouleur: "<?php echo $fillOpacity; ?>", couleurTrait: "<?php echo $strokeColor; ?>", opaciteTrait: "<?php echo $strokeOpacity; ?>", Trait: "<?php echo $Trait; ?>", name: "<?php echo $Nomzone; ?>"
         }
-        vectorsAdministrations.addFeatures([polygonFeature]);
+        vAdministrations.addFeatures([pf]);
         <?php } while ($row_ZonesAdministratives = mysql_fetch_assoc($ZonesAdministratives)); ?>
 
 
         /** ZONES PAYS **/
 
         // calque vector zones économiques pays
-        var vectorsZones = new OpenLayers.Layer.Vector(" Zones", {
+        var vZones = new OpenLayers.Layer.Vector(" Zones", {
             styleMap: new OpenLayers.StyleMap({
                 "default": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
                     fillColor: "${couleur}",
@@ -301,10 +306,10 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
                 }
             }
         });
-        map.addLayer(vectorsZones);
+        map.addLayer(vZones);
 
         // Ajout geometries zones économiques pays
-        var format = new OpenLayers.Format.WKT({
+        format = new OpenLayers.Format.WKT({
             'internalProjection': map.baseLayer.projection,
             'externalProjection': new OpenLayers.Projection("EPSG:4326")
         });
@@ -315,25 +320,128 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
         styleZones($typeZone, $fillcolor, $fillOpacity, $strokeWidth, $strokeColor, $strokeOpacity, $Trait);
         ressourcesGeometrie($surface, $typeZone, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population);
         ?>
-        var polygonFeature = format.read("<?php echo $row_ZonesPays['ch_geo_wkt']; ?>");
-        polygonFeature.attributes = {
-            couleur: "<?php echo $fillcolor; ?>",
-            epaisseurTrait: "<?php echo $strokeWidth; ?>",
-            opaciteCouleur: "<?php echo $fillOpacity; ?>",
-            couleurTrait: "<?php echo $strokeColor; ?>",
-            opaciteTrait: "<?php echo $strokeOpacity; ?>",
-            Trait: "<?php echo $Trait; ?>",
-            name: "<?php echo $Nomzone; ?>",
-            popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><img src='assets/img/imagesdefaut/zone-carte.jpg'></div><div><h3><?php echo addslashes($Nomzone); ?></h3><p><em>cr&eacute;&eacute; par <?php echo $row_ZonesPays['ch_use_login']; ?> <?php if ($row_ZonesPays['ch_geo_pay_id'] == 1) {?>(avec l'Institut G&eacute;c&eacute;en de G&eacute;ographie)<?php } ?></em></p><p>&nbsp;</p><p><strong>Type&nbsp;:</strong> <?php echo $label; ?></h4><p><strong>Surface&nbsp;:</strong> <?php echo $row_ZonesPays['ch_geo_mesure']; ?>Km<sup>2</sup></p><?php if ($row_ZonesPays['ch_geo_pay_id'] != 1) {?><p><strong>Population&nbsp;:</strong> <?php echo $chiffre_francais = number_format($population, 0, ',', ' ');?></p><ul><div class='row-fluid' style='width: 60%;'><li class='span3'><a title='Budget'><img src='assets/img/ressources/budget.png' alt='icone Budget'></a><p><?php $chiffre_francais = number_format($budget, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Industrie'><img src='assets/img/ressources/industrie.png' alt='icone Industrie'></a><p><?php $chiffre_francais = number_format($industrie, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Commerce'><img src='assets/img/ressources/bureau.png' alt='icone Commerce'></a><p><?php $chiffre_francais = number_format($commerce, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Agriculture'><img src='assets/img/ressources/agriculture.png' alt='icone Agriculture'></a><p><?php $chiffre_francais = number_format($agriculture, 0, ',', ' '); echo $chiffre_francais; ?></p></li></div><div class='row-fluid' style='width: 60%;'><li class='span3'><a title='Tourisme'><img src='assets/img/ressources/tourisme.png' alt='icone Tourisme'></a><p><?php $chiffre_francais = number_format($tourisme, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Recherche'><img src='assets/img/ressources/recherche.png' alt='icone Recherche'></a><p><?php $chiffre_francais = number_format($recherche, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Environnement'><img src='assets/img/ressources/environnement.png' alt=icone Environnement'></a><p><?php $chiffre_francais = number_format($environnement, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Education'><img src='assets/img/ressources/education.png' alt='icone Education'></a><p><?php $chiffre_francais = number_format($education, 0, ',', ' '); echo $chiffre_francais; ?></p></li></div></ul><div class='clearfix'></div><?php } ?></div>"
+        pf = format.read("<?php echo $row_ZonesPays['ch_geo_wkt']; ?>");
+        pf.attributes = {
+            couleur: "<?php echo $fillcolor; ?>", epaisseurTrait: "<?php echo $strokeWidth; ?>", opaciteCouleur: "<?php echo $fillOpacity; ?>", couleurTrait: "<?php echo $strokeColor; ?>", opaciteTrait: "<?php echo $strokeOpacity; ?>", Trait: "<?php echo $Trait; ?>", name: "<?php echo $Nomzone; ?>", popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><img src='assets/img/imagesdefaut/zone-carte.jpg'></div><div><h3><?php echo addslashes($Nomzone); ?></h3><p><em>cr&eacute;&eacute; par <?php echo $row_ZonesPays['ch_use_login']; ?> <?php if ($row_ZonesPays['ch_geo_pay_id'] == 1) {?>(avec l'Institut G&eacute;c&eacute;en de G&eacute;ographie)<?php } ?></em></p><p>&nbsp;</p><p><strong>Type&nbsp;:</strong> <?php echo $label; ?></h4><p><strong>Surface&nbsp;:</strong> <?php echo $row_ZonesPays['ch_geo_mesure']; ?>Km<sup>2</sup></p><?php if ($row_ZonesPays['ch_geo_pay_id'] != 1) {?><p><strong>Population&nbsp;:</strong> <?php echo $chiffre_francais = number_format($population, 0, ',', ' ');?></p><ul><div class='row-fluid' style='width: 60%;'><li class='span3'><a title='Budget'><img src='assets/img/ressources/budget.png' alt='icone Budget'></a><p><?= formatNum($budget) ?></p></li><li class='span3'><a title='Industrie'><img src='assets/img/ressources/industrie.png' alt='icone Industrie'></a><p><?= formatNum($industrie) ?></p></li><li class='span3'><a title='Commerce'><img src='assets/img/ressources/bureau.png' alt='icone Commerce'></a><p><?= formatNum($commerce) ?></p></li><li class='span3'><a title='Agriculture'><img src='assets/img/ressources/agriculture.png' alt='icone Agriculture'></a><p><?= formatNum($agriculture) ?></p></li></div><div class='row-fluid' style='width: 60%;'><li class='span3'><a title='Tourisme'><img src='assets/img/ressources/tourisme.png' alt='icone Tourisme'></a><p><?= formatNum($tourisme) ?></p></li><li class='span3'><a title='Recherche'><img src='assets/img/ressources/recherche.png' alt='icone Recherche'></a><p><?= formatNum($recherche) ?></p></li><li class='span3'><a title='Environnement'><img src='assets/img/ressources/environnement.png' alt=icone Environnement'></a><p><?= formatNum($environnement) ?></p></li><li class='span3'><a title='Education'><img src='assets/img/ressources/education.png' alt='icone Education'></a><p><?= formatNum($education) ?></p></li></div></ul><div class='clearfix'></div><?php } ?></div>"
         }
-        vectorsZones.addFeatures([polygonFeature]);
+        vZones.addFeatures([pf]);
         <?php } while($row_ZonesPays = mysql_fetch_assoc($ZonesPays)); ?>
 
 
-        /** VOIES **/
+        /** VOIES GRAND GABARIT **/
 
-        // calque vector voies
-        var vectorsVoies = new OpenLayers.Layer.Vector(" Routes", {
+        // calque vector voies (grandes)
+        var vVoies = new OpenLayers.Layer.Vector(" Routes à grand gabarit", {
+            styleMap: new OpenLayers.StyleMap({
+                "default": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
+                    cursor: "pointer",
+                    fillColor: "#000000",
+                    strokeLinecap: "square",
+                    strokeColor: "${couleurTrait}",
+                    strokeWidth: "${epaisseurTrait}",
+                    strokeDashstyle: "${Trait}",
+                    pointRadius: "5",
+                    cursor: "pointer"
+                }, OpenLayers.Feature.Vector.style["default"])),
+                "select": new OpenLayers.Style({
+                    strokeColor: "#e2001a",
+                    strokeWidth: 3,
+                    strokeDashstyle: "solid",
+                    pointRadius: "5"
+                })
+            }),
+            maxResolution: map.getResolutionForZoom(3),
+            renderers: renderer,
+            eventListeners: {
+                "featureselected": function (event) {
+                    map.setCenter(event.feature.geometry.getBounds().getCenterLonLat());
+                }
+            }
+        });
+        map.addLayer(vVoies);
+
+        // Ajout des routes sur calque voies
+        format = new OpenLayers.Format.WKT({
+            'internalProjection': map.baseLayer.projection,
+            'externalProjection': new OpenLayers.Projection("EPSG:4326")
+        });
+
+        <?php do {
+        if(empty($row_VoiesPaysGrandes['ch_geo_wkt'])) continue;
+        $Nomvoie = str_replace('-', ' ', $row_VoiesPaysGrandes['ch_geo_nom']);
+        $typeVoie = $row_VoiesPaysGrandes['ch_geo_type'];
+        $surface = $row_VoiesPaysGrandes['ch_geo_mesure'];
+        styleVoies($typeVoie, $couleurTrait, $epaisseurTrait, $Trait);
+        ressourcesGeometrie($surface, $typeVoie, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population);
+        ?>
+
+        pf = format.read("<?php echo $row_VoiesPaysGrandes['ch_geo_wkt']; ?>");
+        pf.attributes = {
+            couleurTrait: "<?php echo $couleurTrait; ?>", epaisseurTrait: "<?php echo $epaisseurTrait; ?>", Trait: "<?php echo $Trait; ?>", popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><img src='assets/img/imagesdefaut/zone-voie.jpg'></div><div><h3><?php echo addslashes($Nomvoie); ?></h3><p><em>cr&eacute;&eacute; par <?php echo $row_VoiesPaysGrandes['ch_use_login']; ?> <?php if ($row_VoiesPaysGrandes['ch_geo_pay_id'] == 1) {?>(avec l'Institut G&eacute;c&eacute;en de G&eacute;ographie)<?php } ?></em></p><p>&nbsp;</p><p><strong>Type&nbsp;:</strong> <?php echo $label; ?></h4><p><strong>Longueur&nbsp;:</strong> <?php echo $row_VoiesPaysGrandes['ch_geo_mesure']; ?>Km</p><?php if ($row_VoiesPaysGrandes['ch_geo_pay_id'] != 1) {?><ul><div class='row-fluid'><li class='span3'><a title='Budget'><img src='assets/img/ressources/budget.png' alt='icone Budget'></a><p><?= formatNum($budget) ?></p></li><li class='span3'><a title='Industrie'><img src='assets/img/ressources/industrie.png' alt='icone Industrie'></a><p><?= formatNum($industrie) ?></p></li><li class='span3'><a title='Commerce'><img src='assets/img/ressources/bureau.png' alt='icone Commerce'></a><p><?= formatNum($commerce) ?></p></li><li class='span3'><a title='Agriculture'><img src='assets/img/ressources/agriculture.png' alt='icone Agriculture'></a><p><?= formatNum($agriculture) ?></p></li></div><div class='row-fluid'><li class='span3'><a title='Tourisme'><img src='assets/img/ressources/tourisme.png' alt='icone Tourisme'></a><p><?= formatNum($tourisme) ?></p></li><li class='span3'><a title='Recherche'><img src='assets/img/ressources/recherche.png' alt='icone Recherche'></a><p><?= formatNum($recherche) ?></p></li><li class='span3'><a title='Environnement'><img src='assets/img/ressources/environnement.png' alt=icone Environnement'></a><p><?= formatNum($environnement) ?></p></li><li class='span3'><a title='Education'><img src='assets/img/ressources/education.png' alt='icone Education'></a><p><?= formatNum($education) ?></p></li></div></ul><div class='clearfix'></div><?php } ?></div>"
+        }
+        vVoies.addFeatures([pf]);
+        <?php } while ($row_VoiesPaysGrandes = mysql_fetch_assoc($VoiesPaysGrandes)); ?>
+
+
+        /** VOIES PETIT GABARIT **/
+
+        // calque vector voies (petites)
+        var vVoiesPetites = new OpenLayers.Layer.Vector(" Routes de faible gabarit", {
+            styleMap: new OpenLayers.StyleMap({
+                "default": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
+                    cursor: "pointer",
+                    fillColor: "#000000",
+                    strokeLinecap: "square",
+                    strokeColor: "${couleurTrait}",
+                    strokeWidth: "${epaisseurTrait}",
+                    strokeDashstyle: "${Trait}",
+                    pointRadius: "5",
+                    cursor: "pointer"
+                }, OpenLayers.Feature.Vector.style["default"])),
+                "select": new OpenLayers.Style({
+                    strokeColor: "#e2001a",
+                    strokeWidth: 3,
+                    strokeDashstyle: "solid",
+                    pointRadius: "5"
+                })
+            }),
+            maxResolution: map.getResolutionForZoom(5),
+            renderers: renderer,
+            eventListeners: {
+                "featureselected": function (event) {
+                    map.setCenter(event.feature.geometry.getBounds().getCenterLonLat());
+                }
+            }
+        });
+        map.addLayer(vVoiesPetites);
+
+        // Ajout des routes sur calque voies
+        format = new OpenLayers.Format.WKT({
+            'internalProjection': map.baseLayer.projection,
+            'externalProjection': new OpenLayers.Projection("EPSG:4326")
+        });
+
+        <?php do {
+        if(empty($row_VoiesPaysPetites['ch_geo_wkt'])) continue;
+        $Nomvoie = str_replace('-', ' ', $row_VoiesPaysPetites['ch_geo_nom']);
+        $typeVoie = $row_VoiesPaysPetites['ch_geo_type'];
+        $surface = $row_VoiesPaysPetites['ch_geo_mesure'];
+        styleVoies($typeVoie, $couleurTrait, $epaisseurTrait, $Trait);
+        ressourcesGeometrie($surface, $typeVoie, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population);
+        ?>
+
+        pf = format.read("<?php echo $row_VoiesPaysPetites['ch_geo_wkt']; ?>");
+        pf.attributes = {
+            couleurTrait: "<?php echo $couleurTrait; ?>", epaisseurTrait: "<?php echo $epaisseurTrait; ?>", Trait: "<?php echo $Trait; ?>", popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><img src='assets/img/imagesdefaut/zone-voie.jpg'></div><div><h3><?php echo addslashes($Nomvoie); ?></h3><p><em>cr&eacute;&eacute; par <?php echo $row_VoiesPaysPetites['ch_use_login']; ?> <?php if ($row_VoiesPaysPetites['ch_geo_pay_id'] == 1) {?>(avec l'Institut G&eacute;c&eacute;en de G&eacute;ographie)<?php } ?></em></p><p>&nbsp;</p><p><strong>Type&nbsp;:</strong> <?php echo $label; ?></h4><p><strong>Longueur&nbsp;:</strong> <?php echo $row_VoiesPaysPetites['ch_geo_mesure']; ?>Km</p><?php if ($row_VoiesPaysPetites['ch_geo_pay_id'] != 1) {?><ul><div class='row-fluid'><li class='span3'><a title='Budget'><img src='assets/img/ressources/budget.png' alt='icone Budget'></a><p><?= formatNum($budget) ?></p></li><li class='span3'><a title='Industrie'><img src='assets/img/ressources/industrie.png' alt='icone Industrie'></a><p><?= formatNum($industrie) ?></p></li><li class='span3'><a title='Commerce'><img src='assets/img/ressources/bureau.png' alt='icone Commerce'></a><p><?= formatNum($commerce) ?></p></li><li class='span3'><a title='Agriculture'><img src='assets/img/ressources/agriculture.png' alt='icone Agriculture'></a><p><?= formatNum($agriculture) ?></p></li></div><div class='row-fluid'><li class='span3'><a title='Tourisme'><img src='assets/img/ressources/tourisme.png' alt='icone Tourisme'></a><p><?= formatNum($tourisme) ?></p></li><li class='span3'><a title='Recherche'><img src='assets/img/ressources/recherche.png' alt='icone Recherche'></a><p><?= formatNum($recherche) ?></p></li><li class='span3'><a title='Environnement'><img src='assets/img/ressources/environnement.png' alt=icone Environnement'></a><p><?= formatNum($environnement) ?></p></li><li class='span3'><a title='Education'><img src='assets/img/ressources/education.png' alt='icone Education'></a><p><?= formatNum($education) ?></p></li></div></ul><div class='clearfix'></div><?php } ?></div>"
+        }
+        vVoiesPetites.addFeatures([pf]);
+        <?php } while ($row_VoiesPaysPetites = mysql_fetch_assoc($VoiesPaysPetites)); ?>
+
+
+        /** FRONTIERES **/
+
+        // calque vector voies (petites)
+        var vFrontieres = new OpenLayers.Layer.Vector(" Frontières", {
             styleMap: new OpenLayers.StyleMap({
                 "default": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
                     cursor: "pointer",
@@ -360,31 +468,29 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
                 }
             }
         });
-        map.addLayer(vectorsVoies);
+        map.addLayer(vFrontieres);
 
         // Ajout des routes sur calque voies
-        var format = new OpenLayers.Format.WKT({
+        format = new OpenLayers.Format.WKT({
             'internalProjection': map.baseLayer.projection,
             'externalProjection': new OpenLayers.Projection("EPSG:4326")
         });
 
         <?php do {
-        $Nomvoie = str_replace('-', ' ', $row_VoiesPays['ch_geo_nom']);
-        $typeVoie = $row_VoiesPays['ch_geo_type'];
-        $surface = $row_VoiesPays['ch_geo_mesure'];
+        if(empty($row_frontieres['ch_geo_wkt'])) continue;
+        $Nomvoie = str_replace('-', ' ', $row_frontieres['ch_geo_nom']);
+        $typeVoie = $row_frontieres['ch_geo_type'];
+        $surface = $row_frontieres['ch_geo_mesure'];
         styleVoies($typeVoie, $couleurTrait, $epaisseurTrait, $Trait);
         ressourcesGeometrie($surface, $typeVoie, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population);
         ?>
 
-        var polygonFeature = format.read("<?php echo $row_VoiesPays['ch_geo_wkt']; ?>");
-        polygonFeature.attributes = {
-            couleurTrait: "<?php echo $couleurTrait; ?>",
-            epaisseurTrait: "<?php echo $epaisseurTrait; ?>",
-            Trait: "<?php echo $Trait; ?>",
-            popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><img src='assets/img/imagesdefaut/zone-voie.jpg'></div><div><h3><?php echo addslashes($Nomvoie); ?></h3><p><em>cr&eacute;&eacute; par <?php echo $row_VoiesPays['ch_use_login']; ?> <?php if ($row_VoiesPays['ch_geo_pay_id'] == 1) {?>(avec l'Institut G&eacute;c&eacute;en de G&eacute;ographie)<?php } ?></em></p><p>&nbsp;</p><p><strong>Type&nbsp;:</strong> <?php echo $label; ?></h4><p><strong>Longueur&nbsp;:</strong> <?php echo $row_VoiesPays['ch_geo_mesure']; ?>Km</p><?php if ($row_VoiesPays['ch_geo_pay_id'] != 1) {?><ul><div class='row-fluid'><li class='span3'><a title='Budget'><img src='assets/img/ressources/budget.png' alt='icone Budget'></a><p><?php $chiffre_francais = number_format($budget, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Industrie'><img src='assets/img/ressources/industrie.png' alt='icone Industrie'></a><p><?php $chiffre_francais = number_format($industrie, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Commerce'><img src='assets/img/ressources/bureau.png' alt='icone Commerce'></a><p><?php $chiffre_francais = number_format($commerce, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Agriculture'><img src='assets/img/ressources/agriculture.png' alt='icone Agriculture'></a><p><?php $chiffre_francais = number_format($agriculture, 0, ',', ' '); echo $chiffre_francais; ?></p></li></div><div class='row-fluid'><li class='span3'><a title='Tourisme'><img src='assets/img/ressources/tourisme.png' alt='icone Tourisme'></a><p><?php $chiffre_francais = number_format($tourisme, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Recherche'><img src='assets/img/ressources/recherche.png' alt='icone Recherche'></a><p><?php $chiffre_francais = number_format($recherche, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Environnement'><img src='assets/img/ressources/environnement.png' alt=icone Environnement'></a><p><?php $chiffre_francais = number_format($environnement, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Education'><img src='assets/img/ressources/education.png' alt='icone Education'></a><p><?php $chiffre_francais = number_format($education, 0, ',', ' '); echo $chiffre_francais; ?></p></li></div></ul><div class='clearfix'></div><?php } ?></div>"
+        pf = format.read("<?php echo $row_frontieres['ch_geo_wkt']; ?>");
+        pf.attributes = {
+            couleurTrait: "<?php echo $couleurTrait; ?>", epaisseurTrait: "<?php echo $epaisseurTrait; ?>", Trait: "<?php echo $Trait; ?>", popupContentHTML: ""
         }
-        vectorsVoies.addFeatures([polygonFeature]);
-        <?php } while ($row_VoiesPays = mysql_fetch_assoc($VoiesPays)); ?>
+        vFrontieres.addFeatures([pf]);
+        <?php } while ($row_frontieres = mysql_fetch_assoc($frontieres)); ?>
 
 
         /** AUTRES VECTORS **/
@@ -477,8 +583,39 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
         });
 
         // calque vector villes
-        var vectors2 = new OpenLayers.Layer.Vector(" Villes", {
+        var vectors2 = new OpenLayers.Layer.Vector(" Capitales et grandes villes", {
             maxResolution: map.getResolutionForZoom(3),
+            renderers: renderer,
+            styleMap: new OpenLayers.StyleMap({
+                "default": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
+                    cursor: "pointer",
+                    fillColor: "${couleur}",
+                    strokeColor: "${couleurTrait}",
+                    label: "${label}",
+                    graphicName: "circle",
+                    labelAlign: "cm",
+                    labelXOffset: 30,
+                    labelYOffset: -15,
+                    fillOpacity: 1,
+                    pointRadius: "${size}",
+                    fontSize: "${fontSize}",
+                    fontFamily: "Roboto"
+                }, OpenLayers.Feature.Vector.style["default"])),
+                "select": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
+                    label: "${name}",
+                    fontStyle: "italic",
+                    strokeColor: "white",
+                    fillOpacity: 1,
+                    fontSize: "11px",
+                    pointRadius: "${size}"
+                }, OpenLayers.Feature.Vector.style["select"]))
+            })
+        });
+
+
+        // calque vector villes petites
+        var vectors_villes = new OpenLayers.Layer.Vector(" Villes", {
+            maxResolution: map.getResolutionForZoom(4),
             renderers: renderer,
             styleMap: new OpenLayers.StyleMap({
                 "default": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
@@ -534,7 +671,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
             })
         });
 
-        map.addLayers([vectors1, vectors2, vectors3]);
+        map.addLayers([vectors1, vectors2, vectors_villes, vectors3]);
 
 
         /** SWITCHER **/
@@ -551,8 +688,8 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
         map.addControl(new OpenLayers.Control.KeyboardDefaults());
         map.setCenter(new OpenLayers.LonLat(0, 0), 1);
         // ajout règles de selection
-        selectControl = new OpenLayers.Control.SelectFeature(
-            [vectors1, vectors2, vectors3],
+        var selectControl = new OpenLayers.Control.SelectFeature(
+            [vectors1, vectors2, vectors3, vectors_villes],
             {
                 clickout: true, toggle: false,
                 multiple: false, hover: false,
@@ -567,6 +704,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
         vectors1.addFeatures(createFeatures1());
         vectors2.addFeatures(createFeatures2());
         vectors3.addFeatures(createFeatures3());
+        vectors_villes.addFeatures(createFeatures_villes());
 
         // Fonction afficher dans div info.
         function showStatus(text) {
@@ -577,7 +715,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 
         function createFeatures1() {
             var extent = map.getExtent();
-            var features = [];
+            var f = [];
 
             <?php do {
             $Nompays = str_replace('-', ' ', $row_MarkerPays['ch_pay_nom']);
@@ -591,14 +729,12 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
             var x = '<?php echo $x; ?>';
             var y = '<?php echo $y; ?>';
             var urlicon = '<?php echo $row_MarkerPays['ch_pay_lien_imgdrapeau']; ?>'
-            features.push(new OpenLayers.Feature.Vector(
-                new OpenLayers.Geometry.Point(x, y), features.attributes = {
-                    name: "<?php echo $Nompays; ?>",
-                    flag: "<?php echo $row_MarkerPays['ch_pay_lien_imgdrapeau']; ?>",
-                    popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><a href='page-pays.php?ch_pay_id=<?php echo $row_MarkerPays['ch_pay_id']; ?>'><?php if ($row_MarkerPays['ch_pay_lien_imgheader']) {?><img src='<?php echo addslashes($row_MarkerPays['ch_pay_lien_imgheader']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/drapeau.jpg'><?php }?></a></div><div><h3><?php echo addslashes($Nompays); ?></h3><p><em>cr&eacute;&eacute; par <?php echo addslashes($row_MarkerPays['ch_use_login']); ?></em></p></div><div class='infocarte-icon'><?php if ($row_MarkerPays['ch_use_lien_imgpersonnage']) {?><img class='avatar' src='<?php echo addslashes($row_MarkerPays['ch_use_lien_imgpersonnage']); ?>'></img><?php } else { ?><img src='assets/img/imagesdefaut/personnage.jpg'><?php }?><?php if ($row_MarkerPays['ch_pay_lien_imgdrapeau']) {?><img class='drapeau' src='<?php echo addslashes($row_MarkerPays['ch_pay_lien_imgdrapeau']); ?>'></img><?php } else { ?><img src='assets/img/imagesdefaut/drapeau.jpg'><?php }?></div><p>Mis &agrave; jour le&nbsp;: <strong><?php  echo date('d/m/Y', strtotime($row_MarkerPays['ch_pay_mis_jour'])); ?> &agrave; <?php  echo date('G:i', strtotime($row_MarkerPays['ch_pay_mis_jour'])); ?></strong></p><p>Nombre de villes&nbsp;: <strong><?php echo $row_MarkerPays['ch_pay_nbvilles']; ?> villes</strong></p><p>Population&nbsp;: <strong><?php $population_pays_francais = number_format($row_MarkerPays['ch_pay_population'] + $row_MarkerPays['ch_pay_population_carte'], 0, ',', ' '); echo $population_pays_francais; ?> habitants</strong></p><div class='pull-center'></div></div><div class='pied'><a class='btn btn-primary' href='page-pays.php?ch_pay_id=<?php echo $row_MarkerPays['ch_pay_id']; ?>'>Visiter ce pays</a></div>"
+            f.push(new OpenLayers.Feature.Vector(
+                new OpenLayers.Geometry.Point(x, y), f.attributes = {
+                    name: "<?= htmlspecialchars($Nompays) ?>", flag: "<?php echo $row_MarkerPays['ch_pay_lien_imgdrapeau']; ?>", popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><a href='page-pays.php?ch_pay_id=<?php echo $row_MarkerPays['ch_pay_id']; ?>'><?php if ($row_MarkerPays['ch_pay_lien_imgheader']) {?><img src='<?php echo addslashes($row_MarkerPays['ch_pay_lien_imgheader']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/drapeau.jpg'><?php }?></a></div><div><h3><?php echo addslashes($Nompays); ?></h3><p><em>cr&eacute;&eacute; par <?php echo addslashes($row_MarkerPays['ch_use_login']); ?></em></p></div><div class='infocarte-icon'><?php if ($row_MarkerPays['ch_use_lien_imgpersonnage']) {?><img class='avatar' src='<?php echo addslashes($row_MarkerPays['ch_use_lien_imgpersonnage']); ?>'></img><?php } else { ?><img src='assets/img/imagesdefaut/personnage.jpg'><?php }?><?php if ($row_MarkerPays['ch_pay_lien_imgdrapeau']) {?><img class='drapeau' src='<?php echo addslashes($row_MarkerPays['ch_pay_lien_imgdrapeau']); ?>'></img><?php } else { ?><img src='assets/img/imagesdefaut/drapeau.jpg'><?php }?></div><p>Mis &agrave; jour le&nbsp;: <strong><?php  echo date('d/m/Y', strtotime($row_MarkerPays['ch_pay_mis_jour'])); ?> &agrave; <?php  echo date('G:i', strtotime($row_MarkerPays['ch_pay_mis_jour'])); ?></strong></p><p>Nombre de villes&nbsp;: <strong><?php echo $row_MarkerPays['ch_pay_nbvilles']; ?> villes</strong></p><p>Population&nbsp;: <strong><?php $population_pays_francais = number_format($row_MarkerPays['ch_pay_population'] + $row_MarkerPays['ch_pay_population_carte'], 0, ',', ' '); echo $population_pays_francais; ?> habitants</strong></p><div class='pull-center'></div></div><div class='pied'><a class='btn btn-primary' href='page-pays.php?ch_pay_id=<?php echo $row_MarkerPays['ch_pay_id']; ?>'>Visiter ce pays</a></div>"
                 }));
             <?php } while ($row_MarkerPays = mysql_fetch_assoc($MarkerPays)); ?>
-            return features;
+            return f;
         }
 
 
@@ -606,7 +742,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 
         function createFeatures2() {
             var extent = map.getExtent();
-            var features = [];
+            var f = [];
 
             <?php do {
             $Nomville = str_replace('-', ' ', $row_MarkerVilles['ch_vil_nom']);
@@ -622,15 +758,9 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
             <?php } ?>
             <?php $population = $row_MarkerVilles['ch_vil_population'];
             tailleVilles($population, $sizeicon); ?>
-            features.push(new OpenLayers.Feature.Vector(
-                new OpenLayers.Geometry.Point(x, y), features.attributes = {
-                    name: "<?php echo htmlspecialchars($Nomville); ?>",
-                    size: <?php echo $sizeicon; ?>,
-                    couleur: "white",
-                    label: "<?php echo($population > 1000000 || $row_MarkerVilles['ch_vil_capitale'] == 1 ? $Nomville : ""); ?>",
-                    fontSize: "<?php echo($population > 3000000 || $row_MarkerVilles['ch_vil_capitale'] == 1 ? "11px" : "10px"); ?>",
-                    couleurTrait: pointercolor,
-                    popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><a href='page-ville.php?ch_pay_id=<?php echo $row_MarkerVilles['ch_vil_paysID']; ?>&ch_ville_id=<?php echo $row_MarkerVilles['ch_vil_ID']; ?>'><?php if ($row_MarkerVilles['ch_vil_lien_img1']) {?><img src='<?php echo addslashes($row_MarkerVilles['ch_vil_lien_img1']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/ville.jpg'><?php }?></a></div><div><h3><?php echo addslashes($Nomville); ?></h3><p><em>cr&eacute;&eacute;e par <?php echo addslashes($row_MarkerVilles['ch_use_login']); ?></em></p></div><div class='infocarte-icon'><?php if ($row_MarkerVilles['ch_use_lien_imgpersonnage']) {?><img class='avatar' src='<?php echo addslashes($row_MarkerVilles['ch_use_lien_imgpersonnage']); ?>'></img><?php } else { ?><img src='assets/img/imagesdefaut/personnage.jpg'><?php }?><?php if ($row_MarkerVilles['ch_vil_armoiries']) {?><img class='armoirie' src='<?php echo addslashes($row_MarkerVilles['ch_vil_armoiries']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/blason.jpg'><?php }?></div><p><?php if($row_MarkerVilles['ch_vil_capitale'] == 1) {
+            f.push(new OpenLayers.Feature.Vector(
+                new OpenLayers.Geometry.Point(x, y), f.attributes = {
+                    name: "<?php echo htmlspecialchars($Nomville); ?>", size: <?php echo $sizeicon; ?>, couleur: "white", label: "<?php echo($population > 1000000 || $row_MarkerVilles['ch_vil_capitale'] == 1 ? $Nomville : ""); ?>", fontSize: "<?php echo($population > 3000000 || $row_MarkerVilles['ch_vil_capitale'] == 1 ? "11px" : "10px"); ?>", couleurTrait: pointercolor, popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><a href='page-ville.php?ch_pay_id=<?php echo $row_MarkerVilles['ch_vil_paysID']; ?>&ch_ville_id=<?php echo $row_MarkerVilles['ch_vil_ID']; ?>'><?php if ($row_MarkerVilles['ch_vil_lien_img1']) {?><img src='<?php echo addslashes($row_MarkerVilles['ch_vil_lien_img1']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/ville.jpg'><?php }?></a></div><div><h3><?php echo addslashes($Nomville); ?></h3><p><em>cr&eacute;&eacute;e par <?php echo addslashes($row_MarkerVilles['ch_use_login']); ?></em></p></div><div class='infocarte-icon'><?php if ($row_MarkerVilles['ch_use_lien_imgpersonnage']) {?><img class='avatar' src='<?php echo addslashes($row_MarkerVilles['ch_use_lien_imgpersonnage']); ?>'></img><?php } else { ?><img src='assets/img/imagesdefaut/personnage.jpg'><?php }?><?php if ($row_MarkerVilles['ch_vil_armoiries']) {?><img class='armoirie' src='<?php echo addslashes($row_MarkerVilles['ch_vil_armoiries']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/blason.jpg'><?php }?></div><p><?php if($row_MarkerVilles['ch_vil_capitale'] == 1) {
                         echo 'Capitale';
                     } else {
                         echo 'Ville';
@@ -641,14 +771,48 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
                     } ?></strong></p><div class='pull-center'></div></div><div class='pied'><a class='btn btn-primary' href='page-ville.php?ch_pay_id=<?php echo $row_MarkerVilles['ch_vil_paysID']; ?>&ch_ville_id=<?php echo $row_MarkerVilles['ch_vil_ID']; ?>'>Visiter cette ville</a></div>"
                 }));
             <?php } while ($row_MarkerVilles = mysql_fetch_assoc($MarkerVilles)); ?>
-            return features;
+            return f;
+        }
+
+        function createFeatures_villes() {
+            var extent = map.getExtent();
+            var f = [];
+
+            <?php do {
+            $Nomville = str_replace('-', ' ', $row_MarkerVillesPetites['ch_vil_nom']);
+            $Specialiteville = str_replace('-', ' ', $row_MarkerVillesPetites['ch_vil_specialite']);
+            $Paysville = str_replace('-', ' ', $row_MarkerVillesPetites['ch_pay_nom']);
+            ?>
+            var x = '<?php echo $row_MarkerVillesPetites['ch_vil_coord_X']; ?>';
+            var y = '<?php echo $row_MarkerVillesPetites['ch_vil_coord_Y']; ?>';
+            <?php if ($row_MarkerVillesPetites['ch_vil_capitale'] == 1) {?>
+            var pointercolor = "red";
+            <?php } else { ?>
+            var pointercolor = "black";
+            <?php } ?>
+            <?php $population = $row_MarkerVillesPetites['ch_vil_population'];
+            tailleVilles($population, $sizeicon); ?>
+            f.push(new OpenLayers.Feature.Vector(
+                new OpenLayers.Geometry.Point(x, y), f.attributes = {
+                    name: "<?php echo htmlspecialchars($Nomville); ?>", size: <?php echo $sizeicon; ?>, couleur: "white", label: "<?php echo($population > 250000 || $row_MarkerVillesPetites['ch_vil_capitale'] == 1 ? $Nomville : ""); ?>", fontSize: "<?php echo($population > 3000000 || $row_MarkerVillesPetites['ch_vil_capitale'] == 1 ? "11px" : "10px"); ?>", couleurTrait: pointercolor, popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><a href='page-ville.php?ch_pay_id=<?php echo $row_MarkerVillesPetites['ch_vil_paysID']; ?>&ch_ville_id=<?php echo $row_MarkerVillesPetites['ch_vil_ID']; ?>'><?php if ($row_MarkerVillesPetites['ch_vil_lien_img1']) {?><img src='<?php echo addslashes($row_MarkerVillesPetites['ch_vil_lien_img1']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/ville.jpg'><?php }?></a></div><div><h3><?php echo addslashes($Nomville); ?></h3><p><em>cr&eacute;&eacute;e par <?php echo addslashes($row_MarkerVillesPetites['ch_use_login']); ?></em></p></div><div class='infocarte-icon'><?php if ($row_MarkerVillesPetites['ch_use_lien_imgpersonnage']) {?><img class='avatar' src='<?php echo addslashes($row_MarkerVillesPetites['ch_use_lien_imgpersonnage']); ?>'></img><?php } else { ?><img src='assets/img/imagesdefaut/personnage.jpg'><?php }?><?php if ($row_MarkerVillesPetites['ch_vil_armoiries']) {?><img class='armoirie' src='<?php echo addslashes($row_MarkerVillesPetites['ch_vil_armoiries']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/blason.jpg'><?php }?></div><p><?php if($row_MarkerVillesPetites['ch_vil_capitale'] == 1) {
+                        echo 'Capitale';
+                    } else {
+                        echo 'Ville';
+                    } ?> du pays <strong><a href='page-pays.php?ch_pay_id=<?php echo $row_MarkerVillesPetites['ch_vil_paysID']; ?>'><?php echo addslashes($Paysville); ?></a></strong></p><p>Mise &agrave; jour le&nbsp;: <strong><?php  echo date('d/m/Y', strtotime($row_MarkerVillesPetites['ch_vil_mis_jour'])); ?> &agrave; <?php  echo date('G:i', strtotime($row_MarkerVillesPetites['ch_vil_mis_jour'])); ?></strong></p><p>Population&nbsp;: <strong><?php $population_pays_francais = number_format($row_MarkerVillesPetites['ch_vil_population'], 0, ',', ' '); echo $population_pays_francais; ?> habitants</strong></p><p>Sp&eacute;cialit&eacute;&nbsp;: <strong><?php if($row_MarkerVillesPetites['ch_vil_specialite']) {
+                        echo addslashes($Specialiteville);
+                    } else {
+                        echo 'NA';
+                    } ?></strong></p><div class='pull-center'></div></div><div class='pied'><a class='btn btn-primary' href='page-ville.php?ch_pay_id=<?php echo $row_MarkerVillesPetites['ch_vil_paysID']; ?>&ch_ville_id=<?php echo $row_MarkerVillesPetites['ch_vil_ID']; ?>'>Visiter cette ville</a></div>"
+                }));
+            <?php } while ($row_MarkerVillesPetites = mysql_fetch_assoc($MarkerVillesPetites)); ?>
+            return f;
         }
 
         // Fonction creation points Monuments.
 
         function createFeatures3() {
             var extent = map.getExtent();
-            var features = [];
+            var f = [];
 
             <?php do {
             $NomMonument = str_replace('-', ' ', $row_MarkerMonument['ch_pat_nom']);
@@ -665,16 +829,15 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
             var x = '<?php echo $row_MarkerMonument['ch_pat_coord_X']; ?>';
             var y = '<?php echo $row_MarkerMonument['ch_pat_coord_Y']; ?>';
 
-            features.push(new OpenLayers.Feature.Vector(
-                new OpenLayers.Geometry.Point(x, y), features.attributes = {
-                    name: "Monument\n\n<?php echo addslashes($NomMonument); ?>",
-                    popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><a href='page-monument.php?ch_pat_id=<?php echo $row_MarkerMonument['ch_pat_id']; ?>'><img src='assets/img/imagesdefaut/ville.jpg'></a></div><div><h3><?php echo addslashes($NomMonument); ?></h3><p><em>cr&eacute;&eacute;e par <?php echo addslashes($row_MarkerMonument['ch_use_login']); ?></em></p></div><div class='infocarte-icon'><?php if ($row_MarkerMonument['ch_use_lien_imgpersonnage']) {?><img class='avatar' src='<?php echo addslashes($row_MarkerMonument['ch_use_lien_imgpersonnage']); ?>'></img><?php } else { ?><img src='assets/img/imagesdefaut/personnage.jpg'><?php }?><?php if ($row_MarkerMonument['ch_vil_armoiries']) {?><img class='armoirie' src='<?php echo addslashes($row_MarkerMonument['ch_vil_armoiries']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/blason.jpg'><?php }?></div><p>Monument appartenant &agrave; la ville <strong><a href='page-ville.php?ch_pay_id=<?php echo $row_MarkerMonument['ch_pay_id']; ?>&ch_ville_id=<?php echo $row_MarkerMonument['ch_vil_ID']; ?>'><?php echo addslashes($Nomville); ?></a></strong></p><p>Mise &agrave; jour le&nbsp;: <strong><?php  echo date('d/m/Y', strtotime($row_MarkerMonument['ch_pat_mis_jour'])); ?> &agrave; <?php  echo date('G:i', strtotime($row_MarkerMonument['ch_pat_mis_jour'])); ?></strong></p><div class='pull-center'></div><?php if ($row_MarkerMonument['listcat']) {?><div class='row-fluid icone-categorie'><?php do { ?><div><a title='<?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>'><img src='<?php echo $row_liste_mon_cat3['ch_mon_cat_icon']; ?>' alt='icone <?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>' style='background-color:<?php echo $row_liste_mon_cat3['ch_mon_cat_couleur']; ?>; margin-left:10px;'></a></div><?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); } ?></div><div class='pied'><a class='btn btn-primary' href='page-monument.php?ch_pat_id=<?php echo $row_MarkerMonument['ch_pat_id']; ?>'>Visiter ce monument</a></div>"
+            f.push(new OpenLayers.Feature.Vector(
+                new OpenLayers.Geometry.Point(x, y), f.attributes = {
+                    name: "Monument\n\n<?php echo addslashes($NomMonument); ?>", popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><a href='page-monument.php?ch_pat_id=<?php echo $row_MarkerMonument['ch_pat_id']; ?>'><img src='assets/img/imagesdefaut/ville.jpg'></a></div><div><h3><?php echo addslashes($NomMonument); ?></h3><p><em>cr&eacute;&eacute;e par <?php echo addslashes($row_MarkerMonument['ch_use_login']); ?></em></p></div><div class='infocarte-icon'><?php if ($row_MarkerMonument['ch_use_lien_imgpersonnage']) {?><img class='avatar' src='<?php echo addslashes($row_MarkerMonument['ch_use_lien_imgpersonnage']); ?>'></img><?php } else { ?><img src='assets/img/imagesdefaut/personnage.jpg'><?php }?><?php if ($row_MarkerMonument['ch_vil_armoiries']) {?><img class='armoirie' src='<?php echo addslashes($row_MarkerMonument['ch_vil_armoiries']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/blason.jpg'><?php }?></div><p>Monument appartenant &agrave; la ville <strong><a href='page-ville.php?ch_pay_id=<?php echo $row_MarkerMonument['ch_pay_id']; ?>&ch_ville_id=<?php echo $row_MarkerMonument['ch_vil_ID']; ?>'><?php echo addslashes($Nomville); ?></a></strong></p><p>Mise &agrave; jour le&nbsp;: <strong><?php  echo date('d/m/Y', strtotime($row_MarkerMonument['ch_pat_mis_jour'])); ?> &agrave; <?php  echo date('G:i', strtotime($row_MarkerMonument['ch_pat_mis_jour'])); ?></strong></p><div class='pull-center'></div><?php if ($row_MarkerMonument['listcat']) {?><div class='row-fluid icone-categorie'><?php do { ?><div><a title='<?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>'><img src='<?php echo $row_liste_mon_cat3['ch_mon_cat_icon']; ?>' alt='icone <?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>' style='background-color:<?php echo $row_liste_mon_cat3['ch_mon_cat_couleur']; ?>; margin-left:10px;'></a></div><?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); } ?></div><div class='pied'><a class='btn btn-primary' href='page-monument.php?ch_pat_id=<?php echo $row_MarkerMonument['ch_pat_id']; ?>'>Visiter ce monument</a></div>"
                 }));
             <?php if($row_MarkerMonument['listcat']) {
             mysql_free_result($liste_mon_cat3);
         }?>
             <?php } while ($row_MarkerMonument = mysql_fetch_assoc($MarkerMonument)); ?>
-            return features;
+            return f;
         }
 
         // Evennement a la selection.
@@ -706,7 +869,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
             }
         });
 
-        vectorsZones.events.on({
+        vectors_villes.events.on({
             "featureselected": function (e) {
                 showStatus(e.feature.attributes.popupContentHTML);
                 map.setCenter(e.feature.geometry.getBounds().getCenterLonLat());
@@ -715,7 +878,25 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
             }
         });
 
-        vectorsVoies.events.on({
+        vZones.events.on({
+            "featureselected": function (e) {
+                showStatus(e.feature.attributes.popupContentHTML);
+                map.setCenter(e.feature.geometry.getBounds().getCenterLonLat());
+            },
+            "featureunselected": function (e) {
+            }
+        });
+
+        vVoies.events.on({
+            "featureselected": function (e) {
+                showStatus(e.feature.attributes.popupContentHTML);
+                map.setCenter(e.feature.geometry.getBounds().getCenterLonLat());
+            },
+            "featureunselected": function (e) {
+            }
+        });
+
+        vVoiesPetites.events.on({
             "featureselected": function (e) {
                 showStatus(e.feature.attributes.popupContentHTML);
                 map.setCenter(e.feature.geometry.getBounds().getCenterLonLat());
@@ -726,7 +907,8 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 
         // ajout regles de selection
         selectControl = new OpenLayers.Control.SelectFeature(
-            [vectors1, vectors2, vectors3, vectorsZones, vectorsVoies]
+            [vectors1, vectors2, vectors3, vectors_villes,
+             vZones, vVoies, vVoiesPetites]
         );
         selectControl.handlers.feature.stopDown = false;
         map.addControl(selectControl);

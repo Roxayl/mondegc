@@ -1,5 +1,4 @@
 <?php
-if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 // Connexion BDD Pays pour afficher markers des pays
 
@@ -47,7 +46,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
     var map;
     var mapBounds = new OpenLayers.Bounds(-180.0, -89.9811063294, 180.0, 90.0);
     var mapMinZoom = 0;
-    var mapMaxZoom = 6;
+    var mapMaxZoom = 7;
 
     // avoid pink tiles
     OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
@@ -66,7 +65,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
                     mouseWheelOptions: {interval: 100}
                 })
             ],
-            numZoomLevels: 6,
+            numZoomLevels: mapMaxZoom,
             projection: new OpenLayers.Projection("EPSG:4326"),
             maxResolution: 0.703125,
             maxExtent: new OpenLayers.Bounds(-180.0, -90.0, 180.0, 90.0)

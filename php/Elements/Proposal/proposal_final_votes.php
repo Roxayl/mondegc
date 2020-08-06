@@ -1,6 +1,5 @@
 <?php
 
-
 /** @var \GenCity\Proposal\Proposal $formProposal */
 $formProposal = $data['formProposal'];
 

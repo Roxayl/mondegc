@@ -11,6 +11,7 @@ use App\Models\Pays;
 <div class="pull-right" style="margin-right: 10px; margin-top: -3px;">
     <form method="POST" action="{{ route('notification.mark-as-read') }}"
           class="notification-markasread">
+        @csrf
         <input type="hidden" name="mark_unread" value="1">
         <button class="btn btn-primary" type="submit">Tout marquer comme lu</button>
     </form>

@@ -1,6 +1,5 @@
-<?php if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php'); ?>
+<?php ?>
 <?php
-    
 
 switch ($row_User['ch_use_statut']) {
 case "5" : 

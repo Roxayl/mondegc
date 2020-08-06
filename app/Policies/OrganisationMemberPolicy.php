@@ -18,6 +18,16 @@ class OrganisationMemberPolicy
         // des droits de propriétaire.
         if($orgMember->permissions === Organisation::$permissions['owner']) return false;
 
+        // L'utilisateur peut accepter ou refuser une demande d'adhésion.
+        if( ($orgMember->permissions === Organisation::$permissions['pending'] ||
+             $orgMember->permissions === Organisation::$permissions['invited'])
+            &&
+            in_array($orgMember->pays->ch_pay_id,
+                array_column($user->pays()->get()->toArray(), 'ch_pay_id')) )
+        {
+            return true;
+        }
+
         // On vérifie que l'utilisateur est administrateur de l'organisation concernée.
         return $orgMember->organisation->maxPermission($user) >=
                  Organisation::$permissions['administrator'];

@@ -1,6 +1,5 @@
 <?php
 
-if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 header('Content-Type: text/html; charset=utf-8');
 
 // renvoyer les données POST à soi-même

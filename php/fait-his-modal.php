@@ -1,7 +1,6 @@
 <?php
 
-if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
- header('Content-Type: text/html; charset=utf-8');
+header('Content-Type: text/html; charset=utf-8');
 
 // *** Requête fait_his.
 $colname_fait_his = "-1";

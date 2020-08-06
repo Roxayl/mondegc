@@ -1,5 +1,8 @@
-<?php 
-if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
+<?php
+
+use App\Models\Pays;
+use App\Models\TemperancePays;
+
 
 //Connexion et deconnexion
 include('php/log.php');
@@ -37,30 +40,36 @@ $nbpays_Aldesyl = 0;
 
 
 do {
-switch ($row_stat_pays['ch_pay_continent']) {
-		case "Aurinea" :
-		$nbhabitants_Aurinea += $row_stat_pays['ch_pay_population_carte'];
-		$nbpays_Aurinea++; break;
-		case "RFGC" :
-		$nbhabitants_RFGC += $row_stat_pays['ch_pay_population_carte'];
-		$nbpays_RFGC++; break;
-		case "Volcania" :
-		$nbhabitants_Volcania += $row_stat_pays['ch_pay_population_carte'];
-		$nbpays_Volcania++; break;
-		case "Aldesyl" :
-		$nbhabitants_Aldesyl += $row_stat_pays['ch_pay_population_carte'];
-		$nbpays_Aldesyl++; break;
-		case "Oceania" :
-		$nbhabitants_Oceania += $row_stat_pays['ch_pay_population_carte'];
-		$nbpays_Oceania++; break;
-		case "Philicie" :
-		$nbhabitants_Philicie += $row_stat_pays['ch_pay_population_cartes'];
-		$nbpays_Philicie++; break;
-		default:
-		break;
-		}
-} while ($row_stat_pays = mysql_fetch_assoc($stat_pays));
-	  mysql_data_seek($stat_pays,0);
+    switch($row_stat_pays['ch_pay_continent']) {
+        case "Aurinea" :
+            $nbhabitants_Aurinea += $row_stat_pays['ch_pay_population_carte'];
+            $nbpays_Aurinea++;
+            break;
+        case "RFGC" :
+            $nbhabitants_RFGC += $row_stat_pays['ch_pay_population_carte'];
+            $nbpays_RFGC++;
+            break;
+        case "Volcania" :
+            $nbhabitants_Volcania += $row_stat_pays['ch_pay_population_carte'];
+            $nbpays_Volcania++;
+            break;
+        case "Aldesyl" :
+            $nbhabitants_Aldesyl += $row_stat_pays['ch_pay_population_carte'];
+            $nbpays_Aldesyl++;
+            break;
+        case "Oceania" :
+            $nbhabitants_Oceania += $row_stat_pays['ch_pay_population_carte'];
+            $nbpays_Oceania++;
+            break;
+        case "Philicie" :
+            $nbhabitants_Philicie += $row_stat_pays['ch_pay_population_cartes'];
+            $nbpays_Philicie++;
+            break;
+        default:
+            break;
+    }
+} while($row_stat_pays = mysql_fetch_assoc($stat_pays));
+mysql_data_seek($stat_pays, 0);
 
 
 $nbvilles_Aurinea = 0;
@@ -77,40 +86,45 @@ $nbvilles_Philicie = 0;
 $nbhabitants_Philicie = 0;
 
 do {
-switch ($row_stat_ville['ch_pay_continent']) {
-		case "Aurinea" :
-		$nbvilles_Aurinea += $row_stat_ville['nbville'];
-		$nbhabitants_Aurinea += $row_stat_ville['nbhabitant']; break;
-		case "RFGC" :
-		$nbvilles_RFGC += $row_stat_ville['nbville'];
-		$nbhabitants_RFGC += $row_stat_ville['nbhabitant']; break;
-		case "Volcania" :
-		$nbvilles_Volcania += $row_stat_ville['nbville'];
-		$nbhabitants_Volcania += $row_stat_ville['nbhabitant']; break;
-		case "Aldesyl" :
-		$nbvilles_Aldesyl += $row_stat_ville['nbville'];
-		$nbhabitants_Aldesyl += $row_stat_ville['nbhabitant']; break;
-		case "Oceania" :
-		$nbvilles_Oceania += $row_stat_ville['nbville'];
-		$nbhabitants_Oceania += $row_stat_ville['nbhabitant']; break;
-		case "Philicie" :
-		$nbvilles_Philicie += $row_stat_ville['nbville'];
-		$nbhabitants_Philicie += $row_stat_ville['nbhabitant']; break;
-		default:
-		break;
-		}
-} while ($row_stat_ville = mysql_fetch_assoc($stat_ville));
-	  mysql_data_seek($stat_ville,0); 
+    switch($row_stat_ville['ch_pay_continent']) {
+        case "Aurinea" :
+            $nbvilles_Aurinea += $row_stat_ville['nbville'];
+            $nbhabitants_Aurinea += $row_stat_ville['nbhabitant'];
+            break;
+        case "RFGC" :
+            $nbvilles_RFGC += $row_stat_ville['nbville'];
+            $nbhabitants_RFGC += $row_stat_ville['nbhabitant'];
+            break;
+        case "Volcania" :
+            $nbvilles_Volcania += $row_stat_ville['nbville'];
+            $nbhabitants_Volcania += $row_stat_ville['nbhabitant'];
+            break;
+        case "Aldesyl" :
+            $nbvilles_Aldesyl += $row_stat_ville['nbville'];
+            $nbhabitants_Aldesyl += $row_stat_ville['nbhabitant'];
+            break;
+        case "Oceania" :
+            $nbvilles_Oceania += $row_stat_ville['nbville'];
+            $nbhabitants_Oceania += $row_stat_ville['nbhabitant'];
+            break;
+        case "Philicie" :
+            $nbvilles_Philicie += $row_stat_ville['nbville'];
+            $nbhabitants_Philicie += $row_stat_ville['nbhabitant'];
+            break;
+        default:
+            break;
+    }
+} while($row_stat_ville = mysql_fetch_assoc($stat_ville));
+mysql_data_seek($stat_ville, 0);
 
-$nbpays_Aurinea = $nbpays_Aurinea +1;
+$nbpays_Aurinea = $nbpays_Aurinea + 1;
 $nbvilles_Aurinea = $nbvilles_Aurinea + $nbvilles_RFGC;
 $nbhabitants_Aurinea = $nbhabitants_Aurinea + $nbhabitants_RFGC;
 
 
 // Liste des pays par continent
 
-
-$query_listePays = "SELECT ch_pay_id, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_use_login, (SELECT COUNT(ch_vil_ID) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS nbville, (SELECT SUM(ch_vil_population) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) + ch_pay_population_carte AS nbhabitant FROM pays INNER JOIN users ON ch_use_paysID = ch_pay_id AND ch_use_statut >=10 WHERE ch_pay_publication = 1 Group By ch_pay_id ORDER BY ch_pay_nom ASC";
+$query_listePays = "SELECT ch_pay_id, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgdrapeau, (SELECT COUNT(ch_vil_ID) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS nbville, (SELECT SUM(ch_vil_population) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) + ch_pay_population_carte AS nbhabitant FROM pays WHERE ch_pay_publication = 1 Group By ch_pay_id ORDER BY ch_pay_nom ASC";
 $listePays = mysql_query($query_listePays, $maconnexion) or die(mysql_error());
 $row_listePays = mysql_fetch_assoc($listePays);
 $totalRows_listePays = mysql_num_rows($listePays);
@@ -119,6 +133,15 @@ $totalRows_listePays = mysql_num_rows($listePays);
 if($_SERVER["REMOTE_ADDR"] === '127.0.0.1') {
     ob_end_clean();
 }
+
+// Obtenir les données Tempérance
+$temperance = TemperancePays::join('pays', 'id', '=', 'ch_pay_id')
+    ->select('temperance_pays.*')
+    ->where('ch_pay_publication', '=', Pays::$statut['active'])
+    ->get()->toArray();
+$temperancePays = array_combine( array_column($temperance, 'id'),
+                                 $temperance );
+
 ?>
 <!DOCTYPE html>
 <!-- head Html -->
@@ -159,12 +182,11 @@ if($_SERVER["REMOTE_ADDR"] === '127.0.0.1') {
 <!-- BOOTSTRAP -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
-<script> 
- $( document ).ready(function() {
-init();
-});
+<script>
+    $(document).ready(function () {
+        init();
+    });
 </script>
-
 
 <style>
 .jumbotron {
@@ -227,9 +249,12 @@ div.olControlPanel {
         <div id="map"></div>
       </div>
       <div class="" id="info">
-        <h1>Carte du Monde de G&eacute;n&eacute;ration City</h1>
+        <h1>Carte du Monde</h1>
         <p>&nbsp;</p>
-        <h4>cliquez sur la carte</h4>
+        <h4>Cliquez sur un élément de la carte pour en savoir plus.</h4>
+        <div class="well">
+          <a href="<?= route('map') ?>">Afficher en plein écran</a>
+        </div>
       </div>
     </div>
   </div>
@@ -262,26 +287,12 @@ div.olControlPanel {
 					{
 					$row_listePays['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_listePays['ch_pay_lien_imgdrapeau']);
 					}
-		?>
-        <li class="row-fluid">
-          <div class="">
-            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>"><img src="<?php echo $row_listePays['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau"></a> </div>
-            <div class="span4">
-              <h3><?php echo $row_listePays['ch_pay_nom']; ?></h3>
-            </div>
-            <div class="span4">
-              <p>cr&eacute;&eacute; par&nbsp;: <strong><?php echo $row_listePays['ch_use_login']; ?></strong></p>
-              <p>Nombre de villes&nbsp;: <strong><?php echo $row_listePays['nbville']; ?></strong></p>
-              <p>Population&nbsp;: <strong>
-                <?php
-	$nbhabitant_francais = number_format($row_listePays['nbhabitant'], 0, ',', ' ');
-	echo $nbhabitant_francais; ?>
-                habitants</strong></p>
-            </div>
-            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>" class="btn btn-primary">Visiter</a> </div>
-          </div>
-        </li>
-        <?php } } while ($row_listePays = mysql_fetch_assoc($listePays));
+            renderElement('liste_pays', [
+                    'pays' => $row_listePays,
+                    'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
+                ]);
+			}
+        } while ($row_listePays = mysql_fetch_assoc($listePays));
 		  mysql_data_seek($listePays,0); ?>
         <p>&nbsp;</p>
       </ul>
@@ -308,39 +319,26 @@ div.olControlPanel {
 					{
 					$row_listePays['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_listePays['ch_pay_lien_imgdrapeau']);
 					}
-		?>
-        <li class="row-fluid">
-          <div class="">
-            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>"><img src="<?php echo $row_listePays['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau"></a> </div>
-            <div class="span4">
-              <h3><?php echo $row_listePays['ch_pay_nom']; ?></h3>
-            </div>
-            <div class="span4">
-              <p>cr&eacute;&eacute; par&nbsp;: <strong><?php echo $row_listePays['ch_use_login']; ?></strong></p>
-              <p>Nombre de villes&nbsp;: <strong><?php echo $row_listePays['nbville']; ?></strong></p>
-              <p>Population&nbsp;: <strong>
-                <?php 
-	$nbhabitant_francais = number_format($row_listePays['nbhabitant'], 0, ',', ' ');
-	echo $nbhabitant_francais; ?>
-                habitants</strong></p>
-            </div>
-            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>" class="btn btn-primary">Visiter</a> </div>
-          </div>
-        </li>
-        <?php } } while ($row_listePays = mysql_fetch_assoc($listePays));
-		  mysql_data_seek($listePays,0); ?>
-        <li class="row-fluid">
-          <div class="">
+            renderElement('liste_pays', [
+                    'pays' => $row_listePays,
+                    'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
+                ]);
+			}
+        } while ($row_listePays = mysql_fetch_assoc($listePays));
+        mysql_data_seek($listePays,0); ?>
+
+        <!-- RFGC -->
+        <li>
+          <div class="row-fluid">
             <div class="span2"> <a href="#RFGC"><img src="assets/img/Drapeau-RFGC.jpg" width="100" alt="drapeau"></a> </div>
             <div class="span4">
               <h3>R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</h3>
             </div>
             <div class="span4">
               <p>La RFGC est un pays communautaire ouvert à tous, il est divisé en deux provinces.</p>
-              <p>Nombre de villes&nbsp;: <strong> <?php echo $nbvilles_RFGC; ?> </strong></p>
-              <p>Population&nbsp;: <strong>
-                <?php $nbhabitant_francais = number_format($nbhabitants_RFGC, 0, ',', ' '); echo $nbhabitant_francais; ?>
-                habitants</strong></p>
+              <p><strong>
+                <?= number_format($nbhabitants_RFGC, 0, ',', ' '); ?>
+                </strong> habitants</p>
             </div>
             <div class="span2"> <a href="#RFGC" class="btn btn-primary">Voir les provinces</a> </div>
           </div>
@@ -371,25 +369,13 @@ div.olControlPanel {
 					{
 					$row_listePays['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_listePays['ch_pay_lien_imgdrapeau']);
 					}
-		?>
-        <li class="row-fluid">
-          <div class="">
-            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>"><img src="<?php echo $row_listePays['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau"></a> </div>
-            <div class="span4">
-              <h3><?php echo $row_listePays['ch_pay_nom']; ?></h3>
-            </div>
-            <div class="span4">
-              <p>cr&eacute;&eacute; par&nbsp;: <strong><?php echo $row_listePays['ch_use_login']; ?></strong></p>
-              <p>Nombre de villes&nbsp;: <strong><?php echo $row_listePays['nbville']; ?></strong></p>
-              <p>Population&nbsp;: <strong>
-                <?php $nbhabitant_francais = number_format($row_listePays['nbhabitant'], 0, ',', ' '); echo $nbhabitant_francais; ?>
-                habitants</strong></p>
-            </div>
-            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>" class="btn btn-primary">Visiter</a> </div>
-          </div>
-        </li>
-        <?php } } while ($row_listePays = mysql_fetch_assoc($listePays));
-		  mysql_data_seek($listePays,0); ?>
+            renderElement('liste_pays', [
+                    'pays' => $row_listePays,
+                    'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
+                ]);
+			}
+        } while ($row_listePays = mysql_fetch_assoc($listePays));
+        mysql_data_seek($listePays,0); ?>
         <p>&nbsp;</p>
       </ul>
     </div>
@@ -417,25 +403,13 @@ div.olControlPanel {
 					{
 					$row_listePays['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_listePays['ch_pay_lien_imgdrapeau']);
 					}
-		?>
-        <li class="row-fluid">
-          <div class="">
-            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>"><img src="<?php echo $row_listePays['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau"></a> </div>
-            <div class="span4">
-              <h3><?php echo $row_listePays['ch_pay_nom']; ?></h3>
-            </div>
-            <div class="span4">
-              <p>cr&eacute;&eacute; par&nbsp;: <strong><?php echo $row_listePays['ch_use_login']; ?></strong></p>
-              <p>Nombre de villes&nbsp;: <strong><?php echo $row_listePays['nbville']; ?></strong></p>
-              <p>Population&nbsp;: <strong>
-                <?php $nbhabitant_francais = number_format($row_listePays['nbhabitant'], 0, ',', ' '); echo $nbhabitant_francais; ?>
-                habitants</strong></p>
-            </div>
-            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>" class="btn btn-primary">Visiter</a> </div>
-          </div>
-        </li>
-        <?php } } while ($row_listePays = mysql_fetch_assoc($listePays));
-		  mysql_data_seek($listePays,0); ?>
+            renderElement('liste_pays', [
+                    'pays' => $row_listePays,
+                    'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
+                ]);
+			}
+        } while ($row_listePays = mysql_fetch_assoc($listePays));
+        mysql_data_seek($listePays, 0); ?>
         <p>&nbsp;</p>
       </ul>
     </div>
@@ -463,27 +437,13 @@ div.olControlPanel {
 					{
 					$row_listePays['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_listePays['ch_pay_lien_imgdrapeau']);
 					}
-		?>
-        <li class="row-fluid">
-          <div class="">
-            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>"><img src="<?php echo $row_listePays['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau"></a> </div>
-            <div class="span4">
-              <h3><?php echo $row_listePays['ch_pay_nom']; ?></h3>
-            </div>
-            <div class="span4">
-              <p>cr&eacute;&eacute; par&nbsp;: <strong><?php echo $row_listePays['ch_use_login']; ?></strong></p>
-              <p>Nombre de villes&nbsp;: <strong><?php echo $row_listePays['nbville']; ?></strong></p>
-              <p>Population&nbsp;: <strong>
-                <?php 
-	$nbhabitant_francais = number_format($row_listePays['nbhabitant'], 0, ',', ' ');
-	echo $nbhabitant_francais; ?>
-                habitants</strong></p>
-            </div>
-            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>" class="btn btn-primary">Visiter</a> </div>
-          </div>
-        </li>
-        <?php } } while ($row_listePays = mysql_fetch_assoc($listePays));
-		  mysql_data_seek($listePays,0); ?>
+		renderElement('liste_pays', [
+                'pays' => $row_listePays,
+                'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
+            ]);
+            }
+        } while ($row_listePays = mysql_fetch_assoc($listePays));
+        mysql_data_seek($listePays,0); ?>
         <p>&nbsp;</p>
       </ul>
     </div>
@@ -511,27 +471,13 @@ div.olControlPanel {
 					{
 					$row_listePays['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_listePays['ch_pay_lien_imgdrapeau']);
 					}
-		?>
-        <li class="row-fluid">
-          <div class="">
-            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>"><img src="<?php echo $row_listePays['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau"></a> </div>
-            <div class="span4">
-              <h3><?php echo $row_listePays['ch_pay_nom']; ?></h3>
-            </div>
-            <div class="span4">
-              <p>cr&eacute;&eacute; par&nbsp;: <strong><?php echo $row_listePays['ch_use_login']; ?></strong></p>
-              <p>Nombre de villes&nbsp;: <strong><?php echo $row_listePays['nbville']; ?></strong></p>
-              <p>Population&nbsp;: <strong>
-                <?php 
-	$nbhabitant_francais = number_format($row_listePays['nbhabitant'], 0, ',', ' ');
-	echo $nbhabitant_francais; ?>
-                habitants</strong></p>
-            </div>
-            <div class="span2"> <a href="page-pays.php?ch_pay_id=<?php echo $row_listePays['ch_pay_id']; ?>" class="btn btn-primary">Visiter</a> </div>
-          </div>
-        </li>
-        <?php } } while ($row_listePays = mysql_fetch_assoc($listePays));
-		  mysql_data_seek($listePays,0); ?>
+		    renderElement('liste_pays', [
+                'pays' => $row_listePays,
+                'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
+            ]);
+            }
+        } while ($row_listePays = mysql_fetch_assoc($listePays));
+        mysql_data_seek($listePays,0); ?>
         <p>&nbsp;</p>
       </ul>
     </div>

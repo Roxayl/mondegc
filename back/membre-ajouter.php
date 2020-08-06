@@ -1,7 +1,5 @@
 <?php
 
-
-if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
 //deconnexion
 include(DEF_ROOTPATH . 'php/logout.php');
 
@@ -14,7 +12,7 @@ header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
-if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
+
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 appendQueryString($editFormAction);
