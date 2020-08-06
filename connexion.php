@@ -174,6 +174,9 @@ $mailSuccess = true;
     <section class="span7">
       <p>&nbsp;</p>
       <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="connexion" class="form-horizontal">
+        <input type="hidden" name="__csrf_magic" value="<?= csrf_get_tokens() ?>">
+        <input type="hidden" name="_token"
+               value="<?= \Illuminate\Support\Facades\Session::token() ?>">
         <div class="control-group">
           <label class="control-label" for="identifiant">Login</label>
           <div class="controls">

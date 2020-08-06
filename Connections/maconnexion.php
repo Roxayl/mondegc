@@ -68,6 +68,7 @@ if($mondegc_config['enable_csrf_protection'] === true) {
         function csrf_startup() {
             csrf_conf('rewrite-js', DEF_URI_PATH . 'lib/csrf-magic/csrf-magic.js');
             csrf_conf('rewrite', true);
+            csrf_conf('frame-breaker', false);
         }
     }
     require_once DEF_ROOTPATH . 'lib/csrf-magic/csrf-magic.php';
