@@ -1,5 +1,4 @@
 <?php
-if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
 
 // *** Recherche de sessions.
 $clefSession = $_COOKIE['Session_mondeGC'];

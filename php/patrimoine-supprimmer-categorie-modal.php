@@ -1,9 +1,5 @@
 <?php
 
-if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
-
-
-
 //requete categories monuments
 
 $colname_liste_mon_cat = "-1";

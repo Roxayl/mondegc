@@ -1,5 +1,4 @@
 <?php
-if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php'); 
 
 $colname_MarkerVilles = "-1";
 if (isset($_GET['ch_pay_id'])) {

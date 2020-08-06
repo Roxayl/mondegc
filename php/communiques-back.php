@@ -1,4 +1,4 @@
-<?php if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php'); ?>
+<?php ?>
 <?php 
 //requete liste communiqués
 

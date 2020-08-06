@@ -5,7 +5,7 @@ use App\Models\Infrastructure;
 use App\Notifications\InfrastructureJudged;
 use Illuminate\Support\Facades\Notification;
 
-if(!isset($mondegc_config['front-controller'])) require_once(DEF_ROOTPATH . 'Connections/maconnexion.php');
+
 header('Content-Type: text/html; charset=utf-8');
 
 

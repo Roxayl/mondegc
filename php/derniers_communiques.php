@@ -1,5 +1,5 @@
 <?php 
-if(!isset($mondegc_config['front-controller'])) require_once('Connections/maconnexion.php');
+
 
 
 // *** Connexion communique categorie pays

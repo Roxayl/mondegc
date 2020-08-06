@@ -65,7 +65,6 @@ $simflouz = array(
 
 <?php
 
-
 $monnaie1 = $_POST['monnaie1'];
 
 $somme = $_POST['somme'];
