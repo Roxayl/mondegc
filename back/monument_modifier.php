@@ -1,5 +1,7 @@
 <?php
-        
+
+use GenCity\Monde\Institut\Institut;
+
 //deconnexion
 include(DEF_ROOTPATH . 'php/logout.php');
 
@@ -71,19 +73,21 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_monument")
   
   $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
-  $updateGoTo = DEF_URI_PATH . "back/ville_modifier.php#mes-monuments";
+  getErrorMessage('success', "Le monument a été modifié avec succès.");
+
+  $updateGoTo = DEF_URI_PATH . "back/ville_modifier.php?ville-ID=" . $_POST['ch_pat_villeID'] . "#mes-monuments";
   appendQueryString($updateGoTo);
   header(sprintf("Location: %s", $updateGoTo));
- exit;
+  exit;
 }
 
-$institutCulture = new \GenCity\Monde\Institut\Institut(\GenCity\Monde\Institut\Institut::$instituts['culture']);
+$institutCulture = new Institut(Institut::$instituts['culture']);
 
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Monde GC - Modifier un monument</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -189,16 +193,17 @@ return true;
   <?php } ?>
       <div class="clearfix"></div>
       <!-- Debut formulaire -->
-      <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal" name="modifier_monument" Id="modifier_monument" onsubmit='return verif_champ(document.modifier_monument.form_coord_X.value);'>
+      <form action="<?= e($editFormAction) ?>" method="POST" class="form-horizontal" name="modifier_monument" Id="modifier_monument" onsubmit='return verif_champ(document.modifier_monument.form_coord_X.value);'>
         <!-- Bouton cachés -->
-                <input name="ch_pat_id" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>" >
+        <input name="ch_pat_id" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>" >
         <input name="ch_pat_paysID" type="hidden" value="<?php echo $row_monument['ch_pat_paysID']; ?>" >
         <input name="ch_pat_villeID" type="hidden" value="<?php echo $row_monument['ch_pat_villeID']; ?>">
-        <input name="ch_pat_label" type="hidden" value="<?php echo $row_monument['ch_pat_label']; ?>">
+        <input name="ch_pat_label" type="hidden" value="<?= e($row_monument['ch_pat_label']) ?>">
         <?php 
-				  $now= date("Y-m-d G:i:s");
-				  $nb_update = $monument['ch_pat_nb_update'] + 1;?>
-        <input name="ch_pat_date" type="hidden" value="<?php echo $row_monument['ch_pat_date']; ?>" >
+        $now= date("Y-m-d G:i:s");
+        $nb_update = $row_monument['ch_pat_nb_update'] + 1;
+        ?>
+        <input name="ch_pat_date" type="hidden" value="<?= e($row_monument['ch_pat_date']) ?>" >
         <input name="ch_pat_mis_jour" type="hidden" value="<?php echo $now; ?>" >
         <input name="ch_pat_nb_update" type="hidden" value="<?php echo $nb_update; ?>">
         <!-- Statut -->
@@ -208,25 +213,25 @@ return true;
     Invisible : le monument sera cach&eacute; pour les visiteurs du site."><i class="icon-info-sign"></i></a></div>
           <div class="controls">
             <label>
-              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"1"))) {echo "checked=\"checked\"";} ?> type="radio" name="ch_pat_statut" value="1" id="ch_pat_statut_1">
+              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"1"))) { echo "checked"; } ?> type="radio" name="ch_pat_statut" value="1" id="ch_pat_statut_1">
               visible</label>
             <label>
-              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"2"))) {echo "checked=\"checked\"";} ?> name="ch_pat_statut" type="radio" id="ch_pat_statut_2" value="2">
+              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"2"))) { echo "checked"; } ?> name="ch_pat_statut" type="radio" id="ch_pat_statut_2" value="2">
               invisible</label>
             <span class="radioRequiredMsg">Choisissez un statut pour votre monument</span></div>
         </div>
         <!-- Nom -->
         <div id="sprytextfield2" class="control-group">
-          <label class="control-label" for="ch_pat_nom">Nom du Monument <a href="#" rel="clickover" title="Nom du monument" data-content="50 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
+          <label class="control-label" for="ch_pat_nom">Nom du monument <a href="#" rel="clickover" title="Nom du monument" data-content="50 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input class="span6" type="text" id="ch_pat_nom" name="ch_pat_nom" value="<?php echo $row_monument['ch_pat_nom']; ?>" placeholder="mon monument">
+            <input class="span6" type="text" id="ch_pat_nom" name="ch_pat_nom" value="<?= e($row_monument['ch_pat_nom']) ?>" placeholder="mon monument">
             <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>
         </div>
         <!-- Description -->
         <div class="control-group" id="sprytextarea1">
           <label class="control-label" for="ch_pat_description">Description <a href="#" rel="clickover" title="Pr&eacute;sentation" data-content="Mettez-ici une description de votre monument. 800 caract&egrave;res maximum"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <textarea name="ch_pat_description" id="ch_pat_description" class="span6" rows="6"><?php echo $row_monument['ch_pat_description']; ?></textarea>
+            <textarea name="ch_pat_description" id="ch_pat_description" class="span6" rows="6"><?= e($row_monument['ch_pat_description']) ?></textarea>
             <span class="textareaRequiredMsg">Une valeur est requise.</span> <span class="textareaMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textareaMaxCharsMsg">800 caract&egrave;res maximum.</span></div>
         </div>
         <!-- Placement sur carte monde GC -->
@@ -242,13 +247,13 @@ return true;
             <div id="sprytextfield29" class="control-group">
           <label class="control-label">Coordonn&eacute;es X</label>
           <div class="controls">
-            <input class="span2" type="text" name="form_coord_X" id="form_coord_X"  value="<?php echo $row_monument['ch_pat_coord_X']; ?>" readonly required>
+            <input class="span2" type="text" name="form_coord_X" id="form_coord_X"  value="<?= e($row_monument['ch_pat_coord_X']) ?>" readonly required>
           <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span> <span class="textfieldRequiredMsg">Une valeur est requise. Cliquez sur la carte</span></div>
         </div>
         <div class="control-group">
           <label class="control-label">Coordonn&eacute;es Y</label>
           <div class="controls">
-        <input class="span2" type="text" name="form_coord_Y" id="form_coord_Y"  value="<?php echo $row_monument['ch_pat_coord_Y']; ?>" readonly required>
+        <input class="span2" type="text" name="form_coord_Y" id="form_coord_Y"  value="<?= e($row_monument['ch_pat_coord_Y']) ?>" readonly required>
           </div>
         </div>
           </div>
@@ -269,55 +274,55 @@ return true;
         <div id="sprytextfield6" class="control-group">
           <label class="control-label" for="ch_pat_legende_img1">L&eacute;gende image n&deg;1 <a href="#" rel="clickover" title="L&eacute;gende image" data-content="Mettez-ici la l&eacute;gende qui correspond &agrave; l'image. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input type="text" name="ch_pat_legende_img1" id="ch_pat_legende_img1" value="<?php echo $row_monument['ch_pat_legende_img1']; ?>">
+            <input type="text" name="ch_pat_legende_img1" id="ch_pat_legende_img1" value="<?= e($row_monument['ch_pat_legende_img1']) ?>">
             <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span></div>
         </div>
         <div id="sprytextfield7" class="control-group">
           <label class="control-label" for="ch_pat_lien_img2">Lien image n&deg;2 <a href="#" rel="clickover" title="Lien image" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input type="text" name="ch_pat_lien_img2" id="ch_pat_lien_img2" class="span6" value="<?php echo $row_monument['ch_pat_lien_img2']; ?>">
+            <input type="text" name="ch_pat_lien_img2" id="ch_pat_lien_img2" class="span6" value="<?php echo e($row_monument['ch_pat_lien_img2']) ?>">
             <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span></div>
         </div>
         <div id="sprytextfield8" class="control-group">
           <label class="control-label" for="ch_pat_legende_img2">L&eacute;gende image n&deg;2 <a href="#" rel="clickover" title="L&eacute;gende image" data-content="Mettez-ici la l&eacute;gende qui correspond &agrave; l'image. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input type="text" name="ch_pat_legende_img2" id="ch_pat_legende_img2" value="<?php echo $row_monument['ch_pat_legende_img2']; ?>">
+            <input type="text" name="ch_pat_legende_img2" id="ch_pat_legende_img2" value="<?php echo e($row_monument['ch_pat_legende_img2']) ?>">
             <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span></div>
         </div>
         <div id="sprytextfield9" class="control-group">
           <label class="control-label" for="ch_pat_lien_img3">Lien image n&deg;3 <a href="#" rel="clickover" title="Lien image" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input type="text" name="ch_pat_lien_img3" id="ch_pat_lien_img3" class="span6" value="<?php echo $row_monument['ch_pat_lien_img3']; ?>">
+            <input type="text" name="ch_pat_lien_img3" id="ch_pat_lien_img3" class="span6" value="<?php echo e($row_monument['ch_pat_lien_img3']) ?>">
             <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span></div>
         </div>
         <div id="sprytextfield10" class="control-group">
           <label class="control-label" for="ch_pat_legende_img3">L&eacute;gende image n&deg;3 <a href="#" rel="clickover" title="L&eacute;gende image" data-content="Mettez-ici la l&eacute;gende qui correspond &agrave; l'image. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input type="text" name="ch_pat_legende_img3" id="ch_pat_legende_img3" value="<?php echo $row_monument['ch_pat_legende_img3']; ?>">
+            <input type="text" name="ch_pat_legende_img3" id="ch_pat_legende_img3" value="<?php echo e($row_monument['ch_pat_legende_img3']) ?>">
             <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span></div>
         </div>
         <div id="sprytextfield11" class="control-group">
           <label class="control-label" for="ch_pat_lien_img4">Lien image n&deg;4 <a href="#" rel="clickover" title="Lien image" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input type="text" name="ch_pat_lien_img4" id="ch_pat_lien_img4" class="span6" value="<?php echo $row_monument['ch_pat_lien_img4']; ?>">
+            <input type="text" name="ch_pat_lien_img4" id="ch_pat_lien_img4" class="span6" value="<?php echo e($row_monument['ch_pat_lien_img4']) ?>">
             <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span></div>
         </div>
         <div id="sprytextfield12" class="control-group">
           <label class="control-label" for="ch_pat_legende_img4">L&eacute;gende image n&deg;4 <a href="#" rel="clickover" title="L&eacute;gende image" data-content="Mettez-ici la l&eacute;gende qui correspond &agrave; l'image. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input type="text" name="ch_pat_legende_img4" id="ch_pat_legende_img4" value="<?php echo $row_monument['ch_pat_legende_img4']; ?>">
+            <input type="text" name="ch_pat_legende_img4" id="ch_pat_legende_img4" value="<?php echo e($row_monument['ch_pat_legende_img4']) ?>">
             <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span></div>
         </div>
         <div id="sprytextfield13" class="control-group">
           <label class="control-label" for="ch_pat_lien_img5">Lien image n&deg;5 <a href="#" rel="clickover" title="Lien image" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input type="text" name="ch_pat_lien_img5" id="ch_pat_lien_img5" class="span6" value="<?php echo $row_monument['ch_pat_lien_img5']; ?>">
+            <input type="text" name="ch_pat_lien_img5" id="ch_pat_lien_img5" class="span6" value="<?php echo e($row_monument['ch_pat_lien_img5']) ?>">
             <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span></div>
         </div>
         <div id="sprytextfield14" class="control-group">
           <label class="control-label" for="ch_pat_legende_img5">L&eacute;gende image n&deg;5 <a href="#" rel="clickover" title="L&eacute;gende image" data-content="Mettez-ici la l&eacute;gende qui correspond &agrave; l'image. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input type="text" name="ch_pat_legende_img5" id="ch_pat_legende_img5" value="<?php echo $row_monument['ch_pat_legende_img5']; ?>">
+            <input type="text" name="ch_pat_legende_img5" id="ch_pat_legende_img5" value="<?php echo e($row_monument['ch_pat_legende_img5']) ?>">
             <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span></div>
         </div>
         <div class="controls">
@@ -334,14 +339,11 @@ return true;
   <!-- END CONTENT
     ================================================== --> 
 </div>
+
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
-<?php
-mysql_free_result($monument);
-?>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -357,27 +359,29 @@ mysql_free_result($monument);
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
+    $(function() {
+        $('[rel="clickover"]').clickover();
+    })
 </script>
-<script> 
+<script>
  $( document ).ready(function() {
 init();
 });
 </script>
  <!-- MODAL -->
 <script src="../assets/js/bootstrap-modalmanager.js"></script>
-<script src="../assets/js/bootstrap-modal.js"></script>   
+<script src="../assets/js/bootstrap-modal.js"></script>
 <script>
-$("a[data-toggle=modal]").click(function (e) {
-  lv_target = $(this).attr('data-target')
-  lv_url = $(this).attr('href')
-  $(lv_target).load(lv_url)})
+    $("a[data-toggle=modal]").click(function() {
+        lv_target = $(this).attr('data-target');
+        lv_url = $(this).attr('href');
+        $(lv_target).load(lv_url);
+    })
 
-$('#closemodal').click(function() {
-    $('#Modal-Monument').modal('hide');
-});
-</script> 
+    $('#closemodal').click(function () {
+        $('#Modal-Monument').modal('hide');
+    });
+</script>
 <!-- SPRY ASSETS -->
 <script src="../SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
 <script src="../SpryAssets/SpryValidationTextarea.js" type="text/javascript"></script>
@@ -397,3 +401,8 @@ var sprytextfield14 = new Spry.Widget.ValidationTextField("sprytextfield14", "no
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
 var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {minChars:2, validateOn:["change"], maxChars:800, useCharacterMasking:false});
 </script>
+</body>
+</html>
+<?php
+mysql_free_result($monument);
+?>

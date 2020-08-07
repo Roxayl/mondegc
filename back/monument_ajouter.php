@@ -1,5 +1,7 @@
 <?php
-        
+
+use GenCity\Monde\Institut\Institut;
+
 //deconnexion
 include(DEF_ROOTPATH . 'php/logout.php');
 
@@ -23,39 +25,40 @@ if (isset($_POST['ville_ID'])) {
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 appendQueryString($editFormAction);
 
-if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_monument")) {
-  $insertSQL = sprintf("INSERT INTO patrimoine (ch_pat_paysID, ch_pat_villeID, ch_pat_label, ch_pat_date, ch_pat_mis_jour, ch_pat_nb_update, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_lien_img2, ch_pat_lien_img3, ch_pat_lien_img4, ch_pat_lien_img5, ch_pat_legende_img1, ch_pat_legende_img2, ch_pat_legende_img3, ch_pat_legende_img4, ch_pat_legende_img5, ch_pat_description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_pat_paysID'], "int"),
-					   GetSQLValueString($_POST['ch_pat_villeID'], "int"),
-                       GetSQLValueString($_POST['ch_pat_label'], "text"),
-                       GetSQLValueString($_POST['ch_pat_date'], "date"),
-                       GetSQLValueString($_POST['ch_pat_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_pat_nb_update'], "int"),
-                       GetSQLValueString($_POST['form_coord_X'], "decimal"),
-                       GetSQLValueString($_POST['form_coord_Y'], "decimal"),
-                       GetSQLValueString($_POST['ch_pat_nom'], "text"),
-                       GetSQLValueString($_POST['ch_pat_statut'], "int"),
-                       GetSQLValueString($_POST['ch_pat_lien_img1'], "text"),
-                       GetSQLValueString($_POST['ch_pat_lien_img2'], "text"),
-                       GetSQLValueString($_POST['ch_pat_lien_img3'], "text"),
-                       GetSQLValueString($_POST['ch_pat_lien_img4'], "text"),
-                       GetSQLValueString($_POST['ch_pat_lien_img5'], "text"),
-                       GetSQLValueString($_POST['ch_pat_legende_img1'], "text"),
-                       GetSQLValueString($_POST['ch_pat_legende_img2'], "text"),
-                       GetSQLValueString($_POST['ch_pat_legende_img3'], "text"),
-                       GetSQLValueString($_POST['ch_pat_legende_img4'], "text"),
-                       GetSQLValueString($_POST['ch_pat_legende_img5'], "text"),
-                       GetSQLValueString($_POST['ch_pat_description'], "text"));
+if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_monument")) {
+    $insertSQL = sprintf("INSERT INTO patrimoine (ch_pat_paysID, ch_pat_villeID, ch_pat_label, ch_pat_date, ch_pat_mis_jour, ch_pat_nb_update, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_lien_img2, ch_pat_lien_img3, ch_pat_lien_img4, ch_pat_lien_img5, ch_pat_legende_img1, ch_pat_legende_img2, ch_pat_legende_img3, ch_pat_legende_img4, ch_pat_legende_img5, ch_pat_description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+        GetSQLValueString($_POST['ch_pat_paysID'], "int"),
+        GetSQLValueString($_POST['ch_pat_villeID'], "int"),
+        GetSQLValueString($_POST['ch_pat_label'], "text"),
+        GetSQLValueString($_POST['ch_pat_date'], "date"),
+        GetSQLValueString($_POST['ch_pat_mis_jour'], "date"),
+        GetSQLValueString($_POST['ch_pat_nb_update'], "int"),
+        GetSQLValueString($_POST['form_coord_X'], "decimal"),
+        GetSQLValueString($_POST['form_coord_Y'], "decimal"),
+        GetSQLValueString($_POST['ch_pat_nom'], "text"),
+        GetSQLValueString($_POST['ch_pat_statut'], "int"),
+        GetSQLValueString($_POST['ch_pat_lien_img1'], "text"),
+        GetSQLValueString($_POST['ch_pat_lien_img2'], "text"),
+        GetSQLValueString($_POST['ch_pat_lien_img3'], "text"),
+        GetSQLValueString($_POST['ch_pat_lien_img4'], "text"),
+        GetSQLValueString($_POST['ch_pat_lien_img5'], "text"),
+        GetSQLValueString($_POST['ch_pat_legende_img1'], "text"),
+        GetSQLValueString($_POST['ch_pat_legende_img2'], "text"),
+        GetSQLValueString($_POST['ch_pat_legende_img3'], "text"),
+        GetSQLValueString($_POST['ch_pat_legende_img4'], "text"),
+        GetSQLValueString($_POST['ch_pat_legende_img5'], "text"),
+        GetSQLValueString($_POST['ch_pat_description'], "text"));
 
-  
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+    $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-  $insertGoTo = DEF_URI_PATH . "back/ville_modifier.php";
-  appendQueryString($insertGoTo);
-  header(sprintf("Location: %s", $insertGoTo));
- exit;
+    getErrorMessage('success', "Votre monument <strong>"
+        . e($_POST['ch_pat_nom']) . "</strong> a été ajouté avec succès !");
+
+    $insertGoTo = DEF_URI_PATH . "back/ville_modifier.php";
+    appendQueryString($insertGoTo);
+    header(sprintf("Location: %s", $insertGoTo));
+    exit;
 }
-
 
 
 $query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($paysID, "int"));
@@ -63,13 +66,13 @@ $users = mysql_query($query_users, $maconnexion) or die(mysql_error());
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
 
-$institutCulture = new \GenCity\Monde\Institut\Institut(\GenCity\Monde\Institut\Institut::$instituts['culture']);
+$institutCulture = new Institut(Institut::$instituts['culture']);
 
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Monde GC - Ajouter un monument</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -157,7 +160,7 @@ return true;
       <?php }?>
       <div class="clearfix"></div>
       <!-- Debut formulaire -->
-      <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_monument" Id="ajout_monument" onsubmit='return verif_champ(document.ajout_monument.form_coord_X.value);' >
+      <form action="<?php echo e($editFormAction) ?>" method="POST" class="form-horizontal well" name="ajout_monument" Id="ajout_monument" onsubmit='return verif_champ(document.ajout_monument.form_coord_X.value);' >
         <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
           Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; votre monument. Les monuments sont des constructions exceptionelles de votre pays. La promotion des monuments du Monde GC est confi&eacute;e au <a href="../patrimoine.php" title="lien vers la page consacr&eacute;e &agrave; l'Institut"><?= __s($institutCulture->get('ch_ins_nom')) ?></a>.</div>
@@ -168,7 +171,7 @@ return true;
         <?php 
 				  $now= date("Y-m-d G:i:s");?>
         <input name="ch_pat_date" type="hidden" value="<?php echo $now; ?>" >
-        <input name="ch_pat_mis_jour" type="hidden" value="<?php echo $now; ?>" >
+        <input name="ch_pat_mis_jour" type="hidden" value="<?php echo $now; ?>">
         <input name="ch_pat_nb_update" type="hidden" value="0">
         <!-- Statut -->
         <div id="spryradio1" class="control-group">
@@ -299,8 +302,7 @@ return true;
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -316,10 +318,10 @@ return true;
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
+      $(function() {
           $('[rel="clickover"]').clickover();})
 </script>
-<script> 
+<script>
  $( document ).ready(function() {
 init();
 });
@@ -343,3 +345,5 @@ var sprytextfield14 = new Spry.Widget.ValidationTextField("sprytextfield14", "no
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
 var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {minChars:2, validateOn:["change"], maxChars:800, useCharacterMasking:false});
 </script>
+</body>
+</html>

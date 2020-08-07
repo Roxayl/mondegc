@@ -1,13 +1,5 @@
 <?php
 
-// La fonction csrf_startup permet ici de désactiver la redirection de l'iframe.
-function csrf_startup() {
-    csrf_conf('rewrite-js', DEF_URI_PATH . 'lib/csrf-magic/csrf-magic.js');
-    csrf_conf('rewrite', true);
-    csrf_conf('frame-breaker', false); // ça, là.
-}
-
-
 // *** Connexion communique categorie pays
 $maxRows_LastCommunique = 20;
 $pageNum_LastCommunique = 0;
