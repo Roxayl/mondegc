@@ -45,6 +45,12 @@ class CustomUser extends Authenticatable
 		'ch_use_biographie_dirigeant'
 	];
 
+	/* Niveau de permissions défini dans ch_use_statut */
+	public const ADMIN = 30;
+	public const OCGC = 20;
+	public const JUGE = 15;
+	public const MEMBER = 10;
+
 	public function infrastructures()
 	{
 		return $this->hasMany(Infrastructure::class, 'user_creator');
