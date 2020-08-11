@@ -277,11 +277,6 @@ img.olTileImage {
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
-<?php
-mysql_free_result($users);
-
-mysql_free_result($Fait_his);
-?>
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -347,6 +342,3 @@ var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7", "none
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
 var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {minChars:2, validateOn:["change"], maxChars:800, useCharacterMasking:false});
 </script>
-<?php
-mysql_free_result($Fait_his);
-?>

@@ -107,16 +107,10 @@ elseif($cat == 'organisation') {
     $background_jumbotron = "assets/img/fond_haut-conseil.jpg";
     $breadcrumb_content = [
         [ 'url' => url('politique.php#organisations'), 'text' => "Organisations" ],
-        [ 'url' => route('organisation.showslug', [
-                'id' => $organisation->id,
-                'slug' => $organisation->slug()
-        ]),
+        [ 'url' => route('organisation.showslug', $organisation->showRouteParameter()),
           'text' => $organisation->name
         ],
-        [ 'url' => route('organisation.showslug', [
-                'id' => $organisation->id,
-                'slug' => $organisation->slug()
-        ]) . '#actualites',
+        [ 'url' => route('organisation.showslug', $organisation->showRouteParameter()) . '#actualites',
           'text' => 'Communiqués'
         ],
         [ 'text' => $row_communique['ch_com_titre'] ],

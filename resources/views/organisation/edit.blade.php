@@ -69,8 +69,7 @@ var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChar
                     <span class="divider">/</span></li>
                 <li>
                     <a href="{{ route('organisation.showslug',
-                        ['id' => $organisation->id,
-                         'slug' => $organisation->slug()]) }}"
+                                 $organisation->showRouteParameter()) }}"
                         >{{$organisation->name}}</a>
                     <span class="divider">/</span></li>
                 <li class="active">Modifier</li>

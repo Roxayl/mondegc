@@ -579,10 +579,3 @@ var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "none
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "url", {minChars:2, maxChars:250, validateOn:["change"]});
 var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:400, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
-<?php
-mysql_free_result($liste_groupe);
-mysql_free_result($liste_notifications);
-mysql_free_result($liste_mem_group2);
-mysql_free_result($infoGroupe);
-mysql_free_result($statutGroupeChoisi);
-mysql_free_result($classer_mem);?>

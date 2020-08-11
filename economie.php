@@ -593,7 +593,3 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
 <?php include('php/footer.php'); ?>
 </body>
 </html>
-<?php
-mysql_free_result($somme_ressources);
-mysql_free_result($somme_ressources_mondiales);
-?>

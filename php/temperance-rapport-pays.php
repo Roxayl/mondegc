@@ -261,7 +261,3 @@ $totalRows_pays = mysql_num_rows($pays);
 <div class="modal-footer">
   <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
 </div>
-<?php
-mysql_free_result($temperance);
-mysql_free_result($pays);
-?>

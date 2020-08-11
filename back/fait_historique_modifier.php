@@ -333,6 +333,3 @@ var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6", "none
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
 var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {minChars:2, validateOn:["change"], maxChars:800, useCharacterMasking:false});
 </script>
-<?php
-mysql_free_result($Fait_his);
-?>

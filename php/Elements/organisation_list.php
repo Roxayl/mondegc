@@ -14,7 +14,7 @@ $memberCount = $organisation->members->count();
     <div class="span2">
         <div style="width: 100%; height: 75px; background-size: cover;
                 background-position: center;
-                background-image: url('<?= $organisation->flag ?>');"></div>
+                background-image: url('<?= e($organisation->flag) ?>');"></div>
     </div>
 
     <div class="span10">
@@ -23,21 +23,13 @@ $memberCount = $organisation->members->count();
             <?php
             $temperance = $organisation->temperance()->get()->first();
             renderElement('Temperance/resources_small',
-                array('resources' => array(
-                  'budget' => $temperance->budget,
-                  'industrie' => $temperance->industrie,
-                  'commerce' => $temperance->commerce,
-                  'agriculture' => $temperance->agriculture,
-                  'tourisme' => $temperance->tourisme,
-                  'recherche' => $temperance->recherche,
-                  'environnement' => $temperance->environnement,
-                  'education' => $temperance->education,
-                ))
+                array('resources' => $temperance)
             ); ?>
         </div>
         <?php endif; ?>
-        <a href="<?= url("organisation/{$organisation->id}-" . $organisation->slug()) ?>">
-            <h2><?= $organisation->name ?></h2></a>
+        <a href="<?= route('organisation.showslug',
+            $organisation->showRouteParameter()) ?>">
+            <h2><?= e($organisation->name) ?></h2></a>
         <p>
             <?= $memberCount ?>
             <?= \Illuminate\Support\Str::plural('membre', $memberCount) ?>

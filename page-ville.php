@@ -139,6 +139,7 @@ $row_temperance = mysql_fetch_assoc($temperance);
 
 
 $thisVille = new \GenCity\Monde\Ville($_GET['ch_ville_id']);
+$eloquentVille = \App\Models\Ville::findOrFail($_GET['ch_ville_id']);
 
 ?>
 <!DOCTYPE html>
@@ -705,18 +706,3 @@ $('#closemodal').click(function() {
     $('#Modal-Monument').modal('hide');
 });
 </script>
-<?php
-mysql_free_result($infoVille);
-
-mysql_free_result($Autresvilles);
-
-mysql_free_result($Pays);
-
-mysql_free_result($User);
-
-mysql_free_result($monument);
-
-mysql_free_result($somme_ressources);
-
-mysql_free_result($infrastructure);
-?>

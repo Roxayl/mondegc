@@ -99,6 +99,3 @@ $totalRows_ch_his_confimation_suppression = mysql_num_rows($ch_his_confimation_s
       $(function() { 
           $('[rel="clickover"]').clickover();})
     </script>
-<?php
-mysql_free_result($ch_his_confimation_suppression);
-?>

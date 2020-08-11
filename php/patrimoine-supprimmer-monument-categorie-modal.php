@@ -39,5 +39,3 @@ $totalRows_mon = mysql_num_rows($mon);
             <button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i> Supprimer</button>
             </form>
           </div>
-<?php
-mysql_free_result($mon);?>

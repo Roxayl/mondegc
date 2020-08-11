@@ -141,6 +141,3 @@ $totalRows_villes = mysql_num_rows($villes);
   </div>
   <input type="hidden" name="MM_insert" value="ajout-temperance">
 </form>
-<?php
-mysql_free_result($villes);
-?>

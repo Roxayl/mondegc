@@ -149,6 +149,3 @@ $row_geometries = mysql_fetch_assoc($geometries);
 <div class="modal-footer">
   <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
 </div>
-<?php
-mysql_free_result($geometries);
-?>

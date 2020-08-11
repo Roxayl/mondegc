@@ -34,31 +34,6 @@ $liste_fai_cat3 = mysql_query($query_liste_fai_cat3, $maconnexion) or die(mysql_
 $row_liste_fai_cat3 = mysql_fetch_assoc($liste_fai_cat3);
 $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 }
-
-
-//Affichage date en français pour fait hist
-function affDate($date){
-    $year = substr($date, 0, 4);
-    $month = substr($date, 5, 2);
-    $day = substr($date, 8, 2);
-     
-    $str = $day." ";
-    if($month == 1) $str .= "Janvier";
-    if($month == 2) $str .= "F&eacute;vrier";
-    if($month == 3) $str .= "Mars";
-    if($month == 4) $str .= "Avril";
-    if($month == 5) $str .= "Mai";
-    if($month == 6) $str .= "Juin";
-    if($month == 7) $str .= "Juillet";
-    if($month == 8) $str .= "Ao&ucirc;t";
-    if($month == 9) $str .= "Septembre";
-    if($month == 10) $str .= "Octobre";
-    if($month == 11) $str .= "Novembre";
-    if($month == 12) $str .= "D&eacute;cembre";
-    $str .= " ".$year;
-     
-    return $str;
-}
 ?>
 
 <!-- Modal Header-->

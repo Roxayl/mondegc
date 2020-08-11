@@ -108,8 +108,3 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance"))
     <input type="hidden" name="MM_update" value="phase-temperance">
   </div>
 </form>
-<?php
-mysql_free_result($questionnaires);
-mysql_free_result($note_prec);
-unset ($note);
-?>

@@ -376,6 +376,3 @@ $('#closemodal').click(function() {
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
-<?php
-mysql_free_result($liste_infrastructures);
-?>

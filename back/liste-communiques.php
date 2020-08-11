@@ -185,6 +185,3 @@ echo '</p>';  ?>
       $(function() { 
           $('[rel="clickover"]').clickover();})
     </script>
-<?php
-mysql_free_result($listcommuniques);
-?>

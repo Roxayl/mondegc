@@ -139,6 +139,3 @@ $totalRows_pays = mysql_num_rows($pays);
   </div>
   <input type="hidden" name="MM_insert" value="ajout-temperance">
 </form>
-<?php
-mysql_free_result($pays);
-?>

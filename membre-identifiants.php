@@ -201,8 +201,3 @@ var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "none
 var sprypassword1 = new Spry.Widget.ValidationPassword("sprypassword1", {minChars:2, validateOn:["change"], maxChars:16});
 var spryconfirm1 = new Spry.Widget.ValidationConfirm("spryconfirm1", "ch_use_password", {validateOn:["change"]});
 </script>
-<?php
-mysql_free_result($user_prov);
-
-mysql_free_result($UserID);
-?>

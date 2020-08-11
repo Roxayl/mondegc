@@ -134,6 +134,3 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
-<?php
-mysql_free_result($institut);
-?>

@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Support\Str;
-
-
 //Connexion et deconnexion
 include('php/log.php');
 
@@ -461,10 +458,8 @@ init();
                 <img src="<?= __s($thisMembership->organisation->flag) ?>"
                      alt="Drapeau de <?= __s($thisMembership->organisation->name) ?>"
                      class="img-menu-drapeau">
-                <a href="<?= route('organisation.showslug', [
-                    'id' => $thisMembership->organisation->id,
-                    'slug' => Str::slug($thisMembership->organisation->name)
-                ]) ?>">
+                <a href="<?= route('organisation.showslug',
+                         $thisMembership->organisation->showRouteParameter()) ?>">
                     <?= __s($thisMembership->organisation->name) ?>
                 </a>
             </li>

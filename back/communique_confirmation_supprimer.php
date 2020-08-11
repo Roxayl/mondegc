@@ -143,6 +143,3 @@ $totalRows_ch_communique_confimation_suppression = mysql_num_rows($ch_communique
       $(function() { 
           $('[rel="clickover"]').clickover();})
     </script>
-<?php
-mysql_free_result($ch_communique_confimation_suppression);
-?>

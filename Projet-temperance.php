@@ -296,6 +296,3 @@ $('#closemodal').click(function() {
 <?php include('php/footer.php'); ?>
 </body>
 </html>
-<?php
-mysql_free_result($liste_temperance);
-?>

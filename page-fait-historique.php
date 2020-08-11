@@ -232,6 +232,3 @@ $('#closemodal').click(function() {
 <script type="text/javascript" src="assets/js/Editeur.js"></script>
 <!-- SPRY ASSETS -->
 <script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
-<?php
-mysql_free_result($fait_his);
-?>

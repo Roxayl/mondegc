@@ -129,6 +129,3 @@ img.olTileImage {
 <?php include('php/footer.php'); ?>
 </body>
 </html>
-<?php
-mysql_free_result($Last24H);
-?>

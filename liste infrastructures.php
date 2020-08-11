@@ -269,6 +269,3 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
 <?php include('php/footer.php'); ?>
 </body>
 </html>
-<?php
-mysql_free_result($liste_infra_officielles);
-?>

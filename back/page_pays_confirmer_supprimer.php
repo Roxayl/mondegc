@@ -102,6 +102,3 @@ $currentPage = $_SERVER["PHP_SELF"];
       $(function() { 
           $('[rel="clickover"]').clickover();})
     </script>
-<?php
-mysql_free_result($Pays);
-?>

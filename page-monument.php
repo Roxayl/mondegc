@@ -264,9 +264,3 @@ $('#closemodal').click(function() {
     $('#Modal-Monument').modal('hide');
 });
 </script>
-<?php
-mysql_free_result($monument);
-
-mysql_free_result($users);
-
-?>

@@ -403,6 +403,3 @@ var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {minChar
 </script>
 </body>
 </html>
-<?php
-mysql_free_result($monument);
-?>

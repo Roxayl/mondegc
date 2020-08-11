@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Models\Presenters\OrganisationPresenter;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
@@ -32,6 +33,8 @@ use Spatie\Searchable\SearchResult;
  */
 class Organisation extends Model implements Searchable
 {
+    use OrganisationPresenter;
+
 	protected $table = 'organisation';
 
 	protected $fillable = [
@@ -62,7 +65,7 @@ class Organisation extends Model implements Searchable
     {
 	    return new SearchResult(
 	        $this, $this->name, route('organisation.showslug',
-                ['id' => $this->id, 'slug' => Str::slug($this->name)])
+                $this->showRouteParameter())
         );
     }
 
@@ -152,7 +155,7 @@ class Organisation extends Model implements Searchable
 
     }
 
-	public function slug()
+    public function getSlugAttribute()
     {
         return Str::slug($this->name);
     }

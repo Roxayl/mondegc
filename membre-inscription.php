@@ -334,6 +334,3 @@ var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChar
 var sprypassword1 = new Spry.Widget.ValidationPassword("sprypassword1", {minChars:2, validateOn:["change"], maxChars:16});
 var spryconfirm1 = new Spry.Widget.ValidationConfirm("spryconfirm1", "ch_use_password", {validateOn:["change"]});
 </script>
-<?php
-mysql_free_result($user_prov);
-?>

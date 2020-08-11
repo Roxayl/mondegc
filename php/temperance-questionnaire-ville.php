@@ -264,6 +264,3 @@ var sprytextfield18 = new Spry.Widget.ValidationTextField("sprytextfield18", "no
 var sprytextfield19 = new Spry.Widget.ValidationTextField("sprytextfield19", "none", {validateOn:["change"], maxChars:250, isRequired:false});
 var sprytextfield20 = new Spry.Widget.ValidationTextField("sprytextfield20", "none", {validateOn:["change"], maxChars:250, isRequired:false});
 </script>
-<?php
-mysql_free_result($ville);
-?>

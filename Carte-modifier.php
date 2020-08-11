@@ -989,6 +989,3 @@ $('#closemodal').click(function() {
     $('#Modal-Monument').modal('hide');
 });
 </script>
-<?php
-mysql_free_result($InfoGenerale);
-?>

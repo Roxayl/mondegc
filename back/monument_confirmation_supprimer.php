@@ -101,6 +101,3 @@ $_SESSION['ville_encours'] = $row_ch_pat_confimation_suppression['ch_pat_villeID
       $(function() { 
           $('[rel="clickover"]').clickover();})
     </script>
-<?php
-mysql_free_result($ch_pat_confimation_suppression);
-?>
