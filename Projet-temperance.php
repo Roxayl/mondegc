@@ -212,15 +212,15 @@ $totalRows_nb_juges = mysql_num_rows($nb_juges);
             <!-- Boutons modifier -->
             <div class="span1">
               <?php	if ($row_liste_temperance['element'] == "pays") { ?>
-              <a href="page-pays.php?ch_pay_id=<?php echo $row_liste_temperance['element_id']; ?>" title="lien vers la page du pays"><img src="<?php echo $row_liste_temperance['image']; ?>"></a>
+              <a href="page-pays.php?ch_pay_id=<?= e($row_liste_temperance['element_id']) ?>" title="lien vers la page du pays"><img src="<?= e($row_liste_temperance['image']) ?>"></a>
               <?php } ?>
               <?php	if ($row_liste_temperance['element'] == "ville") { ?>
-              <a href="page-ville.php?ch_pay_id=<?php echo $row_liste_temperance['pays_id']; ?>&ch_ville_id=<?php echo $row_liste_temperance['element_id']; ?>" title="lien vers la page de la ville"><img src="<?php echo $row_liste_temperance['image']; ?>"></a>
+              <a href="page-ville.php?ch_pay_id=<?= e($row_liste_temperance['pays_id']) ?>&ch_ville_id=<?= e($row_liste_temperance['element_id']) ?>" title="lien vers la page de la ville"><img src="<?= e($row_liste_temperance['image']) ?>"></a>
               <?php } ?>
             </div>
             <!-- Nom element tempere -->
             <div class="span3">
-              <h5><?php echo $row_liste_temperance['element']; ?>&nbsp;: <?php echo $row_liste_temperance['nom']; ?></h5>
+              <h5><?= e($row_liste_temperance['element']) ?>&nbsp;: <?= e($row_liste_temperance['nom']) ?></h5>
             </div>
             <!-- contenu categorie -->
             <div class="span4"> <em>Lanc&eacute;e il y a
@@ -232,13 +232,13 @@ $totalRows_nb_juges = mysql_num_rows($nb_juges);
 	  echo $diff;?>
               </em></div>
             <div class="span3">
-              <h5>Nombre de juges ayant vot&eacute;&nbsp;: <?php echo $row_nb_juges['nbjuges']; ?></h5>
+              <h5>Nombre de juges ayant vot&eacute;&nbsp;: <?= e($row_nb_juges['nbjuges']) ?></h5>
             </div>
             <div class="span1"> 
               <!-- Boutons modifier -->
               <?php 
 				if ($row_liste_temperance['element'] == "pays") { ?>
-              <a class="btn btn-temperance" href="php/temperance-rapport-pays.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site"><?php echo get_note_finale($row_liste_temperance['note']); ?>
+              <a class="btn btn-temperance" href="php/temperance-rapport-pays.php?ch_temp_id=<?= e($row_liste_temperance['id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site"><?php echo get_note_finale($row_liste_temperance['note']); ?>
               <?php	if ($row_liste_temperance['tendance'] == "sup") { ?>
               <i class="icon-arrow-up icon-white"></i>
               <?php } elseif ($row_liste_temperance['tendance'] == "inf") { ?>
@@ -249,7 +249,7 @@ $totalRows_nb_juges = mysql_num_rows($nb_juges);
               </a>
               <?php }
                 if ($row_liste_temperance['element'] == "ville") { ?>
-              <a class="btn btn-temperance" href="php/temperance-rapport-ville.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site">Note&nbsp;: <?php echo get_note_finale($row_liste_temperance['note']); ?>
+              <a class="btn btn-temperance" href="php/temperance-rapport-ville.php?ch_temp_id=<?= e($row_liste_temperance['id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site">Note&nbsp;: <?php echo get_note_finale($row_liste_temperance['note']); ?>
               <?php	if ($row_liste_temperance['tendance'] == "sup") { ?>
               <i class="icon-arrow-up icon-white"></i>
               <?php } elseif ($row_liste_temperance['tendance'] == "inf") { ?>

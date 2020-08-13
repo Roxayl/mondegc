@@ -46,7 +46,7 @@ if(isset($_SESSION['userObject'])) {
   <div class="navbar-inner">
     <div class="container">
       <!-- Formulaire connexion Tablettes -->
-      <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="connexion" class="navbar-form pull-right visible-tablet <?php echo $_SESSION['menu_connexion']; ?>">
+      <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="connexion" class="navbar-form pull-right visible-tablet <?= e($_SESSION['menu_connexion']) ?>">
         <input class="span2" type="text" placeholder="Identifiant" name="identifiant"  id="identifiant">
         <input class="span2" type="password" placeholder="Mot de passe" name="mot_de_passe" id="mot_de_passe">
         <button type="submit" class="btn btn-connexion">connexion</button>
@@ -72,7 +72,7 @@ if(isset($_SESSION['userObject'])) {
       <div class="nav-collapse collapse">
 
         <!-- Formulaire connexion desktop / mobile -->
-        <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="connexion" class="navbar-form hidden-tablet <?php echo $_SESSION['menu_connexion']; ?>">
+        <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="connexion" class="navbar-form hidden-tablet <?= e($_SESSION['menu_connexion']) ?>">
           <div class="">
             <input class="span2" type="text" placeholder="Identifiant" name="identifiant"  id="identifiant">
           </div>
@@ -138,7 +138,7 @@ if(isset($_SESSION['userObject'])) {
             <a href="<?= DEF_URI_PATH ?>Page-carte.php" class="dropdown-toggle" data-toggle="dropdown" title="liste des pays class&eacute;s par continent">Carte et pays <b class="caret hidden-phone"></b></a>
             <ul class="dropdown-menu dropdown-double hidden-phone">
               <div class="drop-colonne-gauche">
-                <li class="nav-lien-carte" href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><a href="<?= DEF_URI_PATH ?>Page-carte.php"><div><h3>Explorer la carte</h3></div></a></li>
+                <li class="nav-lien-carte" href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><a href="<?= DEF_URI_PATH ?>Page-carte.php"><div><h3>Explorer la carte</h3></div></a></li>
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Aurinea.png" class="img-continent"> R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</li>
                 <?php
 				do { 
@@ -147,7 +147,7 @@ if(isset($_SESSION['userObject'])) {
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
 					} ?>
-                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><img src="<?php echo $row_menu['ch_pay_lien_imgdrapeau']; ?>" class="img-menu-drapeau"> <?php echo $row_menu['ch_pay_nom']; ?></a></li>
+                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
 				} while ($row_menu = mysql_fetch_assoc($menu));
 				mysql_data_seek($menu,0); ?>
@@ -160,7 +160,7 @@ if(isset($_SESSION['userObject'])) {
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
 					} ?>
-                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><img src="<?php echo $row_menu['ch_pay_lien_imgdrapeau']; ?>" class="img-menu-drapeau"> <?php echo $row_menu['ch_pay_nom']; ?></a></li>
+                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
 				} while ($row_menu = mysql_fetch_assoc($menu));
 				mysql_data_seek($menu,0); ?>
@@ -173,7 +173,7 @@ if(isset($_SESSION['userObject'])) {
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
 					} ?>
-                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><img src="<?php echo $row_menu['ch_pay_lien_imgdrapeau']; ?>" class="img-menu-drapeau"> <?php echo $row_menu['ch_pay_nom']; ?></a></li>
+                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
 				} while ($row_menu = mysql_fetch_assoc($menu));
 				mysql_data_seek($menu,0); ?>
@@ -187,7 +187,7 @@ if(isset($_SESSION['userObject'])) {
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
 					} ?>
-                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><img src="<?php echo $row_menu['ch_pay_lien_imgdrapeau']; ?>" class="img-menu-drapeau"> <?php echo $row_menu['ch_pay_nom']; ?></a></li>
+                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
 				} while ($row_menu = mysql_fetch_assoc($menu));
 				mysql_data_seek($menu,0); ?>
@@ -200,7 +200,7 @@ if(isset($_SESSION['userObject'])) {
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
 					} ?>
-                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><img src="<?php echo $row_menu['ch_pay_lien_imgdrapeau']; ?>" class="img-menu-drapeau"> <?php echo $row_menu['ch_pay_nom']; ?></a></li>
+                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
 				} while ($row_menu = mysql_fetch_assoc($menu));
 				mysql_data_seek($menu,0); ?>
@@ -213,7 +213,7 @@ if(isset($_SESSION['userObject'])) {
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
 					} ?>
-                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><img src="<?php echo $row_menu['ch_pay_lien_imgdrapeau']; ?>" class="img-menu-drapeau"> <?php echo $row_menu['ch_pay_nom']; ?></a></li>
+                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
 				} while ($row_menu = mysql_fetch_assoc($menu));
 				mysql_data_seek($menu,0); ?>

@@ -252,7 +252,7 @@ init();
   <div class="container container-carousel">
     <?php if ($row_infoVille['ch_vil_lien_img1'] OR $row_infoVille['ch_vil_lien_img2'] OR $row_infoVille['ch_vil_lien_img3'] OR $row_infoVille['ch_vil_lien_img4'] OR $row_infoVille['ch_vil_lien_img5']) { ?>
     <div class="titre-caroussel-container">
-    <h1 class="titre-caroussel"><?php echo $row_infoVille['ch_vil_nom']; ?></h1>
+    <h1 class="titre-caroussel"><?= e($row_infoVille['ch_vil_nom']) ?></h1>
     </div>
     <section id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
@@ -296,7 +296,7 @@ init();
     <!-- Titre si pas de carrousel
     ================================================== -->
     <?php } else { ?>
-    <h1><?php echo $row_infoVille['ch_vil_nom']; ?></h1>
+    <h1><?= e($row_infoVille['ch_vil_nom']) ?></h1>
     <?php } ?>
   </div>
 </header>
@@ -308,12 +308,12 @@ init();
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#info-ville">
           <?php if ($row_infoVille['ch_vil_armoiries']) { ?>
-          <img src="<?php echo $row_infoVille['ch_vil_armoiries']; ?>">
+          <img src="<?= e($row_infoVille['ch_vil_armoiries']) ?>">
           <?php } else { ?>
           <img src="assets/img/imagesdefaut/blason.jpg">
           <?php }?>
-          <p><strong><?php echo $row_infoVille['ch_vil_nom']; ?></strong></p>
-          <p><em>Cr&eacute;&eacute;e par <?php echo $row_User['ch_use_login']; ?></em></p>
+          <p><strong><?= e($row_infoVille['ch_vil_nom']) ?></strong></p>
+          <p><em>Cr&eacute;&eacute;e par <?= e($row_User['ch_use_login']) ?></em></p>
           </a></li>
         <?php if($row_User['ch_use_id'] != $row_Pays['ch_use_id']) { ?>
         <li><a href="#diplomatie">Diplomatie</a></li>
@@ -335,7 +335,7 @@ init();
         <li><a href="#patrimoine">Culture</a></li>
         <?php } ?>
         <li><a href="#commentaires">Visites</a></li>
-        <li><a href="page-pays.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>"><?php echo $row_Pays['ch_pay_nom']; ?></a></li>
+        <li><a href="page-pays.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>"><?= e($row_Pays['ch_pay_nom']) ?></a></li>
       </ul>
     </div>
     <!-- END Docs nav
@@ -347,13 +347,13 @@ init();
 
     <ul class="breadcrumb pull-left">
       <li><a href="Page-carte.php#liste-pays">Pays</a> <span class="divider">/</span></li>
-      <li><a href="page-pays.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>"><?= $row_Pays['ch_pay_nom'] ?></a> <span class="divider">/</span></li>
-        <li><a href="page-pays.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>#villes">Villes</a> <span class="divider">/</span></li>
+      <li><a href="page-pays.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>"><?= $row_Pays['ch_pay_nom'] ?></a> <span class="divider">/</span></li>
+        <li><a href="page-pays.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>#villes">Villes</a> <span class="divider">/</span></li>
       <li class="active"><?= $row_infoVille['ch_vil_nom'] ?></li>
     </ul>
 
       <?php if ($row_temperance) { ?>
-      <a class="btn btn-primary" href="php/temperance-rapport-pays.php?ch_temp_id=<?php echo $row_temperance['ch_temp_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le d&eacute;tail de cette note">Note des juges&nbsp;: <?php echo get_note_finale($row_temperance['ch_temp_note']); ?>
+      <a class="btn btn-primary" href="php/temperance-rapport-pays.php?ch_temp_id=<?= e($row_temperance['ch_temp_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le d&eacute;tail de cette note">Note des juges&nbsp;: <?php echo get_note_finale($row_temperance['ch_temp_note']); ?>
       <?php	if ($row_temperance['ch_temp_tendance'] == "sup") { ?>
       <i class="icon-arrow-up icon-white"></i>
       <?php } elseif ($row_temperance['ch_temp_tendance'] == "inf") { ?>
@@ -375,16 +375,16 @@ init();
      ================================================== -->
       <?php if (($_SESSION['statut'] >= 20) OR ($row_User['ch_use_id'] == $_SESSION['user_ID'])) { ?>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/ville_confirmation_supprimer.php" method="post">
-        <input name="ville-ID" type="hidden" value="<?php echo $row_infoVille['ch_vil_ID']; ?>">
+        <input name="ville-ID" type="hidden" value="<?= e($row_infoVille['ch_vil_ID']) ?>">
         <button class="btn btn-danger" type="submit" title="supprimer cette ville"><i class="icon-trash icon-white"></i></button>
       </form>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="get">
-        <input name="ville-ID" type="hidden" value="<?php echo $row_infoVille['ch_vil_ID']; ?>">
+        <input name="ville-ID" type="hidden" value="<?= e($row_infoVille['ch_vil_ID']) ?>">
         <button class="btn btn-primary" type="submit" title="modifier la page de cette ville"><i class="icon-pencil icon-white"></i></button>
       </form>
       <?php } ?>
       <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
-      <a class="btn btn-primary pull-right" href="php/partage-ville.php?ch_vil_ID=<?php echo $row_infoVille['ch_vil_ID']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
+      <a class="btn btn-primary pull-right" href="php/partage-ville.php?ch_vil_ID=<?= e($row_infoVille['ch_vil_ID']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
       <div class="clearfix"></div>
 
@@ -399,7 +399,7 @@ init();
 ================================================== -->
       <div class="span12 thumb thumb-ville">
         <?php if ($row_infoVille['ch_vil_armoiries']) { ?>
-        <img src="<?php echo $row_infoVille['ch_vil_armoiries']; ?>">
+        <img src="<?= e($row_infoVille['ch_vil_armoiries']) ?>">
         <?php } else { ?>
         <img src="assets/img/imagesdefaut/blason.jpg">
         <?php }?>
@@ -408,12 +408,12 @@ init();
     <div class="row-fluid">
       <div class="span12">
         <h4>Informations</h4>
-        <div class="well"> <img class="thumb-drapeau" src="<?php echo $row_Pays['ch_pay_lien_imgdrapeau']; ?>">
+        <div class="well"> <img class="thumb-drapeau" src="<?= e($row_Pays['ch_pay_lien_imgdrapeau']) ?>">
           <strong>
             <?php if ($row_infoVille['ch_vil_capitale']==1) {
     echo "capitale";
 } else { echo "ville"; } ?>
-            du pays <a href="page-pays.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>"><?php echo $row_Pays['ch_pay_nom']; ?></a></strong>
+            du pays <a href="page-pays.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>"><?= e($row_Pays['ch_pay_nom']) ?></a></strong>
           <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;:</strong>
             <?php  echo date("d/m/Y", strtotime($row_infoVille['ch_vil_mis_jour'])); ?>
           </p>
@@ -424,7 +424,7 @@ init();
             <?php
 $population_ville_francais = number_format($row_infoVille['ch_vil_population'], 0, ',', ' ');
 echo $population_ville_francais; ?></p>
-          <p><strong>Sp&eacute;cialit&eacute;&nbsp;:</strong> <?php echo $row_infoVille['ch_vil_specialite']; ?></p>
+          <p><strong>Sp&eacute;cialit&eacute;&nbsp;:</strong> <?= e($row_infoVille['ch_vil_specialite']) ?></p>
         </div>
         <h4>R&eacute;alis&eacute;e avec</h4>
         <div class="well">
@@ -457,7 +457,7 @@ echo $population_ville_francais; ?></p>
     ================================================== -->
       <section id="presentation" class="titre-vert anchor">
         <div class="well">
-          <p><?php echo $row_infoVille['ch_vil_header']; ?></p>
+          <p><?= e($row_infoVille['ch_vil_header']) ?></p>
         </div>
       </section>
 
@@ -493,10 +493,10 @@ echo $population_ville_francais; ?></p>
             <?php if ($row_Autresvilles) { ?>
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S&eacute;lectionnez une autre ville :</p>
             <form class="well" action="<?= DEF_URI_PATH ?>page-ville.php#carte" method="get">
-              <input type="hidden" name="ch_pay_id" value="<?php echo $row_infoVille['ch_vil_paysID']; ?>" />
+              <input type="hidden" name="ch_pay_id" value="<?= e($row_infoVille['ch_vil_paysID']) ?>" />
               <select name="ch_ville_id" onchange="this.form.submit()">
                 <?php do { ?>
-                <option value="<?php echo $row_Autresvilles['ch_vil_ID']; ?>" <?php if ($colname_infoVille == $row_Autresvilles['ch_vil_ID']) {?>selected<?php } ?>><?php echo $row_Autresvilles['ch_vil_nom']; ?></option>
+                <option value="<?= e($row_Autresvilles['ch_vil_ID']) ?>" <?php if ($colname_infoVille == $row_Autresvilles['ch_vil_ID']) {?>selected<?php } ?>><?= e($row_Autresvilles['ch_vil_nom']) ?></option>
                 <?php } while ($row_Autresvilles = mysql_fetch_assoc($Autresvilles)); ?>
               </select>
             </form>
@@ -584,7 +584,7 @@ echo $population_ville_francais; ?></p>
             <?php if(!$row_infoVille['ch_vil_contenu']) { ?>
                 <p><i>La présentation de cette ville est vide !</i></p>
             <?php } ?>
-            <?php echo $row_infoVille['ch_vil_contenu']; ?>
+            <?= htmlPurify($row_infoVille['ch_vil_contenu']) ?>
         </div>
       </section>
 
@@ -595,7 +595,7 @@ echo $population_ville_francais; ?></p>
         <div class="titre-vert anchor" id="politique">
           <h1>Politique et administration</h1>
         </div>
-        <div class="well"> <?php echo $row_infoVille['ch_vil_administration']; ?> </div>
+        <div class="well"> <?= htmlPurify($row_infoVille['ch_vil_administration']) ?> </div>
       </section>
     <?php } ?>
 
@@ -606,7 +606,7 @@ echo $population_ville_francais; ?></p>
         <div class="titre-vert anchor" id="transports">
           <h1>Transports</h1>
         </div>
-        <div class="well"> <?php echo $row_infoVille['ch_vil_transports']; ?> </div>
+        <div class="well"> <?= htmlPurify($row_infoVille['ch_vil_transports']) ?> </div>
       </section>
     <?php } ?>
 
@@ -655,7 +655,7 @@ echo $population_ville_francais; ?></p>
 
         } while ($row_monument = mysql_fetch_assoc($monument)); ?>
         </div>
-        <div class="well"> <?php echo $row_infoVille['ch_vil_culture']; ?> </div>
+        <div class="well"> <?= htmlPurify($row_infoVille['ch_vil_culture']) ?> </div>
 
         <div class="modal container fade" id="Modal-Monument"></div>
         <script>

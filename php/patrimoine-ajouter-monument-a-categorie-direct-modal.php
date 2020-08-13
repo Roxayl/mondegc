@@ -110,9 +110,9 @@ while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)
         <li>
             <label for="ch_disp_cat_id_<?= $row_mon_cat['ch_mon_cat_ID'] ?>"
                style="display: inline-block;">
-            <?php echo $row_mon_cat['ch_mon_cat_nom']; ?></label>
+            <?= e($row_mon_cat['ch_mon_cat_nom']) ?></label>
             <input type="checkbox" id="ch_disp_cat_id_<?= $row_mon_cat['ch_mon_cat_ID'] ?>"
-                   name="ch_disp_cat_id[]" value="<?php echo $row_mon_cat['ch_mon_cat_ID']; ?>"
+                   name="ch_disp_cat_id[]" value="<?= e($row_mon_cat['ch_mon_cat_ID']) ?>"
                    <?= in_array($row_mon_cat['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ?> />
         </li>
     <?php } while ($row_mon_cat = mysql_fetch_assoc($mon_cat)); ?>

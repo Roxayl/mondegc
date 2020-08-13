@@ -331,7 +331,7 @@ init();
 </header>
 <div class="container corps-page"> 
   <!-- Balance des ressources  -->
-	  <h4>Balance des ressources issues de la carte du pays <?php echo $row_InfoGenerale['ch_pay_nom'];?>
+	  <h4>Balance des ressources issues de la carte du pays <?= e($row_InfoGenerale['ch_pay_nom'])?>
 	  </h4>
   <div class="row-fluid">
     <ul class="token">

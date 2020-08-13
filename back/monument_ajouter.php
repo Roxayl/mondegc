@@ -146,7 +146,7 @@ return true;
       </div>
       <?php if (($_SESSION['statut'] >= 20) AND ($row_users['ch_use_id'] != $_SESSION['user_ID'])) { ?>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/membre-modifier_back.php" method="get">
-        <input name="userID" type="hidden" value="<?php echo $row_users['ch_use_id']; ?>">
+        <input name="userID" type="hidden" value="<?= e($row_users['ch_use_id']) ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Profil du dirigeant</button>
       </form>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_back.php" method="get">
@@ -154,7 +154,7 @@ return true;
         <button class="btn btn-danger" type="submit" title="page de gestion du pays"><i class="icon-pays-small-white"></i> Modifier le pays</button>
       </form>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="get">
-        <input name="ville-ID" type="hidden" value="<?php echo $row_monument['ch_pat_villeID']; ?>">
+        <input name="ville-ID" type="hidden" value="<?= e($row_monument['ch_pat_villeID']) ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion de la ville"> Modifier la ville</button>
       </form>
       <?php }?>

@@ -318,7 +318,7 @@ $('#closemodal').click(function() {
                 <?php } ?>
                 <!-- Nom element tempere -->
                 <div class="span3">
-                    <h5><?php echo $row_liste_temperance['element']; ?>&nbsp;: <?php echo $row_liste_temperance['nom']; ?></h5>
+                    <h5><?= e($row_liste_temperance['element']) ?>&nbsp;: <?= e($row_liste_temperance['nom']) ?></h5>
                 </div>
                 <!-- contenu categorie -->
                 <div class="span4"><em>Lanc&eacute;e il y a
@@ -332,9 +332,9 @@ $('#closemodal').click(function() {
                 <!-- Boutons modifier -->
                 <div class="span2">
                     <?php if ($row_liste_temperance['element'] == "pays") { // visible si pays ?>
-                        <a class="btn btn-primary" href="../php/temperance-questionnaire-pays.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="remplir le questionnaire de notation temperance">Noter</a>
+                        <a class="btn btn-primary" href="../php/temperance-questionnaire-pays.php?ch_temp_id=<?= e($row_liste_temperance['id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="remplir le questionnaire de notation temperance">Noter</a>
                     <?php } else { // visible si ville ?>
-                        <a class="btn btn-primary" href="../php/temperance-questionnaire-ville.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="remplir le questionnaire de notation temperance">Noter</a>
+                        <a class="btn btn-primary" href="../php/temperance-questionnaire-ville.php?ch_temp_id=<?= e($row_liste_temperance['id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="remplir le questionnaire de notation temperance">Noter</a>
                     <?php } ?>
                 </div>
             </li>

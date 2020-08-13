@@ -266,7 +266,7 @@ return true;
 
     <div class="titre-caroussel-container-admin">
         <h2 class="titre-caroussel-h2">Gestion de la ville</h2>
-        <h1 class="titre-caroussel"><?php echo $row_ville['ch_vil_nom']; ?></h1>
+        <h1 class="titre-caroussel"><?= e($row_ville['ch_vil_nom']) ?></h1>
     </div>
     <section id="myCarousel" class="carousel slide">
       <div class="carousel-inner vertical-align-center">
@@ -311,7 +311,7 @@ return true;
     ================================================== -->
     <?php } else { ?>
     <h2>Gestion de la ville</h2>
-    <h1><?php echo $row_ville['ch_vil_nom']; ?></h1>
+    <h1><?= e($row_ville['ch_vil_nom']) ?></h1>
     <?php } ?>
   </div>
 </header>
@@ -323,12 +323,12 @@ return true;
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#info-ville">
           <?php if ($row_ville['ch_vil_armoiries']) { ?>
-          <img src="<?php echo $row_ville['ch_vil_armoiries']; ?>">
+          <img src="<?= e($row_ville['ch_vil_armoiries']) ?>">
           <?php } else { ?>
           <img src="../assets/img/imagesdefaut/blason.jpg">
           <?php }?>
-          <p><strong><?php echo $row_ville['ch_vil_nom']; ?></strong></p>
-          <p><em>Cr&eacute;&eacute;e par <?php echo $row_User['ch_use_login']; ?></em></p>
+          <p><strong><?= e($row_ville['ch_vil_nom']) ?></strong></p>
+          <p><em>Cr&eacute;&eacute;e par <?= e($row_User['ch_use_login']) ?></em></p>
           </a></li>
         <li><a href="#page_ville">Page ville</a></li>
         <li><a href="#mes-communiques">Communiqu&eacute;s officiels</a></li>
@@ -358,20 +358,20 @@ return true;
      ================================================== -->
       <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
       <form class="pull-right" action="membre-modifier_back.php" method="post">
-        <input name="userID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
+        <input name="userID" type="hidden" value="<?= e($row_User['ch_use_id']) ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Profil du dirigeant</button>
       </form>
       <form class="pull-right" action="page_pays_back.php" method="post">
-        <input name="paysID" type="hidden" value="<?php echo $row_ville['ch_vil_paysID']; ?>">
+        <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du pays"><i class="icon-pays-small-white"></i> Modifier le pays</button>
       </form>
       <?php }?>
       <form class="pull-right" action="ville_confirmation_supprimer.php" method="post">
-        <input name="ville-ID" type="hidden" value="<?php echo $row_ville['ch_vil_ID']; ?>">
+        <input name="ville-ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
         <button class="btn btn-danger" type="submit" title="supprimer cette ville"><i class="icon-trash icon-white"></i></button>
       </form>
       <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
-      <a class="btn btn-primary pull-right" href="../php/partage-ville.php?ch_vil_ID=<?php echo $row_ville['ch_vil_ID']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
+      <a class="btn btn-primary pull-right" href="../php/partage-ville.php?ch_vil_ID=<?= e($row_ville['ch_vil_ID']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
       <div class="clearfix"></div>
 
@@ -380,7 +380,7 @@ return true;
       <!-- Debut formulaire de modification ville
      ================================================== -->
       <div id="page_ville" class="titre-vert anchor">
-        <h1>Page de <?php echo $row_ville['ch_vil_nom']; ?></h1>
+        <h1>Page de <?= e($row_ville['ch_vil_nom']) ?></h1>
       </div>
       <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_ville" Id="ajout_ville" onsubmit='return verif_champ(document.ajout_ville.form_coord_X.value);'>
         <section>
@@ -388,10 +388,10 @@ return true;
             <button type="button" class="close" data-dismiss="alert">×</button>
             Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; votre ville et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Compl&eacute;tez-le au fur et &agrave; mesure et mettez-le &agrave; jour.</div>
           <!-- boutons cachés -->
-          <input name="ch_vil_ID" type="hidden" value="<?php echo $row_ville['ch_vil_ID']; ?>">
-          <input name="ch_vil_paysID" type="hidden" value="<?php echo $row_ville['ch_vil_paysID']; ?>" >
-          <input name="ch_vil_label" type="hidden" value="<?php echo $row_ville['ch_vil_label']; ?>">
-          <input name="ch_vil_date_enregistrement" type="hidden" value="<?php echo $row_ville['ch_vil_date_enregistrement']; ?>">
+          <input name="ch_vil_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
+          <input name="ch_vil_paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>" >
+          <input name="ch_vil_label" type="hidden" value="<?= e($row_ville['ch_vil_label']) ?>">
+          <input name="ch_vil_date_enregistrement" type="hidden" value="<?= e($row_ville['ch_vil_date_enregistrement']) ?>">
           <?php $now = date("Y-m-d G:i:s");
 				  $nbupdate = $row_ville['ch_vil_nb_update']+1; ?>
           <input name="ch_vil_mis_jour" type="hidden" value="<?php echo $now; ?>" >
@@ -423,7 +423,7 @@ return true;
                 <div id="sprytextfield2" class="control-group">
                   <label class="control-label" for="ch_vil_nom">Nom de la ville <a href="#" rel="clickover" data-placement="bottom" title="Nom de la ville" data-content="30 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
-                    <input class="input-xlarge" type="text" id="ch_vil_nom" name="ch_vil_nom" value="<?php echo $row_ville['ch_vil_nom']; ?>" placeholder="ma ville">
+                    <input class="input-xlarge" type="text" id="ch_vil_nom" name="ch_vil_nom" value="<?= e($row_ville['ch_vil_nom']) ?>" placeholder="ma ville">
                     <span class="textfieldMaxCharsMsg">30 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>
                 </div>
                 <!-- Type de jeu -->
@@ -444,7 +444,7 @@ return true;
                 <div id="sprytextfield28" class="control-group">
                   <label class="control-label" for="ch_vil_armoiries">Armoiries de la ville <a href="#" rel="clickover" title="Armoiries de la ville" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com). l'image des armoiries sera automatiquement redimensionn&eacute;e en 250 pixel de large et 250 pixels de haut."><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
-                    <input class="span11" type="text" id="ch_vil_armoiries" name="ch_vil_armoiries" value="<?php echo $row_ville['ch_vil_armoiries']; ?>" placeholder="">
+                    <input class="span11" type="text" id="ch_vil_armoiries" name="ch_vil_armoiries" value="<?= e($row_ville['ch_vil_armoiries']) ?>" placeholder="">
                     <br>
                     <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
                 </div>
@@ -467,14 +467,14 @@ return true;
                   <!-- Population -->
                   <label class="control-label" for="ch_vil_population">Population <a href="#" rel="clickover" title="Population" data-content="Entrez le chiffre sans espaces"><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
-                    <input name="ch_vil_population" type="text" class="input-xlarge" id="ch_vil_population" placeholder="0" value="<?php echo $row_ville['ch_vil_population']; ?>">
+                    <input name="ch_vil_population" type="text" class="input-xlarge" id="ch_vil_population" placeholder="0" value="<?= e($row_ville['ch_vil_population']) ?>">
                     <span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
                 </div>
                 <!-- Spécialité -->
                 <div id="sprytextfield4">
                   <label class="control-label" for="ch_vil_specialite">Sp&eacute;cialit&eacute; <a href="#" rel="clickover" title="Sp&eacute;cialit&eacute;" data-content="Entrez ici la spécialit&eacute; de votre ville qui pourrait &ecirc;tre l'agriculture ou le macram&eacute;... 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
-                    <input name="ch_vil_specialite" type="text" class="input-xlarge" id="ch_vil_specialite" placeholder="Petit artisanat local"value="<?php echo $row_ville['ch_vil_specialite']; ?>">
+                    <input name="ch_vil_specialite" type="text" class="input-xlarge" id="ch_vil_specialite" placeholder="Petit artisanat local"value="<?= e($row_ville['ch_vil_specialite']) ?>">
                     <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span></div>
                 </div>
                 <p>&nbsp;</p>
@@ -491,13 +491,13 @@ return true;
                     <div id="sprytextfield29" class="control-group">
                       <label class="control-label">Coordonn&eacute;es X</label>
                       <div class="controls">
-                        <input class="span4" type="text" name="form_coord_X" id="form_coord_X" value="<?php echo $row_ville['ch_vil_coord_X']; ?>" readonly>
+                        <input class="span4" type="text" name="form_coord_X" id="form_coord_X" value="<?= e($row_ville['ch_vil_coord_X']) ?>" readonly>
                         <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span> <span class="textfieldRequiredMsg">Une valeur est requise. Cliquez sur la carte</span></div>
                     </div>
                     <div class="control-group">
                       <label class="control-label">Coordonn&eacute;es Y</label>
                       <div class="controls">
-                        <input class="span4" type="text" name="form_coord_Y" id="form_coord_Y" value="<?php echo $row_ville['ch_vil_coord_Y']; ?>" readonly>
+                        <input class="span4" type="text" name="form_coord_Y" id="form_coord_Y" value="<?= e($row_ville['ch_vil_coord_Y']) ?>" readonly>
                       </div>
                     </div>
                   </div>
@@ -515,7 +515,7 @@ return true;
                   <label class="control-label" for="ch_vil_header">Pr&eacute;sentation <a href="#" rel="clickover" title="Pr&eacute;sentation" data-placement="bottom" data-content="Mettez-ici un r&eacute;sum&eacute; du journal de votre ville. Utilisez les liens vers des ancres html pour des renvois vers le détail dans votre journal"><i class="icon-info-sign"></i></a></label>
                 </div>
                 <div>
-                  <textarea name="ch_vil_header" id="ch_vil_header" class="wysiwyg" rows="15"><?php echo $row_ville['ch_vil_header']; ?></textarea>
+                  <textarea name="ch_vil_header" id="ch_vil_header" class="wysiwyg" rows="15"><?= e($row_ville['ch_vil_header']) ?></textarea>
                 </div>
               </div>
             </div>
@@ -530,7 +530,7 @@ return true;
                   <label class="control-label" for="ch_vil_contenu">Contenu de la page <a href="#" rel="clickover" title="Pr&eacute;sentation" data-content="Ecrivez ici le contenu d&eacute;taill&eacute; de la page de votre ville. R&eacute;alisez une mise en forme simple. Pensez &agrave; l'utilisation du site sur les &eacute;crans mobiles. Vous pouvez la mettre à jour au fur et &agrave; mesure"><i class="icon-info-sign"></i></a></label>
                 </div>
                 <div>
-                  <textarea name="ch_vil_contenu" id="ch_vil_contenu" class="wysiwyg"  rows="30"><?php echo $row_ville['ch_vil_contenu']; ?></textarea>
+                  <textarea name="ch_vil_contenu" id="ch_vil_contenu" class="wysiwyg"  rows="30"><?= htmlPurify($row_ville['ch_vil_contenu']) ?></textarea>
                 </div>
               </div>
             </div>
@@ -545,7 +545,7 @@ return true;
                   <label class="control-label" for="ch_vil_administration">Politique et administration urbaine <a href="#" rel="clickover" title="Pr&eacute;sentation" data-placement="bottom" data-content="Parlez de l'administration de votre ville. Qui est le maire ?"><i class="icon-info-sign"></i></a></label>
                 </div>
                 <div>
-                  <textarea name="ch_vil_administration" id="ch_vil_administration" class="wysiwyg" rows="15"><?php echo $row_ville['ch_vil_administration']; ?></textarea>
+                  <textarea name="ch_vil_administration" id="ch_vil_administration" class="wysiwyg" rows="15"><?= htmlPurify($row_ville['ch_vil_administration']) ?></textarea>
                 </div>
                 </div>
               </div>
@@ -560,7 +560,7 @@ return true;
                   <label class="control-label" for="ch_vil_transports">Transports <a href="#" rel="clickover" title="Pr&eacute;sentation" data-placement="bottom" data-content="Infrastructures de transports dans votre ville"><i class="icon-info-sign"></i></a></label>
                 </div>
                 <div>
-                  <textarea name="ch_vil_transports" id="ch_vil_transports" class="wysiwyg" rows="15"><?php echo $row_ville['ch_vil_transports']; ?></textarea>
+                  <textarea name="ch_vil_transports" id="ch_vil_transports" class="wysiwyg" rows="15"><?= htmlPurify($row_ville['ch_vil_transports']) ?></textarea>
                 </div>
                 </div>
               </div>
@@ -575,7 +575,7 @@ return true;
                   <label class="control-label" for="ch_vil_culture">Culture et Patrimoine <a href="#" rel="clickover" title="Pr&eacute;sentation" data-placement="bottom" data-content="Parlez de ce qui fait le rayonnement culturel de votre ville. Quels sont les événements populaires ?"><i class="icon-info-sign"></i></a></label>
                 </div>
                 <div>
-                  <textarea name="ch_vil_culture" id="ch_vil_culture" class="wysiwyg" rows="15"><?php echo $row_ville['ch_vil_culture']; ?></textarea>
+                  <textarea name="ch_vil_culture" id="ch_vil_culture" class="wysiwyg" rows="15"><?= htmlPurify($row_ville['ch_vil_culture']) ?></textarea>
                 </div>
                 </div>
               </div>
@@ -703,7 +703,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
         <tbody>
           <?php do { ?>
             <tr <?php if ($row_infrastructure['ch_inf_statut']==1) { ?>style="opacity:0.5;"<?php }?>>
-              <td><img src="../assets/img/statutinfra_<?php echo $row_infrastructure['ch_inf_statut']; ?>.png" alt="Statut"></td>
+              <td><img src="../assets/img/statutinfra_<?= e($row_infrastructure['ch_inf_statut']) ?>.png" alt="Statut"></td>
               <td><img src="<?= __s($row_infrastructure['ch_inf_lien_image']) ?>" alt="image de votre construction" width="120px"></td>
               <td><?= __s($row_infrastructure['nom_infra']) ?><br>
                   <small>
@@ -712,11 +712,11 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
                   </small></td>
               <td><?php echo date("d/m/Y", strtotime($row_infrastructure['ch_inf_date'])); ?></td>
               <td><!-- Boutons visualiser infrastructure --> 
-                <a class="btn modal-fullscreen" href="../php/infrastructure-modal.php?ch_inf_id=<?php echo $row_infrastructure['ch_inf_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir les détails"><i class="icon-eye-open"></i></a></td>
+                <a class="btn modal-fullscreen" href="../php/infrastructure-modal.php?ch_inf_id=<?= e($row_infrastructure['ch_inf_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir les détails"><i class="icon-eye-open"></i></a></td>
               <td><!-- Boutons modifier infrastructure -->
                 <a class="btn btn-primary" href="infrastructure_ajouter.php?infra_id=<?= __s($row_infrastructure['ch_inf_id']) ?>" title="Modifier cette infrastructure"><i class="icon-pencil icon-white"></i></a></td>
               <td><!-- Boutons supprimer infrastructure --> 
-                <a class="btn btn-danger" href="../php/infrastructure-confirmer-supprimer-modal.php?ch_inf_id=<?php echo $row_infrastructure['ch_inf_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer cette infrastructure"><i class="icon-trash icon-white"></i></a></td>
+                <a class="btn btn-danger" href="../php/infrastructure-confirmer-supprimer-modal.php?ch_inf_id=<?= e($row_infrastructure['ch_inf_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer cette infrastructure"><i class="icon-trash icon-white"></i></a></td>
             </tr>
             <?php } while ($row_infrastructure = mysql_fetch_assoc($infrastructure)); ?>
         </tbody>
@@ -730,8 +730,8 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
             <a class="btn" href="<?php printf("%s?pageNum_infrastructure=%d%s#mes-infrastructures", $currentPage, min($totalPages_infrastructure, $pageNum_infrastructure + 1), $queryString_infrastructure); ?>"> <i class="icon-forward"></i></a>
             <?php } // Show if not last page ?></p>
               <!--<form action="infrastructure_ajouter.php" method="post">
-                <input name="paysID" type="hidden" value="<?php echo $row_ville['ch_vil_paysID']; ?>">
-                <input name="ville_ID" type="hidden" value="<?php echo $row_ville['ch_vil_ID']; ?>">
+                <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
+                <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
                 <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une infrastructure</button>
               </form>-->
               <a href="infra_select_group.php?ville_id=<?= $row_ville['ch_vil_ID'] ?>"
@@ -742,8 +742,8 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
       </table>
       <?php } else { ?>
       <!--<form action="infrastructure_ajouter.php" method="post">
-        <input name="paysID" type="hidden" value="<?php echo $row_ville['ch_vil_paysID']; ?>">
-        <input name="ville_ID" type="hidden" value="<?php echo $row_ville['ch_vil_ID']; ?>">
+        <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
+        <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
         <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une infrastructure</button>
       </form>-->
           <a href="infra_select_group.php?ville_id=<?= $row_ville['ch_vil_ID'] ?>"
@@ -786,18 +786,18 @@ $('#closemodal').click(function() {
         <tbody>
           <?php do { ?>
             <tr>
-              <td><img src="../assets/img/statutvil_<?php echo $row_monument['ch_pat_statut']; ?>.png" alt="Statut"></td>
+              <td><img src="../assets/img/statutvil_<?= e($row_monument['ch_pat_statut']) ?>.png" alt="Statut"></td>
               <td><?= __s($row_monument['ch_pat_nom']) ?></td>
               <td><?php echo date("d/m/Y", strtotime($row_monument['ch_pat_date'])); ?></td>
               <td>
-                  <a class="btn modal-fullscreen" href="../php/patrimoine-modal.php?ch_pat_id=<?php echo $row_monument['ch_pat_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Voir les détails" style="margin-top: -22px;"><i class="icon-eye-open"></i></a>
+                  <a class="btn modal-fullscreen" href="../php/patrimoine-modal.php?ch_pat_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Voir les détails" style="margin-top: -22px;"><i class="icon-eye-open"></i></a>
               </td>
               <td><form action="monument_modifier.php" method="post">
-                  <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
+                  <input name="monument_ID" type="hidden" value="<?= e($row_monument['ch_pat_id']) ?>">
                   <button class="btn btn-primary" type="submit" title="modifier ce monument"><i class="icon-pencil icon-white"></i></button>
                 </form></td>
               <td><form action="monument_confirmation_supprimer.php" method="post"">
-                  <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
+                  <input name="monument_ID" type="hidden" value="<?= e($row_monument['ch_pat_id']) ?>">
                   <button class="btn btn-danger" type="submit" title="supprimer ce monument"><i class="icon-trash icon-white"></i></button>
                 </form></td>
             </tr>
@@ -814,8 +814,8 @@ $('#closemodal').click(function() {
                   <?php } // Show if not last page ?>
               </p>
               <form action="monument_ajouter.php" method="post">
-                <input name="paysID" type="hidden" value="<?php echo $row_ville['ch_vil_paysID']; ?>">
-                <input name="ville_ID" type="hidden" value="<?php echo $row_ville['ch_vil_ID']; ?>">
+                <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
+                <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
                 <button class="btn btn-primary btn-margin-left" type="submit">Ajouter un monument</button>
               </form></td>
           </tr>
@@ -823,8 +823,8 @@ $('#closemodal').click(function() {
       </table>
       <?php } else { ?>
       <form action="monument_ajouter.php" method="post">
-        <input name="paysID" type="hidden" value="<?php echo $row_ville['ch_vil_paysID']; ?>">
-        <input name="ville_ID" type="hidden" value="<?php echo $row_ville['ch_vil_ID']; ?>">
+        <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
+        <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
         <button class="btn btn-primary btn-margin-left" type="submit">Ajouter un monument</button>
       </form>
       <?php } ?>

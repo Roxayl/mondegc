@@ -49,18 +49,18 @@ $totalRows_fai_cat = mysql_num_rows($fai_cat);
 <form action="<?php echo $editFormAction; ?>" name="ajout-fai_categorie" method="POST" class="form-horizontal" id="ajout-fai_categorie">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Ajouter un monument dans la cat&eacute;gorie <?php echo $row_fai_cat['ch_fai_cat_nom']; ?></h3>
+    <h3 id="myModalLabel">Ajouter un monument dans la cat&eacute;gorie <?= e($row_fai_cat['ch_fai_cat_nom']) ?></h3>
   </div>
   <div class="modal-body"> 
     <!-- Boutons cachés -->
     <?php 
 				  $now= date("Y-m-d G:i:s");?>
-    <input name="ch_disp_fait_hist_cat_id" type="hidden" value="<?php echo $row_fai_cat['ch_fai_cat_ID']; ?>">
+    <input name="ch_disp_fait_hist_cat_id" type="hidden" value="<?= e($row_fai_cat['ch_fai_cat_ID']) ?>">
     <input name="ch_disp_FH_label" type="hidden" value="disp_fai">
     <input name="ch_disp_FH_date" type="hidden" value="<?php echo $now; ?>">
     <select name="ch_disp_fait_hist_id" id="ch_disp_fait_hist_id">
       <?php do { ?>
-      <option value="<?php echo $row_liste_fait_cat['ch_his_id']; ?>"><?php echo $row_liste_fait_cat['ch_his_nom']; ?></option>
+      <option value="<?= e($row_liste_fait_cat['ch_his_id']) ?>"><?= e($row_liste_fait_cat['ch_his_nom']) ?></option>
       <?php } while ($row_liste_fait_cat = mysql_fetch_assoc($liste_fait_cat)); ?>
     </select>
   </div>

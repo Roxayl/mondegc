@@ -116,10 +116,10 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
       </div>
       <div class="alert alert-success">
         <button type="button" class="close" data-dismiss="alert">�</button>
-        <p>Cher <?php echo $row_user_prov['ch_use_prov_login']; ?>, entrez un nouveau mot de passe afin d'acc&eacute;der &agrave; votre compte.</p>
+        <p>Cher <?= e($row_user_prov['ch_use_prov_login']) ?>, entrez un nouveau mot de passe afin d'acc&eacute;der &agrave; votre compte.</p>
       </div>
       <form action="<?php echo $editFormAction; ?>" name="InfoUser" method="POST" class="form-horizontal" id="InfoHeader">
-        <input name="ch_use_id" type="hidden" value="<?php echo $row_UserID['ch_use_id']; ?>">
+        <input name="ch_use_id" type="hidden" value="<?= e($row_UserID['ch_use_id']) ?>">
         <!-- Informations G�n�rales
         ================================================== -->
         <h3>Informations Profil</h3>
@@ -127,7 +127,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
         <div id="sprytextfield3" class="control-group">
           <label class="control-label" for="ch_use_login">Login<a href="#" rel="clickover" title="Nom du pays" data-content="2 caract&egrave;res maximum. Ce nom servira &agrave; identifier le nouveau membre dans l'ensemble du monde GC. Votre login doit &ecirc;tre le m&ecirc;me que sur le forum afin d'assurer la fonction d'envoi de MP. Contactez un membre du haut-conseil s'il doit &ecirc;tre modifi&eacute;."><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input class="input-xlarge" type="text" id="ch_use_login" name="ch_use_login" maxlength="12" value="<?php echo $row_user_prov['ch_use_prov_login']; ?>" readonly>
+            <input class="input-xlarge" type="text" id="ch_use_login" name="ch_use_login" maxlength="12" value="<?= e($row_user_prov['ch_use_prov_login']) ?>" readonly>
             <span class="textfieldRequiredMsg">un login est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">12 caract&egrave;res max.</span></div>
         </div>
         <!-- Password -->

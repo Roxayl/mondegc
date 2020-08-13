@@ -96,13 +96,13 @@ $totalRows_drapeau = mysql_num_rows($drapeau);
       <!-- Debut formulaire -->
       <div class="well well-large"> 
         <!-- Image de contr�le drapeau --> 
-        <img src="<?php echo $row_drapeau['ch_pay_lien_imgdrapeau']; ?>" alt="Drapeau du pays n�<?php echo $row_drapeau['ch_pay_id']; ?>" title="drapeau <?php echo $row_drapeau['ch_pay_nom']; ?>">
+        <img src="<?= e($row_drapeau['ch_pay_lien_imgdrapeau']) ?>" alt="Drapeau du pays n�<?= e($row_drapeau['ch_pay_id']) ?>" title="drapeau <?= e($row_drapeau['ch_pay_nom']) ?>">
         <p>&nbsp;</p>
-        <p>Drapeau du pays <?php echo $row_drapeau['ch_pay_nom']; ?>
+        <p>Drapeau du pays <?= e($row_drapeau['ch_pay_nom']) ?>
         <p>&nbsp;</p>
         <form action="<?= DEF_URI_PATH ?>back/drapeau_modifier.php" method="post" enctype="multipart/form-data">
           <input type="file" name="fileToUpload" id="fileToUpload" data-filename-placement="inside" title="Choisir une nouvelle image">
-          <input name="userID" id="userID" type="hidden" value="<?php echo $_SESSION['user_ID']; ?>">
+          <input name="userID" id="userID" type="hidden" value="<?= e($_SESSION['user_ID']) ?>">
           <input name="paysID" id="paysID" type="hidden" value="<?php echo $colname_pays; ?>">
           <input name="maxwidth" id="maxwidth" type="hidden" value="250">
           <input name="ThumbMaxwidth" id="ThumbMaxwidth" type="hidden" value="100">

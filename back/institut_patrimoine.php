@@ -247,11 +247,11 @@ format: 'hex'});
   <!-- formulaire de modification instituts
      ================================================== -->
   <form class="pull-right-cta" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post" style="margin-top: 30px;">
-    <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
+    <input name="institut_id" type="hidden" value="<?= e($row_institut['ch_ins_ID']) ?>">
     <button class="btn btn-primary btn-cta" type="submit" title="modifier les informations sur l'institut"><i class="icon-edit icon-white"></i> Modifier la description</button>
   </form>
   <div id="titre_institut" class="titre-bleu anchor">
-    <h1>G&eacute;rer le <?php echo $row_institut['ch_ins_nom']; ?></h1>
+    <h1>G&eacute;rer le <?= e($row_institut['ch_ins_nom']) ?></h1>
   </div>
   <div class="clearfix"></div>
 
@@ -284,32 +284,32 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
         <?php do { ?>
           <li class="row-fluid"> 
             <!-- ICONE categories -->
-            <div class="span2 icone-categorie"><img src="<?php echo $row_liste_mon_cat['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_liste_mon_cat['ch_mon_cat_nom']; ?>; <?php if ($row_liste_mon_cat['ch_mon_cat_statut'] ==2 ) {?>opacity:0.5;<?php }?>"></div>
+            <div class="span2 icone-categorie"><img src="<?= e($row_liste_mon_cat['ch_mon_cat_icon']) ?>" alt="icone <?= e($row_liste_mon_cat['ch_mon_cat_nom']) ?>; <?php if ($row_liste_mon_cat['ch_mon_cat_statut'] ==2 ) {?>opacity:0.5;<?php }?>"></div>
             <!-- contenu categorie -->
             <div class="span10 info-listes"> 
               <!-- Boutons modifier / supprimer --> 
-              <a class="pull-right" href="../php/patrimoine-supprimmer-categorie-modal.php?mon_cat_id=<?php echo $row_liste_mon_cat['ch_mon_cat_ID']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer cette cat&eacute;gorie"><i class="icon-remove"></i></a> <a class="pull-right" href="../php/patrimoine-modifier-categorie-modal.php?mon_cat_id=<?php echo $row_liste_mon_cat['ch_mon_cat_ID']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="modifier cette cat&eacute;gorie"><i class="icon-pencil"></i></a> 
+              <a class="pull-right" href="../php/patrimoine-supprimmer-categorie-modal.php?mon_cat_id=<?= e($row_liste_mon_cat['ch_mon_cat_ID']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer cette cat&eacute;gorie"><i class="icon-remove"></i></a> <a class="pull-right" href="../php/patrimoine-modifier-categorie-modal.php?mon_cat_id=<?= e($row_liste_mon_cat['ch_mon_cat_ID']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="modifier cette cat&eacute;gorie"><i class="icon-pencil"></i></a> 
               <!-- Desc categorie -->
-              <h4><?php echo $row_liste_mon_cat['ch_mon_cat_nom']; ?></h4>
-              <p><?php echo $row_liste_mon_cat['ch_mon_cat_desc']; ?></p>
+              <h4><?= e($row_liste_mon_cat['ch_mon_cat_nom']) ?></h4>
+              <p><?= e($row_liste_mon_cat['ch_mon_cat_desc']) ?></p>
                 <div class="row-fluid">
                     <div class="span6 icone-ressources"> <img src="../assets/img/ressources/budget.png" alt="icone Budget">
-                    <p>Budget&nbsp;: <strong><?php echo $row_liste_mon_cat['ch_mon_cat_budget']; ?></strong></p>				
+                    <p>Budget&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_budget']) ?></strong></p>				
                     <img src="../assets/img/ressources/industrie.png" alt="icone Industrie">
-                    <p>Industrie&nbsp;: <strong><?php echo $row_liste_mon_cat['ch_mon_cat_industrie']; ?></strong></p>							
+                    <p>Industrie&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_industrie']) ?></strong></p>							
                     <img src="../assets/img/ressources/bureau.png" alt="icone Commerce">
-                    <p>Commerce&nbsp;: <strong><?php echo $row_liste_mon_cat['ch_mon_cat_commerce']; ?></strong></p>					
+                    <p>Commerce&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_commerce']) ?></strong></p>					
                     <img src="../assets/img/ressources/agriculture.png" alt="icone Agriculture">
-                    <p>Agriculture&nbsp;: <strong><?php echo $row_liste_mon_cat['ch_mon_cat_agriculture']; ?></strong></p>
+                    <p>Agriculture&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_agriculture']) ?></strong></p>
 				</div>					
                     <div class="span6 icone-ressources"> <img src="../assets/img/ressources/tourisme.png" alt="icone Tourisme">
-                    <p>Tourisme&nbsp;: <strong><?php echo $row_liste_mon_cat['ch_mon_cat_tourisme']; ?></strong></p>					
+                    <p>Tourisme&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_tourisme']) ?></strong></p>					
                     <img src="../assets/img/ressources/recherche.png" alt="icone Recherche">
-                    <p>Recherche&nbsp;: <strong><?php echo $row_liste_mon_cat['ch_mon_cat_recherche']; ?></strong></p>					
+                    <p>Recherche&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_recherche']) ?></strong></p>					
                     <img src="../assets/img/ressources/environnement.png" alt="icone Evironnement">
-                    <p>Environnement&nbsp;:<strong><?php echo $row_liste_mon_cat['ch_mon_cat_environnement']; ?></strong></p>			
+                    <p>Environnement&nbsp;:<strong><?= e($row_liste_mon_cat['ch_mon_cat_environnement']) ?></strong></p>			
                     <img src="../assets/img/ressources/education.png" alt="icone Education">
-                    <p>Education&nbsp;: <strong><?php echo $row_liste_mon_cat['ch_mon_cat_education']; ?></strong></p>
+                    <p>Education&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_education']) ?></strong></p>
                   </div>
             </div>
           </li>
@@ -422,26 +422,26 @@ $('#closemodal').click(function() {
       <!-- Image du monument -->
       <div class="span2 img-listes">
         <?php if ($row_new_mon['ch_pat_lien_img1']) {?>
-        <img src="<?php echo $row_new_mon['ch_pat_lien_img1']; ?>" alt="image <?php echo $row_new_mon['ch_pat_nom']; ?>">
+        <img src="<?php echo $row_new_mon['ch_pat_lien_img1']; ?>" alt="image <?= e($row_new_mon['ch_pat_nom']) ?>">
         <?php } else { ?>
         <img src="../assets/img/imagesdefaut/ville.jpg" alt="monument">
         <?php } ?>
       </div>
       <!-- Nom, date et lien vers la page du monument -->
       <div class="span6 info-listes">
-        <h4><?php echo $row_new_mon['ch_pat_nom']; ?></h4>
+        <h4><?= e($row_new_mon['ch_pat_nom']) ?></h4>
         <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
           <?php  echo date("d/m/Y", strtotime($row_new_mon['ch_pat_mis_jour'])); ?>
           &agrave; <?php echo date("G:i:s", strtotime($row_new_mon['ch_pat_mis_jour'])); ?> </p>
         <div class="btn-group form-button-inline">
-          <a class="btn btn-primary" href="../php/patrimoine-modal.php?ch_pat_id=<?php echo $row_new_mon['ch_pat_id']; ?>" data-toggle="modal" data-target="#Modal-Monument">Visiter (dans une fenêtre contextuelle)</a>
+          <a class="btn btn-primary" href="../php/patrimoine-modal.php?ch_pat_id=<?= e($row_new_mon['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument">Visiter (dans une fenêtre contextuelle)</a>
           <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="../page-monument.php?ch_pat_id=<?php echo $row_new_mon['ch_pat_id']; ?>"> Visiter (lien direct)</a></li>
+            <li><a href="../page-monument.php?ch_pat_id=<?= e($row_new_mon['ch_pat_id']) ?>"> Visiter (lien direct)</a></li>
           </ul>
         </div>
 
-        <a class="btn btn-primary btn-margin-left" href="../php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?php echo $row_new_mon['ch_pat_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Ajouter à une catégorie">Ajouter à une catégorie</a>
+        <a class="btn btn-primary btn-margin-left" href="../php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?= e($row_new_mon['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Ajouter à une catégorie">Ajouter à une catégorie</a>
       </div>
       <!-- Affichage des categories du monument -->
     </li>
@@ -491,30 +491,30 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
       <!-- Image du monument -->
       <div class="span2 img-listes">
         <?php if ($row_classer_mon['ch_pat_lien_img1']) {?>
-        <img src="<?php echo $row_classer_mon['ch_pat_lien_img1']; ?>" alt="image <?php echo $row_classer_mon['ch_pat_nom']; ?>">
+        <img src="<?php echo $row_classer_mon['ch_pat_lien_img1']; ?>" alt="image <?= e($row_classer_mon['ch_pat_nom']) ?>">
         <?php } else { ?>
         <img src="../assets/img/imagesdefaut/ville.jpg" alt="monument">
         <?php } ?>
       </div>
       <!-- Nom, date et lien vers la page du monument -->
       <div class="span6 info-listes">
-        <h4><?php echo $row_classer_mon['ch_pat_nom']; ?></h4>
+        <h4><?= e($row_classer_mon['ch_pat_nom']) ?></h4>
         <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
           <?php  echo date("d/m/Y", strtotime($row_classer_mon['ch_pat_mis_jour'])); ?>
           &agrave; <?php echo date("G:i:s", strtotime($row_classer_mon['ch_pat_mis_jour'])); ?> </p>
          <div class="btn-group form-button-inline">
-          <a class="btn btn-primary" href="../php/patrimoine-modal.php?ch_pat_id=<?php echo $row_classer_mon['ch_disp_mon_id']; ?>" data-toggle="modal" data-target="#Modal-Monument">Visiter (dans une fenêtre contextuelle)</a>
+          <a class="btn btn-primary" href="../php/patrimoine-modal.php?ch_pat_id=<?= e($row_classer_mon['ch_disp_mon_id']) ?>" data-toggle="modal" data-target="#Modal-Monument">Visiter (dans une fenêtre contextuelle)</a>
           <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="../page-monument.php?ch_pat_id=<?php echo $row_classer_mon['ch_disp_mon_id']; ?>"> Visiter (lien direct)</a></li>
+            <li><a href="../page-monument.php?ch_pat_id=<?= e($row_classer_mon['ch_disp_mon_id']) ?>"> Visiter (lien direct)</a></li>
           </ul>
         </div>
-        <a class="btn btn-primary btn-margin-left" href="../php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?php echo $row_classer_mon['ch_disp_mon_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Modifier les catégories">Modifier les catégories</a></div>
+        <a class="btn btn-primary btn-margin-left" href="../php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?= e($row_classer_mon['ch_disp_mon_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Modifier les catégories">Modifier les catégories</a></div>
       <!-- Affichage des categories du monument -->
       <div class="span4">
         <?php if (($colname_classer_mon != NULL) AND ($colname_classer_mon != "")) { // affiche bouton ajouter si une categorie est choisie ?>
         <!-- Boutons supprimer monument de la catégorie --> 
-        <a class="pull-right" href="../php/patrimoine-supprimmer-monument-categorie-modal.php?ch_disp_id=<?php echo $row_classer_mon['ch_pat_nom']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer ce monument de cette cat&eacute;gorie"><i class="icon-remove"></i></a>
+        <a class="pull-right" href="../php/patrimoine-supprimmer-monument-categorie-modal.php?ch_disp_id=<?= e($row_classer_mon['ch_pat_nom']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer ce monument de cette cat&eacute;gorie"><i class="icon-remove"></i></a>
         <?php } ?>
         <?php if ($row_liste_mon_cat3) {?>
         <?php do { ?>

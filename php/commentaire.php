@@ -48,7 +48,7 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
     $persoReaction = \GenCity\Monde\Personnage::constructFromEntity($paysReaction);
 
       ?>
-  <li class="row-fluid anchor" id="commentaireID<?php echo $row_commentaire['ch_com_ID']; ?>"> 
+  <li class="row-fluid anchor" id="commentaireID<?= e($row_commentaire['ch_com_ID']) ?>"> 
     <div>
     <div class="span3 img-listes img-avatar">
         <?php if(isset($persoReaction)): ?>
@@ -60,11 +60,11 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
     <div class="cta-container" style="position: relative; top: 3px; margin-right: -15px;">
       <?php if (($_SESSION['statut'] >= 20) OR ($_SESSION['user_ID'] == $row_commentaire['ch_com_user_id'])) { ?>
       <form class="pull-right" action="back/communique_confirmation_supprimer.php" method="post">
-        <input name="communique_ID" type="hidden" value="<?php echo $row_commentaire['ch_com_ID']; ?>">
+        <input name="communique_ID" type="hidden" value="<?= e($row_commentaire['ch_com_ID']) ?>">
         <button class="btn btn-danger" type="submit" title="supprimer le commentaire"><i class="icon-trash icon-white"></i></button>
       </form>
       <form class="pull-right" action="back/communique_modifier.php" method="post">
-        <input name="com_id" type="hidden" value="<?php echo $row_commentaire['ch_com_ID']; ?>">
+        <input name="com_id" type="hidden" value="<?= e($row_commentaire['ch_com_ID']) ?>">
         <button class="btn btn-primary" type="submit" title="modifier le commentaire"><i class="icon-pencil icon-white"></i></button>
       </form>
       <?php } ?>
@@ -79,15 +79,15 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
           <?= __s($persoReaction->get('titre_personnage')) ?></h5>
       <!-- AFFICHAGE DATE --> 
       <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_commentaire['ch_com_date'])); ?></small>
-      <p><?php echo $row_commentaire['ch_com_contenu']; ?></p>
+      <p><?= htmlPurify($row_commentaire['ch_com_contenu']) ?></p>
 
       <?php else: ?>
-      <h4><?php echo $row_commentaire['ch_use_predicat_dirigeant']; ?> <?php echo $row_commentaire['ch_use_prenom_dirigeant']; ?> <?php echo $row_commentaire['ch_use_nom_dirigeant']; ?></h4>
-      <h5><?php echo $row_commentaire['ch_use_titre_dirigeant']; ?></h5>
+      <h4><?= e($row_commentaire['ch_use_predicat_dirigeant']) ?> <?= e($row_commentaire['ch_use_prenom_dirigeant']) ?> <?= e($row_commentaire['ch_use_nom_dirigeant']) ?></h4>
+      <h5><?= e($row_commentaire['ch_use_titre_dirigeant']) ?></h5>
       <!-- AFFICHAGE DATE -->
       <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_commentaire['ch_com_date'])); ?></small>
-      <p><?php echo $row_commentaire['ch_com_contenu']; ?></p>
-      <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?php echo $row_commentaire['ch_use_paysID']; ?>#diplomatie">Afficher son profil</a>
+      <p><?= htmlPurify($row_commentaire['ch_com_contenu']) ?></p>
+      <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?= e($row_commentaire['ch_use_paysID']) ?>#diplomatie">Afficher son profil</a>
       <?php endif; ?>
 
       </div>

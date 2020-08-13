@@ -63,7 +63,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
   <?php $now= date("Y-m-d G:i:s");?>
   <input name="ch_not_temp_label" type="hidden" value="notation">
   <input name="ch_not_temp_date" type="hidden" value="<?php echo $now; ?>">
-  <input name="ch_not_temp_juge" type="hidden" value="<?php echo $_SESSION['login_user']; ?>">
+  <input name="ch_not_temp_juge" type="hidden" value="<?= e($_SESSION['login_user']) ?>">
   <input name="ch_not_temp_temperance_id" type="hidden" value="<?php echo $colname_temperance; ?>">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
@@ -71,7 +71,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
   </div>
   <div class="modal-body">
     <div class="well">
-      <h4>Vous notez la ville <a href="../page-ville.php?ch_pay_id=<?php echo $row_ville['ch_pay_id']; ?>ch_ville_id=<?php echo $row_ville['ch_vil_ID']; ?>" target="_blank"><?php echo $row_ville['ch_vil_nom']; ?></a> appartenant au pays <a href="../page-pays.php?ch_pay_id=<?php echo $row_ville['ch_pay_id']; ?>" target="_blank"><?php echo $row_ville['ch_pay_nom']; ?></a></h4>
+      <h4>Vous notez la ville <a href="../page-ville.php?ch_pay_id=<?= e($row_ville['ch_pay_id']) ?>ch_ville_id=<?= e($row_ville['ch_vil_ID']) ?>" target="_blank"><?= e($row_ville['ch_vil_nom']) ?></a> appartenant au pays <a href="../page-pays.php?ch_pay_id=<?= e($row_ville['ch_pay_id']) ?>" target="_blank"><?= e($row_ville['ch_pay_nom']) ?></a></h4>
     </div>
     <ul class="listes">
       <div class="titre-gris">

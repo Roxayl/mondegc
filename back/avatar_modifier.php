@@ -108,9 +108,9 @@ if (isset($uploadconfirm)) {
         <?php renderElement('errormsgs'); ?>
 
         <!-- Image de contr�le drapeau --> 
-        <img src="<?php echo $character['lien_img']; ?>" alt="avatar <?php echo $character['nom_personnage']; ?>" title="drapeau <?php echo $character['nom_personnage']; ?>>">
+        <img src="<?= e($character['lien_img']) ?>" alt="avatar <?= e($character['nom_personnage']) ?>" title="drapeau <?= e($character['nom_personnage']) ?>>">
         <p>&nbsp;</p>
-        <p><?php echo $character['predicat']; ?> <strong><?php echo $character['prenom_personnage']; ?> <?php echo $character['nom_personnage']; ?></strong>
+        <p><?= e($character['predicat']) ?> <strong><?= e($character['prenom_personnage']) ?> <?= e($character['nom_personnage']) ?></strong>
         <p>&nbsp;</p>
         <form action="<?= DEF_URI_PATH ?>back/avatar_modifier.php?paysID=<?= $thisPays->ch_pay_id ?>" method="post" enctype="multipart/form-data">
           <input type="file" name="fileToUpload" id="fileToUpload" data-filename-placement="inside" title="Choisir une nouvelle image">

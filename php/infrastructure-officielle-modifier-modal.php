@@ -92,14 +92,14 @@ if(!empty($row_infra_officielles_group)) {
   <div class="modal-body"> 
     <!-- Boutons cachés -->
     <?php $now= date("Y-m-d G:i:s");?>
-    <input name="ch_inf_off_id" type="hidden" value="<?php echo $row_infra_officielles['ch_inf_off_id']; ?>">
-    <input name="ch_inf_off_label" type="hidden" value="<?php echo $row_infra_officielles['ch_inf_off_label']; ?>">
+    <input name="ch_inf_off_id" type="hidden" value="<?= e($row_infra_officielles['ch_inf_off_id']) ?>">
+    <input name="ch_inf_off_label" type="hidden" value="<?= e($row_infra_officielles['ch_inf_off_label']) ?>">
     <input name="ch_inf_off_date" type="hidden" value="<?php echo $now; ?>">
     <!-- Nom -->
     <div id="sprytextfield1" class="control-group">
       <label class="control-label" for="ch_inf_off_nom">Nom de l'infrastructure </label>
       <div class="controls">
-        <input class="input-xxlarge" type="text" id="ch_inf_off_nom" name="ch_inf_off_nom" value="<?php echo $row_infra_officielles['ch_inf_off_nom']; ?>" maxlength="50" />
+        <input class="input-xxlarge" type="text" id="ch_inf_off_nom" name="ch_inf_off_nom" value="<?= e($row_infra_officielles['ch_inf_off_nom']) ?>" maxlength="50" />
         <br />
         <span class="textfieldMaxCharsMsg">50 caract&egrave;res max.</span>
       <span class="textfieldRequiredMsg">Une valeur est requise.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res min.</span></div>
@@ -108,7 +108,7 @@ if(!empty($row_infra_officielles_group)) {
     <div id="sprytextfield2" class="control-group">
       <label class="control-label" for="ch_inf_off_icone">Lien vers une icone </label>
       <div class="controls">
-        <input class="input-xxlarge" type="text" id="ch_inf_off_icone" name="ch_inf_off_icone" value="<?php echo $row_infra_officielles['ch_inf_off_icone']; ?>">
+        <input class="input-xxlarge" type="text" id="ch_inf_off_icone" name="ch_inf_off_icone" value="<?= e($row_infra_officielles['ch_inf_off_icone']) ?>">
         <br />
       <span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
     </div>
@@ -128,7 +128,7 @@ if(!empty($row_infra_officielles_group)) {
     <div id="sprytextarea1" class="control-group">
       <label class="control-label" for="ch_inf_off_desc">Règles </label>
       <div class="controls">
-        <textarea rows="4" name="ch_inf_off_desc" class="input-xxlarge" id="ch_inf_off_desc"><?php echo $row_infra_officielles['ch_inf_off_desc']; ?></textarea>
+        <textarea rows="4" name="ch_inf_off_desc" class="input-xxlarge" id="ch_inf_off_desc"><?= htmlPurify($row_infra_officielles['ch_inf_off_desc']) ?></textarea>
         <br />
         <span class="textareaMaxCharsMsg">2000 caract&egrave;res max.</span><span class="textareaRequiredMsg">Une valeur est requise.</span></div>
     </div>
@@ -140,7 +140,7 @@ if(!empty($row_infra_officielles_group)) {
     <div id="sprytextfield3" class="control-group">
       <label class="control-label" for="ch_inf_off_budget">Budget </label>
       <div class="controls">
-        <input class="input-small" type="text" id="ch_inf_off_budget" name="ch_inf_off_budget" value="<?php echo $row_infra_officielles['ch_inf_off_budget']; ?>">
+        <input class="input-small" type="text" id="ch_inf_off_budget" name="ch_inf_off_budget" value="<?= e($row_infra_officielles['ch_inf_off_budget']) ?>">
         <br />
       <span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
     </div>
@@ -148,7 +148,7 @@ if(!empty($row_infra_officielles_group)) {
     <div id="sprytextfield4" class="control-group">
       <label class="control-label" for="ch_inf_off_Industrie">Industrie </label>
       <div class="controls">
-        <input class="input-small" type="text" id="ch_inf_off_Industrie" name="ch_inf_off_Industrie" value="<?php echo $row_infra_officielles['ch_inf_off_Industrie']; ?>">
+        <input class="input-small" type="text" id="ch_inf_off_Industrie" name="ch_inf_off_Industrie" value="<?= e($row_infra_officielles['ch_inf_off_Industrie']) ?>">
         <br />
       <span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
     </div>
@@ -156,7 +156,7 @@ if(!empty($row_infra_officielles_group)) {
     <div id="sprytextfield5" class="control-group">
       <label class="control-label" for="ch_inf_off_Commerce">Commerce </label>
       <div class="controls">
-        <input class="input-small" type="text" id="ch_inf_off_Commerce" name="ch_inf_off_Commerce" value="<?php echo $row_infra_officielles['ch_inf_off_Commerce']; ?>">
+        <input class="input-small" type="text" id="ch_inf_off_Commerce" name="ch_inf_off_Commerce" value="<?= e($row_infra_officielles['ch_inf_off_Commerce']) ?>">
         <br />
       <span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
     </div>
@@ -164,7 +164,7 @@ if(!empty($row_infra_officielles_group)) {
     <div id="sprytextfield6" class="control-group">
       <label class="control-label" for="ch_inf_off_Agriculture">Agriculture </label>
       <div class="controls">
-        <input class="input-small" type="text" id="ch_inf_off_Agriculture" name="ch_inf_off_Agriculture" value="<?php echo $row_infra_officielles['ch_inf_off_Agriculture']; ?>">
+        <input class="input-small" type="text" id="ch_inf_off_Agriculture" name="ch_inf_off_Agriculture" value="<?= e($row_infra_officielles['ch_inf_off_Agriculture']) ?>">
         <br />
       <span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
     </div>
@@ -174,7 +174,7 @@ if(!empty($row_infra_officielles_group)) {
     <div id="sprytextfield7" class="control-group">
       <label class="control-label" for="ch_inf_off_Tourisme">Tourisme </label>
       <div class="controls">
-        <input class="input-small" type="text" id="ch_inf_off_Tourisme" name="ch_inf_off_Tourisme" value="<?php echo $row_infra_officielles['ch_inf_off_Tourisme']; ?>">
+        <input class="input-small" type="text" id="ch_inf_off_Tourisme" name="ch_inf_off_Tourisme" value="<?= e($row_infra_officielles['ch_inf_off_Tourisme']) ?>">
         <br />
       <span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
     </div>
@@ -182,7 +182,7 @@ if(!empty($row_infra_officielles_group)) {
     <div id="sprytextfield8" class="control-group">
       <label class="control-label" for="ch_inf_off_Recherche">Recherche </label>
       <div class="controls">
-        <input class="input-small" type="text" id="ch_inf_off_Recherche" name="ch_inf_off_Recherche" value="<?php echo $row_infra_officielles['ch_inf_off_Recherche']; ?>">
+        <input class="input-small" type="text" id="ch_inf_off_Recherche" name="ch_inf_off_Recherche" value="<?= e($row_infra_officielles['ch_inf_off_Recherche']) ?>">
         <br />
       <span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
     </div>
@@ -190,7 +190,7 @@ if(!empty($row_infra_officielles_group)) {
     <div id="sprytextfield9" class="control-group">
       <label class="control-label" for="ch_inf_off_Environnement">Environnement </label>
       <div class="controls">
-        <input class="input-small" type="text" id="ch_inf_off_Environnement" name="ch_inf_off_Environnement" value="<?php echo $row_infra_officielles['ch_inf_off_Environnement']; ?>">
+        <input class="input-small" type="text" id="ch_inf_off_Environnement" name="ch_inf_off_Environnement" value="<?= e($row_infra_officielles['ch_inf_off_Environnement']) ?>">
         <br />
       <span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
     </div>
@@ -198,7 +198,7 @@ if(!empty($row_infra_officielles_group)) {
     <div id="sprytextfield10" class="control-group">
       <label class="control-label" for="ch_inf_off_Education">Education </label>
       <div class="controls">
-        <input class="input-small" type="text" id="ch_inf_off_Education" name="ch_inf_off_Education" value="<?php echo $row_infra_officielles['ch_inf_off_Education']; ?>">
+        <input class="input-small" type="text" id="ch_inf_off_Education" name="ch_inf_off_Education" value="<?= e($row_infra_officielles['ch_inf_off_Education']) ?>">
         <br />
       <span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
     </div>

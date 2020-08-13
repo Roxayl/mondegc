@@ -152,7 +152,7 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
 ================================================== -->
 <header class="jumbotron jumbotron-medium jumbotron-institut subhead anchor" id="info-institut" >
   <div class="container">
-    <h1><?php echo $row_institut['ch_ins_nom']; ?></h1>
+    <h1><?= e($row_institut['ch_ins_nom']) ?></h1>
   </div>
 </header>
 <div class="container"> 
@@ -164,12 +164,12 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#info-institut">
           <?php if ($row_institut['ch_ins_logo']) { ?>
-          <img src="<?php echo $row_institut['ch_ins_logo']; ?>">
+          <img src="<?= e($row_institut['ch_ins_logo']) ?>">
           <?php } else { ?>
           <img src="assets/img/imagesdefaut/blason.jpg">
           <?php }?>
-          <p><strong><?php echo $row_institut['ch_ins_sigle']; ?></strong></p>
-          <p><em><?php echo $row_institut['ch_ins_nom']; ?></em></p>
+          <p><strong><?= e($row_institut['ch_ins_sigle']) ?></strong></p>
+          <p><em><?= e($row_institut['ch_ins_nom']) ?></em></p>
           </a></li>
         <li><a href="#presentation">Pr&eacute;sentation</a></li>
         <li><a href="#monument">Monuments index&eacute;s</a></li>
@@ -238,8 +238,8 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
           <div class="well">
             <div class="row-fluid">
               <div class="span8">
-                <h3><?php echo $row_info_cat['ch_mon_cat_nom']; ?></h3>
-                <p><?php echo $row_info_cat['ch_mon_cat_desc']; ?></p
+                <h3><?= e($row_info_cat['ch_mon_cat_nom']) ?></h3>
+                <p><?= e($row_info_cat['ch_mon_cat_desc']) ?></p
                 <p><strong>Influence sur l'économie de cette catégorie :</strong></p>
                   <?php
                     renderElement('Temperance/resources', array(
@@ -248,7 +248,7 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
                   ?>
                   <div class="clearfix"></div>
               </div>
-              <div class="span2 icone-categorie icone-large"><img src="<?php echo $row_info_cat['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_info_cat['ch_mon_cat_nom']; ?>" style="background-color:<?php echo $row_info_cat['ch_mon_cat_couleur']; ?>;"></div>
+              <div class="span2 icone-categorie icone-large"><img src="<?= e($row_info_cat['ch_mon_cat_icon']) ?>" alt="icone <?= e($row_info_cat['ch_mon_cat_nom']) ?>" style="background-color:<?= e($row_info_cat['ch_mon_cat_couleur']) ?>;"></div>
             </div>
           </div>
           <?php }?>

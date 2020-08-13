@@ -276,19 +276,19 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
     <?php if ($check_organisation && ($_SESSION['statut'] >= 20) OR ($row_user['ch_use_id'] == $_SESSION['user_ID'])) { ?>
      <div class="moderation">
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/communique_confirmation_supprimer.php" method="post">
-        <input name="communique_ID" type="hidden" value="<?php echo $row_communique['ch_com_ID']; ?>">
+        <input name="communique_ID" type="hidden" value="<?= e($row_communique['ch_com_ID']) ?>">
         <button class="btn btn-danger" type="submit" title="supprimer ce communiqu&eacute;"
             style="margin-left: 5px;"><i class="icon-trash icon-white"></i></button>
       </form>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/communique_modifier.php" method="post">
-        <input name="com_id" type="hidden" value="<?php echo $row_communique['ch_com_ID']; ?>">
+        <input name="com_id" type="hidden" value="<?= e($row_communique['ch_com_ID']) ?>">
         <button class="btn btn-primary" type="submit" title="modifier ce communiqu&eacute;"
             style="margin-left: 5px;"><i class="icon-pencil icon-white"></i></button>
       </form>
       </div>
       <?php } ?>
       <?php if ($row_user['ch_use_id'] == $_SESSION['user_ID']) { ?>
-      <a class="btn btn-primary pull-right" href="php/partage-communique.php?com_id=<?php echo $row_communique['ch_com_ID']; ?>" data-toggle="modal" data-target="#myModal" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
+      <a class="btn btn-primary pull-right" href="php/partage-communique.php?com_id=<?= e($row_communique['ch_com_ID']) ?>" data-toggle="modal" data-target="#myModal" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
   </div>
 
@@ -297,7 +297,7 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
       <h1><?= __s($row_communique['ch_com_titre']) ?></h1>
     </div>
     <!-- Contenu -->
-    <div class="well"><?php echo $row_communique['ch_com_contenu']; ?></div>
+    <div class="well"><?= htmlPurify($row_communique['ch_com_contenu']) ?></div>
     <!-- Commentaire
         ================================================== -->
     <section>

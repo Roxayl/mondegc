@@ -256,13 +256,13 @@ $totalRows_user = mysql_num_rows($user);
     <form action="<?php echo $editFormAction; ?>" method="POST" name="modifier_communique" Id="modifier_communique">
       <!-- Bouton cachés -->
       <?php $now= date("Y-m-d G:i:s");?>
-      <input name="ch_com_ID" type="hidden" value="<?php echo $row_communique['ch_com_ID']; ?>">
+      <input name="ch_com_ID" type="hidden" value="<?= e($row_communique['ch_com_ID']) ?>">
       <input name="ch_com_pays_id" type="hidden" value="<?php echo $row_communique['ch_com_pays_id'] ?>">
-      <input name="ch_com_label" type="hidden" value="<?php echo $row_communique['ch_com_label']; ?>">
-      <input name="ch_com_categorie" type="hidden" value="<?php echo $row_communique['ch_com_categorie']; ?>">
-      <input name="ch_com_element_id" type="hidden" value="<?php echo $row_communique['ch_com_element_id']; ?>">
-      <input name="ch_com_user_id" type="hidden" value="<?php echo $row_communique['ch_com_user_id']; ?>">
-      <input name="ch_com_date" type="hidden" value="<?php echo $row_communique['ch_com_date']; ?>">
+      <input name="ch_com_label" type="hidden" value="<?= e($row_communique['ch_com_label']) ?>">
+      <input name="ch_com_categorie" type="hidden" value="<?= e($row_communique['ch_com_categorie']) ?>">
+      <input name="ch_com_element_id" type="hidden" value="<?= e($row_communique['ch_com_element_id']) ?>">
+      <input name="ch_com_user_id" type="hidden" value="<?= e($row_communique['ch_com_user_id']) ?>">
+      <input name="ch_com_date" type="hidden" value="<?= e($row_communique['ch_com_date']) ?>">
       <input name="ch_com_date_mis_jour" type="hidden" value="<?php echo $now; ?>">
       <!-- choix possibilité publication pour communiqués officiels-->
       <?php if (in_array($row_communique['ch_com_categorie'], ['ville', 'pays', 'institut', 'organisation'])) { ?>
@@ -286,12 +286,12 @@ $totalRows_user = mysql_num_rows($user);
       <!-- Titre uniquement dans le cas de communiqués officiels -->
       <?php if (in_array($row_communique['ch_com_categorie'], ['ville', 'pays', 'institut', 'organisation'])) { ?>
       <div id="sprytextfield1">
-        <input name="ch_com_titre" type="text" class="span12" id="ch_com_titre" placeholder="Titre" value="<?php echo $row_communique['ch_com_titre']; ?>">
+        <input name="ch_com_titre" type="text" class="span12" id="ch_com_titre" placeholder="Titre" value="<?= e($row_communique['ch_com_titre']) ?>">
         <span class="textfieldMaxCharsMsg">100 caract&egrave;res max.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res min</span></div>
       <?php } ?>
       <p>&nbsp;</p>
       <!-- Contenu -->
-      <textarea rows="20" name="ch_com_contenu" class="wysiwyg" id="ch_com_contenu"><?php echo $row_communique['ch_com_contenu']; ?></textarea>
+      <textarea rows="20" name="ch_com_contenu" class="wysiwyg" id="ch_com_contenu"><?= htmlPurify($row_communique['ch_com_contenu']) ?></textarea>
       <p>&nbsp;</p>
       <button type="submit" class="btn btn-primary btn-margin-left">Envoyer</button>
       <input type="hidden" name="MM_update" value="modifier_communique">

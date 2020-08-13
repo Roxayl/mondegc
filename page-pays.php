@@ -132,7 +132,7 @@ $_SESSION['last_work'] = 'page-pays.php?ch_pay_id='.$row_Pays['ch_pay_id'];
 <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
- background-image: url(<?php echo $row_Pays['ch_pay_lien_imgheader'];
+ background-image: url(<?= e($row_Pays['ch_pay_lien_imgheader'])
 ?>);
 	background-position: center;
 }
@@ -190,7 +190,7 @@ init();
     <?php if($thisPays->get('ch_pay_continent') === 'RFGC'): ?>
       <h2>République fédérale de Génération City</h2>
     <?php endif; ?>
-    <h1><?php echo $row_Pays['ch_pay_nom']; ?></h1>
+    <h1><?= e($row_Pays['ch_pay_nom']) ?></h1>
   </div>
 </header>
 
@@ -201,9 +201,9 @@ init();
   <div class="row-fluid">
     <div class="span3 bs-docs-sidebar">
       <ul class="nav nav-list bs-docs-sidenav">
-        <li class="row-fluid"><a href="#pays_stats"><img src="<?php echo $row_Pays['ch_pay_lien_imgdrapeau']; ?>">
-          <p><strong><?php echo $row_Pays['ch_pay_nom']; ?></strong></p>
-          <p><em>Cr&eacute;&eacute; par <?php echo $row_User['ch_use_login']; ?></em></p>
+        <li class="row-fluid"><a href="#pays_stats"><img src="<?= e($row_Pays['ch_pay_lien_imgdrapeau']) ?>">
+          <p><strong><?= e($row_Pays['ch_pay_nom']) ?></strong></p>
+          <p><em>Cr&eacute;&eacute; par <?= e($row_User['ch_use_login']) ?></em></p>
           </a></li>
 
         <li><a href="#presentation">Pr&eacute;sentation</a></li>
@@ -246,7 +246,7 @@ init();
 
      <div class="pull-right">
       <?php if ($row_temperance) { ?>
-      <a class="btn btn-temperance" href="php/temperance-rapport-pays.php?ch_temp_id=<?php echo $row_temperance['ch_temp_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le d&eacute;tail de cette note">Note Tempérance&nbsp;: <?php echo get_note_finale($row_temperance['ch_temp_note']); ?>
+      <a class="btn btn-temperance" href="php/temperance-rapport-pays.php?ch_temp_id=<?= e($row_temperance['ch_temp_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le d&eacute;tail de cette note">Note Tempérance&nbsp;: <?php echo get_note_finale($row_temperance['ch_temp_note']); ?>
       <?php	if ($row_temperance['ch_temp_tendance'] == "sup") { ?>
       <i class="icon-arrow-up icon-white"></i>
       <?php } elseif ($row_temperance['ch_temp_tendance'] == "inf") { ?>
@@ -270,19 +270,19 @@ init();
      ================================================== -->
       <?php if ($_SESSION['statut'] >= 30) { ?>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_confirmer_supprimer.php" method="post">
-        <input name="paysID" type="hidden" value="<?php echo $row_Pays['ch_pay_id']; ?>">
+        <input name="paysID" type="hidden" value="<?= e($row_Pays['ch_pay_id']) ?>">
         <button class="btn btn-danger" type="submit" title="supprimer ce pays"><i class="icon-trash icon-white"></i></button>
       </form>
       <?php } ?>
       <?php if (($_SESSION['statut'] >= 20) OR ($row_User['ch_use_id'] == $_SESSION['user_ID'])) { ?>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_back.php" method="post">
-        <input name="paysID" type="hidden" value="<?php echo $row_Pays['ch_pay_id']; ?>">
-        <input name="userID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
+        <input name="paysID" type="hidden" value="<?= e($row_Pays['ch_pay_id']) ?>">
+        <input name="userID" type="hidden" value="<?= e($row_User['ch_use_id']) ?>">
         <button class="btn btn-primary" type="submit" title="modifier la page de ce pays"><i class="icon-pencil icon-white"></i></button>
       </form>
       <?php } ?>
       <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
-      <a class="btn btn-primary pull-right" href="php/partage-pays.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
+      <a class="btn btn-primary pull-right" href="php/partage-pays.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
       <div class="clearfix"></div>
 
@@ -293,7 +293,7 @@ init();
       ?>
       <div class="row-fluid">
         <div class="span12 thumb">
-          <img src="<?php echo $row_Pays['ch_pay_lien_imgdrapeau']; ?>" alt="Drapeau du pays n°<?php echo $row_Pays['ch_pay_id']; ?>" title="drapeau <?php echo $row_Pays['ch_pay_nom']; ?>">
+          <img src="<?= e($row_Pays['ch_pay_lien_imgdrapeau']) ?>" alt="Drapeau du pays n°<?= e($row_Pays['ch_pay_id']) ?>" title="drapeau <?= e($row_Pays['ch_pay_nom']) ?>">
           <br>
           <em><?= __s($row_Pays['ch_pay_devise']) ?></em>
         </div>
@@ -314,7 +314,7 @@ init();
             <p><strong>Population rurale <a href="#" rel="clickover" title="Population rurale" data-content="La population rurale prend en compte la population issue de zones dessin&eacute;es sur la carte"><i class="icon-info-sign"></i></a>&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($row_Pays['ch_pay_population_carte'], 0, ',', ' '); echo $population_pays_francais ?></p>
             <p><strong>Population totale&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($population_pays + $row_Pays['ch_pay_population_carte'], 0, ',', ' '); echo $population_pays_francais ?></p>
           <!-- <p><strong>Population employée&nbsp;:&nbsp;</strong><?php $population_pays_francais = number_format($row_Pays['ch_pay_emploi_carte'], 0, ',', ' '); echo $population_pays_francais ?> habitants</p>-->
-            <p><strong>R&eacute;gime&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_forme_etat']; ?></p>
+            <p><strong>R&eacute;gime&nbsp;:&nbsp;</strong><?= e($row_Pays['ch_pay_forme_etat']) ?></p>
           </div>
           <!-- type de jeu
  ================================================== -->
@@ -341,11 +341,11 @@ init();
       <div class="row-fluid">
         <div class="span12">
           <h4>Situation&nbsp</h4>
-          <img src="Carto/Emplacements/emplacement<?php echo $row_Pays['ch_pay_emplacement']; ?>.jpg" alt="situation du pays <?php echo $row_Pays['ch_pay_nom']; ?>" title="situation pays <?php echo $row_Pays['ch_pay_nom']; ?>">
+          <img src="Carto/Emplacements/emplacement<?= e($row_Pays['ch_pay_emplacement']) ?>.jpg" alt="situation du pays <?= e($row_Pays['ch_pay_nom']) ?>" title="situation pays <?= e($row_Pays['ch_pay_nom']) ?>">
           <div class="well">
-            <p><strong>Capitale&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_capitale']; ?></p>
-            <p><strong>Langues officielles&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_langue_officielle']; ?></p>
-            <p><strong>Monnaie&nbsp;:&nbsp;</strong><?php echo $row_Pays['ch_pay_monnaie']; ?></p>
+            <p><strong>Capitale&nbsp;:&nbsp;</strong><?= e($row_Pays['ch_pay_capitale']) ?></p>
+            <p><strong>Langues officielles&nbsp;:&nbsp;</strong><?= e($row_Pays['ch_pay_langue_officielle']) ?></p>
+            <p><strong>Monnaie&nbsp;:&nbsp;</strong><?= e($row_Pays['ch_pay_monnaie']) ?></p>
           </div>
         </div>
       </div>
@@ -384,8 +384,8 @@ init();
         ================================================== -->
       <section id="presentation" class="anchor">
         <div class="well">
-          <p><?php echo $row_Pays['ch_pay_header_presentation']; ?></p>
-          <?php echo $row_Pays['ch_pay_text_presentation']; ?>
+          <p><?= htmlPurify($row_Pays['ch_pay_header_presentation']) ?></p>
+          <?= htmlPurify($row_Pays['ch_pay_text_presentation']) ?>
         </div>
       </section>
 
@@ -482,15 +482,15 @@ init();
           <ul class="listes">
             <?php do { ?>
               <li class="row-fluid">
-                <div class="span5 img-listes"> <a href="page-ville.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>&ch_ville_id=<?php echo $row_villes['ch_vil_ID']; ?>">
+                <div class="span5 img-listes"> <a href="page-ville.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>&ch_ville_id=<?= e($row_villes['ch_vil_ID']) ?>">
                   <?php if ($row_villes['ch_vil_lien_img1']) {?>
-                  <img src="<?php echo $row_villes['ch_vil_lien_img1']; ?>" alt="<?php echo $row_villes['ch_vil_nom']; ?>">
+                  <img src="<?php echo $row_villes['ch_vil_lien_img1']; ?>" alt="<?= e($row_villes['ch_vil_nom']) ?>">
                   <?php } else { ?>
                   <img src="assets/img/imagesdefaut/ville.jpg" alt="ville">
                   <?php } ?>
                   </a> </div>
                 <div class="span6 info-listes">
-                  <h4><?php echo $row_villes['ch_vil_nom']; ?></h4>
+                  <h4><?= e($row_villes['ch_vil_nom']) ?></h4>
                   <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
                     <?php  echo date("d/m/Y", strtotime($row_villes['ch_vil_mis_jour'])); ?>
                   </p>
@@ -499,11 +499,11 @@ init();
 					  $population_ville_francais = number_format($row_villes['ch_vil_population'], 0, ',', ' ');
 					  echo $population_ville_francais; ?>
                     habitants</p>
-                  <p><strong>Sp&eacute;cialit&eacute;&nbsp;: </strong> <?php echo $row_villes['ch_vil_specialite']; ?></p>
+                  <p><strong>Sp&eacute;cialit&eacute;&nbsp;: </strong> <?= e($row_villes['ch_vil_specialite']) ?></p>
                   <?php if ($row_villes['ch_vil_user'] != $row_User['ch_use_id']) { ?>
-                  <p><em><b>Ville créée par <a href="page-ville.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>&ch_ville_id=<?php echo $row_villes['ch_vil_ID']; ?>#diplomatie"><?php echo $row_villes['ch_use_login']; ?></a></b></em></p>
+                  <p><em><b>Ville créée par <a href="page-ville.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>&ch_ville_id=<?= e($row_villes['ch_vil_ID']) ?>#diplomatie"><?= e($row_villes['ch_use_login']) ?></a></b></em></p>
                   <?php } ?>
-                  <a href="page-ville.php?ch_pay_id=<?php echo $row_Pays['ch_pay_id']; ?>&ch_ville_id=<?php echo $row_villes['ch_vil_ID']; ?>" class="btn btn-primary">Visiter</a> </div>
+                  <a href="page-ville.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>&ch_ville_id=<?= e($row_villes['ch_vil_ID']) ?>" class="btn btn-primary">Visiter</a> </div>
               </li>
               <?php } while ($row_villes = mysql_fetch_assoc($villes)); ?>
           </ul>
@@ -520,8 +520,8 @@ init();
         <div id="map" class="well"></div>
         <?php if ($row_Pays['ch_pay_header_geographie'] OR $row_Pays['ch_pay_text_geographie']) { ?>
         <div class="well">
-          <h5><strong><?php echo $row_Pays['ch_pay_header_geographie']; ?></strong></h5>
-          <?php echo $row_Pays['ch_pay_text_geographie']; ?></div>
+          <h5><strong><?= htmlPurify($row_Pays['ch_pay_header_geographie']) ?></strong></h5>
+          <?= htmlPurify($row_Pays['ch_pay_text_geographie']) ?></div>
         <?php } ?>
       </section>
       
@@ -533,8 +533,8 @@ init();
           <h1>Politique</h1>
         </div>
         <div class="well">
-          <h5><strong><?php echo $row_Pays['ch_pay_header_politique']; ?></strong></h5>
-          <?php echo $row_Pays['ch_pay_text_politique']; ?></div>
+          <h5><strong><?= htmlPurify($row_Pays['ch_pay_header_politique']) ?></strong></h5>
+          <?= htmlPurify($row_Pays['ch_pay_text_politique']) ?></div>
       </section>
       <?php } ?>
       <!-- Histoire
@@ -562,7 +562,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
             <li class="row-fluid">
               <div class="span5 img-listes">
                 <?php if ($row_fait_his['ch_his_lien_img1']) {?>
-                <img src="<?php echo $row_fait_his['ch_his_lien_img1']; ?>" alt="illustration <?php echo $row_fait_his['ch_his_nom']; ?>">
+                <img src="<?php echo $row_fait_his['ch_his_lien_img1']; ?>" alt="illustration <?= e($row_fait_his['ch_his_nom']) ?>">
                 <?php } else { ?>
                 <img src="assets/img/imagesdefaut/ville.jpg" alt="illustration">
                 <?php } ?>
@@ -571,11 +571,11 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
                 <?php if (($row_fait_his['ch_his_date_fait2'] != NULL) AND ($row_fait_his['ch_his_personnage'] == 1)) { ?>
                 <!-- si periode historique -->
                 <h5>Période du <?php echo affDate($row_fait_his['ch_his_date_fait']); ?> au <?php echo affDate($row_fait_his['ch_his_date_fait2']); ?>&nbsp;:</h5>
-                <h4><?php echo $row_fait_his['ch_his_nom']; ?></h4>
+                <h4><?= e($row_fait_his['ch_his_nom']) ?></h4>
                 <?php } elseif (($row_fait_his['ch_his_date_fait2'] != NULL) AND ($row_fait_his['ch_his_personnage'] == 2)) { ?>
                 <!-- si pers historique -->
-                <h4><?php echo $row_fait_his['ch_his_nom']; ?></h4>
-                <p><?php echo $row_fait_his['ch_his_profession']; ?> (<?php echo affDate($row_fait_his['ch_his_date_fait']); ?> - <?php echo affDate($row_fait_his['ch_his_date_fait2']); ?>)&nbsp; <em>
+                <h4><?= e($row_fait_his['ch_his_nom']) ?></h4>
+                <p><?= e($row_fait_his['ch_his_profession']) ?> (<?php echo affDate($row_fait_his['ch_his_date_fait']); ?> - <?php echo affDate($row_fait_his['ch_his_date_fait2']); ?>)&nbsp; <em>
                   <?php 
 	  $d1 = new DateTime($row_fait_his['ch_his_date_fait']);
 	  $d2 = new DateTime($row_fait_his['ch_his_date_fait2']);
@@ -584,8 +584,8 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
                   </em></p>
                 <?php } elseif (($row_fait_his['ch_his_date_fait2'] == NULL) AND ($row_fait_his['ch_his_personnage'] == 2)) { ?>
                 <!-- si pers vivant -->
-                <h4><?php echo $row_fait_his['ch_his_nom']; ?></h4>
-                <p><?php echo $row_fait_his['ch_his_profession']; ?> (<?php echo affDate($row_fait_his['ch_his_date_fait']); ?>-&nbsp;&nbsp;)&nbsp; <em>
+                <h4><?= e($row_fait_his['ch_his_nom']) ?></h4>
+                <p><?= e($row_fait_his['ch_his_profession']) ?> (<?php echo affDate($row_fait_his['ch_his_date_fait']); ?>-&nbsp;&nbsp;)&nbsp; <em>
                   <?php 
 	  $d1 = new DateTime($row_fait_his['ch_his_date_fait']);
 	  $d2 = new DateTime('NOW');
@@ -595,7 +595,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
                 <?php } else { ?>
                 <!-- si fait historique -->
                 <h5>&Eacute;v&eacute;nement du <?php echo affDate($row_fait_his['ch_his_date_fait']); ?>&nbsp;:</h5>
-                <h4><?php echo $row_fait_his['ch_his_nom']; ?></h4>
+                <h4><?= e($row_fait_his['ch_his_nom']) ?></h4>
                 <?php } ?>
                 <?php if ($row_liste_fai_cat3) { ?>
                 <div class="row-fluid icone-categorie">
@@ -608,10 +608,10 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
                 <?php } else  {  ?>
                 <p>&nbsp;</p>
                 <?php }?>
-                <p><strong>Description&nbsp;: </strong> <?php echo $row_fait_his['ch_his_description']; ?></p>
-                <a class="btn btn-primary" href="php/fait-his-modal.php?ch_his_id=<?php echo $row_fait_his['ch_his_id']; ?>" data-toggle="modal" data-target="#Modal-Monument">Consulter</a>
+                <p><strong>Description&nbsp;: </strong> <?= e($row_fait_his['ch_his_description']) ?></p>
+                <a class="btn btn-primary" href="php/fait-his-modal.php?ch_his_id=<?= e($row_fait_his['ch_his_id']) ?>" data-toggle="modal" data-target="#Modal-Monument">Consulter</a>
                 <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
-                <a class="btn btn-primary" href="php/partage-fait-hist.php?ch_his_id=<?php echo $row_fait_his['ch_his_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i></a>
+                <a class="btn btn-primary" href="php/partage-fait-hist.php?ch_his_id=<?= e($row_fait_his['ch_his_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i></a>
                 <?php }?>
               </div>
             </li>
@@ -623,8 +623,8 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         <?php } ?>
         <?php if ($row_Pays['ch_pay_header_histoire'] OR $row_Pays['ch_pay_text_histoire']) { ?>
         <div class="well">
-          <h5><strong><?php echo $row_Pays['ch_pay_header_histoire']; ?></strong></h5>
-          <?php echo $row_Pays['ch_pay_text_histoire']; ?> </div>
+          <h5><strong><?= htmlPurify($row_Pays['ch_pay_header_histoire']) ?></strong></h5>
+          <?= htmlPurify($row_Pays['ch_pay_text_histoire']) ?> </div>
         <?php } ?>
       </section>
       <?php } ?>
@@ -711,8 +711,8 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         <?php if ($row_Pays['ch_pay_header_economie'] OR $row_Pays['ch_pay_text_economie']) { ?>
         <p>&nbsp;</p>
         <div class="well">
-          <h5><strong><?php echo $row_Pays['ch_pay_header_economie']; ?></strong></h5>
-          <?php echo $row_Pays['ch_pay_text_economie']; ?></div>
+          <h5><strong><?= htmlPurify($row_Pays['ch_pay_header_economie']) ?></strong></h5>
+          <?= htmlPurify($row_Pays['ch_pay_text_economie']) ?></div>
         <?php } ?>
       </section>
       <!-- Transport
@@ -723,8 +723,8 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
           <h1>Transport</h1>
         </div>
         <div class="well">
-          <h5><strong><?php echo $row_Pays['ch_pay_header_transport']; ?></strong></h5>
-          <?php echo $row_Pays['ch_pay_text_transport']; ?></div>
+          <h5><strong><?= htmlPurify($row_Pays['ch_pay_header_transport']) ?></strong></h5>
+          <?= htmlPurify($row_Pays['ch_pay_text_transport']) ?></div>
       </section>
       <?php } ?>
       <!-- Sport
@@ -735,8 +735,8 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
           <h1>Sport</h1>
         </div>
         <div class="well">
-          <h5><strong><?php echo $row_Pays['ch_pay_header_sport']; ?></strong></h5>
-          <?php echo $row_Pays['ch_pay_text_sport']; ?></div>
+          <h5><strong><?= htmlPurify($row_Pays['ch_pay_header_sport']) ?></strong></h5>
+          <?= htmlPurify($row_Pays['ch_pay_text_sport']) ?></div>
       </section>
       <?php } ?>
       <?php if ($row_Pays['ch_pay_header_culture'] OR $row_Pays['ch_pay_text_culture']) { ?>
@@ -747,8 +747,8 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
           <h1>Culture</h1>
         </div>
         <div class="well">
-          <h5><?php echo $row_Pays['ch_pay_header_culture']; ?></h5>
-          <?php echo $row_Pays['ch_pay_text_culture']; ?></div>
+          <h5><?= htmlPurify($row_Pays['ch_pay_header_culture']) ?></h5>
+          <?= htmlPurify($row_Pays['ch_pay_text_culture']) ?></div>
       </section>
       <?php } ?>
       <!-- Patrimoine
@@ -802,8 +802,8 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         <?php } ?>
         <?php if ($row_Pays['ch_pay_header_patrimoine'] OR $row_Pays['ch_pay_text_patrimoine']) { ?>
         <div class="well">
-          <h5><strong><?php echo $row_Pays['ch_pay_header_patrimoine']; ?></strong></h5>
-          <?php echo $row_Pays['ch_pay_text_patrimoine']; ?> </div>
+          <h5><strong><?= htmlPurify($row_Pays['ch_pay_header_patrimoine']) ?></strong></h5>
+          <?= htmlPurify($row_Pays['ch_pay_text_patrimoine']) ?> </div>
         <?php } ?>
       </section>
       <?php } ?>

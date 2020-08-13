@@ -231,13 +231,13 @@ div.editPanel {
   <!-- formulaire de modification instituts
      ================================================== -->
   <form class="pull-right-cta" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post" style="margin-top: 30px;">
-    <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
+    <input name="institut_id" type="hidden" value="<?= e($row_institut['ch_ins_ID']) ?>">
     <button class="btn btn-primary btn-cta" type="submit" title="Modifier les informations sur le Comité"><i class="icon-edit icon-white"></i> Modifier la description</button>
   </form>
   <!-- Liste des Communiqués
         ================================================== -->
   <div id="titre_institut" class="titre-bleu anchor">
-    <h1>G&eacute;rer le <?php echo $row_institut['ch_ins_nom']; ?></h1>
+    <h1>G&eacute;rer le <?= e($row_institut['ch_ins_nom']) ?></h1>
   </div>
 
   <div class="well">

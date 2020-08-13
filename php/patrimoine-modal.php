@@ -54,7 +54,7 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
   <!-- Titre-->
   <div class="titre-vert">
-    <h1><?php echo $row_monument['ch_pat_nom']; ?><br>
+    <h1><?= e($row_monument['ch_pat_nom']) ?><br>
     <small style="font-size: 20px;">Un monument au <?= __s($thisPays->get('ch_pay_nom')) ?></small></h1>
   </div>
 </div>
@@ -107,15 +107,15 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
     <!-- Titre si pas de carrousel
     ================================================== -->
     <?php } else { ?>
-    <h1><?php echo $row_monument['ch_pat_nom']; ?></h1>
+    <h1><?= e($row_monument['ch_pat_nom']) ?></h1>
     <?php } ?>
   </div>
   <div class="well">
     <div class="row-fluid">
       <div class="span8">
-        <p><strong>Pays&nbsp;:</strong> <img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pat_paysID']; ?>"><?php echo $row_monument['ch_pay_nom']; ?></a></p>
-        <p><strong>Ville&nbsp;:</strong> <a class="" href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pat_paysID']; ?>&ch_ville_id=<?php echo $row_monument['ch_pat_villeID']; ?>"><?php echo $row_monument['ch_vil_nom']; ?></a></p>
-        <p><?php echo $row_monument['ch_pat_description']; ?></p>
+        <p><strong>Pays&nbsp;:</strong> <img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>"><?= e($row_monument['ch_pay_nom']) ?></a></p>
+        <p><strong>Ville&nbsp;:</strong> <a class="" href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>&ch_ville_id=<?= e($row_monument['ch_pat_villeID']) ?>"><?= e($row_monument['ch_vil_nom']) ?></a></p>
+        <p><?= e($row_monument['ch_pat_description']) ?></p>
         <!-- Liste des categories di monument -->
         <p><strong>Cat&eacute;gories&nbsp;:</strong></p>
         <?php if ($row_liste_mon_cat3) { ?>
@@ -155,28 +155,28 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
   <?php if ($row_commentaire) { ?>
   <ul class="listes">
     <?php do { ?>
-      <li class="row-fluid" id="commentaireID<?php echo $row_commentaire['ch_com_ID']; ?>"> 
-        <div class="span3 img-listes img-avatar"> <img src="<?php echo $row_commentaire['ch_use_lien_imgpersonnage']; ?>"> </div>
+      <li class="row-fluid" id="commentaireID<?= e($row_commentaire['ch_com_ID']) ?>"> 
+        <div class="span3 img-listes img-avatar"> <img src="<?= e($row_commentaire['ch_use_lien_imgpersonnage']) ?>"> </div>
         <div class="span9 info-listes">
         <!-- AFFICHAGE OUTILS MODERATION -->
         <div class="pull-right">
           <?php if (($_SESSION['statut'] >= 20) OR ($_SESSION['user_ID'] == $row_commentaire['ch_com_user_id'])) { ?>
           <form class="pull-right" action="back/communique_confirmation_supprimer.php" method="post">
-            <input name="communique_ID" type="hidden" value="<?php echo $row_commentaire['ch_com_ID']; ?>">
+            <input name="communique_ID" type="hidden" value="<?= e($row_commentaire['ch_com_ID']) ?>">
             <button class="btn" type="submit" title="supprimer le commentaire"><i class="icon-trash"></i></button>
           </form>
           <form class="pull-right" action="back/communique_modifier.php" method="post">
-            <input name="com_id" type="hidden" value="<?php echo $row_commentaire['ch_com_ID']; ?>">
+            <input name="com_id" type="hidden" value="<?= e($row_commentaire['ch_com_ID']) ?>">
             <button class="btn" type="submit" title="modifier le commentaire"><i class="icon-pencil"></i></button>
           </form>
           <?php } ?>
         </div>
-          <h4><?php echo $row_commentaire['ch_use_predicat_dirigeant']; ?> <?php echo $row_commentaire['ch_use_prenom_dirigeant']; ?> <?php echo $row_commentaire['ch_use_nom_dirigeant']; ?></h4>
-          <h5><?php echo $row_commentaire['ch_use_titre_dirigeant']; ?></h5>
+          <h4><?= e($row_commentaire['ch_use_predicat_dirigeant']) ?> <?= e($row_commentaire['ch_use_prenom_dirigeant']) ?> <?= e($row_commentaire['ch_use_nom_dirigeant']) ?></h4>
+          <h5><?= e($row_commentaire['ch_use_titre_dirigeant']) ?></h5>
           <!-- AFFICHAGE DATE --> 
           <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_commentaire['ch_com_date'])); ?></small>
-          <p><?php echo $row_commentaire['ch_com_contenu']; ?></p>
-          <form class="" action="page-monument.php?ch_pay_id=<?php echo $row_commentaire['ch_use_paysID']; ?>#diplomatie" method="post">
+          <p><?= htmlPurify($row_commentaire['ch_com_contenu']) ?></p>
+          <form class="" action="page-monument.php?ch_pay_id=<?= e($row_commentaire['ch_use_paysID']) ?>#diplomatie" method="post">
             <button class="btn btn-primary" type="submit">Afficher son profil</button>
           </form>
         </div>
@@ -192,7 +192,7 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
   <!-- NOUVEAU COMMENTAIRE SI CONNECTE -->
   
   <?php if ($_SESSION['connect']) { ?>
-  <a href="page-monument.php?ch_pat_id=<?php echo $row_monument['ch_pat_id']; ?>" class="btn btn-danger" ><i class="icon-pencil icon-white"></i> Réagir</a>
+  <a href="page-monument.php?ch_pat_id=<?= e($row_monument['ch_pat_id']) ?>" class="btn btn-danger" ><i class="icon-pencil icon-white"></i> Réagir</a>
   <?php } ?>
   <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fermer</button>
 </div>

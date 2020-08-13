@@ -138,7 +138,7 @@ img.olTileImage {
       </div>
       <?php if (($_SESSION['statut'] >= 20) AND ($row_users['ch_use_id'] != $_SESSION['user_ID'])) { ?>
       <form class="pull-right" action="membre-modifier_back.php" method="post">
-        <input name="userID" type="hidden" value="<?php echo $row_users['ch_use_id']; ?>">
+        <input name="userID" type="hidden" value="<?= e($row_users['ch_use_id']) ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Profil du dirigeant</button>
       </form>
       <form class="pull-right" action="page_pays_back.php" method="post">
@@ -147,12 +147,12 @@ img.olTileImage {
       </form>
       <?php } else {?>
       <form class="pull-right" action="fait_historique_confirmation_supprimer.php" method="post">
-        <input name="ch_his_id" type="hidden" value="<?php echo $row_Fait_his['ch_his_id']; ?>">
+        <input name="ch_his_id" type="hidden" value="<?= e($row_Fait_his['ch_his_id']) ?>">
         <button class="btn btn-danger" type="submit" title="supprimer ce fait historique"><i class="icon-trash icon-white"></i></button>
       </form>
       <?php } ?>
       <?php if ($row_users['ch_use_id'] == $_SESSION['user_ID']) { ?>
-      <a class="btn btn-primary pull-right" href="../php/partage-fait-hist.php?ch_his_id=<?php echo $row_Fait_his['ch_his_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
+      <a class="btn btn-primary pull-right" href="../php/partage-fait-hist.php?ch_his_id=<?= e($row_Fait_his['ch_his_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
 
         <ul class="breadcrumb pull-left">
@@ -167,13 +167,13 @@ img.olTileImage {
           <button type="button" class="close" data-dismiss="alert">×</button>
           Ce formulaire contient les informations qui seront affich&eacute;es sur la page consacr&eacute;e &agrave; un fait historique. Les faits historiques construisent l'histoire de votre pays. Veillez a ce qu'elle soit coh&eacute;rente avec les pays qui vous entourent. La gestion de l'histoire du Monde GC est confi&eacute;e au <a href="../histoire.php" title="lien vers la page consacr&eacute;e au Comité">Comité d'Histoire</a>.</div>
         <!-- Bouton cachУЉs -->
-        <input name="ch_his_id" type="hidden" value="<?php echo $row_Fait_his['ch_his_id']; ?>" >
-        <input name="ch_his_paysID" type="hidden" value="<?php echo $row_Fait_his['ch_his_paysID']; ?>" >
+        <input name="ch_his_id" type="hidden" value="<?= e($row_Fait_his['ch_his_id']) ?>" >
+        <input name="ch_his_paysID" type="hidden" value="<?= e($row_Fait_his['ch_his_paysID']) ?>" >
         <input name="ch_his_personnage" type="hidden" value="2">
-        <input name="ch_his_label" type="hidden" value="<?php echo $row_Fait_his['ch_his_label']; ?>">
+        <input name="ch_his_label" type="hidden" value="<?= e($row_Fait_his['ch_his_label']) ?>">
         <?php $now= date("Y-m-d G:i:s");
 		$nb_update = $row_Fait_his['ch_his_nb_update'] + 1;?>
-        <input name="ch_his_date" type="hidden" value="<?php echo $row_Fait_his['ch_his_date']; ?>" >
+        <input name="ch_his_date" type="hidden" value="<?= e($row_Fait_his['ch_his_date']) ?>" >
         <input name="ch_his_mis_jour" type="hidden" value="<?php echo $now; ?>" >
         <input name="ch_his_nb_update" type="hidden" value="<?php echo $nb_update; ?>">
         <div class="row-fluid">
@@ -196,15 +196,15 @@ img.olTileImage {
         <div id="sprytextfield2" class="control-group">
           <label class="control-label" for="ch_his_nom">Nom du personnage <a href="#" rel="clickover" title="Nom du personnage" data-content="50 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input class="span6" type="text" id="ch_his_nom" name="ch_his_nom" value="<?php echo $row_Fait_his['ch_his_nom']; ?>">
+            <input class="span6" type="text" id="ch_his_nom" name="ch_his_nom" value="<?= e($row_Fait_his['ch_his_nom']) ?>">
             <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>
         </div>
         <!-- DATE -->
         <div class="control-group">
           <label class="control-label" for="ch_his_date_fait">Date de naissance <a href="#" rel="clickover" title="Date de naissance" data-content="Choisissez la date de naissance de votre personnage"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <div class="input-append date" id="dpYears" data-date="<?php echo $row_Fait_his['ch_his_date_fait']; ?>" data-date-format="yyyy-mm-dd" data-date-viewmode="years">
-              <input class="span6" type="text" value="<?php echo $row_Fait_his['ch_his_date_fait']; ?>" id="ch_his_date_fait" name="ch_his_date_fait"  readonly>
+            <div class="input-append date" id="dpYears" data-date="<?= e($row_Fait_his['ch_his_date_fait']) ?>" data-date-format="yyyy-mm-dd" data-date-viewmode="years">
+              <input class="span6" type="text" value="<?= e($row_Fait_his['ch_his_date_fait']) ?>" id="ch_his_date_fait" name="ch_his_date_fait"  readonly>
               <span class="add-on"><i class="icon-calendar"></i></span> </div>
             <label style="display:inline;">
               <input <?php if ($row_Fait_his['ch_his_date_fait2'] == NULL) {echo "checked=\"checked\"";} ?> type="checkbox" name="ch_his_periode" value="1" id="ch_his_periode">
@@ -224,7 +224,7 @@ img.olTileImage {
         <div id="sprytextfield7" class="control-group">
           <label class="control-label" for="ch_his_profession">Profession <a href="#" rel="clickover" title="Profession" data-content="Indiquez la profession ou le r&ocirc;le social de ce personnage"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input type="text" name="ch_his_profession" id="ch_his_profession" value="<?php echo $row_Fait_his['ch_his_profession']; ?>" class="span12">
+            <input type="text" name="ch_his_profession" id="ch_his_profession" value="<?= e($row_Fait_his['ch_his_profession']) ?>" class="span12">
             <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>
         </div>
         <!-- image -->
@@ -245,7 +245,7 @@ img.olTileImage {
         <div class="control-group" id="sprytextarea1">
           <label class="control-label" for="ch_his_description">Biographie <a href="#" rel="clickover" title="Biographie" data-content="Mettez-ici le r&eacute;sum&eacute; de la vie de votre personnage historique. 800 caract&egrave;res maximum"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <textarea name="ch_his_description" id="ch_his_description" class="span12" rows="6"><?php echo $row_Fait_his['ch_his_description']; ?></textarea>
+            <textarea name="ch_his_description" id="ch_his_description" class="span12" rows="6"><?= e($row_Fait_his['ch_his_description']) ?></textarea>
             <span class="textareaRequiredMsg">Une valeur est requise.</span> <span class="textareaMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textareaMaxCharsMsg">800 caract&egrave;res maximum.</span></div>
         </div>
         </div>
@@ -257,7 +257,7 @@ img.olTileImage {
         <div class="control-group">
           <label class="control-label" for="ch_his_contenu">Biographie d&eacute;taill&eacute;e <a href="#" rel="clickover" title="Contenu" data-content="Mettez-ici le dУЉtail de la vie de votre personnage historique. 800 caract&egrave;res maximum"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <textarea name="ch_his_contenu" id="ch_his_contenu" class="wysiwyg" rows="15"><?php echo $row_Fait_his['ch_his_contenu']; ?></textarea>
+            <textarea name="ch_his_contenu" id="ch_his_contenu" class="wysiwyg" rows="15"><?= htmlPurify($row_Fait_his['ch_his_contenu']) ?></textarea>
           </div>
         </div>
         <div class="controls">

@@ -261,7 +261,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
 ================================================== -->
 <header class="jumbotron jumbotron-medium jumbotron-institut subhead anchor" id="info-institut" >
   <div class="container">
-    <h1><?php echo $row_institut['ch_ins_nom']; ?></h1>
+    <h1><?= e($row_institut['ch_ins_nom']) ?></h1>
   </div>
 </header>
 <div class="container"> 
@@ -273,12 +273,12 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#info-institut">
           <?php if ($row_institut['ch_ins_logo']) { ?>
-          <img src="<?php echo $row_institut['ch_ins_logo']; ?>">
+          <img src="<?= e($row_institut['ch_ins_logo']) ?>">
           <?php } else { ?>
           <img src="assets/img/imagesdefaut/blason.jpg">
           <?php }?>
-          <p><strong><?php echo $row_institut['ch_ins_sigle']; ?></strong></p>
-          <p><em><?php echo $row_institut['ch_ins_nom']; ?></em></p>
+          <p><strong><?= e($row_institut['ch_ins_sigle']) ?></strong></p>
+          <p><em><?= e($row_institut['ch_ins_nom']) ?></em></p>
           </a></li>
         <li><a href="#presentation">Pr&eacute;sentation</a></li>
         <li><a href="#ressources">Statistiques &eacute;conomiques</a></li>
@@ -483,14 +483,14 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
             <div class="span1">
               <h3><?php echo $rank; ?></h3>
             </div>
-            <div class="span1"><a href="page-pays.php?ch_pay_id=<?php echo $row_somme_ressources['ch_pay_id']; ?>" title="lien vers la page du pays"><img src="<?php 
+            <div class="span1"><a href="page-pays.php?ch_pay_id=<?= e($row_somme_ressources['ch_pay_id']) ?>" title="lien vers la page du pays"><img src="<?php 
 			if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_somme_ressources['ch_pay_lien_imgdrapeau']))
 					{
 					$row_somme_ressources['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_somme_ressources['ch_pay_lien_imgdrapeau']);
 					}
 			echo $row_somme_ressources['ch_pay_lien_imgdrapeau']; ?>"></a></div>
             <div class="span6">
-              <h4><?php echo $row_somme_ressources['ch_pay_nom']; ?></h4>
+              <h4><?= e($row_somme_ressources['ch_pay_nom']) ?></h4>
             </div>
             <?php if (($cat =="budget") AND ($row_somme_ressources['budget']!=NULL)) { ?>
             <div class="span1 token-list-eco"> <a href="#" title="Budget"><img src="assets/img/ressources/budget.png" alt="icone Budget"></a> </div>

@@ -112,8 +112,8 @@ $totalPages_listcommuniques = ceil($totalRows_listcommuniques/$maxRows_listcommu
         <tbody>
           <?php do { ?>
             <tr>
-              <td><img src="../assets/img/statutpays<?php echo $row_listcommuniques['ch_com_statut']; ?>.png" alt="Statut"></td>
-              <td><?php echo $row_listcommuniques['ch_com_titre']; ?></td>
+              <td><img src="../assets/img/statutpays<?= e($row_listcommuniques['ch_com_statut']) ?>.png" alt="Statut"></td>
+              <td><?= e($row_listcommuniques['ch_com_titre']) ?></td>
               <td><?php if ($row_listcommuniques['ch_com_categorie'] == 'pays') {?>
                 <img src="../assets/img/IconesBDD/50/Pays1.png" alt="pays" title="pays">
                 <?php }  ?>
@@ -124,17 +124,17 @@ $totalPages_listcommuniques = ceil($totalRows_listcommuniques/$maxRows_listcommu
                 <img src="../assets/img/IconesBDD/50/ocgc.png" alt="institut" title="institut">
                 <?php }  ?>
                 </td>
-              <td><img src="<?php echo $row_listcommuniques['ch_use_lien_imgpersonnage']; ?>" width="50px">
-                <p><?php echo $row_listcommuniques['ch_use_login']; ?></p></td>
+              <td><img src="<?= e($row_listcommuniques['ch_use_lien_imgpersonnage']) ?>" width="50px">
+                <p><?= e($row_listcommuniques['ch_use_login']) ?></p></td>
               <td><?php echo date("d/m/Y � G:i:s", strtotime($row_listcommuniques['ch_com_date_mis_jour'])); ?></td>
               <td><form action="<?= DEF_URI_PATH ?>back/communique_modifier.php" method="post">
-                  <input name="com_id" type="hidden" value="<?php echo $row_listcommuniques['ch_com_ID']; ?>">
+                  <input name="com_id" type="hidden" value="<?= e($row_listcommuniques['ch_com_ID']) ?>">
                   <button class="btn" type="submit" title="modifier le communiqu&eacute;"><i class="icon-pencil"></i></button>
                 </form></td>
               <?php if ($_SESSION['statut'] >= 30)
 {?>
               <td><form action="<?= DEF_URI_PATH ?>back/communique_confirmation_supprimer.php" method="post">
-                  <input name="communique-ID" type="hidden" value="<?php echo $row_listcommuniques['ch_com_ID']; ?>">
+                  <input name="communique-ID" type="hidden" value="<?= e($row_listcommuniques['ch_com_ID']) ?>">
                   <button class="btn" type="submit" title="supprimer le communiqu&eacute;"><i class="icon-trash"></i></button>
                 </form></td>
               <?php }  ?>

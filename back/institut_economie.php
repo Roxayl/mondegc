@@ -205,13 +205,13 @@ format: 'hex'});
     <!-- formulaire de modification instituts
      ================================================== -->
     <form class="pull-right-cta" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post" style="margin-top: 30px;">
-      <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
+      <input name="institut_id" type="hidden" value="<?= e($row_institut['ch_ins_ID']) ?>">
       <button class="btn btn-primary btn-cta" type="submit" title="modifier les informations sur l'institut"><i class="icon-edit icon-white"></i> Modifier la description</button>
     </form>
     <!-- Titre page
         ================================================== -->
     <div id="titre_institut" class="titre-bleu anchor">
-      <h1>Gérer le <?php echo $row_institut['ch_ins_nom']; ?></h1>
+      <h1>Gérer le <?= e($row_institut['ch_ins_nom']) ?></h1>
     </div>
     <div class="clearfix"></div>
 
@@ -228,7 +228,7 @@ format: 'hex'});
           <?php do { ?>
             <li class="row-fluid liste-temp"> 
               <!-- Boutons supprimer -->
-              <div class="span1"> <a href="../php/temperance-confirmer-supprimer-modal.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer cette temperance"><i class="icon-remove"></i></a> </div>
+              <div class="span1"> <a href="../php/temperance-confirmer-supprimer-modal.php?ch_temp_id=<?= e($row_liste_temperance['id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer cette temperance"><i class="icon-remove"></i></a> </div>
               <!-- affichage du statut -->
               <?php if ($row_liste_temperance['statut'] == 1) {?>
               <div class="span2 liste-statut-temp" style="background-color: rgba(255,102,0,1);">
@@ -249,7 +249,7 @@ format: 'hex'});
               <?php } ?>
               <!-- Nom element tempere -->
               <div class="span3">
-                <h5><?php echo $row_liste_temperance['element']; ?>&nbsp;: <?php echo $row_liste_temperance['nom']; ?></h5>
+                <h5><?= e($row_liste_temperance['element']) ?>&nbsp;: <?= e($row_liste_temperance['nom']) ?></h5>
               </div>
               <!-- contenu categorie -->
               <div class="span4"><em>Lancée il y a
@@ -271,19 +271,19 @@ $totalRows_nb_juges = mysql_num_rows($nb_juges);
 				 ?>
                 <p>&nbsp;</p>
                 <strong>
-                <p>Nombre de juges ayant voté : <?php echo $row_nb_juges['nbjuges']; ?></p>
+                <p>Nombre de juges ayant voté : <?= e($row_nb_juges['nbjuges']) ?></p>
                 </strong>
                 <?php } ?>
               </div>
               <div class="span2"> 
                 <!-- Boutons modifier -->
                 <?php if ($row_liste_temperance['statut'] == 1) { // visible si en phase 1 ?>
-                <a class="btn btn-primary" href="../php/temperance-modifier-phase2-modal.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="passer &agrave; la phase d'ouverture des votes">Ouvrir les votes</a>
+                <a class="btn btn-primary" href="../php/temperance-modifier-phase2-modal.php?ch_temp_id=<?= e($row_liste_temperance['id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="passer &agrave; la phase d'ouverture des votes">Ouvrir les votes</a>
                 <?php } elseif ($row_liste_temperance['statut'] == 2) {  // visible si en phase 2 ?>
-                <a class="btn btn-primary" href="../php/temperance-modifier-phase3-modal.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>&element=<?php echo $row_liste_temperance['element']; ?>&element_id=<?php echo $row_liste_temperance['element_id']; ?>&nb_juges=<?php echo $row_nb_juges['nbjuges']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="publier la note et le rapport de synth&egrave;se des juges">Clore les votes</a>
+                <a class="btn btn-primary" href="../php/temperance-modifier-phase3-modal.php?ch_temp_id=<?= e($row_liste_temperance['id']) ?>&element=<?= e($row_liste_temperance['element']) ?>&element_id=<?= e($row_liste_temperance['element_id']) ?>&nb_juges=<?= e($row_nb_juges['nbjuges']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="publier la note et le rapport de synth&egrave;se des juges">Clore les votes</a>
                 <?php } elseif ($row_liste_temperance['statut'] == 3) {  // visible si en phase 3
 				if ($row_liste_temperance['element'] == "pays") { ?>
-                <a class="btn btn-temperance" href="../php/temperance-rapport-pays.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site">Note&nbsp;: <?php echo get_note_finale($row_liste_temperance['note']); ?>
+                <a class="btn btn-temperance" href="../php/temperance-rapport-pays.php?ch_temp_id=<?= e($row_liste_temperance['id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site">Note&nbsp;: <?php echo get_note_finale($row_liste_temperance['note']); ?>
                 <?php	if ($row_liste_temperance['tendance'] == "sup") { ?>
                 <i class="icon-arrow-up icon-white"></i>
                 <?php } elseif ($row_liste_temperance['tendance'] == "inf") { ?>
@@ -294,7 +294,7 @@ $totalRows_nb_juges = mysql_num_rows($nb_juges);
                 </a>
                 <?php }
                 if ($row_liste_temperance['element'] == "ville") { ?>
-                <a class="btn btn-temperance" href="../php/temperance-rapport-ville.php?ch_temp_id=<?php echo $row_liste_temperance['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site">Note&nbsp;: <?php echo get_note_finale($row_liste_temperance['note']); ?>
+                <a class="btn btn-temperance" href="../php/temperance-rapport-ville.php?ch_temp_id=<?= e($row_liste_temperance['id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir le rapport publi&eacute; sur le site">Note&nbsp;: <?php echo get_note_finale($row_liste_temperance['note']); ?>
                 <?php	if ($row_liste_temperance['tendance'] == "sup") { ?>
                 <i class="icon-arrow-up icon-white"></i>
                 <?php } elseif ($row_liste_temperance['tendance'] == "inf") { ?>
@@ -449,41 +449,41 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
             $thisInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($row_liste_infra_officielles['ch_inf_off_id']); ?>
             <li class="row-fluid"> 
               <!-- ICONE infrastructures -->
-              <div class="span2"><img src="<?php echo $row_liste_infra_officielles['ch_inf_off_icone']; ?>" alt="icone <?php echo $row_liste_infra_officielles['ch_inf_off_nom']; ?>"></div>
+              <div class="span2"><img src="<?= e($row_liste_infra_officielles['ch_inf_off_icone']) ?>" alt="icone <?= e($row_liste_infra_officielles['ch_inf_off_nom']) ?>"></div>
               <!-- contenu categorie -->
               <div class="span10 info-listes"> 
                 <!-- Boutons modifier / supprimer --> 
-                <a class="pull-right" href="../php/infrastructure-officielle-supprimmer-modal.php?infrastructure_off=<?php echo $row_liste_infra_officielles['ch_inf_off_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer cette infrastructure"><i class="icon-remove"></i></a> <a class="pull-right" href="../php/infrastructure-officielle-modifier-modal.php?infrastructure_off=<?php echo $row_liste_infra_officielles['ch_inf_off_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="modifier cette infrastructure"><i class="icon-pencil"></i></a> 
+                <a class="pull-right" href="../php/infrastructure-officielle-supprimmer-modal.php?infrastructure_off=<?= e($row_liste_infra_officielles['ch_inf_off_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer cette infrastructure"><i class="icon-remove"></i></a> <a class="pull-right" href="../php/infrastructure-officielle-modifier-modal.php?infrastructure_off=<?= e($row_liste_infra_officielles['ch_inf_off_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="modifier cette infrastructure"><i class="icon-pencil"></i></a> 
                 <!-- Desc categorie -->
-                <h4><?php echo $row_liste_infra_officielles['ch_inf_off_nom']; ?></h4>
+                <h4><?= e($row_liste_infra_officielles['ch_inf_off_nom']) ?></h4>
 
                 <?php if($thisInfraOff->hasGroup()): ?>
                 <p><strong><?= $thisInfraOff->getGroup()->get('nom_groupe') ?></strong></p>
                 <?php else: ?>
                 <p><i style="color: red;">Pas de groupe d'infrastructure. Cette infrastructure n'apparaît pas dans la page d'ajout d'infrastructure.</i></p>
                 <?php endif; ?>
-                <p><?php echo $row_liste_infra_officielles['ch_inf_off_desc']; ?></p>
+                <p><?= htmlPurify($row_liste_infra_officielles['ch_inf_off_desc']) ?></p>
 
                 <div class="row-fluid">
                   <div class="span3 icone-ressources"> <img src="../assets/img/ressources/budget.png" alt="icone Budget">
-                    <p>Budget&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_budget']; ?></strong></p>
+                    <p>Budget&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_budget']) ?></strong></p>
                     <img src="../assets/img/ressources/industrie.png" alt="icone Industrie">
-                    <p>Industrie&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_Industrie']; ?></strong></p>
+                    <p>Industrie&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_Industrie']) ?></strong></p>
                   </div>
                   <div class="span3 icone-ressources"> <img src="../assets/img/ressources/bureau.png" alt="icone Commerce">
-                    <p>Commerce&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_Commerce']; ?></strong></p>
+                    <p>Commerce&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_Commerce']) ?></strong></p>
                     <img src="../assets/img/ressources/agriculture.png" alt="icone Agriculture">
-                    <p>Agriculture&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_Agriculture']; ?></strong></p>
+                    <p>Agriculture&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_Agriculture']) ?></strong></p>
                   </div>
                   <div class="span3 icone-ressources"> <img src="../assets/img/ressources/tourisme.png" alt="icone Tourisme">
-                    <p>Tourisme&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_Tourisme']; ?></strong></p>
+                    <p>Tourisme&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_Tourisme']) ?></strong></p>
                     <img src="../assets/img/ressources/recherche.png" alt="icone Recherche">
-                    <p>Recherche&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_Recherche']; ?></strong></p>
+                    <p>Recherche&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_Recherche']) ?></strong></p>
                   </div>
                   <div class="span3 icone-ressources"> <img src="../assets/img/ressources/environnement.png" alt="icone Evironnement">
-                    <p>Environnement&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_Environnement']; ?></strong></p>
+                    <p>Environnement&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_Environnement']) ?></strong></p>
                     <img src="../assets/img/ressources/education.png" alt="icone Education">
-                    <p>Education&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_Education']; ?></strong></p>
+                    <p>Education&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_Education']) ?></strong></p>
                   </div>
                 </div>
               </div>

@@ -42,13 +42,13 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
   <!-- Titre-->
   <div class="titre-vert"> <img src="assets/img/IconesBDD/100/faithistorique.png" alt="fait historique">
-    <h1><?php echo $row_fait_his['ch_his_nom']; ?></h1>
+    <h1><?= e($row_fait_his['ch_his_nom']) ?></h1>
   </div>
 </div>
 <!-- Modal BODY-->
 <div class="modal-body corps-page">
   <div class="well">
-    <p class="pull-right">Histoire du pays <a class="" href="page-pays.php?ch_pay_id=<?php echo $row_fait_his['ch_his_paysID']; ?>#histoire"><?php echo $row_fait_his['ch_pay_nom']; ?></a></p>
+    <p class="pull-right">Histoire du pays <a class="" href="page-pays.php?ch_pay_id=<?= e($row_fait_his['ch_his_paysID']) ?>#histoire"><?= e($row_fait_his['ch_pay_nom']) ?></a></p>
     <div class="row-fluid">
       <div class="span4"> <img src="<?php echo $row_fait_his['ch_his_lien_img1']; ?>" alt="illustration">
         <p><em><?php echo $row_fait_his['ch_his_legende_img1']; ?></em></p>
@@ -66,7 +66,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         </em>
         <?php } elseif (($row_fait_his['ch_his_date_fait2'] != NULL) AND ($row_fait_his['ch_his_personnage'] == 2)) { ?>
         <!-- si pers historique -->
-        <h4><?php echo $row_fait_his['ch_his_profession']; ?> (<?php echo affDate($row_fait_his['ch_his_date_fait']); ?> - <?php echo affDate($row_fait_his['ch_his_date_fait2']); ?>)</h4>
+        <h4><?= e($row_fait_his['ch_his_profession']) ?> (<?php echo affDate($row_fait_his['ch_his_date_fait']); ?> - <?php echo affDate($row_fait_his['ch_his_date_fait2']); ?>)</h4>
         <em>
         <?php 
 	  $d1 = new DateTime($row_fait_his['ch_his_date_fait']);
@@ -76,7 +76,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         </em>
         <?php } elseif (($row_fait_his['ch_his_date_fait2'] == NULL) AND ($row_fait_his['ch_his_personnage'] == 2)) { ?>
         <!-- si pers vivant -->
-        <h4><?php echo $row_fait_his['ch_his_profession']; ?> (<?php echo affDate($row_fait_his['ch_his_date_fait']); ?>-&nbsp;&nbsp;)</h4>
+        <h4><?= e($row_fait_his['ch_his_profession']) ?> (<?php echo affDate($row_fait_his['ch_his_date_fait']); ?>-&nbsp;&nbsp;)</h4>
         <em>
         <?php 
 	  $d1 = new DateTime($row_fait_his['ch_his_date_fait']);
@@ -89,7 +89,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         <h4>&Eacute;v&eacute;nement du <?php echo affDate($row_fait_his['ch_his_date_fait']); ?>&nbsp;:</h4>
         <?php } ?>
         <p>&nbsp;</p>
-        <p><strong><?php echo $row_fait_his['ch_his_description']; ?></strong></p>
+        <p><strong><?= e($row_fait_his['ch_his_description']) ?></strong></p>
         <div class="row-fluid"> 
           <!-- Liste des categories du monument -->
           <h4>Cat&eacute;gories&nbsp;:</h4>
@@ -125,7 +125,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
     </div>
   </div>
   <?php if ($row_fait_his['ch_his_contenu']) { ?>
-  <div class="well"> <?php echo $row_fait_his['ch_his_contenu']; ?> </div>
+  <div class="well"> <?= htmlPurify($row_fait_his['ch_his_contenu']) ?> </div>
   <?php }?>
   <!-- REACTIONS -->
   <div id="commentaires" class="titre-vert">
@@ -134,28 +134,28 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
   <?php if ($row_commentaire) { ?>
   <ul class="listes">
     <?php do { ?>
-      <li class="row-fluid" id="commentaireID<?php echo $row_commentaire['ch_com_ID']; ?>">
-        <div class="span3 img-listes img-avatar"> <img src="<?php echo $row_commentaire['ch_use_lien_imgpersonnage']; ?>"> </div>
+      <li class="row-fluid" id="commentaireID<?= e($row_commentaire['ch_com_ID']) ?>">
+        <div class="span3 img-listes img-avatar"> <img src="<?= e($row_commentaire['ch_use_lien_imgpersonnage']) ?>"> </div>
         <div class="span9 info-listes"> 
           <!-- AFFICHAGE OUTILS MODERATION -->
           <div class="pull-right">
             <?php if (($_SESSION['statut'] >= 20) OR ($_SESSION['user_ID'] == $row_commentaire['ch_com_user_id'])) { ?>
             <form class="pull-right" action="back/communique_confirmation_supprimer.php" method="post">
-              <input name="communique_ID" type="hidden" value="<?php echo $row_commentaire['ch_com_ID']; ?>">
+              <input name="communique_ID" type="hidden" value="<?= e($row_commentaire['ch_com_ID']) ?>">
               <button class="btn" type="submit" title="supprimer le commentaire"><i class="icon-trash"></i></button>
             </form>
             <form class="pull-right" action="back/communique_modifier.php" method="post">
-              <input name="com_id" type="hidden" value="<?php echo $row_commentaire['ch_com_ID']; ?>">
+              <input name="com_id" type="hidden" value="<?= e($row_commentaire['ch_com_ID']) ?>">
               <button class="btn" type="submit" title="modifier le commentaire"><i class="icon-pencil"></i></button>
             </form>
             <?php } ?>
           </div>
-          <h4><?php echo $row_commentaire['ch_use_predicat_dirigeant']; ?> <?php echo $row_commentaire['ch_use_prenom_dirigeant']; ?> <?php echo $row_commentaire['ch_use_nom_dirigeant']; ?></h4>
-          <h5><?php echo $row_commentaire['ch_use_titre_dirigeant']; ?></h5>
+          <h4><?= e($row_commentaire['ch_use_predicat_dirigeant']) ?> <?= e($row_commentaire['ch_use_prenom_dirigeant']) ?> <?= e($row_commentaire['ch_use_nom_dirigeant']) ?></h4>
+          <h5><?= e($row_commentaire['ch_use_titre_dirigeant']) ?></h5>
           <!-- AFFICHAGE DATE --> 
           <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_commentaire['ch_com_date'])); ?></small>
-          <p><?php echo $row_commentaire['ch_com_contenu']; ?></p>
-          <form class="" action="page-monument.php?ch_pay_id=<?php echo $row_commentaire['ch_use_paysID']; ?>#diplomatie" method="post">
+          <p><?= htmlPurify($row_commentaire['ch_com_contenu']) ?></p>
+          <form class="" action="page-monument.php?ch_pay_id=<?= e($row_commentaire['ch_use_paysID']) ?>#diplomatie" method="post">
             <button class="btn btn-primary" type="submit">Afficher son profil</button>
           </form>
         </div>
@@ -182,7 +182,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 <div class="modal-footer"> 
   <!-- NOUVEAU COMMENTAIRE SI CONNECTE -->
   <?php if ($_SESSION['connect']) { ?>
-  <a href="page-fait-historique.php?ch_his_id=<?php echo $row_fait_his['ch_his_id']; ?>" class="btn btn-danger" ><i class="icon-pencil icon-white"></i> Réagir</a>
+  <a href="page-fait-historique.php?ch_his_id=<?= e($row_fait_his['ch_his_id']) ?>" class="btn btn-danger" ><i class="icon-pencil icon-white"></i> Réagir</a>
   <?php } ?>
   <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fermer</button>
 </div>

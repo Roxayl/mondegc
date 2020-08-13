@@ -113,7 +113,7 @@ if ($_SESSION['last_work'] == "institut_politique.php") {
 <!-- Modal Header-->
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
-  <h3 id="myModalLabel">Rejoindre le groupe <?php echo $row_groupe['ch_mem_group_nom']; ?></h3>
+  <h3 id="myModalLabel">Rejoindre le groupe <?= e($row_groupe['ch_mem_group_nom']) ?></h3>
 </div>
 <div class="modal-body">
   <div class="row-fluid">
@@ -121,7 +121,7 @@ if ($_SESSION['last_work'] == "institut_politique.php") {
       <h4>Souhaitez-vous faire une demande pour rejoindre ce groupe ?</h4>
       <p>Vous devrez attendre que les administrateurs de ce groupe acceptent votre demande pour en faire pleinement partie.</p>
     </div>
-    <div class="span2 icone-categorie"><img src="<?php echo $row_groupe['ch_mem_group_icon']; ?>" alt="icone <?php echo $row_groupe['ch_mem_group_nom']; ?>" style="background-color:<?php echo $row_groupe['ch_mem_group_couleur']; ?>;"></div>
+    <div class="span2 icone-categorie"><img src="<?= e($row_groupe['ch_mem_group_icon']) ?>" alt="icone <?= e($row_groupe['ch_mem_group_nom']) ?>" style="background-color:<?= e($row_groupe['ch_mem_group_couleur']) ?>;"></div>
   </div>
 </div>
 <div class="modal-footer"> 

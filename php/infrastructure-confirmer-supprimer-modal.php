@@ -19,21 +19,21 @@ $row_infrastructure = mysql_fetch_assoc($infrastructure);
 
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
-  <h3 id="myModalLabel">Supprimer l'infrastructure <?php echo $row_infrastructure['ch_inf_off_nom']; ?></h3>
+  <h3 id="myModalLabel">Supprimer l'infrastructure <?php e($row_infrastructure['ch_inf_off_nom']) ?></h3>
 </div>
 <div class="modal-body">
   <div class="row-fluid">
     <div class="span9">
       <h1>Attention&nbsp;!</h1>
-      <p>Souhaitez-vous r&eacute;ellement enlever cette <?php echo $row_infrastructure['ch_inf_off_nom']; ?> de votre ville&nbsp;?</p>
+      <p>Souhaitez-vous r&eacute;ellement enlever cette <?= e($row_infrastructure['ch_inf_off_nom']) ?> de votre ville&nbsp;?</p>
       <p><i class="icon-warning-sign"></i> Cette suppression sera d&eacute;finitive. Elle pourrait affecter l'&eacute;conomie de votre ville et de votre pays.</p>
     </div>
-    <div class="span3"> <img src="<?php echo $row_infrastructure['ch_inf_lien_image']; ?>" alt="image de votre construction"> </div>
+    <div class="span3"> <img src="<?= e($row_infrastructure['ch_inf_lien_image']) ?>" alt="image de votre construction"> </div>
   </div>
 </div>
 <div class="modal-footer">
   <form action="infrastructure_supprimer.php" name="supprimer-infrastructure" method="POST" id="supprimer-infrastructure">
-    <input name="ch_inf_id" type="hidden" value="<?php echo $row_infrastructure['ch_inf_id']; ?>">
+    <input name="ch_inf_id" type="hidden" value="<?= e($row_infrastructure['ch_inf_id']) ?>">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Annuler</button>
     <button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i> Supprimer</button>
   </form>

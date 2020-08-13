@@ -94,12 +94,12 @@ $totalPages_LastCommuniqueReaction = ceil($totalRows_LastCommuniqueReaction/$max
           <!-- Si c'est un commentaire sur le pays
 ================================================== -->
           <?php if ( $row_LastCommuniquePays['ch_com_categorie'] == "com_pays") {?>
-          <div class="avatar"> <a href="pays/page-pays.php?ch_pay_id=<?php echo $row_LastCommuniquePays['ch_use_paysID']; ?>#diplomatie"><img src="<?php echo $row_LastCommuniquePays['ch_use_lien_imgpersonnage']; ?>" alt="dirigeant"></a> <a href="pays/page-pays.php?ch_pay_id=<?php echo $row_LastCommuniquePays['ch_pay_id']; ?>#commentaireID<?php echo $row_LastCommuniquePays['ch_com_ID']; ?>"><img src="<?php echo $row_LastCommuniquePays['ch_pay_lien_imgdrapeau']; ?>" alt="pays"></a> </div>
+          <div class="avatar"> <a href="pays/page-pays.php?ch_pay_id=<?= e($row_LastCommuniquePays['ch_use_paysID']) ?>#diplomatie"><img src="<?= e($row_LastCommuniquePays['ch_use_lien_imgpersonnage']) ?>" alt="dirigeant"></a> <a href="pays/page-pays.php?ch_pay_id=<?= e($row_LastCommuniquePays['ch_pay_id']) ?>#commentaireID<?= e($row_LastCommuniquePays['ch_com_ID']) ?>"><img src="<?= e($row_LastCommuniquePays['ch_pay_lien_imgdrapeau']) ?>" alt="pays"></a> </div>
           <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommuniquePays['ch_com_date'])); ?> &agrave; <?php  echo date("G:i", strtotime($row_LastCommuniquePays['ch_com_date'])); ?>
           </small>
           <div class="arrow_box">
-            <p><a href="pays/page-pays.php?ch_pay_id=<?php echo $row_LastCommuniquePays['ch_use_paysID']; ?>#diplomatie"> <?php echo $row_LastCommuniquePays['ch_use_prenom_dirigeant']; ?> <?php echo $row_LastCommuniquePays['ch_use_nom_dirigeant']; ?></a> <?php echo $row_LastCommuniquePays['ch_use_titre_dirigeant']; ?> a visit&eacute; le pays <a href="pays/page-pays.php?ch_pay_id=<?php echo $row_LastCommuniquePays['ch_pay_id']; ?>#commentaireID<?php echo $row_LastCommuniquePays['ch_com_ID']; ?>"> <?php echo $row_LastCommuniquePays['ch_pay_nom']; ?></a></p>
+            <p><a href="pays/page-pays.php?ch_pay_id=<?= e($row_LastCommuniquePays['ch_use_paysID']) ?>#diplomatie"> <?= e($row_LastCommuniquePays['ch_use_prenom_dirigeant']) ?> <?= e($row_LastCommuniquePays['ch_use_nom_dirigeant']) ?></a> <?= e($row_LastCommuniquePays['ch_use_titre_dirigeant']) ?> a visit&eacute; le pays <a href="pays/page-pays.php?ch_pay_id=<?= e($row_LastCommuniquePays['ch_pay_id']) ?>#commentaireID<?= e($row_LastCommuniquePays['ch_com_ID']) ?>"> <?= e($row_LastCommuniquePays['ch_pay_nom']) ?></a></p>
           </div>
           <div class="clearfix"></div>
           <hr>
@@ -107,12 +107,12 @@ $totalPages_LastCommuniqueReaction = ceil($totalRows_LastCommuniqueReaction/$max
           <!-- Si c'est un communique emmanant du pays
 ================================================== -->
           <?php if ( $row_LastCommuniquePays['ch_com_categorie'] == "pays") {?>
-          <div class="avatar"> <a href="pays/page-pays.php?ch_pay_id=<?php echo $row_LastCommuniquePays['ch_use_paysID']; ?>#diplomatie"><img src="<?php echo $row_LastCommuniquePays['ch_use_lien_imgpersonnage']; ?>" alt="dirigeant"></a> <a href="pays/page-communique.php?com_id=<?php echo $row_LastCommuniquePays['ch_com_ID']; ?>"><img src="<?php echo $row_LastCommuniquePays['ch_pay_lien_imgdrapeau']; ?>" alt="pays"></a> </div>
+          <div class="avatar"> <a href="pays/page-pays.php?ch_pay_id=<?= e($row_LastCommuniquePays['ch_use_paysID']) ?>#diplomatie"><img src="<?= e($row_LastCommuniquePays['ch_use_lien_imgpersonnage']) ?>" alt="dirigeant"></a> <a href="pays/page-communique.php?com_id=<?= e($row_LastCommuniquePays['ch_com_ID']) ?>"><img src="<?= e($row_LastCommuniquePays['ch_pay_lien_imgdrapeau']) ?>" alt="pays"></a> </div>
           <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommuniquePays['ch_com_date'])); ?> &agrave; <?php  echo date("G:i", strtotime($row_LastCommuniquePays['ch_com_date'])); ?>
           </small>
           <div class="arrow_box">
-            <p><a href="pays/page-pays.php?ch_pay_id=<?php echo $row_LastCommuniquePays['ch_use_paysID']; ?>#diplomatie"> <?php echo $row_LastCommuniquePays['ch_use_prenom_dirigeant']; ?> <?php echo $row_LastCommuniquePays['ch_use_nom_dirigeant']; ?></a> <?php echo $row_LastCommuniquePays['ch_use_titre_dirigeant']; ?> a lan&ccedil;&eacute; un communiqu&eacute; au nom de son pays <a href="pays/page-communique.php?com_id=<?php echo $row_LastCommuniquePays['ch_com_ID']; ?>"> <?php echo $row_LastCommuniquePays['ch_pay_nom']; ?></a></p>
+            <p><a href="pays/page-pays.php?ch_pay_id=<?= e($row_LastCommuniquePays['ch_use_paysID']) ?>#diplomatie"> <?= e($row_LastCommuniquePays['ch_use_prenom_dirigeant']) ?> <?= e($row_LastCommuniquePays['ch_use_nom_dirigeant']) ?></a> <?= e($row_LastCommuniquePays['ch_use_titre_dirigeant']) ?> a lan&ccedil;&eacute; un communiqu&eacute; au nom de son pays <a href="pays/page-communique.php?com_id=<?= e($row_LastCommuniquePays['ch_com_ID']) ?>"> <?= e($row_LastCommuniquePays['ch_pay_nom']) ?></a></p>
           </div>
           <div class="clearfix"></div>
           <hr>
@@ -138,15 +138,15 @@ $totalPages_LastCommuniqueReaction = ceil($totalRows_LastCommuniqueReaction/$max
           <!-- Si c'est un commentaire sur la ville
 ================================================== -->
           <?php if ( $row_LastCommuniqueVilles['ch_com_categorie'] == "com_ville") {?>
-          <div class="avatar"> <a href="pays/page-pays.php?ch_pay_id=<?php echo $row_LastCommuniqueVilles['ch_use_paysID']; ?>#diplomatie"><img src="<?php echo $row_LastCommuniqueVilles['ch_use_lien_imgpersonnage']; ?>" alt="dirigeant"></a> 
+          <div class="avatar"> <a href="pays/page-pays.php?ch_pay_id=<?= e($row_LastCommuniqueVilles['ch_use_paysID']) ?>#diplomatie"><img src="<?= e($row_LastCommuniqueVilles['ch_use_lien_imgpersonnage']) ?>" alt="dirigeant"></a> 
           <?php if ($row_LastCommuniqueVilles['ch_vil_armoiries']) {?>
-          <a href="pays/page-ville.php?ch_pay_id=<?php echo $row_LastCommuniqueVilles['ch_vil_paysID']; ?>&ch_ville_id=<?php echo $row_LastCommuniqueVilles['ch_vil_ID']; ?>#commentaireID<?php echo $row_LastCommuniqueVilles['ch_com_ID']; ?>"><img src="<?php echo $row_LastCommuniqueVilles['ch_vil_armoiries']; ?>" alt="armoiries"></a><?php } ?>
+          <a href="pays/page-ville.php?ch_pay_id=<?= e($row_LastCommuniqueVilles['ch_vil_paysID']) ?>&ch_ville_id=<?= e($row_LastCommuniqueVilles['ch_vil_ID']) ?>#commentaireID<?= e($row_LastCommuniqueVilles['ch_com_ID']) ?>"><img src="<?= e($row_LastCommuniqueVilles['ch_vil_armoiries']) ?>" alt="armoiries"></a><?php } ?>
           </div>
           <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommuniqueVilles['ch_com_date'])); ?> &agrave; <?php  echo date("G:i", strtotime($row_LastCommuniqueVilles['ch_com_date'])); ?>
           </small>
           <div class="arrow_box">
-            <p><a href="pays/page-pays.php?ch_pay_id=<?php echo $row_LastCommuniqueVilles['ch_use_paysID']; ?>#diplomatie"> <?php echo $row_LastCommuniqueVilles['ch_use_prenom_dirigeant']; ?> <?php echo $row_LastCommuniqueVilles['ch_use_nom_dirigeant']; ?></a> <?php echo $row_LastCommuniqueVilles['ch_use_titre_dirigeant']; ?> a visit&eacute; la ville <a href="pays/page-ville.php?ch_pay_id=<?php echo $row_LastCommuniqueVilles['ch_vil_paysID']; ?>&ch_ville_id=<?php echo $row_LastCommuniqueVilles['ch_vil_ID']; ?>#commentaireID<?php echo $row_LastCommuniqueVilles['ch_com_ID']; ?>"><?php echo $row_LastCommuniqueVilles['ch_vil_nom']; ?></a></p>
+            <p><a href="pays/page-pays.php?ch_pay_id=<?= e($row_LastCommuniqueVilles['ch_use_paysID']) ?>#diplomatie"> <?= e($row_LastCommuniqueVilles['ch_use_prenom_dirigeant']) ?> <?= e($row_LastCommuniqueVilles['ch_use_nom_dirigeant']) ?></a> <?= e($row_LastCommuniqueVilles['ch_use_titre_dirigeant']) ?> a visit&eacute; la ville <a href="pays/page-ville.php?ch_pay_id=<?= e($row_LastCommuniqueVilles['ch_vil_paysID']) ?>&ch_ville_id=<?= e($row_LastCommuniqueVilles['ch_vil_ID']) ?>#commentaireID<?= e($row_LastCommuniqueVilles['ch_com_ID']) ?>"><?= e($row_LastCommuniqueVilles['ch_vil_nom']) ?></a></p>
           </div>
           <div class="clearfix"></div>
           <hr>
@@ -154,16 +154,16 @@ $totalPages_LastCommuniqueReaction = ceil($totalRows_LastCommuniqueReaction/$max
           <!-- Si c'est un communique emmanant de la ville
 ================================================== -->
           <?php if ( $row_LastCommuniqueVilles['ch_com_categorie'] == "ville") {?>
-          <div class="avatar"> <a href="pays/page-pays.php?ch_pay_id=<?php echo $row_LastCommuniqueVilles['ch_use_paysID']; ?>#diplomatie"><img src="<?php echo $row_LastCommuniqueVilles['ch_use_lien_imgpersonnage']; ?>" alt="dirigeant"></a>
+          <div class="avatar"> <a href="pays/page-pays.php?ch_pay_id=<?= e($row_LastCommuniqueVilles['ch_use_paysID']) ?>#diplomatie"><img src="<?= e($row_LastCommuniqueVilles['ch_use_lien_imgpersonnage']) ?>" alt="dirigeant"></a>
           <?php if ($row_LastCommuniqueVilles['ch_vil_armoiries']) {?>
-          <a href="pays/page-communique.php?com_id=<?php echo $row_LastCommuniqueVilles['ch_com_ID']; ?>"><img src="<?php echo $row_LastCommuniqueVilles['ch_vil_armoiries']; ?>" alt="armoiries"></a>
+          <a href="pays/page-communique.php?com_id=<?= e($row_LastCommuniqueVilles['ch_com_ID']) ?>"><img src="<?= e($row_LastCommuniqueVilles['ch_vil_armoiries']) ?>" alt="armoiries"></a>
           <?php } ?>
           </div>
           <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommuniqueVilles['ch_com_date'])); ?> &agrave; <?php  echo date("G:i", strtotime($row_LastCommuniqueVilles['ch_com_date'])); ?>
           </small>
           <div class="arrow_box">
-            <p><a href="pays/page-pays.php?ch_pay_id=<?php echo $row_LastCommuniqueVilles['ch_use_paysID']; ?>#diplomatie"> <?php echo $row_LastCommuniqueVilles['ch_use_prenom_dirigeant']; ?> <?php echo $row_LastCommuniqueVilles['ch_use_nom_dirigeant']; ?></a> <?php echo $row_LastCommuniqueVilles['ch_use_titre_dirigeant']; ?> a lan&ccedil;&eacute; un communiqu&eacute; au nom de la ville <a href="pays/page-communique.php?com_id=<?php echo $row_LastCommuniqueVilles['ch_com_ID']; ?>"> <?php echo $row_LastCommuniqueVilles['ch_vil_nom']; ?></a></p>
+            <p><a href="pays/page-pays.php?ch_pay_id=<?= e($row_LastCommuniqueVilles['ch_use_paysID']) ?>#diplomatie"> <?= e($row_LastCommuniqueVilles['ch_use_prenom_dirigeant']) ?> <?= e($row_LastCommuniqueVilles['ch_use_nom_dirigeant']) ?></a> <?= e($row_LastCommuniqueVilles['ch_use_titre_dirigeant']) ?> a lan&ccedil;&eacute; un communiqu&eacute; au nom de la ville <a href="pays/page-communique.php?com_id=<?= e($row_LastCommuniqueVilles['ch_com_ID']) ?>"> <?= e($row_LastCommuniqueVilles['ch_vil_nom']) ?></a></p>
           </div>
           <div class="clearfix"></div>
           <hr>
@@ -186,12 +186,12 @@ $totalPages_LastCommuniqueReaction = ceil($totalRows_LastCommuniqueReaction/$max
     <ul class="notification">
       <?php do { ?>
         <li>
-          <div class="avatar"> <a href="pays/page-pays.php?ch_pay_id=<?php echo $row_LastCommuniqueReaction['ch_use_paysID']; ?>#diplomatie"><img src="<?php echo $row_LastCommuniqueReaction['ch_use_lien_imgpersonnage']; ?>" alt="dirigeant"></a> </div>
+          <div class="avatar"> <a href="pays/page-pays.php?ch_pay_id=<?= e($row_LastCommuniqueReaction['ch_use_paysID']) ?>#diplomatie"><img src="<?= e($row_LastCommuniqueReaction['ch_use_lien_imgpersonnage']) ?>" alt="dirigeant"></a> </div>
           <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommuniqueReaction['ch_com_date'])); ?> &agrave; <?php  echo date("G:i", strtotime($row_LastCommuniqueReaction['ch_com_date'])); ?>
           </small>
           <div class="arrow_box">
-            <p><em><a href="pays/page-pays.php?ch_pay_id=<?php echo $row_LastCommuniqueReaction['ch_use_paysID']; ?>#diplomatie"> <?php echo $row_LastCommuniqueReaction['ch_use_prenom_dirigeant']; ?> <?php echo $row_LastCommuniqueReaction['ch_use_nom_dirigeant']; ?></a></em> <?php echo $row_LastCommuniqueReaction['ch_use_titre_dirigeant']; ?> a r&eacute;agit <em><a href="pays/page-communique.php?com_id=<?php echo $row_LastCommuniqueReaction['ch_com_element_id']; ?>#commentaireID<?php echo $row_LastCommuniqueReaction['ch_com_ID']; ?>">&agrave; un communiqu&eacute;.</a></em></p>
+            <p><em><a href="pays/page-pays.php?ch_pay_id=<?= e($row_LastCommuniqueReaction['ch_use_paysID']) ?>#diplomatie"> <?= e($row_LastCommuniqueReaction['ch_use_prenom_dirigeant']) ?> <?= e($row_LastCommuniqueReaction['ch_use_nom_dirigeant']) ?></a></em> <?= e($row_LastCommuniqueReaction['ch_use_titre_dirigeant']) ?> a r&eacute;agit <em><a href="pays/page-communique.php?com_id=<?= e($row_LastCommuniqueReaction['ch_com_element_id']) ?>#commentaireID<?= e($row_LastCommuniqueReaction['ch_com_ID']) ?>">&agrave; un communiqu&eacute;.</a></em></p>
           </div>
           <div class="clearfix"></div>
           <hr>

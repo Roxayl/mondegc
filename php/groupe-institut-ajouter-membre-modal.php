@@ -48,18 +48,18 @@ $totalRows_mem_group = mysql_num_rows($mem_group);
 <form action="<?php echo $editFormAction; ?>" name="ajout-mem_groupegorie" method="POST" class="form-horizontal" id="ajout-mem_groupegorie">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
-    <h3 id="myModalLabel">Ajouter un membre dans le groupe <?php echo $row_mem_group['ch_mem_group_nom']; ?></h3>
+    <h3 id="myModalLabel">Ajouter un membre dans le groupe <?= e($row_mem_group['ch_mem_group_nom']) ?></h3>
   </div>
   <div class="modal-body"> 
     <!-- Boutons cach�s -->
     <?php 
 				  $now= date("Y-m-d G:i:s");?>
-    <input name="ch_disp_group_id" type="hidden" value="<?php echo $row_mem_group['ch_mem_group_ID']; ?>">
+    <input name="ch_disp_group_id" type="hidden" value="<?= e($row_mem_group['ch_mem_group_ID']) ?>">
     <input name="ch_disp_MG_label" type="hidden" value="disp_mem">
     <input name="ch_disp_MG_date" type="hidden" value="<?php echo $now; ?>">
     <select name="ch_disp_mem_id" id="ch_disp_mem_id">
       <?php do { ?>
-      <option value="<?php echo $row_info_membre['ch_use_id']; ?>"><?php echo $row_info_membre['ch_use_nom_dirigeant']; ?></option>
+      <option value="<?= e($row_info_membre['ch_use_id']) ?>"><?= e($row_info_membre['ch_use_nom_dirigeant']) ?></option>
       <?php } while ($row_info_membre = mysql_fetch_assoc($info_membre)); ?>
     </select>
     <p>&nbsp;</p>

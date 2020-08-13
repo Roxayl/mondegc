@@ -124,17 +124,17 @@ $totalPages_listemembres = ceil($totalRows_listemembres/$maxRows_listemembres)-1
                 <?php ; 
 			   } else { ?>
                 <?php ; } ?></td>
-              <td><img src="<?php echo $row_listemembres['ch_use_lien_imgpersonnage']; ?>" alt="Personnage" width="80px"></td>
-              <td><?php echo $row_listemembres['ch_use_login']; ?></td>
+              <td><img src="<?= e($row_listemembres['ch_use_lien_imgpersonnage']) ?>" alt="Personnage" width="80px"></td>
+              <td><?= e($row_listemembres['ch_use_login']) ?></td>
               <td><?php echo date("d/m/Y à G:i:s", strtotime($row_listemembres['ch_use_last_log'])); ?></td>
               <td><form action="<?= DEF_URI_PATH ?>back/membre-modifier_back.php" method="post">
-                  <input name="userID" type="hidden" value="<?php echo $row_listemembres['ch_use_id']; ?>">
+                  <input name="userID" type="hidden" value="<?= e($row_listemembres['ch_use_id']) ?>">
                   <button class="btn" type="submit" title="modifier le profil"><i class="icon-pencil"></i></button>
                 </form></td>
               <?php if ($_SESSION['statut'] >= 30)
 {?>
               <td><form action="<?= DEF_URI_PATH ?>back/membre_confirmation_supprimer.php" method="post">
-                  <input name="ch_use_id" type="hidden" value="<?php echo $row_listemembres['ch_use_id']; ?>">
+                  <input name="ch_use_id" type="hidden" value="<?= e($row_listemembres['ch_use_id']) ?>">
                   <button class="btn" type="submit" title="supprimer le profil"><i class="icon-trash"></i></button>
                 </form></td>
               <?php }  ?>

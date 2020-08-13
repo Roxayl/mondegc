@@ -1213,18 +1213,29 @@ function dateFormat($date, $getTime = false) {
 
 /**
  * Filtre un texte avant affichage.
- * @param string|array $text Texte ou array à traiter.
- * @return mixed|array|string <code>array</code> ou <code>string</code> en cas de succès.
- *  <code>FALSE</code> en cas d'échec.
+ * @param string $text Chaîne à traiter.
+ * @return string Chaîne avec les caractères HTML échappés.
  */
-function __s($text) {
+function __s($text)
+{
+    return htmlspecialchars($text, ENT_QUOTES);
+}
 
-    if(is_array($text)) {
-        return filter_var_array($text, FILTER_SANITIZE_SPECIAL_CHARS);
-    } else {
-        return htmlspecialchars($text, ENT_QUOTES);
+
+/**
+ * Purifie un rendu HTML, en supprimant le code HTML potentiellement dangereux.
+ * @param string $text Texte à purifier.
+ * @return string $text Rendu purifié.
+ */
+function htmlPurify($text)
+{
+    static $config = null;
+    static $purifier = null;
+    if(is_null($config)) {
+        $config = HTMLPurifier_Config::createDefault();
+        $purifier = new HTMLPurifier($config);
     }
-
+    return $purifier->purify($text);
 }
 
 

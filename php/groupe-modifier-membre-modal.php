@@ -48,10 +48,10 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-group")) {
     <!-- Boutons cach�s -->
     <?php 
 	$now= date("Y-m-d G:i:s");?>
-    <input name="ch_disp_MG_id" type="hidden" value="<?php echo $row_info_dispatch['ch_disp_MG_id']; ?>">
-    <input name="ch_disp_MG_label" type="hidden" value="<?php echo $row_info_dispatch['ch_disp_MG_label']; ?>">
-    <input name="ch_disp_group_id" type="hidden" value="<?php echo $row_info_dispatch['ch_disp_group_id']; ?>">
-    <input name="ch_disp_mem_id" type="hidden" value="<?php echo $row_info_dispatch['ch_disp_mem_id']; ?>">
+    <input name="ch_disp_MG_id" type="hidden" value="<?= e($row_info_dispatch['ch_disp_MG_id']) ?>">
+    <input name="ch_disp_MG_label" type="hidden" value="<?= e($row_info_dispatch['ch_disp_MG_label']) ?>">
+    <input name="ch_disp_group_id" type="hidden" value="<?= e($row_info_dispatch['ch_disp_group_id']) ?>">
+    <input name="ch_disp_mem_id" type="hidden" value="<?= e($row_info_dispatch['ch_disp_mem_id']) ?>">
     <input name="ch_disp_MG_date" type="hidden" value="<?php echo $now; ?>">
     <!-- Statut -->
     <div id="spryradio1" class="control-group">

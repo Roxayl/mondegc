@@ -145,7 +145,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
       </div>
       <div class="alert alert-success">
         <button type="button" class="close" data-dismiss="alert">�</button>
-        <p>Bienvenue dans le Monde GC <?php echo $row_user_prov['ch_use_prov_login']; ?>. Compl&eacute;tez votre profil afin de finaliser votre inscription.</p>
+        <p>Bienvenue dans le Monde GC <?= e($row_user_prov['ch_use_prov_login']) ?>. Compl&eacute;tez votre profil afin de finaliser votre inscription.</p>
       </div>
       <form action="<?php echo $editFormAction; ?>" name="InfoUser" method="POST" class="form-horizontal" id="InfoHeader">
         <!-- Boutons cach�s -->
@@ -153,8 +153,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
 		$now= date("Y-m-d G:i:s");?>
         <input name="ch_use_date" type="hidden" value="<?php echo $now; ?>">
         <input name="ch_use_last_log" type="hidden" value="<?php echo $now; ?>">
-        <input name="ch_use_statut" type="hidden" value="<?php echo $row_user_prov['ch_use_prov_statut']; ?>">
-        <input name="ch_use_paysID" type="hidden" value="<?php echo $row_user_prov['ch_use_prov_paysID']; ?>">
+        <input name="ch_use_statut" type="hidden" value="<?= e($row_user_prov['ch_use_prov_statut']) ?>">
+        <input name="ch_use_paysID" type="hidden" value="<?= e($row_user_prov['ch_use_prov_paysID']) ?>">
         <input name="ch_use_acces" type="hidden" value="1">
         
         <!-- Informations G�n�rales
@@ -164,7 +164,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
         <div id="sprytextfield3" class="control-group">
           <label class="control-label" for="ch_use_login">Login<a href="#" rel="clickover" title="Nom du pays" data-content="12 caract&egrave;res maximum. Ce nom servira &agrave; identifier le nouveau membre dans l'ensemble du monde GC. Votre login doit &ecirc;tre le m&ecirc;me que sur le forum afin d'assurer la fonction d'envoi de MP. Contactez un membre du haut-conseil s'il doit &ecirc;tre modifi&eacute;."><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input class="input-xlarge" type="text" id="ch_use_login" name="ch_use_login" maxlength="12" value="<?php echo $row_user_prov['ch_use_prov_login']; ?>" readonly>
+            <input class="input-xlarge" type="text" id="ch_use_login" name="ch_use_login" maxlength="12" value="<?= e($row_user_prov['ch_use_prov_login']) ?>" readonly>
             <span class="textfieldRequiredMsg">un login est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">12 caract&egrave;res max.</span></div>
         </div>
         <!-- Password -->
@@ -187,7 +187,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
         <div id="sprytextfield7" class="control-group">
           <label class="control-label" for="ch_use_mail">Adresse mail<a href="#" rel="clickover" title="E-mail" data-content="Laissez une adresse de contact en cas de perte du mot de passe"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input class="input-xlarge" name="ch_use_mail" type="text" id="ch_use_mail" value="<?php echo $row_user_prov['ch_use_prov_mail']; ?>" maxlength="50">
+            <input class="input-xlarge" name="ch_use_mail" type="text" id="ch_use_mail" value="<?= e($row_user_prov['ch_use_prov_mail']) ?>" maxlength="50">
             <span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
         </div>
         <h3>Personnage</h3>

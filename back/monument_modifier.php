@@ -166,38 +166,38 @@ return true;
       <div class="well">
       <?php if (($_SESSION['statut'] >= 20) AND ($row_users['ch_use_id'] != $_SESSION['user_ID'])) { ?>
        <form class="pull-right" action="<?= DEF_URI_PATH ?>back/monument_confirmation_supprimer.php" method="post">
-        <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
+        <input name="monument_ID" type="hidden" value="<?= e($row_monument['ch_pat_id']) ?>">
         <button class="btn btn-danger" type="submit" title="supprimer ce monument"><i class="icon-trash icon-white"></i></button>
       </form>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/membre-modifier_back.php" method="get">
-        <input name="userID" type="hidden" value="<?php echo $row_users['ch_use_id']; ?>">
+        <input name="userID" type="hidden" value="<?= e($row_users['ch_use_id']) ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Profil du dirigeant</button>
       </form>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_back.php" method="get">
-        <input name="paysID" type="hidden" value="<?php echo $row_monument['ch_pat_paysID']; ?>">
+        <input name="paysID" type="hidden" value="<?= e($row_monument['ch_pat_paysID']) ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du pays"><i class="icon-pays-small-white"></i> Modifier le pays</button>
       </form>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="get">
-        <input name="ville-ID" type="hidden" value="<?php echo $row_monument['ch_pat_villeID']; ?>">
+        <input name="ville-ID" type="hidden" value="<?= e($row_monument['ch_pat_villeID']) ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion de la ville"> Modifier la ville</button>
       </form>
       <?php } else {?>
        <form class="pull-right" action="<?= DEF_URI_PATH ?>back/monument_confirmation_supprimer.php" method="post">
-        <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
+        <input name="monument_ID" type="hidden" value="<?= e($row_monument['ch_pat_id']) ?>">
         <button class="btn btn-danger" type="submit" title="supprimer ce monument"><i class="icon-trash icon-white"></i></button>
       </form>
       <a class="btn btn-primary pull-right" title="retour &agrave; la page de gestion de la ville" href="ville_modifier.php#mes-monuments">Retour ville</a>
       <?php } ?>
       <?php if ($row_users['ch_use_id'] == $_SESSION['user_ID']) { ?>
-  <a class="btn btn-primary pull-right" href="../php/partage-monument.php?ch_pat_id=<?php echo $row_monument['ch_pat_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i>Partager sur le forum</a>
+  <a class="btn btn-primary pull-right" href="../php/partage-monument.php?ch_pat_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i>Partager sur le forum</a>
   <?php } ?>
       <div class="clearfix"></div>
       <!-- Debut formulaire -->
       <form action="<?= e($editFormAction) ?>" method="POST" class="form-horizontal" name="modifier_monument" Id="modifier_monument" onsubmit='return verif_champ(document.modifier_monument.form_coord_X.value);'>
         <!-- Bouton cachés -->
-        <input name="ch_pat_id" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>" >
-        <input name="ch_pat_paysID" type="hidden" value="<?php echo $row_monument['ch_pat_paysID']; ?>" >
-        <input name="ch_pat_villeID" type="hidden" value="<?php echo $row_monument['ch_pat_villeID']; ?>">
+        <input name="ch_pat_id" type="hidden" value="<?= e($row_monument['ch_pat_id']) ?>" >
+        <input name="ch_pat_paysID" type="hidden" value="<?= e($row_monument['ch_pat_paysID']) ?>" >
+        <input name="ch_pat_villeID" type="hidden" value="<?= e($row_monument['ch_pat_villeID']) ?>">
         <input name="ch_pat_label" type="hidden" value="<?= e($row_monument['ch_pat_label']) ?>">
         <?php 
         $now= date("Y-m-d G:i:s");

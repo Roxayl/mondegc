@@ -204,7 +204,7 @@ $totalRows_pays = mysql_num_rows($pays);
               <select name="ch_use_prov_paysID" id="ch_use_prov_paysID" class="input-xlarge">
                 <option>--S&eacute;lectionnez un pays--</option>
                 <?php do { ?>
-                <option value="<?php echo $row_pays['ch_pay_id']; ?>"><?php echo $row_pays['ch_pay_nom']; ?></option>
+                <option value="<?= e($row_pays['ch_pay_id']) ?>"><?= e($row_pays['ch_pay_nom']) ?></option>
                 <?php } while ($row_pays = mysql_fetch_assoc($pays)); ?>
               </select>
             </div>

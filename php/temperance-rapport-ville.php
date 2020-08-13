@@ -68,7 +68,7 @@ $totalRows_ville = mysql_num_rows($ville);
 <div class="modal-header">
 <div class="pull-left"><img style="width:100px; margin-right: 10px; margin-top:-50px;" src="http://www.generation-city.com/monde/assets/img/IconesBDD/Bleu/100/ocgc_bleu.png"></div>
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-  <h3 id="myModalLabel">Rapport des juges temp&eacute;rants sur la ville : <a href="../page-ville.php?ch_pay_id=<?php echo $row_ville['ch_pay_id']; ?>&ch_ville_id=<?php echo $row_ville['ch_vil_ID']; ?>" target="_blank"><?php echo $row_ville['ch_vil_nom']; ?></a> appartenant au pays <a href="../page-pays.php?ch_pay_id=<?php echo $row_ville['ch_pay_id']; ?>" target="_blank"><?php echo $row_ville['ch_pay_nom']; ?></a></h3>
+  <h3 id="myModalLabel">Rapport des juges temp&eacute;rants sur la ville : <a href="../page-ville.php?ch_pay_id=<?= e($row_ville['ch_pay_id']) ?>&ch_ville_id=<?= e($row_ville['ch_vil_ID']) ?>" target="_blank"><?= e($row_ville['ch_vil_nom']) ?></a> appartenant au pays <a href="../page-pays.php?ch_pay_id=<?= e($row_ville['ch_pay_id']) ?>" target="_blank"><?= e($row_ville['ch_pay_nom']) ?></a></h3>
 </div>
 <div class="modal-body">
 <div class="alert alert-success"><p>Ce rapport a &eacute;t&eacute; r&eacute;dig&eacute; dans le cadre du <a href="http://www.generation-city.com/monde/economie.php#temperance" title="en savoir plus sur le porjet temp&eacute;rance"> projet temp&eacute;rance de l'Institut Economique</a> qui vise &agrave; appr&eacute;cier la coh&eacute;rence globale d'une ville.</p>

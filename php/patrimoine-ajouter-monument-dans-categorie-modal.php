@@ -50,18 +50,18 @@ $totalRows_mon_cat = mysql_num_rows($mon_cat);
 <form action="<?php echo $editFormAction; ?>" name="ajout-mon_categorie" method="POST" class="form-horizontal" id="ajout-mon_categorie">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Ajouter un monument dans la cat&eacute;gorie <?php echo $row_mon_cat['ch_mon_cat_nom']; ?></h3>
+    <h3 id="myModalLabel">Ajouter un monument dans la cat&eacute;gorie <?= e($row_mon_cat['ch_mon_cat_nom']) ?></h3>
   </div>
   <div class="modal-body"> 
     <!-- Boutons cachés -->
     <?php 
 				  $now= date("Y-m-d G:i:s");?>
-    <input name="ch_disp_cat_id" type="hidden" value="<?php echo $row_mon_cat['ch_mon_cat_ID']; ?>">
+    <input name="ch_disp_cat_id" type="hidden" value="<?= e($row_mon_cat['ch_mon_cat_ID']) ?>">
     <input name="ch_disp_mon_label" type="hidden" value="disp_mon">
     <input name="ch_disp_date" type="hidden" value="<?php echo $now; ?>">
     <select name="ch_disp_mon_id" id="ch_disp_mon_id">
       <?php do { ?>
-      <option value="<?php echo $row_liste_mon_cat['ch_pat_id']; ?>"><?php echo $row_liste_mon_cat['ch_pat_nom']; ?></option>
+      <option value="<?= e($row_liste_mon_cat['ch_pat_id']) ?>"><?= e($row_liste_mon_cat['ch_pat_nom']) ?></option>
       <?php } while ($row_liste_mon_cat = mysql_fetch_assoc($liste_mon_cat)); ?>
     </select>
   </div>
