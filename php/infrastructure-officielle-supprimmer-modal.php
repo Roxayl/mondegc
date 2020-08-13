@@ -36,5 +36,3 @@ $totalRows_infra_officielles = mysql_num_rows($infra_officielles);
             <button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i> Supprimer</button>
             </form>
           </div>
-<?php
-mysql_free_result($infra_officielles);?>

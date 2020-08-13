@@ -589,8 +589,7 @@ img.olTileImage {
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -606,9 +605,10 @@ img.olTileImage {
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
 <!-- EDITEUR -->
 <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript" src="../assets/js/Editeur.js"></script>
@@ -640,3 +640,5 @@ var sprytextarea10 = new Spry.Widget.ValidationTextarea("sprytextarea10", {maxCh
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
 var spryradio2 = new Spry.Widget.ValidationRadio("spryradio2", {validateOn:["change"]});
 </script>
+</body>
+</html>

@@ -319,7 +319,7 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>
-</body>
+
 <script>
 $("a[data-toggle=modal]").click(function (e) {
   lv_target = $(this).attr('data-target')
@@ -329,3 +329,4 @@ $("a[data-toggle=modal]").click(function (e) {
 $('.popover-html').popover({ html : true});
 </script>
 </html>
+</body>

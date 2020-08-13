@@ -87,7 +87,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
 <html lang="fr">
 <!-- head Html -->
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Monde GC-</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -299,8 +299,6 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>
-</body>
-</html>
 
 <!-- Le javascript
     ================================================== -->
@@ -313,7 +311,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
 <script src="assets/js/bootstrap-scrollspy.js"></script>
 <script src="assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
+      $(function() {
           $('[rel="clickover"]').clickover();})
 </script>
 <!-- SPRY ASSETS -->
@@ -334,3 +332,5 @@ var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChar
 var sprypassword1 = new Spry.Widget.ValidationPassword("sprypassword1", {minChars:2, validateOn:["change"], maxChars:16});
 var spryconfirm1 = new Spry.Widget.ValidationConfirm("spryconfirm1", "ch_use_password", {validateOn:["change"]});
 </script>
+</body>
+</html>

@@ -1,8 +1,5 @@
 <?php
 
-header('Content-Type: text/html; charset=iso-8859-1');
-
-
 //requete categories monuments
 
 $colname_ch_disp_MG_id = "-1";
@@ -44,4 +41,3 @@ $totalRows_mon = mysql_num_rows($mon);
     <button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i> Supprimer</button>
   </form>
 </div>
-<?php mysql_free_result($mon);?>

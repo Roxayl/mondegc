@@ -148,9 +148,10 @@ $logs = \GenCity\Monde\Logger\Log::getAll($limit, $offset);
 <!-- EDITEUR -->
 <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript" src="../assets/js/Editeur.js"></script>
- <script type="text/javascript">
-      $(function() {
-          $('[rel="clickover"]').clickover();})
-    </script>
+<script type="text/javascript">
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
 </body>
 </html>

@@ -103,6 +103,3 @@ $totalRows_mon_cat = mysql_num_rows($mon_cat);
   </div>
   <input type="hidden" name="MM_insert" value="ajout-mon_categorie">
 </form>
-<?php
-mysql_free_result($liste_mon_cat);
-mysql_free_result($mon_cat);?>

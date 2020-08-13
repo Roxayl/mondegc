@@ -24,7 +24,7 @@ $_SESSION['ville_encours'] = $row_ch_pat_confimation_suppression['ch_pat_villeID
 <html lang="fr">
 <!-- head Html -->
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Supprimer un monument</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -85,8 +85,7 @@ $_SESSION['ville_encours'] = $row_ch_pat_confimation_suppression['ch_pat_villeID
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -97,7 +96,10 @@ $_SESSION['ville_encours'] = $row_ch_pat_confimation_suppression['ch_pat_villeID
 <script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
- <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
+<script type="text/javascript">
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
+</body>
+</html>

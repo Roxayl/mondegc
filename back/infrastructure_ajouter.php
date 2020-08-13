@@ -155,7 +155,7 @@ if($totalRows_liste_inf_off == 0) {
 <html lang="fr">
 <!-- head Html -->
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Monde GC - <?= $form_action === 'add' ? 'Ajouter' : 'Modifier' ?> une infrastructure</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">

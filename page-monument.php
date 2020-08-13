@@ -252,8 +252,7 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>
-</body>
-</html>
+
 <script>
 $("a[data-toggle=modal]").click(function (e) {
   lv_target = $(this).attr('data-target')
@@ -264,3 +263,5 @@ $('#closemodal').click(function() {
     $('#Modal-Monument').modal('hide');
 });
 </script>
+</body>
+</html>

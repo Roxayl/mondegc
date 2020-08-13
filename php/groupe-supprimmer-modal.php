@@ -1,7 +1,5 @@
 <?php
 
-header('Content-Type: text/html; charset=iso-8859-1');
-
 //requete categories monuments
 
 $colname_membres_groupes = "-1";
@@ -39,5 +37,3 @@ $totalRows_membres_groupes = mysql_num_rows($membres_groupes);
             <button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i> Supprimer</button>
             </form>
           </div>
-<?php
-mysql_free_result($membres_groupes);?>

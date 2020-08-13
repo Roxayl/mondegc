@@ -262,13 +262,7 @@ img.olTileImage {
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
-<?php
-mysql_free_result($users);
 
-mysql_free_result($Fait_his);
-?>
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -284,40 +278,41 @@ mysql_free_result($Fait_his);
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
 <!-- MODAL -->
 <script src="../assets/js/bootstrap-modalmanager.js"></script>
 <script src="../assets/js/bootstrap-modal.js"></script>
 <script>
-$("a[data-toggle=modal]").click(function (e) {
-  lv_target = $(this).attr('data-target')
-  lv_url = $(this).attr('href')
-  $(lv_target).load(lv_url)})
+    $("a[data-toggle=modal]").click(function (e) {
+        lv_target = $(this).attr('data-target')
+        lv_url = $(this).attr('href')
+        $(lv_target).load(lv_url)
+    })
 
-$('#closemodal').click(function() {
-    $('#Modal-Monument').modal('hide');
-});
+    $('#closemodal').click(function () {
+        $('#Modal-Monument').modal('hide');
+    });
 </script>
 <!-- DATE PICKER -->
 <script src="../datepicker/js/bootstrap-datepicker.js"></script>
 <script>
-$(function(){
-			window.prettyPrint && prettyPrint();
-			$('#dpYears').datepicker();
-			$('#dpYears2').datepicker();
-		});
+    $(function () {
+        window.prettyPrint && prettyPrint();
+        $('#dpYears').datepicker();
+        $('#dpYears2').datepicker();
+    });
 </script>
 <script>
-$('#ch_his_periode').change(function () {
-    if ($(this).attr("checked")) 
-    {
-        $('.periode').fadeIn();
-        return;
-    }
-   $('.periode').fadeOut();
-});
+    $('#ch_his_periode').change(function () {
+        if ($(this).attr("checked")) {
+            $('.periode').fadeIn();
+            return;
+        }
+        $('.periode').fadeOut();
+    });
 </script>
 <!-- EDITEUR -->
 <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
@@ -327,9 +322,11 @@ $('#ch_his_periode').change(function () {
 <script src="../SpryAssets/SpryValidationTextarea.js" type="text/javascript"></script>
 <script src="../SpryAssets/SpryValidationRadio.js" type="text/javascript"></script>
 <script type="text/javascript">
-var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "none", {maxChars:50, validateOn:["change"], minChars:2});
-var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "url", {validateOn:["change"], maxChars:250});
-var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6", "none", {isRequired:false, maxChars:50, validateOn:["change"]});
-var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
-var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {minChars:2, validateOn:["change"], maxChars:800, useCharacterMasking:false});
+    var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "none", {maxChars: 50, validateOn: ["change"], minChars: 2});
+    var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "url", {validateOn: ["change"], maxChars: 250});
+    var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6", "none", {isRequired: false, maxChars: 50, validateOn: ["change"]});
+    var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn: ["change"]});
+    var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {minChars: 2, validateOn: ["change"], maxChars: 800, useCharacterMasking: false});
 </script>
+</body>
+</html>

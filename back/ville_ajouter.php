@@ -389,8 +389,7 @@ return true;
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -406,13 +405,14 @@ return true;
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
-    <script> 
- $( document ).ready(function() {
-init();
-});
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
+<script>
+    $(document).ready(function () {
+        init();
+    });
 </script>
 <!-- EDITEUR -->
 <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
@@ -438,3 +438,5 @@ var sprytextfield14 = new Spry.Widget.ValidationTextField("sprytextfield14", "no
 var sprytextfield28 = new Spry.Widget.ValidationTextField("sprytextfield28", "url", {maxChars:250, validateOn:["change"], isRequired:false});
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
 </script>
+</body>
+</html>

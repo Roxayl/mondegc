@@ -691,8 +691,7 @@ $('#closemodal').click(function() {
     ================================================== -->
 <?php include('php/footer.php'); ?>
 <div class="modal container fade" id="Modal-Monument"></div>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -706,3 +705,5 @@ $('#closemodal').click(function() {
     $('#Modal-Monument').modal('hide');
 });
 </script>
+</body>
+</html>

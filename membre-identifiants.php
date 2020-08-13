@@ -175,8 +175,6 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>
-</body>
-</html>
 
 <!-- Le javascript
     ================================================== -->
@@ -189,7 +187,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
 <script src="assets/js/bootstrap-scrollspy.js"></script>
 <script src="assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
+      $(function() {
           $('[rel="clickover"]').clickover();})
 </script>
 <!-- SPRY ASSETS -->
@@ -201,3 +199,5 @@ var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "none
 var sprypassword1 = new Spry.Widget.ValidationPassword("sprypassword1", {minChars:2, validateOn:["change"], maxChars:16});
 var spryconfirm1 = new Spry.Widget.ValidationConfirm("spryconfirm1", "ch_use_password", {validateOn:["change"]});
 </script>
+</body>
+</html>

@@ -213,17 +213,16 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
           </div>
           <input type="hidden" name="MM_update" value="ajout-categorie">
         </form>
-        <script>
-		$(function(){
-$('#cp4').colorpicker({
-format: 'hex'});
-		});
-	</script>
-    <script type="text/javascript">
+<script>
+    $(function () {
+        $('#cp4').colorpicker({
+            format: 'hex'
+        });
+    });
+</script>
+<script type="text/javascript">
 var spryradio20 = new Spry.Widget.ValidationRadio("spryradio20", {validateOn:["change"]});
 var sprytextfield21 = new Spry.Widget.ValidationTextField("sprytextfield21", "none", {minChars:2, maxChars:30, validateOn:["change"]});
 var sprytextfield23 = new Spry.Widget.ValidationTextField("sprytextfield23", "url", {minChars:2, maxChars:250, validateOn:["change"]});
 var sprytextarea24 = new Spry.Widget.ValidationTextarea("sprytextarea24", {maxChars:400, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
-<?php
-mysql_free_result($liste_mon_cat);?>

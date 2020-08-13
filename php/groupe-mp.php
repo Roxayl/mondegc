@@ -1,7 +1,5 @@
 <?php
 
-header('Content-Type: text/html; charset=iso-8859-1');
-
 $group_ID = "-1";
 if (isset($_GET['ch_mem_group_ID'])) {
   $group_ID = $_GET['ch_mem_group_ID'];
@@ -92,5 +90,3 @@ $msgHead = "[center][img]".$row_group_info['ch_mem_group_icon']."[/img]
 <div class="modal-footer">
   <button class="btn" data-dismiss="modal" aria-hidden="true">Annuler</button>
 </div>
-<?php
-mysql_free_result($group);?>

@@ -5,7 +5,7 @@
  * Version cible : 2.0
  * ******************/
 
-require_once('../../Connections/maconnexion.php');
+require_once('../../php/init/legacy_init.php');
 
 mysql_select_db($database_maconnexion, $maconnexion);
 

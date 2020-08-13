@@ -125,6 +125,3 @@ while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)
   </div>
   <input type="hidden" name="MM_insert" value="ajout-mon_categorie_direct">
 </form>
-<?php
-mysql_free_result($liste_mon_cat);
-mysql_free_result($mon_cat);?>

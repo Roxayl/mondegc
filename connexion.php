@@ -118,7 +118,7 @@ $mailSuccess = true;
 <html lang="fr">
 <!-- head Html -->
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Monde GC - Connexion au compte</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -248,8 +248,6 @@ $mailSuccess = true;
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>
-</body>
-</html>
 
 <!-- Le javascript
     ================================================== -->
@@ -262,7 +260,7 @@ $mailSuccess = true;
 <script src="assets/js/bootstrap-scrollspy.js"></script>
 <script src="assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
+      $(function() {
           $('[rel="clickover"]').clickover();})
 </script>
 <!-- SPRY ASSETS -->
@@ -270,3 +268,5 @@ $mailSuccess = true;
 <script type="text/javascript">
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "email", {validateOn:["change"]});
 </script>
+</body>
+</html>

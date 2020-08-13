@@ -275,8 +275,7 @@ img.olTileImage {
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -292,40 +291,41 @@ img.olTileImage {
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
 <!-- MODAL -->
 <script src="../assets/js/bootstrap-modalmanager.js"></script>
 <script src="../assets/js/bootstrap-modal.js"></script>
 <script>
-$("a[data-toggle=modal]").click(function (e) {
-  lv_target = $(this).attr('data-target')
-  lv_url = $(this).attr('href')
-  $(lv_target).load(lv_url)})
+    $("a[data-toggle=modal]").click(function (e) {
+        lv_target = $(this).attr('data-target')
+        lv_url = $(this).attr('href')
+        $(lv_target).load(lv_url)
+    })
 
-$('#closemodal').click(function() {
-    $('#Modal-Monument').modal('hide');
-});
+    $('#closemodal').click(function () {
+        $('#Modal-Monument').modal('hide');
+    });
 </script>
 <!-- DATE PICKER -->
 <script src="../datepicker/js/bootstrap-datepicker.js"></script>
 <script>
-$(function(){
-			window.prettyPrint && prettyPrint();
-			$('#dpYears').datepicker();
-			$('#dpYears2').datepicker();
-		});
+    $(function () {
+        window.prettyPrint && prettyPrint();
+        $('#dpYears').datepicker();
+        $('#dpYears2').datepicker();
+    });
 </script>
 <script>
-$('#ch_his_periode').change(function () {
-    if ($(this).attr("checked")) 
-    {
-        $('.periode').fadeOut();
-        return;
-    }
-   $('.periode').fadeIn();
-});
+    $('#ch_his_periode').change(function () {
+        if ($(this).attr("checked")) {
+            $('.periode').fadeOut();
+            return;
+        }
+        $('.periode').fadeIn();
+    });
 </script>
 <!-- EDITEUR -->
 <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
@@ -342,3 +342,5 @@ var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7", "none
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
 var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {minChars:2, validateOn:["change"], maxChars:800, useCharacterMasking:false});
 </script>
+</body>
+</html>

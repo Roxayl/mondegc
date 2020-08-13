@@ -186,7 +186,3 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
   <?php } ?>
   <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fermer</button>
 </div>
-<?php
-mysql_free_result($fait_his);
-mysql_free_result($commentaire);
-?>

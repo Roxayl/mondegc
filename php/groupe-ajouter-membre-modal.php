@@ -1,8 +1,5 @@
 <?php
 
-header('Content-Type: text/html; charset=iso-8859-1');
-
-
 //requete listes monuments
 $colname_group_id = "-1";
 if (isset($_GET['mem_group_id'])) {
@@ -141,6 +138,3 @@ if ($_SESSION['last_work'] == "institut_politique.php") {
     <input type="hidden" name="MM_insert" value="ajoutgroup">
   </form>
 </div>
-<?php
-mysql_free_result($groupe);
-?>

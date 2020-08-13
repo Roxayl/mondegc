@@ -316,10 +316,11 @@ $totalRows_user = mysql_num_rows($user);
 <script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
- <script type="text/javascript">
-      $(function() {
-          $('[rel="clickover"]').clickover();})
-    </script>
+<script type="text/javascript">
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
 <!-- EDITEUR -->
 <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript" src="../assets/js/Editeur.js"></script>
@@ -329,8 +330,8 @@ $totalRows_user = mysql_num_rows($user);
 <script src="../SpryAssets/SpryValidationTextarea.js" type="text/javascript"></script>
 <script src="../SpryAssets/SpryValidationRadio.js" type="text/javascript"></script>
 <script type="text/javascript">
-var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "none", {maxChars:100, validateOn:["change"], minChars:2});
-var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
+    var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "none", {maxChars: 100, validateOn: ["change"], minChars: 2});
+    var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn: ["change"]});
 </script>
 </body>
 </html>

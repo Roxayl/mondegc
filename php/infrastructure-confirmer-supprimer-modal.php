@@ -1,8 +1,5 @@
 <?php
 
-header('Content-Type: text/html; charset=iso-8859-1');
-
-
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 appendQueryString($editFormAction);
 

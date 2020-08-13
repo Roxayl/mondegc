@@ -37,5 +37,3 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
             <button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i> Supprimer</button>
             </form>
           </div>
-<?php
-mysql_free_result($liste_mon_cat);?>

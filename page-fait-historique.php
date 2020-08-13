@@ -198,8 +198,7 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -211,7 +210,7 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
 <script src="assets/js/bootstrap-scrollspy.js"></script>
 <script src="assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
+      $(function() {
           $('[rel="clickover"]').clickover();})
 </script>
 <!-- MODAL -->
@@ -232,3 +231,5 @@ $('#closemodal').click(function() {
 <script type="text/javascript" src="assets/js/Editeur.js"></script>
 <!-- SPRY ASSETS -->
 <script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
+</body>
+</html>

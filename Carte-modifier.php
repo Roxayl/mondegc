@@ -161,8 +161,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
   mysql_free_result($geometries);
 }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml>">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
@@ -977,8 +976,7 @@ init();
 <!-- Footer
     ================================================== -->
 <?php include("php/footer.php"); ?>
-</body>
-</html>
+
 <script>
 $("a[data-toggle=modal]").click(function (e) {
   lv_target = $(this).attr('data-target')
@@ -989,3 +987,5 @@ $('#closemodal').click(function() {
     $('#Modal-Monument').modal('hide');
 });
 </script>
+</body>
+</html>

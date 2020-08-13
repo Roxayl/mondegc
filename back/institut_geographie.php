@@ -75,7 +75,7 @@ $_SESSION['last_work'] = "institut_geographie.php";
 <html lang="fr">
 <!-- head Html -->
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Monde GC - Gérer le <?= __s($row_institut['ch_ins_nom']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">

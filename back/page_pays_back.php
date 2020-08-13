@@ -1253,14 +1253,15 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
 <?php include(DEF_ROOTPATH . 'php/carteemplacements.php'); ?>
 <script>
-$("a[data-toggle=modal]").click(function (e) {
-  lv_target = $(this).attr('data-target')
-  lv_url = $(this).attr('href')
-  $(lv_target).load(lv_url)})
+    $("a[data-toggle=modal]").click(function (e) {
+        lv_target = $(this).attr('data-target')
+        lv_url = $(this).attr('href')
+        $(lv_target).load(lv_url)
+    })
 
-$('#closemodal').click(function() {
-    $('#Modal-Monument').modal('hide');
-});
+    $('#closemodal').click(function () {
+        $('#Modal-Monument').modal('hide');
+    });
 </script>
 <!-- EDITEUR -->
 <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>

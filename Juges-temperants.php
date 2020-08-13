@@ -100,11 +100,12 @@ $totalRows_HautConseil = mysql_num_rows($HautConseil);
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
 <script src="assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
+</body>
+</html>

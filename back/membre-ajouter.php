@@ -255,8 +255,7 @@ $totalRows_pays = mysql_num_rows($pays);
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -268,9 +267,10 @@ $totalRows_pays = mysql_num_rows($pays);
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
 <!-- SPRY ASSETS-->
 <script src="../SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
 <script src="../SpryAssets/SpryValidationTextarea.js" type="text/javascript"></script>
@@ -279,7 +279,9 @@ $totalRows_pays = mysql_num_rows($pays);
 <script src="../SpryAssets/SpryValidationConfirm.js" type="text/javascript"></script>
 <script src="../SpryAssets/SpryValidationSelect.js" type="text/javascript"></script>
 <script type="text/javascript">
-var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "none", {minChars:2, maxChars:35, validateOn:["change"]});
-var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7", "email", {validateOn:["change"]});
-var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
+    var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "none", {minChars: 2, maxChars: 35, validateOn: ["change"]});
+    var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7", "email", {validateOn: ["change"]});
+    var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn: ["change"]});
 </script>
+</body>
+</html>

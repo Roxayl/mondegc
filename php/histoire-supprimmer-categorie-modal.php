@@ -1,6 +1,6 @@
 <?php
 
-header('Content-Type: text/html; charset=iso-8859-1');
+<meta charset="utf-8">
 
 
 //requete categories monuments
@@ -40,5 +40,3 @@ $totalRows_liste_fait_cat = mysql_num_rows($liste_fait_cat);
             <button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i> Supprimer</button>
             </form>
           </div>
-<?php
-mysql_free_result($liste_fait_cat);?>

@@ -178,7 +178,3 @@ var spryconfirm10 = new Spry.Widget.ValidationConfirm("spryconfirm10", "ch_use_p
 var sprytextfield15 = new Spry.Widget.ValidationTextField("sprytextfield15", "email", {validateOn:["change"]});
 <?php }  ?>
 </script>
-<?php
-mysql_free_result($pays);
-mysql_free_result($User);
-?>

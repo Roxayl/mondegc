@@ -233,9 +233,3 @@ if($cat == 'organisation') {
   <?php } ?>
   <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fermer</button>
 </div>
-<?php
-mysql_free_result($communique);
-
-mysql_free_result($user);
-
-mysql_free_result($commentaire);?>

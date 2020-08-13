@@ -838,7 +838,6 @@ $('#closemodal').click(function() {
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 
-
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -854,26 +853,26 @@ $('#closemodal').click(function() {
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-$(function() {
-    $('[rel="clickover"]').clickover();})
-</script>
-<script>
-$( document ).ready(function() {
-    init();
-});
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+    $(document).ready(function () {
+        init();
+    });
 </script>
 <!-- MODAL -->
 <script src="../assets/js/bootstrap-modalmanager.js"></script>
 <script src="../assets/js/bootstrap-modal.js"></script>
 <script>
-$("a[data-toggle=modal]").click(function (e) {
-  lv_target = $(this).attr('data-target')
-  lv_url = $(this).attr('href')
-  $(lv_target).load(lv_url)})
+    $("a[data-toggle=modal]").click(function (e) {
+        lv_target = $(this).attr('data-target')
+        lv_url = $(this).attr('href')
+        $(lv_target).load(lv_url)
+    })
 
-$('#closemodal').click(function() {
-    $('#Modal-Monument').modal('hide');
-});
+    $('#closemodal').click(function () {
+        $('#Modal-Monument').modal('hide');
+    });
 </script>
 <!-- EDITEUR -->
 <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>

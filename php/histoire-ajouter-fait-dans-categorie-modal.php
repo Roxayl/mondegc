@@ -70,6 +70,3 @@ $totalRows_fai_cat = mysql_num_rows($fai_cat);
   </div>
   <input type="hidden" name="MM_insert" value="ajout-fai_categorie">
 </form>
-<?php
-mysql_free_result($liste_fait_cat);
-mysql_free_result($fai_cat);?>

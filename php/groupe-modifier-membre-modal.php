@@ -1,7 +1,5 @@
 <?php
 
-header('Content-Type: text/html; charset=iso-8859-1');
-
 //requete dispatch
 $colname_info_membre = "-1";
 if (isset($_GET['ch_disp_MG_id'])) {
@@ -76,5 +74,3 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-group")) {
   </div>
   <input type="hidden" name="MM_update" value="ajout-group">
 </form>
-<?php
-mysql_free_result($info_dispatch);?>

@@ -196,7 +196,3 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
   <?php } ?>
   <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fermer</button>
 </div>
-<?php
-mysql_free_result($monument);
-mysql_free_result($commentaire);
-?>

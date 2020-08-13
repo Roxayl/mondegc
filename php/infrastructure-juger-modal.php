@@ -338,14 +338,9 @@ $totalRows_ressources_pays = mysql_num_rows($ressources_pays);
     </form>
   </div>
 </div>
-<?php
-mysql_free_result($infrastructure);
-mysql_free_result($ressources_ville);
-mysql_free_result($ressources_pays);
-?>
-  </div>
-  <script language="javascript">
-		function ChangeImage(url) {
-			document.getElementById("img").src = url;
-		}
-		</script> 
+</div>
+<script>
+    function ChangeImage(url) {
+        document.getElementById("img").src = url;
+    }
+</script>

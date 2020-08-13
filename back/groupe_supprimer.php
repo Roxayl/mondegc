@@ -35,7 +35,7 @@ if ($_SESSION['last_work'] = "institut_politique.php") {
 ?><!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Haut-Conseil - Supprimer un groupe</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -82,8 +82,7 @@ if ($_SESSION['last_work'] = "institut_politique.php") {
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -94,7 +93,10 @@ if ($_SESSION['last_work'] = "institut_politique.php") {
 <script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
- <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
+<script type="text/javascript">
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
+</body>
+</html>

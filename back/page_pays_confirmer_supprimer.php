@@ -26,7 +26,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 ?><!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Haut-Conseil - Supprimer un pays</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">

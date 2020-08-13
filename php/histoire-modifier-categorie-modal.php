@@ -128,5 +128,3 @@ var sprytextfield21 = new Spry.Widget.ValidationTextField("sprytextfield21", "no
 var sprytextfield23 = new Spry.Widget.ValidationTextField("sprytextfield23", "url", {minChars:2, maxChars:250, validateOn:["change"]});
 var sprytextarea24 = new Spry.Widget.ValidationTextarea("sprytextarea24", {maxChars:400, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
-<?php
-mysql_free_result($liste_fait_cat);?>

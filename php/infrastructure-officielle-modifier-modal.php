@@ -224,5 +224,3 @@ var sprytextfield9 = new Spry.Widget.ValidationTextField("sprytextfield9", "inte
 var sprytextfield10 = new Spry.Widget.ValidationTextField("sprytextfield10", "integer", {validateOn:["change"], isRequired:false, useCharacterMasking:true});
 var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:2000, validateOn:["change"], useCharacterMasking:false});
 </script>
-<?php
-mysql_free_result($infra_officielles);?>

@@ -119,8 +119,7 @@ $totalRows_drapeau = mysql_num_rows($drapeau);
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -133,9 +132,12 @@ $totalRows_drapeau = mysql_num_rows($drapeau);
 <script src="../assets/js/bootstrap-clickover.js"></script>
 <script src="../assets/js/bootstrap-filestyle.min.js"></script>
 <script type="text/javascript">
-$('input[type=file]').bootstrapFileInput();
+    $('input[type=file]').bootstrapFileInput();
 </script>
 <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
+</body>
+</html>

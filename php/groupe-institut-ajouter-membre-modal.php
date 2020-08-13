@@ -84,6 +84,3 @@ $totalRows_mem_group = mysql_num_rows($mem_group);
   </div>
   <input type="hidden" name="MM_insert" value="ajout-mem_groupegorie">
 </form>
-<?php
-mysql_free_result($info_membre);
-mysql_free_result($mem_group);?>
