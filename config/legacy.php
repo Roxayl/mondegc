@@ -8,4 +8,8 @@ return [
 
     'enable_csrf_protection' => env('LEGACY_CSRF', true),
 
+    'salt' => env('LEGACY_SALT', function() {
+        throw new InvalidArgumentException("Configuration legacy.salt manquante");
+    }),
+
 ];

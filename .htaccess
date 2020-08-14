@@ -4,7 +4,6 @@ RewriteEngine On
 RewriteCond %{REQUEST_URI} !^/mondegc/public/
 RewriteCond %{REQUEST_URI} !^/mondegc/assets/
 RewriteCond %{REQUEST_URI} !^/mondegc/back/
-RewriteCond %{REQUEST_URI} !^/mondegc/BContact/
 RewriteCond %{REQUEST_URI} !^/mondegc/Carto/
 RewriteCond %{REQUEST_URI} !^/mondegc/colorpicker/
 RewriteCond %{REQUEST_URI} !^/mondegc/datepicker/

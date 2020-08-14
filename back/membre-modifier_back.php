@@ -32,7 +32,7 @@ $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '
 appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
-  include(DEF_ROOTPATH . "php/config.php");
+  $salt = config('legacy.salt');
   if (isset ($_POST['ch-use_password'])) {
   $hashed_password = md5($_POST['ch-use_password'].$salt);
   unset($_POST['ch-use_password']);

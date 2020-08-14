@@ -33,7 +33,7 @@ $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '
 appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
-  include_once("php/config.php");
+  $salt = config('legacy.salt');
   $password = md5($_POST['ch-use_password'].$salt);
   $updateSQL = sprintf("UPDATE users SET ch_use_login=%s, ch_use_password=%s WHERE ch_use_id=%s",
                        GetSQLValueString($_POST['ch_use_login'], "text"),

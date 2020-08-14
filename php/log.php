@@ -88,7 +88,7 @@ if ($clefSession != NULL and $clefSession != "" and !isset($_SESSION['login_user
 
 // *** Si l'utilisateur veut se connecter
 if (isset($_POST['identifiant'])) {
-	require(DEF_ROOTPATH . "php/config.php");
+  $salt = config('legacy.salt');
   $loginUsername = $_POST['identifiant'];
   $password = md5($_POST['mot_de_passe'].$salt);
   $MM_fldUserAuthorization = "ch_use_paysID";
