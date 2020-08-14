@@ -52,7 +52,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
 
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-  <h3 id="myModalLabel">Partager <strong> <?php echo $row_fait_hist['ch_his_nom']; ?></strong> sur le forum de G&eacute;n&eacute;ration City</h3>
+  <h3 id="myModalLabel">Partager <strong> <?= e($row_fait_hist['ch_his_nom']) ?></strong> sur le forum de G&eacute;n&eacute;ration City</h3>
 </div>
 <div class="modal-body corps-page">
   <div class="row-fluid">
@@ -60,10 +60,10 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
       <div class="well">
         <h3>Message&nbsp;:</h3>
         <div class="pull-center"><img src="http://monde.generation-city.com/assets/img/IconesBDD/100/faithistorique.png">
-          <h4><?php echo $row_fait_hist['ch_his_nom']; ?></h4>
+          <h4><?= e($row_fait_hist['ch_his_nom']) ?></h4>
           <img src="<?php echo $row_fait_hist['ch_his_lien_img1']; ?>"></div>
-        <p><?php echo $row_fait_hist['ch_his_description']; ?></p>
-        <div class="pull-center"><a href="http://www.generation-city.com/monde/page-fait-historique.php?ch_his_id=<?php echo $row_fait_hist['ch_his_id']; ?>"><strong>Consulter</strong></a></div>
+        <p><?= e($row_fait_hist['ch_his_description']) ?></p>
+        <div class="pull-center"><a href="http://www.generation-city.com/monde/page-fait-historique.php?ch_his_id=<?= e($row_fait_hist['ch_his_id']) ?>"><strong>Consulter</strong></a></div>
         <p>&nbsp;</p>
       </div>
       <form action="http://www.forum-gc.com/post" method="post" name="post" enctype="multipart/form-data" onSubmit="envoiMessage(this)" target="_blank">
@@ -105,7 +105,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
   <?php if (($row_fait_hist['ch_pay_lien_forum']==NULL) OR ($row_fait_hist['ch_pay_lien_forum']=="") OR ($id_trouve== false) ) {?>
   <!-- Si le lien du sujet sur le forum n'est pas trouv&eacute;-->
   <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_lien" Id="ajout_lien">
-    <input type="hidden" name="ch_pay_id" id="ch_pay_id" value="<?php echo $row_fait_hist['ch_his_paysID']; ?>">
+    <input type="hidden" name="ch_pay_id" id="ch_pay_id" value="<?= e($row_fait_hist['ch_his_paysID']) ?>">
     <?php if (($row_fait_hist['ch_pay_lien_forum']== NULL) OR ($row_fait_hist['ch_pay_lien_forum']== "")){?>
     <h4>Vous n'avez pas encore indiqu&eacute; le lien du sujet consacr&eacute; à votre pays sur le Forum de G&eacute;n&eacute;ration City </h4>
     <?php } else { ?>

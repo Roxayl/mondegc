@@ -68,15 +68,15 @@ $currentPage = $_SERVER["PHP_SELF"];
 <header class="jumbotron subhead" id="overview">
   <div class="container">
     <h1>Attention&nbsp;!</h1>
-    <img src="<?php echo $row_membre['ch_use_lien_imgpersonnage']; ?>" width="100px" class="pull-right">
-    <p>Souhaitez-vous r&eacute;ellement supprimer le profil du membre <?php echo $row_membre['ch_use_login']; ?>&nbsp;?</p>
+    <img src="<?= e($row_membre['ch_use_lien_imgpersonnage']) ?>" width="100px" class="pull-right">
+    <p>Souhaitez-vous r&eacute;ellement supprimer le profil du membre <?= e($row_membre['ch_use_login']) ?>&nbsp;?</p>
     <p>Cette action sera irr&eacute;versible</p>
     <form action="<?= DEF_URI_PATH ?>back/membre_supprimer.php" method="post" class="form-button-inline">
-      <input name="ch_use_id" type="hidden" value="<?php echo $row_membre['ch_use_id']; ?>">
+      <input name="ch_use_id" type="hidden" value="<?= e($row_membre['ch_use_id']) ?>">
       <button type="submit" class="btn btn-large btn-danger" title="supprimer ce membre"><i class="icon-trash icon-white"></i> Supprimer</button>
     </form>
     <form action="<?= DEF_URI_PATH ?>back/liste-membres.php" method="post" class="form-button-inline">
-      <input name="userID" type="hidden" value="<?php echo $row_membre['ch_use_id']; ?>">
+      <input name="userID" type="hidden" value="<?= e($row_membre['ch_use_id']) ?>">
       <button type="submit" class="btn btn-large btn-success" title="retour &agrave; la lsite des membres">Annuler</button>
     </form>
   </div>
@@ -85,8 +85,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -97,10 +96,10 @@ $currentPage = $_SERVER["PHP_SELF"];
 <script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
- <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
-<?php
-mysql_free_result($membre);
-?>
+<script type="text/javascript">
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
+</body>
+</html>

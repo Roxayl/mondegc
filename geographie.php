@@ -184,7 +184,7 @@ init();
         <select name="ch_pay_id" id="ch_pay_id" onchange="this.form.submit()">
           <option value="" <?php if ($_GET['ch_pay_id'] == NULL) {?>selected<?php } ?>>S&eacute;lectionnez un pays&nbsp;</option>
           <?php do { ?>
-          <option value="<?php echo $row_liste_pays['ch_pay_id']; ?>" <?php if ($row_liste_pays['ch_pay_id'] == $_GET['ch_pay_id']) {?>selected<?php } ?>><?= __s($row_liste_pays['ch_pay_nom']) ?></option>
+          <option value="<?= e($row_liste_pays['ch_pay_id']) ?>" <?php if ($row_liste_pays['ch_pay_id'] == $_GET['ch_pay_id']) {?>selected<?php } ?>><?= __s($row_liste_pays['ch_pay_nom']) ?></option>
           <?php } while ($row_liste_pays = mysql_fetch_assoc($liste_pays)); ?>
         </select>
       </form>

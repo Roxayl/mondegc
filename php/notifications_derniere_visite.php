@@ -132,11 +132,11 @@ $totalPages_MAJVilles = ceil($totalRows_MAJVilles/$maxRows_MAJVilles)-1;
           <li>
             <div class="span8 alert alert-success">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <div class="span1"><a href="../page-pays.php?ch_pay_id=<?php echo $row_MAJPays['ch_pay_id']; ?>"><img src="<?php echo $row_MAJPays['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau"></a></div>
+              <div class="span1"><a href="../page-pays.php?ch_pay_id=<?= e($row_MAJPays['ch_pay_id']) ?>"><img src="<?= e($row_MAJPays['ch_pay_lien_imgdrapeau']) ?>" alt="drapeau"></a></div>
               <div class="span5"> <small>le
                 <?php  echo date("d/m/Y à G:i", strtotime($row_MAJPays['ch_pay_mis_jour'])); ?>
                 &nbsp;:</small>
-                <p>La page du pays <a href="../page-pays.php?ch_pay_id=<?php echo $row_MAJPays['ch_pay_id']; ?>"><?php echo $row_MAJPays['ch_pay_nom']; ?></a> &agrave; &eacute;t&eacute; mise &agrave; jour</p>
+                <p>La page du pays <a href="../page-pays.php?ch_pay_id=<?= e($row_MAJPays['ch_pay_id']) ?>"><?= e($row_MAJPays['ch_pay_nom']) ?></a> &agrave; &eacute;t&eacute; mise &agrave; jour</p>
               </div>
             </div>
             <div class="span9"></div>
@@ -151,11 +151,11 @@ $totalPages_MAJVilles = ceil($totalRows_MAJVilles/$maxRows_MAJVilles)-1;
           <li>
             <div class="span8 alert alert-block">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <div class="span1"><a href="../page-ville.php?ch_pay_id=<?php echo $row_MAJVilles['ch_vil_paysID']; ?>&ch_ville_id=<?php echo $row_MAJVilles['ch_vil_ID']; ?>"><img src="<?php echo $row_MAJVilles['ch_vil_armoiries']; ?>" alt="armoiries"></a></div>
+              <div class="span1"><a href="../page-ville.php?ch_pay_id=<?= e($row_MAJVilles['ch_vil_paysID']) ?>&ch_ville_id=<?= e($row_MAJVilles['ch_vil_ID']) ?>"><img src="<?= e($row_MAJVilles['ch_vil_armoiries']) ?>" alt="armoiries"></a></div>
               <div class="span5"> <small>le
                 <?php  echo date("d/m/Y à G:i", strtotime($row_MAJVilles['ch_vil_mis_jour'])); ?>
                 &nbsp;:</small>
-                <p>La page de la ville <a href="../page-ville.php?ch_pay_id=<?php echo $row_MAJVilles['ch_vil_paysID']; ?>&ch_ville_id=<?php echo $row_MAJVilles['ch_vil_ID']; ?>"><?php echo $row_MAJVilles['ch_vil_nom']; ?></a> &agrave; &eacute;t&eacute; mise &agrave; jour</p>
+                <p>La page de la ville <a href="../page-ville.php?ch_pay_id=<?= e($row_MAJVilles['ch_vil_paysID']) ?>&ch_ville_id=<?= e($row_MAJVilles['ch_vil_ID']) ?>"><?= e($row_MAJVilles['ch_vil_nom']) ?></a> &agrave; &eacute;t&eacute; mise &agrave; jour</p>
               </div>
             </div>
             <div class="span9"></div>
@@ -171,13 +171,13 @@ $totalPages_MAJVilles = ceil($totalRows_MAJVilles/$maxRows_MAJVilles)-1;
             <?php if ( $row_LastCommuniquePays['ch_com_categorie'] == "com_pays") {?>
             <div class="span8 alert alert-info">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <div class="span1"><a href="../page-pays.php?ch_pay_id=<?php echo $row_LastCommuniquePays['ch_use_paysID']; ?>#diplomatie"><img src="<?php echo $row_LastCommuniquePays['ch_use_lien_imgpersonnage']; ?>" alt="dirigeant"></a></div>
+              <div class="span1"><a href="../page-pays.php?ch_pay_id=<?= e($row_LastCommuniquePays['ch_use_paysID']) ?>#diplomatie"><img src="<?= e($row_LastCommuniquePays['ch_use_lien_imgpersonnage']) ?>" alt="dirigeant"></a></div>
               <div class="span5"> <small>le
                 <?php  echo date("d/m/Y à G:i", strtotime($row_LastCommuniquePays['ch_com_date'])); ?>
                 &nbsp;:</small>
-                <p><a href="../page-pays.php?ch_pay_id=<?php echo $row_LastCommuniquePays['ch_use_paysID']; ?>#diplomatie"> <?php echo $row_LastCommuniquePays['ch_use_prenom_dirigeant']; ?> <?php echo $row_LastCommuniquePays['ch_use_nom_dirigeant']; ?></a> <?php echo $row_LastCommuniquePays['ch_use_titre_dirigeant']; ?> &agrave; visit&eacute; le pays <a href="../page-pays.php?ch_pay_id=<?php echo $row_LastCommuniquePays['ch_pay_id']; ?>#commentaireID<?php echo $row_LastCommuniquePays['ch_com_ID']; ?>"> <?php echo $row_LastCommuniquePays['ch_pay_nom']; ?></a></p>
+                <p><a href="../page-pays.php?ch_pay_id=<?= e($row_LastCommuniquePays['ch_use_paysID']) ?>#diplomatie"> <?= e($row_LastCommuniquePays['ch_use_prenom_dirigeant']) ?> <?= e($row_LastCommuniquePays['ch_use_nom_dirigeant']) ?></a> <?= e($row_LastCommuniquePays['ch_use_titre_dirigeant']) ?> &agrave; visit&eacute; le pays <a href="../page-pays.php?ch_pay_id=<?= e($row_LastCommuniquePays['ch_pay_id']) ?>#commentaireID<?= e($row_LastCommuniquePays['ch_com_ID']) ?>"> <?= e($row_LastCommuniquePays['ch_pay_nom']) ?></a></p>
               </div>
-              <div class="span1"><a href="../page-pays.php?ch_pay_id=<?php echo $row_LastCommuniquePays['ch_pay_id']; ?>#commentaireID<?php echo $row_LastCommuniquePays['ch_com_ID']; ?>"><img src="<?php echo $row_LastCommuniquePays['ch_pay_lien_imgdrapeau']; ?>" alt="pays"></a></div>
+              <div class="span1"><a href="../page-pays.php?ch_pay_id=<?= e($row_LastCommuniquePays['ch_pay_id']) ?>#commentaireID<?= e($row_LastCommuniquePays['ch_com_ID']) ?>"><img src="<?= e($row_LastCommuniquePays['ch_pay_lien_imgdrapeau']) ?>" alt="pays"></a></div>
             </div>
             <div class="span9"></div>
             <?php } ?>
@@ -186,13 +186,13 @@ $totalPages_MAJVilles = ceil($totalRows_MAJVilles/$maxRows_MAJVilles)-1;
             <?php if ( $row_LastCommuniquePays['ch_com_categorie'] == "pays") {?>
             <div class="span8 alert alert-success">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <div class="span1"><a href="../page-pays.php?ch_pay_id=<?php echo $row_LastCommuniquePays['ch_use_paysID']; ?>#diplomatie"><img src="<?php echo $row_LastCommuniquePays['ch_use_lien_imgpersonnage']; ?>" alt="dirigeant"></a></div>
+              <div class="span1"><a href="../page-pays.php?ch_pay_id=<?= e($row_LastCommuniquePays['ch_use_paysID']) ?>#diplomatie"><img src="<?= e($row_LastCommuniquePays['ch_use_lien_imgpersonnage']) ?>" alt="dirigeant"></a></div>
               <div class="span5"> <small>le
                 <?php  echo date("d/m/Y à G:i", strtotime($row_LastCommuniquePays['ch_com_date'])); ?>
                 &nbsp;:</small>
-                <p><a href="../page-pays.php?ch_pay_id=<?php echo $row_LastCommuniquePays['ch_use_paysID']; ?>#diplomatie"> <?php echo $row_LastCommuniquePays['ch_use_prenom_dirigeant']; ?> <?php echo $row_LastCommuniquePays['ch_use_nom_dirigeant']; ?></a> <?php echo $row_LastCommuniquePays['ch_use_titre_dirigeant']; ?> &agrave; lan&ccedil;&eacute; un communiqu&eacute; au nom de son pays <a href="../page-communique.php?com_id=<?php echo $row_LastCommuniquePays['ch_com_ID']; ?>"> <?php echo $row_LastCommuniquePays['ch_pay_nom']; ?></a></p>
+                <p><a href="../page-pays.php?ch_pay_id=<?= e($row_LastCommuniquePays['ch_use_paysID']) ?>#diplomatie"> <?= e($row_LastCommuniquePays['ch_use_prenom_dirigeant']) ?> <?= e($row_LastCommuniquePays['ch_use_nom_dirigeant']) ?></a> <?= e($row_LastCommuniquePays['ch_use_titre_dirigeant']) ?> &agrave; lan&ccedil;&eacute; un communiqu&eacute; au nom de son pays <a href="../page-communique.php?com_id=<?= e($row_LastCommuniquePays['ch_com_ID']) ?>"> <?= e($row_LastCommuniquePays['ch_pay_nom']) ?></a></p>
               </div>
-              <div class="span1"><a href="../page-communique.php?com_id=<?php echo $row_LastCommuniquePays['ch_com_ID']; ?>"><img src="<?php echo $row_LastCommuniquePays['ch_pay_lien_imgdrapeau']; ?>" alt="pays"></a></div>
+              <div class="span1"><a href="../page-communique.php?com_id=<?= e($row_LastCommuniquePays['ch_com_ID']) ?>"><img src="<?= e($row_LastCommuniquePays['ch_pay_lien_imgdrapeau']) ?>" alt="pays"></a></div>
             </div>
             <div class="span9"></div>
             <?php } ?>
@@ -208,13 +208,13 @@ $totalPages_MAJVilles = ceil($totalRows_MAJVilles/$maxRows_MAJVilles)-1;
             <?php if ( $row_LastCommuniqueVilles['ch_com_categorie'] == "com_ville") {?>
             <div class="span8 alert alert-info">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <div class="span1"><a href="../page-pays.php?ch_pay_id=<?php echo $row_LastCommuniqueVilles['ch_use_paysID']; ?>#diplomatie"><img src="<?php echo $row_LastCommuniqueVilles['ch_use_lien_imgpersonnage']; ?>" alt="dirigeant"></a></div>
+              <div class="span1"><a href="../page-pays.php?ch_pay_id=<?= e($row_LastCommuniqueVilles['ch_use_paysID']) ?>#diplomatie"><img src="<?= e($row_LastCommuniqueVilles['ch_use_lien_imgpersonnage']) ?>" alt="dirigeant"></a></div>
               <div class="span5"> <small>le
                 <?php  echo date("d/m/Y à G:i", strtotime($row_LastCommuniqueVilles['ch_com_date'])); ?>
                 &nbsp;:</small>
-                <p><a href="../page-pays.php?ch_pay_id=<?php echo $row_LastCommuniqueVilles['ch_use_paysID']; ?>#diplomatie"> <?php echo $row_LastCommuniqueVilles['ch_use_prenom_dirigeant']; ?> <?php echo $row_LastCommuniqueVilles['ch_use_nom_dirigeant']; ?></a> <?php echo $row_LastCommuniqueVilles['ch_use_titre_dirigeant']; ?> &agrave; visit&eacute; la ville <a href="../page-ville.php?ch_pay_id=<?php echo $row_LastCommuniqueVilles['ch_vil_paysID']; ?>&ch_ville_id=<?php echo $row_LastCommuniqueVilles['ch_vil_ID']; ?>#commentaireID<?php echo $row_LastCommuniqueVilles['ch_com_ID']; ?>"><?php echo $row_LastCommuniqueVilles['ch_vil_nom']; ?></a></p>
+                <p><a href="../page-pays.php?ch_pay_id=<?= e($row_LastCommuniqueVilles['ch_use_paysID']) ?>#diplomatie"> <?= e($row_LastCommuniqueVilles['ch_use_prenom_dirigeant']) ?> <?= e($row_LastCommuniqueVilles['ch_use_nom_dirigeant']) ?></a> <?= e($row_LastCommuniqueVilles['ch_use_titre_dirigeant']) ?> &agrave; visit&eacute; la ville <a href="../page-ville.php?ch_pay_id=<?= e($row_LastCommuniqueVilles['ch_vil_paysID']) ?>&ch_ville_id=<?= e($row_LastCommuniqueVilles['ch_vil_ID']) ?>#commentaireID<?= e($row_LastCommuniqueVilles['ch_com_ID']) ?>"><?= e($row_LastCommuniqueVilles['ch_vil_nom']) ?></a></p>
               </div>
-              <div class="span1"><a href="../page-ville.php?ch_pay_id=<?php echo $row_LastCommuniqueVilles['ch_vil_paysID']; ?>&ch_ville_id=<?php echo $row_LastCommuniqueVilles['ch_vil_ID']; ?>#commentaireID<?php echo $row_LastCommuniqueVilles['ch_com_ID']; ?>"><img src="<?php echo $row_LastCommuniqueVilles['ch_vil_armoiries']; ?>" alt="armoiries"></a></div>
+              <div class="span1"><a href="../page-ville.php?ch_pay_id=<?= e($row_LastCommuniqueVilles['ch_vil_paysID']) ?>&ch_ville_id=<?= e($row_LastCommuniqueVilles['ch_vil_ID']) ?>#commentaireID<?= e($row_LastCommuniqueVilles['ch_com_ID']) ?>"><img src="<?= e($row_LastCommuniqueVilles['ch_vil_armoiries']) ?>" alt="armoiries"></a></div>
             </div>
             <div class="span9"></div>
             <?php } ?>
@@ -223,13 +223,13 @@ $totalPages_MAJVilles = ceil($totalRows_MAJVilles/$maxRows_MAJVilles)-1;
             <?php if ( $row_LastCommuniqueVilles['ch_com_categorie'] == "ville") {?>
             <div class="span8 alert alert-block">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <div class="span1"><a href="../page-pays.php?ch_pay_id=<?php echo $row_LastCommuniqueVilles['ch_use_paysID']; ?>#diplomatie"><img src="<?php echo $row_LastCommuniqueVilles['ch_use_lien_imgpersonnage']; ?>" alt="dirigeant"></a></div>
+              <div class="span1"><a href="../page-pays.php?ch_pay_id=<?= e($row_LastCommuniqueVilles['ch_use_paysID']) ?>#diplomatie"><img src="<?= e($row_LastCommuniqueVilles['ch_use_lien_imgpersonnage']) ?>" alt="dirigeant"></a></div>
               <div class="span5"> <small>le
                 <?php  echo date("d/m/Y à G:i", strtotime($row_LastCommuniqueVilles['ch_com_date'])); ?>
                 &nbsp;:</small>
-                <p><a href="../page-pays.php?ch_pay_id=<?php echo $row_LastCommuniqueVilles['ch_use_paysID']; ?>#diplomatie"> <?php echo $row_LastCommuniqueVilles['ch_use_prenom_dirigeant']; ?> <?php echo $row_LastCommuniqueVilles['ch_use_nom_dirigeant']; ?></a> <?php echo $row_LastCommuniqueVilles['ch_use_titre_dirigeant']; ?> &agrave; lan&ccedil;&eacute; un communiqu&eacute; au nom de la ville <a href="../page-communique.php?com_id=<?php echo $row_LastCommuniqueVilles['ch_com_ID']; ?>"> <?php echo $row_LastCommuniqueVilles['ch_vil_nom']; ?></a></p>
+                <p><a href="../page-pays.php?ch_pay_id=<?= e($row_LastCommuniqueVilles['ch_use_paysID']) ?>#diplomatie"> <?= e($row_LastCommuniqueVilles['ch_use_prenom_dirigeant']) ?> <?= e($row_LastCommuniqueVilles['ch_use_nom_dirigeant']) ?></a> <?= e($row_LastCommuniqueVilles['ch_use_titre_dirigeant']) ?> &agrave; lan&ccedil;&eacute; un communiqu&eacute; au nom de la ville <a href="../page-communique.php?com_id=<?= e($row_LastCommuniqueVilles['ch_com_ID']) ?>"> <?= e($row_LastCommuniqueVilles['ch_vil_nom']) ?></a></p>
               </div>
-              <div class="span1"><a href="../page-communique.php?com_id=<?php echo $row_LastCommuniqueVilles['ch_com_ID']; ?>"><img src="<?php echo $row_LastCommuniqueVilles['ch_vil_armoiries']; ?>" alt="armoiries"></a></div>
+              <div class="span1"><a href="../page-communique.php?com_id=<?= e($row_LastCommuniqueVilles['ch_com_ID']) ?>"><img src="<?= e($row_LastCommuniqueVilles['ch_vil_armoiries']) ?>" alt="armoiries"></a></div>
             </div>
             <div class="span9"></div>
             <?php } ?>
@@ -244,11 +244,11 @@ $totalPages_MAJVilles = ceil($totalRows_MAJVilles/$maxRows_MAJVilles)-1;
           <li>
             <div class="span8 alert alert-info">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <div class="span1"><a href="../page-pays.php?ch_pay_id=<?php echo $row_LastCommuniqueReaction['ch_use_paysID']; ?>#diplomatie"><img src="<?php echo $row_LastCommuniqueReaction['ch_use_lien_imgpersonnage']; ?>" alt="dirigeant"></a></div>
+              <div class="span1"><a href="../page-pays.php?ch_pay_id=<?= e($row_LastCommuniqueReaction['ch_use_paysID']) ?>#diplomatie"><img src="<?= e($row_LastCommuniqueReaction['ch_use_lien_imgpersonnage']) ?>" alt="dirigeant"></a></div>
               <div class="span5"> <small>le
                 <?php  echo date("d/m/Y à G:i", strtotime($row_LastCommuniqueReaction['ch_com_date'])); ?>
                 &nbsp;:</small>
-                <p><a href="../page-pays.php?ch_pay_id=<?php echo $row_LastCommuniqueReaction['ch_use_paysID']; ?>#diplomatie"> <?php echo $row_LastCommuniqueReaction['ch_use_prenom_dirigeant']; ?> <?php echo $row_LastCommuniqueReaction['ch_use_nom_dirigeant']; ?></a> <?php echo $row_LastCommuniqueReaction['ch_use_titre_dirigeant']; ?> &agrave; r&eacute;agit <a href="../page-communique.php?com_id=<?php echo $row_LastCommuniqueReaction['ch_com_element_id']; ?>#commentaireID<?php echo $row_LastCommuniqueReaction['ch_com_ID']; ?>">&agrave; un communiqu&eacute;</a></p>
+                <p><a href="../page-pays.php?ch_pay_id=<?= e($row_LastCommuniqueReaction['ch_use_paysID']) ?>#diplomatie"> <?= e($row_LastCommuniqueReaction['ch_use_prenom_dirigeant']) ?> <?= e($row_LastCommuniqueReaction['ch_use_nom_dirigeant']) ?></a> <?= e($row_LastCommuniqueReaction['ch_use_titre_dirigeant']) ?> &agrave; r&eacute;agit <a href="../page-communique.php?com_id=<?= e($row_LastCommuniqueReaction['ch_com_element_id']) ?>#commentaireID<?= e($row_LastCommuniqueReaction['ch_com_ID']) ?>">&agrave; un communiqu&eacute;</a></p>
               </div>
             </div>
             <div class="span9"></div>

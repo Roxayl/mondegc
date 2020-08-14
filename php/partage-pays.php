@@ -51,7 +51,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
 <?php if ($id_trouve == TRUE) { ?>
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-  <h3 id="myModalLabel">Partager <strong> <?php echo $row_pays['ch_pay_nom']; ?></strong> sur le forum de G&eacute;n&eacute;ration City</h3>
+  <h3 id="myModalLabel">Partager <strong> <?= e($row_pays['ch_pay_nom']) ?></strong> sur le forum de G&eacute;n&eacute;ration City</h3>
 </div>
 <div class="modal-body corps-page">
   <div class="row-fluid">
@@ -59,7 +59,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
       <div class="well">
         <h3>Message&nbsp;:</h3>
         <div class="pull-center"><img src="http://monde.generation-city.com/assets/img/IconesBDD/100/Pays1.png">
-          <h4><?php echo $row_pays['ch_pay_nom']; ?> a &eacute;t&eacute; mis &agrave; jour</h4>
+          <h4><?= e($row_pays['ch_pay_nom']) ?> a &eacute;t&eacute; mis &agrave; jour</h4>
         </div>
         <script type="text/javascript">
         function envoiMessage(form)
@@ -145,7 +145,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
     <h4>Nous n'avons pas retrouv&eacute; votre sujet dans le lien que vous avez indiqu&eacute;</h4>
     <?php } ?>
     <!-- Lien Forum -->
-    <input type="hidden" id="ch_pay_id" name="ch_pay_id" value="<?php echo $row_pays['ch_pay_id']; ?>">
+    <input type="hidden" id="ch_pay_id" name="ch_pay_id" value="<?= e($row_pays['ch_pay_id']) ?>">
     <div id="sprytextfield1" class="control-group">
       <label class="control-label" for="ch_pay_lien_forum">Lien sujet sur le forum <a href="#" rel="clickover" data-placement="bottom" title="Lien du sujet" data-content="250 caract&egrave;res maximum. Copiez/collez ici le lien vers le sujet consacr&eacute; &agrave; votre pays sur le forum. Cette information sevira &agrave; poster des messages dans votre sujet directement depuis le site"><i class="icon-info-sign"></i></a></label>
       <div class="controls">

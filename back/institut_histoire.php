@@ -247,13 +247,13 @@ format: 'hex'});
   <!-- formulaire de modification instituts
      ================================================== -->
   <form class="pull-right-cta" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post" style="margin-top: 30px;">
-    <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
+    <input name="institut_id" type="hidden" value="<?= e($row_institut['ch_ins_ID']) ?>">
     <button class="btn btn-primary btn-cta" type="submit" title="modifier les informations sur l'institut"><i class="icon-edit icon-white"></i> Modifier la description</button>
   </form>
   <!-- Liste des Communiqués
         ================================================== -->
   <div id="titre_institut" class="titre-bleu anchor">
-    <h1>G&eacute;rer le <?php echo $row_institut['ch_ins_nom']; ?></h1>
+    <h1>G&eacute;rer le <?= e($row_institut['ch_ins_nom']) ?></h1>
   </div>
   <div class="clearfix"></div>
 
@@ -286,14 +286,14 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
         <?php do { ?>
           <li class="row-fluid"> 
             <!-- ICONE categories -->
-            <div class="span2 icone-categorie"><img src="<?php echo $row_liste_fait_cat['ch_fai_cat_icon']; ?>" alt="icone <?php echo $row_liste_fait_cat['ch_fai_cat_nom']; ?>" style="background-color:<?php echo $row_liste_fait_cat['ch_fai_cat_couleur']; ?>; <?php if ($row_liste_fait_cat['ch_fai_cat_statut'] == 2 ) {?>opacity:0.5;<?php }?>"></div>
+            <div class="span2 icone-categorie"><img src="<?= e($row_liste_fait_cat['ch_fai_cat_icon']) ?>" alt="icone <?= e($row_liste_fait_cat['ch_fai_cat_nom']) ?>" style="background-color:<?= e($row_liste_fait_cat['ch_fai_cat_couleur']) ?>; <?php if ($row_liste_fait_cat['ch_fai_cat_statut'] == 2 ) {?>opacity:0.5;<?php }?>"></div>
             <!-- contenu categorie -->
             <div class="span10 info-listes"> 
               <!-- Boutons modifier / supprimer --> 
-              <a class="pull-right" href="../php/histoire-supprimmer-categorie-modal.php?fai_cat_id=<?php echo $row_liste_fait_cat['ch_fai_cat_ID']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer cette cat&eacute;gorie"><i class="icon-remove"></i></a> <a class="pull-right" href="../php/histoire-modifier-categorie-modal.php?fai_cat_id=<?php echo $row_liste_fait_cat['ch_fai_cat_ID']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="modifier cette cat&eacute;gorie"><i class="icon-pencil"></i></a> 
+              <a class="pull-right" href="../php/histoire-supprimmer-categorie-modal.php?fai_cat_id=<?= e($row_liste_fait_cat['ch_fai_cat_ID']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer cette cat&eacute;gorie"><i class="icon-remove"></i></a> <a class="pull-right" href="../php/histoire-modifier-categorie-modal.php?fai_cat_id=<?= e($row_liste_fait_cat['ch_fai_cat_ID']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="modifier cette cat&eacute;gorie"><i class="icon-pencil"></i></a> 
               <!-- Desc categorie -->
-              <h4><?php echo $row_liste_fait_cat['ch_fai_cat_nom']; ?></h4>
-              <p><?php echo $row_liste_fait_cat['ch_fai_cat_desc']; ?></p>
+              <h4><?= e($row_liste_fait_cat['ch_fai_cat_nom']) ?></h4>
+              <p><?= e($row_liste_fait_cat['ch_fai_cat_desc']) ?></p>
             </div>
           </li>
           <?php } while ($row_liste_fait_cat = mysql_fetch_assoc($liste_fait_cat)); ?>
@@ -414,18 +414,18 @@ $('#closemodal').click(function() {
         <!-- Image du monument -->
         <div class="span2 img-listes">
           <?php if ($row_new_fait['ch_his_lien_img1']) {?>
-          <img src="<?php echo $row_new_fait['ch_his_lien_img1']; ?>" alt="image <?php echo $row_new_fait['ch_his_nom']; ?>">
+          <img src="<?php echo $row_new_fait['ch_his_lien_img1']; ?>" alt="image <?= e($row_new_fait['ch_his_nom']) ?>">
           <?php } else { ?>
           <img src="../assets/img/imagesdefaut/ville.jpg" alt="monument">
           <?php } ?>
         </div>
         <!-- Nom, date et lien vers la page du monument -->
         <div class="span6 info-listes">
-          <h4><?php echo $row_new_fait['ch_his_nom']; ?></h4>
+          <h4><?= e($row_new_fait['ch_his_nom']) ?></h4>
           <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
             <?php  echo date("d/m/Y", strtotime($row_new_fait['ch_his_mis_jour'])); ?>
             &agrave; <?php echo date("G:i:s", strtotime($row_new_fait['ch_his_mis_jour'])); ?> </p>
-          <a class="btn btn-primary" href="../page-fait-historique.php?ch_his_id=<?php echo $row_new_fait['ch_his_id']; ?>">Visiter</a> </div>
+          <a class="btn btn-primary" href="../page-fait-historique.php?ch_his_id=<?= e($row_new_fait['ch_his_id']) ?>">Visiter</a> </div>
         <!-- Affichage des categories du monument --> 
       </li>
       <?php } while ($row_new_fait = mysql_fetch_assoc($new_fait)); ?>
@@ -470,23 +470,23 @@ $totalRows_liste_fait_cat3 = mysql_num_rows($liste_fait_cat3);
       <!-- Image du fait hist -->
       <div class="span2 img-listes">
         <?php if ($row_classer_fait_his['ch_his_lien_img1']) {?>
-        <img src="<?php echo $row_classer_fait_his['ch_his_lien_img1']; ?>" alt="image <?php echo $row_classer_fait_his['ch_his_nom']; ?>">
+        <img src="<?php echo $row_classer_fait_his['ch_his_lien_img1']; ?>" alt="image <?= e($row_classer_fait_his['ch_his_nom']) ?>">
         <?php } else { ?>
         <img src="../assets/img/imagesdefaut/ville.jpg" alt="monument">
         <?php } ?>
       </div>
       <!-- Nom, date et lien vers la page du fait historique -->
       <div class="span6 info-listes">
-        <h4><?php echo $row_classer_fait_his['ch_his_nom']; ?></h4>
+        <h4><?= e($row_classer_fait_his['ch_his_nom']) ?></h4>
         <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
           <?php  echo date("d/m/Y", strtotime($row_classer_fait_his['ch_his_mis_jour'])); ?>
           &agrave; <?php echo date("G:i:s", strtotime($row_classer_fait_his['ch_his_mis_jour'])); ?> </p>
-        <a class="btn btn-primary" href="../page-fait-historique.php?ch_his_id=<?php echo $row_classer_fait_his['ch_disp_fait_hist_id']; ?>">Visiter</a> </div>
+        <a class="btn btn-primary" href="../page-fait-historique.php?ch_his_id=<?= e($row_classer_fait_his['ch_disp_fait_hist_id']) ?>">Visiter</a> </div>
       <!-- Affichage des categories du fait historique -->
       <div class="span4">
         <?php if (($colname_classer_fait_his != NULL) AND ($colname_classer_fait_his != "")) { // affiche bouton ajouter si une categorie est choisie ?>
         <!-- Boutons supprimer fait de la catégorie --> 
-        <a class="pull-right" href="../php/histoire-supprimmer-fait-categorie-modal.php?ch_disp_FH_id=<?php echo $row_classer_fait_his['id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer ce fait de cette cat&eacute;gorie"><i class="icon-remove"></i></a>
+        <a class="pull-right" href="../php/histoire-supprimmer-fait-categorie-modal.php?ch_disp_FH_id=<?= e($row_classer_fait_his['id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer ce fait de cette cat&eacute;gorie"><i class="icon-remove"></i></a>
         <?php } ?>
         <?php if ($row_liste_fait_cat3) {?>
         <?php do { ?>
@@ -537,18 +537,12 @@ $('#closemodal').click(function() {
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <script type="text/javascript">
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
 var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "none", {minChars:2, maxChars:30, validateOn:["change"]});
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "url", {minChars:2, maxChars:250, validateOn:["change"]});
 var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:400, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
-<?php
-mysql_free_result($institut);
-mysql_free_result($liste_fait_cat);
-mysql_free_result($liste_fait_cat2);
-mysql_free_result($classer_fait_his);
-mysql_free_result($liste_fait_restants);
-?>
+</body>
+</html>

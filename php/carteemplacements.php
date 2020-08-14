@@ -397,7 +397,7 @@ switch ($emplacement) // placement des markers selon la variable d'emplacement
 ?>
 		var x = '<?php echo $x; ?>' ;
 		var y = '<?php echo $y; ?>' ;  
-		var urlicon ='<?php echo $row_MarkerPays['ch_pay_lien_imgdrapeau']; ?>'
+		var urlicon ='<?= e($row_MarkerPays['ch_pay_lien_imgdrapeau']) ?>'
             //anchored popup thin long fixed contents autosize closebox overflow
             ll = new OpenLayers.LonLat(x,y);
             addMarker(ll, urlicon, popupClass);

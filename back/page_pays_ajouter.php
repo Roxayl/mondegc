@@ -30,7 +30,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
 	if ($_POST['ch_pay_emplacement'] >= 18 and $_POST['ch_pay_emplacement'] < 24 ){ $ch_pay_continent = "Volcania";}
 	if ($_POST['ch_pay_emplacement'] >= 24 and $_POST['ch_pay_emplacement'] <= 27 ){ $ch_pay_continent = "Aldesyl";}
 	if ($_POST['ch_pay_emplacement'] >= 27 and $_POST['ch_pay_emplacement'] <= 42 ){ $ch_pay_continent = "Philicie";}
-	if( $_POST['ch_pay_emplacement'] >= 42 and $_POST['ch_pay_emplacement'] <= 56 ){ $ch_pay_continent = "Aldesyl";}
+	if( $_POST['ch_pay_emplacement'] > 42 and $_POST['ch_pay_emplacement'] <= 56 ){ $ch_pay_continent = "Aldesyl";}
 	if( $_POST['ch_pay_emplacement'] >= 56 and $_POST['ch_pay_emplacement'] <= 57 ){ $ch_pay_continent = "Volcania";}
 	if ($_POST['ch_pay_emplacement'] >= 57 and $_POST['ch_pay_emplacement'] <= 58 ){ $ch_pay_continent = "Aldesyl";}
 	if ($_POST['ch_pay_emplacement'] >= 59){ $ch_pay_continent = "Volcania";}
@@ -185,7 +185,7 @@ img.olTileImage {
       <input name="ch_pay_date" type="hidden" value="<?php echo $now; ?>">
       <input name="ch_pay_mis_jour" type="hidden" value="<?php echo $now; ?>">
       <input name="ch_pay_nb_update" type="hidden" value="<?php echo $nbupdate; ?>">
-      <input name="ch_pay_id" type="hidden" value="<?php echo $row_Info_generale['ch_pay_id']; ?>">
+      <input name="ch_pay_id" type="hidden" value="<?= e($row_Info_generale['ch_pay_id']) ?>">
       <input name="ch_pay_date" type="hidden" value="<?php echo $now; ?>">
       <input name="ch_pay_budget_carte" type="hidden" value="0">
       <input name="ch_pay_industrie_carte" type="hidden" value="0">
@@ -263,7 +263,7 @@ img.olTileImage {
               <div id="sprytextfield_lien_wiki" class="control-group">
                 <label class="control-label" for="lien_wiki">Lien Wiki GC <a href="#" rel="clickover" data-placement="bottom" title="Lien Wiki GC" data-content="250 caract&egrave;res maximum. Le lien vers le wiki GC."><i class="icon-info-sign"></i></a></label>
                 <div class="controls">
-                  <input class="span12" type="text" id="lien_wiki" name="lien_wiki" value="<?php echo $row_InfoGenerale['lien_wiki']; ?>">
+                  <input class="span12" type="text" id="lien_wiki" name="lien_wiki" value="<?= e($row_InfoGenerale['lien_wiki']) ?>">
                   <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res max.</span></div>
               </div>
               <!-- Devise -->
@@ -589,8 +589,7 @@ img.olTileImage {
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -606,9 +605,10 @@ img.olTileImage {
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
 <!-- EDITEUR -->
 <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript" src="../assets/js/Editeur.js"></script>
@@ -640,3 +640,5 @@ var sprytextarea10 = new Spry.Widget.ValidationTextarea("sprytextarea10", {maxCh
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
 var spryradio2 = new Spry.Widget.ValidationRadio("spryradio2", {validateOn:["change"]});
 </script>
+</body>
+</html>

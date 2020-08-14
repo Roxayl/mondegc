@@ -3,8 +3,7 @@
 //deconnexion
 include('php/log.php');
 
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
 <head>
@@ -58,24 +57,9 @@ include('php/log.php');
       $(function() { 
           $('[rel="clickover"]').clickover();})
     </script>
-<!-- Color Picker  -->
-<script src="assets/js/bootstrap-colorpicker.js" type="text/javascript"></script>
 <!-- MODAL -->
 <script src="assets/js/bootstrap-modalmanager.js"></script>
 <script src="assets/js/bootstrap-modal.js"></script>
-<!-- SPRY ASSETS -->
-<script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
-<script src="SpryAssets/SpryValidationTextarea.js" type="text/javascript"></script>
-<script src="SpryAssets/SpryValidationRadio.js" type="text/javascript"></script>
-<script>
-		$(function(){
-			window.prettyPrint && prettyPrint()
-			$('#cp3').colorpicker({
-format: 'hex'});
-$('#cp4').colorpicker({
-format: 'hex'});
-		});
-	</script>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
@@ -141,26 +125,24 @@ format: 'hex'});
         <em>
         <p>Sakuro </p>
         </em> </div>
-
-        <script>
-$("a[data-toggle=modal]").click(function (e) {
-  lv_target = $(this).attr('data-target')
-  lv_url = $(this).attr('href')
-  $(lv_target).load(lv_url)})
-
-$('#closemodal').click(function() {
-    $('#Modal-Monument').modal('hide');
-});
-</script> 
       </div>
     </div>
   </div>
 </div>
+
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>
+<script>
+    $("a[data-toggle=modal]").click(function (e) {
+        lv_target = $(this).attr('data-target')
+        lv_url = $(this).attr('href')
+        $(lv_target).load(lv_url)
+    })
+
+    $('#closemodal').click(function () {
+        $('#Modal-Monument').modal('hide');
+    });
+</script>
 </body>
 </html>
-<?php
-mysql_free_result($liste_temperance);
-?>

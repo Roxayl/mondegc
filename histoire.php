@@ -189,7 +189,7 @@ $queryString_pays_arch = sprintf("&totalRows_pays_arch=%d%s", $totalRows_pays_ar
 ================================================== -->
 <header class="jumbotron jumbotron-medium jumbotron-institut subhead anchor" id="info-institut" >
   <div class="container">
-    <h1><?php echo $row_institut['ch_ins_nom']; ?></h1>
+    <h1><?= e($row_institut['ch_ins_nom']) ?></h1>
   </div>
 </header>
 <div class="container"> 
@@ -201,12 +201,12 @@ $queryString_pays_arch = sprintf("&totalRows_pays_arch=%d%s", $totalRows_pays_ar
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#info-institut">
           <?php if ($row_institut['ch_ins_logo']) { ?>
-          <img src="<?php echo $row_institut['ch_ins_logo']; ?>">
+          <img src="<?= e($row_institut['ch_ins_logo']) ?>">
           <?php } else { ?>
           <img src="assets/img/imagesdefaut/blason.jpg">
           <?php }?>
-          <p><strong><?php echo $row_institut['ch_ins_sigle']; ?></strong></p>
-          <p><em><?php echo $row_institut['ch_ins_nom']; ?></em></p>
+          <p><strong><?= e($row_institut['ch_ins_sigle']) ?></strong></p>
+          <p><em><?= e($row_institut['ch_ins_nom']) ?></em></p>
           </a></li>
         <li><a href="#presentation">Pr&eacute;sentation</a></li>
         <li><a href="#fait_hist">&Eacute;l&eacute;ments historiques index&eacute;s</a></li>
@@ -267,10 +267,10 @@ $queryString_pays_arch = sprintf("&totalRows_pays_arch=%d%s", $totalRows_pays_ar
           <div class="well">
             <div class="row-fluid">
               <div class="span8">
-                <p><strong><?php echo $row_info_cat['ch_fai_cat_nom']; ?></strong></p>
-                <p><?php echo $row_info_cat['ch_fai_cat_desc']; ?></p>
+                <p><strong><?= e($row_info_cat['ch_fai_cat_nom']) ?></strong></p>
+                <p><?= e($row_info_cat['ch_fai_cat_desc']) ?></p>
               </div>
-              <div class="span2 icone-categorie icone-large"><img src="<?php echo $row_info_cat['ch_fai_cat_icon']; ?>" alt="icone <?php echo $row_info_cat['ch_fai_cat_nom']; ?>" style="background-color:<?php echo $row_info_cat['ch_fai_cat_couleur']; ?>;"></div>
+              <div class="span2 icone-categorie icone-large"><img src="<?= e($row_info_cat['ch_fai_cat_icon']) ?>" alt="icone <?= e($row_info_cat['ch_fai_cat_nom']) ?>" style="background-color:<?= e($row_info_cat['ch_fai_cat_couleur']) ?>;"></div>
             </div>
           </div>
           <?php }?>
@@ -295,7 +295,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
               <!-- Image du monument -->
               <div class="span2 img-listes">
                 <?php if ($row_classer_fait_hist['ch_his_lien_img1']) {?>
-                <img src="<?php echo $row_classer_fait_hist['ch_his_lien_img1']; ?>" alt="image <?php echo $row_classer_fait_hist['ch_his_nom']; ?>">
+                <img src="<?php echo $row_classer_fait_hist['ch_his_lien_img1']; ?>" alt="image <?= e($row_classer_fait_hist['ch_his_nom']) ?>">
                 <?php } else { ?>
                 <img src="assets/img/imagesdefaut/ville.jpg" alt="monument">
                 <?php } ?>
@@ -305,17 +305,17 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 					$row_classer_fait_hist['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_classer_fait_hist['ch_pay_lien_imgdrapeau']);
 					} 
 					?>
-                <a href="page-pays.php?ch_pay_id=<?php echo $row_classer_fait_hist['ch_pay_id']; ?>"><img class="img-drapeau-hist" src="<?php echo $row_classer_fait_hist['ch_pay_lien_imgdrapeau']; ?>" alt="<?php echo $row_classer_fait_hist['ch_pay_nom']; ?>" title="<?php echo $row_classer_fait_hist['ch_pay_nom']; ?>"></a>
+                <a href="page-pays.php?ch_pay_id=<?= e($row_classer_fait_hist['ch_pay_id']) ?>"><img class="img-drapeau-hist" src="<?= e($row_classer_fait_hist['ch_pay_lien_imgdrapeau']) ?>" alt="<?= e($row_classer_fait_hist['ch_pay_nom']) ?>" title="<?= e($row_classer_fait_hist['ch_pay_nom']) ?>"></a>
                 <?php } ?>
               </div>
               <!-- Nom, date et lien vers la page du fait historique -->
               <div class="span6 info-listes">
                 <h4>Le <?php echo affDate($row_classer_fait_hist['ch_his_date_fait']); ?>&nbsp;:</h4>
-                <h4><?php echo $row_classer_fait_hist['ch_his_nom']; ?></h4>
+                <h4><?= e($row_classer_fait_hist['ch_his_nom']) ?></h4>
                 <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
                   <?php  echo date("d/m/Y", strtotime($row_classer_fait_hist['ch_his_mis_jour'])); ?>
                   &agrave; <?php echo date("G:i:s", strtotime($row_classer_fait_hist['ch_his_mis_jour'])); ?> </p>
-                <a class="btn btn-primary" href="php/fait-his-modal.php?ch_his_id=<?php echo $row_classer_fait_hist['ch_disp_fait_hist_id']; ?>" data-toggle="modal" data-target="#Modal-Monument">Consulter</a> </div>
+                <a class="btn btn-primary" href="php/fait-his-modal.php?ch_his_id=<?= e($row_classer_fait_hist['ch_disp_fait_hist_id']) ?>" data-toggle="modal" data-target="#Modal-Monument">Consulter</a> </div>
               <!-- Affichage des categories du fait historique -->
               <?php if ($row_liste_fai_cat3) {?>
               <div class="span4 icone-categorie">
@@ -367,7 +367,7 @@ $('#closemodal').click(function() {
               <div class="row-fluid">
               <div class="span5 img-listes">
                 <?php if ($row_pays_arch['ch_pay_lien_imgdrapeau']) {?>
-                <a class="" href="page-pays.php?ch_pay_id=<?php echo $row_pays_arch['ch_pay_id']; ?>"> <img src="<?php echo $row_pays_arch['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau <?php echo $row_pays_arch['ch_pay_nom']; ?>"> </a>
+                <a class="" href="page-pays.php?ch_pay_id=<?= e($row_pays_arch['ch_pay_id']) ?>"> <img src="<?= e($row_pays_arch['ch_pay_lien_imgdrapeau']) ?>" alt="drapeau <?= e($row_pays_arch['ch_pay_nom']) ?>"> </a>
                 <?php } else { ?>
                 <img src="assets/img/imagesdefaut/drapeau.jpg" alt="pays">
                 <?php } ?>
@@ -375,8 +375,8 @@ $('#closemodal').click(function() {
               <div class="span6 info-listes"> <small>derni&egrave;re mise &agrave; jour le
                 <?php  echo date("d/m/Y à G:i", strtotime($row_pays_arch['ch_pay_mis_jour'])); ?>
                 </small>
-                <h4><?php echo $row_pays_arch['ch_pay_nom']; ?></h4>
-                <p>Cr&eacute;&eacute; par&nbsp;: <strong><?php echo $row_pays_arch['ch_use_prenom_dirigeant']; ?> <?php echo $row_pays_arch['ch_use_nom_dirigeant']; ?></strong></p>
+                <h4><?= e($row_pays_arch['ch_pay_nom']) ?></h4>
+                <p>Cr&eacute;&eacute; par&nbsp;: <strong><?= e($row_pays_arch['ch_use_prenom_dirigeant']) ?> <?= e($row_pays_arch['ch_use_nom_dirigeant']) ?></strong></p>
                 <p>Population&nbsp;: <strong>
                   <?php 
 	$population_pays_francais = number_format($row_pays_arch['ch_pay_population'], 0, ',', ' ');
@@ -388,7 +388,7 @@ $('#closemodal').click(function() {
 		  } else {echo 'NA'; 
 		  }?>
                   </strong></p>
-                <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?php echo $row_pays_arch['ch_pay_id']; ?>">Visiter</a> </div>
+                <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?= e($row_pays_arch['ch_pay_id']) ?>">Visiter</a> </div>
             </li>
             <hr>
             <?php } while ($row_pays_arch = mysql_fetch_assoc($pays_arch)); ?>

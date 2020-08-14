@@ -5,19 +5,19 @@
     "license": "proprietary",
     "authors": [
         {
-            "name": "Roxel Lay",
-            "email": "contact@romukulot.fr",
-            "homepage": "https://romukulot.fr",
-            "role": "Developer"
-        }, {
             "name": "Calimero",
             "role": "Developer"
         }, {
+            "name": "Lesime",
+            "role": "Graphic designer"
+        }, {
+            "name": "Roxel Lay",
+            "role": "Developer",
+            "email": "contact@romukulot.fr",
+            "homepage": "https://romukulot.fr"
+        }, {
             "name": "Sakuro",
             "role": "Developer"
-        }, {
-            "name": "Lesime",
-            "role": "Graphiste"
         }
     ],
     "support": {
@@ -26,6 +26,7 @@
     "require": {
         "php": "^7.4",
         "brackets/craftable": "^5.0",
+        "ezyang/htmlpurifier": "^4.13",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",

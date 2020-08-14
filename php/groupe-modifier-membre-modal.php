@@ -1,7 +1,5 @@
 <?php
 
-header('Content-Type: text/html; charset=iso-8859-1');
-
 //requete dispatch
 $colname_info_membre = "-1";
 if (isset($_GET['ch_disp_MG_id'])) {
@@ -50,10 +48,10 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-group")) {
     <!-- Boutons cach�s -->
     <?php 
 	$now= date("Y-m-d G:i:s");?>
-    <input name="ch_disp_MG_id" type="hidden" value="<?php echo $row_info_dispatch['ch_disp_MG_id']; ?>">
-    <input name="ch_disp_MG_label" type="hidden" value="<?php echo $row_info_dispatch['ch_disp_MG_label']; ?>">
-    <input name="ch_disp_group_id" type="hidden" value="<?php echo $row_info_dispatch['ch_disp_group_id']; ?>">
-    <input name="ch_disp_mem_id" type="hidden" value="<?php echo $row_info_dispatch['ch_disp_mem_id']; ?>">
+    <input name="ch_disp_MG_id" type="hidden" value="<?= e($row_info_dispatch['ch_disp_MG_id']) ?>">
+    <input name="ch_disp_MG_label" type="hidden" value="<?= e($row_info_dispatch['ch_disp_MG_label']) ?>">
+    <input name="ch_disp_group_id" type="hidden" value="<?= e($row_info_dispatch['ch_disp_group_id']) ?>">
+    <input name="ch_disp_mem_id" type="hidden" value="<?= e($row_info_dispatch['ch_disp_mem_id']) ?>">
     <input name="ch_disp_MG_date" type="hidden" value="<?php echo $now; ?>">
     <!-- Statut -->
     <div id="spryradio1" class="control-group">
@@ -76,5 +74,3 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-group")) {
   </div>
   <input type="hidden" name="MM_update" value="ajout-group">
 </form>
-<?php
-mysql_free_result($info_dispatch);?>

@@ -156,7 +156,7 @@ if($cat == 'organisation') {
   <div class="titre-vert">
     <h1><?= __s($row_communique['ch_com_titre']) ?></h1>
   </div>
-  <div class="well"><?php echo $row_communique['ch_com_contenu']; ?></div>
+  <div class="well"><?= htmlPurify($row_communique['ch_com_contenu']) ?></div>
   
   <!-- REACTIONS -->
   <div id="commentaires" class="titre-vert anchor">
@@ -170,18 +170,18 @@ if($cat == 'organisation') {
     $persoReaction = \GenCity\Monde\Personnage::constructFromEntity($paysReaction);
     ?>
 
-      <li class="row-fluid" id="commentaireID<?php echo $row_commentaire['ch_com_ID']; ?>"> 
+      <li class="row-fluid" id="commentaireID<?= e($row_commentaire['ch_com_ID']) ?>"> 
         <!-- AFFICHAGE OUTILS MODERATION -->
-        <div class="span2 img-listes"> <img src="<?php echo $row_commentaire['ch_use_lien_imgpersonnage']; ?>"> </div>
+        <div class="span2 img-listes"> <img src="<?= e($row_commentaire['ch_use_lien_imgpersonnage']) ?>"> </div>
         <div class="span10 info-listes">
          <div class="pull-right">
           <?php if ($check_organisation && ($_SESSION['statut'] >= 20) OR ($_SESSION['user_ID'] == $row_commentaire['ch_com_user_id'])) { ?>
           <form class="pull-right" action="back/communique_confirmation_supprimer.php" method="post">
-            <input name="communique-ID" type="hidden" value="<?php echo $row_commentaire['ch_com_ID']; ?>">
+            <input name="communique-ID" type="hidden" value="<?= e($row_commentaire['ch_com_ID']) ?>">
             <button class="btn" type="submit" title="supprimer le commentaire"><i class="icon-trash"></i></button>
           </form>
           <form class="pull-right" action="back/communique_modifier.php" method="post">
-            <input name="com_id" type="hidden" value="<?php echo $row_commentaire['ch_com_ID']; ?>">
+            <input name="com_id" type="hidden" value="<?= e($row_commentaire['ch_com_ID']) ?>">
             <button class="btn" type="submit" title="modifier le commentaire"><i class="icon-pencil"></i></button>
           </form>
           <?php } ?>
@@ -195,19 +195,19 @@ if($cat == 'organisation') {
               <?= __s($persoReaction->get('titre_personnage')) ?></h5>
           <!-- AFFICHAGE DATE -->
           <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_commentaire['ch_com_date'])); ?></small>
-          <p><?php echo $row_commentaire['ch_com_contenu']; ?></p>
-          <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?php echo $row_commentaire['ch_use_paysID']; ?>#diplomatie">Afficher la page du pays</a>
+          <p><?= htmlPurify($row_commentaire['ch_com_contenu']) ?></p>
+          <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?= e($row_commentaire['ch_use_paysID']) ?>#diplomatie">Afficher la page du pays</a>
 
           <?php else: ?>
-          <h4><?php echo $row_commentaire['ch_use_predicat_dirigeant']; ?> <?php echo $row_commentaire['ch_use_prenom_dirigeant']; ?> <?php echo $row_commentaire['ch_use_nom_dirigeant']; ?></h4>
-          <h5><?php echo $row_commentaire['ch_use_titre_dirigeant']; ?></h5>
+          <h4><?= e($row_commentaire['ch_use_predicat_dirigeant']) ?> <?= e($row_commentaire['ch_use_prenom_dirigeant']) ?> <?= e($row_commentaire['ch_use_nom_dirigeant']) ?></h4>
+          <h5><?= e($row_commentaire['ch_use_titre_dirigeant']) ?></h5>
           <!-- AFFICHAGE DATE -->
           <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_commentaire['ch_com_date'])); ?></small>
-          <p><?php echo $row_commentaire['ch_com_contenu']; ?></p>
-          <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?php echo $row_commentaire['ch_use_paysID']; ?>#diplomatie">Afficher son profil</a>
+          <p><?= htmlPurify($row_commentaire['ch_com_contenu']) ?></p>
+          <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?= e($row_commentaire['ch_use_paysID']) ?>#diplomatie">Afficher son profil</a>
           <?php endif; ?>
 
-          <form class="" action="page-communique.php?ch_pay_id=<?php echo $row_commentaire['ch_use_paysID']; ?>#diplomatie" method="post">
+          <form class="" action="page-communique.php?ch_pay_id=<?= e($row_commentaire['ch_use_paysID']) ?>#diplomatie" method="post">
             <button class="btn btn-primary" type="submit">Afficher son profil</button>
           </form>
         </div>
@@ -229,13 +229,7 @@ if($cat == 'organisation') {
 <div class="modal-footer"> 
   <!-- NOUVEAU COMMENTAIRE SI CONNECTE -->
   <?php if ($_SESSION['connect']) { ?>
-  <a href="page-communique.php?com_id=<?php echo $row_communique['ch_com_ID']; ?>" class="btn btn-danger" ><i class="icon-pencil icon-white"></i> Réagir</a>
+  <a href="page-communique.php?com_id=<?= e($row_communique['ch_com_ID']) ?>" class="btn btn-danger" ><i class="icon-pencil icon-white"></i> Réagir</a>
   <?php } ?>
   <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fermer</button>
 </div>
-<?php
-mysql_free_result($communique);
-
-mysql_free_result($user);
-
-mysql_free_result($commentaire);?>

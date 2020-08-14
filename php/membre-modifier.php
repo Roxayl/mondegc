@@ -38,8 +38,8 @@ $totalRows_pays = mysql_num_rows($pays);
     <!-- donnees personnelles -->
     <div class="span5">
       <p><strong>Statut :</strong> <?php echo $Rang_statut; ?></p>
-      <p><strong>Login :</strong> <?php echo $row_User['ch_use_login']; ?></p>
-      <p><strong>Mail :</strong> <?php echo $row_User['ch_use_mail']; ?></p>
+      <p><strong>Login :</strong> <?= e($row_User['ch_use_login']) ?></p>
+      <p><strong>Mail :</strong> <?= e($row_User['ch_use_mail']) ?></p>
     </div>
   </div>
   <div class="row-fluid"> 
@@ -67,8 +67,8 @@ $totalRows_pays = mysql_num_rows($pays);
   <div class="modal-body">
   <form action="<?php echo $editFormAction; ?>" name="ProfilUser" method="POST" class="form-horizontal" id="ProfilUser">
     <!-- Boutons cachés -->
-    <input name="ch_use_id" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
-    <input name="userID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
+    <input name="ch_use_id" type="hidden" value="<?= e($row_User['ch_use_id']) ?>">
+    <input name="userID" type="hidden" value="<?= e($row_User['ch_use_id']) ?>">
     <?php if ($_SESSION['statut'] >=20) {?>
     <div class="alert-danger">
       <h4>Param&egrave;tres r&eacute;serv&eacute;s &agrave; la mod&eacute;ration</h4>
@@ -110,7 +110,7 @@ $totalRows_pays = mysql_num_rows($pays);
           <select name="ch_use_paysID" id="ch_use_paysID">
             <option value="">Aucun</option>
             <?php do { ?>
-            <option value="<?php echo $row_pays['ch_pay_id']; ?>" <?php if (!(strcmp($row_pays['ch_pay_id'], $row_User['ch_use_paysID']))) {echo "selected=\"selected\"";} ?>><?php echo $row_pays['ch_pay_nom']; ?></option>
+            <option value="<?= e($row_pays['ch_pay_id']) ?>" <?php if (!(strcmp($row_pays['ch_pay_id'], $row_User['ch_use_paysID']))) {echo "selected=\"selected\"";} ?>><?= e($row_pays['ch_pay_nom']) ?></option>
             <?php } while ($row_pays = mysql_fetch_assoc($pays)); ?>
           </select>
         </div>
@@ -119,15 +119,15 @@ $totalRows_pays = mysql_num_rows($pays);
     </div>
     <!-- Si pas de moderation -->
     <?php } else {  ?>
-    <input name="ch_use_statut" type="hidden" value="<?php echo $row_User['ch_use_statut']; ?>">
-    <input name="ch_use_paysID" type="hidden" value="<?php echo $row_User['ch_use_paysID']; ?>">
-    <input name="ch_use_acces" type="hidden" value="<?php echo $row_User['ch_use_acces']; ?>">
+    <input name="ch_use_statut" type="hidden" value="<?= e($row_User['ch_use_statut']) ?>">
+    <input name="ch_use_paysID" type="hidden" value="<?= e($row_User['ch_use_paysID']) ?>">
+    <input name="ch_use_acces" type="hidden" value="<?= e($row_User['ch_use_acces']) ?>">
     <?php } ?>
     <!-- Nom user -->
     <div id="sprytextfield14" class="control-group">
       <label class="control-label" for="ch_use_login">Login<a href="#" rel="clickover" title="Nom du membre" data-content="12 caract&egrave;res maximum. Le login doit &ecirc;tre identique au pseudo utilis&eacute; sur le forum afin d'assurer l'envoi de mp. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
       <div class="controls">
-        <input class="input-xlarge" type="text" id="ch_use_login" name="ch_use_login" maxlength="12" value="<?php echo $row_User['ch_use_login']; ?>" <?php if ($_SESSION['statut'] < 20) {?> readonly="readonly"<?php } ?>>
+        <input class="input-xlarge" type="text" id="ch_use_login" name="ch_use_login" maxlength="12" value="<?= e($row_User['ch_use_login']) ?>" <?php if ($_SESSION['statut'] < 20) {?> readonly="readonly"<?php } ?>>
         <br />
         <span class="textfieldRequiredMsg">un login est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">12 caract&egrave;res max.</span></div>
     </div>
@@ -155,7 +155,7 @@ $totalRows_pays = mysql_num_rows($pays);
     <div id="sprytextfield15" class="control-group">
       <label class="control-label" for="ch_use_mail">Adresse mail<a href="#" rel="clickover" title="E-mail" data-content="Laissez une adresse de contact en cas de perte du mot de passe"><i class="icon-info-sign"></i></a></label>
       <div class="controls">
-        <input class="input-xlarge" name="ch_use_mail" type="text" id="ch_use_mail" value="<?php echo $row_User['ch_use_mail']; ?>" maxlength="50">
+        <input class="input-xlarge" name="ch_use_mail" type="text" id="ch_use_mail" value="<?= e($row_User['ch_use_mail']) ?>" maxlength="50">
         <br>
         <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldRequiredMsg">Une adresse mail valide est requise.</span></div>
     </div>
@@ -178,7 +178,3 @@ var spryconfirm10 = new Spry.Widget.ValidationConfirm("spryconfirm10", "ch_use_p
 var sprytextfield15 = new Spry.Widget.ValidationTextField("sprytextfield15", "email", {validateOn:["change"]});
 <?php }  ?>
 </script>
-<?php
-mysql_free_result($pays);
-mysql_free_result($User);
-?>

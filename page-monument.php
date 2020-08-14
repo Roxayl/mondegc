@@ -170,26 +170,26 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
 
     <ul class="breadcrumb pull-left">
         <li><a href="Page-carte.php#liste-pays">Pays</a> <span class="divider">/</span></li>
-        <li><a href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>"><?= $row_monument['ch_pay_nom'] ?></a> <span class="divider">/</span></li>
-        <li><a href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>#villes">Villes</a> <span class="divider">/</span></li>
-        <li><a href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>&ch_ville_id=<?= $row_monument['ch_vil_ID'] ?>"><?= __s($row_monument['ch_vil_nom']) ?></a> <span class="divider">/</span></li>
-        <li><a href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pay_id']; ?>&ch_ville_id=<?= $row_monument['ch_vil_ID'] ?>#patrimoine">Culture</a> <span class="divider">/</span></li>
+        <li><a href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pay_id']) ?>"><?= $row_monument['ch_pay_nom'] ?></a> <span class="divider">/</span></li>
+        <li><a href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pay_id']) ?>#villes">Villes</a> <span class="divider">/</span></li>
+        <li><a href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pay_id']) ?>&ch_ville_id=<?= $row_monument['ch_vil_ID'] ?>"><?= __s($row_monument['ch_vil_nom']) ?></a> <span class="divider">/</span></li>
+        <li><a href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pay_id']) ?>&ch_ville_id=<?= $row_monument['ch_vil_ID'] ?>#patrimoine">Culture</a> <span class="divider">/</span></li>
       <li class="active"><?= $row_monument['ch_pat_nom'] ?></li>
     </ul>
   <!-- Moderation
      ================================================== -->
   <?php if (($_SESSION['statut'] >= 20) OR ($row_users['ch_use_id'] == $_SESSION['user_ID'])) { ?>
   <form class="pull-right" action="<?= DEF_URI_PATH ?>back/monument_confirmation_supprimer.php" method="post">
-    <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
+    <input name="monument_ID" type="hidden" value="<?= e($row_monument['ch_pat_id']) ?>">
     <button class="btn btn-danger" type="submit" title="supprimer ce monument"><i class="icon-trash icon-white"></i></button>
   </form>
   <form class="pull-right" action="<?= DEF_URI_PATH ?>back/monument_modifier.php" method="post">
-    <input name="monument_ID" type="hidden" value="<?php echo $row_monument['ch_pat_id']; ?>">
+    <input name="monument_ID" type="hidden" value="<?= e($row_monument['ch_pat_id']) ?>">
     <button class="btn btn-primary" type="submit" title="modifier ce monument"><i class="icon-pencil icon-white"></i></button>
   </form>
   <?php } ?>
   <?php if ($row_users['ch_use_id'] == $_SESSION['user_ID']) { ?>
-  <a class="btn btn-primary pull-right" href="php/partage-monument.php?ch_pat_id=<?php echo $row_monument['ch_pat_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i>Partager sur le forum</a>
+  <a class="btn btn-primary pull-right" href="php/partage-monument.php?ch_pat_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i>Partager sur le forum</a>
   <?php } ?>
   
   <div class="clearfix"></div>
@@ -200,8 +200,8 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
   <div class="well">
     <div class="row-fluid">
       <div class="span8">
-        <p><strong>Pays&nbsp;:</strong> <img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?php echo $row_monument['ch_pat_paysID']; ?>"><?= __s($row_monument['ch_pay_nom']) ?></a></p>
-        <p><strong>Ville&nbsp;:</strong> <a class="" href="page-ville.php?ch_pay_id=<?php echo $row_monument['ch_pat_paysID']; ?>&ch_ville_id=<?php echo $row_monument['ch_pat_villeID']; ?>"><?= __s($row_monument['ch_vil_nom']) ?></a></p>
+        <p><strong>Pays&nbsp;:</strong> <img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>"><?= __s($row_monument['ch_pay_nom']) ?></a></p>
+        <p><strong>Ville&nbsp;:</strong> <a class="" href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>&ch_ville_id=<?= e($row_monument['ch_pat_villeID']) ?>"><?= __s($row_monument['ch_vil_nom']) ?></a></p>
         <p><?= __s($row_monument['ch_pat_description']) ?></p>
         <!-- Liste des categories di monument -->
         <p><strong>Cat&eacute;gories&nbsp;:</strong></p>
@@ -252,8 +252,7 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>
-</body>
-</html>
+
 <script>
 $("a[data-toggle=modal]").click(function (e) {
   lv_target = $(this).attr('data-target')
@@ -264,9 +263,5 @@ $('#closemodal').click(function() {
     $('#Modal-Monument').modal('hide');
 });
 </script>
-<?php
-mysql_free_result($monument);
-
-mysql_free_result($users);
-
-?>
+</body>
+</html>

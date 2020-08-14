@@ -43,7 +43,7 @@ $totalPages_listvilles = ceil($totalRows_listvilles/$maxRows_listvilles)-1;
 ?><!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Haut-Conseil - Liste des villes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -114,20 +114,20 @@ $totalPages_listvilles = ceil($totalRows_listvilles/$maxRows_listvilles)-1;
         <tbody>
           <?php do { ?>
             <tr>
-              <td><img src="../assets/img/statutvil_<?php echo $row_listvilles['ch_vil_capitale']; ?>.png" alt="Statut"></td>
-              <td><?php echo $row_listvilles['ch_pay_nom']; ?></td>
-              <td><?php echo $row_listvilles['ch_vil_nom']; ?></td>
-              <td><?php echo $row_listvilles['ch_use_login']; ?></td>
-              <td><?php echo $row_listvilles['ch_vil_population']; ?></td>
+              <td><img src="../assets/img/statutvil_<?= e($row_listvilles['ch_vil_capitale']) ?>.png" alt="Statut"></td>
+              <td><?= e($row_listvilles['ch_pay_nom']) ?></td>
+              <td><?= e($row_listvilles['ch_vil_nom']) ?></td>
+              <td><?= e($row_listvilles['ch_use_login']) ?></td>
+              <td><?= e($row_listvilles['ch_vil_population']) ?></td>
               <td><?php echo date("d/m/Y � G:i:s", strtotime($row_listvilles['ch_vil_mis_jour'])); ?></td>
               <td><form action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="GET">
-                  <input name="ville-ID" type="hidden" value="<?php echo $row_listvilles['ch_vil_ID']; ?>">
+                  <input name="ville-ID" type="hidden" value="<?= e($row_listvilles['ch_vil_ID']) ?>">
                   <button class="btn" type="submit" title="modifier la ville"><i class="icon-pencil"></i></button>
                 </form></td>
               <?php if ($_SESSION['statut'] >= 30)
 {?>
               <td><form action="<?= DEF_URI_PATH ?>back/ville_confirmation_supprimer.php" method="post">
-                  <input name="ville-ID" type="hidden" value="<?php echo $row_listvilles['ch_vil_ID']; ?>">
+                  <input name="ville-ID" type="hidden" value="<?= e($row_listvilles['ch_vil_ID']) ?>">
                   <button class="btn" type="submit" title="supprimer la ville"><i class="icon-trash"></i></button>
                 </form></td>
               <?php }  ?>
@@ -161,8 +161,7 @@ echo '</p>';  ?>
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -173,7 +172,10 @@ echo '</p>';  ?>
 <script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
- <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
+<script type="text/javascript">
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
+</body>
+</html>

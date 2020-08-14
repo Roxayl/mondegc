@@ -76,7 +76,7 @@ $pageConseilOCGC = new \GenCity\Monde\Page('conseil_ocgc_desc');
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>
-</body>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -84,3 +84,4 @@ $pageConseilOCGC = new \GenCity\Monde\Page('conseil_ocgc_desc');
 <script src="assets/js/bootstrap.js"></script>
 <script src="assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 </html>
+</body>

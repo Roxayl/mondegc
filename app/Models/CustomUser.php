@@ -45,6 +45,12 @@ class CustomUser extends Authenticatable
 		'ch_use_biographie_dirigeant'
 	];
 
+	/* Niveau de permissions défini dans ch_use_statut */
+	public const ADMIN = 30;
+	public const OCGC = 20;
+	public const JUGE = 15;
+	public const MEMBER = 10;
+
 	public function infrastructures()
 	{
 		return $this->hasMany(Infrastructure::class, 'user_creator');
@@ -85,7 +91,6 @@ class CustomUser extends Authenticatable
         return $this->{$this->getAuthIdentifierName()};
     }
 
-
     public function getAuthPassword()
     {
       return $this->ch_use_password;
@@ -105,13 +110,13 @@ class CustomUser extends Authenticatable
 
         switch($level) {
             case 'member':
-                $permission = 10; break;
+                $permission = self::MEMBER; break;
             case 'juge':
-                $permission = 15; break;
+                $permission = self::JUGE; break;
             case 'ocgc':
-                $permission = 20; break;
+                $permission = self::OCGC; break;
             case 'admin':
-                $permission = 30; break;
+                $permission = self::ADMIN; break;
             default:
                 throw new \InvalidArgumentException("Mauvais type de permission.");
         }

@@ -24,7 +24,7 @@ $_SESSION['ville_encours'] = $row_ch_pat_confimation_suppression['ch_pat_villeID
 <html lang="fr">
 <!-- head Html -->
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Supprimer un monument</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -68,14 +68,14 @@ $_SESSION['ville_encours'] = $row_ch_pat_confimation_suppression['ch_pat_villeID
 <header class="jumbotron subhead" id="overview">
   <div class="container">
     <h1>Attention&nbsp;!</h1>
-    <p>Souhaitez-vous r&eacute;ellement supprimer <?php echo $row_ch_pat_confimation_suppression['ch_pat_nom']; ?>&nbsp;?</p>
+    <p>Souhaitez-vous r&eacute;ellement supprimer <?= e($row_ch_pat_confimation_suppression['ch_pat_nom']) ?>&nbsp;?</p>
     <p>Cette action sera irr&eacute;versible</p>
     <form action="<?= DEF_URI_PATH ?>back/monument_supprimer.php" method="post" class="form-button-inline">
-      <input name="monument_ID" type="hidden" value="<?php echo $row_ch_pat_confimation_suppression['ch_pat_id']; ?>">
+      <input name="monument_ID" type="hidden" value="<?= e($row_ch_pat_confimation_suppression['ch_pat_id']) ?>">
       <button type="submit" class="btn btn-large btn-danger" title="supprimer le monument"><i class="icon-trash icon-white"></i> Supprimer</button>
     </form>
     <form action="<?= DEF_URI_PATH ?>back/ville_modifier.php#mes-monuments" method="get" class="form-button-inline">
-      <input name="monument_ID" type="hidden" value="<?php echo $row_ch_pat_confimation_suppression['ch_pat_villeID']; ?>">
+      <input name="monument_ID" type="hidden" value="<?= e($row_ch_pat_confimation_suppression['ch_pat_villeID']) ?>">
       <button type="submit" class="btn btn-large btn-success" title="retour &agrave; la page de modification de la ville">Annuler</button>
     </form>
   </div>
@@ -85,8 +85,7 @@ $_SESSION['ville_encours'] = $row_ch_pat_confimation_suppression['ch_pat_villeID
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -97,10 +96,10 @@ $_SESSION['ville_encours'] = $row_ch_pat_confimation_suppression['ch_pat_villeID
 <script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
- <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
-<?php
-mysql_free_result($ch_pat_confimation_suppression);
-?>
+<script type="text/javascript">
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
+</body>
+</html>

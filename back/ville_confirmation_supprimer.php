@@ -25,8 +25,8 @@ $totalRows_ch_vil_confimation_suppression = mysql_num_rows($ch_vil_confimation_s
 <html lang="fr">
 <!-- head Html -->
 <head>
-<meta charset="iso-8859-1">
-<title>Supprimer<?php echo $row_ch_vil_confimation_suppression['ch_vil_nom']; ?></title>
+<meta charset="utf-8">
+<title>Supprimer<?= e($row_ch_vil_confimation_suppression['ch_vil_nom']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -69,14 +69,14 @@ $totalRows_ch_vil_confimation_suppression = mysql_num_rows($ch_vil_confimation_s
 <header class="jumbotron subhead" id="overview">
   <div class="container">
     <h1>Attention&nbsp;!</h1>
-    <p>Souhaitez-vous r&eacute;ellement supprimer <?php echo $row_ch_vil_confimation_suppression['ch_vil_nom']; ?>&nbsp;?</p>
+    <p>Souhaitez-vous r&eacute;ellement supprimer <?= e($row_ch_vil_confimation_suppression['ch_vil_nom']) ?>&nbsp;?</p>
     <p>Cette action sera irr&eacute;versible</p>
     <form action="ville_supprimer.php" method="post" class="form-button-inline">
-      <input name="ville_ID" type="hidden" value="<?php echo $row_ch_vil_confimation_suppression['ch_vil_ID']; ?>">
+      <input name="ville_ID" type="hidden" value="<?= e($row_ch_vil_confimation_suppression['ch_vil_ID']) ?>">
       <button type="submit" class="btn btn-large btn-danger" title="supprimer la ville"><i class="icon-trash icon-white"></i> Supprimer</button>
     </form>
     <form action="ville_modifier.php" method="get" class="form-button-inline">
-      <input name="ville_ID" type="hidden" value="<?php echo $row_ch_vil_confimation_suppression['ch_vil_ID']; ?>">
+      <input name="ville_ID" type="hidden" value="<?= e($row_ch_vil_confimation_suppression['ch_vil_ID']) ?>">
       <button type="submit" class="btn btn-large btn-success" title="retour &agrave; la page de modification de la ville">Annuler</button>
     </form>
   </div>
@@ -86,8 +86,7 @@ $totalRows_ch_vil_confimation_suppression = mysql_num_rows($ch_vil_confimation_s
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -98,10 +97,10 @@ $totalRows_ch_vil_confimation_suppression = mysql_num_rows($ch_vil_confimation_s
 <script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
- <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
-<?php
-mysql_free_result($ch_vil_confimation_suppression);
-?>
+<script type="text/javascript">
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
+</body>
+</html>

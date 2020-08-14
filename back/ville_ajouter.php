@@ -148,7 +148,7 @@ return true;
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#info-ville"> <img src="../assets/img/imagesdefaut/blason.jpg">
           <p><strong>Nouvelle ville</strong></p>
-          <p><em>Cr&eacute;&eacute;e par <?php echo $row_users['ch_use_login']; ?></em></p>
+          <p><em>Cr&eacute;&eacute;e par <?= e($row_users['ch_use_login']) ?></em></p>
           </a></li>
         <li><a href="#pageville">Page ville</a></li>
         <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
@@ -167,12 +167,12 @@ return true;
       <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
       <form class="pull-right" action="membre-modifier_back.php" method="post">
         <input name="paysID" type="hidden" value="<?php echo $paysID; ?>">
-        <input name="userID" type="hidden" value="<?php echo $row_users['ch_use_id']; ?>">
+        <input name="userID" type="hidden" value="<?= e($row_users['ch_use_id']) ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Profil du dirigeant</button>
       </form>
       <form class="pull-right" action="page_pays_back.php" method="post">
         <input name="paysID" type="hidden" value="<?php echo $paysID; ?>">
-        <input name="userID" type="hidden" value="<?php echo $row_users['ch_use_id']; ?>">
+        <input name="userID" type="hidden" value="<?= e($row_users['ch_use_id']) ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du pays"><i class="icon-pays-small-white"></i> Modifier le pays</button>
       </form>
       <?php }?>
@@ -187,7 +187,7 @@ return true;
           Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; votre ville et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Compl&eacute;tez-le au fur et &agrave; mesure et mettez-le &agrave; jour.</div>
         <!-- Bouton cachés -->
         <input name="ch_vil_paysID" type="hidden" value="<?php echo $paysID; ?>" >
-        <input name="ch_vil_user" type="hidden" value="<?php echo $_SESSION['user_ID']; ?>" >
+        <input name="ch_vil_user" type="hidden" value="<?= e($_SESSION['user_ID']) ?>" >
         <input name="ch_vil_label" type="hidden" value="ville">
         <?php 
 				  $now= date("Y-m-d G:i:s");?>
@@ -389,8 +389,7 @@ return true;
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -406,13 +405,14 @@ return true;
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
-    <script> 
- $( document ).ready(function() {
-init();
-});
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
+<script>
+    $(document).ready(function () {
+        init();
+    });
 </script>
 <!-- EDITEUR -->
 <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
@@ -438,3 +438,5 @@ var sprytextfield14 = new Spry.Widget.ValidationTextField("sprytextfield14", "no
 var sprytextfield28 = new Spry.Widget.ValidationTextField("sprytextfield28", "url", {maxChars:250, validateOn:["change"], isRequired:false});
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
 </script>
+</body>
+</html>

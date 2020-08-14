@@ -1,13 +1,5 @@
 <?php
 
-// La fonction csrf_startup permet ici de désactiver la redirection de l'iframe.
-function csrf_startup() {
-    csrf_conf('rewrite-js', DEF_URI_PATH . 'lib/csrf-magic/csrf-magic.js');
-    csrf_conf('rewrite', true);
-    csrf_conf('frame-breaker', false); // ça, là.
-}
-
-
 // *** Connexion communique categorie pays
 $maxRows_LastCommunique = 20;
 $pageNum_LastCommunique = 0;
@@ -269,15 +261,15 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 ================================================== -->
     <li class="fond-notification item">
       <div class="row-fluid">
-        <div class="span1 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img class="auteur" src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="visiteur"></a> </div>
+        <div class="span1 auteur"> <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"><img class="auteur" src="<?= e($row_LastCommunique['photo_auteur']) ?>" alt="visiteur"></a> </div>
         <div class="span10"> <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
           &agrave;
           <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
           </small>
-          <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['id_institution']; ?>#commentaireID<?php echo $row_LastCommunique['id']; ?>"> a visit&eacute;</a> le pays <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['id_institution']; ?>"> <?php echo $row_LastCommunique['institution']; ?></a></p>
+          <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['id_institution']) ?>#commentaireID<?= e($row_LastCommunique['id']) ?>"> a visit&eacute;</a> le pays <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['id_institution']) ?>"> <?= e($row_LastCommunique['institution']) ?></a></p>
         </div>
-        <div class="span1 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['id_institution']; ?>"><img class="auteur" src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="pays"></a> </div>
+        <div class="span1 auteur"> <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['id_institution']) ?>"><img class="auteur" src="<?= e($row_LastCommunique['img_institution']) ?>" alt="pays"></a> </div>
       </div>
     </li>
     <?php } ?>
@@ -292,16 +284,16 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
             <h3>Nouveau Communiqu&eacute;</h3>
           </div>
           <div class="row-fluid fond-notification">
-            <div class="span2 auteur"><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="auteur"></a> </div>
+            <div class="span2 auteur"><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"><img src="<?= e($row_LastCommunique['photo_auteur']) ?>" alt="auteur"></a> </div>
             <div class="span8 desc"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-              <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?>  a lanc&eacute; un communiqu&eacute; au nom de son pays <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['id_institution']; ?>"> <?php echo $row_LastCommunique['institution']; ?></a> intitul&eacute;&nbsp;:</p>
-              <h4><a href="page-communique.php?com_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
+              <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?>  a lanc&eacute; un communiqu&eacute; au nom de son pays <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['id_institution']) ?>"> <?= e($row_LastCommunique['institution']) ?></a> intitul&eacute;&nbsp;:</p>
+              <h4><a href="page-communique.php?com_id=<?= e($row_LastCommunique['id']) ?>"> <?= e($row_LastCommunique['titre']) ?> </a> </h4>
             </div>
-            <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['id_institution']; ?>"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="pays"></a> </div>
+            <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['id_institution']) ?>"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="pays"></a> </div>
           </div>
         </div>
       </div>
@@ -312,19 +304,19 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 ================================================== -->
     <li class="fond-notification item">
       <div class="row-fluid">
-        <div class="span1 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="visiteur"></a> </div>
+        <div class="span1 auteur"> <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"><img src="<?= e($row_LastCommunique['photo_auteur']) ?>" alt="visiteur"></a> </div>
         <div class="span10"> <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
           &agrave;
           <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
           </small>
-          <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>#commentaireID<?php echo $row_LastCommunique['id']; ?>"> a visit&eacute;</a> la ville <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>"><?php echo $row_LastCommunique['institution']; ?></a></p>
+          <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>#commentaireID<?= e($row_LastCommunique['id']) ?>"> a visit&eacute;</a> la ville <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>"><?= e($row_LastCommunique['institution']) ?></a></p>
         </div>
         <div class="span1 auteur">
           <?php if ($row_LastCommunique['img_institution']) {?>
-          <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="armoiries"></a>
+          <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="armoiries"></a>
           <?php } else {?>
-          <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>" alt="armoiries"><img src="assets/img/imagesdefaut/blason.jpg" alt="photo armoiries"></a>
+          <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>" alt="armoiries"><img src="assets/img/imagesdefaut/blason.jpg" alt="photo armoiries"></a>
           <?php }?>
         </div>
       </div>
@@ -341,20 +333,20 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
             <h3>Nouveau Communiqu&eacute;</h3>
           </div>
           <div class="row-fluid fond-notification">
-            <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="auteur"></a> </div>
+            <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"><img src="<?= e($row_LastCommunique['photo_auteur']) ?>" alt="auteur"></a> </div>
             <div class="span8"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-              <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a lanc&eacute; un communiqu&eacute; au nom de la ville <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>"> <?php echo $row_LastCommunique['institution']; ?></a> intitul&eacute;&nbsp;:</p>
-              <h4><a href="page-communique.php?com_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
+              <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> a lanc&eacute; un communiqu&eacute; au nom de la ville <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>"> <?= e($row_LastCommunique['institution']) ?></a> intitul&eacute;&nbsp;:</p>
+              <h4><a href="page-communique.php?com_id=<?= e($row_LastCommunique['id']) ?>"> <?= e($row_LastCommunique['titre']) ?> </a> </h4>
             </div>
             <div class="span2 auteur">
               <?php if ($row_LastCommunique['img_institution']) {?>
-              <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="armoiries"></a>
+              <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="armoiries"></a>
               <?php } else {?>
-              <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>" alt="armoiries"><img src="assets/img/imagesdefaut/blason.jpg" alt="photo armoiries"></a>
+              <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>" alt="armoiries"><img src="assets/img/imagesdefaut/blason.jpg" alt="photo armoiries"></a>
               <?php }?>
             </div>
           </div>
@@ -387,18 +379,18 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
             <h3>Nouveau Communiqu&eacute;</h3>
           </div>
           <div class="row-fluid fond-notification">
-            <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="auteur"></a> </div>
+            <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"><img src="<?= e($row_LastCommunique['photo_auteur']) ?>" alt="auteur"></a> </div>
             <div class="span8"> <small>le
               <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-              <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a lanc&eacute; un communiqu&eacute; au nom de l'<a href="<?php echo $lien_institut; ?>"><?php echo $row_LastCommunique['institution']; ?></a> intitul&eacute;&nbsp;:</p>
-              <h4><a href="page-communique.php?com_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
+              <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> a lanc&eacute; un communiqu&eacute; au nom de l'<a href="<?php echo $lien_institut; ?>"><?= e($row_LastCommunique['institution']) ?></a> intitul&eacute;&nbsp;:</p>
+              <h4><a href="page-communique.php?com_id=<?= e($row_LastCommunique['id']) ?>"> <?= e($row_LastCommunique['titre']) ?> </a> </h4>
             </div>
             <div class="span2 auteur">
               <?php if ($row_LastCommunique['img_institution']) {?>
-              <a href="<?php echo $lien_institut; ?>"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="armoiries"></a>
+              <a href="<?php echo $lien_institut; ?>"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="armoiries"></a>
               <?php } else {?>
               <a href="<?php echo $lien_institut; ?>"><img src="assets/img/imagesdefaut/blason.jpg" alt="photo armoiries"></a>
               <?php }?>
@@ -413,19 +405,19 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 ================================================== -->
     <li class="fond-notification item">
       <div class="row-fluid">
-        <div class="span1 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="visiteur"></a> </div>
+        <div class="span1 auteur"> <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"><img src="<?= e($row_LastCommunique['photo_auteur']) ?>" alt="visiteur"></a> </div>
         <div class="span10"> <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
           &agrave;
           <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
           </small>
-          <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> <a href="page-monument.php?ch_pat_id=<?php echo $row_LastCommunique['id_institution']; ?>#commentaireID<?php echo $row_LastCommunique['id']; ?>"> a visit&eacute;</a> le monument <a href="page-monument.php?ch_pat_id=<?php echo $row_LastCommunique['id_institution']; ?>"><?php echo $row_LastCommunique['institution']; ?></a></p>
+          <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id_institution']) ?>#commentaireID<?= e($row_LastCommunique['id']) ?>"> a visit&eacute;</a> le monument <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id_institution']) ?>"><?= e($row_LastCommunique['institution']) ?></a></p>
         </div>
         <div class="span1 auteur">
           <?php if ($row_LastCommunique['img_institution']) {?>
-          <a href="page-monument.php?ch_pat_id=<?php echo $row_LastCommunique['id_institution']; ?>"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="photo monument"></a>
+          <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id_institution']) ?>"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="photo monument"></a>
           <?php } else {?>
-          <a href="page-monument.php?ch_pat_id=<?php echo $row_LastCommunique['id_institution']; ?>" alt="photo monument"><img src="assets/img/imagesdefaut/ville.jpg" alt="photo monument"></a>
+          <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id_institution']) ?>" alt="photo monument"><img src="assets/img/imagesdefaut/ville.jpg" alt="photo monument"></a>
           <?php }?>
         </div>
       </div>
@@ -436,19 +428,19 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 ================================================== -->
     <li class="fond-notification item">
       <div class="row-fluid">
-        <div class="span1 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="visiteur"></a> </div>
+        <div class="span1 auteur"> <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"><img src="<?= e($row_LastCommunique['photo_auteur']) ?>" alt="visiteur"></a> </div>
         <div class="span10"> <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
           &agrave;
           <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
           </small>
-          <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id_institution']; ?>#commentaireID<?php echo $row_LastCommunique['id']; ?>"> a comment&eacute; </a> l'&eacute;l&eacute;ment historique <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id_institution']; ?>"><?php echo $row_LastCommunique['institution']; ?></a></p>
+          <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> <a href="page-fait-historique.php?ch_his_id=<?= e($row_LastCommunique['id_institution']) ?>#commentaireID<?= e($row_LastCommunique['id']) ?>"> a comment&eacute; </a> l'&eacute;l&eacute;ment historique <a href="page-fait-historique.php?ch_his_id=<?= e($row_LastCommunique['id_institution']) ?>"><?= e($row_LastCommunique['institution']) ?></a></p>
         </div>
         <div class="span1 auteur">
           <?php if ($row_LastCommunique['img_institution']) {?>
-          <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id_institution']; ?>"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="photo illustration"></a>
+          <a href="page-fait-historique.php?ch_his_id=<?= e($row_LastCommunique['id_institution']) ?>"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="photo illustration"></a>
           <?php } else {?>
-          <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id_institution']; ?>" alt="photo monument"><img src="assets/img/imagesdefaut/ville.jpg" alt="photo illustration"></a>
+          <a href="page-fait-historique.php?ch_his_id=<?= e($row_LastCommunique['id_institution']) ?>" alt="photo monument"><img src="assets/img/imagesdefaut/ville.jpg" alt="photo illustration"></a>
           <?php }?>
         </div>
       </div>
@@ -459,19 +451,19 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 ================================================== -->
     <li class="fond-notification item">
       <div class="row-fluid">
-        <div class="span1 auteur"> <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="visiteur" title="auteur du communiqu&eacute;"></a></div>
+        <div class="span1 auteur"> <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"><img src="<?= e($row_LastCommunique['photo_auteur']) ?>" alt="visiteur" title="auteur du communiqu&eacute;"></a></div>
         <div class="span10"> <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
           &agrave;
           <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
           </small>
-          <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> <a href="page-communique.php?com_id=<?php echo $row_LastCommunique['id_element']; ?>#commentaireID<?php echo $row_LastCommunique['id']; ?>">a r&eacute;agi</a> au communiqu&eacute; intitul&eacute; <a href="page-communique.php?com_id=<?php echo $row_LastCommunique['id_element']; ?>"><?php echo $row_LastCommunique['institution']; ?>.</a></p>
+          <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> <a href="page-communique.php?com_id=<?= e($row_LastCommunique['id_element']) ?>#commentaireID<?= e($row_LastCommunique['id']) ?>">a r&eacute;agi</a> au communiqu&eacute; intitul&eacute; <a href="page-communique.php?com_id=<?= e($row_LastCommunique['id_element']) ?>"><?= e($row_LastCommunique['institution']) ?>.</a></p>
         </div>
         <div class="span1 auteur">
           <?php if ($row_LastCommunique['img_institution']) {?>
-          <a href="page-communique.php?com_id=<?php echo $row_LastCommunique['id_institution']; ?>"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="auteur" title="auteur du communiqu&eacute;"></a>
+          <a href="page-communique.php?com_id=<?= e($row_LastCommunique['id_institution']) ?>"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="auteur" title="auteur du communiqu&eacute;"></a>
           <?php } else {?>
-          <a href="page-communique.php?com_id=<?php echo $row_LastCommunique['id_institution']; ?>" alt="pays"><img src="assets/img/imagesdefaut/personnage.jpg" alt="photo membre"></a>
+          <a href="page-communique.php?com_id=<?= e($row_LastCommunique['id_institution']) ?>" alt="pays"><img src="assets/img/imagesdefaut/personnage.jpg" alt="photo membre"></a>
           <?php }?>
         </div>
       </div>
@@ -493,9 +485,9 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
           <div class="row-fluid fond-notification">
             <div class="span4">
               <?php if ($row_LastCommunique['img_institution']) {?>
-              <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['id']; ?>" alt="pays"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="Drapeau du pays"></a>
+              <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['id']) ?>" alt="pays"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="Drapeau du pays"></a>
               <?php } else {?>
-              <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['id']; ?>" alt="pays"><img src="assets/img/imagesdefaut/drapeau.jpg" alt="Drapeau du pays"></a>
+              <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['id']) ?>" alt="pays"><img src="assets/img/imagesdefaut/drapeau.jpg" alt="Drapeau du pays"></a>
               <?php }?>
             </div>
             <div class="span8"> <small>le
@@ -503,8 +495,8 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-              <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a mis &agrave; jour la page de son pays&nbsp;:</p>
-              <h4><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
+              <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> a mis &agrave; jour la page de son pays&nbsp;:</p>
+              <h4><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['id']) ?>"> <?= e($row_LastCommunique['titre']) ?> </a> </h4>
             </div>
           </div>
         </div>
@@ -524,9 +516,9 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
           <div class="row-fluid fond-notification">
             <div class="span4">
               <?php if ($row_LastCommunique['img_institution']) {?>
-              <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration ville"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="illustration ville"></a>
+              <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id']) ?>" alt="illustration ville"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="illustration ville"></a>
               <?php } else {?>
-              <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration ville"><img src="assets/img/imagesdefaut/ville.jpg" alt="illustration ville"></a>
+              <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id']) ?>" alt="illustration ville"><img src="assets/img/imagesdefaut/ville.jpg" alt="illustration ville"></a>
               <?php }?>
             </div>
             <div class="span8"> <small>le
@@ -534,8 +526,8 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-              <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a mis &agrave; jour la page de sa ville&nbsp;:</p>
-              <h4><a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
+              <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> a mis &agrave; jour la page de sa ville&nbsp;:</p>
+              <h4><a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>"> <?= e($row_LastCommunique['titre']) ?> </a> </h4>
             </div>
           </div>
         </div>
@@ -555,9 +547,9 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
           <div class="row-fluid fond-notification">
             <div class="span4">
               <?php if ($row_LastCommunique['img_institution']) {?>
-              <a href="page-monument.php?ch_pat_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration monument"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="illustration monument"></a>
+              <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id']) ?>" alt="illustration monument"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="illustration monument"></a>
               <?php } else {?>
-              <a href="page-monument.php?ch_pat_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration monument"><img src="assets/img/imagesdefaut/ville.jpg" alt="illustration monument"></a>
+              <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id']) ?>" alt="illustration monument"><img src="assets/img/imagesdefaut/ville.jpg" alt="illustration monument"></a>
               <?php }?>
             </div>
             <div class="span8"> <small>le
@@ -565,8 +557,8 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-              <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a cr&eacute;&eacute; un nouveau monument dans la ville <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>"> <?php echo $row_LastCommunique['institution']; ?> </a>:</p>
-              <h4><a href="page-monument.php?ch_pat_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
+              <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> a cr&eacute;&eacute; un nouveau monument dans la ville <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>"> <?= e($row_LastCommunique['institution']) ?> </a>:</p>
+              <h4><a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id']) ?>"> <?= e($row_LastCommunique['titre']) ?> </a> </h4>
             </div>
           </div>
         </div>
@@ -578,19 +570,19 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 ================================================== -->
     <li class="fond-notification item">
       <div class="row-fluid">
-        <div class="span1 auteur"><a href="page-monument.php?ch_pat_id=<?php echo $row_LastCommunique['id']; ?>"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="photo monument"></a> </div>
+        <div class="span1 auteur"><a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id']) ?>"><img src="<?= e($row_LastCommunique['photo_auteur']) ?>" alt="photo monument"></a> </div>
         <div class="span10"> <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
           &agrave;
           <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
           </small>
-          <p>Le monument <a href="page-monument.php?ch_pat_id=<?php echo $row_LastCommunique['id']; ?>"><?php echo $row_LastCommunique['nom_auteur']; ?></a> a rejoint la cat&eacute;gorie <a href="patrimoine.php?mon_catID=<?php echo $row_LastCommunique['id_institution']; ?>#monument"><?php echo $row_LastCommunique['institution']; ?></a></p>
+          <p>Le monument <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id']) ?>"><?= e($row_LastCommunique['nom_auteur']) ?></a> a rejoint la cat&eacute;gorie <a href="patrimoine.php?mon_catID=<?= e($row_LastCommunique['id_institution']) ?>#monument"><?= e($row_LastCommunique['institution']) ?></a></p>
         </div>
         <div class="span1 auteur icone-categorie">
           <?php if ($row_LastCommunique['img_institution']) {?>
-          <a href="patrimoine.php?mon_catID=<?php echo $row_LastCommunique['id_institution']; ?>#monument"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="icone categorie" style="background-color:<?php echo $row_LastCommunique['pays_institution']; ?>;"></a>
+          <a href="patrimoine.php?mon_catID=<?= e($row_LastCommunique['id_institution']) ?>#monument"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="icone categorie" style="background-color:<?= e($row_LastCommunique['pays_institution']) ?>;"></a>
           <?php } else {?>
-          <a href="patrimoine.php?mon_catID=<?php echo $row_LastCommunique['id_institution']; ?>#monument"><img src="assets/img/imagesdefaut/blason.jpg" alt="icone categorie" style="background-color:<?php echo $row_LastCommunique['pays_institution']; ?>;"></a>
+          <a href="patrimoine.php?mon_catID=<?= e($row_LastCommunique['id_institution']) ?>#monument"><img src="assets/img/imagesdefaut/blason.jpg" alt="icone categorie" style="background-color:<?= e($row_LastCommunique['pays_institution']) ?>;"></a>
           <?php }?>
         </div>
       </div>
@@ -610,9 +602,9 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
           <div class="row-fluid fond-notification">
             <div class="span4">
               <?php if ($row_LastCommunique['img_institution']) {?>
-              <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration fait historique"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="illustration fait historique"></a>
+              <a href="page-fait-historique.php?ch_his_id=<?= e($row_LastCommunique['id']) ?>" alt="illustration fait historique"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="illustration fait historique"></a>
               <?php } else {?>
-              <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration fait historique"><img src="assets/img/imagesdefaut/ville.jpg" alt="illustration fait historique"></a>
+              <a href="page-fait-historique.php?ch_his_id=<?= e($row_LastCommunique['id']) ?>" alt="illustration fait historique"><img src="assets/img/imagesdefaut/ville.jpg" alt="illustration fait historique"></a>
               <?php }?>
             </div>
             <div class="span8"> <small>le
@@ -620,9 +612,9 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-              <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a compl&eacute;t&eacute; <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>#histoire">l'histoire de <?php echo $row_LastCommunique['institution']; ?> </a> en y ajoutant une nouvelle periode marquante&nbsp;:</p>
+              <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> a compl&eacute;t&eacute; <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>#histoire">l'histoire de <?= e($row_LastCommunique['institution']) ?> </a> en y ajoutant une nouvelle periode marquante&nbsp;:</p>
               <h4>du <?php echo affDate($row_LastCommunique['sous_categorie']); ?> au <?php echo affDate($row_LastCommunique['id_element']); ?></h4>
-              <h4><a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
+              <h4><a href="page-fait-historique.php?ch_his_id=<?= e($row_LastCommunique['id']) ?>"> <?= e($row_LastCommunique['titre']) ?> </a> </h4>
             </div>
           </div>
         </div>
@@ -641,9 +633,9 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
           <div class="row-fluid fond-notification">
             <div class="span4">
               <?php if ($row_LastCommunique['img_institution']) {?>
-              <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration fait historique"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="illustration fait historique"></a>
+              <a href="page-fait-historique.php?ch_his_id=<?= e($row_LastCommunique['id']) ?>" alt="illustration fait historique"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="illustration fait historique"></a>
               <?php } else {?>
-              <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration fait historique"><img src="assets/img/imagesdefaut/ville.jpg" alt="illustration fait historique"></a>
+              <a href="page-fait-historique.php?ch_his_id=<?= e($row_LastCommunique['id']) ?>" alt="illustration fait historique"><img src="assets/img/imagesdefaut/ville.jpg" alt="illustration fait historique"></a>
               <?php }?>
             </div>
             <div class="span8"> <small>le
@@ -651,8 +643,8 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-              <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a compl&eacute;t&eacute; <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>#histoire">l'histoire de <?php echo $row_LastCommunique['institution']; ?> </a> en y ajoutant un nouveau personnage marquant&nbsp;</p>
-              <h4><a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a></h4>
+              <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> a compl&eacute;t&eacute; <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>#histoire">l'histoire de <?= e($row_LastCommunique['institution']) ?> </a> en y ajoutant un nouveau personnage marquant&nbsp;</p>
+              <h4><a href="page-fait-historique.php?ch_his_id=<?= e($row_LastCommunique['id']) ?>"> <?= e($row_LastCommunique['titre']) ?> </a></h4>
               <h4>(<?php echo affDate($row_LastCommunique['sous_categorie']); ?> - <?php echo affDate($row_LastCommunique['id_element']); ?>)</h4>
             </div>
           </div>
@@ -672,9 +664,9 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
           <div class="row-fluid fond-notification">
             <div class="span4">
               <?php if ($row_LastCommunique['img_institution']) {?>
-              <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration fait historique"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="illustration fait historique"></a>
+              <a href="page-fait-historique.php?ch_his_id=<?= e($row_LastCommunique['id']) ?>" alt="illustration fait historique"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="illustration fait historique"></a>
               <?php } else {?>
-              <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>" alt="illustration fait historique"><img src="assets/img/imagesdefaut/ville.jpg" alt="illustration fait historique"></a>
+              <a href="page-fait-historique.php?ch_his_id=<?= e($row_LastCommunique['id']) ?>" alt="illustration fait historique"><img src="assets/img/imagesdefaut/ville.jpg" alt="illustration fait historique"></a>
               <?php }?>
             </div>
             <div class="span8"> <small>le
@@ -682,9 +674,9 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-              <p><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"> <?php echo $row_LastCommunique['prenom_auteur']; ?> <?php echo $row_LastCommunique['nom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a compl&eacute;t&eacute; <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>#histoire">l'histoire de <?php echo $row_LastCommunique['institution']; ?> </a> en y ajoutant un nouveau fait marquant&nbsp;:</p>
+              <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> a compl&eacute;t&eacute; <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>#histoire">l'histoire de <?= e($row_LastCommunique['institution']) ?> </a> en y ajoutant un nouveau fait marquant&nbsp;:</p>
               <h4>Le <?php echo affDate($row_LastCommunique['sous_categorie']); ?></h4>
-              <h4><a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>"> <?php echo $row_LastCommunique['titre']; ?> </a> </h4>
+              <h4><a href="page-fait-historique.php?ch_his_id=<?= e($row_LastCommunique['id']) ?>"> <?= e($row_LastCommunique['titre']) ?> </a> </h4>
             </div>
           </div>
         </div>
@@ -697,19 +689,19 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 ================================================== -->
     <li class="fond-notification item">
       <div class="row-fluid">
-        <div class="span1 auteur"><a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="photo monument"></a> </div>
+        <div class="span1 auteur"><a href="page-fait-historique.php?ch_his_id=<?= e($row_LastCommunique['id']) ?>"><img src="<?= e($row_LastCommunique['photo_auteur']) ?>" alt="photo monument"></a> </div>
         <div class="span10"> <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
           &agrave;
           <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
           </small>
-          <p>L'&eacute;l&eacute;ment historique <a href="page-fait-historique.php?ch_his_id=<?php echo $row_LastCommunique['id']; ?>"><?php echo $row_LastCommunique['nom_auteur']; ?></a> a rejoint la cat&eacute;gorie <a href="histoire.php?fai_catID=<?php echo $row_LastCommunique['id_institution']; ?>#fait_hist"><?php echo $row_LastCommunique['institution']; ?></a></p>
+          <p>L'&eacute;l&eacute;ment historique <a href="page-fait-historique.php?ch_his_id=<?= e($row_LastCommunique['id']) ?>"><?= e($row_LastCommunique['nom_auteur']) ?></a> a rejoint la cat&eacute;gorie <a href="histoire.php?fai_catID=<?= e($row_LastCommunique['id_institution']) ?>#fait_hist"><?= e($row_LastCommunique['institution']) ?></a></p>
         </div>
         <div class="span1 auteur icone-categorie">
           <?php if ($row_LastCommunique['img_institution']) {?>
-          <a href="histoire.php?fai_catID=<?php echo $row_LastCommunique['id_institution']; ?>#fait_hist"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="icone categorie" style="background-color:<?php echo $row_LastCommunique['pays_institution']; ?>;"></a>
+          <a href="histoire.php?fai_catID=<?= e($row_LastCommunique['id_institution']) ?>#fait_hist"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="icone categorie" style="background-color:<?= e($row_LastCommunique['pays_institution']) ?>;"></a>
           <?php } else {?>
-          <a href="histoire.php?fai_catID=<?php echo $row_LastCommunique['id_institution']; ?>#fait_hist"><img src="assets/img/imagesdefaut/blason.jpg" alt="icone categorie" style="background-color:<?php echo $row_LastCommunique['pays_institution']; ?>;"></a>
+          <a href="histoire.php?fai_catID=<?= e($row_LastCommunique['id_institution']) ?>#fait_hist"><img src="assets/img/imagesdefaut/blason.jpg" alt="icone categorie" style="background-color:<?= e($row_LastCommunique['pays_institution']) ?>;"></a>
           <?php }?>
         </div>
       </div>
@@ -720,19 +712,19 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 ================================================== -->
     <li class="fond-notification item">
       <div class="row-fluid">
-        <div class="span1 auteur"><a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><img src="<?php echo $row_LastCommunique['photo_auteur']; ?>" alt="photo monument"></a> </div>
+        <div class="span1 auteur"><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"><img src="<?= e($row_LastCommunique['photo_auteur']) ?>" alt="photo monument"></a> </div>
         <div class="span10"> <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
           &agrave;
           <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
           </small>
-          <p>Le membre <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><?php echo $row_LastCommunique['nom_auteur']; ?> <?php echo $row_LastCommunique['prenom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a rejoint le groupe <a href="politique.php?mem_groupID=<?php echo $row_LastCommunique['id_institution']; ?>#groupes"><?php echo $row_LastCommunique['institution']; ?></a></p>
+          <p>Le membre <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"><?= e($row_LastCommunique['nom_auteur']) ?> <?= e($row_LastCommunique['prenom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> a rejoint le groupe <a href="politique.php?mem_groupID=<?= e($row_LastCommunique['id_institution']) ?>#groupes"><?= e($row_LastCommunique['institution']) ?></a></p>
         </div>
         <div class="span1 auteur icone-categorie">
           <?php if ($row_LastCommunique['img_institution']) {?>
-          <a href="politique.php?mem_groupID=<?php echo $row_LastCommunique['id_institution']; ?>#groupes"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="icone categorie" style="background-color:<?php echo $row_LastCommunique['pays_institution']; ?>;"></a>
+          <a href="politique.php?mem_groupID=<?= e($row_LastCommunique['id_institution']) ?>#groupes"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="icone categorie" style="background-color:<?= e($row_LastCommunique['pays_institution']) ?>;"></a>
           <?php } else {?>
-          <a href="politique.php?mem_groupID=<?php echo $row_LastCommunique['id_institution']; ?>#groupes"><img src="assets/img/imagesdefaut/blason.jpg" alt="icone categorie" style="background-color:<?php echo $row_LastCommunique['pays_institution']; ?>;"></a>
+          <a href="politique.php?mem_groupID=<?= e($row_LastCommunique['id_institution']) ?>#groupes"><img src="assets/img/imagesdefaut/blason.jpg" alt="icone categorie" style="background-color:<?= e($row_LastCommunique['pays_institution']) ?>;"></a>
           <?php }?>
         </div>
       </div>
@@ -743,19 +735,19 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 ================================================== -->
     <li class="fond-notification item">
       <div class="row-fluid">
-        <div class="span1 auteur"><img src="<?php echo $row_LastCommunique['sous_categorie']; ?>" alt="photo infrastructure"></div>
+        <div class="span1 auteur"><img src="<?= e($row_LastCommunique['sous_categorie']) ?>" alt="photo infrastructure"></div>
         <div class="span10"> <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
           &agrave;
           <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
           </small>
-          <p>L'infrastructure <?php echo $row_LastCommunique['titre']; ?> cr&eacute;e dans la ville de <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>"><?php echo $row_LastCommunique['institution']; ?></a> par <a href="page-pays.php?ch_pay_id=<?php echo $row_LastCommunique['paysID_auteur']; ?>#diplomatie"><?php echo $row_LastCommunique['nom_auteur']; ?> <?php echo $row_LastCommunique['prenom_auteur']; ?></a> <?php echo $row_LastCommunique['titre_auteur']; ?> a &eacute;t&eacute; accept&eacute;e par les juges temp&eacute;rants</p>
+          <p>L'infrastructure <?= e($row_LastCommunique['titre']) ?> cr&eacute;e dans la ville de <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>"><?= e($row_LastCommunique['institution']) ?></a> par <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"><?= e($row_LastCommunique['nom_auteur']) ?> <?= e($row_LastCommunique['prenom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> a &eacute;t&eacute; accept&eacute;e par les juges temp&eacute;rants</p>
         </div>
         <div class="span1 auteur icone-categorie">
           <?php if ($row_LastCommunique['img_institution']) {?>
-          <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>#economie"><img src="<?php echo $row_LastCommunique['img_institution']; ?>" alt="icone categorie" style="background-color:<?php echo $row_LastCommunique['pays_institution']; ?>;"></a>
+          <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>#economie"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="icone categorie" style="background-color:<?= e($row_LastCommunique['pays_institution']) ?>;"></a>
           <?php } else {?>
-          <a href="page-ville.php?ch_pay_id=<?php echo $row_LastCommunique['pays_institution']; ?>&ch_ville_id=<?php echo $row_LastCommunique['id_institution']; ?>#economie"><img src="assets/img/imagesdefaut/blason.jpg" alt="icone categorie" style="background-color:<?php echo $row_LastCommunique['pays_institution']; ?>;"></a>
+          <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>#economie"><img src="assets/img/imagesdefaut/blason.jpg" alt="icone categorie" style="background-color:<?= e($row_LastCommunique['pays_institution']) ?>;"></a>
           <?php }?>
         </div>
       </div>

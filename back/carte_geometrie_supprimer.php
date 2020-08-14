@@ -72,7 +72,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
 ?><!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Supprimer une g&eacute;ometrie</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -119,8 +119,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -131,7 +130,10 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
 <script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
- <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
+<script type="text/javascript">
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
+</body>
+</html>

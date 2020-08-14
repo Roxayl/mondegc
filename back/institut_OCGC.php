@@ -96,11 +96,11 @@ $_SESSION['last_work'] = "institut_OCGC.php";
   <!-- formulaire de modification instituts
      ================================================== -->
   <form class="pull-right-cta" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post" style="margin-top: 30px;">
-    <input name="institut_id" type="hidden" value="<?php echo $row_institut['ch_ins_ID']; ?>">
+    <input name="institut_id" type="hidden" value="<?= e($row_institut['ch_ins_ID']) ?>">
     <button class="btn btn-primary btn-cta" type="submit" title="modifier les informations sur l'institut"><i class="icon-edit icon-white"></i> Modifier la description</button>
   </form>
   <div id="titre_institut" class="titre-bleu anchor">
-    <h1>G&eacute;rer l'<?php echo $row_institut['ch_ins_nom']; ?></h1>
+    <h1>G&eacute;rer l'<?= e($row_institut['ch_ins_nom']) ?></h1>
   </div>
   <div class="clearfix"></div>
 
@@ -134,6 +134,3 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
-<?php
-mysql_free_result($institut);
-?>

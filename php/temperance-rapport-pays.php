@@ -68,7 +68,7 @@ $totalRows_pays = mysql_num_rows($pays);
 <div class="modal-header">
 <div class="pull-left"></div>
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-  <h3 id="myModalLabel">Rapport des juges temp&eacute;rants sur le pays : <a href="../page-pays.php?ch_pay_id=<?php echo $row_pays['ch_pay_id']; ?>" target="_blank"><?php echo $row_pays['ch_pay_nom']; ?></a></h3>
+  <h3 id="myModalLabel">Rapport des juges temp&eacute;rants sur le pays : <a href="../page-pays.php?ch_pay_id=<?= e($row_pays['ch_pay_id']) ?>" target="_blank"><?= e($row_pays['ch_pay_nom']) ?></a></h3>
 </div>
 <div class="modal-body">
 <div class="alert alert-tips"><p>Ce rapport a &eacute;t&eacute; r&eacute;dig&eacute; dans le cadre du <a href="http://www.generation-city.com/monde/economie.php#temperance" title="en savoir plus sur le porjet temp&eacute;rance"> projet Temp&eacute;rance de l'Institut Economique</a> qui vise &agrave; appr&eacute;cier la coh&eacute;rence globale d'un pays.</p>
@@ -261,7 +261,3 @@ $totalRows_pays = mysql_num_rows($pays);
 <div class="modal-footer">
   <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
 </div>
-<?php
-mysql_free_result($temperance);
-mysql_free_result($pays);
-?>

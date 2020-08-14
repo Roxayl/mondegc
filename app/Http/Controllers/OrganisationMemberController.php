@@ -128,8 +128,7 @@ class OrganisationMemberController extends Controller
         $orgMember->sendNotifications($oldOrgMember);
 
         return redirect()->route('organisation.showslug',
-            ['id' => $orgMember->organisation_id,
-             'slug' => Str::slug($orgMember->organisation->name)])
+            $orgMember->organisation->showRouteParameter())
             ->with('message', 'success|Le pays a été modifié avec succès !');
 
     }
@@ -163,8 +162,7 @@ class OrganisationMemberController extends Controller
         $orgMember->sendNotifications($oldOrgMember);
 
         return redirect()->route('organisation.showslug',
-            ['id' => $orgMember->organisation_id,
-             'slug' => Str::slug($orgMember->organisation->name)])
+            $orgMember->organisation->showRouteParameter())
             ->with('message', "success|Le pays a quitté l'organisation avec succès. Byebye, blackbird!");
 
     }

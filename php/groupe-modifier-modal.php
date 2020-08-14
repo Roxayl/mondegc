@@ -1,8 +1,5 @@
 <?php
 
-header('Content-Type: text/html; charset=iso-8859-1');
-
-
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 appendQueryString($editFormAction);
 
@@ -49,7 +46,7 @@ $totalRows_group_membre = mysql_num_rows($group_membre);
 <form action="<?php echo $editFormAction; ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
-<h3 id="myModalLabel">Modifier le groupe <?php echo $row_group_membre['ch_mem_group_nom']; ?></h3>
+<h3 id="myModalLabel">Modifier le groupe <?= e($row_group_membre['ch_mem_group_nom']) ?></h3>
           </div>
           <div class="modal-body">
           <div class="row-fluid">
@@ -58,9 +55,9 @@ $totalRows_group_membre = mysql_num_rows($group_membre);
             <?php 
 				  $now= date("Y-m-d G:i:s");
                   $nb_update = $row_group_membre['ch_mem_group_nb_update'] + 1; ?>
-            <input name="ch_mem_group_ID" type="hidden" value="<?php echo $row_group_membre['ch_mem_group_ID']; ?>">
+            <input name="ch_mem_group_ID" type="hidden" value="<?= e($row_group_membre['ch_mem_group_ID']) ?>">
             <input name="ch_mem_group_label" type="hidden" value="mem_group">
-            <input name="ch_mem_group_date" type="hidden" value="<?php echo $row_group_membre['ch_mem_group_date']; ?>">
+            <input name="ch_mem_group_date" type="hidden" value="<?= e($row_group_membre['ch_mem_group_date']) ?>">
             <input name="ch_mem_group_mis_jour" type="hidden" value="<?php echo $now; ?>">
             <input name="ch_mem_group_nb_update" type="hidden" value=<?php echo $nb_update; ?> >
             <!-- Statut -->
@@ -81,7 +78,7 @@ $totalRows_group_membre = mysql_num_rows($group_membre);
             <div id="sprytextfield21" class="control-group">
               <label class="control-label" for="ch_mem_group_nom">Nom de la cat&eacute;gorie <a href="#" rel="clickover" title="Nom de la cat&eacute;gorie" data-content="30 caract&egrave;res maximum. Ce nom servira &agrave; identifier la cat&eacute;gorie dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
               <div class="controls">
-                <input class="input-xlarge" type="text" id="ch_mem_group_nom" name="ch_mem_group_nom" value="<?php echo $row_group_membre['ch_mem_group_nom']; ?>">
+                <input class="input-xlarge" type="text" id="ch_mem_group_nom" name="ch_mem_group_nom" value="<?= e($row_group_membre['ch_mem_group_nom']) ?>">
                 <br>
                 <span class="textfieldRequiredMsg">un nom est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">30 caract&egrave;res max.</span></div>
             </div>
@@ -89,7 +86,7 @@ $totalRows_group_membre = mysql_num_rows($group_membre);
             <div id="sprytextfield23" class="control-group">
               <label class="control-label" for="ch_mem_group_icon">Ic&ocirc;ne <a href="#" rel="clickover" title="Ic&ocirc;ne" data-content="L'ic&ocirc;ne sert &agrave; repr&eacute;senter la cat&eacute;gorie dans l'ensemble du site. Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)"><i class="icon-info-sign"></i></a></label>
               <div class="controls">
-                <input class="input-xlarge" type="text" name="ch_mem_group_icon" id="ch_mem_group_icon" value="<?php echo $row_group_membre['ch_mem_group_icon']; ?>">
+                <input class="input-xlarge" type="text" name="ch_mem_group_icon" id="ch_mem_group_icon" value="<?= e($row_group_membre['ch_mem_group_icon']) ?>">
                 <br>
                 <span class="textfieldRequiredMsg">une ic&ocirc;ne est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res max.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
             </div>
@@ -97,22 +94,22 @@ $totalRows_group_membre = mysql_num_rows($group_membre);
             <div id="" class="control-group">
               <label class="control-label" for="ch_mem_group_icon">Couleur <a href="#" rel="clickover" title="Couleur" data-content="Choisissez une couleur de fond pour la cat&eacute;gorie"><i class="icon-info-sign"></i></a></label>
               <div class="controls">
-                <div class="input-append color" data-color="<?php echo $row_group_membre['ch_mem_group_couleur']; ?>" data-color-format="hex" id="cp4">
-                  <input type="text" class="input-large" value="<?php echo $row_group_membre['ch_mem_group_couleur']; ?>" name="ch_mem_group_couleur" id="ch_mem_group_couleur">
-                  <span class="add-on"><i style="background-color: <?php echo $row_group_membre['ch_mem_group_couleur']; ?>)"></i></span> </div>
+                <div class="input-append color" data-color="<?= e($row_group_membre['ch_mem_group_couleur']) ?>" data-color-format="hex" id="cp4">
+                  <input type="text" class="input-large" value="<?= e($row_group_membre['ch_mem_group_couleur']) ?>" name="ch_mem_group_couleur" id="ch_mem_group_couleur">
+                  <span class="add-on"><i style="background-color: <?= e($row_group_membre['ch_mem_group_couleur']) ?>)"></i></span> </div>
               </div>
             </div>
             <!-- Description -->
             <div id="sprytextarea24" class="control-group">
               <label class="control-label" for="ch_mem_group_desc">Description <a href="#" rel="clickover" title="Description" data-content="Donnez en quelques lignes des informations qui permettrons de comprendre l'objet de cette cat&eacute;gorie. 400 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
               <div class="controls">
-                <textarea rows="6" name="ch_mem_group_desc" class="input-xlarge" id="ch_mem_group_desc"><?php echo $row_group_membre['ch_mem_group_desc']; ?></textarea>
+                <textarea rows="6" name="ch_mem_group_desc" class="input-xlarge" id="ch_mem_group_desc"><?= e($row_group_membre['ch_mem_group_desc']) ?></textarea>
                 <br>
                 <span class="textareaMaxCharsMsg">400 caract&egrave;res max.</span></div>
             </div>
             </div>
             <div class="span3 icone-categorie"> 
-          <img src="<?php echo $row_group_membre['ch_mem_group_icon']; ?>" alt="icone cat&eacute;gorie" style="background-color:<?php echo $row_group_membre['ch_mem_group_couleur']; ?>;"></div>
+          <img src="<?= e($row_group_membre['ch_mem_group_icon']) ?>" alt="icone cat&eacute;gorie" style="background-color:<?= e($row_group_membre['ch_mem_group_couleur']) ?>;"></div>
 </div>
           </div>
           <div class="modal-footer">
@@ -133,5 +130,3 @@ var sprytextfield21 = new Spry.Widget.ValidationTextField("sprytextfield21", "no
 var sprytextfield23 = new Spry.Widget.ValidationTextField("sprytextfield23", "url", {minChars:2, maxChars:250, validateOn:["change"]});
 var sprytextarea24 = new Spry.Widget.ValidationTextarea("sprytextarea24", {maxChars:400, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
-<?php
-mysql_free_result($group_membre);?>

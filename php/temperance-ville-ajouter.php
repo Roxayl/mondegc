@@ -122,7 +122,7 @@ $totalRows_villes = mysql_num_rows($villes);
     <div class="controls">
     <select name="ch_temp_element_id" id="ch_temp_element_id" class="span3">
       <?php do { ?>
-          <option value="<?php echo $row_villes['ch_vil_ID']; ?>"><?php echo $row_villes['ch_vil_nom']; ?></option>
+          <option value="<?= e($row_villes['ch_vil_ID']) ?>"><?= e($row_villes['ch_vil_nom']) ?></option>
       <?php } while ($row_villes = mysql_fetch_assoc($villes)); ?>
      </select>
     </div>
@@ -141,6 +141,3 @@ $totalRows_villes = mysql_num_rows($villes);
   </div>
   <input type="hidden" name="MM_insert" value="ajout-temperance">
 </form>
-<?php
-mysql_free_result($villes);
-?>

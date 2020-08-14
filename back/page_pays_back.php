@@ -50,7 +50,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
         if ($_POST['ch_pay_emplacement'] >= 18 and $_POST['ch_pay_emplacement'] < 24 ){ $ch_pay_continent = "Volcania";}
         if ($_POST['ch_pay_emplacement'] >= 24 and $_POST['ch_pay_emplacement'] <= 27 ){ $ch_pay_continent = "Aldesyl";}
         if ($_POST['ch_pay_emplacement'] >= 27 and $_POST['ch_pay_emplacement'] <= 42 ){ $ch_pay_continent = "Philicie";}
-        if( $_POST['ch_pay_emplacement'] >= 42 and $_POST['ch_pay_emplacement'] <= 56 ){ $ch_pay_continent = "Aldesyl";}
+        if( $_POST['ch_pay_emplacement'] > 42 and $_POST['ch_pay_emplacement'] <= 56 ){ $ch_pay_continent = "Aldesyl";}
         if( $_POST['ch_pay_emplacement'] >= 56 and $_POST['ch_pay_emplacement'] <= 57 ){ $ch_pay_continent = "Volcania";}
         if ($_POST['ch_pay_emplacement'] >= 57 and $_POST['ch_pay_emplacement'] <= 58 ){ $ch_pay_continent = "Aldesyl";}
         if ($_POST['ch_pay_emplacement'] >= 59){ $ch_pay_continent = "Volcania";}
@@ -314,7 +314,7 @@ if(!empty($paysPersonnages)) {
 <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
- background-image: url(<?php echo $row_InfoGenerale['ch_pay_lien_imgheader'];
+ background-image: url(<?= e($row_InfoGenerale['ch_pay_lien_imgheader'])
 ?>);
 	background-position: center;
 }
@@ -356,7 +356,7 @@ img.olTileImage {
 <header class="jumbotron subhead anchor" id="overview">
   <div class="container">
       <h2>Gestion du pays</h2>
-      <h1><?php echo $row_InfoGenerale['ch_pay_nom']; ?></h1>
+      <h1><?= e($row_InfoGenerale['ch_pay_nom']) ?></h1>
   </div>
 </header>
 <!-- Docs nav
@@ -367,9 +367,9 @@ img.olTileImage {
       <ul class="nav nav-list bs-docs-sidenav cadre-bleu">
         <li class="row-fluid"><a href="#overview">
           <?php if ($row_InfoGenerale['ch_pay_lien_imgdrapeau']) { ?>
-          <img src="<?php echo $row_InfoGenerale['ch_pay_lien_imgdrapeau']; ?>">
+          <img src="<?= e($row_InfoGenerale['ch_pay_lien_imgdrapeau']) ?>">
           <?php }?>
-          <p><strong><?php echo $row_InfoGenerale['ch_pay_nom']; ?></strong></p>
+          <p><strong><?= e($row_InfoGenerale['ch_pay_nom']) ?></strong></p>
           </a></li>
         <li><a href="#dirigeants">Dirigeants</a></li>
         <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
@@ -397,16 +397,16 @@ img.olTileImage {
      ================================================== -->
       <?php if ($_SESSION['userObject']->minStatus('Administrateur')) { ?>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_confirmer_supprimer.php" method="post">
-      <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
+      <input name="paysID" type="hidden" value="<?= e($row_InfoGenerale['ch_pay_id']) ?>">
       <button class="btn btn-danger" type="submit" title="supprimer ce pays"><i class="icon-trash icon-white"></i></button>
       </form>
       <?php } ?>
       <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
-      <a class="btn btn-primary pull-right" href="../php/partage-pays.php?ch_pay_id=<?php echo $row_InfoGenerale['ch_pay_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Annoncez sur le forum une mise &agrave; jour de votre page"><i class="icon-share icon-white"></i> Partager sur le forum</a>
+      <a class="btn btn-primary pull-right" href="../php/partage-pays.php?ch_pay_id=<?= e($row_InfoGenerale['ch_pay_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Annoncez sur le forum une mise &agrave; jour de votre page"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
       <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/drapeau_modifier.php" method="post">
-      <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
+      <input name="paysID" type="hidden" value="<?= e($row_InfoGenerale['ch_pay_id']) ?>">
       <button class="btn btn-primary" type="submit" title="Chargez une nouvelle image sur le serveur"><i class="icon-pays-small-white"></i> Modifier le drapeau</button>
       </form>
       <?php } ?>
@@ -479,11 +479,11 @@ img.olTileImage {
             <?php 
 				  $now= date("Y-m-d G:i:s");
                   $nbupdate = $row_InfoGenerale['ch_pay_nb_update']+1; ?>
-            <input name="ch_pay_date" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_date']; ?>">
+            <input name="ch_pay_date" type="hidden" value="<?= e($row_InfoGenerale['ch_pay_date']) ?>">
             <input name="ch_pay_mis_jour" type="hidden" value="<?php echo $now; ?>">
             <input name="ch_pay_nb_update" type="hidden" value="<?php echo $nbupdate; ?>">
-            <input name="ch_pay_id" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
-            <input name="ch_pay_label" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_label']; ?>">
+            <input name="ch_pay_id" type="hidden" value="<?= e($row_InfoGenerale['ch_pay_id']) ?>">
+            <input name="ch_pay_label" type="hidden" value="<?= e($row_InfoGenerale['ch_pay_label']) ?>">
             <!-- Si l'ID du pays a ete trouve
         ================================================== -->
             <?php if ($_SESSION['userObject']->minStatus('OCGC')) { ?>
@@ -531,73 +531,73 @@ img.olTileImage {
                 <div class="accordion-inner">
                   <?php if ($_SESSION['statut'] < 20) { ?>
                   <!-- Boutons cachés -->
-                  <input name="ch_pay_publication" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_publication']; ?>">
-                  <input name="ch_pay_continent" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_continent']; ?>">
-                  <input name="ch_pay_emplacement" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_emplacement']; ?>">
+                  <input name="ch_pay_publication" type="hidden" value="<?= e($row_InfoGenerale['ch_pay_publication']) ?>">
+                  <input name="ch_pay_continent" type="hidden" value="<?= e($row_InfoGenerale['ch_pay_continent']) ?>">
+                  <input name="ch_pay_emplacement" type="hidden" value="<?= e($row_InfoGenerale['ch_pay_emplacement']) ?>">
                   <?php } ?>
                   <!-- Nom pays -->
                   <div id="sprytextfield3" class="control-group">
                     <label class="control-label" for="ch_pay_nom">Nom du pays <a href="#" rel="clickover" data-placement="bottom" title="Nom du pays" data-content="35 caract&egrave;res maximum. Ce nom servira &agrave; identifier votre pays dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                      <input class="input-xlarge" type="text" id="ch_pay_nom" name="ch_pay_nom" value="<?php echo $row_InfoGenerale['ch_pay_nom']; ?>" maxlength="50">
+                      <input class="input-xlarge" type="text" id="ch_pay_nom" name="ch_pay_nom" value="<?= e($row_InfoGenerale['ch_pay_nom']) ?>" maxlength="50">
                       <span class="textfieldRequiredMsg">Le nom du pays est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">35 caract&egrave;res max.</span></div>
                   </div>
                   <!-- Lien Forum -->
                   <div id="sprytextfield10" class="control-group">
                     <label class="control-label" for="ch_pay_lien_forum">Lien sujet sur le forum <a href="#" rel="clickover" data-placement="bottom" title="Lien du sujet" data-content="250 caract&egrave;res maximum. Copiez/collez ici le lien vers le sujet consacré à votre pays sur le forum. Cette information sevira à poster des messages dans votre sujet directement depuis le site"><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                      <input class="span12" type="text" id="ch_pay_lien_forum" name="ch_pay_lien_forum" value="<?php echo $row_InfoGenerale['ch_pay_lien_forum']; ?>">
+                      <input class="span12" type="text" id="ch_pay_lien_forum" name="ch_pay_lien_forum" value="<?= e($row_InfoGenerale['ch_pay_lien_forum']) ?>">
                       <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res max.</span></div>
                   </div>
                   <!-- Lien Wiki -->
                   <div id="sprytextfield_lien_wiki" class="control-group">
                     <label class="control-label" for="lien_wiki">Lien Wiki GC <a href="#" rel="clickover" data-placement="bottom" title="Lien Wiki GC" data-content="250 caract&egrave;res maximum. Le lien vers le wiki GC."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                      <input class="span12" type="text" id="lien_wiki" name="lien_wiki" value="<?php echo $row_InfoGenerale['lien_wiki']; ?>">
+                      <input class="span12" type="text" id="lien_wiki" name="lien_wiki" value="<?= e($row_InfoGenerale['lien_wiki']) ?>">
                       <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res max.</span></div>
                   </div>
                   <!-- Devise -->
                   <div id="sprytextfield2" class="control-group">
                     <label class="control-label" for="ch_pay_devise">Devise du pays <a href="#" rel="clickover" title="Devise du pays" data-content="100 caract&egrave;res maximum. Mettez-ici une phrase d'accroche ou une devise du type : Libert&eacute; - Egalit&eacute; - Fraternit&eacute;"><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                      <input class="span9" type="text" id="ch_pay_devise" name="ch_pay_devise" value="<?php echo $row_InfoGenerale['ch_pay_devise']; ?>" maxlength="100" >
+                      <input class="span9" type="text" id="ch_pay_devise" name="ch_pay_devise" value="<?= e($row_InfoGenerale['ch_pay_devise']) ?>" maxlength="100" >
                       <span class="textfieldMaxCharsMsg">100 caract&egrave;res max.</span></div>
                   </div>
                   <!-- Lien image fond -->
                   <div id="sprytextfield1" class="control-group">
                     <label class="control-label" for="ch_pay_lien_imgheader">Lien image de fond <a href="#" rel="clickover" title="Image d'en-t&ecirc;te" data-content="Il s'agit de l'image qui sera affich&eacute;e en en-t&ecirc;te de la page de votre pays. Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)"><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                      <input class="span12" name="ch_pay_lien_imgheader" type="text" id="ch_pay_lien_imgheader" value="<?php echo $row_InfoGenerale['ch_pay_lien_imgheader']; ?>" maxlength="250">
+                      <input class="span12" name="ch_pay_lien_imgheader" type="text" id="ch_pay_lien_imgheader" value="<?= e($row_InfoGenerale['ch_pay_lien_imgheader']) ?>" maxlength="250">
                       <span class="textfieldInvalidFormatMsg">Format non valide.</span> <span class="textfieldMaxCharsMsg">250 caract&egrave;res max.</span></div>
                   </div>
                   <!-- Lien Image drapeau -->
-                      <input class="span12" name="ch_pay_lien_imgdrapeau" type="hidden" id="ch_pay_lien_imgdrapeau" value="<?php echo $row_InfoGenerale['ch_pay_lien_imgdrapeau']; ?>">
+                      <input class="span12" name="ch_pay_lien_imgdrapeau" type="hidden" id="ch_pay_lien_imgdrapeau" value="<?= e($row_InfoGenerale['ch_pay_lien_imgdrapeau']) ?>">
                   <!-- Forme de l'état -->
                   <div id="sprytextfield6" class="control-group">
                     <label class="control-label" for="ch_pay_forme_etat">Forme de l'&eacute;tat <a href="#" rel="clickover" title="R&eacute;gime politique" data-content="Fait r&eacute;f&eacute;rence &agrave; la mani&egrave;re dont le pouvoir est organis&eacute; et exerc&eacute; au sein de votre pays. Par exemple s'il s'agit d'une r&eacute;publique ou d'un royaume. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                      <input class="input-xlarge" name="ch_pay_forme_etat" type="text" id="ch_pay_forme_etat" value="<?php echo $row_InfoGenerale['ch_pay_forme_etat']; ?>" maxlength="50">
+                      <input class="input-xlarge" name="ch_pay_forme_etat" type="text" id="ch_pay_forme_etat" value="<?= e($row_InfoGenerale['ch_pay_forme_etat']) ?>" maxlength="50">
                       <span class="textfieldMaxCharsMsg">50 caract&egrave;res max.</span></div>
                   </div>
                   <!-- Capitale -->
                   <div id="sprytextfield7" class="control-group">
                     <label class="control-label" for="ch_pay_capitale">Nom de votre capitale <a href="#" rel="clickover" title="Capitale" data-content="50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                      <input class="input-xlarge" name="ch_pay_capitale" type="text" id="ch_pay_capitale" value="<?php echo $row_InfoGenerale['ch_pay_capitale']; ?>" maxlength="50">
+                      <input class="input-xlarge" name="ch_pay_capitale" type="text" id="ch_pay_capitale" value="<?= e($row_InfoGenerale['ch_pay_capitale']) ?>" maxlength="50">
                       <span class="textfieldMaxCharsMsg">50 caract&egrave;res max.</span></div>
                   </div>
                   <!-- Langue officielle -->
                   <div id="sprytextfield8" class="control-group">
                     <label class="control-label" for="ch_pay_langue_officielle">Langue officielle <a href="#" rel="clickover" title="Langue officielle" data-content="50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                      <input class="input-xlarge" name="ch_pay_langue_officielle" type="text" id="ch_pay_langue_officielle" value="<?php echo $row_InfoGenerale['ch_pay_langue_officielle']; ?>" maxlength="50">
+                      <input class="input-xlarge" name="ch_pay_langue_officielle" type="text" id="ch_pay_langue_officielle" value="<?= e($row_InfoGenerale['ch_pay_langue_officielle']) ?>" maxlength="50">
                       <span class="textfieldMaxCharsMsg">50 caract&egrave;res max.</span></div>
                   </div>
                   <!-- Monnaie -->
                   <div id="sprytextfield9" class="control-group">
                     <label class="control-label" for="ch_pay_monnaie">monnaie officielle <a href="#" rel="clickover" data-placement="top" title="Monnaie" data-content=" La monnaie de votre pays reste fictive. Vous pouvez choisir le nom que vous souhaitez. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
                     <div class="controls">
-                      <input class="input-xlarge" name="ch_pay_monnaie" type="text" id="ch_pay_monnaie" value="<?php echo $row_InfoGenerale['ch_pay_monnaie']; ?>" maxlength="50">
+                      <input class="input-xlarge" name="ch_pay_monnaie" type="text" id="ch_pay_monnaie" value="<?= e($row_InfoGenerale['ch_pay_monnaie']) ?>" maxlength="50">
                       <span class="textfieldMaxCharsMsg">50 caract&egrave;res max.</span></div>
                   </div>
                 </div>
@@ -615,13 +615,13 @@ img.olTileImage {
                     Attention, ne pas passer &agrave; la ligne ou faire diff&eacute;rents paragraphes pour l'en-t&ecirc;te pr&eacute;sentation. L'en-t&ecirc;te est affich&eacute; sur la carte  et le passage &agrave; la ligne emp&ecirc;che la carte g&eacute;n&eacute;rale de s'afficher.</div>
                   <div id="sprytextarea2">
                     <label for="ch_pay_header_presentation">En-t&ecirc;te <a href="#" rel="clickover" title="En-t&ecirc;te présentation" data-content=" L'en-t&ecirc;te est mis en exergue dans la mise en page. 250 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
-                    <textarea rows="3" name="ch_pay_header_presentation" class="span12" id="ch_pay_header_presentation"><?php echo $row_InfoGenerale['ch_pay_header_presentation']; ?></textarea>
+                    <textarea rows="3" name="ch_pay_header_presentation" class="span12" id="ch_pay_header_presentation"><?= htmlPurify($row_InfoGenerale['ch_pay_header_presentation']) ?></textarea>
                     <br>
                     <span class="textareaMaxCharsMsg">250 caract&egrave;res max.</span> </div>
                   <p>&nbsp;</p>
                   <!-- Contenu -->
                   <label for="ch_pay_text_presentation">Contenu <a href="#" rel="clickover" title="Contenu pr&eacute;sentation" data-content="Ecrivez ici le contenu d&eacute;taill&eacute; du chapitre de pr&eacute;sentation de votre pays. R&eacute;alisez une mise en forme simple. Pensez &agrave; l'utilisation du site sur les &eacute;crans mobiles."><i class="icon-info-sign"></i></a></label>
-                  <textarea rows="20" name="ch_pay_text_presentation" class="wysiwyg" id="ch_pay_text_presentation"><?php echo $row_InfoGenerale['ch_pay_text_presentation']; ?></textarea>
+                  <textarea rows="20" name="ch_pay_text_presentation" class="wysiwyg" id="ch_pay_text_presentation"><?= htmlPurify($row_InfoGenerale['ch_pay_text_presentation']) ?></textarea>
                 </div>
               </div>
             </div>
@@ -634,13 +634,13 @@ img.olTileImage {
                   <!-- Header -->
                   <div id="sprytextarea3">
                     <label for="ch_pay_header_geographie">En-t&ecirc;te <a href="#" rel="clickover" title="En-t&ecirc;te g&eacute;ographie" data-content="L'en-t&ecirc;te est mis en exergue dans la mise en page. 250 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
-                    <textarea rows="3" name="ch_pay_header_geographie" class="span12" id="ch_pay_header_geographie"><?php echo $row_InfoGenerale['ch_pay_header_geographie']; ?></textarea>
+                    <textarea rows="3" name="ch_pay_header_geographie" class="span12" id="ch_pay_header_geographie"><?= htmlPurify($row_InfoGenerale['ch_pay_header_geographie']) ?></textarea>
                     <br>
                     <span class="textareaMaxCharsMsg">250 caract&egrave;res max.</span> </div>
                   <p>&nbsp;</p>
                   <!-- Contenu -->
                   <label for="ch_pay_text_geographie">Contenu <a href="#" rel="clickover" title="Contenu g&eacute;ographie" data-content="Ecrivez ici le contenu d&eacute;taill&eacute; du chapitre consacr&eacute; &agrave; la g&eacute;ographie de votre pays. R&eacute;alisez une mise en forme simple. Pensez &agrave; l'utilisation du site sur les &eacute;crans mobiles."><i class="icon-info-sign"></i></a></label>
-                  <textarea rows="20" name="ch_pay_text_geographie" class="wysiwyg" id="ch_pay_text_geographie"><?php echo $row_InfoGenerale['ch_pay_text_geographie']; ?></textarea>
+                  <textarea rows="20" name="ch_pay_text_geographie" class="wysiwyg" id="ch_pay_text_geographie"><?= htmlPurify($row_InfoGenerale['ch_pay_text_geographie']) ?></textarea>
                 </div>
               </div>
             </div>
@@ -653,13 +653,13 @@ img.olTileImage {
                   <!-- Header -->
                   <div id="sprytextarea10">
                     <label for="ch_pay_header_politique">En-t&ecirc;te <a href="#" rel="clickover" title="En-t&ecirc;te politique" data-content="L'en-t&ecirc;te est mis en exergue dans la mise en page. 250 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
-                    <textarea rows="3" name="ch_pay_header_politique" class="span12" id="ch_pay_header_politique"><?php echo $row_InfoGenerale['ch_pay_header_politique']; ?></textarea>
+                    <textarea rows="3" name="ch_pay_header_politique" class="span12" id="ch_pay_header_politique"><?= htmlPurify($row_InfoGenerale['ch_pay_header_politique']) ?></textarea>
                     <br>
                     <span class="textareaMaxCharsMsg">250 caract&egrave;res max.</span> </div>
                   <p>&nbsp;</p>
                   <!-- Contenu -->
                   <label for="ch_pay_text_politique">Contenu <a href="#" rel="clickover" title="Contenu politique" data-content="Ecrivez ici le contenu d&eacute;taill&eacute; du chapitre consacr&eacute; &agrave; la politique de votre pays. R&eacute;alisez une mise en forme simple. Pensez &agrave; l'utilisation du site sur les &eacute;crans mobiles."><i class="icon-info-sign"></i></a></label>
-                  <textarea rows="20" name="ch_pay_text_politique" class="wysiwyg" id="ch_pay_text_politique"><?php echo $row_InfoGenerale['ch_pay_text_politique']; ?></textarea>
+                  <textarea rows="20" name="ch_pay_text_politique" class="wysiwyg" id="ch_pay_text_politique"><?= htmlPurify($row_InfoGenerale['ch_pay_text_politique']) ?></textarea>
                 </div>
               </div>
             </div>
@@ -672,13 +672,13 @@ img.olTileImage {
                   <!-- Header -->
                   <div id="sprytextarea4">
                     <label for="ch_pay_header_histoire">En-t&ecirc;te <a href="#" rel="clickover" title="En-t&ecirc;te histoire" data-content="L'en-t&ecirc;te est mis en exergue dans la mise en page. 250 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
-                    <textarea rows="3" name="ch_pay_header_histoire" class="span12" id="ch_pay_header_histoire"><?php echo $row_InfoGenerale['ch_pay_header_histoire']; ?></textarea>
+                    <textarea rows="3" name="ch_pay_header_histoire" class="span12" id="ch_pay_header_histoire"><?= htmlPurify($row_InfoGenerale['ch_pay_header_histoire']) ?></textarea>
                     <br>
                     <span class="textareaMaxCharsMsg">250 caract&egrave;res max.</span> </div>
                   <p>&nbsp;</p>
                   <!-- Contenu -->
                   <label for="ch_pay_text_histoire">Contenu <a href="#" rel="clickover" title="Contenu histoire" data-content="Ecrivez ici le contenu d&eacute;taill&eacute; du chapitre consacr&eacute; &agrave; l'histoire de votre pays. R&eacute;alisez une mise en forme simple. Pensez &agrave; l'utilisation du site sur les &eacute;crans mobiles."><i> class="icon-info-sign"></i></a></label>
-                  <textarea rows="20" name="ch_pay_text_histoire" class="wysiwyg" id="ch_pay_text_histoire"><?php echo $row_InfoGenerale['ch_pay_text_histoire']; ?></textarea>
+                  <textarea rows="20" name="ch_pay_text_histoire" class="wysiwyg" id="ch_pay_text_histoire"><?= htmlPurify($row_InfoGenerale['ch_pay_text_histoire']) ?></textarea>
                 </div>
               </div>
             </div>
@@ -691,13 +691,13 @@ img.olTileImage {
                   <!-- Header -->
                   <div id="sprytextarea5">
                     <label for="ch_pay_header_economie">En-t&ecirc;te <a href="#" rel="clickover" title="En-t&ecirc;te &eacute;conomie" data-content="L'en-t&ecirc;te est mis en exergue dans la mise en page. 250 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
-                    <textarea rows="3" name="ch_pay_header_economie" class="span12" id="ch_pay_header_economie"><?php echo $row_InfoGenerale['ch_pay_header_economie']; ?></textarea>
+                    <textarea rows="3" name="ch_pay_header_economie" class="span12" id="ch_pay_header_economie"><?= htmlPurify($row_InfoGenerale['ch_pay_header_economie']) ?></textarea>
                     <br>
                     <span class="textareaMaxCharsMsg">250 caract&egrave;res max.</span> </div>
                   <p>&nbsp;</p>
                   <!-- Contenu -->
                   <label for="ch_pay_text_economie">Contenu <a href="#" rel="clickover" title="Contenu histoire" data-content="Ecrivez ici le contenu d&eacute;taill&eacute; du chapitre consacr&eacute; &agrave; l'histoire de votre pays. R&eacute;alisez une mise en forme simple. Pensez &agrave; l'utilisation du site sur les &eacute;crans mobiles."><i class="icon-info-sign"></i></a></label>
-                  <textarea rows="20" name="ch_pay_text_economie" class="wysiwyg" id="ch_pay_text_economie"><?php echo $row_InfoGenerale['ch_pay_text_economie']; ?></textarea>
+                  <textarea rows="20" name="ch_pay_text_economie" class="wysiwyg" id="ch_pay_text_economie"><?= htmlPurify($row_InfoGenerale['ch_pay_text_economie']) ?></textarea>
                 </div>
               </div>
             </div>
@@ -710,13 +710,13 @@ img.olTileImage {
                   <!-- Header -->
                   <div id="sprytextarea6">
                     <label for="ch_pay_header_transport">En-t&ecirc;te <a href="#" rel="clickover" title="En-t&ecirc;te transport" data-content="L'en-t&ecirc;te est mis en exergue dans la mise en page. 250 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
-                    <textarea rows="3" name="ch_pay_header_transport" class="span12" id="ch_pay_header_transport"><?php echo $row_InfoGenerale['ch_pay_header_transport']; ?></textarea>
+                    <textarea rows="3" name="ch_pay_header_transport" class="span12" id="ch_pay_header_transport"><?= htmlPurify($row_InfoGenerale['ch_pay_header_transport']) ?></textarea>
                     <br>
                     <span class="textareaMaxCharsMsg">250 caract&egrave;res max.</span> </div>
                   <p>&nbsp;</p>
                   <!-- Contenu -->
                   <label for="ch_pay_text_transport">Contenu <a href="#" rel="clickover" title="Contenu transport" data-content="Ecrivez ici le contenu d&eacute;taill&eacute; du chapitre consacr&eacute; aux transports de votre pays. R&eacute;alisez une mise en forme simple. Pensez &agrave; l'utilisation du site sur les &eacute;crans mobiles."><i class="icon-info-sign"></i></a></label>
-                  <textarea rows="20" name="ch_pay_text_transport" class="wysiwyg" id="ch_pay_text_transport"><?php echo $row_InfoGenerale['ch_pay_text_transport']; ?></textarea>
+                  <textarea rows="20" name="ch_pay_text_transport" class="wysiwyg" id="ch_pay_text_transport"><?= htmlPurify($row_InfoGenerale['ch_pay_text_transport']) ?></textarea>
                 </div>
               </div>
             </div>
@@ -729,13 +729,13 @@ img.olTileImage {
                   <!-- Header -->
                   <div id="sprytextarea7">
                     <label for="ch_pay_header_sport">En-t&ecirc;te <a href="#" rel="clickover" title="En-t&ecirc;te sport" data-content="L'en-t&ecirc;te est mis en exergue dans la mise en page. 250 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
-                    <textarea rows="3" name="ch_pay_header_sport" class="span12" id="ch_pay_header_transport"><?php echo $row_InfoGenerale['ch_pay_header_sport']; ?></textarea>
+                    <textarea rows="3" name="ch_pay_header_sport" class="span12" id="ch_pay_header_transport"><?= htmlPurify($row_InfoGenerale['ch_pay_header_sport']) ?></textarea>
                     <br>
                     <span class="textareaMaxCharsMsg">250 caract&egrave;res max.</span> </div>
                   <p>&nbsp;</p>
                   <!-- Contenu -->
                   <label for="ch_pay_text_sport">Contenu <a href="#" rel="clickover" title="Contenu sport" data-content="Ecrivez ici le contenu d&eacute;taill&eacute; du chapitre consacr&eacute; aux sports de votre pays. R&eacute;alisez une mise en forme simple. Pensez &agrave; l'utilisation du site sur les &eacute;crans mobiles."><i class="icon-info-sign"></i></a></label>
-                  <textarea rows="20" name="ch_pay_text_sport" class="wysiwyg" id="ch_pay_text_sport"><?php echo $row_InfoGenerale['ch_pay_text_sport']; ?></textarea>
+                  <textarea rows="20" name="ch_pay_text_sport" class="wysiwyg" id="ch_pay_text_sport"><?= htmlPurify($row_InfoGenerale['ch_pay_text_sport']) ?></textarea>
                 </div>
               </div>
             </div>
@@ -748,13 +748,13 @@ img.olTileImage {
                   <!-- Header -->
                   <div id="sprytextarea8">
                     <label for="ch_pay_header_culture">En-t&ecirc;te <a href="#" rel="clickover" title="En-t&ecirc;te culture" data-content="L'en-t&ecirc;te est mis en exergue dans la mise en page. 250 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
-                    <textarea rows="3" name="ch_pay_header_culture" class="span12" id="ch_pay_header_culture"><?php echo $row_InfoGenerale['ch_pay_header_culture']; ?></textarea>
+                    <textarea rows="3" name="ch_pay_header_culture" class="span12" id="ch_pay_header_culture"><?= htmlPurify($row_InfoGenerale['ch_pay_header_culture']) ?></textarea>
                     <br>
                     <span class="textareaMaxCharsMsg">250 caract&egrave;res max.</span> </div>
                   <p>&nbsp;</p>
                   <!-- Contenu -->
                   <label for="ch_pay_text_culture">Contenu <a href="#" rel="clickover" title="Contenu culture" data-content="Ecrivez ici le contenu d&eacute;taill&eacute; du chapitre consacr&eacute;  &agrave; la culture de votre pays. R&eacute;alisez une mise en forme simple. Pensez &agrave; l'utilisation du site sur les &eacute;crans mobiles."><i class="icon-info-sign"></i></a></label>
-                  <textarea rows="20" name="ch_pay_text_culture" class="span12 wysiwyg" id="ch_pay_text_culture"><?php echo $row_InfoGenerale['ch_pay_text_culture']; ?></textarea>
+                  <textarea rows="20" name="ch_pay_text_culture" class="span12 wysiwyg" id="ch_pay_text_culture"><?= htmlPurify($row_InfoGenerale['ch_pay_text_culture']) ?></textarea>
                 </div>
               </div>
             </div>
@@ -767,13 +767,13 @@ img.olTileImage {
                   <!-- Header -->
                   <div id="sprytextarea9">
                     <label for="ch_pay_header_patrimoine">En-t&ecirc;te <a href="#" rel="clickover" title="En-t&ecirc;te patrimoine" data-content="L'en-t&ecirc;te est mis en exergue dans la mise en page. 250 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
-                    <textarea rows="3" name="ch_pay_header_patrimoine" class="span12" id="ch_pay_header_patrimoine"><?php echo $row_InfoGenerale['ch_pay_header_patrimoine']; ?></textarea>
+                    <textarea rows="3" name="ch_pay_header_patrimoine" class="span12" id="ch_pay_header_patrimoine"><?= htmlPurify($row_InfoGenerale['ch_pay_header_patrimoine']) ?></textarea>
                     <br>
                     <span class="textareaMaxCharsMsg">250 caract&egrave;res max.</span> </div>
                   <p>&nbsp;</p>
                   <!-- Contenu -->
                   <label for="ch_pay_text_patrimoine">Contenu <a href="#" rel="clickover" title="Contenu culture" data-content="Ecrivez ici le contenu d&eacute;taill&eacute; du chapitre consacr&eacute;  au patrimoine de votre pays. R&eacute;alisez une mise en forme simple. Pensez &agrave; l'utilisation du site sur les &eacute;crans mobiles."><i class="icon-info-sign"></i></a></label>
-                  <textarea rows="20" name="ch_pay_text_patrimoine" class="span12 wysiwyg" id="ch_pay_text_patrimoine"><?php echo $row_InfoGenerale['ch_pay_text_patrimoine']; ?></textarea>
+                  <textarea rows="20" name="ch_pay_text_patrimoine" class="span12 wysiwyg" id="ch_pay_text_patrimoine"><?= htmlPurify($row_InfoGenerale['ch_pay_text_patrimoine']) ?></textarea>
                 </div>
               </div>
             </div>
@@ -850,11 +850,11 @@ img.olTileImage {
           <tbody>
             <?php do { ?>
               <tr>
-                <td><img src="../assets/img/statutvil_<?php echo $row_mesvilles['ch_vil_capitale']; ?>.png" alt="Statut"></td>
+                <td><img src="../assets/img/statutvil_<?= e($row_mesvilles['ch_vil_capitale']) ?>.png" alt="Statut"></td>
                 <td><?php if ($row_mesvilles['ch_vil_paysID'] != $row_mesvilles['ch_use_paysID']) { ?>
-                  <img src="<?php echo $row_mesvilles['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau" width="50px" title="ville appartenant au pays <?php echo $row_mesvilles['ch_pay_nom'] ?>">
+                  <img src="<?= e($row_mesvilles['ch_pay_lien_imgdrapeau']) ?>" alt="drapeau" width="50px" title="ville appartenant au pays <?php echo $row_mesvilles['ch_pay_nom'] ?>">
                   <?php } ?>
-                  <?php echo $row_mesvilles['ch_vil_nom']; ?></td>
+                  <?= e($row_mesvilles['ch_vil_nom']) ?></td>
                 <td><?php echo formatNum($row_mesvilles['ch_vil_population']); ?></td>
                 <td>
                     <a class="btn btn-primary"  style="margin-top: -22px;"
@@ -862,11 +862,11 @@ img.olTileImage {
                 </td>
                 <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
                 <td><form action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="GET">
-                    <input name="ville-ID" type="hidden" value="<?php echo $row_mesvilles['ch_vil_ID']; ?>">
+                    <input name="ville-ID" type="hidden" value="<?= e($row_mesvilles['ch_vil_ID']) ?>">
                     <button class="btn btn-primary" type="submit" title="modifier la ville"><i class="icon-pencil icon-white"></i></button>
                   </form></td>
                 <td><form action="<?= DEF_URI_PATH ?>back/ville_confirmation_supprimer.php" method="POST">
-                    <input name="ville-ID" type="hidden" value="<?php echo $row_mesvilles['ch_vil_ID']; ?>">
+                    <input name="ville-ID" type="hidden" value="<?= e($row_mesvilles['ch_vil_ID']) ?>">
                     <button class="btn btn-danger" type="submit" title="supprimer la ville"><i class="icon-trash icon-white"></i></button>
                   </form></td>
                 <?php endif; ?>
@@ -885,8 +885,8 @@ img.olTileImage {
                 </p>
               <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
                 <form action="<?= DEF_URI_PATH ?>back/ville_ajouter.php" method="post">
-                  <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
-                  <input name="user_ID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
+                  <input name="paysID" type="hidden" value="<?= e($row_InfoGenerale['ch_pay_id']) ?>">
+                  <input name="user_ID" type="hidden" value="<?= e($row_User['ch_use_id']) ?>">
                   <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une ville</button>
                 </form>
                 <?php endif; ?></td>
@@ -897,8 +897,8 @@ img.olTileImage {
             <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
                 <h3>Mes villes</h3>
                 <form action="<?= DEF_URI_PATH ?>back/ville_ajouter.php" method="post">
-                  <input name="paysID" type="hidden" value="<?php echo $row_InfoGenerale['ch_pay_id']; ?>">
-                  <input name="user_ID" type="hidden" value="<?php echo $row_User['ch_use_id']; ?>">
+                  <input name="paysID" type="hidden" value="<?= e($row_InfoGenerale['ch_pay_id']) ?>">
+                  <input name="user_ID" type="hidden" value="<?= e($row_User['ch_use_id']) ?>">
                   <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une ville</button>
                 </form>
             <?php endif; ?></td>
@@ -931,9 +931,9 @@ img.olTileImage {
           <tbody>
             <?php do { ?>
               <tr>
-                <td><img src="../assets/img/statutvil_<?php echo $row_autres_villes['ch_vil_capitale']; ?>.png" alt="Statut"></td>
-                <td><?php echo $row_autres_villes['ch_vil_nom']; ?></td>
-                <td><?php echo $row_autres_villes['ch_use_login']; ?></td>
+                <td><img src="../assets/img/statutvil_<?= e($row_autres_villes['ch_vil_capitale']) ?>.png" alt="Statut"></td>
+                <td><?= e($row_autres_villes['ch_vil_nom']) ?></td>
+                <td><?= e($row_autres_villes['ch_use_login']) ?></td>
                 <td><?php echo formatNum($row_autres_villes['ch_vil_population']); ?></td>
                 <td>
                     <a class="btn btn-primary" style="margin-top: -22px;"
@@ -943,11 +943,11 @@ img.olTileImage {
                         $thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) {
                     // Affichage si sup ou egal à dirigeant ?>
                 <td><form action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="get">
-                    <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
+                    <input name="ville-ID" type="hidden" value="<?= e($row_autres_villes['ch_vil_ID']) ?>">
                     <button class="btn btn-primary" type="submit" title="modifier la ville"><i class="icon-pencil icon-white"></i></button>
                   </form></td>
                 <td><form action="<?= DEF_URI_PATH ?>back/ville_confirmation_supprimer.php" method="post">
-                    <input name="ville-ID" type="hidden" value="<?php echo $row_autres_villes['ch_vil_ID']; ?>">
+                    <input name="ville-ID" type="hidden" value="<?= e($row_autres_villes['ch_vil_ID']) ?>">
                     <button class="btn btn-danger" type="submit" title="supprimer la ville"><i class="icon-trash icon-white"></i></button>
                   </form></td>
                 <?php } ?>
@@ -1054,7 +1054,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
           <tbody>
             <?php do { ?>
               <tr>
-                <td><img src="../assets/img/statutvil_<?php echo $row_fait_hist['ch_his_statut']; ?>.png" alt="Statut"></td>
+                <td><img src="../assets/img/statutvil_<?= e($row_fait_hist['ch_his_statut']) ?>.png" alt="Statut"></td>
                 <td><?php if ($row_fait_hist['ch_his_date_fait2'] == NULL AND $row_fait_hist['ch_his_personnage']== 1) {
 					echo "Fait";
 					} elseif ($row_fait_hist['ch_his_date_fait2'] != NULL AND $row_fait_hist['ch_his_personnage']== 1) {
@@ -1064,18 +1064,18 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
 					} else {
 					echo "Inconnu";
 						} ?></td>
-                <td><strong><?php echo $row_fait_hist['ch_his_nom']; ?></strong></td>
+                <td><strong><?= e($row_fait_hist['ch_his_nom']) ?></strong></td>
                 <td>Le <?php echo affDate($row_fait_hist['ch_his_date_fait']); ?></td>
                 <td><form action="<?php if ($row_fait_hist['ch_his_personnage'] == 2) {
 					echo DEF_URI_PATH . "back/personnage_historique_modifier.php";
 					} else {
 					echo DEF_URI_PATH . "back/fait_historique_modifier.php";
 						} ?>" method="post">
-                    <input name="ch_his_id" type="hidden" value="<?php echo $row_fait_hist['ch_his_id']; ?>">
+                    <input name="ch_his_id" type="hidden" value="<?= e($row_fait_hist['ch_his_id']) ?>">
                     <button class="btn" type="submit" title="modifier cet &eacute;l&eacute;ment historique"><i class="icon-pencil"></i></button>
                   </form></td>
                 <td><form action="<?= DEF_URI_PATH ?>back/fait_historique_confirmation_supprimer.php" method="post">
-                    <input name="ch_his_id" type="hidden" value="<?php echo $row_fait_hist['ch_his_id']; ?>">
+                    <input name="ch_his_id" type="hidden" value="<?= e($row_fait_hist['ch_his_id']) ?>">
                     <button class="btn" type="submit" title="supprimer ce fait historique"><i class="icon-trash"></i></button>
                   </form></td>
               </tr>
@@ -1131,7 +1131,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
   <div class="modal-body">
   <form action="<?= DEF_URI_PATH ?>back/membre-modifier_back.php" name="InfoUser" method="POST" class="form-horizontal" id="InfoUser">
 
-      <input name="personnage_id" type="hidden" value="<?php echo $paysPersonnages['id']; ?>">
+      <input name="personnage_id" type="hidden" value="<?= e($paysPersonnages['id']) ?>">
     <!-- Predicat -->
     <div class="control-group">
       <label class="control-label" for="ch_use_predicat_dirigeant">Pr&eacute;dicat <a href="#" rel="clickover" title="Pr&eacute;dicat" data-content="Lorsque votre dirigeant sera nomm&eacute;, notamment lors des c&eacute;r&eacute;monies protocolaires, sp&eacute;cifiez quelle appellation doit être utilis&eacute;e. Le pr&eacute;dicat pr&eacute;c&egrave;de le nom et le pr&eacute;nom"><i class="icon-info-sign"></i></a></label>
@@ -1174,7 +1174,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
     <div id="sprytextfield31" class="control-group">
       <label class="control-label" for="ch_use_nom_dirigeant">Nom du dirigeant <a href="#" rel="clickover" title="Nom du dirigeant" data-content="50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
       <div class="controls">
-        <input class="input-xlarge" name="ch_use_nom_dirigeant" type="text" id="ch_use_nom_dirigeant" value="<?php echo $paysPersonnages['nom_personnage']; ?>" maxlength="50">
+        <input class="input-xlarge" name="ch_use_nom_dirigeant" type="text" id="ch_use_nom_dirigeant" value="<?= e($paysPersonnages['nom_personnage']) ?>" maxlength="50">
         <br>
         <span class="textfieldMaxCharsMsg">50 caract&egrave;res max.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>
     </div>
@@ -1182,7 +1182,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
     <div id="sprytextfield32" class="control-group">
       <label class="control-label" for="ch_use_prenom_dirigeant">Pr&eacute;nom du dirigeant <a href="#" rel="clickover" title="pr&eacute;nom du dirigeant" data-content="50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
       <div class="controls">
-        <input class="input-xlarge" name="ch_use_prenom_dirigeant" type="text" id="ch_use_prenom_dirigeant" value="<?php echo $paysPersonnages['prenom_personnage']; ?>" maxlength="50">
+        <input class="input-xlarge" name="ch_use_prenom_dirigeant" type="text" id="ch_use_prenom_dirigeant" value="<?= e($paysPersonnages['prenom_personnage']) ?>" maxlength="50">
         <br>
         <span class="textfieldMaxCharsMsg">50 caract&egrave;res max.</span></div>
     </div>
@@ -1190,7 +1190,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
     <div id="sprytextfield33" class="control-group">
       <label class="control-label" for="ch_use_titre_dirigeant">Titre du dirigeant <a href="#" rel="clickover" title="Titre du dirigeant" data-content="Le titre doit faire r&eacute;f&eacute;rence au syst&egrave;me politique et citer le nom de votre pays. Par exemple : Pr&eacute;sident de la r&eacute;publique fran&ccedil;aise. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
       <div class="controls">
-        <input class="input-xlarge" name="ch_use_titre_dirigeant" type="text" id="ch_use_titre_dirigeant" value="<?php echo $paysPersonnages['titre_personnage']; ?>" maxlength="250">
+        <input class="input-xlarge" name="ch_use_titre_dirigeant" type="text" id="ch_use_titre_dirigeant" value="<?= e($paysPersonnages['titre_personnage']) ?>" maxlength="250">
         <br>
         <span class="textfieldMaxCharsMsg">50 caract&egrave;res max.</span></div>
     </div>
@@ -1198,7 +1198,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
     <div id="sprytextarea30" class="control-group">
       <label class="control-label" for="ch_use_biographie_dirigeant">Biographie <a href="#" rel="clickover" title="Biographie" data-content="Donnez en quelques lignes des informations qui permettrons &agrave; vos homologues du Monde GC de mieux cerner votre personnage. 500 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
       <div class="controls">
-        <textarea rows="6" name="ch_use_biographie_dirigeant" class="input-xlarge" id="ch_use_biographie_dirigeant"><?php echo $paysPersonnages['biographie']; ?></textarea>
+        <textarea rows="6" name="ch_use_biographie_dirigeant" class="input-xlarge" id="ch_use_biographie_dirigeant"><?= e($paysPersonnages['biographie']) ?></textarea>
         <br>
         <span class="textareaMaxCharsMsg">500 caract&egrave;res max.</span></div>
     </div>
@@ -1253,14 +1253,15 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
 <?php include(DEF_ROOTPATH . 'php/carteemplacements.php'); ?>
 <script>
-$("a[data-toggle=modal]").click(function (e) {
-  lv_target = $(this).attr('data-target')
-  lv_url = $(this).attr('href')
-  $(lv_target).load(lv_url)})
+    $("a[data-toggle=modal]").click(function (e) {
+        lv_target = $(this).attr('data-target')
+        lv_url = $(this).attr('href')
+        $(lv_target).load(lv_url)
+    })
 
-$('#closemodal').click(function() {
-    $('#Modal-Monument').modal('hide');
-});
+    $('#closemodal').click(function () {
+        $('#Modal-Monument').modal('hide');
+    });
 </script>
 <!-- EDITEUR -->
 <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>

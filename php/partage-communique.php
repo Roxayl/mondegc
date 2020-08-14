@@ -132,7 +132,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut
 
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-  <h3 id="myModalLabel">Partager la cr&eacute;ation du communique <strong> <?php echo $row_communique['ch_com_titre']; ?></strong> sur le forum de Génération City</h3>
+  <h3 id="myModalLabel">Partager la cr&eacute;ation du communique <strong> <?= e($row_communique['ch_com_titre']) ?></strong> sur le forum de Génération City</h3>
 </div>
 <div class="modal-body corps-page">
   <div class="row-fluid">
@@ -145,19 +145,19 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut
           <?php } else { ?>
           <img src="http://monde.generation-city.com/assets/img/IconesBDD/100/Communique.png">
           <?php } ?>
-          <p class="pull-center"><?php echo $row_communique['ch_use_predicat_dirigeant']; ?> <?php echo $row_communique['ch_use_prenom_dirigeant']; ?> <?php echo $row_communique['ch_use_nom_dirigeant']; ?></p>
-          <p class="pull-center"><em><?php echo $row_communique['ch_use_titre_dirigeant']; ?></em></p>
+          <p class="pull-center"><?= e($row_communique['ch_use_predicat_dirigeant']) ?> <?= e($row_communique['ch_use_prenom_dirigeant']) ?> <?= e($row_communique['ch_use_nom_dirigeant']) ?></p>
+          <p class="pull-center"><em><?= e($row_communique['ch_use_titre_dirigeant']) ?></em></p>
           <?php if ( $cat == "pays") { ?>
-          <p class="pull-center">a &eacute;crit un communiqu&eacute; officiel au nom du pays <a href="http://www.generation-city.com/monde/page-pays.php?ch_pay_id=<?php echo $row_pays['ch_pay_id']; ?>"><?php echo $row_pays['ch_pay_nom'] ?></a></p>
+          <p class="pull-center">a &eacute;crit un communiqu&eacute; officiel au nom du pays <a href="http://www.generation-city.com/monde/page-pays.php?ch_pay_id=<?= e($row_pays['ch_pay_id']) ?>"><?php echo $row_pays['ch_pay_nom'] ?></a></p>
           <?php } elseif ( $cat == "villes") { ?>
-          <p class="pull-center">a &eacute;crit un communiqu&eacute; officiel au nom de la ville <a href="http://www.generation-city.com/monde/page-ville.php?ch_pay_id=<?php echo $row_villes['ch_pay_id']; ?>&ch_ville_id=<?php echo $row_villes['ch_vil_ID']; ?>"><?php echo $row_villes['ch_vil_nom'] ?></a></p>
+          <p class="pull-center">a &eacute;crit un communiqu&eacute; officiel au nom de la ville <a href="http://www.generation-city.com/monde/page-ville.php?ch_pay_id=<?= e($row_villes['ch_pay_id']) ?>&ch_ville_id=<?= e($row_villes['ch_vil_ID']) ?>"><?php echo $row_villes['ch_vil_nom'] ?></a></p>
           <?php } elseif ( $cat == "institut") { ?>
           <p class="pull-center">a &eacute;crit un communiqu&eacute; officiel au nom de l'<?php echo $row_institut['ch_ins_nom'] ?></p>
           <?php } ?>
           <h4 class="pull-center"><?php echo $row_communique['ch_com_titre'] ?></h4>
         </div>
-        <p><?php echo $row_communique['ch_com_contenu']; ?></p>
-        <div class="pull-center"><a href="http://www.generation-city.com/monde/page-communique.php?com_id=<?php echo $row_communique['ch_com_ID']; ?>"><strong>Voir les r&eacute;actions</strong></a></div>
+        <p><?= htmlPurify($row_communique['ch_com_contenu']) ?></p>
+        <div class="pull-center"><a href="http://www.generation-city.com/monde/page-communique.php?com_id=<?= e($row_communique['ch_com_ID']) ?>"><strong>Voir les r&eacute;actions</strong></a></div>
         <p>&nbsp;</p>
       </div>
       <form action="https://www.forum-gc.com/post" method="post" name="post" enctype="multipart/form-data" onSubmit="envoiMessage(this)">
@@ -201,7 +201,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut
   <?php if ( $cat == "pays") { ?>
   <?php if (($row_pays['ch_pay_lien_forum']== NULL) OR ($row_pays['ch_pay_lien_forum']== "")){?>
   <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_lien" Id="ajout_lien">
-    <input type="hidden" name="ch_pay_id" id="ch_pay_id" value="<?php echo $row_communique['ch_com_element_id']; ?>">
+    <input type="hidden" name="ch_pay_id" id="ch_pay_id" value="<?= e($row_communique['ch_com_element_id']) ?>">
     <h4>Vous n'avez pas encore indiqu&eacute; le lien du sujet consacr&eacute; à votre pays sur le Forum de G&eacute;n&eacute;ration City </h4>
     <!-- Lien Forum -->
     <input type="hidden" id="ch_pay_id" name="ch_pay_id" value="<?php echo $row_communique['ch_com_element_id'] ?>">
@@ -226,7 +226,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut
   <?php } elseif ( $cat == "institut") { ?>
   <?php if (($row_institut['ch_ins_lien_forum']== NULL) OR ($row_institut['ch_ins_lien_forum']== "")){?>
   <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_lien_institut" Id="ajout_lien_institut">
-    <input type="hidden" name="ch_ins_ID" id="ch_ins_ID" value="<?php echo $row_institut['ch_ins_ID']; ?>">
+    <input type="hidden" name="ch_ins_ID" id="ch_ins_ID" value="<?= e($row_institut['ch_ins_ID']) ?>">
     <h4>Vous n'avez pas encore indiqu&eacute; le lien du sujet consacr&eacute; à cet institut sur le Forum de G&eacute;n&eacute;ration City </h4>
     <!-- Lien Forum -->
     <div id="sprytextfield2" class="control-group">

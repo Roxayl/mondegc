@@ -26,7 +26,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 ?><!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Haut-Conseil - Supprimer un pays</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -53,7 +53,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url('<?php echo $row_Pays['ch_pay_lien_imgheader']; ?>');
+	background-image: url('<?= e($row_Pays['ch_pay_lien_imgheader']) ?>');
 	background-position:center;
 }
 </style></head>
@@ -66,14 +66,14 @@ $currentPage = $_SERVER["PHP_SELF"];
 <div id="introheader" class="jumbotron">
   <div class="container">
     <h1>Attention&nbsp;!</h1>
-    <p>Souhaitez-vous r&eacute;ellement supprimer le pays <?php echo $row_Pays['ch_pay_nom']; ?>&nbsp;?</p>
+    <p>Souhaitez-vous r&eacute;ellement supprimer le pays <?= e($row_Pays['ch_pay_nom']) ?>&nbsp;?</p>
       <p>Cette action sera irr&eacute;versible</p>
     <form action="<?= DEF_URI_PATH ?>back/page_pays_supprimer.php" method="post" class="form-button-inline">
-      <input name="Pays_ID" type="hidden" value="<?php echo $row_Pays['ch_pay_id']; ?>">
+      <input name="Pays_ID" type="hidden" value="<?= e($row_Pays['ch_pay_id']) ?>">
       <button type="submit" class="btn btn-large btn-danger" title="supprimer le Pays"><i class="icon-trash icon-white"></i> Supprimer</button>
       </form>
       <form action="<?= DEF_URI_PATH ?>back/page_pays_back.php" method="post" class="form-button-inline">
-        <input name="paysID" type="hidden" value="<?php echo $row_Pays['ch_pay_id']; ?>">
+        <input name="paysID" type="hidden" value="<?= e($row_Pays['ch_pay_id']) ?>">
       <button type="submit" class="btn btn-large btn-success" title="retour &agrave; la page de modification du pays">Annuler</button>
     </form>
     </p>
@@ -102,6 +102,3 @@ $currentPage = $_SERVER["PHP_SELF"];
       $(function() { 
           $('[rel="clickover"]').clickover();})
     </script>
-<?php
-mysql_free_result($Pays);
-?>

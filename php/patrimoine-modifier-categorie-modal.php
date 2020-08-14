@@ -71,7 +71,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 <form action="<?php echo $editFormAction; ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-<h3 id="myModalLabel">Modifier la cat&eacute;gorie <?php echo $row_liste_mon_cat['ch_mon_cat_nom']; ?></h3>
+<h3 id="myModalLabel">Modifier la cat&eacute;gorie <?= e($row_liste_mon_cat['ch_mon_cat_nom']) ?></h3>
           </div>
           <div class="modal-body">
           <div class="row-fluid">
@@ -80,9 +80,9 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
             <?php 
 				  $now= date("Y-m-d G:i:s");
                   $nb_update = $row_liste_mon_cat['ch_mon_cat_nb_update'] + 1; ?>
-            <input name="ch_mon_cat_ID" type="hidden" value="<?php echo $row_liste_mon_cat['ch_mon_cat_ID']; ?>">
+            <input name="ch_mon_cat_ID" type="hidden" value="<?= e($row_liste_mon_cat['ch_mon_cat_ID']) ?>">
             <input name="ch_mon_cat_label" type="hidden" value="mon_cat">
-            <input name="ch_mon_cat_date" type="hidden" value="<?php echo $row_liste_mon_cat['ch_mon_cat_date']; ?>">
+            <input name="ch_mon_cat_date" type="hidden" value="<?= e($row_liste_mon_cat['ch_mon_cat_date']) ?>">
             <input name="ch_mon_cat_mis_jour" type="hidden" value="<?php echo $now; ?>">
             <input name="ch_mon_cat_nb_update" type="hidden" value=<?php echo $nb_update; ?> >
             <!-- Statut -->
@@ -103,7 +103,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
             <div id="sprytextfield21" class="control-group">
               <label class="control-label" for="ch_mon_cat_nom">Nom de la cat&eacute;gorie <a href="#" rel="clickover" title="Nom de la cat&eacute;gorie" data-content="30 caract&egrave;res maximum. Ce nom servira &agrave; identifier la cat&eacute;gorie dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
               <div class="controls">
-                <input class="input-xlarge" type="text" id="ch_mon_cat_nom" name="ch_mon_cat_nom" value="<?php echo $row_liste_mon_cat['ch_mon_cat_nom']; ?>">
+                <input class="input-xlarge" type="text" id="ch_mon_cat_nom" name="ch_mon_cat_nom" value="<?= e($row_liste_mon_cat['ch_mon_cat_nom']) ?>">
                 <br>
                 <span class="textfieldRequiredMsg">un nom est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">30 caract&egrave;res max.</span></div>
             </div>
@@ -111,7 +111,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
             <div id="sprytextfield23" class="control-group">
               <label class="control-label" for="ch_mon_cat_icon">Ic&ocirc;ne <a href="#" rel="clickover" title="Ic&ocirc;ne" data-content="L'ic&ocirc;ne sert &agrave; repr&eacute;senter la cat&eacute;gorie dans l'ensemble du site. Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)"><i class="icon-info-sign"></i></a></label>
               <div class="controls">
-                <input class="input-xlarge" type="text" name="ch_mon_cat_icon" id="ch_mon_cat_icon" value="<?php echo $row_liste_mon_cat['ch_mon_cat_icon']; ?>">
+                <input class="input-xlarge" type="text" name="ch_mon_cat_icon" id="ch_mon_cat_icon" value="<?= e($row_liste_mon_cat['ch_mon_cat_icon']) ?>">
                 <br>
                 <span class="textfieldRequiredMsg">une ic&ocirc;ne est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res max.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
             </div>
@@ -119,22 +119,22 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
             <div id="" class="control-group">
               <label class="control-label" for="ch_mon_cat_icon">Couleur <a href="#" rel="clickover" title="Couleur" data-content="Choisissez une couleur de fond pour la cat&eacute;gorie"><i class="icon-info-sign"></i></a></label>
               <div class="controls">
-                <div class="input-append color" data-color="<?php echo $row_liste_mon_cat['ch_mon_cat_couleur']; ?>" data-color-format="hex" id="cp4">
-                  <input type="text" class="input-large" value="<?php echo $row_liste_mon_cat['ch_mon_cat_couleur']; ?>" name="ch_mon_cat_couleur" id="ch_mon_cat_couleur">
-                  <span class="add-on"><i style="background-color: <?php echo $row_liste_mon_cat['ch_mon_cat_couleur']; ?>)"></i></span> </div>
+                <div class="input-append color" data-color="<?= e($row_liste_mon_cat['ch_mon_cat_couleur']) ?>" data-color-format="hex" id="cp4">
+                  <input type="text" class="input-large" value="<?= e($row_liste_mon_cat['ch_mon_cat_couleur']) ?>" name="ch_mon_cat_couleur" id="ch_mon_cat_couleur">
+                  <span class="add-on"><i style="background-color: <?= e($row_liste_mon_cat['ch_mon_cat_couleur']) ?>)"></i></span> </div>
               </div>
             </div>
             <!-- Description -->
             <div id="sprytextarea24" class="control-group">
               <label class="control-label" for="ch_mon_cat_desc">Description <a href="#" rel="clickover" title="Description" data-content="Donnez en quelques lignes des informations qui permettrons de comprendre l'objet de cette cat&eacute;gorie. 400 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
               <div class="controls">
-                <textarea rows="6" name="ch_mon_cat_desc" class="input-xlarge" id="ch_mon_cat_desc"><?php echo $row_liste_mon_cat['ch_mon_cat_desc']; ?></textarea>
+                <textarea rows="6" name="ch_mon_cat_desc" class="input-xlarge" id="ch_mon_cat_desc"><?= e($row_liste_mon_cat['ch_mon_cat_desc']) ?></textarea>
                 <br>
                 <span class="textareaMaxCharsMsg">400 caract&egrave;res max.</span></div>
             </div>
             </div>
             <div class="span3 icone-categorie"> 
-          <img src="<?php echo $row_liste_mon_cat['ch_mon_cat_icon']; ?>" alt="icone cat&eacute;gorie" style="background-color:<?php echo $row_liste_mon_cat['ch_mon_cat_couleur']; ?>;"></div>
+          <img src="<?= e($row_liste_mon_cat['ch_mon_cat_icon']) ?>" alt="icone cat&eacute;gorie" style="background-color:<?= e($row_liste_mon_cat['ch_mon_cat_couleur']) ?>;"></div>
 </div>
           </div>
 		  <h3>Influence sur l'économie</h3>
@@ -145,7 +145,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 					<div id="sprytextfield3" class="control-group">
 						<label class="control-label" for="ch_mon_cat_budget">Budget <a href="#" rel="clickover" title="Nom de la cat&eacute;gorie" data-content="30 caract&egrave;res maximum. Ce nom servira &agrave; identifier la cat&eacute;gorie dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
 						<div class="controls">
-						<input class="input-small" type="text" id="ch_mon_cat_budget" name="ch_mon_cat_budget" value="<?php echo $row_liste_mon_cat['ch_mon_cat_budget']; ?>">
+						<input class="input-small" type="text" id="ch_mon_cat_budget" name="ch_mon_cat_budget" value="<?= e($row_liste_mon_cat['ch_mon_cat_budget']) ?>">
 						<br>
 						<span class="textfieldRequiredMsg">un nom est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">11 caract&egrave;res max.</span></div>
 					</div>
@@ -153,7 +153,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 					<div id="sprytextfield3" class="control-group">
 						<label class="control-label" for="ch_mon_cat_industrie">Industrie <a href="#" rel="clickover" title="Nom de la cat&eacute;gorie" data-content="30 caract&egrave;res maximum. Ce nom servira &agrave; identifier la cat&eacute;gorie dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
 						<div class="controls">
-						<input class="input-small" type="text" id="ch_mon_cat_industrie" name="ch_mon_cat_industrie" value="<?php echo $row_liste_mon_cat['ch_mon_cat_industrie']; ?>">
+						<input class="input-small" type="text" id="ch_mon_cat_industrie" name="ch_mon_cat_industrie" value="<?= e($row_liste_mon_cat['ch_mon_cat_industrie']) ?>">
 						<br>
 						<span class="textfieldRequiredMsg">un nom est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">11 caract&egrave;res max.</span></div>
 					</div>
@@ -161,7 +161,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 					<div id="sprytextfield3" class="control-group">
 						<label class="control-label" for="ch_mon_cat_commerce">Commerce <a href="#" rel="clickover" title="Nom de la cat&eacute;gorie" data-content="30 caract&egrave;res maximum. Ce nom servira &agrave; identifier la cat&eacute;gorie dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
 						<div class="controls">
-						<input class="input-small" type="text" id="ch_mon_cat_commerce" name="ch_mon_cat_commerce" value="<?php echo $row_liste_mon_cat['ch_mon_cat_commerce']; ?>">
+						<input class="input-small" type="text" id="ch_mon_cat_commerce" name="ch_mon_cat_commerce" value="<?= e($row_liste_mon_cat['ch_mon_cat_commerce']) ?>">
 						<br>
 						<span class="textfieldRequiredMsg">un nom est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">11 caract&egrave;res max.</span></div>
 					</div>
@@ -169,7 +169,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 					<div id="sprytextfield3" class="control-group">
 						<label class="control-label" for="ch_mon_cat_agriculture">Agriculture <a href="#" rel="clickover" title="Nom de la cat&eacute;gorie" data-content="30 caract&egrave;res maximum. Ce nom servira &agrave; identifier la cat&eacute;gorie dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
 						<div class="controls">
-						<input class="input-small" type="text" id="ch_mon_cat_agriculture" name="ch_mon_cat_agriculture" value="<?php echo $row_liste_mon_cat['ch_mon_cat_agriculture']; ?>">
+						<input class="input-small" type="text" id="ch_mon_cat_agriculture" name="ch_mon_cat_agriculture" value="<?= e($row_liste_mon_cat['ch_mon_cat_agriculture']) ?>">
 						<br>
 						<span class="textfieldRequiredMsg">un nom est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">1 caract&egrave;res max.</span></div>
 					</div>
@@ -179,7 +179,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 					<div id="sprytextfield21" class="control-group">
 						<label class="control-label" for="ch_mon_cat_tourisme">Tourisme <a href="#" rel="clickover" title="Nom de la cat&eacute;gorie" data-content="30 caract&egrave;res maximum. Ce nom servira &agrave; identifier la cat&eacute;gorie dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
 						<div class="controls">
-						<input class="input-small" type="text" id="ch_mon_cat_tourisme" name="ch_mon_cat_tourisme" value="<?php echo $row_liste_mon_cat['ch_mon_cat_tourisme']; ?>">
+						<input class="input-small" type="text" id="ch_mon_cat_tourisme" name="ch_mon_cat_tourisme" value="<?= e($row_liste_mon_cat['ch_mon_cat_tourisme']) ?>">
 						<br>
 						<span class="textfieldRequiredMsg">un nom est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">11 caract&egrave;res max.</span></div>
 					</div>
@@ -187,7 +187,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 					<div id="sprytextfield21" class="control-group">
 						<label class="control-label" for="ch_mon_cat_recherche">Recherche <a href="#" rel="clickover" title="Nom de la cat&eacute;gorie" data-content="30 caract&egrave;res maximum. Ce nom servira &agrave; identifier la cat&eacute;gorie dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
 						<div class="controls">
-						<input class="input-small" type="text" id="ch_mon_cat_recherche" name="ch_mon_cat_recherche" value="<?php echo $row_liste_mon_cat['ch_mon_cat_recherche']; ?>">
+						<input class="input-small" type="text" id="ch_mon_cat_recherche" name="ch_mon_cat_recherche" value="<?= e($row_liste_mon_cat['ch_mon_cat_recherche']) ?>">
 						<br>
 						<span class="textfieldRequiredMsg">un nom est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">11 caract&egrave;res max.</span></div>
 					</div>
@@ -195,7 +195,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 					<div id="sprytextfield21" class="control-group">
 						<label class="control-label" for="ch_mon_cat_environnement">Environnement <a href="#" rel="clickover" title="Nom de la cat&eacute;gorie" data-content="30 caract&egrave;res maximum. Ce nom servira &agrave; identifier la cat&eacute;gorie dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
 						<div class="controls">
-						<input class="input-small" type="text" id="ch_mon_cat_environnement" name="ch_mon_cat_environnement" value="<?php echo $row_liste_mon_cat['ch_mon_cat_environnement']; ?>">
+						<input class="input-small" type="text" id="ch_mon_cat_environnement" name="ch_mon_cat_environnement" value="<?= e($row_liste_mon_cat['ch_mon_cat_environnement']) ?>">
 						<br>
 						<span class="textfieldRequiredMsg">un nom est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">11 caract&egrave;res max.</span></div>
 					</div>
@@ -203,7 +203,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 					<div id="sprytextfield21" class="control-group">
 						<label class="control-label" for="ch_mon_cat_education">Education <a href="#" rel="clickover" title="Nom de la cat&eacute;gorie" data-content="30 caract&egrave;res maximum. Ce nom servira &agrave; identifier la cat&eacute;gorie dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
 						<div class="controls">
-						<input class="input-small" type="text" id="ch_mon_cat_education" name="ch_mon_cat_education" value="<?php echo $row_liste_mon_cat['ch_mon_cat_education']; ?>">
+						<input class="input-small" type="text" id="ch_mon_cat_education" name="ch_mon_cat_education" value="<?= e($row_liste_mon_cat['ch_mon_cat_education']) ?>">
 						<br>
 						<span class="textfieldRequiredMsg">un nom est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">11 caract&egrave;res max.</span></div>
 					</div>
@@ -213,17 +213,16 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
           </div>
           <input type="hidden" name="MM_update" value="ajout-categorie">
         </form>
-        <script>
-		$(function(){
-$('#cp4').colorpicker({
-format: 'hex'});
-		});
-	</script>
-    <script type="text/javascript">
+<script>
+    $(function () {
+        $('#cp4').colorpicker({
+            format: 'hex'
+        });
+    });
+</script>
+<script type="text/javascript">
 var spryradio20 = new Spry.Widget.ValidationRadio("spryradio20", {validateOn:["change"]});
 var sprytextfield21 = new Spry.Widget.ValidationTextField("sprytextfield21", "none", {minChars:2, maxChars:30, validateOn:["change"]});
 var sprytextfield23 = new Spry.Widget.ValidationTextField("sprytextfield23", "url", {minChars:2, maxChars:250, validateOn:["change"]});
 var sprytextarea24 = new Spry.Widget.ValidationTextarea("sprytextarea24", {maxChars:400, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
-<?php
-mysql_free_result($liste_mon_cat);?>

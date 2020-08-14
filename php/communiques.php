@@ -54,16 +54,16 @@ $queryString_communiques = sprintf("&totalRows_communiques=%d%s", $totalRows_com
     </thead>
     <tbody>
       <?php do { ?>
-      <tr id="communiqueID<?php echo $row_communiques['ch_com_ID']; ?>">
-        <td><?php echo $row_communiques['ch_com_titre']; ?></td>
+      <tr id="communiqueID<?= e($row_communiques['ch_com_ID']) ?>">
+        <td><?= e($row_communiques['ch_com_titre']) ?></td>
         <td>Le <?php echo date("d/m/Y", strtotime($row_communiques['ch_com_date'])); ?> &agrave; <?php echo date("G:i", strtotime($row_communiques['ch_com_date'])); ?></td>
         <td><!-- Button to trigger modal -->
           
           <div class="text-center">
           <?php if (isset($_SESSION['user_id']) && $row_communiques['ch_com_user_id'] == $_SESSION['user_ID']) { ?>
-  <a class="btn btn-primary pull-right" href="php/partage-communique.php?com_id=<?php echo $row_communiques['ch_com_ID']; ?>" data-toggle="modal" data-target="#myModal" title="Poster sur le forum"><i class="icon-share icon-white"></i></a>
+  <a class="btn btn-primary pull-right" href="php/partage-communique.php?com_id=<?= e($row_communiques['ch_com_ID']) ?>" data-toggle="modal" data-target="#myModal" title="Poster sur le forum"><i class="icon-share icon-white"></i></a>
   <?php } ?>
-          <a class="btn btn-primary" href="php/communique-modal.php?com_id=<?php echo $row_communiques['ch_com_ID']; ?>" data-toggle="modal" data-target="#myModal">Lire</a>
+          <a class="btn btn-primary" href="php/communique-modal.php?com_id=<?= e($row_communiques['ch_com_ID']) ?>" data-toggle="modal" data-target="#myModal">Lire</a>
           </div></td>
       </tr>
       <?php } while ($row_communiques = mysql_fetch_assoc($communiques)); ?>

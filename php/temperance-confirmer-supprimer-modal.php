@@ -32,7 +32,7 @@ $row_temperance = mysql_fetch_assoc($temperance);
 </div>
 <div class="modal-footer">
   <form action="temperance_supprimer.php" name="supprimer-temperance" method="POST" id="supprimer-temperance">
-    <input name="ch_temp_id" type="hidden" value="<?php echo $row_temperance['ch_temp_id']; ?>">
+    <input name="ch_temp_id" type="hidden" value="<?= e($row_temperance['ch_temp_id']) ?>">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Annuler</button>
     <button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i> Supprimer</button>
   </form>

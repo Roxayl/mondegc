@@ -1,7 +1,5 @@
 <?php
 
-header('Content-Type: text/html; charset=iso-8859-1');
-
 $group_ID = "-1";
 if (isset($_GET['ch_mem_group_ID'])) {
   $group_ID = $_GET['ch_mem_group_ID'];
@@ -36,7 +34,7 @@ $msgHead = "[center][img]".$row_group_info['ch_mem_group_icon']."[/img]
 <!-- Modal Header-->
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
-  <h3 id="myModalLabel">Envoyer un message aux membres du groupe <strong><?php echo $row_group_info['ch_mem_group_nom']; ?></strong> sur le forum de G&eacute;n&eacute;ration City</h3>
+  <h3 id="myModalLabel">Envoyer un message aux membres du groupe <strong><?= e($row_group_info['ch_mem_group_nom']) ?></strong> sur le forum de G&eacute;n&eacute;ration City</h3>
 </div>
 <div class="modal-body corps-page">
   <div class="row-fluid">
@@ -53,13 +51,13 @@ $msgHead = "[center][img]".$row_group_info['ch_mem_group_icon']."[/img]
       <label class="checkbox">
       <div class="row-fluid">
       <div class="span1">
-      <input type="checkbox" name="username[]" value="<?php echo $row_group['ch_use_login']; ?>" checked="checked"/>
+      <input type="checkbox" name="username[]" value="<?= e($row_group['ch_use_login']) ?>" checked="checked"/>
       </div>
       <div class="span1">
-      <img src="<?php echo $row_group['ch_use_lien_imgpersonnage']; ?>" class="img-mp"/> 
+      <img src="<?= e($row_group['ch_use_lien_imgpersonnage']) ?>" class="img-mp"/> 
 	  </div>
       <div class="span10">
-	  <?php echo $row_group['ch_use_predicat_dirigeant']; ?> <?php echo $row_group['ch_use_prenom_dirigeant']; ?> <?php echo $row_group['ch_use_nom_dirigeant']; ?>
+	  <?= e($row_group['ch_use_predicat_dirigeant']) ?> <?= e($row_group['ch_use_prenom_dirigeant']) ?> <?= e($row_group['ch_use_nom_dirigeant']) ?>
       </div>
       </div>
        </label>
@@ -67,8 +65,8 @@ $msgHead = "[center][img]".$row_group_info['ch_mem_group_icon']."[/img]
         <h3>Message&nbsp;:</h3>
         <input class="input-xlarge" type="text" name="subject" value="" placeholder="titre">
           <input name="msgHead" type="hidden" value="<?php echo htmlentities($msgHead, ENT_QUOTES, "ISO-8859-1"); ?>" />
-        <div class="pull-center icone-categorie"><img src="<?php echo $row_group_info['ch_mem_group_icon']; ?>" style="background-color:<?php echo $row_group_info['ch_mem_group_couleur']; ?>">
-          <h4><?php echo $row_group_info['ch_mem_group_nom']; ?></h4>
+        <div class="pull-center icone-categorie"><img src="<?= e($row_group_info['ch_mem_group_icon']) ?>" style="background-color:<?= e($row_group_info['ch_mem_group_couleur']) ?>">
+          <h4><?= e($row_group_info['ch_mem_group_nom']) ?></h4>
           <p class="pull-center">Message aux membres</p>
           <p>&nbsp;</p>
         </div>
@@ -92,5 +90,3 @@ $msgHead = "[center][img]".$row_group_info['ch_mem_group_icon']."[/img]
 <div class="modal-footer">
   <button class="btn" data-dismiss="modal" aria-hidden="true">Annuler</button>
 </div>
-<?php
-mysql_free_result($group);?>

@@ -75,32 +75,32 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
      ================================================== -->
   <?php if (($_SESSION['statut'] >= 20) OR ($row_fait_his['ch_use_id'] == $_SESSION['user_ID'])) { ?>
   <form class="pull-right" action="<?= DEF_URI_PATH ?>back/fait_historique_confirmation_supprimer.php" method="post">
-    <input name="ch_his_id" type="hidden" value="<?php echo $row_fait_his['ch_his_id']; ?>">
+    <input name="ch_his_id" type="hidden" value="<?= e($row_fait_his['ch_his_id']) ?>">
     <button class="btn btn-danger" type="submit" title="supprimer ce fait historique"><i class="icon-trash icon-white"></i></button>
   </form>
   <?php if ($row_fait_his['ch_his_personnage'] == 2) { ?>
   <form class="pull-right" action="<?= DEF_URI_PATH ?>back/personnage_historique_modifier.php" method="post">
-    <input name="ch_his_id" type="hidden" value="<?php echo $row_fait_his['ch_his_id']; ?>">
+    <input name="ch_his_id" type="hidden" value="<?= e($row_fait_his['ch_his_id']) ?>">
     <button class="btn btn-danger" type="submit" title="modifier ce fait historique"><i class="icon-pencil icon-white"></i></button>
   </form>
   <?php } else {?>
 <form class="pull-right" action="<?= DEF_URI_PATH ?>back/fait_historique_modifier.php" method="post">
-    <input name="ch_his_id" type="hidden" value="<?php echo $row_fait_his['ch_his_id']; ?>">
+    <input name="ch_his_id" type="hidden" value="<?= e($row_fait_his['ch_his_id']) ?>">
     <button class="btn btn-danger" type="submit" title="modifier ce fait historique"><i class="icon-pencil icon-white"></i></button>
   </form>
   <?php }?>
   <?php }?>
   <?php if ($row_fait_his['ch_use_id'] == $_SESSION['user_ID']) { ?>
-  <a class="btn btn-primary pull-right" href="php/partage-fait-hist.php?ch_his_id=<?php echo $row_fait_his['ch_his_id']; ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
+  <a class="btn btn-primary pull-right" href="php/partage-fait-hist.php?ch_his_id=<?= e($row_fait_his['ch_his_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
   <?php } ?>
   <div class="clearfix"></div>
   <!-- Titre-->
   <div class="titre-vert"> <img src="assets/img/IconesBDD/100/faithistorique.png" alt="fait historique">
-    <h1><?php echo $row_fait_his['ch_his_nom']; ?></h1>
+    <h1><?= e($row_fait_his['ch_his_nom']) ?></h1>
   </div>
   <!-- Affichage fait historique-->
   <div class="well">
-    <p class="pull-right">Histoire du pays <a class="" href="page-pays.php?ch_pay_id=<?php echo $row_fait_his['ch_his_paysID']; ?>#histoire"><?php echo $row_fait_his['ch_pay_nom']; ?></a></p>
+    <p class="pull-right">Histoire du pays <a class="" href="page-pays.php?ch_pay_id=<?= e($row_fait_his['ch_his_paysID']) ?>#histoire"><?= e($row_fait_his['ch_pay_nom']) ?></a></p>
     <div class="row-fluid">
       <div class="span4"> <img src="<?php echo $row_fait_his['ch_his_lien_img1']; ?>" alt="illustration">
         <p><em><?php echo $row_fait_his['ch_his_legende_img1']; ?></em></p>
@@ -118,7 +118,7 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
         </em>
         <?php } elseif (($row_fait_his['ch_his_date_fait2'] != NULL) AND ($row_fait_his['ch_his_personnage'] == 2)) { ?>
         <!-- si pers historique -->
-        <h4><?php echo $row_fait_his['ch_his_profession']; ?> (<?php echo affDate($row_fait_his['ch_his_date_fait']); ?> - <?php echo affDate($row_fait_his['ch_his_date_fait2']); ?>)</h4>
+        <h4><?= e($row_fait_his['ch_his_profession']) ?> (<?php echo affDate($row_fait_his['ch_his_date_fait']); ?> - <?php echo affDate($row_fait_his['ch_his_date_fait2']); ?>)</h4>
         <em>
         <?php 
 	  $d1 = new DateTime($row_fait_his['ch_his_date_fait']);
@@ -128,7 +128,7 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
         </em>
         <?php } elseif (($row_fait_his['ch_his_date_fait2'] == NULL) AND ($row_fait_his['ch_his_personnage'] == 2)) { ?>
         <!-- si pers vivant -->
-        <h4><?php echo $row_fait_his['ch_his_profession']; ?> (<?php echo affDate($row_fait_his['ch_his_date_fait']); ?>-&nbsp;&nbsp;)</h4>
+        <h4><?= e($row_fait_his['ch_his_profession']) ?> (<?php echo affDate($row_fait_his['ch_his_date_fait']); ?>-&nbsp;&nbsp;)</h4>
         <em>
         <?php 
 	  $d1 = new DateTime($row_fait_his['ch_his_date_fait']);
@@ -141,7 +141,7 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
         <h4>&Eacute;v&eacute;nement du <?php echo affDate($row_fait_his['ch_his_date_fait']); ?>&nbsp;:</h4>
         <?php } ?>
         <p>&nbsp;</p>
-        <p><strong><?php echo $row_fait_his['ch_his_description']; ?></strong></p>
+        <p><strong><?= e($row_fait_his['ch_his_description']) ?></strong></p>
         <div class="row-fluid"> 
           <!-- Liste des categories du monument -->
           <h4>Cat&eacute;gories&nbsp;:</h4>
@@ -176,7 +176,7 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
       </div>
     </div>
     <?php if ($row_fait_his['ch_his_contenu']) { ?>
-    <div class="well"> <?php echo $row_fait_his['ch_his_contenu']; ?> </div>
+    <div class="well"> <?= htmlPurify($row_fait_his['ch_his_contenu']) ?> </div>
     <?php }?>
   </div>
   <!-- Commentaire
@@ -198,8 +198,7 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -211,7 +210,7 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
 <script src="assets/js/bootstrap-scrollspy.js"></script>
 <script src="assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
+      $(function() {
           $('[rel="clickover"]').clickover();})
 </script>
 <!-- MODAL -->
@@ -232,6 +231,5 @@ $('#closemodal').click(function() {
 <script type="text/javascript" src="assets/js/Editeur.js"></script>
 <!-- SPRY ASSETS -->
 <script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
-<?php
-mysql_free_result($fait_his);
-?>
+</body>
+</html>

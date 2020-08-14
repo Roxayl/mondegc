@@ -118,16 +118,16 @@ $totalPages_ListPays = ceil($totalRows_ListPays/$maxRows_ListPays)-1;
         <tbody>
           <?php do { ?>
             <tr>
-              <td><img src="../assets/img/statutpays<?php echo $row_ListPays['ch_pay_publication']; ?>.png" alt="Statut"></td>
-              <td><img src="<?php echo $row_ListPays['ch_pay_lien_imgdrapeau']; ?>" width="75px"></td>
-              <td><?php echo $row_ListPays['ch_pay_nom']; ?></td>
-              <td>N°<?php echo $row_ListPays['ch_pay_emplacement']; ?> <img class="pull-right" src="../Carto/Emplacements/emplacement<?php echo $row_ListPays['ch_pay_emplacement']; ?>.jpg" width="50px"></td>
-              <td><?php echo $row_ListPays['ch_pay_continent']; ?></td>
+              <td><img src="../assets/img/statutpays<?= e($row_ListPays['ch_pay_publication']) ?>.png" alt="Statut"></td>
+              <td><img src="<?= e($row_ListPays['ch_pay_lien_imgdrapeau']) ?>" width="75px"></td>
+              <td><?= e($row_ListPays['ch_pay_nom']) ?></td>
+              <td>N°<?= e($row_ListPays['ch_pay_emplacement']) ?> <img class="pull-right" src="../Carto/Emplacements/emplacement<?= e($row_ListPays['ch_pay_emplacement']) ?>.jpg" width="50px"></td>
+              <td><?= e($row_ListPays['ch_pay_continent']) ?></td>
               <td>
               <?php $thisPays = new \GenCity\Monde\Pays($row_ListPays['ch_pay_id']);
               $listeLeaders = $thisPays->getLeaders(); ?>
                 <?php foreach($listeLeaders as $thisLeader): ?>
-                <p><?php echo $thisLeader['ch_use_login']; ?>
+                <p><?= e($thisLeader['ch_use_login']) ?>
                     <small><?= \GenCity\Monde\Pays::getPermissionName($thisLeader['permissions']); ?></small></p>
                 <?php endforeach; ?>
               </td>
@@ -137,7 +137,7 @@ $totalPages_ListPays = ceil($totalRows_ListPays/$maxRows_ListPays)-1;
               <?php if ($_SESSION['userObject']->minStatus('Administrateur'))
               {?>
               <td><form action="<?= DEF_URI_PATH ?>back/page_pays_confirmer_supprimer.php" method="post">
-                  <input name="paysID" type="hidden" value="<?php echo $row_ListPays['ch_pay_id']; ?>">
+                  <input name="paysID" type="hidden" value="<?= e($row_ListPays['ch_pay_id']) ?>">
                   <button class="btn" type="submit" title="supprimer le pays"><i class="icon-trash"></i></button>
                 </form></td>
               <?php }  ?>
@@ -171,8 +171,7 @@ echo '</p>';  ?>
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -183,10 +182,10 @@ echo '</p>';  ?>
 <script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
- <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
-<?php
-mysql_free_result($ListPays);
-?>
+<script type="text/javascript">
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
+</body>
+</html>

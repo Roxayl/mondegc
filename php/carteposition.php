@@ -173,7 +173,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 			$typeZone = $row_ZonesTerres['ch_geo_type'];
 			styleZones($typeZone, $fillcolor, $fillOpacity, $strokeWidth, $strokeColor, $strokeOpacity, $Trait);
 			?>
-			var polygonFeature= format.read("<?php echo $row_ZonesTerres['ch_geo_wkt']; ?>");
+			var polygonFeature= format.read("<?= e($row_ZonesTerres['ch_geo_wkt']) ?>");
 			polygonFeature.attributes = {
 				couleur : "<?php echo $fillcolor; ?>",
 				epaisseurTrait : "<?php echo $strokeWidth; ?>",
@@ -252,7 +252,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 			styleZones($typeZone, $fillcolor, $fillOpacity, $strokeWidth, $strokeColor, $strokeOpacity, $Trait);
 			ressourcesGeometrie($surface, $typeZone, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population, $emploi);
 			?>
-			var polygonFeature= format.read("<?php echo $row_ZonesPays['ch_geo_wkt']; ?>");
+			var polygonFeature= format.read("<?= e($row_ZonesPays['ch_geo_wkt']) ?>");
 			polygonFeature.attributes = {
 				couleur : "<?php echo $fillcolor; ?>",
 				epaisseurTrait : "<?php echo $strokeWidth; ?>",
@@ -310,7 +310,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 			ressourcesGeometrie($surface, $typeVoie, $budget, $industrie, $commerce, $agriculture, $tourisme, $recherche, $environnement, $education, $label, $population, $emploi);
 			?>
 			
-			var polygonFeature= format.read("<?php echo $row_VoiesPays['ch_geo_wkt']; ?>");
+			var polygonFeature= format.read("<?= e($row_VoiesPays['ch_geo_wkt']) ?>");
 			polygonFeature.attributes = {
 				couleurTrait : "<?php echo $couleurTrait; ?>",
 				epaisseurTrait : "<?php echo $epaisseurTrait; ?>",
@@ -525,11 +525,11 @@ coordEmplacement($emplacement, $x, $y);
 ?>
 		var x = '<?php echo $x; ?>' ;
 		var y = '<?php echo $y; ?>' ;  
-		var urlicon ='<?php echo $row_MarkerPays['ch_pay_lien_imgdrapeau']; ?>'
+		var urlicon ='<?= e($row_MarkerPays['ch_pay_lien_imgdrapeau']) ?>'
                 features.push(new OpenLayers.Feature.Vector(
                     new OpenLayers.Geometry.Point(x,y), features.attributes = {
                 name: "<?php echo $Nompays; ?>",
-				flag: "<?php echo $row_MarkerPays['ch_pay_lien_imgdrapeau']; ?>"
+				flag: "<?= e($row_MarkerPays['ch_pay_lien_imgdrapeau']) ?>"
             }));
 		<?php } while ($row_MarkerPays = mysql_fetch_assoc($MarkerPays)); ?>
             return features;
@@ -545,8 +545,8 @@ coordEmplacement($emplacement, $x, $y);
 			<?php do { 
 			$Nomville = str_replace ( '-', ' ', $row_MarkerVilles['ch_vil_nom']);
 			?>
-		var x = '<?php echo $row_MarkerVilles['ch_vil_coord_X']; ?>' ;
-		var y = '<?php echo $row_MarkerVilles['ch_vil_coord_Y']; ?>' ;
+		var x = '<?= e($row_MarkerVilles['ch_vil_coord_X']) ?>' ;
+		var y = '<?= e($row_MarkerVilles['ch_vil_coord_Y']) ?>' ;
 		<?php if ($row_MarkerVilles['ch_vil_capitale'] == 1) {?>
 		var pointercolor = "red";
         <?php } else { ?>
@@ -573,8 +573,8 @@ coordEmplacement($emplacement, $x, $y);
 			<?php do { 
 			$NomMonument = str_replace ( '-', ' ', $row_MarkerMonument['ch_pat_nom']);
 			?>
-		var x = '<?php echo $row_MarkerMonument['ch_pat_coord_X']; ?>' ;
-		var y = '<?php echo $row_MarkerMonument['ch_pat_coord_Y']; ?>' ;
+		var x = '<?= e($row_MarkerMonument['ch_pat_coord_X']) ?>' ;
+		var y = '<?= e($row_MarkerMonument['ch_pat_coord_Y']) ?>' ;
                 features.push(new OpenLayers.Feature.Vector(
                 new OpenLayers.Geometry.Point(x,y), features.attributes = {
                 	name: "Monument\n\n<?php echo addslashes($NomMonument); ?>"
@@ -592,7 +592,7 @@ coordEmplacement($emplacement, $x, $y);
             var extent = map.getExtent();
             var features = [];
 			
-		var urlicon ='<?php echo $row_MarkerPays['ch_pay_lien_imgdrapeau']; ?>'
+		var urlicon ='<?= e($row_MarkerPays['ch_pay_lien_imgdrapeau']) ?>'
                 features.push(new OpenLayers.Feature.Vector(
                     new OpenLayers.Geometry.Point(x,y), features.attributes = {
 				flag: urlicon

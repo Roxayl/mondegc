@@ -56,8 +56,8 @@ $queryString_Liste_communiques = sprintf("&totalRows_Liste_communiques=%d%s", $t
           <tbody>
             <?php do { ?>
               <tr>
-                <td><img src="../assets/img/statutpays<?php echo $row_Liste_communiques['ch_com_statut']; ?>.png" alt="Statut"></td>
-                <td><?php echo $row_Liste_communiques['ch_com_titre']; ?></td>
+                <td><img src="../assets/img/statutpays<?= e($row_Liste_communiques['ch_com_statut']) ?>.png" alt="Statut"></td>
+                <td><?= e($row_Liste_communiques['ch_com_titre']) ?></td>
                 <td>Le <?php echo date("d/m/Y", strtotime($row_Liste_communiques['ch_com_date_mis_jour'])); ?>
                 &agrave; <?php echo date("G:i", strtotime($row_Liste_communiques['ch_com_date_mis_jour'])); ?>
                 </td>
@@ -66,12 +66,12 @@ $queryString_Liste_communiques = sprintf("&totalRows_Liste_communiques=%d%s", $t
                       <input name="paysID" type="hidden" value="<?php echo $colname_paysID; ?>">
                     <?php endif; ?>
                     <input name="userID" type="hidden" value="<?php echo $userID; ?>">
-                    <input name="com_id" type="hidden" value="<?php echo $row_Liste_communiques['ch_com_ID']; ?>">
+                    <input name="com_id" type="hidden" value="<?= e($row_Liste_communiques['ch_com_ID']) ?>">
                     <button class="btn btn-primary" type="submit" title="modifier le communiqu&eacute;"><i class="icon-pencil icon-white"></i></button>
                   </form></td>
                 <td><form action="communique_confirmation_supprimer.php" method="post">
                     <input name="userID" type="hidden" value="<?php echo $userID; ?>">
-                    <input name="communique_ID" type="hidden" value="<?php echo $row_Liste_communiques['ch_com_ID']; ?>">
+                    <input name="communique_ID" type="hidden" value="<?= e($row_Liste_communiques['ch_com_ID']) ?>">
                     <button class="btn btn-danger" type="submit" title="supprimer le communiqu&eacute;"><i class="icon-trash icon-white"></i></button>
                   </form></td>
               </tr>

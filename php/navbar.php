@@ -48,7 +48,7 @@ if(auth()->check()) {
   <div class="navbar-inner">
     <div class="container">
       <!-- Formulaire connexion Tablettes -->
-      <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="connexion" class="navbar-form pull-right visible-tablet <?php echo $_SESSION['menu_connexion']; ?>">
+      <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="connexion" class="navbar-form pull-right visible-tablet <?= e($_SESSION['menu_connexion']) ?>">
         <input type="hidden" name="__csrf_magic" value="<?= csrf_get_tokens() ?>">
         <input type="hidden" name="_token"
                  value="<?= \Illuminate\Support\Facades\Session::token() ?>">
@@ -75,7 +75,7 @@ if(auth()->check()) {
       <div class="nav-collapse collapse"> 
         
         <!-- Formulaire connexion desktop / mobile -->
-        <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="connexion" class="navbar-form hidden-tablet <?php echo $_SESSION['menu_connexion']; ?>">
+        <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="connexion" class="navbar-form hidden-tablet <?= e($_SESSION['menu_connexion']) ?>">
           <input type="hidden" name="__csrf_magic" value="<?= csrf_get_tokens() ?>">
           <input type="hidden" name="_token"
                  value="<?= \Illuminate\Support\Facades\Session::token() ?>">
@@ -194,7 +194,7 @@ if(auth()->check()) {
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
 					} ?>
-                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><img src="<?php echo $row_menu['ch_pay_lien_imgdrapeau']; ?>" class="img-menu-drapeau"> <?php echo $row_menu['ch_pay_nom']; ?></a></li>
+                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
 				} while ($row_menu = mysql_fetch_assoc($menu));
 				mysql_data_seek($menu,0); ?>
@@ -207,7 +207,7 @@ if(auth()->check()) {
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
 					} ?>
-                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><img src="<?php echo $row_menu['ch_pay_lien_imgdrapeau']; ?>" class="img-menu-drapeau"> <?php echo $row_menu['ch_pay_nom']; ?></a></li>
+                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
 				} while ($row_menu = mysql_fetch_assoc($menu));
 				mysql_data_seek($menu,0); ?>
@@ -220,7 +220,7 @@ if(auth()->check()) {
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
 					} ?>
-                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><img src="<?php echo $row_menu['ch_pay_lien_imgdrapeau']; ?>" class="img-menu-drapeau"> <?php echo $row_menu['ch_pay_nom']; ?></a></li>
+                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
 				} while ($row_menu = mysql_fetch_assoc($menu));
 				mysql_data_seek($menu,0); ?>
@@ -234,7 +234,7 @@ if(auth()->check()) {
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
 					} ?>
-                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><img src="<?php echo $row_menu['ch_pay_lien_imgdrapeau']; ?>" class="img-menu-drapeau"> <?php echo $row_menu['ch_pay_nom']; ?></a></li>
+                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
 				} while ($row_menu = mysql_fetch_assoc($menu));
 				mysql_data_seek($menu,0); ?>
@@ -247,7 +247,7 @@ if(auth()->check()) {
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
 					} ?>
-                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><img src="<?php echo $row_menu['ch_pay_lien_imgdrapeau']; ?>" class="img-menu-drapeau"> <?php echo $row_menu['ch_pay_nom']; ?></a></li>
+                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
 				} while ($row_menu = mysql_fetch_assoc($menu));
 				mysql_data_seek($menu,0); ?>
@@ -260,7 +260,7 @@ if(auth()->check()) {
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
 					} ?>
-                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?php echo $row_menu['ch_pay_id']; ?>"><img src="<?php echo $row_menu['ch_pay_lien_imgdrapeau']; ?>" class="img-menu-drapeau"> <?php echo $row_menu['ch_pay_nom']; ?></a></li>
+                <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
 				} while ($row_menu = mysql_fetch_assoc($menu));
 				mysql_data_seek($menu,0); ?>

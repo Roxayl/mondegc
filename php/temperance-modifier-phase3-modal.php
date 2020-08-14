@@ -75,10 +75,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance"))
 
   $updateGoTo = DEF_URI_PATH . "back/institut_economie.php";
   appendQueryString($updateGoTo);
-  $adresse = $updateGoTo .'#liste-temperance';
-  mysql_free_result($questionnaires);
+  $adresse = $updateGoTo .'#liste-temperance';*
   header(sprintf("Location: %s", $adresse));
- exit;
+  exit;
 }
 ?>
 
@@ -108,8 +107,3 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance"))
     <input type="hidden" name="MM_update" value="phase-temperance">
   </div>
 </form>
-<?php
-mysql_free_result($questionnaires);
-mysql_free_result($note_prec);
-unset ($note);
-?>

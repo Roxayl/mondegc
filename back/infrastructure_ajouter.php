@@ -155,7 +155,7 @@ if($totalRows_liste_inf_off == 0) {
 <html lang="fr">
 <!-- head Html -->
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Monde GC - <?= $form_action === 'add' ? 'Ajouter' : 'Modifier' ?> une infrastructure</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -262,7 +262,7 @@ img.olTileImage {
           <select name="infra_off_id" id="infra_off_id" placeholder="Rechercher une infrastructure..." <?= ($form_action === 'edit') ? 'disabled' : '' ?>>
             <option value=""></option>
             <?php do { ?>
-            <option value="<?php echo $row_liste_inf_off['ch_inf_off_id']; ?>" <?php if ($colname_inf_off_choisie == $row_liste_inf_off['ch_inf_off_id']) {?>selected<?php } ?>><?php echo $row_liste_inf_off['ch_inf_off_nom']; ?></option>
+            <option value="<?= e($row_liste_inf_off['ch_inf_off_id']) ?>" <?php if ($colname_inf_off_choisie == $row_liste_inf_off['ch_inf_off_id']) {?>selected<?php } ?>><?= e($row_liste_inf_off['ch_inf_off_nom']) ?></option>
             <?php } while ($row_liste_inf_off = mysql_fetch_assoc($liste_inf_off)); ?>
           </select>
       <input name="ville_ID" type="hidden" value="<?php echo $ville_ID; ?>">
@@ -381,11 +381,11 @@ img.olTileImage {
 
         <?php else: ?>
           <div class="span3 img-listes img-avatar">
-              <img src="<?php echo $row_inf_off_choisie['ch_inf_off_icone']; ?>">
+              <img src="<?= e($row_inf_off_choisie['ch_inf_off_icone']) ?>">
           </div>
           <div class="span9">
-            <h2><?php echo $row_inf_off_choisie['ch_inf_off_nom']; ?></h2>
-            <p><?php echo $row_inf_off_choisie['ch_inf_off_desc']; ?></p>
+            <h2><?= e($row_inf_off_choisie['ch_inf_off_nom']) ?></h2>
+            <p><?= htmlPurify($row_inf_off_choisie['ch_inf_off_desc']) ?></p>
           </div>
         <?php endif; ?>
 
@@ -394,23 +394,23 @@ img.olTileImage {
         <h4>Influence</h4>
         <div class="row-fluid">
           <div class="span6 well icone-ressources">
-            <img src="../assets/img/ressources/budget.png" alt="icone Budget"><p>Budget&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_budget']; ?></strong></p>
+            <img src="../assets/img/ressources/budget.png" alt="icone Budget"><p>Budget&nbsp;: <strong><?= e($row_inf_off_choisie['ch_inf_off_budget']) ?></strong></p>
             <div class="clearfix"></div>
-            <img src="../assets/img/ressources/industrie.png" alt="icone Industrie"><p>Industrie&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Industrie']; ?></strong></p>
+            <img src="../assets/img/ressources/industrie.png" alt="icone Industrie"><p>Industrie&nbsp;: <strong><?= e($row_inf_off_choisie['ch_inf_off_Industrie']) ?></strong></p>
             <div class="clearfix"></div>
-            <img src="../assets/img/ressources/bureau.png" alt="icone Commerce"><p>Commerce&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Commerce']; ?></strong></p>
+            <img src="../assets/img/ressources/bureau.png" alt="icone Commerce"><p>Commerce&nbsp;: <strong><?= e($row_inf_off_choisie['ch_inf_off_Commerce']) ?></strong></p>
             <div class="clearfix"></div>
-            <img src="../assets/img/ressources/agriculture.png" alt="icone Agriculture"><p>Agriculture&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Agriculture']; ?></strong></p>
+            <img src="../assets/img/ressources/agriculture.png" alt="icone Agriculture"><p>Agriculture&nbsp;: <strong><?= e($row_inf_off_choisie['ch_inf_off_Agriculture']) ?></strong></p>
             <div class="clearfix"></div>
           </div>
           <div class="span6 well icone-ressources">
-            <img src="../assets/img/ressources/tourisme.png" alt="icone Tourisme"><p>Tourisme&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Tourisme']; ?></strong></p>
+            <img src="../assets/img/ressources/tourisme.png" alt="icone Tourisme"><p>Tourisme&nbsp;: <strong><?= e($row_inf_off_choisie['ch_inf_off_Tourisme']) ?></strong></p>
             <div class="clearfix"></div>
-            <img src="../assets/img/ressources/recherche.png" alt="icone Recherche"><p>Recherche&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Recherche']; ?></strong></p>
+            <img src="../assets/img/ressources/recherche.png" alt="icone Recherche"><p>Recherche&nbsp;: <strong><?= e($row_inf_off_choisie['ch_inf_off_Recherche']) ?></strong></p>
             <div class="clearfix"></div>
-            <img src="../assets/img/ressources/environnement.png" alt="icone Evironnement"><p>Environnement&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Environnement']; ?></strong></p>
+            <img src="../assets/img/ressources/environnement.png" alt="icone Evironnement"><p>Environnement&nbsp;: <strong><?= e($row_inf_off_choisie['ch_inf_off_Environnement']) ?></strong></p>
             <div class="clearfix"></div>
-            <img src="../assets/img/ressources/education.png" alt="icone Education"><p>Education&nbsp;: <strong><?php echo $row_inf_off_choisie['ch_inf_off_Education']; ?></strong></p>
+            <img src="../assets/img/ressources/education.png" alt="icone Education"><p>Education&nbsp;: <strong><?= e($row_inf_off_choisie['ch_inf_off_Education']) ?></strong></p>
             <div class="clearfix"></div>
           </div>
         </div>

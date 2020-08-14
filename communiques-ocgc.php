@@ -45,7 +45,7 @@ $queryString_communiquesPays = sprintf("&totalRows_communiquesPays=%d%s", $total
 <html lang="fr">
 <!-- head Html -->
 <head>
-<meta charset="iso-8859-1">
+<meta charset="utf-8">
 <title>Monde GC - Communiqués des comités</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -143,17 +143,17 @@ img.olTileImage {
     </ul>
 
     <?php do { ?>
-      <div class="row-fluid" id="communiqueID<?php echo $row_communiquesPays['ch_com_ID']; ?>">
+      <div class="row-fluid" id="communiqueID<?= e($row_communiquesPays['ch_com_ID']) ?>">
       <div class="titre-bleu anchor" id="presentation">
-          <h1><?php echo $row_communiquesPays['ch_com_titre']; ?></h1>
+          <h1><?= e($row_communiquesPays['ch_com_titre']) ?></h1>
 
       <p class="pull-right" style="margin-right:10px;">
-          Le <strong><?php echo date("d/m/Y", strtotime($row_communiquesPays['ch_com_date'])); ?></strong> &agrave; <?php echo date("G\hi", strtotime($row_communiquesPays['ch_com_date'])); ?> par <?php echo $row_communiquesPays['ch_use_login']; ?></p>
+          Le <strong><?php echo date("d/m/Y", strtotime($row_communiquesPays['ch_com_date'])); ?></strong> &agrave; <?php echo date("G\hi", strtotime($row_communiquesPays['ch_com_date'])); ?> par <?= e($row_communiquesPays['ch_use_login']) ?></p>
       </div>
       <div class="well">
-	  <strong><p><?php echo $row_communiquesPays['ch_ins_nom']; ?></p></strong>
-	  <?php echo $row_communiquesPays['ch_com_contenu']; ?>
-      <a class="btn btn-primary" href="page-communique.php?com_id=<?php echo $row_communiquesPays['ch_com_id']; ?>"><?php echo $row_communiquesPays['nb_commentaires']; ?> commentaires</a>
+	  <strong><p><?= e($row_communiquesPays['ch_ins_nom']) ?></p></strong>
+	  <?= htmlPurify($row_communiquesPays['ch_com_contenu']) ?>
+      <a class="btn btn-primary" href="page-communique.php?com_id=<?= e($row_communiquesPays['ch_com_id']) ?>"><?= e($row_communiquesPays['nb_commentaires']) ?> commentaires</a>
       </div>
       <p>&nbsp;</p>
       <?php } while ($row_communiquesPays = mysql_fetch_assoc($communiquesPays)); ?>

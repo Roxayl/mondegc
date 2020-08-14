@@ -5,7 +5,11 @@
  * Version cible : 2.7
  * ******************/
 
-mysql_select_db($database_maconnexion, $maconnexion);
+/*************************
+ *                       *
+ *   ÉDITION DE TABLES   *
+ *                       *
+ *************************/
 
 $queries = array();
 
@@ -36,3 +40,15 @@ $queries[] = "SET FOREIGN_KEY_CHECKS=1";
 foreach($queries as $query) {
     mysql_query($query) or die(mysql_error());
 }
+
+
+/*************************
+ *                       *
+ *       REQUÊTES        *
+ *                       *
+ *************************/
+
+/* Remettre la Helvénie en Philicie */
+$helvenie = \App\Models\Pays::findOrFail(89);
+$helvenie->ch_pay_continent = 'Philicie';
+$helvenie->save();

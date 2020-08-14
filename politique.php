@@ -85,7 +85,7 @@ $organisations = \App\Models\Organisation::with('members')
 ================================================== -->
 <header class="jumbotron jumbotron-medium jumbotron-institut subhead anchor" id="info-institut" >
   <div class="container">
-    <h1><?php echo $row_institut['ch_ins_nom']; ?></h1>
+    <h1><?= e($row_institut['ch_ins_nom']) ?></h1>
   </div>
 </header>
 <div class="container"> 
@@ -97,12 +97,12 @@ $organisations = \App\Models\Organisation::with('members')
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#info-institut">
           <?php if ($row_institut['ch_ins_logo']) { ?>
-          <img src="<?php echo $row_institut['ch_ins_logo']; ?>">
+          <img src="<?= e($row_institut['ch_ins_logo']) ?>">
           <?php } else { ?>
           <img src="assets/img/imagesdefaut/blason.jpg">
           <?php }?>
-          <p><strong><?php echo $row_institut['ch_ins_sigle']; ?></strong></p>
-          <p><em><?php echo $row_institut['ch_ins_nom']; ?></em></p>
+          <p><strong><?= e($row_institut['ch_ins_sigle']) ?></strong></p>
+          <p><em><?= e($row_institut['ch_ins_nom']) ?></em></p>
           </a></li>
         <li><a href="#presentation">Pr&eacute;sentation</a></li>
         <li><a href="#organisations">Organisations</a></li>

@@ -71,7 +71,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
   </div>
   <div class="modal-body">
     <div class="well">
-      <h4>Vous notez le pays <a href="../page-pays.php?ch_pay_id=<?php echo $row_pays['ch_pay_id']; ?>" target="_blank"><?php echo $row_pays['ch_pay_nom']; ?></a></h4>
+      <h4>Vous notez le pays <a href="../page-pays.php?ch_pay_id=<?= e($row_pays['ch_pay_id']) ?>" target="_blank"><?= e($row_pays['ch_pay_nom']) ?></a></h4>
     </div>
     <ul class="listes">
       <div class="titre-gris">

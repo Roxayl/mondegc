@@ -32,7 +32,7 @@ $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '
 appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
-  include(DEF_ROOTPATH . "php/config.php");
+  $salt = config('legacy.salt');
   if (isset ($_POST['ch-use_password'])) {
   $hashed_password = md5($_POST['ch-use_password'].$salt);
   unset($_POST['ch-use_password']);
@@ -291,7 +291,7 @@ $row_notifications  = mysql_fetch_assoc($notifications );
 $totalRows_notifications  = mysql_num_rows($notifications );
 if (($row_notifications != NULL) OR ($row_notifications != "") ) {
 do {  ?>
-  <div class="alert"> <a class="pull-right btn btn-primary" href="../php/groupe-supprimmer-membre-modal.php?ch_disp_MG_id=<?php echo $row_notifications['ch_disp_MG_id']; ?>" data-toggle="modal" data-target="#Modal-Groupe" title="supprimer la demande de ce membre">Refuser</a> <a class="pull-right btn btn-primary" href="../php/groupe-modifier-membre-modal.php?ch_disp_MG_id=<?php echo $row_notifications['ch_disp_MG_id']; ?>" data-toggle="modal" data-target="#Modal-Groupe" title="choisir le statut de ce membre">Accepter</a> <img src="<?php echo $row_notifications['ch_use_lien_imgpersonnage'] ; ?>" class="Icone-thumb" width="50px"/> <strong><?php echo $row_notifications['ch_use_predicat_dirigeant'] ; ?> <?php echo $row_notifications['ch_use_prenom_dirigeant'] ; ?> <?php echo $row_notifications['ch_use_nom_dirigeant'] ; ?></strong> <em><?php echo $row_notifications['ch_use_titre_dirigeant'] ; ?></em> a fait une demande pour rejoindre le groupe <?php echo $row_notifications['ch_mem_group_nom'] ; ?>. </div>
+  <div class="alert"> <a class="pull-right btn btn-primary" href="../php/groupe-supprimmer-membre-modal.php?ch_disp_MG_id=<?= e($row_notifications['ch_disp_MG_id']) ?>" data-toggle="modal" data-target="#Modal-Groupe" title="supprimer la demande de ce membre">Refuser</a> <a class="pull-right btn btn-primary" href="../php/groupe-modifier-membre-modal.php?ch_disp_MG_id=<?= e($row_notifications['ch_disp_MG_id']) ?>" data-toggle="modal" data-target="#Modal-Groupe" title="choisir le statut de ce membre">Accepter</a> <img src="<?php echo $row_notifications['ch_use_lien_imgpersonnage'] ; ?>" class="Icone-thumb" width="50px"/> <strong><?php echo $row_notifications['ch_use_predicat_dirigeant'] ; ?> <?php echo $row_notifications['ch_use_prenom_dirigeant'] ; ?> <?php echo $row_notifications['ch_use_nom_dirigeant'] ; ?></strong> <em><?php echo $row_notifications['ch_use_titre_dirigeant'] ; ?></em> a fait une demande pour rejoindre le groupe <?php echo $row_notifications['ch_mem_group_nom'] ; ?>. </div>
   <?php
 } while ($row_notifications = mysql_fetch_assoc($notifications));
 }
@@ -333,19 +333,19 @@ $i++;
 		?>
     <li class="row-fluid"> 
       <!-- ICONE groupe -->
-      <div class="span2 icone-categorie"><img src="<?php echo $row_liste_groupe['ch_mem_group_icon']; ?>" alt="icone <?php echo $row_liste_groupe['ch_mem_group_nom']; ?>" style="background-color:<?php echo $row_liste_groupe['ch_mem_group_couleur']; ?>;"></div>
+      <div class="span2 icone-categorie"><img src="<?= e($row_liste_groupe['ch_mem_group_icon']) ?>" alt="icone <?= e($row_liste_groupe['ch_mem_group_nom']) ?>" style="background-color:<?= e($row_liste_groupe['ch_mem_group_couleur']) ?>;"></div>
       <!-- contenu groupe -->
       <div class="span10 info-listes"> 
         <!-- Boutons modifier / supprimer -->
         <?php if ($row_liste_groupe['ch_disp_mem_statut']==2) { ?>
-        <a class="pull-right" href="../php/groupe-supprimmer-modal.php?mem_group_ID=<?php echo $row_liste_groupe['ch_mem_group_ID']; ?>" data-toggle="modal" data-target="#Modal-Groupe" title="supprimer ce groupe"><i class="icon-remove"></i></a> <a class="pull-right" href="../php/groupe-modifier-modal.php?mem_group_ID=<?php echo $row_liste_groupe['ch_mem_group_ID']; ?>" data-toggle="modal" data-target="#Modal-Groupe" title="modifier ce groupe"><i class="icon-pencil"></i></a>
+        <a class="pull-right" href="../php/groupe-supprimmer-modal.php?mem_group_ID=<?= e($row_liste_groupe['ch_mem_group_ID']) ?>" data-toggle="modal" data-target="#Modal-Groupe" title="supprimer ce groupe"><i class="icon-remove"></i></a> <a class="pull-right" href="../php/groupe-modifier-modal.php?mem_group_ID=<?= e($row_liste_groupe['ch_mem_group_ID']) ?>" data-toggle="modal" data-target="#Modal-Groupe" title="modifier ce groupe"><i class="icon-pencil"></i></a>
         <?php } ?>
         <!-- Desc categorie -->
-        <h4><?php echo $row_liste_groupe['ch_mem_group_nom']; ?></h4>
-        <p><?php echo $row_liste_groupe['ch_mem_group_desc']; ?></p>
+        <h4><?= e($row_liste_groupe['ch_mem_group_nom']) ?></h4>
+        <p><?= e($row_liste_groupe['ch_mem_group_desc']) ?></p>
       </div>
       <!-- Bouton MP --> 
-      <a class="btn btn-primary btn-ssmarge pull-right" href="../php/groupe-mp.php?ch_mem_group_ID=<?php echo $row_liste_groupe['ch_mem_group_ID']; ?>" data-toggle="modal" data-target="#Modal-Groupe" title="Envoyez un message aux membres de ce groupe"><i class="icon-share icon-white"></i> MP</a> </li>
+      <a class="btn btn-primary btn-ssmarge pull-right" href="../php/groupe-mp.php?ch_mem_group_ID=<?= e($row_liste_groupe['ch_mem_group_ID']) ?>" data-toggle="modal" data-target="#Modal-Groupe" title="Envoyez un message aux membres de ce groupe"><i class="icon-share icon-white"></i> MP</a> </li>
     <?php
         if (($row_liste_groupe['listgroup']!= "") AND ($row_liste_groupe['listgroup']!= NULL)) { ?>
     <div class="accordion" id="accordion<?php echo $i; ?>">
@@ -358,8 +358,8 @@ $i++;
          do { ?>
                 <!-- liste membres du groupe -->
                 <li class="row-fluid">
-                  <div class="span1"><a href="../page-pays.php?ch_pay_id=<?php echo $row_liste_membres_groupe['ch_use_paysID']; ?>#diplomatie" title="voir le profil de ce dirigeant"><img src="<?php echo $row_liste_membres_groupe['ch_use_lien_imgpersonnage']; ?>" alt="lien"></a> </div>
-                  <div class="span3"> <?php echo $row_liste_membres_groupe['ch_use_predicat_dirigeant']; ?> <?php echo $row_liste_membres_groupe['ch_use_prenom_dirigeant']; ?> <?php echo $row_liste_membres_groupe['ch_use_nom_dirigeant'];?>  <?php echo $row_liste_membres_groupe['ch_use_titre_dirigeant']; ?></div>
+                  <div class="span1"><a href="../page-pays.php?ch_pay_id=<?= e($row_liste_membres_groupe['ch_use_paysID']) ?>#diplomatie" title="voir le profil de ce dirigeant"><img src="<?= e($row_liste_membres_groupe['ch_use_lien_imgpersonnage']) ?>" alt="lien"></a> </div>
+                  <div class="span3"> <?= e($row_liste_membres_groupe['ch_use_predicat_dirigeant']) ?> <?= e($row_liste_membres_groupe['ch_use_prenom_dirigeant']) ?> <?= e($row_liste_membres_groupe['ch_use_nom_dirigeant'])?>  <?= e($row_liste_membres_groupe['ch_use_titre_dirigeant']) ?></div>
                   <div class="span2">
                     <?php if ($row_liste_membres_groupe['ch_disp_mem_statut']==1) { ?>
                     <p>Membre</p>
@@ -372,10 +372,10 @@ $i++;
                   <div class="span1">
                     <?php if (($row_liste_groupe['ch_disp_mem_statut']==2) OR ( $row_liste_membres_groupe['ch_use_id'] == $_SESSION['user_ID']) OR ($_SESSION['statut'] >= 20)) {?>
                     <!-- Boutons supprimer membre du groupe --> 
-                    <a class="pull-right" href="../php/groupe-supprimmer-membre-modal.php?ch_disp_MG_id=<?php echo $row_liste_membres_groupe['ch_disp_MG_id']; ?>" data-toggle="modal" data-target="#Modal-Groupe" title="enlever ce membre de ce groupe"><i class="icon-remove"></i></a>
+                    <a class="pull-right" href="../php/groupe-supprimmer-membre-modal.php?ch_disp_MG_id=<?= e($row_liste_membres_groupe['ch_disp_MG_id']) ?>" data-toggle="modal" data-target="#Modal-Groupe" title="enlever ce membre de ce groupe"><i class="icon-remove"></i></a>
                     <?php } ?>
                     <?php if (($row_liste_groupe['ch_disp_mem_statut']==2) OR ($_SESSION['statut'] >= 20)) {?>
-                    <a class="pull-right" href="../php/groupe-modifier-membre-modal.php?ch_disp_MG_id=<?php echo $row_liste_membres_groupe['ch_disp_MG_id']; ?>" data-toggle="modal" data-target="#Modal-Groupe" title="modifier le statut de ce membre"><i class="icon-edit"></i></a>
+                    <a class="pull-right" href="../php/groupe-modifier-membre-modal.php?ch_disp_MG_id=<?= e($row_liste_membres_groupe['ch_disp_MG_id']) ?>" data-toggle="modal" data-target="#Modal-Groupe" title="modifier le statut de ce membre"><i class="icon-edit"></i></a>
                     <?php } ?>
                   </div>
                 </li>
@@ -502,12 +502,12 @@ $('#closemodal').click(function() {
   <?php } else { ?>
   <div class="well"> 
     <!-- ICONE groupe -->
-    <div class="span2 icone-categorie"><img src="<?php echo $row_infoGroupe['ch_mem_group_icon']; ?>" alt="icone <?php echo $row_infoGroupe['ch_mem_group_nom']; ?>" style="background-color:<?php echo $row_infoGroupe['ch_mem_group_couleur']; ?>;"></div>
+    <div class="span2 icone-categorie"><img src="<?= e($row_infoGroupe['ch_mem_group_icon']) ?>" alt="icone <?= e($row_infoGroupe['ch_mem_group_nom']) ?>" style="background-color:<?= e($row_infoGroupe['ch_mem_group_couleur']) ?>;"></div>
     <!-- contenu groupe -->
     <div class="span10 info-listes"> 
       <!-- Desc categorie -->
-      <h4><?php echo $row_infoGroupe['ch_mem_group_nom']; ?></h4>
-      <p><?php echo $row_infoGroupe['ch_mem_group_desc']; ?></p>
+      <h4><?= e($row_infoGroupe['ch_mem_group_nom']) ?></h4>
+      <p><?= e($row_infoGroupe['ch_mem_group_desc']) ?></p>
     </div>
     <!-- Bouton Adhesion -->
     <?php if ($row_statutGroupeChoisi['ch_disp_mem_statut']== NULL) {?>
@@ -530,8 +530,8 @@ $('#closemodal').click(function() {
          do { ?>
               <!-- liste membres du groupe -->
               <li class="row-fluid">
-                <div class="span1"><a href="../page-pays.php?ch_pay_id=<?php echo $row_classer_mem['ch_use_paysID']; ?>#diplomatie" title="voir le profil de ce dirigeant"><img src="<?php echo $row_classer_mem['ch_use_lien_imgpersonnage']; ?>" alt="lien"></a> </div>
-                <div class="span3"><?php echo $row_classer_mem['ch_use_predicat_dirigeant']; ?> <?php echo $row_classer_mem['ch_use_prenom_dirigeant']; ?> <?php echo $row_classer_mem['ch_use_nom_dirigeant'];?> <?php echo $row_classer_mem['ch_use_titre_dirigeant']; ?></div>
+                <div class="span1"><a href="../page-pays.php?ch_pay_id=<?= e($row_classer_mem['ch_use_paysID']) ?>#diplomatie" title="voir le profil de ce dirigeant"><img src="<?= e($row_classer_mem['ch_use_lien_imgpersonnage']) ?>" alt="lien"></a> </div>
+                <div class="span3"><?= e($row_classer_mem['ch_use_predicat_dirigeant']) ?> <?= e($row_classer_mem['ch_use_prenom_dirigeant']) ?> <?= e($row_classer_mem['ch_use_nom_dirigeant'])?> <?= e($row_classer_mem['ch_use_titre_dirigeant']) ?></div>
                 <div class="span2">
                   <?php if ($row_classer_mem['ch_disp_mem_statut']==1) { ?>
                   <p>Membre</p>
@@ -571,18 +571,12 @@ $('#closemodal').click(function() {
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <script type="text/javascript">
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
 var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "none", {minChars:2, maxChars:30, validateOn:["change"]});
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "url", {minChars:2, maxChars:250, validateOn:["change"]});
 var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:400, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
-<?php
-mysql_free_result($liste_groupe);
-mysql_free_result($liste_notifications);
-mysql_free_result($liste_mem_group2);
-mysql_free_result($infoGroupe);
-mysql_free_result($statutGroupeChoisi);
-mysql_free_result($classer_mem);?>
+</body>
+</html>

@@ -171,35 +171,35 @@ $totalRows_ressources_pays = mysql_num_rows($ressources_pays);
 
 <div class="modal-header">
   <div class="row-fluid">
-    <div class="span2"><img src="<?php echo $row_infrastructure['ch_inf_off_icone']; ?>" alt="icone <?php echo $row_infrastructure['ch_inf_off_nom']; ?>"></div>
+    <div class="span2"><img src="<?= e($row_infrastructure['ch_inf_off_icone']) ?>" alt="icone <?= e($row_infrastructure['ch_inf_off_nom']) ?>"></div>
     <div class="span10">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3 id="myModalLabel"><?= __s($row_infrastructure['nom_infra']) ?>
-      <small><?php echo $row_infrastructure['ch_inf_off_nom']; ?></small></h3>
-      <p><em><?php echo $row_infrastructure['ch_inf_off_desc']; ?></em></p>
+      <small><?= e($row_infrastructure['ch_inf_off_nom']) ?></small></h3>
+      <p><em><?= htmlPurify($row_infrastructure['ch_inf_off_desc']) ?></em></p>
     </div>
   </div>
 </div>
 <div class="modal-body">
   <?php if ($row_infrastructure['ch_inf_statut'] == 2) {?>
-  <div class="alert alert-success"> <img src="../assets/img/statutinfra_<?php echo $row_infrastructure['ch_inf_statut']; ?>.png" alt="Statut"> Acceptée par les juges tempérants</div>
+  <div class="alert alert-success"> <img src="../assets/img/statutinfra_<?= e($row_infrastructure['ch_inf_statut']) ?>.png" alt="Statut"> Acceptée par les juges tempérants</div>
   <?php } elseif ($row_infrastructure['ch_inf_statut'] == 3) { ?>
   <div class="alert alert-danger">
-    <p><img src="../assets/img/statutinfra_<?php echo $row_infrastructure['ch_inf_statut']; ?>.png" alt="Statut"> Refusée par les juges tempérants. Cette infrastructure n'influence pas l'économie.
+    <p><img src="../assets/img/statutinfra_<?= e($row_infrastructure['ch_inf_statut']) ?>.png" alt="Statut"> Refusée par les juges tempérants. Cette infrastructure n'influence pas l'économie.
     <p>
       <?php if (($row_infrastructure['ch_inf_commentaire_juge'] != NULL) OR ($row_infrastructure['ch_inf_commentaire_juge'] != "")) { ?>
-    <p><strong>Raison&nbsp;: <em>"<?php echo $row_infrastructure['ch_inf_commentaire_juge']; ?>"</em></strong></p>
+    <p><strong>Raison&nbsp;: <em>"<?= htmlPurify($row_infrastructure['ch_inf_commentaire_juge']) ?>"</em></strong></p>
     <?php }?>
   </div>
   <?php } else { ?>
-  <div class="alert"> <img src="../assets/img/statutinfra_<?php echo $row_infrastructure['ch_inf_statut']; ?>.png" alt="Statut"> En attente de jugement. Son influence n'est pas encore prise en compte. </div>
+  <div class="alert"> <img src="../assets/img/statutinfra_<?= e($row_infrastructure['ch_inf_statut']) ?>.png" alt="Statut"> En attente de jugement. Son influence n'est pas encore prise en compte. </div>
   <?php }?>
   <div class="row-fluid">
     <div class="span12">
-    <img class="hidden-phone img-modal-ressource" id="img" src="<?php echo $row_infrastructure['ch_inf_lien_image']; ?>" alt="image de l'infrastrucutre">
+    <img class="hidden-phone img-modal-ressource" id="img" src="<?= e($row_infrastructure['ch_inf_lien_image']) ?>" alt="image de l'infrastrucutre">
     <div class="row-fluid">
          <div class="span2 list-thumb-ressource">
-         <img onClick="ChangeImage(this.src);" class="img-thumb-ressource" src="<?php echo $row_infrastructure['ch_inf_lien_image']; ?>" alt="image n°1">
+         <img onClick="ChangeImage(this.src);" class="img-thumb-ressource" src="<?= e($row_infrastructure['ch_inf_lien_image']) ?>" alt="image n°1">
          </div>
      <?php if ($row_infrastructure['ch_inf_lien_image2']) { ?>
          <div class="span2 list-thumb-ressource">
@@ -213,17 +213,17 @@ $totalRows_ressources_pays = mysql_num_rows($ressources_pays);
         <?php } ?>
         </div>
       <div class="well">
-        <p>La ville <a href="../page-ville.php?ch_pay_id=<?php echo $row_infrastructure['ch_pay_id']; ?>&ch_ville_id=<?php echo $row_infrastructure['ch_inf_villeid']; ?>"><?php echo $row_infrastructure['ch_vil_nom']; ?></a> du pays <a href="../page-pays.php?ch_pay_id=<?php echo $row_infrastructure['ch_pay_id']; ?>"><?php echo $row_infrastructure['ch_pay_nom']; ?></a> souhaite ajouter cette infrastructure et modifier ses statistiques &eacute;conomiques</p>
+        <p>La ville <a href="../page-ville.php?ch_pay_id=<?= e($row_infrastructure['ch_pay_id']) ?>&ch_ville_id=<?= e($row_infrastructure['ch_inf_villeid']) ?>"><?= e($row_infrastructure['ch_vil_nom']) ?></a> du pays <a href="../page-pays.php?ch_pay_id=<?= e($row_infrastructure['ch_pay_id']) ?>"><?= e($row_infrastructure['ch_pay_nom']) ?></a> souhaite ajouter cette infrastructure et modifier ses statistiques &eacute;conomiques</p>
             <strong><p>Description&nbsp;:</p></strong>
-    <p><em><?php echo $row_infrastructure['ch_inf_commentaire']; ?></em></p>
+    <p><em><?= e($row_infrastructure['ch_inf_commentaire']) ?></em></p>
     <?php if (!empty($row_infrastructure['ch_inf_lien_forum'])) { ?>
-    <a href="<?php echo $row_infrastructure['ch_inf_lien_forum']; ?>" target="_blank">
+    <a href="<?= e($row_infrastructure['ch_inf_lien_forum']) ?>" target="_blank">
         <div class="external-link-icon"
              style="background-image:url('http://www.generation-city.com/forum/new/favicon.png');"></div>
         Lien sur le forum</a>
     <?php } ?>
     <?php if (!empty($row_infrastructure['lien_wiki'])) { ?>
-        <a href="<?php echo $row_infrastructure['lien_wiki']; ?>" target="_blank">
+        <a href="<?= e($row_infrastructure['lien_wiki']) ?>" target="_blank">
         <div class="external-link-icon"
              style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></div>
             Lien sur le wiki</a>
@@ -238,57 +238,57 @@ $totalRows_ressources_pays = mysql_num_rows($ressources_pays);
   <div class="well">
     <div class="row-fluid">
       <div class="span6 icone-ressources">
-        <img src="../assets/img/ressources/budget.png" alt="icone Budget"><p>Budget&nbsp;: <strong><?php echo $row_infrastructure['ch_inf_off_budget']; ?></strong></p>
-        <img src="../assets/img/ressources/industrie.png" alt="icone Industrie"><p>Industrie&nbsp;: <strong><?php echo $row_infrastructure['ch_inf_off_Industrie']; ?></strong></p>
-        <img src="../assets/img/ressources/bureau.png" alt="icone Commerce"><p>Commerce&nbsp;: <strong><?php echo $row_infrastructure['ch_inf_off_Commerce']; ?></strong></p>
-        <img src="../assets/img/ressources/agriculture.png" alt="icone Agriculture"><p>Agriculture&nbsp;: <strong><?php echo $row_infrastructure['ch_inf_off_Agriculture']; ?></strong></p>
+        <img src="../assets/img/ressources/budget.png" alt="icone Budget"><p>Budget&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_budget']) ?></strong></p>
+        <img src="../assets/img/ressources/industrie.png" alt="icone Industrie"><p>Industrie&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Industrie']) ?></strong></p>
+        <img src="../assets/img/ressources/bureau.png" alt="icone Commerce"><p>Commerce&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Commerce']) ?></strong></p>
+        <img src="../assets/img/ressources/agriculture.png" alt="icone Agriculture"><p>Agriculture&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Agriculture']) ?></strong></p>
       </div>
       <div class="span6 icone-ressources">
-        <img src="../assets/img/ressources/tourisme.png" alt="icone Tourisme"><p>Tourisme&nbsp;: <strong><?php echo $row_infrastructure['ch_inf_off_Tourisme']; ?></strong></p>
-        <img src="../assets/img/ressources/recherche.png" alt="icone Recherche"><p>Recherche&nbsp;: <strong><?php echo $row_infrastructure['ch_inf_off_Recherche']; ?></strong></p>
-        <img src="../assets/img/ressources/environnement.png" alt="icone Evironnement"><p>Environnement&nbsp;: <strong><?php echo $row_infrastructure['ch_inf_off_Environnement']; ?></strong></p>
-        <img src="../assets/img/ressources/education.png" alt="icone Education"><p>Education&nbsp;: <strong><?php echo $row_infrastructure['ch_inf_off_Education']; ?></strong></p>
+        <img src="../assets/img/ressources/tourisme.png" alt="icone Tourisme"><p>Tourisme&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Tourisme']) ?></strong></p>
+        <img src="../assets/img/ressources/recherche.png" alt="icone Recherche"><p>Recherche&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Recherche']) ?></strong></p>
+        <img src="../assets/img/ressources/environnement.png" alt="icone Evironnement"><p>Environnement&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Environnement']) ?></strong></p>
+        <img src="../assets/img/ressources/education.png" alt="icone Education"><p>Education&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Education']) ?></strong></p>
       </div>
     </div>
   </div>
   <h3>Informations utiles</h3>
   <div class="accordion-group">
-    <div class="accordion-heading"><a class="accordion-toggle well" data-toggle="collapse" href="#collapseone">Ressources actuelles de la ville : <?php echo $row_infrastructure['ch_vil_nom']; ?></a></div>
+    <div class="accordion-heading"><a class="accordion-toggle well" data-toggle="collapse" href="#collapseone">Ressources actuelles de la ville : <?= e($row_infrastructure['ch_vil_nom']) ?></a></div>
     <div id="collapseone" class="accordion-body collapse">
       <div class="accordion-inner">
         <div class="row-fluid">
           <div class="span6">
-            <p>Budget&nbsp;: <strong><?php echo $row_ressources_ville['sum_ville_budget']; ?></strong></p>
-            <p>Industrie&nbsp;: <strong><?php echo $row_ressources_ville['sum_ville_industrie']; ?></strong></p>
-            <p>Commerce&nbsp;: <strong><?php echo $row_ressources_ville['sum_ville_commerce']; ?></strong></p>
-            <p>Agriculture&nbsp;: <strong><?php echo $row_ressources_ville['sum_ville_agriculture']; ?></strong></p>
+            <p>Budget&nbsp;: <strong><?= e($row_ressources_ville['sum_ville_budget']) ?></strong></p>
+            <p>Industrie&nbsp;: <strong><?= e($row_ressources_ville['sum_ville_industrie']) ?></strong></p>
+            <p>Commerce&nbsp;: <strong><?= e($row_ressources_ville['sum_ville_commerce']) ?></strong></p>
+            <p>Agriculture&nbsp;: <strong><?= e($row_ressources_ville['sum_ville_agriculture']) ?></strong></p>
           </div>
           <div class="span6">
-            <p>Tourisme&nbsp;: <strong><?php echo $row_ressources_ville['sum_ville_tourisme']; ?></strong></p>
-            <p>Recherche&nbsp;: <strong><?php echo $row_ressources_ville['sum_ville_recherche']; ?></strong></p>
-            <p>Environnement&nbsp;: <strong><?php echo $row_ressources_ville['sum_ville_environnement']; ?></strong></p>
-            <p>Education&nbsp;: <strong><?php echo $row_ressources_ville['sum_ville_education']; ?></strong></p>
+            <p>Tourisme&nbsp;: <strong><?= e($row_ressources_ville['sum_ville_tourisme']) ?></strong></p>
+            <p>Recherche&nbsp;: <strong><?= e($row_ressources_ville['sum_ville_recherche']) ?></strong></p>
+            <p>Environnement&nbsp;: <strong><?= e($row_ressources_ville['sum_ville_environnement']) ?></strong></p>
+            <p>Education&nbsp;: <strong><?= e($row_ressources_ville['sum_ville_education']) ?></strong></p>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="accordion-group">
-    <div class="accordion-heading"><a class="accordion-toggle well" data-toggle="collapse" href="#collapsetwo">Ressources actuelles du pays : <?php echo $row_infrastructure['ch_pay_nom']; ?></a> </div>
+    <div class="accordion-heading"><a class="accordion-toggle well" data-toggle="collapse" href="#collapsetwo">Ressources actuelles du pays : <?= e($row_infrastructure['ch_pay_nom']) ?></a> </div>
     <div id="collapsetwo" class="accordion-body collapse">
       <div class="accordion-inner">
         <div class="row-fluid">
           <div class="span6">
-            <p>Budget&nbsp;: <strong><?php echo $row_ressources_pays['sum_pays_budget']; ?></strong></p>
-            <p>Industrie&nbsp;: <strong><?php echo $row_ressources_pays['sum_pays_industrie']; ?></strong></p>
-            <p>Commerce&nbsp;: <strong><?php echo $row_ressources_pays['sum_pays_commerce']; ?></strong></p>
-            <p>Agriculture&nbsp;: <strong><?php echo $row_ressources_pays['sum_pays_agriculture']; ?></strong></p>
+            <p>Budget&nbsp;: <strong><?= e($row_ressources_pays['sum_pays_budget']) ?></strong></p>
+            <p>Industrie&nbsp;: <strong><?= e($row_ressources_pays['sum_pays_industrie']) ?></strong></p>
+            <p>Commerce&nbsp;: <strong><?= e($row_ressources_pays['sum_pays_commerce']) ?></strong></p>
+            <p>Agriculture&nbsp;: <strong><?= e($row_ressources_pays['sum_pays_agriculture']) ?></strong></p>
           </div>
           <div class="span6">
-            <p>Tourisme&nbsp;: <strong><?php echo $row_ressources_pays['sum_pays_tourisme']; ?></strong></p>
-            <p>Recherche&nbsp;: <strong><?php echo $row_ressources_pays['sum_pays_recherche']; ?></strong></p>
-            <p>Environnement&nbsp;: <strong><?php echo $row_ressources_pays['sum_pays_environnement']; ?></strong></p>
-            <p>Education&nbsp;: <strong><?php echo $row_ressources_pays['sum_pays_education']; ?></strong></p>
+            <p>Tourisme&nbsp;: <strong><?= e($row_ressources_pays['sum_pays_tourisme']) ?></strong></p>
+            <p>Recherche&nbsp;: <strong><?= e($row_ressources_pays['sum_pays_recherche']) ?></strong></p>
+            <p>Environnement&nbsp;: <strong><?= e($row_ressources_pays['sum_pays_environnement']) ?></strong></p>
+            <p>Education&nbsp;: <strong><?= e($row_ressources_pays['sum_pays_education']) ?></strong></p>
           </div>
         </div>
       </div>
@@ -298,11 +298,11 @@ $totalRows_ressources_pays = mysql_num_rows($ressources_pays);
 <div class="modal-footer">
   <form action="<?php echo $editFormAction; ?>" name="accepter_infrastructure" Id="accepter_infrastructure" method="post" class="form-button-inline">
     <?php $now = date("Y-m-d G:i:s"); ?>
-    <input name="ch_inf_id" type="hidden" value="<?php echo $row_infrastructure['ch_inf_id']; ?>">
+    <input name="ch_inf_id" type="hidden" value="<?= e($row_infrastructure['ch_inf_id']) ?>">
     <input name="ch_inf_date" type="hidden" value="<?php echo $now; ?>" >
-    <input name="ch_inf_juge" type="hidden" value="<?php echo $_SESSION['user_ID']; ?>" >
+    <input name="ch_inf_juge" type="hidden" value="<?= e($_SESSION['user_ID']) ?>" >
     <input name="ch_inf_statut_accepter" type="hidden" value="2" >
-    <input name="ch_inf_commentaire_juge" type="hidden" value="<?php echo $row_infrastructure['ch_inf_commentaire_juge'];?>" >
+    <input name="ch_inf_commentaire_juge" type="hidden" value="<?= e($row_infrastructure['ch_inf_commentaire_juge'])?>" >
      <?php if (($row_infrastructure['ch_inf_statut'] == 2) OR ($row_infrastructure['ch_inf_statut'] == 3)) {?>
  <h4 style="float:left;">Modifier le jugement :</h4>
 <?php }?>
@@ -319,14 +319,14 @@ $totalRows_ressources_pays = mysql_num_rows($ressources_pays);
       </div>
       <div class="modal-body">
         <?php $now = date("Y-m-d G:i:s"); ?>
-        <input name="ch_inf_id" type="hidden" value="<?php echo $row_infrastructure['ch_inf_id']; ?>">
+        <input name="ch_inf_id" type="hidden" value="<?= e($row_infrastructure['ch_inf_id']) ?>">
         <input name="ch_inf_date" type="hidden" value="<?php echo $now; ?>" >
         <input name="ch_inf_statut_refuser" type="hidden" value="3" >
-    <input name="ch_inf_juge" type="hidden" value="<?php echo $_SESSION['user_ID']; ?>" >
+    <input name="ch_inf_juge" type="hidden" value="<?= e($_SESSION['user_ID']) ?>" >
         <div class="control-group">
           <label class="control-label" for="ch_inf_commentaire_juge">Expliquez en quelques lignes les raisons de votre d&eacute;cision</label>
           <div class="controls">
-            <textarea name="ch_inf_commentaire_juge" id="ch_inf_commentaire_juge" class="span5" rows="6"><?php echo $row_infrastructure['ch_inf_commentaire_juge'];?></textarea>
+            <textarea name="ch_inf_commentaire_juge" id="ch_inf_commentaire_juge" class="span5" rows="6"><?= e($row_infrastructure['ch_inf_commentaire_juge'])?></textarea>
           </div>
         </div>
       </div>
@@ -338,14 +338,9 @@ $totalRows_ressources_pays = mysql_num_rows($ressources_pays);
     </form>
   </div>
 </div>
-<?php
-mysql_free_result($infrastructure);
-mysql_free_result($ressources_ville);
-mysql_free_result($ressources_pays);
-?>
-  </div>
-  <script language="javascript">
-		function ChangeImage(url) {
-			document.getElementById("img").src = url;
-		}
-		</script> 
+</div>
+<script>
+    function ChangeImage(url) {
+        document.getElementById("img").src = url;
+    }
+</script>

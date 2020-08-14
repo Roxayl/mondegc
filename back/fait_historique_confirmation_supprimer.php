@@ -66,14 +66,14 @@ $totalRows_ch_his_confimation_suppression = mysql_num_rows($ch_his_confimation_s
 <header class="jumbotron subhead" id="overview">
   <div class="container">
     <h1>Attention&nbsp;!</h1>
-    <p>Souhaitez-vous r&eacute;ellement supprimer <?php echo $row_ch_his_confimation_suppression['ch_his_nom']; ?>&nbsp;?</p>
+    <p>Souhaitez-vous r&eacute;ellement supprimer <?= e($row_ch_his_confimation_suppression['ch_his_nom']) ?>&nbsp;?</p>
     <p>Cette action sera irr&eacute;versible</p>
     <form action="<?= DEF_URI_PATH ?>back/fait_historique_supprimer.php" method="post" class="form-button-inline">
-      <input name="ch_his_id" type="hidden" value="<?php echo $row_ch_his_confimation_suppression['ch_his_id']; ?>">
+      <input name="ch_his_id" type="hidden" value="<?= e($row_ch_his_confimation_suppression['ch_his_id']) ?>">
       <button type="submit" class="btn btn-large btn-danger" title="supprimer le monument"><i class="icon-trash icon-white"></i> Supprimer</button>
     </form>
     <form action="<?= DEF_URI_PATH ?>back/page_pays_back.php#faits-historiques" method="post" class="form-button-inline">
-      <input name="paysID" type="hidden" value="<?php echo $row_ch_his_confimation_suppression['ch_his_paysID']; ?>">
+      <input name="paysID" type="hidden" value="<?= e($row_ch_his_confimation_suppression['ch_his_paysID']) ?>">
       <button type="submit" class="btn btn-large btn-success" title="retour &agrave; la page de modification du pays">Annuler</button>
     </form>
   </div>
@@ -83,8 +83,7 @@ $totalRows_ch_his_confimation_suppression = mysql_num_rows($ch_his_confimation_s
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -95,10 +94,10 @@ $totalRows_ch_his_confimation_suppression = mysql_num_rows($ch_his_confimation_s
 <script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
- <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
-<?php
-mysql_free_result($ch_his_confimation_suppression);
-?>
+<script type="text/javascript">
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
+</body>
+</html>

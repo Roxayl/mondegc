@@ -220,28 +220,28 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
       <?php do { ?>
         <li class="row-fluid"> 
           <!-- ICONE infrastructures -->
-          <div class="span2"><img src="<?php echo $row_liste_infra_officielles['ch_inf_off_icone']; ?>" alt="icone <?php echo $row_liste_infra_officielles['ch_inf_off_nom']; ?>"></div>
+          <div class="span2"><img src="<?= e($row_liste_infra_officielles['ch_inf_off_icone']) ?>" alt="icone <?= e($row_liste_infra_officielles['ch_inf_off_nom']) ?>"></div>
           <!-- contenu categorie -->
           <div class="span10 info-listes"> 
             <!-- Desc categorie -->
-            <h4><?php echo $row_liste_infra_officielles['ch_inf_off_nom']; ?></h4>
-            <p><?php echo $row_liste_infra_officielles['ch_inf_off_desc']; ?></p>
+            <h4><?= e($row_liste_infra_officielles['ch_inf_off_nom']) ?></h4>
+            <p><?= htmlPurify($row_liste_infra_officielles['ch_inf_off_desc']) ?></p>
             <div class="row-fluid">
               <div class="span3 icone-ressources">
-                <img src="assets/img/ressources/budget.png" alt="icone Budget"><p>Budget&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_budget']; ?></strong></p>
-                <img src="assets/img/ressources/industrie.png" alt="icone Industrie"><p>Industrie&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_Industrie']; ?></strong></p>
+                <img src="assets/img/ressources/budget.png" alt="icone Budget"><p>Budget&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_budget']) ?></strong></p>
+                <img src="assets/img/ressources/industrie.png" alt="icone Industrie"><p>Industrie&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_Industrie']) ?></strong></p>
               </div>
               <div class="span3 icone-ressources">
-                <img src="assets/img/ressources/bureau.png" alt="icone Commerce"><p>Commerce&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_Commerce']; ?></strong></p>
-                <img src="assets/img/ressources/agriculture.png" alt="icone Agriculture"><p>Agriculture&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_Agriculture']; ?></strong></p>
+                <img src="assets/img/ressources/bureau.png" alt="icone Commerce"><p>Commerce&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_Commerce']) ?></strong></p>
+                <img src="assets/img/ressources/agriculture.png" alt="icone Agriculture"><p>Agriculture&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_Agriculture']) ?></strong></p>
               </div>
               <div class="span3 icone-ressources">
-                <img src="assets/img/ressources/tourisme.png" alt="icone Tourisme"><p>Tourisme&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_Tourisme']; ?></strong></p>
-                <img src="assets/img/ressources/recherche.png" alt="icone Recherche"><p>Recherche&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_Recherche']; ?></strong></p>
+                <img src="assets/img/ressources/tourisme.png" alt="icone Tourisme"><p>Tourisme&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_Tourisme']) ?></strong></p>
+                <img src="assets/img/ressources/recherche.png" alt="icone Recherche"><p>Recherche&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_Recherche']) ?></strong></p>
               </div>
               <div class="span3 icone-ressources">
-                <img src="assets/img/ressources/environnement.png" alt="icone Evironnement"><p>Environnement&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_Environnement']; ?></strong></p>
-                <img src="assets/img/ressources/education.png" alt="icone Education"><p>Education&nbsp;: <strong><?php echo $row_liste_infra_officielles['ch_inf_off_Education']; ?></strong></p>
+                <img src="assets/img/ressources/environnement.png" alt="icone Evironnement"><p>Environnement&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_Environnement']) ?></strong></p>
+                <img src="assets/img/ressources/education.png" alt="icone Education"><p>Education&nbsp;: <strong><?= e($row_liste_infra_officielles['ch_inf_off_Education']) ?></strong></p>
               </div>
             </div>
           </div>
@@ -269,6 +269,3 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
 <?php include('php/footer.php'); ?>
 </body>
 </html>
-<?php
-mysql_free_result($liste_infra_officielles);
-?>

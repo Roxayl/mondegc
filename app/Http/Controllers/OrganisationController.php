@@ -49,7 +49,7 @@ class OrganisationController extends Controller
         $member = OrganisationMember::create($memberData);
 
         return redirect()->route('organisation.showslug',
-              ['id' => $organisation->id, 'slug' => $organisation->slug()])
+              $organisation->showRouteParameter())
             ->with(['message' => "success|L'organisation a été créée avec succès !"]);
     }
 
@@ -61,9 +61,9 @@ class OrganisationController extends Controller
         $organisation = Organisation::with(['members', 'membersPending', 'communiques'])
             ->findOrFail($id);
 
-        if(is_null($slug) || $organisation->slug() !== Str::slug($slug)) {
+        if(is_null($slug) || $organisation->slug !== Str::slug($slug)) {
             return redirect()->route('organisation.showslug',
-                ['id' => $organisation->id, 'slug' => $organisation->slug()]);
+                $organisation->showRouteParameter());
         }
 
         $members_invited = collect();

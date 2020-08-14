@@ -130,7 +130,7 @@ img.olTileImage {
       </div>
       <?php if (($_SESSION['statut'] > 1) AND ($row_users['ch_use_id'] != $_SESSION['user_ID'])) { ?>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/membre-modifier_back.php" method="post">
-        <input name="userID" type="hidden" value="<?php echo $row_users['ch_use_id']; ?>">
+        <input name="userID" type="hidden" value="<?= e($row_users['ch_use_id']) ?>">
         <button class="btn btn-danger" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Profil du dirigeant</button>
       </form>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_back.php" method="post">
@@ -258,8 +258,7 @@ img.olTileImage {
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -275,27 +274,27 @@ img.olTileImage {
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    })
+</script>
 <!-- DATE PICKER -->
 <script src="../datepicker/js/bootstrap-datepicker.js"></script>
 <script>
-$(function(){
-			window.prettyPrint && prettyPrint();
-			$('#dpYears').datepicker();
-			$('#dpYears2').datepicker();
-		});
+    $(function () {
+        window.prettyPrint && prettyPrint();
+        $('#dpYears').datepicker();
+        $('#dpYears2').datepicker();
+    });
 </script>
 <script>
-$('#ch_his_periode').change(function () {
-    if ($(this).attr("checked")) 
-    {
-        $('.periode').fadeOut();
-        return;
-    }
-   $('.periode').fadeIn();
-});
+    $('#ch_his_periode').change(function () {
+        if ($(this).attr("checked")) {
+            $('.periode').fadeOut();
+            return;
+        }
+        $('.periode').fadeIn();
+    });
 </script>
 <!-- EDITEUR -->
 <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
@@ -313,3 +312,5 @@ var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7", "none
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
 var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {minChars:2, validateOn:["change"], maxChars:800, useCharacterMasking:false});
 </script>
+</body>
+</html>

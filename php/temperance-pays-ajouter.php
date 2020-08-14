@@ -121,7 +121,7 @@ $totalRows_pays = mysql_num_rows($pays);
     <div class="controls">
     <select name="ch_temp_element_id" id="ch_temp_element_id" class="span3">
       <?php do { ?>
-          <option value="<?php echo $row_pays['ch_pay_id']; ?>"><?php echo $row_pays['ch_pay_nom']; ?></option>
+          <option value="<?= e($row_pays['ch_pay_id']) ?>"><?= e($row_pays['ch_pay_nom']) ?></option>
       <?php } while ($row_pays = mysql_fetch_assoc($pays)); ?>
      </select>
     </div>
@@ -139,6 +139,3 @@ $totalRows_pays = mysql_num_rows($pays);
   </div>
   <input type="hidden" name="MM_insert" value="ajout-temperance">
 </form>
-<?php
-mysql_free_result($pays);
-?>
