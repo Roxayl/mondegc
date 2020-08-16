@@ -150,6 +150,9 @@ class Pays extends Model implements Searchable
         'archived' => 2,
     ];
 
+	public const PERMISSION_DIRIGEANT = 10;
+	public const PERMISSION_CODIRIGEANT = 5;
+
 	public function getSearchResult() : SearchResult
     {
 	    return new SearchResult(
@@ -165,6 +168,11 @@ class Pays extends Model implements Searchable
 	public function users()
     {
         return $this->belongsToMany(CustomUser::class, 'users_pays', 'ID_pays', 'ID_user');
+    }
+
+    public function geometries()
+    {
+        return $this->hasMany(Geometry::class, 'ch_geo_pay_id');
     }
 
     public function temperance()

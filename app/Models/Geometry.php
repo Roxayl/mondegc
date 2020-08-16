@@ -62,6 +62,11 @@ class Geometry extends Model
 		'ch_geo_nom'
 	];
 
+	public function pays()
+    {
+        return $this->belongsTo(Pays::class, 'ch_geo_pay_id');
+    }
+
 	public function type_geometry()
 	{
 		return $this->belongsTo(TypeGeometry::class, 'type_geometrie_id');

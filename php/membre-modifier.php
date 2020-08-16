@@ -1,22 +1,21 @@
-<?php ?>
 <?php
 
-switch ($row_User['ch_use_statut']) {
-case "5" : 
-$Rang_statut = 'Maire de villes';
-break;
-case "10" :  
-$Rang_statut = 'Dirigeant de pays';
-break;
-case "15" :  
-$Rang_statut = 'Juge Tempérant';
-break;
-case "20" :  
-$Rang_statut = 'Membre du Haut-Conseil';
-break;
-case "30" :  
-$Rang_statut = 'Administrateur';
-break;
+switch($row_User['ch_use_statut']) {
+    case "5" :
+        $Rang_statut = 'Maire de villes';
+        break;
+    case "10" :
+        $Rang_statut = 'Dirigeant de pays';
+        break;
+    case "15" :
+        $Rang_statut = 'Juge Tempérant';
+        break;
+    case "20" :
+        $Rang_statut = 'Membre du Haut-Conseil';
+        break;
+    case "30" :
+        $Rang_statut = 'Administrateur';
+        break;
 }
 
 //Liste pays pour moderation
@@ -83,9 +82,6 @@ $totalRows_pays = mysql_num_rows($pays);
           <!-- Definir statut du membre -->
       <div id="spryradio10" class="control-group"> <span class="control-label">Statut</span>
         <div class="controls">
-          <label class="radio" for="ch_use_statut_1">
-            <input name="ch_use_statut" type="radio" id="ch_use_prov_statut_1" value="5" <?php if (!(strcmp($row_User['ch_use_statut'],"5"))) {echo "checked=\"checked\"";} ?>>
-            Maire de villes<a href="#" rel="clickover" title="Maire" data-content="Un maire appartient &agrave; un pays. Il peut ajouter des villes qui appartiendront &agrave; son pays, cr&eacute;er des monuments et des communiqu&eacute;s. Il n'aura pas acc&egrave;s au formulaire permettant de modifier la page du pays."><i class="icon-info-sign"></i></a></label>
           <label class="radio" for="ch_use_statut_2">
             <input <?php if (!(strcmp($row_User['ch_use_statut'],"10"))) {echo "checked=\"checked\"";} ?> name="ch_use_statut" type="radio" id="ch_use_statut_2" value="10" checked="CHECKED" selected="selected">
             Dirigeant de pays<a href="#" rel="clickover" title="Dirigeant" data-content="Le dirigeant d'un pays peut alimenter les diff&eacute;rentes bases de donn&eacute;es au nom de son pays."><i class="icon-info-sign"></i></a></label>
