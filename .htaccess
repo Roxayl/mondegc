@@ -5,12 +5,9 @@ RewriteCond %{REQUEST_URI} !^/mondegc/public/
 RewriteCond %{REQUEST_URI} !^/mondegc/assets/
 RewriteCond %{REQUEST_URI} !^/mondegc/back/
 RewriteCond %{REQUEST_URI} !^/mondegc/Carto/
-RewriteCond %{REQUEST_URI} !^/mondegc/colorpicker/
-RewriteCond %{REQUEST_URI} !^/mondegc/datepicker/
 RewriteCond %{REQUEST_URI} !^/mondegc/lib/
 RewriteCond %{REQUEST_URI} !^/mondegc/php/
 RewriteCond %{REQUEST_URI} !^/mondegc/services/
-RewriteCond %{REQUEST_URI} !^/mondegc/SpryAssets/
 RewriteCond %{REQUEST_URI} !^/mondegc/userfiles/
 RewriteCond %{REQUEST_FILENAME} !\.php$
 RewriteRule ^(.*)$ /mondegc/public/$1 [L,QSA]
@@ -22,11 +19,3 @@ RewriteCond %{REQUEST_FILENAME} \.php$
 RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ public/index.php?target=$1.$2 [nc,L,QSA]
 RewriteCond %{REQUEST_FILENAME} \.php$
 RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ public/index.php?target=$1.$2.$3 [nc,L,QSA]
-
-# Gestion front controller sans Laravel (obsolete)
-#RewriteCond %{REQUEST_URI} !^/public(.*)$
-#RewriteRule ^([a-zA-Z0-9\s_-]+)\.php$ public/front.php?target=$1 [nc,L,QSA]
-#RewriteCond %{REQUEST_URI} !^/public(.*)$
-#RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ public/front.php?target=$1.$2 [nc,L,QSA]
-#RewriteCond %{REQUEST_URI} !^/public(.*)$
-#RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ public/front.php?target=$1.$2.$3 [nc,L,QSA]

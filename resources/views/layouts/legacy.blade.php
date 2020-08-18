@@ -21,7 +21,7 @@
     <![endif]-->
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="{{url('assets/ico/favicon.ico')}}">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ url(' assets/ico/apple-touch-icon-144-precomposed.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ url('assets/ico/apple-touch-icon-144-precomposed.png') }}">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ url('assets/ico/apple-touch-icon-114-precomposed.png') }}">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ url('assets/ico/apple-touch-icon-72-precomposed.png') }}">
     <link rel="apple-touch-icon-precomposed" href="{{ url('assets/ico/apple-touch-icon-57-precomposed.png') }}">
@@ -73,15 +73,8 @@
       </div>
     </footer>
 
-    <script src="{{url('assets/js/jquery.js')}}"></script>
-    <script src="{{url('assets/js/bootstrap.js')}}"></script>
-    <script src="{{url('assets/js/bootstrap-affix.js')}}"></script>
-    <script src="{{url('assets/js/application.js')}}"></script>
-    <script src="{{url('assets/js/bootstrap-scrollspy.js')}}"></script>
-    <script src="{{url('assets/js/bootstrapx-clickover.js')}}"></script>
-    <!-- MODAL -->
-    <script src="{{url('assets/js/bootstrap-modalmanager.js')}}"></script>
-    <script src="{{url('assets/js/bootstrap-modal.js')}}"></script>
+    <script src="{{mix('/js/vendor-compiled.js')}}"></script>
+    <script src="{{mix('/js/application-compiled.js')}}"></script>
     <script type="text/javascript">
     (function(window, document, $, undefined) {
         $(function() {

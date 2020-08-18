@@ -66,25 +66,25 @@ $totalRows_monument = mysql_num_rows($monument);
 
 //Recherche de la balance des ressources de la ville
 $villeid = "-1";
-if (isset($row_infoVille['ch_vil_ID'])) {
-$villeid = $row_infoVille['ch_vil_ID'];
+if(isset($row_infoVille['ch_vil_ID'])) {
+    $villeid = $row_infoVille['ch_vil_ID'];
 
-$query_somme_ressources = sprintf("SELECT SUM(ch_inf_off_budget) AS budget,SUM(ch_inf_off_Industrie) AS industrie, SUM(ch_inf_off_Commerce) AS commerce, SUM(ch_inf_off_Agriculture) AS agriculture, SUM(ch_inf_off_Tourisme) AS tourisme, SUM(ch_inf_off_Recherche) AS recherche, SUM(ch_inf_off_Environnement) AS environnement, SUM(ch_inf_off_Education) AS education FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_ID = %s AND ch_vil_capitale != 3 AND ch_inf_statut = 2", GetSQLValueString($villeid, "int"));
-$somme_ressources = mysql_query($query_somme_ressources, $maconnexion) or die(mysql_error());
-$row_somme_ressources = mysql_fetch_assoc($somme_ressources);
+    $query_somme_ressources = sprintf("SELECT SUM(ch_inf_off_budget) AS budget,SUM(ch_inf_off_Industrie) AS industrie, SUM(ch_inf_off_Commerce) AS commerce, SUM(ch_inf_off_Agriculture) AS agriculture, SUM(ch_inf_off_Tourisme) AS tourisme, SUM(ch_inf_off_Recherche) AS recherche, SUM(ch_inf_off_Environnement) AS environnement, SUM(ch_inf_off_Education) AS education FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_ID = %s AND ch_vil_capitale != 3 AND ch_inf_statut = 2", GetSQLValueString($villeid, "int"));
+    $somme_ressources = mysql_query($query_somme_ressources, $maconnexion) or die(mysql_error());
+    $row_somme_ressources = mysql_fetch_assoc($somme_ressources);
 
 //Recherche de la balance des ressources monument
-$query_monument_ressources = sprintf("SELECT SUM(ch_mon_cat_budget) AS budget,SUM(ch_mon_cat_industrie) AS industrie, SUM(ch_mon_cat_commerce) AS commerce, SUM(ch_mon_cat_agriculture) AS agriculture, SUM(ch_mon_cat_tourisme) AS tourisme, SUM(ch_mon_cat_recherche) AS recherche, SUM(ch_mon_cat_environnement) AS environnement, SUM(ch_mon_cat_education) AS education FROM monument_categories
+    $query_monument_ressources = sprintf("SELECT SUM(ch_mon_cat_budget) AS budget,SUM(ch_mon_cat_industrie) AS industrie, SUM(ch_mon_cat_commerce) AS commerce, SUM(ch_mon_cat_agriculture) AS agriculture, SUM(ch_mon_cat_tourisme) AS tourisme, SUM(ch_mon_cat_recherche) AS recherche, SUM(ch_mon_cat_environnement) AS environnement, SUM(ch_mon_cat_education) AS education FROM monument_categories
   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_villeID = %s", GetSQLValueString($villeid, "int"));
-$monument_ressources = mysql_query($query_monument_ressources, $maconnexion) or die(mysql_error());
-$row_monument_ressources = mysql_fetch_assoc($monument_ressources);
+    $monument_ressources = mysql_query($query_monument_ressources, $maconnexion) or die(mysql_error());
+    $row_monument_ressources = mysql_fetch_assoc($monument_ressources);
 
 // Total ressources
-$total_ressources = array('budget' => 0, 'industrie' => 0, 'commerce' => 0, 'agriculture' => 0, 'tourisme' => 0, 'recherche' => 0, 'environnement' => 0, 'education' => 0);
-foreach($total_ressources as $resourceName => $value) {
-    $total_ressources[$resourceName] = $row_monument_ressources[$resourceName] + $row_somme_ressources[$resourceName];
-}
+    $total_ressources = array('budget' => 0, 'industrie' => 0, 'commerce' => 0, 'agriculture' => 0, 'tourisme' => 0, 'recherche' => 0, 'environnement' => 0, 'education' => 0);
+    foreach($total_ressources as $resourceName => $value) {
+        $total_ressources[$resourceName] = $row_monument_ressources[$resourceName] + $row_somme_ressources[$resourceName];
+    }
 
 }
 
@@ -218,17 +218,18 @@ img.olTileImage {
 <script src="assets/js/bootstrap-scrollspy.js"></script>
 <script src="assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
+    $(function () {
+        $('[rel="clickover"]').clickover();
+    });
 </script>
 <!-- CARTE -->
 <script src="assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="assets/js/OpenLayers.js" type="text/javascript"></script>
 <?php include('php/carteville.php'); ?>
-<script> 
- $( document ).ready(function() {
-init();
-});
+<script>
+    $(document).ready(function () {
+        init();
+    });
 </script>
 <!-- MODAL -->
 <script src="assets/js/bootstrap-modalmanager.js"></script>
@@ -457,7 +458,7 @@ echo $population_ville_francais; ?></p>
     ================================================== -->
       <section id="presentation" class="titre-vert anchor">
         <div class="well">
-          <p><?= e($row_infoVille['ch_vil_header']) ?></p>
+          <p><?= htmlPurify($row_infoVille['ch_vil_header']) ?></p>
         </div>
       </section>
 

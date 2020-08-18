@@ -104,11 +104,7 @@ class Organisation extends Model implements Searchable
 
     public function temperance()
     {
-	    return $this
-            ->hasOne(TemperanceOrganisation::class, 'id', 'id')
-            ->join('organisation', 'organisation.id', '=',
-                   'temperance_organisation.id')
-            ->where('allow_temperance', '=', '1');
+	    return $this->hasOne(TemperanceOrganisation::class, 'id', 'id');
     }
 
     public function membersWithTemperance()

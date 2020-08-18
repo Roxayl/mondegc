@@ -21,7 +21,7 @@ $memberCount = $organisation->members->count();
         <?php if($organisation->allow_temperance): ?>
         <div class="pull-right" style="position: absolute; right: 0;">
             <?php
-            $temperance = $organisation->temperance()->get()->first();
+            $temperance = $organisation->temperance->toArray();
             renderElement('Temperance/resources_small',
                 array('resources' => $temperance)
             ); ?>

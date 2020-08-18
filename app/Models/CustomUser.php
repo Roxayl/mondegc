@@ -16,7 +16,7 @@ class CustomUser extends Authenticatable
 	protected $casts = [
 		'ch_use_acces' => 'bool',
 		'ch_use_paysID' => 'int',
-		'ch_use_statut' => 'bool'
+		'ch_use_statut' => 'int'
 	];
 
 	protected $dates = [
@@ -104,6 +104,18 @@ class CustomUser extends Authenticatable
     public function getReminderEmail()
     {
         return $this->ch_use_mail;
+    }
+
+    /**
+     * Vérifie si un utilisateur possède bien un pays, au niveau de permission co-dirigeant.
+     * @param Pays $pays Pays à vérifier.
+     * @return bool Renvoie <code>true</code> lorsque l'utilisateur dirige le pays,
+     *              <code>false</code> sinon.
+     */
+    public function ownsPays(Pays $pays) : bool
+    {
+        return in_array($pays->ch_pay_id,
+                 array_column($this->pays()->get()->toArray(), 'ch_pay_id'));
     }
 
     public function hasMinPermission($level) {

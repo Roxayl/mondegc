@@ -163,12 +163,6 @@ if(auth()->check()) {
         <!-- Menu -->
         <ul class="nav">
 
-          <li class="<?php if ($accueil) { echo('active');} ?>">
-            <center>
-              <a href="<?= DEF_URI_PATH ?>index.php"><i class="icon icon-accueil"></i></a>
-            </center>
-            <a href="<?= DEF_URI_PATH ?>index.php">Accueil</a> </li>
-
         <?php if(isset($_SESSION['userObject'])): ?>
           <li class="<?php if ($dashboard) { echo('active');}  ?>">
             <center>

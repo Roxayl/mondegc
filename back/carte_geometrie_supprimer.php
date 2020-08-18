@@ -1,16 +1,25 @@
 <?php
 
+use App\Models\Geometry;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+
 //deconnexion
 include(DEF_ROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'])
+if(!isset($_SESSION['userObject'])) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
+
+// Vérifier permissions
+$geometry = Geometry::findOrFail($_GET['ch_geo_id']);
+if( !auth()->user()->hasMinPermission('ocgc') &&
+    !auth()->user()->ownsPays($geometry->pays) )
 {
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
+    throw new AccessDeniedHttpException();
+}
 
 if ((isset($_GET['ch_geo_id'])) && ($_GET['ch_geo_id'] != "")) {
   $deleteSQL = sprintf("DELETE FROM geometries WHERE ch_geo_id=%s",

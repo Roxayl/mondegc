@@ -45,57 +45,17 @@ $row_geometries = mysql_fetch_assoc($geometries);
 		$tot_emploi = $tot_emploi + $emploi;
 		?>
   <div class="row-fluid">
-    <div class="titre-gris">
-      <h3 style="margin-left:20px;"><?php echo $label; ?>&nbsp;: <?php echo number_format($surface, 0, ',', ' '); ?> km<?php if ($typeZone == 'megapole' OR $typeZone == 'urbaine' OR $typeZone == 'periurbaine' OR $typeZone == 'industrielle' OR $typeZone == 'maraichere' OR $typeZone == 'cerealiere' OR $typeZone == 'elevage' OR $typeZone == 'prairies' OR $typeZone == 'forestiere' OR $typeZone == 'protegee' OR $typeZone == 'forestiere' OR $typeZone == 'marecageuse' OR $typeZone == 'lagunaire') {; ?><sup>2</sup><?php } ?></h3>
+    <div class="titre-gris pull-center">
+      <h4><?php echo $label; ?>&nbsp;: <?php echo number_format($surface, 0, ',', ' '); ?> km<?php if ($typeZone == 'megapole' OR $typeZone == 'urbaine' OR $typeZone == 'periurbaine' OR $typeZone == 'industrielle' OR $typeZone == 'maraichere' OR $typeZone == 'cerealiere' OR $typeZone == 'elevage' OR $typeZone == 'prairies' OR $typeZone == 'forestiere' OR $typeZone == 'protegee' OR $typeZone == 'forestiere' OR $typeZone == 'marecageuse' OR $typeZone == 'lagunaire') {; ?><sup>2</sup><?php } ?></h4>
     </div>
     <?php if ($typeZone == 'megapole' OR $typeZone == 'urbaine' OR $typeZone == 'periurbaine' OR $typeZone == 'industrielle' OR $typeZone == 'maraichere' OR $typeZone == 'cerealiere' OR $typeZone == 'elevage' OR $typeZone == 'prairies' OR $typeZone == 'forestiere' OR $typeZone == 'protegee' OR $typeZone == 'forestiere' OR $typeZone == 'marecageuse' OR $typeZone == 'lagunaire') {; ?><p class="pull-center">Population&nbsp;: <?php $chiffre_francais = number_format($population, 0, ',', ' '); echo $chiffre_francais; ?> habitants</p>
 <?php } ?>
-    <div class="span2">&nbsp;</div>
-    <ul class="token">
-      <li class="span1"><a title="Budget"><img src="http://www.generation-city.com/monde/assets/img/ressources/budget.png" alt="icone Budget"></a>
-        <p>
-          <?php $chiffre_francais = number_format($budget, 0, ',', ' '); echo $chiffre_francais; ?>
-        </p>
-      </li>
-      <li class="span1"><a title="Industrie"><img src="http://www.generation-city.com/monde/assets/img/ressources/industrie.png" alt="icone Industrie"></a>
-        <p>
-          <?php $chiffre_francais = number_format($industrie, 0, ',', ' '); echo $chiffre_francais; ?>
-        </p>
-      </li>
-      <li class="span1"><a title="Commerce"><img src="http://www.generation-city.com/monde/assets/img/ressources/bureau.png" alt="icone Commerce"></a>
-        <p>
-          <?php $chiffre_francais = number_format($commerce, 0, ',', ' '); echo $chiffre_francais; ?>
-        </p>
-      </li>
-      <li class="span1"><a title="Agriculture"><img src="http://www.generation-city.com/monde/assets/img/ressources/agriculture.png" alt="icone Agriculture"></a>
-        <p>
-          <?php $chiffre_francais = number_format($agriculture, 0, ',', ' '); echo $chiffre_francais; ?>
-        </p>
-      </li>
-      <li class="span1"><a title="Tourisme"><img src="http://www.generation-city.com/monde/assets/img/ressources/tourisme.png" alt="icone Tourisme"></a>
-        <p>
-          <?php $chiffre_francais = number_format($tourisme, 0, ',', ' '); echo $chiffre_francais; ?>
-        </p>
-      </li>
-      <li class="span1"><a title="Recherche"><img src="http://www.generation-city.com/monde/assets/img/ressources/recherche.png" alt="icone Recherche"></a>
-        <p>
-          <?php $chiffre_francais = number_format($recherche, 0, ',', ' '); echo $chiffre_francais; ?>
-        </p>
-      </li>
-      <li class="span1"><a title="Environnement"><img src="http://www.generation-city.com/monde/assets/img/ressources/environnement.png" alt="icone Environnement"></a>
-        <p>
-          <?php $chiffre_francais = number_format($environnement, 0, ',', ' '); echo $chiffre_francais; ?>
-        </p>
-      </li>
-      <li class="span1"><a title="Education"><img src="http://www.generation-city.com/monde/assets/img/ressources/education.png" alt="icone Education"></a>
-        <p>
-          <?php $chiffre_francais = number_format($education, 0, ',', ' '); echo $chiffre_francais; ?>
-        </p>
-      </li>
-    </ul>
+    <?php
+    renderElement('Temperance/resources', [
+        'resources' => compact(['budget', 'agriculture', 'commerce', 'education',
+             'environnement', 'industrie', 'recherche', 'tourisme'])
+    ]); ?>
   </div>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
   <?php } while ($row_geometries = mysql_fetch_assoc($geometries)); ?>
   <div class="row-fluid">
     <div class="titre-gris">
