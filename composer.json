@@ -52,7 +52,9 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Squirrel\\": "php/Squirrel/",
+            "GenCity\\": "php/GenCity/"
         },
         "classmap": [
             "database/seeds",

@@ -67,7 +67,8 @@ return [
     */
 
     'directory_path' => env('APP_DIR', ''),
-    'mix_url' => env('MIX_ASSET_URL', url('') . '/' . env('APP_DIR', '')),
+    'mix_url' => php_sapi_name() === 'cli' ? '' :
+        env('MIX_ASSET_URL', url('') . '/' . env('APP_DIR', '')),
 
     /*
     |--------------------------------------------------------------------------

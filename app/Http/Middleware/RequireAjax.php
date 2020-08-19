@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class RequireAjax
@@ -16,7 +17,7 @@ class RequireAjax
      */
     public function handle($request, Closure $next)
     {
-        if (config('app.env') === 'production' && !$request->ajax()) {
+        if (App::environment() === 'production' && !$request->ajax()) {
             throw new AccessDeniedHttpException();
         }
 
