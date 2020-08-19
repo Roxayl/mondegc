@@ -192,21 +192,21 @@ init();
 
     <?php if(count($proposalsPendingVotes)): ?>
         <h4 class="well">Vote en cours</h4>
-        <?php renderElement('Proposal/proposal_active_list', array(
+        <?php renderElement('proposal/proposal_active_list', array(
                 'proposalList' => $proposalsPendingVotes
             )); ?>
     <?php endif; ?>
 
     <?php if(count($proposalsPendingDebate)): ?>
         <h4 class="well">Débat en cours</h4>
-        <?php renderElement('Proposal/proposal_active_list', array(
+        <?php renderElement('proposal/proposal_active_list', array(
                 'proposalList' => $proposalsPendingDebate
             )); ?>
     <?php endif; ?>
 
     <?php if(count($proposalsPendingValidation)): ?>
         <h4 class="well">En attente d'une validation du Conseil de l'OCGC</h4>
-        <?php renderElement('Proposal/proposal_active_list', array(
+        <?php renderElement('proposal/proposal_active_list', array(
                 'proposalList' => $proposalsPendingValidation
             )); ?>
     <?php endif; ?>
@@ -218,7 +218,7 @@ init();
 
     <h3>Propositions déjà votées</h3>
     <?php if(count($proposalsFinished)): ?>
-        <?php renderElement('Proposal/proposal_finished_list', array(
+        <?php renderElement('proposal/proposal_finished_list', array(
                 'proposalList' => $proposalsFinished
             )); ?>
     <?php else: ?>

@@ -8,7 +8,7 @@ use GenCity\Monde\User;
 header('Content-Type: text/html; charset=utf-8');
 
 // renvoyer les données POST à soi-même
-$editFormAction = DEF_URI_PATH . 'php/Modal/pays_leader_add.php';
+$editFormAction = DEF_URI_PATH . 'php/modal/pays_leader_add.php';
 appendQueryString($editFormAction);
 
 $pays_ID = isset($_GET['pays_ID']) ? (int)$_GET['pays_ID'] : 0;

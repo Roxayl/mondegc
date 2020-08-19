@@ -519,7 +519,7 @@ echo $population_ville_francais; ?></p>
         <h3>Balance des ressources</h3>
         <div class="well">
           <?php
-            renderElement('Temperance/resources', array(
+            renderElement('temperance/resources', array(
                 'resources' => $total_ressources
             ));
           ?>
@@ -535,14 +535,14 @@ echo $population_ville_francais; ?></p>
             <div class="accordion-inner">
               <h4><i class="icon-road"></i> Infrastructures</h4>
                 <?php
-                renderElement('Temperance/resources_small', array(
+                renderElement('temperance/resources_small', array(
                     'resources' => $row_somme_ressources
                 ));
                 ?>
                 <p></p>
               <h4><i class="icon-star"></i> Culture</h4>
                 <?php
-                renderElement('Temperance/resources_small', array(
+                renderElement('temperance/resources_small', array(
                     'resources' => $row_monument_ressources
                 ));
                 ?>

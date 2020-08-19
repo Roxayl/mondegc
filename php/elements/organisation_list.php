@@ -22,7 +22,7 @@ $memberCount = $organisation->members->count();
         <div class="pull-right" style="position: absolute; right: 0;">
             <?php
             $temperance = $organisation->temperance->toArray();
-            renderElement('Temperance/resources_small',
+            renderElement('temperance/resources_small',
                 array('resources' => $temperance)
             ); ?>
         </div>

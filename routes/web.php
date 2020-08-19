@@ -36,7 +36,6 @@ Route::post('password/reset', 'Legacy\LegacySiteController@authFallback');
 /* Default */
 Route::get('/laravel', function() { return view('welcome'); });
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('layouttester', 'LayoutTesterController@index');
 
 /* Page */
 Route::get('/page/{page}-{url}', 'PageController@index')->name('page.show');

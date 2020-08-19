@@ -25,7 +25,7 @@ if(isset($data['pays'])) {
   </div>
   <div class="row-fluid">
     <div class="span10 offset2">
-        <?php renderElement('Temperance/resources_small',
+        <?php renderElement('temperance/resources_small',
             ['resources' => $temperance]); ?>
     </div>
   </div>

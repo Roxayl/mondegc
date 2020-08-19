@@ -440,13 +440,13 @@ img.olTileImage {
             <td>
             <?php if($_SESSION['userObject']->minStatus('OCGC') ||
                      $thisPays->getUserPermission() >= Pays::$permissions['dirigeant']): ?>
-                <a class="btn btn-primary" href="../php/Modal/pays_leader_edit.php?user_pays_ID=<?= $rowLeaders['users_pays_ID'] ?>" data-toggle="modal" data-target="#Modal-Monument">Gérer cet utilisateur</a>
+                <a class="btn btn-primary" href="../php/modal/pays_leader_edit.php?user_pays_ID=<?= $rowLeaders['users_pays_ID'] ?>" data-toggle="modal" data-target="#Modal-Monument">Gérer cet utilisateur</a>
             <?php endif; ?>
             </td>
             <td>
             <?php if($_SESSION['userObject']->minStatus('OCGC') ||
                      $thisPays->getUserPermission() >= Pays::$permissions['dirigeant']): ?>
-                <a class="btn btn-danger" href="../php/Modal/pays_leader_delete.php?user_pays_ID=<?= $rowLeaders['users_pays_ID'] ?>" data-toggle="modal" data-target="#Modal-Monument"><i class="icon-trash icon-white"></i> Supprimer</a>
+                <a class="btn btn-danger" href="../php/modal/pays_leader_delete.php?user_pays_ID=<?= $rowLeaders['users_pays_ID'] ?>" data-toggle="modal" data-target="#Modal-Monument"><i class="icon-trash icon-white"></i> Supprimer</a>
             <?php endif; ?>
             </td>
             <td></td>
@@ -455,7 +455,7 @@ img.olTileImage {
       </tbody>
     </table>
 
-    <a class="btn btn-primary btn-margin-left" href="../php/Modal/pays_leader_add.php?pays_ID=<?= $thisPays->ch_pay_id ?>" data-toggle="modal" data-target="#Modal-Monument">Ajouter un dirigeant...</a>
+    <a class="btn btn-primary btn-margin-left" href="../php/modal/pays_leader_add.php?pays_ID=<?= $thisPays->ch_pay_id ?>" data-toggle="modal" data-target="#Modal-Monument">Ajouter un dirigeant...</a>
 
     </section>
 
@@ -991,7 +991,7 @@ img.olTileImage {
           ); ?>
 
           <?php
-            renderElement('Temperance/resources', array(
+            renderElement('temperance/resources', array(
                 'resources' => $ressources_cartes,
                 'path' => '../'
             ));

@@ -223,7 +223,7 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
         <br>
         <p><strong>Influence sur l'économie :</strong></p>
             <?php
-            renderElement('Temperance/resources_small', array(
+            renderElement('temperance/resources_small', array(
                 'resources' => $row_monument_ressources
             ));
             ?>

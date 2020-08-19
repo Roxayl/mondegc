@@ -189,7 +189,7 @@ init();
     <h3>Propositions déjà votées</h3>
 
     <?php if(count($proposalsFinished)): ?>
-        <?php renderElement('Proposal/proposal_finished_list', array(
+        <?php renderElement('proposal/proposal_finished_list', array(
                 'proposalList' => $proposalsFinished
             )); ?>
     <?php else: ?>

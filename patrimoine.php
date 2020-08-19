@@ -242,7 +242,7 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
                 <p><?= e($row_info_cat['ch_mon_cat_desc']) ?></p
                 <p><strong>Influence sur l'économie de cette catégorie :</strong></p>
                   <?php
-                    renderElement('Temperance/resources', array(
+                    renderElement('temperance/resources', array(
                         'resources' => $row_monument_ressources
                     ));
                   ?>

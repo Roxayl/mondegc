@@ -239,7 +239,7 @@ include(DEF_ROOTPATH . 'php/navbar.php'); ?>
     <!-- ZONE DE DÉBATS -->
     <div class="cta-title pull-right-cta">
     <?php if(isset($_SESSION['userObject'])): ?>
-        <a href="../php/Modal/proposal_debate_edit.php?ID_proposal=<?= $formProposal->get('id') ?>"
+        <a href="../php/modal/proposal_debate_edit.php?ID_proposal=<?= $formProposal->get('id') ?>"
            data-toggle="modal" data-target="#Modal-Monument" class="btn btn-primary btn-cta">
             <i class="icon-white icon-edit"></i></a>
     <?php endif; ?>
@@ -345,7 +345,7 @@ include(DEF_ROOTPATH . 'php/navbar.php'); ?>
                         \GenCity\Proposal\Proposal::allValidationStatus('voteFinished')): ?>
                         <h2>
                         <?php
-                        renderElement('Proposal/proposal_decision', array(
+                        renderElement('proposal/proposal_decision', array(
                             'decisionData' => $proposalDecision->outputFormat())); ?>
                         </h2>
 
@@ -363,7 +363,7 @@ include(DEF_ROOTPATH . 'php/navbar.php'); ?>
                 </div>
 
                 <div class="span6 well">
-                    <?php renderElement('Proposal/proposal_description',
+                    <?php renderElement('proposal/proposal_description',
                         array('formProposal' => $formProposal,
                               'decisionData' => $proposalDecision->outputFormat())); ?>
                 </div>
@@ -380,7 +380,7 @@ include(DEF_ROOTPATH . 'php/navbar.php'); ?>
             \GenCity\Proposal\Proposal::allValidationStatus('votePending') &&
            count($userVotes) > 0):
 
-            renderElement('Proposal/proposal_pending_votes', array(
+            renderElement('proposal/proposal_pending_votes', array(
                 'formProposal' => $formProposal,
                 'userVotes' => $userVotes
             ));
@@ -388,7 +388,7 @@ include(DEF_ROOTPATH . 'php/navbar.php'); ?>
         elseif($formProposal->getStatus(false) ===
             GenCity\Proposal\Proposal::allValidationStatus('voteFinished')):
 
-            renderElement('Proposal/proposal_final_votes', array(
+            renderElement('proposal/proposal_final_votes', array(
                 'formProposal' => $formProposal
             ));
 

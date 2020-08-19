@@ -12,7 +12,7 @@ if (!isset($_SESSION['userObject'])) {
 
 if(isset($_GET['fetch'])) {
 
-    renderElement('Notification/generate_user_notifications');
+    renderElement('notification/generate_user_notifications');
 
 }
 
