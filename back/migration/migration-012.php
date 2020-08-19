@@ -34,6 +34,11 @@ WHERE organisation_members.permissions >= 10
   AND o.allow_temperance = 1
 GROUP BY o.id";
 
+// Supprime les tables des packages installés.
+$queries[] = "DROP TABLE `activations`, `admin_activations`, `admin_password_resets`,
+    `admin_users`, `images`, `media`, `model_has_permissions`, `model_has_roles`,
+    `permissions`, `roles`, `role_has_permissions`, `translations`, `wysiwyg_media`";
+
 $queries[] = "SET FOREIGN_KEY_CHECKS=1";
 
 // Exécuter la requête

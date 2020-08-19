@@ -15,25 +15,15 @@ class Page extends Model
         'seo_keywords',
         'published_at',
         'cover_image',
-    
+
     ];
-    
-    
+
     protected $dates = [
         'created_at',
         'updated_at',
         'published_at',
-    
+
     ];
-    
-    protected $appends = ['resource_url'];
-
-    /* ************************ ACCESSOR ************************* */
-
-    public function getResourceUrlAttribute()
-    {
-        return url('/admin/pages/'.$this->getKey());
-    }
 
     public function getPageOrFail() {
 
