@@ -159,10 +159,6 @@ img.olTileImage {
 }
 </style>
 
-<!-- PARLIAMENT -->
-<script src="../assets/js/d3.v4.min.js"></script>
-<script src="../assets/js/d3-parliament.js"></script>
-
 <!-- STYLE -->
 <style media="screen">
     
@@ -184,7 +180,7 @@ img.olTileImage {
     <?php endforeach; ?>
     </style>
 </head>
-<body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
+<body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140">
 
 <!-- Navbar
     ================================================== -->
@@ -444,6 +440,7 @@ include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <!-- Footer
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>
@@ -453,279 +450,33 @@ include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script src="../assets/js/bootstrap-modalmanager.js"></script>
 <script src="../assets/js/bootstrap-modal.js"></script>
-<script src="../assets/js/Chart.2.7.3.bundle.js"></script>
 <script type="text/javascript">
-$(function() {
-    $('[rel="clickover"]').clickover();})
+    $(function() {
+        $('[rel="clickover"]').clickover();
+    });
 </script>
 
+<!-- PARLIAMENT -->
 <script type="text/javascript">
-(function(window, document, $, d3, Chart, undefined) {
-
-    /** Countdown **/
-
-    try {
-
-        var countdownElementId = 'proposal-countdown';
-
-        var CountDownTimer = function(dt, id) {
-            var end = new Date(dt);
-
-            var _second = 1000;
-            var _minute = _second * 60;
-            var _hour = _minute * 60;
-            var _day = _hour * 24;
-            var timer;
-
-            function showRemaining() {
-                var now = new Date();
-                var distance = end - now;
-                if (distance < 0) {
-
-                    clearInterval(timer);
-                    document.getElementById(id).innerHTML = 'Vote terminé';
-
-                    return;
-                }
-                var days = Math.floor(distance / _day);
-                var hours = Math.floor((distance % _day) / _hour) + (days * 24);
-                var minutes = Math.floor((distance % _hour) / _minute);
-                var seconds = Math.floor((distance % _minute) / _second);
-
-                var output = '';
-
-                output += ('0' + hours).slice(-2) + ':';
-                output += ('0' + minutes).slice(-2) + ':';
-                output += ('0' + seconds).slice(-2) + '';
-
-                document.getElementById(id).innerHTML = '<h4 style="margin: 0;">Vote en cours</h4>' + output;
-            }
-
-            timer = setInterval(showRemaining, 1000);
-        };
-
-        if($('#' + countdownElementId).get(0).hasAttribute('runCountdown')) {
-            CountDownTimer("<?= $formProposal->get('debate_end') ?>", countdownElementId);
+    var parliamentData = {
+        proposal: {
+            dateEnd: "<?= e($formProposal->get('debate_end')) ?>",
+        },
+        chart: {
+            labels: <?= json_encode(__s($voteChartResults['labels'])) ?>,
+            dataset: <?= json_encode(__s($voteChartResults['data'])) ?>,
+            bgColor: <?= json_encode(__s($voteChartResults['bgColor'])) ?>,
+        },
+        diagram: {
+            data: <?= json_encode(__s($voteResults['d3DataSource'])) ?>,
+        },
+        tooltip: {
+            data: <?= json_encode(__s($reponsesData)) ?>,
         }
-
-    } catch(err) { }
-
-
-    /** Modal **/
-
-    $("a[data-toggle=modal]").click(function (e) {
-      var lv_target = $(this).attr('data-target');
-      var lv_url = $(this).attr('href');
-      $(lv_target).load(lv_url)});
-
-    $('#closemodal').click(function() {
-        $('#Modal-Monument').modal('hide');
-    });
-
-
-    /** Chart.js **/
-
-    var ctx = document.getElementById("parliament-chart");
-    setTimeout(function() {
-        var myChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: <?= json_encode(__s($voteChartResults['labels'])) ?>,
-                datasets: [{
-                    label: '# of Votes',
-                    data: <?= json_encode(__s($voteChartResults['data'])) ?>,
-                    backgroundColor: <?= json_encode(__s($voteChartResults['bgColor'])) ?>,
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                rotation: 0.955 * Math.PI,
-                circumference: 1.09 * Math.PI,
-                legend: {
-                    display: false
-                },
-                animation: {
-                    animateScale: true,
-                    animateRotate: true
-                }
-            }
-        });
-    }, 1000);
-
-
-    /** Diagram init **/
-
-    var parliament = d3.parliament().width(500).height(270).innerRadiusCoef(0.39);
-    parliament.enter.fromCenter(true).smallToBig(true);
-    parliament.exit.toCenter(true).bigToSmall(true);
-    parliament.on("click", function(e) { console.log(e); });
-
-    var diagramData = <?= json_encode($voteResults['d3DataSource']) ?>;
-
-    var setData = function(d) {
-        d3.select("#parliament").datum(d).call(parliament);
     };
-
-    setData(diagramData);
-
-
-    /** Tooltip **/
-
-    var voteData = <?= json_encode($reponsesData); ?>;
-
-    var tooltip = d3.selectAll(".tooltip:not(.css)");
-    var HTMLmouseTip = d3.select("div.tooltip.mouse");
-    /* If this seems like a lot of different variables,
-       remember that normally you'd only implement one
-       type of tooltip! */
-
-    var generateTooltipHtmlData = function(voteId) {
-
-        var str = '';
-        str += '<div class="tooltip-container" style="border-color: ' + voteData[voteId].reponseColor + '">';
-        str += '<img src="' + voteData[voteId].paysDrapeau + '" class="img-menu-drapeau" /> '
-        str += "<span>"
-        str += voteData[voteId].paysNom
-        str += "</span>"
-        str += "<br>"
-        str += '<strong style="color: ' + voteData[voteId].reponseColor + '">'
-        str += voteData[voteId].reponseIntitule.toUpperCase()
-        str += '</strong>'
-        str += '</div>';
-
-        return str;
-
-    };
-
-    /* I'm using d3 to add the event handlers to the circles
-       and set positioning attributes on the tooltips, but
-       you could use JQuery or plain Javascript. */
-    d3.select("svg").select("g")
-        .selectAll("circle")
-
-        /***** Easy but ugly tooltip *****/
-        .attr("title", "Automatic Title Tooltip")
-
-        .on("mouseover", function () {
-
-            tooltip.style("opacity", "1");
-
-            /* You'd normally set the tooltip text
-               here, based on data from the  element
-               being moused-over; I'm just setting colour. */
-            tooltip.style("color", this.getAttribute("fill") );
-          /* Note: SVG text is set in CSS to link fill colour to
-             the "color" attribute. */
-
-            var tooltipString = generateTooltipHtmlData(d3.select(this).attr('data-vote-id'));
-            tooltip.html(tooltipString);
-
-            /***** Positioning a tooltip precisely
-                   over an SVG element *****/
-
-            /***** For an HTML tooltip *****/
-
-            //for the HTML tooltip, we're not interested in a
-            //transformation relative to an internal SVG coordinate
-            //system, but relative to the page body
-
-            //We can't get that matrix directly,
-            //but we can get the conversion to the
-            //screen coordinates.
-
-            var matrix = this.getScreenCTM()
-                    .translate(+this.getAttribute("cx"),
-                             +this.getAttribute("cy"));
-
-        })
-        .on("mousemove", function () {
-
-            /***** Positioning a tooltip using mouse coordinates *****/
-
-            /* The code is shorter, but it runs every time
-               the mouse moves, so it could slow down other
-               processes or animation. */
-
-            /***** For an HTML tooltip *****/
-
-            //mouse coordinates relative to the page as a whole
-            //can be accessed directly from the click event object
-            //(which d3 stores as d3.event)
-            HTMLmouseTip
-                .style("left", Math.max(0, d3.event.pageX - 150) + "px")
-                .style("top", (d3.event.pageY + 20) + "px");
-        })
-        .on("mouseout", function () {
-            return tooltip.style("opacity", "0");
-        });
-
-
-    /** Editing **/
-
-    var getSpecificSvgId = function(vote_id) {
-
-        for(var i = 0; i < diagramData['d3DataSource'].length; i++) {
-            if(diagramData['d3DataSource'][i]['id'] === vote_id) {
-                return;
-            }
-        }
-
-    };
-
-    var manageColors = function($thisInput) {
-
-        var selectedColor = '#83808A';
-
-        $thisInput.closest('ul').find('li').each(function() {
-
-            var el = $(this);
-
-            if(el.find('input[name="voteCast[reponse_choisie]"]').prop('checked')) {
-                el.css({
-                    "border-color": el.attr('data-default-color'),
-                    "background-color": el.attr('data-default-color'),
-                    "color": "#ffffff"
-                });
-                selectedColor = el.attr('data-default-color');
-            } else {
-                el.css({
-                    "border-color": el.attr('data-default-color'),
-                    "background-color": "#fafafa",
-                    "color": el.attr('data-default-color')
-                });
-            }
-
-        });
-
-        var row_id = $thisInput.closest('form').find('input[name="voteCast[id]"]').val();
-        $('svg .seat.diagram-pays-' + row_id).css({'fill': selectedColor});
-
-    };
-
-    $(document).on('change', 'input[name="voteCast[reponse_choisie]"]', function(ev) {
-        
-        $('input[name="voteCast[reponse_choisie]"]').not(this).prop('checked', false);
-
-        var $form = $(this).closest('form');
-
-        $.ajax({
-            url: $form.attr('action'),
-            type: 'POST',
-            data: $form.serialize()
-        }).success(function(data) {
-            // TODO! Ajouter un message dans la bannière.
-        });
-
-        manageColors($(ev.target));
-
-    });
-
-    $('input[name="voteCast[reponse_choisie]"]').filter(':checked').each(function() {
-        manageColors($(this));
-    });
-
-})(window, document, jQuery, d3, Chart);
 </script>
+<script src="<?= mix('/js/vendor-parliament-compiled.js') ?>"></script>
+<script src="<?= mix('/js/parliament-compiled.js') ?>"></script>
 
 </body>
 </html>

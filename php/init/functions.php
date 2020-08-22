@@ -1210,7 +1210,11 @@ function dateFormat($date, $getTime = false)
  */
 function __s($text)
 {
-    return htmlspecialchars($text, ENT_QUOTES);
+    if(is_array($text)) {
+        return filter_var_array($text, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    } else {
+        return htmlspecialchars($text, ENT_QUOTES);
+    }
 }
 
 
