@@ -293,7 +293,7 @@ do {
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
               <p><a href="<?= route('organisation.showslug', ['id' => $row_LastCommunique['id_institution'], 'slug' => \Illuminate\Support\Str::slug($row_LastCommunique['institution'])]) ?>"><?= __s($row_LastCommunique['institution']) ?></a> a publié un communiqué :</p>
-              <h4><a href="page-communique.php?com_id=<?= $row_LastCommunique['id'] ?>"> <?= __s($row_LastCommunique['titre']) ?> </a> </h4>
+              <h4><a href="page-communique.php?com_id=<?= e($row_LastCommunique['id']) ?>"> <?= __s($row_LastCommunique['titre']) ?> </a> </h4>
             </div>
             <div class="span2 auteur"> <a href="page-pays.php?ch_pay_id=<?= __s($row_LastCommunique['id_institution']) ?>"><img src="<?= __s($row_LastCommunique['img_institution']) ?>" alt="Drapeau de <?= __s($row_LastCommunique['institution']) ?>"></a> </div>
         </div>
@@ -779,7 +779,7 @@ do {
               <?= date("d/m/Y à G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
               <p>L'Assemblée générale a voté sur la proposition suivante :</p>
-              <h4><a href="back/ocgc_proposal.php?id=<?= $row_LastCommunique['id_element'] ?>"><?php echo __s($row_LastCommunique['titre']) ?></a></h4>
+              <h4><a href="back/ocgc_proposal.php?id=<?= e($row_LastCommunique['id_element']) ?>"><?php echo __s($row_LastCommunique['titre']) ?></a></h4>
               <div class="btn-margin-left">Résultat : <?= $info ?></div>
             </div>
         </div>
@@ -804,11 +804,11 @@ do {
             <div class="span8"> <small>le
               <?= date("d/m/Y à G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-                <p><a href="page-pays.php?ch_pay_id=<?= $row_LastCommunique['id_institution'] ?>"><?= __s($row_LastCommunique['pays_institution']) ?></a> a créé une nouvelle proposition portant sur le thème suivant :</p>
-              <h4><a href="back/ocgc_proposal.php?id=<?= $row_LastCommunique['id_element'] ?>"><?php echo __s($row_LastCommunique['titre']) ?></a></h4>
+                <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['id_institution']) ?>"><?= __s($row_LastCommunique['pays_institution']) ?></a> a créé une nouvelle proposition portant sur le thème suivant :</p>
+              <h4><a href="back/ocgc_proposal.php?id=<?= e($row_LastCommunique['id_element']) ?>"><?php echo __s($row_LastCommunique['titre']) ?></a></h4>
             </div>
             <div class="span2">
-              <a href="page-pays.php?ch_pay_id=<?= $row_LastCommunique['id_institution'] ?>">
+              <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['id_institution']) ?>">
                   <img src="<?= __s($row_LastCommunique['img_institution']) ?>"
                        alt="Logo pays <?= __s($row_LastCommunique['pays_institution']) ?>">
               </a>

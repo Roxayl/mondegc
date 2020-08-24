@@ -63,7 +63,7 @@ if(auth()->check()) {
           <a href="<?= DEF_URI_PATH ?>dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mes pays</a>
           <ul class="dropdown-menu dropdown-mes-pays" role="menu" aria-labelledby="dLabel">
           <?php foreach($nav_userPays as $nav_thisPays): ?>
-            <li style="width: 100%;"><a tabindex="-1" href="back/page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>"><img class="img-menu-drapeau" src="<?= $nav_thisPays['ch_pay_lien_imgdrapeau'] ?>"> <?= $nav_thisPays['ch_pay_nom'] ?></a></li>
+            <li style="width: 100%;"><a tabindex="-1" href="back/page_pays_back.php?paysID=<?= e($nav_thisPays['ch_pay_id']) ?>"><img class="img-menu-drapeau" src="<?= e($nav_thisPays['ch_pay_lien_imgdrapeau']) ?>"> <?= e($nav_thisPays['ch_pay_nom']) ?></a></li>
           <?php endforeach; ?>
           </ul>
         </div>
@@ -94,15 +94,19 @@ if(auth()->check()) {
         <div class="hidden-tablet navbar-form <?php echo isset($_SESSION['menu_gestion']) ? $_SESSION['menu_gestion'] : '' ?>">
             <div><a href="<?= DEF_URI_PATH ?>back/membre-modifier_back.php?userID=<?= isset($_SESSION['user_ID']) ? $_SESSION['user_ID'] : '' ?>" class="btn btn-primary" type="submit" title="page de gestion du profil" style="visibility: hidden;"><i class="icon-user-white"></i> Mon profil</a></div>
 
-        <?php if(isset($_SESSION['userObject'])): ?>
+        <?php if(isset($_SESSION['userObject'])):
+
+            $navbar_intitulePays = count($nav_userPays) > 1 ? 'Mes pays' : 'Mon pays';
+            ?>
             <div class="offset" style="margin-top: 35px;">
 
                 <div class="dropdown pull-right">
-                  <a href="<?= DEF_URI_PATH ?>dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="Gérer mes pays"><i class="icon-pays-small-white"></i> Mes pays</a>
+                  <a href="<?= DEF_URI_PATH ?>dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="Gérer mes pays"><i class="icon-pays-small-white"></i> <?= $navbar_intitulePays ?></a>
                   <ul class="dropdown-menu dropdown-mes-pays" role="menu" aria-labelledby="dLabel">
+                      <li class="nav-header">Gérer <?= \Illuminate\Support\Str::lower($navbar_intitulePays) ?></li>
                       <?php foreach($nav_userPays as $nav_thisPays): ?>
-                      <li><a href="<?= DEF_URI_PATH ?>back/page_pays_back.php?paysID=<?= $nav_thisPays['ch_pay_id'] ?>" style="padding-left: 5px;">
-                        <img class="img-menu-drapeau" src="<?= $nav_thisPays['ch_pay_lien_imgdrapeau'] ?>"> <?= $nav_thisPays['ch_pay_nom'] ?>
+                      <li><a href="<?= DEF_URI_PATH ?>back/page_pays_back.php?paysID=<?= e($nav_thisPays['ch_pay_id']) ?>" style="padding-left: 5px;">
+                        <img class="img-menu-drapeau" src="<?= e($nav_thisPays['ch_pay_lien_imgdrapeau']) ?>"> <?= e($nav_thisPays['ch_pay_nom']) ?>
                          </a></li>
                       <?php endforeach; ?>
                       <li class="divider"></li>

@@ -133,7 +133,7 @@ $totalPages_ListPays = ceil($totalRows_ListPays/$maxRows_ListPays)-1;
               </td>
               <td><?php echo date("d/m/Y � G:i:s", strtotime($row_ListPays['ch_pay_mis_jour'])); ?></td>
               <td>
-                  <a href="page_pays_back.php?paysID=<?= $row_ListPays['ch_pay_id'] ?>" class="btn" type="submit" title="modifier le pays"><i class="icon-pencil"></i></a></td>
+                  <a href="page_pays_back.php?paysID=<?= e($row_ListPays['ch_pay_id']) ?>" class="btn" type="submit" title="modifier le pays"><i class="icon-pencil"></i></a></td>
               <?php if ($_SESSION['userObject']->minStatus('Administrateur'))
               {?>
               <td><form action="<?= DEF_URI_PATH ?>back/page_pays_confirmer_supprimer.php" method="post">

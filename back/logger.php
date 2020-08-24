@@ -113,7 +113,7 @@ $logs = \GenCity\Monde\Logger\Log::getAll($limit, $offset);
 
         <?php if(count($logs)): ?>
 
-            <?php renderElement('Logger/log_list', array('logs' => $logs)); ?>
+            <?php renderElement('logger/log_list', array('logs' => $logs)); ?>
 
         <?php else: ?>
             <p>Aucun élément dans le journal.</p>

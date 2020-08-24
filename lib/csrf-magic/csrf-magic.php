@@ -165,19 +165,17 @@ function csrf_ob_handler($buffer, $flags) {
                 'var csrfMagicToken = "'.$tokens.'";'.
                 'var csrfMagicName = "'.$name.'";</script>'.
             '<script src="'.$js.'" type="text/javascript"></script>'.
-
-            '<script type="text/javascript">
+            '</head>',
+            $buffer
+        );
+        $script = '<script type="text/javascript">
             $(document).ajaxSuccess(function() {
                 try {
                     CsrfMagic.end();
                 } catch(err) { console.log("Erreur CsrfMagic"); }
             });
             </script>' .
-
-            '</head>',
-            $buffer
-        );
-        $script = '<script type="text/javascript">CsrfMagic.end();</script>';
+            '<script type="text/javascript">CsrfMagic.end();</script>';
         $buffer = str_ireplace('</body>', $script . '</body>', $buffer, $count);
         if (!$count) {
             $buffer .= $script;

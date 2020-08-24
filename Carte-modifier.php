@@ -348,7 +348,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
           {
               $resources[$resource] = $row_InfoGenerale["ch_pay_{$resource}_carte"];
           }
-          renderElement('Temperance/resources_small', [
+          renderElement('temperance/resources_small', [
                   'resources' => $resources
           ]); ?>
       </div>

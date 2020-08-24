@@ -334,7 +334,7 @@ return true;
         <li><a href="#mes-communiques">Communiqu&eacute;s officiels</a></li>
         <li><a href="#mes-infrastructures">Infrastructures</a></li>
         <li><a href="#mes-monuments">Monuments</a></li>
-        <li><a href="page_pays_back.php?paysID=<?= $row_ville['ch_pay_id'] ?>">Retour &agrave; mon pays</a></li>
+        <li><a href="page_pays_back.php?paysID=<?= e($row_ville['ch_pay_id']) ?>">Retour &agrave; mon pays</a></li>
       </ul>
     </div>
     <!-- END Docs nav
@@ -345,13 +345,13 @@ return true;
     <section class="span9 corps-page">
 
     <ul class="breadcrumb pull-left">
-      <li><a href="page_pays_back.php?paysID=<?= $row_ville['ch_pay_id'] ?>&userID=<?= $row_User['ch_use_id'] ?>">Gestion du pays : <?= $row_ville['ch_pay_nom'] ?></a> <span class="divider">/</span></li>
-      <li class="active">Gestion de la ville : <?= $row_ville['ch_vil_nom'] ?></li>
+      <li><a href="page_pays_back.php?paysID=<?= e($row_ville['ch_pay_id']) ?>&userID=<?= e($row_User['ch_use_id']) ?>">Gestion du pays : <?= e($row_ville['ch_pay_nom']) ?></a> <span class="divider">/</span></li>
+      <li class="active">Gestion de la ville : <?= e($row_ville['ch_vil_nom']) ?></li>
     </ul>
     <div class="clearfix"></div>
 
     <div class="pull-left">
-        <a class="btn btn-primary btn-margin-left" href="../page-ville.php?ch_pay_id=<?= $row_ville['ch_pay_id'] ?>&ch_ville_id=<?= $row_ville['ch_vil_ID'] ?>" type="submit" title="page de gestion du pays">Accéder à la page de la ville</a>
+        <a class="btn btn-primary btn-margin-left" href="../page-ville.php?ch_pay_id=<?= e($row_ville['ch_pay_id']) ?>&ch_ville_id=<?= e($row_ville['ch_vil_ID']) ?>" type="submit" title="page de gestion du pays">Accéder à la page de la ville</a>
     </div>
 
       <!-- Moderation
@@ -734,7 +734,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
                 <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
                 <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une infrastructure</button>
               </form>-->
-              <a href="infra_select_group.php?ville_id=<?= $row_ville['ch_vil_ID'] ?>"
+              <a href="infra_select_group.php?ville_id=<?= e($row_ville['ch_vil_ID']) ?>"
                  class="btn btn-primary btn-margin-left">Ajouter une infrastructure</a>
             </td>
           </tr>
@@ -746,7 +746,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
         <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
         <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une infrastructure</button>
       </form>-->
-          <a href="infra_select_group.php?ville_id=<?= $row_ville['ch_vil_ID'] ?>"
+          <a href="infra_select_group.php?ville_id=<?= e($row_ville['ch_vil_ID']) ?>"
              class="btn btn-primary btn-margin-left">Ajouter une infrastructure</a>
       <?php } ?>
       <!-- Modal et script -->

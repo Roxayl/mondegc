@@ -48,26 +48,14 @@ if($mondegc_config['hide_errors'] === true) {
 
 
 /*************************
- * Librairies (autoload) *
+ *  Librairies diverses  *
  *************************/
-
-require_once(DEF_ROOTPATH . 'vendor/autoload.php');
-
-// Auto-chargement de classes
-spl_autoload_register(function($class) {
-    // On vire l'espace de noms "Squirrel\" dans un nom de classe.
-    // $class = preg_replace('`Squirrel\\\\`', '', $class, 1);
-    // On remplace les anti-slash par des slash
-    $class = str_replace('\\', '/', $class);
-    include(DEF_ROOTPATH.'php/'. $class . '.php');
-});
 
 // Fonctions diverses
 require(DEF_ROOTPATH . 'php/init/functions.php');
 
 // Librairie CSRF Magic
 if($mondegc_config['enable_csrf_protection'] === true) {
-    /* CSRF-Magic */
     if(!function_exists('csrf_startup')) {
         function csrf_startup() {
             csrf_conf('rewrite-js', DEF_URI_PATH . 'lib/csrf-magic/csrf-magic.js');
@@ -78,8 +66,8 @@ if($mondegc_config['enable_csrf_protection'] === true) {
     require_once DEF_ROOTPATH . 'lib/csrf-magic/csrf-magic.php';
 }
 
-/* wrapper mysql_ */
-// wrapper pour les fonctions MySQL pour PHP7
+// wrapper mysql_ :
+// wrapper pour les fonctions MySQL obsolètes, pour PHP7
 if(version_compare(phpversion(), '7.0.0', '>=')) {
     require_once(DEF_ROOTPATH . 'lib/mysql_wrapper/mysql_wrapper.php');
 }

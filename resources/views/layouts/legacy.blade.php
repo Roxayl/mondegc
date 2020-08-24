@@ -6,7 +6,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Monde GC - @yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Le Monde GC rassemble une communauté de joueurs du site Génération City qui ont souhaité s'unir pour construire leur propre monde et développer une nouvelle expérience de jeu.">
+    <meta name="description" content="
+        @if(View::hasSection('seodescription'))
+            @yield('seodescription')
+        @else
+            Le Monde GC rassemble une communauté de joueurs du site Génération City qui ont
+            souhaité s'unir pour construire leur propre monde et développer une nouvelle
+            expérience de jeu.
+        @endif ">
     <link href="{{url('assets/css/bootstrap.css')}}" rel="stylesheet">
     <link href="{{url('assets/css/bootstrap-responsive.css')}}" rel="stylesheet">
     <link href="{{url('assets/css/bootstrap-modal.css')}}" rel="stylesheet" type="text/css">

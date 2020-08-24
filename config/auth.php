@@ -41,11 +41,6 @@ return [
             'driver' => 'session',
             'provider' => 'users', // provider users par défaut
         ],
-        // Craftable
-        'admin' => [
-            'driver' => 'session',
-            'provider' => 'admin_users',
-        ],
         // API
         'api' => [
             'driver' => 'token',
@@ -77,11 +72,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\CustomUser::class,
         ],
-        // Craftable
-        'admin_users' => [
-            'driver' => 'eloquent',
-            'model' => Brackets\AdminAuth\Models\AdminUser::class,
-        ],
     ],
 
     /*
@@ -100,11 +90,6 @@ return [
     */
 
     'passwords' => [
-        'admin_users' => [
-            'provider' => 'admin_users',
-            'table' => 'admin_password_resets',
-            'expire' => 60,
-        ],
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',

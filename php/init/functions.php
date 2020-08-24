@@ -1154,7 +1154,7 @@ function renderElement($element, $data = null)
 {
     if(!is_array($data))
         $data = array($data);
-    require(DEF_ROOTPATH . 'php/Elements/' . $element . '.php');
+    require(DEF_ROOTPATH . 'php/elements/' . $element . '.php');
 }
 
 function formatNum($number, $decimals = 0)
@@ -1210,7 +1210,11 @@ function dateFormat($date, $getTime = false)
  */
 function __s($text)
 {
-    return htmlspecialchars($text, ENT_QUOTES);
+    if(is_array($text)) {
+        return filter_var_array($text, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    } else {
+        return htmlspecialchars($text, ENT_QUOTES);
+    }
 }
 
 

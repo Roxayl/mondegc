@@ -51,7 +51,7 @@ $row_geometries = mysql_fetch_assoc($geometries);
     <?php if ($typeZone == 'megapole' OR $typeZone == 'urbaine' OR $typeZone == 'periurbaine' OR $typeZone == 'industrielle' OR $typeZone == 'maraichere' OR $typeZone == 'cerealiere' OR $typeZone == 'elevage' OR $typeZone == 'prairies' OR $typeZone == 'forestiere' OR $typeZone == 'protegee' OR $typeZone == 'forestiere' OR $typeZone == 'marecageuse' OR $typeZone == 'lagunaire') {; ?><p class="pull-center">Population&nbsp;: <?php $chiffre_francais = number_format($population, 0, ',', ' '); echo $chiffre_francais; ?> habitants</p>
 <?php } ?>
     <?php
-    renderElement('Temperance/resources', [
+    renderElement('temperance/resources', [
         'resources' => compact(['budget', 'agriculture', 'commerce', 'education',
              'environnement', 'industrie', 'recherche', 'tourisme'])
     ]); ?>

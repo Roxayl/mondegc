@@ -147,7 +147,7 @@
             @php
             $temperance = $organisation->temperance()->get()->first()->toArray();
             @endphp
-            {!! \App\Services\HelperService::renderLegacyElement('Temperance/resources', [
+            {!! \App\Services\HelperService::renderLegacyElement('temperance/resources', [
                 'resources' => $temperance
             ]) !!}
             <div class="clearfix"></div>
@@ -176,7 +176,7 @@
                         <a href="{{ url('page-pays.php?ch_pay_id=' . $thisPays['pays_id']) }}">
                             {{ $thisPays['pays']['ch_pay_nom'] }}</a>
                         {!! \App\Services\HelperService::renderLegacyElement(
-                            'Temperance/resources_small', [
+                            'temperance/resources_small', [
                                 'resources' => [
                                      'budget' => $paysResources['budget'],
                                      'industrie' => $paysResources['industrie'],

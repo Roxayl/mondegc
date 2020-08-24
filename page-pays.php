@@ -241,7 +241,7 @@ init();
 
     <ul class="breadcrumb pull-left">
       <li><a href="Page-carte.php#liste-pays">Pays</a> <span class="divider">/</span></li>
-      <li class="active"><?= $row_Pays['ch_pay_nom'] ?></li>
+      <li class="active"><?= e($row_Pays['ch_pay_nom']) ?></li>
     </ul>
 
      <div class="pull-right">
@@ -674,7 +674,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         <div class="well">
           <h3>Balance totale des ressources</h3>
           <?php
-            renderElement('Temperance/resources', array(
+            renderElement('temperance/resources', array(
                 'resources' => $ressources_total
             ));
           ?>
@@ -690,14 +690,14 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
             <div class="accordion-inner">
               <h4><i class="icon-road"></i> Balance des ressources issues des villes du pays </h4>
                 <?php
-                renderElement('Temperance/resources_small', array(
+                renderElement('temperance/resources_small', array(
                     'resources' => $ressources_villes
                 ));
                 ?>
                 <p></p>
               <h4><i class="icon-map-marker"></i> Balance des ressources issues de la carte</h4>
                 <?php
-                renderElement('Temperance/resources_small', array(
+                renderElement('temperance/resources_small', array(
                     'resources' => $ressources_cartes
                 ));
                 ?>

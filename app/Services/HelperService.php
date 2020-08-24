@@ -22,7 +22,7 @@ class HelperService {
         if(!is_array($data))
             $data = array($data);
         ob_start();
-        require(base_path('php/Elements/' . $element . '.php'));
+        require(base_path('php/elements/' . $element . '.php'));
         return ob_get_clean();
 
     }
