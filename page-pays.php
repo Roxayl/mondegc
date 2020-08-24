@@ -241,7 +241,7 @@ init();
 
     <ul class="breadcrumb pull-left">
       <li><a href="Page-carte.php#liste-pays">Pays</a> <span class="divider">/</span></li>
-      <li class="active"><?= $row_Pays['ch_pay_nom'] ?></li>
+      <li class="active"><?= e($row_Pays['ch_pay_nom']) ?></li>
     </ul>
 
      <div class="pull-right">

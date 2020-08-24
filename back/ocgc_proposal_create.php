@@ -150,7 +150,7 @@ include(DEF_ROOTPATH . 'php/navbar.php'); ?>
         <div class="well">
             <p>
             <input class="input-xlarge" type="radio" name="ocgc_proposal_create[type]" style="display: inline-block;"
-                   id="ocgc_proposal_create[type][RP]" value="RP" <?= $form_radio_type['RP'] ?>>
+                   id="ocgc_proposal_create[type][RP]" value="RP" <?= e($form_radio_type['RP']) ?>>
             <label for="ocgc_proposal_create[type][RP]" style="display: inline-block;">
                 Role-play (Résolution)</label><br />
                 Vous pouvez créer une <strong>résolution</strong> afin de solliciter l'avis de l'Assemblée générale sur
@@ -159,7 +159,7 @@ include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 
             <p>
             <input class="input-xlarge" type="radio" name="ocgc_proposal_create[type]" style="display: inline-block;"
-                   id="ocgc_proposal_create[type][IRL]" value="IRL" <?= $form_radio_type['IRL'] ?>>
+                   id="ocgc_proposal_create[type][IRL]" value="IRL" <?= e($form_radio_type['IRL']) ?>>
             <label for="ocgc_proposal_create[type][IRL]" style="display: inline-block;">
                 Réel (Sondage)</label><br />
                 Vous pouvez interroger les membres de la communauté participant au Monde GC en créant un <strong>sondage</strong>.
@@ -186,7 +186,7 @@ include(DEF_ROOTPATH . 'php/navbar.php'); ?>
             <p>
             <input class="input-xlarge" type="radio" name="ocgc_proposal_create[type_reponse]" style="display: inline-block;"
                    id="ocgc_proposal_create[type_reponse][dual]" value="dual"
-                   <?= $form_radio_type_reponse['dual'] ?>>
+                   <?= e($form_radio_type_reponse['dual']) ?>>
             <label for="ocgc_proposal_create[type_reponse][dual]" style="display: inline-block;">
                 Vote de type "POUR/CONTRE"</label><br />
                 Un vote à deux réponses : pour ou contre.
@@ -195,7 +195,7 @@ include(DEF_ROOTPATH . 'php/navbar.php'); ?>
             <p>
             <input class="input-xlarge" type="radio" name="ocgc_proposal_create[type_reponse]" style="display: inline-block;"
                    id="ocgc_proposal_create[type_reponse][multiple]" value="multiple"
-                   <?= $form_radio_type_reponse['multiple'] ?>>
+                   <?= e($form_radio_type_reponse['multiple']) ?>>
             <label for="ocgc_proposal_create[type_reponse][multiple]" style="display: inline-block;">
                 Vote à réponses personnalisés.</label><br />
                 Vous pouvez définir manuellement les réponses à ce sondage.
@@ -292,7 +292,7 @@ include(DEF_ROOTPATH . 'php/navbar.php'); ?>
                 <div class="controls">
                     <select name="ocgc_proposal_create[debate_start]" id="ocgc_proposal_create[debate_start]">
                     <?php foreach($formNextDebates as $nextDebate): ?>
-                        <option value="<?= $nextDebate['debate_start'] ?>"
+                        <option value="<?= e($nextDebate['debate_start']) ?>"
                           <?= $form_select_debate_start[$nextDebate['debate_start']] ?>>Du <?=
                             date('d/m/Y à H:i', strtotime($nextDebate['debate_start'])); ?> au <?=
                             date('d/m/Y à H:i', strtotime($nextDebate['debate_end'])); ?></option>

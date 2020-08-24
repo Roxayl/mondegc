@@ -118,7 +118,7 @@ if(!empty($row_infra_officielles_group)) {
       <div class="controls">
           <select name="groupe_infra" id="groupe_infra">
               <?php while($row_infra_group = mysql_fetch_assoc($infra_group)): ?>
-                <option value="<?= $row_infra_group['id'] ?>" <?= $selected_infra_group == $row_infra_group['id'] ? 'selected' : '' ?>><?= __s($row_infra_group['nom_groupe']) ?>
+                <option value="<?= e($row_infra_group['id']) ?>" <?= $selected_infra_group == $row_infra_group['id'] ? 'selected' : '' ?>><?= __s($row_infra_group['nom_groupe']) ?>
                 </option>
               <?php endwhile; ?>
           </select>

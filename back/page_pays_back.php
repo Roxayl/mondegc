@@ -390,7 +390,7 @@ img.olTileImage {
     <div class="span9 corps-page">
 
     <ul class="breadcrumb pull-left">
-      <li class="active">Gestion du pays : <?= $row_InfoGenerale['ch_pay_nom'] ?></a></li>
+      <li class="active">Gestion du pays : <?= e($row_InfoGenerale['ch_pay_nom']) ?></a></li>
     </ul>
 
       <!-- Moderation
@@ -435,18 +435,18 @@ img.olTileImage {
       <tbody>
         <?php foreach($paysLeaders as $rowLeaders) { ?>
           <tr>
-            <td><?= $rowLeaders['ch_use_login'] ?></td>
+            <td><?= e($rowLeaders['ch_use_login']) ?></td>
             <td><?= Pays::getPermissionName($rowLeaders['permissions']); ?></td>
             <td>
             <?php if($_SESSION['userObject']->minStatus('OCGC') ||
                      $thisPays->getUserPermission() >= Pays::$permissions['dirigeant']): ?>
-                <a class="btn btn-primary" href="../php/modal/pays_leader_edit.php?user_pays_ID=<?= $rowLeaders['users_pays_ID'] ?>" data-toggle="modal" data-target="#Modal-Monument">Gérer cet utilisateur</a>
+                <a class="btn btn-primary" href="../php/modal/pays_leader_edit.php?user_pays_ID=<?= e($rowLeaders['users_pays_ID']) ?>" data-toggle="modal" data-target="#Modal-Monument">Gérer cet utilisateur</a>
             <?php endif; ?>
             </td>
             <td>
             <?php if($_SESSION['userObject']->minStatus('OCGC') ||
                      $thisPays->getUserPermission() >= Pays::$permissions['dirigeant']): ?>
-                <a class="btn btn-danger" href="../php/modal/pays_leader_delete.php?user_pays_ID=<?= $rowLeaders['users_pays_ID'] ?>" data-toggle="modal" data-target="#Modal-Monument"><i class="icon-trash icon-white"></i> Supprimer</a>
+                <a class="btn btn-danger" href="../php/modal/pays_leader_delete.php?user_pays_ID=<?= e($rowLeaders['users_pays_ID']) ?>" data-toggle="modal" data-target="#Modal-Monument"><i class="icon-trash icon-white"></i> Supprimer</a>
             <?php endif; ?>
             </td>
             <td></td>
@@ -805,14 +805,14 @@ img.olTileImage {
     <?php } else { ?>
     <div class="row-fluid">
         <div class="span4">
-            <img src="<?= $paysPersonnages['lien_img'] ?>" />
+            <img src="<?= e($paysPersonnages['lien_img']) ?>" />
         </div>
         <div class="span8">
             <h3>
-                <?= $paysPersonnages['predicat'] ?>
-                <?= $paysPersonnages['prenom_personnage'] ?>
-                <?= $paysPersonnages['nom_personnage'] ?></h3>
-            <small><?= $paysPersonnages['titre_personnage'] ?></small>
+                <?= e($paysPersonnages['predicat']) ?>
+                <?= e($paysPersonnages['prenom_personnage']) ?>
+                <?= e($paysPersonnages['nom_personnage']) ?></h3>
+            <small><?= e($paysPersonnages['titre_personnage']) ?></small>
             <br>
         <p><a href="avatar_modifier.php?paysID=<?= $thisPays->model->ch_pay_id ?>"
              class="btn btn-primary">Modifier l'avatar du personnage</a></p>
@@ -858,7 +858,7 @@ img.olTileImage {
                 <td><?php echo formatNum($row_mesvilles['ch_vil_population']); ?></td>
                 <td>
                     <a class="btn btn-primary"  style="margin-top: -22px;"
-                       href="../page-ville.php?ch_pay_id=<?= $row_mesvilles['ch_vil_paysID'] ?>&ch_ville_id=<?= $row_mesvilles['ch_vil_ID'] ?>">Visiter</a>
+                       href="../page-ville.php?ch_pay_id=<?= e($row_mesvilles['ch_vil_paysID']) ?>&ch_ville_id=<?= e($row_mesvilles['ch_vil_ID']) ?>">Visiter</a>
                 </td>
                 <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
                 <td><form action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="GET">
@@ -937,7 +937,7 @@ img.olTileImage {
                 <td><?php echo formatNum($row_autres_villes['ch_vil_population']); ?></td>
                 <td>
                     <a class="btn btn-primary" style="margin-top: -22px;"
-                       href="../page-ville.php?ch_pay_id=<?= $row_autres_villes['ch_vil_paysID'] ?>&ch_ville_id=<?= $row_autres_villes['ch_vil_ID'] ?>">Visiter</a>
+                       href="../page-ville.php?ch_pay_id=<?= e($row_autres_villes['ch_vil_paysID']) ?>&ch_ville_id=<?= e($row_autres_villes['ch_vil_ID']) ?>">Visiter</a>
                 </td>
                 <?php if ($_SESSION['userObject']->minStatus('OCGC') ||
                         $thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) {

@@ -81,7 +81,7 @@ $infra_group = mysql_query($query_infra_group, $maconnexion);
       <div class="controls">
           <select name="groupe_infra" id="groupe_infra">
               <?php while($row_infra_group = mysql_fetch_assoc($infra_group)): ?>
-                <option value="<?= $row_infra_group['id'] ?>"><?= __s($row_infra_group['nom_groupe']) ?>
+                <option value="<?= e($row_infra_group['id']) ?>"><?= __s($row_infra_group['nom_groupe']) ?>
                 </option>
               <?php endwhile; ?>
           </select>

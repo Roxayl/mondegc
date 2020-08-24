@@ -348,9 +348,9 @@ img.olTileImage {
 
     <ul class="breadcrumb pull-left">
       <li><a href="Page-carte.php#liste-pays">Pays</a> <span class="divider">/</span></li>
-      <li><a href="page-pays.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>"><?= $row_Pays['ch_pay_nom'] ?></a> <span class="divider">/</span></li>
+      <li><a href="page-pays.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>"><?= e($row_Pays['ch_pay_nom']) ?></a> <span class="divider">/</span></li>
         <li><a href="page-pays.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>#villes">Villes</a> <span class="divider">/</span></li>
-      <li class="active"><?= $row_infoVille['ch_vil_nom'] ?></li>
+      <li class="active"><?= e($row_infoVille['ch_vil_nom']) ?></li>
     </ul>
 
       <?php if ($row_temperance) { ?>

@@ -176,10 +176,10 @@ init();
             <li class="row-fluid">
               <div class="">
                 <div class="span2">
-                    <a href="page-pays.php?ch_pay_id=<?= $pays['ch_pay_id']; ?>"><img src="<?= $pays['ch_pay_lien_imgdrapeau']; ?>" alt="drapeau"></a>
+                    <a href="page-pays.php?ch_pay_id=<?= e($pays['ch_pay_id']); ?>"><img src="<?= e($pays['ch_pay_lien_imgdrapeau']); ?>" alt="drapeau"></a>
                 </div>
                 <div class="span5">
-                    <h3><?= $pays['ch_pay_nom']; ?></h3>
+                    <h3><?= e($pays['ch_pay_nom']); ?></h3>
                     <div class="btn-group">
                         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                             Actions
@@ -187,10 +187,10 @@ init();
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                             <li class="dropdown-li-force">
-                                <a tabindex="-1" href="back/communique_ajouter.php?paysID=<?= $pays['ch_pay_id'] ?>&userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>&cat=pays&com_element_id=<?= $pays['ch_pay_id'] ?>">
+                                <a tabindex="-1" href="back/communique_ajouter.php?paysID=<?= e($pays['ch_pay_id']) ?>&userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>&cat=pays&com_element_id=<?= e($pays['ch_pay_id']) ?>">
                                     <i class="icon-file"></i> Publier un communiqué</a></li>
                             <li class="dropdown-li-force">
-                                <a tabindex="0" href="back/infra_select_group.php?pays_id=<?= $pays['ch_pay_id'] ?>">
+                                <a tabindex="0" href="back/infra_select_group.php?pays_id=<?= e($pays['ch_pay_id']) ?>">
                                     <i class="icon-home"></i> Ajouter une infrastructure</a></li>
                         </ul>
                     </div>
@@ -198,8 +198,8 @@ init();
                 <div class="span2">
                 </div>
                 <div class="span3">
-                    <a href="page-pays.php?ch_pay_id=<?= $pays['ch_pay_id']; ?>" class="span btn btn-primary">Visiter</a>
-                    <a href="back/page_pays_back.php?paysID=<?= $pays['ch_pay_id'] ?>&userID=<?= $thisUser->model->ch_use_id ?>" class="span btn btn-primary"><i class="icon-pays-small-white"></i> Gérer mon pays</a>
+                    <a href="page-pays.php?ch_pay_id=<?= e($pays['ch_pay_id']); ?>" class="span btn btn-primary">Visiter</a>
+                    <a href="back/page_pays_back.php?paysID=<?= e($pays['ch_pay_id']) ?>&userID=<?= $thisUser->model->ch_use_id ?>" class="span btn btn-primary"><i class="icon-pays-small-white"></i> Gérer mon pays</a>
                 </div>
               </div>
             </li>

@@ -95,7 +95,7 @@ while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)
 <form action="<?php echo $editFormAction; ?>" name="ajout-mon_categorie" method="POST" class="form-horizontal" id="ajout-mon_categorie">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Ajouter <?= $this_mon_cat['ch_pat_nom'] ?> aux catégories</h3>
+    <h3 id="myModalLabel">Ajouter <?= e($this_mon_cat['ch_pat_nom']) ?> aux catégories</h3>
   </div>
   <div class="modal-body">
     <!-- Boutons cachés -->
@@ -108,10 +108,10 @@ while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)
     <ul>
     <?php do { ?>
         <li>
-            <label for="ch_disp_cat_id_<?= $row_mon_cat['ch_mon_cat_ID'] ?>"
+            <label for="ch_disp_cat_id_<?= e($row_mon_cat['ch_mon_cat_ID']) ?>"
                style="display: inline-block;">
             <?= e($row_mon_cat['ch_mon_cat_nom']) ?></label>
-            <input type="checkbox" id="ch_disp_cat_id_<?= $row_mon_cat['ch_mon_cat_ID'] ?>"
+            <input type="checkbox" id="ch_disp_cat_id_<?= e($row_mon_cat['ch_mon_cat_ID']) ?>"
                    name="ch_disp_cat_id[]" value="<?= e($row_mon_cat['ch_mon_cat_ID']) ?>"
                    <?= in_array($row_mon_cat['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ?> />
         </li>
