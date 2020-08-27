@@ -287,7 +287,7 @@ div.olControlPanel {
 					{
 					$row_listePays['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_listePays['ch_pay_lien_imgdrapeau']);
 					}
-            renderElement('liste_pays', [
+            renderElement('pays/liste_pays', [
                     'pays' => $row_listePays,
                     'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
                 ]);
@@ -319,7 +319,7 @@ div.olControlPanel {
 					{
 					$row_listePays['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_listePays['ch_pay_lien_imgdrapeau']);
 					}
-            renderElement('liste_pays', [
+            renderElement('pays/liste_pays', [
                     'pays' => $row_listePays,
                     'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
                 ]);
@@ -369,7 +369,7 @@ div.olControlPanel {
 					{
 					$row_listePays['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_listePays['ch_pay_lien_imgdrapeau']);
 					}
-            renderElement('liste_pays', [
+            renderElement('pays/liste_pays', [
                     'pays' => $row_listePays,
                     'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
                 ]);
@@ -403,7 +403,7 @@ div.olControlPanel {
 					{
 					$row_listePays['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_listePays['ch_pay_lien_imgdrapeau']);
 					}
-            renderElement('liste_pays', [
+            renderElement('pays/liste_pays', [
                     'pays' => $row_listePays,
                     'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
                 ]);
@@ -437,7 +437,7 @@ div.olControlPanel {
 					{
 					$row_listePays['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_listePays['ch_pay_lien_imgdrapeau']);
 					}
-		renderElement('liste_pays', [
+		renderElement('pays/liste_pays', [
                 'pays' => $row_listePays,
                 'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
             ]);
@@ -471,7 +471,7 @@ div.olControlPanel {
 					{
 					$row_listePays['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_listePays['ch_pay_lien_imgdrapeau']);
 					}
-		    renderElement('liste_pays', [
+		    renderElement('pays/liste_pays', [
                 'pays' => $row_listePays,
                 'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
             ]);

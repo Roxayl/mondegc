@@ -25,9 +25,10 @@ class OrganisationController extends Controller
     public function create()
     {
         $this->authorize('create', Organisation::class);
+        $organisation = new Organisation();
 
         $pays = auth()->user()->pays;
-        return view('organisation.create')->with('pays', $pays);
+        return view('organisation.create', compact(['organisation', 'pays']));
     }
 
     /**

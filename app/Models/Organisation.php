@@ -6,7 +6,10 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\Infrastructurable;
+use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\OrganisationPresenter;
+use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
@@ -31,9 +34,9 @@ use Spatie\Searchable\SearchResult;
  *
  * @package App\Models
  */
-class Organisation extends Model implements Searchable
+class Organisation extends Model implements Searchable, Infrastructurable
 {
-    use OrganisationPresenter;
+    use OrganisationPresenter, InfrastructurablePresenter, HasInfrastructures;
 
 	protected $table = 'organisation';
 

@@ -569,7 +569,7 @@ echo $population_ville_francais; ?></p>
                   'description' => $row_infrastructure['ch_inf_commentaire']
               );
 
-               renderElement('infrastructure_well', $infraData);
+               renderElement('infrastructure/well', $infraData);
 
           } while ($row_infrastructure = mysql_fetch_assoc($infrastructure)); ?>
         </div>
@@ -652,7 +652,7 @@ echo $population_ville_francais; ?></p>
               'nom' => $row_monument['ch_pat_nom'],
               'description' => $row_monument['ch_pat_description']
             );
-            renderElement('infrastructure_well', $infraData);
+            renderElement('infrastructure/well', $infraData);
 
         } while ($row_monument = mysql_fetch_assoc($monument)); ?>
         </div>

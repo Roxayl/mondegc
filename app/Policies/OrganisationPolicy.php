@@ -4,11 +4,12 @@ namespace App\Policies;
 
 use App\Models\CustomUser;
 use App\Models\Organisation;
+use App\Policies\Traits\ManagesInfrastructures;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class OrganisationPolicy
 {
-    use HandlesAuthorization;
+    use HandlesAuthorization, ManagesInfrastructures;
     
     /**
      * Determine whether the user can view any organisations.
@@ -102,7 +103,7 @@ class OrganisationPolicy
      */
     public function administrate(CustomUser $user, Organisation $organisation)
     {
-        return $organisation->maxPermission($user) >= Organisation::$permissions['administrator'];
+        return $organisation->maxPermission($user) >=
+            Organisation::$permissions['administrator'];
     }
-
 }

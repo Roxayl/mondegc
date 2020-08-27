@@ -5,6 +5,8 @@
  *   Fonctions globales   *
  **************************/
 
+use App\Services\HelperService;
+
 //Protection  données envoyées
 function GetSQLValueString($value, $type = "text", $definedValue = "", $notDefinedValue = "")
 {
@@ -1225,13 +1227,7 @@ function __s($text)
  */
 function htmlPurify($text)
 {
-    static $config = null;
-    static $purifier = null;
-    if(is_null($config)) {
-        $config = HTMLPurifier_Config::createDefault();
-        $purifier = new HTMLPurifier($config);
-    }
-    return $purifier->purify($text);
+    return HelperService::purifyHtml($text);
 }
 
 

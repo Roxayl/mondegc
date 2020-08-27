@@ -285,7 +285,7 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
               'nom' => $row_classer_mon['ch_pat_nom'],
               'description' => $row_classer_mon['ch_pat_description']
             );
-            renderElement('infrastructure_well', $infraData);
+            renderElement('infrastructure/well', $infraData);
 
         } while ($row_classer_mon = mysql_fetch_assoc($classer_mon)); ?>
         </div>

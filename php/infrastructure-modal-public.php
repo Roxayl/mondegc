@@ -29,12 +29,12 @@ $row_infrastructure = mysql_fetch_assoc($infrastructure);
   <div class="modal-body">
   <?php if ($row_infrastructure['ch_inf_statut'] == 2) {?>
    <div class="alert alert-success">
-            <img src="assets/img/statutinfra_<?= e($row_infrastructure['ch_inf_statut']) ?>.png" alt="Statut"> Acceptée par les juges tempérants
+            <img src="<?= DEF_URI_PATH ?>assets/img/statutinfra_<?= e($row_infrastructure['ch_inf_statut']) ?>.png" alt="Statut"> Acceptée par les juges tempérants
             <?php if ($row_infrastructure['ch_inf_juge'] != NULL) { ?><em>(jug&eacute; par <?= e($row_infrastructure['ch_use_login']) ?>)</em><?php }?>
             </div>
   <?php } elseif ($row_infrastructure['ch_inf_statut'] == 3) { ?>
 <div class="alert alert-danger">
-            <p><img src="assets/img/statutinfra_<?= e($row_infrastructure['ch_inf_statut']) ?>.png" alt="Statut"> Refusée par les juges tempérants. Cette infrastructure n'influence pas l'économie.<p>
+            <p><img src="<?= DEF_URI_PATH ?>assets/img/statutinfra_<?= e($row_infrastructure['ch_inf_statut']) ?>.png" alt="Statut"> Refusée par les juges tempérants. Cette infrastructure n'influence pas l'économie.<p>
             <?php if (($row_infrastructure['ch_inf_commentaire_juge'] != NULL) OR ($row_infrastructure['ch_inf_commentaire_juge'] != "")) { ?>
 			<p><strong>Raison&nbsp;: <em>"<?= htmlPurify($row_infrastructure['ch_inf_commentaire_juge']) ?>"</em></strong></p>
   	<?php }?>
@@ -42,7 +42,7 @@ $row_infrastructure = mysql_fetch_assoc($infrastructure);
             </div>
            <?php } else { ?>
 <div class="alert">
-            <img src="assets/img/statutinfra_<?= e($row_infrastructure['ch_inf_statut']) ?>.png" alt="Statut"> En attente de jugement. Son influence n'est pas encore prise en compte.
+            <img src="<?= DEF_URI_PATH ?>assets/img/statutinfra_<?= e($row_infrastructure['ch_inf_statut']) ?>.png" alt="Statut"> En attente de jugement. Son influence n'est pas encore prise en compte.
             </div><?php }?>
   
     <div class="row-fluid">
@@ -68,14 +68,14 @@ $row_infrastructure = mysql_fetch_assoc($infrastructure);
     <div class="span6">
     <h3>Influence sur l'économie</h3>
              <div class="well icone-ressources">
-                <img src="assets/img/ressources/budget.png" alt="icone Budget"><p>&nbsp;Budget&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_budget']) ?></strong></p>
-                <img src="assets/img/ressources/industrie.png" alt="icone Industrie"><p>&nbsp;Industrie&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Industrie']) ?></strong></p>
-                <img src="assets/img/ressources/bureau.png" alt="icone Commerce"><p>&nbsp;Commerce&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Commerce']) ?></strong></p>
-                <img src="assets/img/ressources/agriculture.png" alt="icone Agriculture"><p>&nbsp;Agriculture&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Agriculture']) ?></strong></p>
-                <img src="assets/img/ressources/tourisme.png" alt="icone Tourisme"><p>&nbsp;Tourisme&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Tourisme']) ?></strong></p>
-                <img src="assets/img/ressources/recherche.png" alt="icone Recherche"><p>&nbsp;Recherche&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Recherche']) ?></strong></p>
-                <img src="assets/img/ressources/environnement.png" alt="icone Evironnement"><p>&nbsp;Environnement&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Environnement']) ?></strong></p>
-                <img src="assets/img/ressources/education.png" alt="icone Education"><p>&nbsp;Education&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Education']) ?></strong></p>
+                <img src="<?= DEF_URI_PATH ?>assets/img/ressources/budget.png" alt="icone Budget"><p>&nbsp;Budget&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_budget']) ?></strong></p>
+                <img src="<?= DEF_URI_PATH ?>assets/img/ressources/industrie.png" alt="icone Industrie"><p>&nbsp;Industrie&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Industrie']) ?></strong></p>
+                <img src="<?= DEF_URI_PATH ?>assets/img/ressources/bureau.png" alt="icone Commerce"><p>&nbsp;Commerce&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Commerce']) ?></strong></p>
+                <img src="<?= DEF_URI_PATH ?>assets/img/ressources/agriculture.png" alt="icone Agriculture"><p>&nbsp;Agriculture&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Agriculture']) ?></strong></p>
+                <img src="<?= DEF_URI_PATH ?>assets/img/ressources/tourisme.png" alt="icone Tourisme"><p>&nbsp;Tourisme&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Tourisme']) ?></strong></p>
+                <img src="<?= DEF_URI_PATH ?>assets/img/ressources/recherche.png" alt="icone Recherche"><p>&nbsp;Recherche&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Recherche']) ?></strong></p>
+                <img src="<?= DEF_URI_PATH ?>assets/img/ressources/environnement.png" alt="icone Evironnement"><p>&nbsp;Environnement&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Environnement']) ?></strong></p>
+                <img src="<?= DEF_URI_PATH ?>assets/img/ressources/education.png" alt="icone Education"><p>&nbsp;Education&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Education']) ?></strong></p>
             </div>
             <p>&nbsp;</p>
              <strong><p>R&egrave;gle&nbsp;:</p></strong>
