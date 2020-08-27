@@ -2,7 +2,6 @@
 
 namespace App\Models\Presenters;
 
-use App\Models\Contracts\Infrastructurable;
 use App\Models\Infrastructure;
 use App\Models\InfrastructureGroupe;
 use App\Models\InfrastructureOfficielle;
@@ -17,31 +16,6 @@ trait InfrastructurablePresenter
                 getUrlParameterFromMorph(self::class),
             'infrastructurable_id' => $this->$fieldPrimaryKey,
         ];
-    }
-
-    /**
-     * Donne le lien d'accès vers l'infrastructurable désigné.
-     * @return string URL vers la page de présentation de l'infrastructurable.
-     */
-    public function accessorUrl() : string
-    {
-        $infrastructurableData = $this->getInfrastructurableData();
-        $url = '';
-        switch($infrastructurableData['infrastructurable_type']) {
-            case 'ville':
-                $url = url("page-ville.php?villeID=" .
-                    $infrastructurableData['infrastructurable_id']);
-                break;
-            case 'organisation':
-                $url = route('organisation.showslug',
-                    $this->showRouteParameter());
-                break;
-            case 'pays':
-                $url = url('page-pays.php?ch_pay_id=' .
-                    $infrastructurableData['infrastructurable_id']);
-                break;
-        }
-        return $url;
     }
 
     /**
@@ -77,5 +51,10 @@ trait InfrastructurablePresenter
             $params['infrastructure_officielle_id'] = $infrastructureOfficielle->id;
         }
         return $params;
+    }
+
+    public function getType() : string
+    {
+        return Infrastructure::getUrlParameterFromMorph(self::class);
     }
 }

@@ -8,6 +8,7 @@ namespace App\Models;
 
 use App\Models\Contracts\Infrastructurable;
 use App\Models\Presenters\InfrastructurablePresenter;
+use App\Models\Presenters\PaysPresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -71,7 +72,7 @@ use Spatie\Searchable\SearchResult;
  */
 class Pays extends Model implements Searchable, Infrastructurable
 {
-    use InfrastructurablePresenter, HasInfrastructures;
+    use InfrastructurablePresenter, PaysPresenter, HasInfrastructures;
 
     /**
      * @var array|int[]

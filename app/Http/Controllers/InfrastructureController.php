@@ -92,7 +92,8 @@ class InfrastructureController extends Controller
 
         $infrastructure->save();
 
-        return redirect($infrastructure->infrastructurable->accessorUrl())
+        return redirect($infrastructure->infrastructurable->backAccessorUrl()
+            . '#infrastructures')
             ->with(['message' => 'success|Infrastructure créée avec succès !']);
     }
 
@@ -133,7 +134,8 @@ class InfrastructureController extends Controller
 
         $infrastructure->update();
 
-        return redirect($infrastructure->infrastructurable->accessorUrl())
+        return redirect($infrastructure->infrastructurable->backAccessorUrl()
+            . '#infrastructures')
             ->with(['message' => 'success|Infrastructure modifiée avec succès !']);
     }
 
@@ -163,7 +165,8 @@ class InfrastructureController extends Controller
 
         $infrastructure->delete();
 
-        return redirect($infrastructure->infrastructurable->accessorUrl())
+        return redirect($infrastructure->infrastructurable->backAccessorUrl()
+            . '#infrastructures')
             ->with(['message' => "success|L'infrastructure a été supprimée."]);
     }
 }

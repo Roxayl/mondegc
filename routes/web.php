@@ -64,6 +64,11 @@ Route::match(['put', 'patch'], 'infrastructure/{infrastructure_id}', 'Infrastruc
 Route::get('infrastructure/{infrastructure_id}/delete', 'InfrastructureController@delete')->name('infrastructure.delete');
 Route::delete('infrastructure/{infrastructure_id}', 'InfrastructureController@destroy')->name('infrastructure.destroy');
 
+/* InfrastructureJudge */
+Route::get('economy/infrastructure-judge', 'InfrastructureJudgeController@index')->name('infrastructure-judge.index');
+Route::get('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJudgeController@show')->name('infrastructure-judge.show');
+Route::patch('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJudgeController@judge')->name('infrastructure-judge.judge');
+
 /* Search */
 Route::get('search', 'SearchController@index')->name('search');
 

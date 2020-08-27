@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * Class InfrastructureOfficielle
@@ -79,5 +80,17 @@ class InfrastructureOfficielle extends Model
             'ID_infra_officielle',
             'ID_groupes'
         );
+    }
+
+    public function mapResources()
+    {
+        $resources = [];
+        foreach(['budget', 'agriculture', 'commerce', 'industrie',
+                 'tourisme', 'recherche', 'environnement', 'education'] as $resource) {
+            $field = 'ch_inf_off_' . ($resource === 'budget'
+                    ? $resource : Str::ucfirst($resource));
+            $resources[$resource] = $this->$field;
+        }
+        return $resources;
     }
 }

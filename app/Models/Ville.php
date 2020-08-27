@@ -8,6 +8,7 @@ namespace App\Models;
 
 use App\Models\Contracts\Infrastructurable;
 use App\Models\Presenters\InfrastructurablePresenter;
+use App\Models\Presenters\VillePresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -54,7 +55,7 @@ use Spatie\Searchable\SearchResult;
  */
 class Ville extends Model implements Searchable, Infrastructurable
 {
-    use InfrastructurablePresenter, HasInfrastructures;
+    use InfrastructurablePresenter, VillePresenter, HasInfrastructures;
 
 	protected $table = 'villes';
 	protected $primaryKey = 'ch_vil_ID';

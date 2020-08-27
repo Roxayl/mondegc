@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Models\Presenters\InfrastructurePresenter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,6 +38,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Infrastructure extends Model
 {
+    use InfrastructurePresenter;
+
 	protected $table = 'infrastructures';
 	protected $primaryKey = 'ch_inf_id';
 
@@ -78,6 +81,21 @@ class Infrastructure extends Model
 	public function infrastructurable()
     {
 	    return $this->morphTo();
+    }
+
+    public static function pending()
+    {
+        return self::where('ch_inf_statut', self::JUGEMENT_PENDING);
+    }
+
+    public static function accepted()
+    {
+        return self::where('ch_inf_statut', self::JUGEMENT_ACCEPTED);
+    }
+
+    public static function rejected()
+    {
+        return self::where('ch_inf_statut', self::JUGEMENT_REJECTED);
     }
 
     public function infrastructure_officielle()
