@@ -186,4 +186,8 @@ class Pays extends Model implements Searchable, Infrastructurable
         return $this->hasOne(TemperancePays::class, 'id', 'ch_pay_id');
     }
 
+    public function getUsers()
+    {
+        return $this->users()->get();
+    }
 }

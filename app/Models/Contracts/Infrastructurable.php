@@ -38,4 +38,9 @@ interface Infrastructurable
     public function getFlag() : string;
 
     public function getName() : string;
+
+
+    /* Défini dans les modèles. */
+
+    public function getUsers();
 }

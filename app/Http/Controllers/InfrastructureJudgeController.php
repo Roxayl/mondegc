@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\InfrastructureJudged;
 use App\Models\Infrastructure;
 use Illuminate\Http\Request;
 
@@ -50,6 +51,8 @@ class InfrastructureJudgeController extends Controller
         }
 
         $infrastructure->update();
+
+        event(new InfrastructureJudged($infrastructure));
 
         return redirect()->back()
             ->with('message', 'success|Infrastructure jugée avec succès !');

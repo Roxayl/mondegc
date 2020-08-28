@@ -121,4 +121,9 @@ class Ville extends Model implements Searchable, Infrastructurable
 	{
 		return $this->belongsTo(Pays::class, 'ch_vil_paysID');
 	}
+
+	public function getUsers()
+    {
+        return $this->pays->users;
+    }
 }
