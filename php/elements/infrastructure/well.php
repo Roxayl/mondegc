@@ -19,7 +19,7 @@ switch($data['type']) {
         <?php if(isset($data['overlay_image'])): ?>
             <img src="<?= e($data['overlay_image']) ?>">
         <?php endif; ?>
-        <?= isset($data['overlay_text']) ? e($data['overlay_text']) : '' ?>
+        <?= isset($data['overlay_text']) ? $data['overlay_text'] : '' ?>
     </div>
     <?php endif; ?>
     <div class="infra-image" style="background-image: url('<?= $data['image'] ?>');"></div>
