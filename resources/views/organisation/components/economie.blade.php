@@ -1,4 +1,6 @@
 
+@inject('helperService', 'App\Services\HelperService')
+
 @if($organisation->allow_temperance)
 
     @can('manageInfrastructure', $organisation)
@@ -65,35 +67,35 @@
             <a class="accordion-toggle" data-toggle="collapse"
                href="#economie-infrastructures">
                 Infrastructures
+                @if($organisation->infrastructures->count())
+                    <span class="badge badge-info">
+                        {{ $organisation->infrastructures->count() }}
+                    </span>
+                @endif
             </a>
           </div>
           <div id="economie-infrastructures" class="accordion-body collapse">
             <div class="accordion-inner">
             @foreach($organisation->infrastructures as $infrastructure)
-                @include('blocks.infra_well', ['data' => [
+                {!! $helperService::renderLegacyElement('infrastructure/well', [
+                    'id' => $infrastructure->ch_inf_id,
                     'type' => 'infra',
-                    'overlay_image' =>
-                        $infrastructure->infrastructure_officielle->ch_inf_off_icone,
-                    'overlay_text' =>
-                        $infrastructure->infrastructure_officielle->ch_inf_off_nom,
+                    'overlay_image' => $infrastructure
+                        ->infrastructure_officielle->ch_inf_off_icone,
+                    'overlay_text' => $infrastructure
+                        ->infrastructure_officielle->ch_inf_off_nom,
                     'image' => $infrastructure->ch_inf_lien_image,
                     'nom' => $infrastructure->nom_infra,
-                    'url' => '',
-                    'description' => $infrastructure->ch_inf_commentaire,
-                    'dropdown' => [
-                        [
-                            'type' => 'link',
-                            'url'  => route('infrastructure.edit',
-                                ['infrastructure_id' => $infrastructure->ch_inf_id]),
-                            'text' => "Modifier l'infrastructure",
-                        ],
-                    ],
-                ]])
+                    'description' => \Illuminate\Support\Str::limit(
+                        $infrastructure->ch_inf_commentaire),
+                ]); !!}
             @endforeach
             </div>
           </div>
         </div>
 
     </div> <!-- end .well -->
+
+    <div class="modal container fade" id="Modal-Monument"></div>
 
 @endif

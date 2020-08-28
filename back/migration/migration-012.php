@@ -8,8 +8,6 @@
 use App\Models\Infrastructure;
 use App\Models\Ville;
 
-mysql_select_db($database_maconnexion, $maconnexion);
-
 
 /*************************
  *                       *

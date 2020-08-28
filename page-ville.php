@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Infrastructure as EloquentInfrastructure;
+
 //Connexion et deconnexion
 include('php/log.php');
 
@@ -97,7 +99,11 @@ if (isset($_GET['pageNum_infrastructure'])) {
 $startRow_infrastructure = $pageNum_infrastructure * $maxRows_infrastructure;
 
 
-$query_infrastructure = sprintf("SELECT * FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id=infrastructures_officielles.ch_inf_off_id WHERE ch_inf_villeid = %s AND ch_inf_statut =2 ORDER BY ch_inf_date DESC", GetSQLValueString($villeid, "int"));
+$query_infrastructure = sprintf(
+    "SELECT * FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id=infrastructures_officielles.ch_inf_off_id WHERE ch_inf_villeid = %s AND infrastructurable_type = %s AND ch_inf_statut =2 ORDER BY ch_inf_date DESC",
+    GetSQLValueString($villeid, "int"),
+    GetSQLValueString(EloquentInfrastructure::getMorphFromUrlParameter('ville'), "text")
+);
 $query_limit_infrastructure = sprintf("%s LIMIT %d, %d", $query_infrastructure, $startRow_infrastructure, $maxRows_infrastructure);
 $infrastructure = mysql_query($query_infrastructure, $maconnexion) or die(mysql_error());
 $row_infrastructure = mysql_fetch_assoc($infrastructure);

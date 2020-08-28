@@ -2,6 +2,7 @@
 
 //Connexion et deconnexion
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 
 include('php/log.php');
 
