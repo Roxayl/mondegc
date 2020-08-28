@@ -42,6 +42,9 @@ if(auth()->check()) {
     $navbar_notifCount = auth()->user()->unreadNotifications->count();
 }
 
+/** Organisations */
+$navbar_organisationList = \App\Models\Organisation::orderBy('name')->get();
+
 ?>
 
 <div class="navbar navbar-fixed-top">
@@ -263,6 +266,29 @@ if(auth()->check()) {
 				} while ($row_menu = mysql_fetch_assoc($menu));
 				mysql_data_seek($menu,0); ?>
               </div>
+            </ul>
+          </li>
+
+          <li class="dropdown <?= isset($organisation) ? 'active' : '' ?>">
+            <center>
+              <a href="<?= DEF_URI_PATH . 'politique.php#organisations' ?>"
+                 title="Organisations du Monde GC"><i class="icon icon-institut"></i></a>
+            </center>
+            <a href="<?= DEF_URI_PATH . 'politique.php' ?>" class="dropdown-toggle"
+               data-toggle="dropdown" title="Organisations du Monde GC"
+                >Organisations <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="<?= DEF_URI_PATH . 'politique.php#organisations' ?>">
+                      <i class="icon-list"></i> Voir la liste des organisations
+                  </a></li>
+              <li class="nav-header">Organisations</li>
+              <?php foreach($navbar_organisationList as $thisOrganisation): ?>
+              <li><a href="<?= DEF_URI_PATH . 'organisation/' . $thisOrganisation->id ?>">
+                      <img src="<?= e($thisOrganisation->flag) ?>"
+                           class="img-menu-drapeau">
+                      <?= e($thisOrganisation->name) ?>
+                  </a></li>
+              <?php endforeach; ?>
             </ul>
           </li>
 

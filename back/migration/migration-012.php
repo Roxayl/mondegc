@@ -5,6 +5,10 @@
  * Version cible : 2.7
  * ******************/
 
+use App\Models\Infrastructure;
+use App\Models\Ville;
+
+
 /*************************
  *                       *
  *   ÉDITION DE TABLES   *
@@ -33,6 +37,16 @@ LEFT JOIN temperance_pays tp on organisation_members.pays_id = tp.id
 WHERE organisation_members.permissions >= 10
   AND o.allow_temperance = 1
 GROUP BY o.id";
+
+$queries[] = 'alter table infrastructures
+	add infrastructurable_id int null';
+
+$queries[] = 'alter table infrastructures
+	add infrastructurable_type varchar(191) null';
+
+$queries[] = sprintf(
+    'UPDATE infrastructures SET infrastructurable_id = ch_inf_villeid, infrastructurable_type = %s',
+    GetSQLValueString(Infrastructure::getActualClassNameForMorph(Ville::class)));
 
 // Supprime les tables des packages installés.
 $queries[] = "DROP TABLE `activations`, `admin_activations`, `admin_password_resets`,

@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Models\Presenters\InfrastructurePresenter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,9 +38,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Infrastructure extends Model
 {
+    use InfrastructurePresenter;
+
 	protected $table = 'infrastructures';
 	protected $primaryKey = 'ch_inf_id';
-	public $timestamps = false;
+
+	public const CREATED_AT = 'ch_inf_date';
+	public const UPDATED_AT = null;
 
 	protected $casts = [
 		'ch_inf_off_id' => 'int',
@@ -54,11 +59,8 @@ class Infrastructure extends Model
 	];
 
 	protected $fillable = [
-		'ch_inf_label',
 		'ch_inf_off_id',
 		'ch_inf_villeid',
-		'ch_inf_date',
-		'ch_inf_statut',
 		'nom_infra',
 		'ch_inf_lien_image',
 		'ch_inf_lien_image2',
@@ -66,20 +68,60 @@ class Infrastructure extends Model
 		'ch_inf_lien_image4',
 		'ch_inf_lien_image5',
 		'ch_inf_lien_forum',
+        'ch_inf_commentaire',
 		'lien_wiki',
-		'user_creator',
-		'ch_inf_commentaire',
-		'ch_inf_juge',
-		'ch_inf_commentaire_juge'
+        'infrastructurable_type',
+        'infrastructurable_id',
 	];
 
-	public function ville()
+	public const JUGEMENT_PENDING  = 1;
+	public const JUGEMENT_ACCEPTED = 2;
+	public const JUGEMENT_REJECTED = 3;
+
+	public function infrastructurable()
     {
-        return $this->belongsTo(Ville::class, 'ch_inf_villeid');
+	    return $this->morphTo();
+    }
+
+    public static function pending()
+    {
+        return self::where('ch_inf_statut', self::JUGEMENT_PENDING);
+    }
+
+    public static function accepted()
+    {
+        return self::where('ch_inf_statut', self::JUGEMENT_ACCEPTED);
+    }
+
+    public static function rejected()
+    {
+        return self::where('ch_inf_statut', self::JUGEMENT_REJECTED);
+    }
+
+    public function infrastructure_officielle()
+    {
+        return $this->belongsTo(InfrastructureOfficielle::class, 'ch_inf_off_id');
     }
 
 	public function user()
 	{
 		return $this->belongsTo(CustomUser::class, 'user_creator');
 	}
+
+	public static function getMorphFromUrlParameter($parameter)
+    {
+	    switch($parameter) {
+            case 'ville': $class = Ville::class; break;
+            case 'pays': $class = Pays::class; break;
+            case 'organisation': $class = Organisation::class; break;
+            default: throw new \InvalidArgumentException("Mauvais type de modèle.");
+        }
+        return self::getActualClassNameForMorph($class);
+    }
+
+    public static function getUrlParameterFromMorph($morphType)
+    {
+        $morph = explode("\\", $morphType);
+        return strtolower(end($morph));
+    }
 }

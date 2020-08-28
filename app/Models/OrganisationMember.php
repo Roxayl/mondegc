@@ -110,7 +110,7 @@ class OrganisationMember extends Model
                  $this->permissions === Organisation::$permissions['member'])
         {
             $users = Organisation::find(
-                $this->organisation_id)->adminUsers(Organisation::$permissions['member']);
+                $this->organisation_id)->getUsers(Organisation::$permissions['member']);
             Notification::send($users,
                 new OrganisationMemberPermissionChanged($this, 'accepted'));
         }
@@ -119,7 +119,7 @@ class OrganisationMember extends Model
         // Notifiés : Administrateurs de l'organisation.
         elseif($this->permissions === Organisation::$permissions['pending'])
         {
-            $users = Organisation::find($this->organisation_id)->adminUsers();
+            $users = Organisation::find($this->organisation_id)->getUsers();
             Notification::send($users, new OrganisationMemberJoined($this));
         }
 
@@ -138,7 +138,7 @@ class OrganisationMember extends Model
             && $this->permissions === Organisation::$permissions['administrator'])
         {
             $users = Organisation::find(
-                $this->organisation_id)->adminUsers(Organisation::$permissions['member']);
+                $this->organisation_id)->getUsers(Organisation::$permissions['member']);
             Notification::send($users,
                 new OrganisationMemberPermissionChanged($this,
                     'promotedAdministrator'));
@@ -148,7 +148,7 @@ class OrganisationMember extends Model
         // Notifiés : Utilisateurs membres de l'organisation.
         elseif(!$this->exists) {
             $users = Organisation::find(
-                $this->organisation_id)->adminUsers(Organisation::$permissions['member']);
+                $this->organisation_id)->getUsers(Organisation::$permissions['member']);
             $pays = Pays::find($this->pays_id);
             $organisation = Organisation::find($this->organisation_id);
             Notification::send($users,

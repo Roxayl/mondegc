@@ -192,6 +192,8 @@ $totalRows_list_users = mysql_num_rows($list_users);
 $coord_X = $row_ville['ch_vil_coord_X'];
 $coord_Y = $row_ville['ch_vil_coord_Y'];
 
+$eloquentVille = \App\Models\Ville::findOrFail($thisVille->get('ch_vil_ID'));
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -332,7 +334,7 @@ return true;
           </a></li>
         <li><a href="#page_ville">Page ville</a></li>
         <li><a href="#mes-communiques">Communiqu&eacute;s officiels</a></li>
-        <li><a href="#mes-infrastructures">Infrastructures</a></li>
+        <li><a href="#infrastructures">Infrastructures</a></li>
         <li><a href="#mes-monuments">Monuments</a></li>
         <li><a href="page_pays_back.php?paysID=<?= e($row_ville['ch_pay_id']) ?>">Retour &agrave; mon pays</a></li>
       </ul>
@@ -682,86 +684,10 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
     
     <!-- Liste des infrastructures
         ================================================== -->
-    <section>
-      <div id="mes-infrastructures" class="titre-vert anchor">
-        <h1>Infrastructures</h1>
-      </div>
-      <div class="alert alert-tips">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        Identifiez-ici les infrastructures que vous avez construite dans votre ville afin qu'elle soient prises en compte dans l'&eacute;conomie de votre pays. Vous devez prouver la construction de chaque infrastructure par une photo. Les infrastructures indentifi&eacute;es seront mod&eacute;r&eacute;es avant d'&ecirc;tre comptabilis&eacute;es.</div>
-      <?php if ($row_infrastructure) { ?>
-      <table width="539" class="table table-hover">
-        <thead>
-          <tr class="tablehead">
-            <th width="5%" scope="col"><a href="#" rel="clickover" title="Statut de votre infrastructure" data-content="L'infrastructure est modérée par les juges tempérants et peut-être refus&eacute;e"><i class="icon-globe"></i></a></th>
-            <th colspan="2" width="64%" scope="col">Nom</th>
-            <th width="23%" scope="col">Date</th>
-            <th width="4%" scope="col">&nbsp;</th>
-            <th width="4%" scope="col">&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php do { ?>
-            <tr <?php if ($row_infrastructure['ch_inf_statut']==1) { ?>style="opacity:0.5;"<?php }?>>
-              <td><img src="../assets/img/statutinfra_<?= e($row_infrastructure['ch_inf_statut']) ?>.png" alt="Statut"></td>
-              <td><img src="<?= __s($row_infrastructure['ch_inf_lien_image']) ?>" alt="image de votre construction" width="120px"></td>
-              <td><?= __s($row_infrastructure['nom_infra']) ?><br>
-                  <small>
-                      <img src="<?= __s($row_infrastructure['']) ?>" alt="">
-                      <?= __s($row_infrastructure['ch_inf_off_nom']) ?>
-                  </small></td>
-              <td><?php echo date("d/m/Y", strtotime($row_infrastructure['ch_inf_date'])); ?></td>
-              <td><!-- Boutons visualiser infrastructure --> 
-                <a class="btn modal-fullscreen" href="../php/infrastructure-modal.php?ch_inf_id=<?= e($row_infrastructure['ch_inf_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="voir les détails"><i class="icon-eye-open"></i></a></td>
-              <td><!-- Boutons modifier infrastructure -->
-                <a class="btn btn-primary" href="infrastructure_ajouter.php?infra_id=<?= __s($row_infrastructure['ch_inf_id']) ?>" title="Modifier cette infrastructure"><i class="icon-pencil icon-white"></i></a></td>
-              <td><!-- Boutons supprimer infrastructure --> 
-                <a class="btn btn-danger" href="../php/infrastructure-confirmer-supprimer-modal.php?ch_inf_id=<?= e($row_infrastructure['ch_inf_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="supprimer cette infrastructure"><i class="icon-trash icon-white"></i></a></td>
-            </tr>
-            <?php } while ($row_infrastructure = mysql_fetch_assoc($infrastructure)); ?>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="6"><p class="pull-right">de <?php echo ($startRow_infrastructure + 1) ?> &agrave; <?php echo min($startRow_infrastructure + $maxRows_infrastructure, $totalRows_infrastructure) ?> sur <?php echo $totalRows_infrastructure ?>
-            <?php if ($pageNum_infrastructure > 0) { // Show if not first page ?>
-            <a class="btn" href="<?php printf("%s?pageNum_infrastructure=%d%s#mes-infrastructures", $currentPage, max(0, $pageNum_infrastructure - 1), $queryString_infrastructure); ?>"><i class=" icon-backward"></i></a>
-            <?php } // Show if not first page ?>
-            <?php if ($pageNum_infrastructure < $totalPages_infrastructure) { // Show if not last page ?>
-            <a class="btn" href="<?php printf("%s?pageNum_infrastructure=%d%s#mes-infrastructures", $currentPage, min($totalPages_infrastructure, $pageNum_infrastructure + 1), $queryString_infrastructure); ?>"> <i class="icon-forward"></i></a>
-            <?php } // Show if not last page ?></p>
-              <!--<form action="infrastructure_ajouter.php" method="post">
-                <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
-                <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
-                <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une infrastructure</button>
-              </form>-->
-              <a href="infra_select_group.php?ville_id=<?= e($row_ville['ch_vil_ID']) ?>"
-                 class="btn btn-primary btn-margin-left">Ajouter une infrastructure</a>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-      <?php } else { ?>
-      <!--<form action="infrastructure_ajouter.php" method="post">
-        <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
-        <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
-        <button class="btn btn-primary btn-margin-left" type="submit">Ajouter une infrastructure</button>
-      </form>-->
-          <a href="infra_select_group.php?ville_id=<?= e($row_ville['ch_vil_ID']) ?>"
-             class="btn btn-primary btn-margin-left">Ajouter une infrastructure</a>
-      <?php } ?>
-      <!-- Modal et script -->
-      <div class="modal container fade" id="#Modal-Monument"></div>
-      <script>
-$("a[data-toggle=modal]").click(function (e) {
-  lv_target = $(this).attr('data-target')
-  lv_url = $(this).attr('href')
-  $(lv_target).load(lv_url)})
-
-$('#closemodal').click(function() {
-    $('#Modal-Monument').modal('hide');
-});
-</script> 
-    </section>
+    <?php
+    renderElement('infrastructure/back_list', [
+          'infrastructurable' => $eloquentVille,
+    ]); ?>
     <!-- Liste des monuments
         ================================================== -->
     <section>

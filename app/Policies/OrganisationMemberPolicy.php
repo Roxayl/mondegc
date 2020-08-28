@@ -11,42 +11,42 @@ class OrganisationMemberPolicy
 {
     use HandlesAuthorization;
 
-    public function update(CustomUser $user, OrganisationMember $orgMember) {
-
+    public function update(CustomUser $user, OrganisationMember $orgMember)
+    {
         // On ne permet pas de modifier les permissions d'un propriétaire.
         // Les droits d'un propriétaire font l'objet d'une autre méthode de transfert
         // des droits de propriétaire.
-        if($orgMember->permissions === Organisation::$permissions['owner']) return false;
+        if($orgMember->permissions === Organisation::$permissions['owner']) {
+            return false;
+        }
 
         // L'utilisateur peut accepter ou refuser une demande d'adhésion.
         if( ($orgMember->permissions === Organisation::$permissions['pending'] ||
              $orgMember->permissions === Organisation::$permissions['invited'])
             &&
-            in_array($orgMember->pays->ch_pay_id,
-                array_column($user->pays()->get()->toArray(), 'ch_pay_id')) )
-        {
+             $user->ownsPays($orgMember->pays)
+          ) {
             return true;
         }
 
         // On vérifie que l'utilisateur est administrateur de l'organisation concernée.
         return $orgMember->organisation->maxPermission($user) >=
                  Organisation::$permissions['administrator'];
-
     }
 
-    public function quit(CustomUser $user, OrganisationMember $orgMember) {
+    public function quit(CustomUser $user, OrganisationMember $orgMember)
+    {
+        // Un propriétaire ne peut pas quitter une organisation.
+        // Les droits d'un propriétaire font l'objet d'une autre méthode de transfert
+        // des droits de propriétaire.
+        if($orgMember->permissions < Organisation::$permissions['owner'])
+            return false;
 
-        // Quitter une organisation.
         // Autorisé si l'utilisateur est administrateur de l'organisation ou
         // si l'utilisateur possède le pays.
-        return
-            $orgMember->permissions < Organisation::$permissions['owner'] &&
-            ( $orgMember->organisation->maxPermission($user) >=
-                Organisation::$permissions['administrator'] ||
-              in_array($orgMember->pays->ch_pay_id,
-                array_column($user->pays()->get()->toArray(), 'ch_pay_id'))
-            );
-
+        return $orgMember->organisation->maxPermission($user) >=
+                Organisation::$permissions['administrator']
+            ||
+              $user->ownsPays($orgMember->pays);
     }
-
 }

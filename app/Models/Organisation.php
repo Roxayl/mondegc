@@ -6,7 +6,10 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\Infrastructurable;
+use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\OrganisationPresenter;
+use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
@@ -31,9 +34,9 @@ use Spatie\Searchable\SearchResult;
  *
  * @package App\Models
  */
-class Organisation extends Model implements Searchable
+class Organisation extends Model implements Searchable, Infrastructurable
 {
-    use OrganisationPresenter;
+    use OrganisationPresenter, InfrastructurablePresenter, HasInfrastructures;
 
 	protected $table = 'organisation';
 
@@ -119,12 +122,12 @@ class Organisation extends Model implements Searchable
 
     public function communiques()
     {
-        // TODO: https://laravel.com/docs/5.8/eloquent-relationships#one-to-many-polymorphic-relations
+        // TODO: https://laravel.com/docs/6.x/eloquent-relationships#one-to-many-polymorphic-relations
         return $this->hasMany(Communique::class, 'ch_com_element_id', 'id')->where('ch_com_categorie', '=', 'organisation');
     }
 
-    public function adminUsers($permission = null) {
-
+    public function getUsers($permission = null)
+    {
 	    if($permission === null)
 	        $permission = self::$permissions['administrator'];
 
@@ -148,7 +151,6 @@ class Organisation extends Model implements Searchable
 
         $query = CustomUser::whereIn('ch_use_id', $users)->get();
         return $query;
-
     }
 
     public function getSlugAttribute()
@@ -156,12 +158,10 @@ class Organisation extends Model implements Searchable
         return Str::slug($this->name);
     }
 
-    public function maxPermission(CustomUser $user) {
-
+    public function maxPermission(CustomUser $user)
+    {
         $pays = array_column($user->pays()->get()->toArray(), 'ch_pay_id');
         $permission = $this->membersAll()->whereIn('pays_id', $pays)->max('permissions');
         return $permission;
-
     }
-
 }

@@ -1,6 +1,9 @@
 <?php
 
 //Connexion et deconnexion
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
+
 include('php/log.php');
 
 $colname_Pays = "-1";
@@ -90,6 +93,7 @@ $row_geometries = mysql_fetch_assoc($geometries);
 
 // Obtention des organisations
 $orgMember = \App\Models\OrganisationMember::with('organisation')->where('pays_id', '=', $colname_Pays)->get();
+$eloquentPays = \App\Models\Pays::findOrFail($colname_Pays);
 
 $_SESSION['last_work'] = 'page-pays.php?ch_pay_id='.$row_Pays['ch_pay_id'];
 ?>
@@ -630,6 +634,21 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
       <?php } ?>
       <!-- Economie
         ================================================== -->
+
+        <?php
+
+        if(Gate::check('manageInfrastructure', $eloquentPays)):
+        ?>
+            <div class="cta-title pull-right-cta" style="margin-top: 30px;">
+            <a href="<?= url('back/page_pays_back.php?paysID=' . $row_Pays['ch_pay_id']
+                        . '#infrastructures') ?>"
+               class="btn btn-primary btn-cta">
+                <i class="icon-adjust icon-white"></i> Gérer les infrastructures</a>
+            </div>
+        <?php
+        endif;
+        ?>
+
       <section>
         <div id="economie" class="titre-vert anchor">
           <h1>Économie</h1>
@@ -706,6 +725,37 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
             </div>
           </div>
 
+          <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse"
+                   href="#economie-infrastructures">
+                    Infrastructures
+                    <span class="badge badge-info">
+                        <?= $eloquentPays->infrastructures->count() ?>
+                    </span>
+                </a>
+              </div>
+          <div id="economie-infrastructures" class="accordion-body collapse">
+            <div class="accordion-inner">
+            <?php
+
+            foreach($eloquentPays->infrastructures as $infrastructure):
+
+                $infraData = array(
+                  'id' => $infrastructure->ch_inf_id,
+                  'type' => 'infra',
+                  'overlay_image' => $infrastructure->infrastructure_officielle->ch_inf_off_icone,
+                  'overlay_text' => $infrastructure->infrastructure_officielle->ch_inf_off_nom,
+                  'image' => $infrastructure->ch_inf_lien_image,
+                  'nom' => $infrastructure->nom_infra,
+                  'description' => Str::limit($infrastructure->ch_inf_commentaire),
+                );
+                renderElement('infrastructure/well', $infraData);
+
+            endforeach; ?>
+
+            </div>
+          </div>
         </div>
 
         <?php if ($row_Pays['ch_pay_header_economie'] OR $row_Pays['ch_pay_text_economie']) { ?>
@@ -719,7 +769,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         ================================================== -->
       <?php if ($row_Pays['ch_pay_header_transport'] OR $row_Pays['ch_pay_text_transport']) { ?>
       <section>
-        <div id="transport" class="titre-vert anchor">
+        <div id="transport" class="titre-vert">
           <h1>Transport</h1>
         </div>
         <div class="well">
@@ -731,7 +781,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         ================================================== -->
       <?php if ($row_Pays['ch_pay_header_sport'] OR $row_Pays['ch_pay_text_sport']) { ?>
       <section>
-        <div id="sport" class="titre-vert anchor">
+        <div id="sport" class="titre-vert">
           <h1>Sport</h1>
         </div>
         <div class="well">
@@ -743,7 +793,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
       <!-- Culture
         ================================================== -->
       <section>
-        <div id="culture" class="titre-vert anchor">
+        <div id="culture" class="titre-vert">
           <h1>Culture</h1>
         </div>
         <div class="well">
@@ -755,7 +805,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         ================================================== -->
       <?php if ($row_Pays['ch_pay_header_patrimoine'] OR $row_Pays['ch_pay_text_patrimoine'] OR $row_monument) { ?>
       <section>
-        <div id="patrimoine" class="titre-vert anchor">
+        <div id="patrimoine" class="titre-vert">
           <h1>Patrimoine</h1>
         </div>
         <?php if ($row_monument) { ?>
@@ -793,7 +843,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
               'nom' => $row_monument['ch_pat_nom'],
               'description' => $row_monument['ch_pat_description']
             );
-            renderElement('infrastructure_well', $infraData);
+            renderElement('infrastructure/well', $infraData);
 
         } while ($row_monument = mysql_fetch_assoc($monument)); ?>
         </div>
@@ -810,7 +860,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
       <!-- Commentaire
         ================================================== -->
       <section>
-        <div id="commentaires" class="titre-vert anchor">
+        <div id="commentaires" class="titre-vert">
           <h1>Visites</h1>
         </div>
         <?php 

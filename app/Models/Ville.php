@@ -6,6 +6,10 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\Infrastructurable;
+use App\Models\Presenters\InfrastructurablePresenter;
+use App\Models\Presenters\VillePresenter;
+use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\Searchable;
@@ -49,8 +53,10 @@ use Spatie\Searchable\SearchResult;
  *
  * @package App\Models
  */
-class Ville extends Model implements Searchable
+class Ville extends Model implements Searchable, Infrastructurable
 {
+    use InfrastructurablePresenter, VillePresenter, HasInfrastructures;
+
 	protected $table = 'villes';
 	protected $primaryKey = 'ch_vil_ID';
     const CREATED_AT = 'ch_vil_date_enregistrement';
@@ -115,4 +121,9 @@ class Ville extends Model implements Searchable
 	{
 		return $this->belongsTo(Pays::class, 'ch_vil_paysID');
 	}
+
+	public function getUsers()
+    {
+        return $this->pays->users;
+    }
 }

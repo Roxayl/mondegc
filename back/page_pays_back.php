@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Pays as EloquentPays;
 use GenCity\Monde\Pays;
  
 //deconnexion
@@ -274,6 +275,10 @@ $paysPersonnages = $thisPays->getCharacters();
 if(!empty($paysPersonnages)) {
     $paysPersonnages = $paysPersonnages[0];
 }
+
+// Pays
+$eloquentPays = EloquentPays::findOrFail($row_InfoGenerale['ch_pay_id']);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -377,6 +382,7 @@ img.olTileImage {
         <li><a href="#personnage">Personnage</a></li>
         <?php }?>
         <li><a href="#villes">Villes</a></li>
+        <li><a href="#infrastructures">Infrastructures</a></li>
         <li><a href="#routes-campagne">Routes et campagne</a></li>
         <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
         <li><a href="#mes-communiques">Communiqu&eacute;s officiels</a></li>
@@ -969,6 +975,14 @@ img.olTileImage {
         </table>
       </section>
       <?php }  // fin affichage section autre villes si existantes.  ?>
+
+
+      <!-- Infrastructures
+        ================================================== -->
+      <?php
+      renderElement('infrastructure/back_list', [
+          'infrastructurable' => $eloquentPays,
+      ]); ?>
 
       <!-- Routes et campagne
         ================================================== -->

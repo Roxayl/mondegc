@@ -54,6 +54,21 @@ Route::match(['put', 'patch'], 'organisation-member/{id}', 'OrganisationMemberCo
 Route::get('organisation-member/{id}/delete', 'OrganisationMemberController@delete')->name('organisation-member.delete');
 Route::delete('organisation-member/{id}', 'OrganisationMemberController@destroy')->name('organisation-member.destroy');
 
+/* Infrastructure */
+Route::get('infrastructure/{id}', 'InfrastructureController@show')->name('infrastructure.show');
+Route::get('infrastructure/select-group/type:{infrastructurable_type}/id:{infrastructurable_id}', 'InfrastructureController@selectGroup')->name('infrastructure.select-group');
+Route::get('infrastructure/create/type:{infrastructurable_type}/id:{infrastructurable_id}', 'InfrastructureController@create')->name('infrastructure.create');
+Route::post('infrastructure/create', 'InfrastructureController@store')->name('infrastructure.store');
+Route::get('infrastructure/{infrastructure_id}/edit', 'InfrastructureController@edit')->name('infrastructure.edit');
+Route::match(['put', 'patch'], 'infrastructure/{infrastructure_id}', 'InfrastructureController@update')->name('infrastructure.update');
+Route::get('infrastructure/{infrastructure_id}/delete', 'InfrastructureController@delete')->name('infrastructure.delete');
+Route::delete('infrastructure/{infrastructure_id}', 'InfrastructureController@destroy')->name('infrastructure.destroy');
+
+/* InfrastructureJudge */
+Route::get('economy/infrastructure-judge', 'InfrastructureJudgeController@index')->name('infrastructure-judge.index');
+Route::get('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJudgeController@show')->name('infrastructure-judge.show');
+Route::patch('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJudgeController@judge')->name('infrastructure-judge.judge');
+
 /* Search */
 Route::get('search', 'SearchController@index')->name('search');
 
