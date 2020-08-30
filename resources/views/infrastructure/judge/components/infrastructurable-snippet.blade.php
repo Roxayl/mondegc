@@ -1,4 +1,14 @@
 
+    @if(is_null($infrastructure->infrastructurable))
+
+        <small style="color: red;">
+            L'élément auquel appartient cette infrastructure a été supprimé.
+        </small>
+
+        @php return; @endphp
+
+    @endif
+
     <small>
         @if(!empty($infrastructure->infrastructurable->getFlag()))
             <img src="{{ $infrastructure->infrastructurable->getFlag() }}"

@@ -59,7 +59,7 @@ class OrganisationController extends Controller
      */
     public function show($id, $slug = null)
     {
-        $organisation = Organisation::with(['members', 'membersPending', 'communiques'])
+        $organisation = Organisation::with(['members', 'membersPending'])
             ->findOrFail($id);
 
         if(is_null($slug) || $organisation->slug !== Str::slug($slug)) {
@@ -67,12 +67,15 @@ class OrganisationController extends Controller
                 $organisation->showRouteParameter());
         }
 
+        $communiques = $organisation->communiques()->paginate(10);
+
         $members_invited = collect();
         if(auth()->check()) {
             $members_invited = $organisation->membersInvited(auth()->user())->get();
         }
 
-        return view('organisation.show', compact(['organisation', 'members_invited']));
+        return view('organisation.show', compact(
+            ['organisation', 'communiques', 'members_invited']));
     }
 
     /**

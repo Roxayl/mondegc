@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -123,7 +124,19 @@ class Organisation extends Model implements Searchable, Infrastructurable
     public function communiques()
     {
         // TODO: https://laravel.com/docs/6.x/eloquent-relationships#one-to-many-polymorphic-relations
-        return $this->hasMany(Communique::class, 'ch_com_element_id', 'id')->where('ch_com_categorie', '=', 'organisation');
+        $query = $this->hasMany(Communique::class,
+            'ch_com_element_id', 'id')
+            ->where('ch_com_categorie', '=', 'organisation')
+            ->orderByDesc('ch_com_statut')
+            ->orderByDesc('ch_com_date');
+
+        // Affiche seulement les communiqués publiés, si l'utilisateur n'a pas les
+        // permissions pour administrer l'organisation.
+        if(Gate::denies('administrate', $this)) {
+            $query = $query->where('ch_com_statut', Communique::STATUS_PUBLISHED);
+        }
+
+        return $query;
     }
 
     public function getUsers($permission = null)

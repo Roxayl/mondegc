@@ -32,7 +32,6 @@ class Communique extends Model
 {
 	protected $table = 'communiques';
 	protected $primaryKey = 'ch_com_ID';
-	public $timestamps = false;
 
 	protected $casts = [
 		'ch_com_statut' => 'int',
@@ -50,17 +49,16 @@ class Communique extends Model
 	];
 
 	protected $fillable = [
-		'ch_com_label',
 		'ch_com_statut',
 		'ch_com_categorie',
 		'ch_com_element_id',
-		'ch_com_user_id',
-		'ch_com_date',
-		'ch_com_date_mis_jour',
 		'ch_com_titre',
 		'ch_com_contenu',
 		'ch_com_pays_id'
 	];
+
+	public const STATUS_PUBLISHED = 1;
+	public const STATUS_DRAFT = 2;
 
 	public function user()
 	{
