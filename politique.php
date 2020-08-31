@@ -12,9 +12,7 @@ $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
 
-$organisations = \App\Models\Organisation::with('members')
-    ->orderByDesc('allow_temperance')
-    ->paginate();
+$organisations = \App\Models\Organisation::allOrdered()->paginate();
 
 ?><!DOCTYPE html>
 <html lang="fr">

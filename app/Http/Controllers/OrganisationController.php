@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Communique;
 use App\Models\Organisation;
 use App\Models\OrganisationMember;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -22,13 +24,16 @@ class OrganisationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         $this->authorize('create', Organisation::class);
         $organisation = new Organisation();
 
         $pays = auth()->user()->pays;
-        return view('organisation.create', compact(['organisation', 'pays']));
+
+        $type = $request->has('type') ? $request->get('type') : null;
+
+        return view('organisation.create', compact(['organisation', 'pays', 'type']));
     }
 
     /**
@@ -40,7 +45,15 @@ class OrganisationController extends Controller
     {
         $this->authorize('create', Organisation::class);
 
-        $organisation = Organisation::create($request->except(['_method', '_token']));
+        $organisation = new Organisation();
+        $organisation->fill($request->except(['_method', '_token']));
+
+        $type = $request->input('type');
+        if(!in_array($type, Organisation::$types))
+            throw new \InvalidArgumentException("Mauvais type d'organisation.");
+        $organisation->type = $type;
+
+        $organisation->save();
 
         $memberData = array(
             'organisation_id' => $organisation->id,
@@ -67,7 +80,13 @@ class OrganisationController extends Controller
                 $organisation->showRouteParameter());
         }
 
-        $communiques = $organisation->communiques()->paginate(10);
+        $communiques = $organisation->communiques();
+        if(Gate::denies('administrate', $organisation)) {
+            // Affiche seulement les communiqués publiés, si l'utilisateur n'a pas les
+            // permissions pour administrer l'organisation.
+            $communiques = $communiques->where('ch_com_statut', Communique::STATUS_PUBLISHED);
+        }
+        $communiques = $communiques->paginate(10);
 
         $members_invited = collect();
         if(auth()->check()) {

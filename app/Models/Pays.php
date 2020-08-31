@@ -11,6 +11,7 @@ use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\PaysPresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use Carbon\Carbon;
+use Closure;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\Searchable;
@@ -104,10 +105,6 @@ class Pays extends Model implements Searchable, Infrastructurable
 	];
 
 	protected $fillable = [
-		'ch_pay_label',
-		'ch_pay_publication',
-		'ch_pay_continent',
-		'ch_pay_emplacement',
 		'ch_pay_lien_forum',
 		'lien_wiki',
 		'ch_pay_nom',
@@ -116,7 +113,6 @@ class Pays extends Model implements Searchable, Infrastructurable
 		'ch_pay_lien_imgdrapeau',
 		'ch_pay_date',
 		'ch_pay_mis_jour',
-		'ch_pay_nb_update',
 		'ch_pay_forme_etat',
 		'ch_pay_capitale',
 		'ch_pay_langue_officielle',
@@ -139,21 +135,14 @@ class Pays extends Model implements Searchable, Infrastructurable
 		'ch_pay_text_culture',
 		'ch_pay_header_patrimoine',
 		'ch_pay_text_patrimoine',
-		'ch_pay_budget_carte',
-		'ch_pay_industrie_carte',
-		'ch_pay_commerce_carte',
-		'ch_pay_agriculture_carte',
-		'ch_pay_tourisme_carte',
-		'ch_pay_recherche_carte',
-		'ch_pay_environnement_carte',
-		'ch_pay_education_carte',
-		'ch_pay_population_carte',
-		'ch_pay_emploi_carte'
 	];
 
+	public const STATUS_ACTIVE = 1;
+	public const STATUS_ARCHIVED = 2;
+
 	public static array $statut = [
-	    'active' => 1,
-        'archived' => 2,
+	    'active' => self::STATUS_ACTIVE,
+        'archived' => self::STATUS_ARCHIVED,
     ];
 
 	public const PERMISSION_DIRIGEANT = 10;
@@ -170,6 +159,41 @@ class Pays extends Model implements Searchable, Infrastructurable
 	{
 		return $this->hasMany(OrganisationMember::class, 'pays_id');
 	}
+
+	private function getOrganisationMembership(Closure $f)
+    {
+        $query = $this->organisation_members()
+            ->join('organisation', 'organisation.id', 'organisation_id')
+            ->where('permissions', '>=', Organisation::PERMISSION_MEMBER);
+
+        return $f($query);
+    }
+
+	public function organisationsAll()
+    {
+        return $this->getOrganisationMembership(function($query) {
+            return $query->get()
+                         ->pluck('organisation');
+        });
+    }
+
+    public function alliance()
+    {
+        return $this->getOrganisationMembership(function($query) {
+            return $query->where('type', Organisation::TYPE_ALLIANCE)
+                         ->get()
+                         ->pluck('organisation')->first();
+        });
+    }
+
+    public function otherOrganisations()
+    {
+        return $this->getOrganisationMembership(function($query) {
+            return $query->where('type', '!=', Organisation::TYPE_ALLIANCE)
+                         ->get()
+                         ->pluck('organisation');
+        });
+    }
 
 	public function users()
     {

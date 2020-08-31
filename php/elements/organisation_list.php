@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 if(isset($data['organisation']))
     /** @var \App\Models\Organisation $organisation */
     $organisation = $data['organisation'];
@@ -31,8 +33,10 @@ $memberCount = $organisation->members->count();
             $organisation->showRouteParameter()) ?>">
             <h2><?= e($organisation->name) ?></h2></a>
         <p>
+            <span class="badge org-<?= e($organisation->type) ?>">
+                <?= __("organisation.types.{$organisation->type}") ?></span>
             <?= $memberCount ?>
-            <?= \Illuminate\Support\Str::plural('membre', $memberCount) ?>
+            <?= Str::plural('membre', $memberCount) ?>
             <?php foreach($organisation->members as $member): ?>
                 <a title="<?= __s($member->pays->ch_pay_nom) ?>"
                    href="<?= url("page-pays.php?ch_pay_id={$member->pays->ch_pay_id}")?>">

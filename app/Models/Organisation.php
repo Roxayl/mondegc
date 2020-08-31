@@ -57,12 +57,28 @@ class Organisation extends Model implements Searchable, Infrastructurable
         'allow_temperance' => false,
     ];
 
-	static $permissions = [
-	    'owner' => 100,
-        'administrator' => 50,
-        'member' => 10,
-        'pending' => 5,
-        'invited' => 2,
+	public const PERMISSION_OWNER = 100;
+	public const PERMISSION_ADMINISTRATOR = 50;
+	public const PERMISSION_MEMBER = 10;
+	public const PERMISSION_PENDING = 5;
+	public const PERMISSION_INVITED = 2;
+
+    public static array $permissions = [
+        'owner' => self::PERMISSION_OWNER,
+        'administrator' => self::PERMISSION_ADMINISTRATOR,
+        'member' => self::PERMISSION_MEMBER,
+        'pending' => self::PERMISSION_PENDING,
+        'invited' => self::PERMISSION_INVITED,
+    ];
+
+	public const TYPE_ALLIANCE = 'alliance';
+	public const TYPE_ORGANISATION = 'organisation';
+	public const TYPE_GROUP = 'group';
+
+	public static array $types = [
+	    'alliance' => self::TYPE_ALLIANCE,
+        'organisation' => self::TYPE_ORGANISATION,
+        'group' => self::TYPE_GROUP,
     ];
 
 	public function getSearchResult() : SearchResult
@@ -124,19 +140,11 @@ class Organisation extends Model implements Searchable, Infrastructurable
     public function communiques()
     {
         // TODO: https://laravel.com/docs/6.x/eloquent-relationships#one-to-many-polymorphic-relations
-        $query = $this->hasMany(Communique::class,
+        return $this->hasMany(Communique::class,
             'ch_com_element_id', 'id')
             ->where('ch_com_categorie', '=', 'organisation')
             ->orderByDesc('ch_com_statut')
             ->orderByDesc('ch_com_date');
-
-        // Affiche seulement les communiqués publiés, si l'utilisateur n'a pas les
-        // permissions pour administrer l'organisation.
-        if(Gate::denies('administrate', $this)) {
-            $query = $query->where('ch_com_statut', Communique::STATUS_PUBLISHED);
-        }
-
-        return $query;
     }
 
     public function getUsers($permission = null)
@@ -164,6 +172,16 @@ class Organisation extends Model implements Searchable, Infrastructurable
 
         $query = CustomUser::whereIn('ch_use_id', $users)->get();
         return $query;
+    }
+
+    public static function allOrdered()
+    {
+        return self::with('members')
+            ->orderByRaw("CASE type
+                WHEN 'alliance' THEN 1 WHEN 'organisation' THEN 2 WHEN 'group' THEN 3
+                ELSE 4 END")
+            ->orderByDesc('created_at')
+            ->orderByDesc('allow_temperance');
     }
 
     public function getSlugAttribute()

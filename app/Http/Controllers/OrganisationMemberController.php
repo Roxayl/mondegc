@@ -16,19 +16,28 @@ class OrganisationMemberController extends Controller
         $this->middleware('require-ajax', ['only' => ['joinOrganisation', 'edit']]);
     }
 
-    private function checkMemberAlreadyExists(Request $request, Organisation $organisation) {
+    private function checkMemberAlreadyExists(Request $request, Organisation $organisation)
+    {
+        $pays_id = $request->get('pays_id');
 
         // Vérifier si le membre existe déjà
         $memberAlreadyExists = (bool)$organisation->membersAll()
-            ->where('pays_id', '=', $request->get('pays_id'))
+            ->where('pays_id', '=', $pays_id)
             ->get()
             ->count();
-
         if($memberAlreadyExists) {
             throw new \InvalidArgumentException("Ce pays est déjà membre de cette "
                . "organisation ou vous avez déjà formulé une demande d'adhésion.");
         }
 
+        // Empêche qu'un pays déjà membre d'une alliance en rejoigne une autre.
+        if($organisation->type === $organisation::TYPE_ALLIANCE) {
+            $alliance = Pays::find($pays_id)->alliance();
+            if(!empty($alliance)) {
+                throw new \InvalidArgumentException("Ce pays ne peut pas rejoindre "
+                    . "plusieurs alliances. Il est déjà membre de {$alliance->name}.");
+            }
+        }
     }
 
     /*

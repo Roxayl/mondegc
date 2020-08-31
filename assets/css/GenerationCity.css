@@ -693,6 +693,45 @@ body > .navbar .brand {
 }
 
 
+/* Organisation */
+
+a.org-container, div.org-container {
+    border-radius: 10px;
+    padding: 10px;
+    color: #fafafa;
+    background-size: 200%;
+}
+
+a.org-container:hover {
+    text-decoration: none;
+    background-size: 100%;
+}
+
+.org-alliance {
+    background: rgb(199, 190, 96);
+    background: -moz-linear-gradient(90deg, rgba(199, 190, 96, 1) 0%, rgba(193, 175, 62, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(199, 190, 96, 1) 0%, rgba(193, 175, 62, 1) 100%);
+    background: linear-gradient(90deg, rgba(199, 190, 96, 1) 0%, rgba(193, 175, 62, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c7be60", endColorstr="#c1af3e", GradientType=1);
+}
+
+.org-organisation {
+    background: rgb(96, 184, 199);
+    background: -moz-linear-gradient(90deg, rgba(96, 184, 199, 1) 0%, rgba(67, 151, 208, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(96, 184, 199, 1) 0%, rgba(67, 151, 208, 1) 100%);
+    background: linear-gradient(90deg, rgba(96, 184, 199, 1) 0%, rgba(67, 151, 208, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#60b8c7", endColorstr="#4397d0", GradientType=1);
+}
+
+.org-group {
+    background: rgb(143, 193, 64);
+    background: -moz-linear-gradient(90deg, rgba(143, 193, 64, 1) 0%, rgba(73, 152, 45, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(143, 193, 64, 1) 0%, rgba(73, 152, 45, 1) 100%);
+    background: linear-gradient(90deg, rgba(143, 193, 64, 1) 0%, rgba(73, 152, 45, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#8fc140", endColorstr="#49982d", GradientType=1);
+}
+
+
 /* Dropdown
 -------------------------------------------------- */
 

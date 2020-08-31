@@ -39,7 +39,7 @@ class OrganisationMemberPolicy
         // Un propriétaire ne peut pas quitter une organisation.
         // Les droits d'un propriétaire font l'objet d'une autre méthode de transfert
         // des droits de propriétaire.
-        if($orgMember->permissions < Organisation::$permissions['owner'])
+        if($orgMember->permissions === Organisation::$permissions['owner'])
             return false;
 
         // Autorisé si l'utilisateur est administrateur de l'organisation ou

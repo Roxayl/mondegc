@@ -39,12 +39,7 @@
 
         <div class="span3 bs-docs-sidebar">
             <ul class="nav nav-list bs-docs-sidenav">
-                <li class="row-fluid"><a href="#header">
-                    <img src="{{$organisation->logo}}" alt="Logo de {{$organisation->name}}">
-                    <p><strong>{{$organisation->name}}</strong></p>
-                        <p><em>{{$organisation->members->count()}}
-                            {{ \Illuminate\Support\Str::plural('membre',  $organisation->members->count()) }}</em></p>
-                    </a></li>
+                @include('organisation.components.sidebar-header')
                 <li><a href="#actualites">Actualités</a></li>
                 <li><a href="#presentation">Présentation</a></li>
                 @if($organisation->allow_temperance)

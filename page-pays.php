@@ -92,8 +92,9 @@ $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error())
 $row_geometries = mysql_fetch_assoc($geometries);
 
 // Obtention des organisations
-$orgMember = \App\Models\OrganisationMember::with('organisation')->where('pays_id', '=', $colname_Pays)->get();
 $eloquentPays = \App\Models\Pays::findOrFail($colname_Pays);
+$organisations = $eloquentPays->otherOrganisations();
+$alliance = $eloquentPays->alliance();
 
 $_SESSION['last_work'] = 'page-pays.php?ch_pay_id='.$row_Pays['ch_pay_id'];
 ?>
@@ -453,22 +454,55 @@ init();
           <?php endif; ?>
         </div>
 
-        <?php if(count($orgMember)): ?>
-        <h4>Organisations</h4>
-        <p><?= $thisPays->get('ch_pay_nom') ?> est membre des organisations suivantes :</p>
-        <ul style="list-style-type: none;">
-        <?php foreach($orgMember as $thisMembership): ?>
-            <li>
-                <img src="<?= __s($thisMembership->organisation->flag) ?>"
-                     alt="Drapeau de <?= __s($thisMembership->organisation->name) ?>"
-                     class="img-menu-drapeau">
-                <a href="<?= route('organisation.showslug',
-                         $thisMembership->organisation->showRouteParameter()) ?>">
-                    <?= __s($thisMembership->organisation->name) ?>
-                </a>
-            </li>
-        <?php endforeach; ?>
-        </ul>
+        <?php if($organisations->count() || !empty($alliance)): ?>
+            <h4>Organisations</h4>
+
+            <?php if(!empty($alliance)): ?>
+                <h5>Alliance</h5>
+
+                <div class="well" style="margin-top: 0; padding-top: 0;">
+                <div class="org-container org-alliance row-fluid" style="margin-left: -20px;">
+                    <div class="span2">
+                        <img src="<?= e($alliance->flag) ?>" style="width: 90%;"
+                         alt="Drapeau de l'alliance <?= e($alliance->name) ?>">
+                    </div>
+                    <div class="span10">
+                        <a href="<?= route('organisation.showslug',
+                                $alliance->showRouteParameter()) ?>">
+                            <h3 style="margin: 0 0 10px;"><?= e($alliance->name) ?></h3>
+                        </a>
+                        <p><?= e($thisPays->get('ch_pay_nom')) ?> est membre de l'alliance.</p>
+                        <div class="alert alert-light">
+                            <?php renderElement('temperance/resources_small', [
+                                'resources' => $alliance->temperance->first()->toArray()
+                            ]); ?>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            <?php endif; ?>
+
+            <?php if($organisations->count()): ?>
+
+                <h5>Autres organisations</h5>
+
+                <p><?= e($thisPays->get('ch_pay_nom')) ?> est membre des organisations
+                    suivantes :</p>
+                <ul style="list-style-type: none;">
+                <?php foreach($organisations as $organisation): ?>
+                    <li>
+                        <img src="<?= e($organisation->flag) ?>"
+                             alt="Drapeau de <?= e($organisation->name) ?>"
+                             class="img-menu-drapeau">
+                        <a href="<?= route('organisation.showslug',
+                                 $organisation->showRouteParameter()) ?>">
+                            <?= e($organisation->name) ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
         <?php endif; ?>
 
         </div>
