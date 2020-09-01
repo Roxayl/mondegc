@@ -81,6 +81,10 @@ class Organisation extends Model implements Searchable, Infrastructurable
         'group' => self::TYPE_GROUP,
     ];
 
+	public static array $typesCreatable = [
+	    self::TYPE_ORGANISATION, self::TYPE_GROUP
+    ];
+
 	public function getSearchResult() : SearchResult
     {
 	    return new SearchResult(

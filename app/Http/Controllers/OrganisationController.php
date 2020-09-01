@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Organisation\MigrateType;
 use App\Models\Communique;
 use App\Models\Organisation;
 use App\Models\OrganisationMember;
@@ -49,7 +50,7 @@ class OrganisationController extends Controller
         $organisation->fill($request->except(['_method', '_token']));
 
         $type = $request->input('type');
-        if(!in_array($type, Organisation::$types))
+        if(!in_array($type, Organisation::$typesCreatable))
             throw new \InvalidArgumentException("Mauvais type d'organisation.");
         $organisation->type = $type;
 
@@ -139,4 +140,23 @@ class OrganisationController extends Controller
         throw new BadRequestHttpException();
     }
 
+    public function migrate($id)
+    {
+        $organisation = Organisation::findOrFail($id);
+
+        return view('organisation.migrate', compact(['organisation']));
+    }
+
+    public function runMigration(MigrateType $request, $id)
+    {
+        $organisation = Organisation::findOrFail($id);
+
+        $organisation->type = $request->type;
+
+        $organisation->save();
+
+        return redirect()->back()
+            ->with('message', 'success|Votre organisation est devenue une '
+                . __("organisation.types.$request->type"));
+    }
 }

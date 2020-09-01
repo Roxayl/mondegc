@@ -52,8 +52,8 @@
             {{-- S'il faut afficher un en-tête sur le type d'orga ?
             <div class="well">
                 <div class="org-container org-{{ $organisation->type }}">
-                    <h3>{{ trans("organisation.types.$organisation->type") }}</h3>
-                    <p>{{ trans("organisation.types.{$organisation->type}-description") }}</p>
+                    <h3>{{ __("organisation.types.$organisation->type") }}</h3>
+                    <p>{{ __("organisation.types.{$organisation->type}-description") }}</p>
                 </div>
             </div>
             --}}
@@ -62,22 +62,16 @@
                 <h1>Présentation</h1>
             </div>
 
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
             <div class="well">
 
             <label>Type d'organisation
                 <span class="badge org-{{ $organisation->type }}">
-                {{ __("organisation.types.{$organisation->type}") }}
-                </span>
+                {{ __("organisation.types.{$organisation->type}") }}</span>
+                <a href="{{ route('organisation.migrate',
+                    ['organisation' => $organisation->id]) }}"
+                   data-toggle="modal" data-target="#modal-container">
+                    Migrer vers un nouveau type...
+                </a>
             </label>
             <br>
 

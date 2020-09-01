@@ -5,17 +5,31 @@ namespace App\Services;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\ViewErrorBag;
 
 class HelperService {
 
-    static function displayAlert()
+    static function displayAlert() : string
     {
+        $output = '';
+
+        // Messages généralement définis pendant une redirection.
         if (Session::has('message')) {
             list($type, $message) = explode('|', Session::get('message'));
-            return sprintf('<div class="alert alert-%s">%s</div>', $type, $message);
+            $output .= sprintf('<div class="alert alert-%s">%s</div>', $type, $message);
         }
 
-        return '';
+        // Affiche le contenu de la variable 'errors', notamment pour la validation.
+        $errors = request()->session()->get('errors') ?: new ViewErrorBag;
+        if($errors->any()) {
+            $output .= '<div class="alert alert-danger"><ul>';
+            foreach ($errors->all() as $error) {
+                $output .= sprintf('<li>%s</li>', $error);
+            }
+            $output .= '</ul></div>';
+        }
+
+        return $output;
     }
 
     static function renderLegacyElement($element, $data)

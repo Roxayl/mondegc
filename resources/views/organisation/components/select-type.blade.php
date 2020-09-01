@@ -2,7 +2,7 @@
     <div class="row-fluid">
 
         @php $i = 1; @endphp
-        @foreach($organisation::$types as $organisationType)
+        @foreach($organisation::$typesCreatable as $organisationType)
             <a href="{{ route('organisation.create', ['type' => $organisationType]) }}"
                 class="span6 org-container org-{{ $organisationType }}">
                 <h3>{{ trans("organisation.types.$organisationType") }}</h3>
