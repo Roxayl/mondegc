@@ -5,14 +5,14 @@
     <a href="<?= route('organisation-member.invite',
                  ['organisation_id' => $organisation->id]) ?>"
        class="btn btn-primary btn-cta pull-right"
-       data-toggle="modal" data-target="#modal-container">
+       data-toggle="modal" data-target="#modal-container-small">
     <i class="icon-white icon-envelope"></i> Inviter...</a>
 @endcan
 @if(auth()->check())
     <a href="<?= route('organisation-member.join',
                  ['organisation_id' => $organisation->id]) ?>"
        class="btn btn-primary btn-cta pull-right" style="margin-right: 8px;"
-       data-toggle="modal" data-target="#modal-container">
+       data-toggle="modal" data-target="#modal-container-small">
     <i class="icon-white icon-plus-sign"></i> Rejoindre...</a>
 @endif
 </div>

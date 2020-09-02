@@ -193,7 +193,7 @@ init();
 <header class="jumbotron subhead anchor" id="pays_stats">
   <div class="container">
     <?php if($thisPays->get('ch_pay_continent') === 'RFGC'): ?>
-      <h2>République fédérale de Génération City</h2>
+      <h2>République fédérale de Gécée</h2>
     <?php endif; ?>
     <h1><?= e($row_Pays['ch_pay_nom']) ?></h1>
   </div>
@@ -296,8 +296,19 @@ init();
       <?php
       ob_start();
       ?>
-      <div class="row-fluid">
+      <div class="row-fluid" style="margin-top: -40px;">
         <div class="span12 thumb">
+
+          <?php if(!empty($alliance)): ?>
+              <img src="<?= e($alliance->flag) ?>" alt="Drapeau de l'alliance <?= e($alliance->name) ?>"
+                   class="img-menu-drapeau">
+              Membre de
+              <a href="<?= route('organisation.showslug', $alliance->showRouteParameter()) ?>">
+                <?= e($alliance->name) ?>
+              </a>
+              <br><br>
+          <?php endif; ?>
+
           <img src="<?= e($row_Pays['ch_pay_lien_imgdrapeau']) ?>" alt="Drapeau du pays n°<?= e($row_Pays['ch_pay_id']) ?>" title="drapeau <?= e($row_Pays['ch_pay_nom']) ?>">
           <br>
           <em><?= __s($row_Pays['ch_pay_devise']) ?></em>
@@ -378,9 +389,12 @@ init();
 
       <?php
       $infobox_contents = ob_get_clean();
+      $infobox_title = __s($row_Pays['ch_pay_nom']);
+      if($thisPays->get('ch_pay_continent') === 'RFGC')
+          $infobox_title .= '<br><small>République fédérale de Gécée</small>';
 
       renderElement('infobox', array(
-          'title' => __s($row_Pays['ch_pay_nom']),
+          'title' => $infobox_title,
           'contents' => $infobox_contents
       ));
       ?>
@@ -434,20 +448,21 @@ init();
             <div class="titre-gris">
               <?php if (!empty($personnage->get('prenom_personnage'))
                      OR !empty($personnage->get('nom_personnage'))): ?>
-                  <h3><?= __s($personnage->get('prenom_personnage')) ?>
+                  <small style="padding: 0;"><?= __s($personnage->get('predicat')) ?></small>
+                  <h3 style="padding-top: 0;"><?= __s($personnage->get('prenom_personnage')) ?>
                       <?= __s($personnage->get('nom_personnage')) ?></h3>
+                  <br>
+                  <small><i class="icon-briefcase icone-large"></i>
+                      <?= __s($personnage->get('titre_personnage')) ?></small>
               <?php else: ?>
                 <h3>Pas de dirigeant</h3>
               <?php endif; ?>
             </div>
           </div>
           <div class="span9">
-            <div class="well">
-              <p><i><?= __s($personnage->get('predicat')) ?></i></p>
-              <p><i><?= __s($personnage->get('titre_personnage')) ?></i></p>
-            </div>
             <?php if (!empty($personnage->get('biographie'))): ?>
             <div class="well">
+              <h5>Biographie</h5>
               <p><?= __s($personnage->get('biographie')) ?></p>
             </div>
           </div>
@@ -460,31 +475,27 @@ init();
             <?php if(!empty($alliance)): ?>
                 <h5>Alliance</h5>
 
-                <div class="well" style="margin-top: 0; padding-top: 0;">
-                <div class="org-container org-alliance row-fluid" style="margin-left: -20px;">
-                    <div class="span2">
-                        <img src="<?= e($alliance->flag) ?>" style="width: 90%;"
-                         alt="Drapeau de l'alliance <?= e($alliance->name) ?>">
-                    </div>
-                    <div class="span10">
-                        <a href="<?= route('organisation.showslug',
-                                $alliance->showRouteParameter()) ?>">
-                            <h3 style="margin: 0 0 10px;"><?= e($alliance->name) ?></h3>
-                        </a>
-                        <p><?= e($thisPays->get('ch_pay_nom')) ?> est membre de l'alliance.</p>
-                        <div class="alert alert-light">
+                <div class="info-infrastructure-off span12" style="margin-left: -3px;">
+                    <h2><a href="<?= route('organisation.showslug',
+                            $alliance->showRouteParameter()) ?>"><?= e($alliance->name) ?></a></h2>
+
+                    <div class="row-fluid" style="margin-top: 10px;">
+                        <div class="span2">
+                            <img src="<?= e($alliance->flag) ?>" style="margin-left: 5px;"
+                                 alt="Drapeau de l'alliance <?= e($alliance->name) ?>">
+                        </div>
+                        <div class="span10">
+                            <p><?= e($thisPays->get('ch_pay_nom')) ?> est membre de l'alliance.</p>
                             <?php renderElement('temperance/resources_small', [
                                 'resources' => $alliance->temperance->first()->toArray()
                             ]); ?>
                         </div>
                     </div>
                 </div>
-                </div>
-
             <?php endif; ?>
 
             <?php if($organisations->count()): ?>
-
+                <br><br><br>
                 <h5>Autres organisations</h5>
 
                 <p><?= e($thisPays->get('ch_pay_nom')) ?> est membre des organisations
@@ -503,6 +514,7 @@ init();
                 <?php endforeach; ?>
                 </ul>
             <?php endif; ?>
+
         <?php endif; ?>
 
         </div>

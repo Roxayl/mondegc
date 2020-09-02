@@ -262,7 +262,7 @@ class VoteList {
 
             // Définir le nom du pays
             if($vote->getPaysAuthor()->get('ch_pay_continent') === 'RFGC') {
-                $pays_nom = "République Fédérale de Génération City - " .
+                $pays_nom = "République Fédérale de Gécée - " .
                             $vote->getPaysAuthor()->get('ch_pay_nom');
             } else {
                 $pays_nom = $vote->getPaysAuthor()->get('ch_pay_nom');

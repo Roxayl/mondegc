@@ -1,25 +1,53 @@
 
     <div class="row-fluid">
+        <div class="span2">
+            <img src="http://vasel.yt/wiki/images/d/da/Icone-globe-cpgc.png"
+                 alt="Icône d'organisation CPGC">
+        </div>
+        <div class="span10">
+            <h3 style="margin: 10px 0;">L'union fait la force !</h3>
+            <p>@lang('organisation.create.create-description')</p>
+        </div>
+    </div>
 
-        @php $i = 1; @endphp
-        @foreach($organisation::$typesCreatable as $organisationType)
-            <a href="{{ route('organisation.create', ['type' => $organisationType]) }}"
-                class="span6 org-container org-{{ $organisationType }}">
-                <h3>{{ trans("organisation.types.$organisationType") }}</h3>
-                <p>{{ trans("organisation.types.{$organisationType}-description") }}</p>
-                <h4>Principes</h4>
+    <br><br>
+
+    @foreach($organisation::$types as $organisationType)
+        <div class="row-fluid">
+        <div class="span12 org-container" style="margin-bottom: 15px;">
+
+            <div class="org-header org-{{ $organisationType }}">
+                <h2>{{ __("organisation.types.$organisationType") }}</h2>
+                <p>{{ __("organisation.types.{$organisationType}-description") }}
+                </p>
+            </div>
+
+            <div class="org-description">
                 <ul>
-                    @foreach(trans("organisation.types.{$organisationType}-criteria")
+                    @foreach(__("organisation.types.{$organisationType}-criteria")
                                 as $criteria)
-                        <li>{{ $criteria }}</li>
+                        <li>{!! $criteria !!}</li>
                     @endforeach
                 </ul>
-            </a>
 
-            @if(($i++ % 2) == 0)
-                </div>
-                <div class="row-fluid" style="margin-top: 20px;">
-            @endif
-        @endforeach
+                @if(in_array($organisationType, $organisation::$typesCreatable))
+                    <a class="btn btn-primary" href="{{ route('organisation.create',
+                             ['type' => $organisationType]) }}"
+                       style="margin: 0 12px 12px;">
+                        Créer une {{ __("organisation.types.$organisationType") }}</a>
 
-    </div>
+                @elseif($organisationType === $organisation::TYPE_ALLIANCE)
+                    <small style="display: block;"><i class="icon-info-sign"></i>
+                        Vous ne pouvez pas créer d'alliance.
+                        Créez une organisation à la place, et vous pourrez la faire évoluer en alliance
+                        quand elle sera suffisamment développée !</small>
+
+                @else
+                    <small><i class="icon-info-sign"></i>
+                        Vous ne pouvez pas créer ce type d'organisation.</small>
+                @endif
+            </div>
+
+        </div>
+        </div>
+    @endforeach

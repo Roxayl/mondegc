@@ -42,10 +42,6 @@
                 {!! App\Services\HelperService::displayAlert() !!}
             </div>
 
-            <div id="actualites" class="titre-vert anchor">
-                <h1>Créer une organisation</h1>
-            </div>
-
             <div class="well">
 
             @if(is_null($type))

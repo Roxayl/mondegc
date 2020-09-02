@@ -268,7 +268,7 @@ div.olControlPanel {
   <!-- Continent RFGC
     ================================================== -->
   <div class="titre-gris anchor" id="RFGC">
-    <h2>Pays : République fédérale de Génération City</h2>
+    <h2>Pays : République fédérale de Gécée</h2>
   </div>
   <div class="stat-continent pull-center">
     <p><span class="stat"><span class="chiffre"><?php echo $nbpays_RFGC; ?></span> provinces</span> <span class="stat"><span class="chiffre"><?php echo $nbvilles_RFGC; ?></span> villes</span> <span class="stat"><span class="chiffre">

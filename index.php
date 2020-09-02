@@ -81,8 +81,9 @@ $_SESSION['an']=true;
 <div id="introheader" class="jumbotron">
   <div class="container">
     <div class="header">
-      <h1>Bienvenue sur le site du Monde de Génération City</h1>
-      <p><em>Le Monde GC rassemble une communaut&eacute; de joueurs de G&eacute;n&eacute;ration City qui ont souhait&eacute; s'unir pour construire leur propre monde et d&eacute;velopper <a href="participer.php#faq">une nouvelle expérience de jeu</a>.</em></p>
+      <h1>Bienvenue dans le Monde de Génération City</h1>
+        <h2>C'est votre Monde.</h2>
+        <p><em>Le Monde GC rassemble une communaut&eacute; de joueurs de <a href="https://www.forum-gc.com/">G&eacute;n&eacute;ration City</a> qui ont souhait&eacute; s'unir pour construire leur propre monde et d&eacute;velopper <a href="participer.php#faq">une nouvelle expérience de jeu</a>.</em></p>
     </div>
     <div class="Master-link">
       <p class="hidden-phone">Débutez l'exploration&nbsp;:</p>

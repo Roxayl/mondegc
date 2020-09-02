@@ -49,6 +49,8 @@
 
     <div class="modal container fade" id="modal-container"></div>
 
+    <div class="modal container modal-small fade" id="modal-container-small"></div>
+
     <!-- Footer
     ================================================== -->
     <footer class="footer">
@@ -94,8 +96,8 @@
             var lv_url = $(this).attr('href');
             $(lv_target).load(lv_url);
         });
-        $('#closemodal').click(function() {
-            $('#modal-container').modal('hide');
+        $('#closemodal').click(function(ev) {
+            $(ev.target).closest('.modal').modal('hide');
         });
     })(window, document, jQuery);
     </script>

@@ -1,18 +1,21 @@
 
     <div class="well org-container org-{{ $type }}">
-        <div class="pull-right">
-            <a href="{{ route('organisation.create') }}" style="color: #d7d7d7;">
-                 <small>Revenir sur mon choix...</small></a>
+        <div class="org-header">
+            <div class="pull-right">
+                <a href="{{ route('organisation.create') }}" style="color: #d7d7d7;">
+                     <small>Revenir sur mon choix...</small></a>
+            </div>
+            <h2>{{ __("organisation.types.$type") }}</h2>
+            <p>{{ __("organisation.types.{$type}-description") }}</p>
         </div>
-        <h3>{{ __("organisation.types.$type") }}</h3>
-        <p>{{ __("organisation.types.{$type}-description") }}</p>
-        <h4>Principes</h4>
-        <ul>
-            @foreach(__("organisation.types.{$type}-criteria")
-                        as $criteria)
-                <li>{{ $criteria }}</li>
-            @endforeach
-        </ul>
+        <div class="org-description">
+            <ul>
+                @foreach(__("organisation.types.{$type}-criteria")
+                            as $criteria)
+                    <li>{!! $criteria !!}</li>
+                @endforeach
+            </ul>
+        </div>
     </div>
 
     <br><br>
