@@ -27,7 +27,9 @@ use Spatie\Searchable\SearchResult;
  * @property string|null $logo
  * @property string|null $flag
  * @property string|null $text
+ * @property string $type
  * @property bool $allow_temperance
+ * @property Carbon|null $type_migrated_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
@@ -51,6 +53,10 @@ class Organisation extends Model implements Searchable, Infrastructurable
 
 	protected $casts = [
         'allow_temperance' => 'boolean',
+    ];
+
+	protected $dates = [
+	    'type_changed_at',
     ];
 
 	protected $attributes = [

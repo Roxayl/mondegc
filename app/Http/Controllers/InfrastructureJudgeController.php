@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\InfrastructureJudged;
+use App\Events\Infrastructure\InfrastructureJudged;
 use App\Models\Infrastructure;
 use Illuminate\Http\Request;
 

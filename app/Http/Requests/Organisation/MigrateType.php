@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Organisation;
 
 use App\Models\Organisation;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
@@ -55,10 +56,26 @@ class MigrateType extends FormRequest
         return $allowed;
     }
 
+    protected function canMigrateBasedOnTime() : bool
+    {
+        $allowed = true;
+
+        // Empêche la migration si l'organisation a déjà changé de type au cours des
+        // sept derniers jours.
+        if(!is_null($this->organisation->type_migrated_at)) {
+            if($this->organisation->type_migrated_at > Carbon::now()->subDays(7)) {
+                $allowed = false;
+            }
+        }
+
+        return $allowed;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
+     * @throws ValidationException
      */
     public function rules()
     {
@@ -66,22 +83,28 @@ class MigrateType extends FormRequest
             request()->route('organisation'));
         $type = request()->input('type');
 
+        $errors = [];
+
         if($this->organisation->type !== Organisation::TYPE_ALLIANCE
            && $type === Organisation::TYPE_ALLIANCE) {
             if(!$this->canMigrateToAlliance()) {
-                throw ValidationException::withMessages(
-                    ['type' => __('organisation.validation.migrate-alliance-error')]
-                );
+                $errors['type'] = __('organisation.validation.migrate-alliance-error');
             }
         }
 
         if($this->organisation->type !== Organisation::TYPE_GROUP
            && $type === Organisation::TYPE_GROUP) {
             if(!$this->canMigrateToGroup()) {
-                throw ValidationException::withMessages(
-                    ['type' => __('organisation.validation.migrate-group-error')]
-                );
+                $errors['type'] = __('organisation.validation.migrate-group-error');
             }
+        }
+
+        if(!$this->canMigrateBasedOnTime()) {
+            $errors['early'] =  __('organisation.validation.migrate-too-early-error');
+        }
+
+        if(count($errors)) {
+            throw ValidationException::withMessages($errors);
         }
 
         $types = implode(',', Organisation::$types);

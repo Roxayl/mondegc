@@ -174,6 +174,20 @@ class NotificationPresenter
                 $style = "background: linear-gradient(120deg, #EA0A0A 0%,#BE0FDC 72%);";
                 break;
 
+            /*
+            |---------------------------------------------------------------------
+            | Une organisation a changé de type.
+            |---------------------------------------------------------------------
+            */
+            case 'App\Notifications\OrganisationTypeMigrated':
+                $organisation = Organisation::find($notification->data['organisation_id']);
+                $header = "VOTRE ORGANISATION CHANGE";
+                $text = "<strong>" . e($organisation->name) . "</strong> est devenue "
+                      . "une " . e(__("organisation.types.{$notification->data['type']}")) . ".";
+                $link = route('organisation.show', ['organisation' => $organisation->id]);
+                $style = "background: linear-gradient(120deg, #EA0A0A 0%,#BE0FDC 72%);";
+                break;
+
             default:
                 $continue = true;
 

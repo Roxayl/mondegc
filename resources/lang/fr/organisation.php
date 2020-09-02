@@ -52,6 +52,7 @@ return [
     'validation' => [
         'migrate-alliance-error' => "Cette organisation ne peut pas devenir une alliance. Vérifiez que les conditions de ce type d'organisation sont respectées.",
         'migrate-group-error' => "Cette organisation ne peut pas devenir un groupe. Vérifiez que les conditions de ce type d'organisation sont respectées.",
+        'migrate-too-early-error' => "Vous ne pouvez pas changer le type de votre organisation car vous l'avez déjà fait récemment. Vous devez attendre 7 jours après le précédent changement de type pour pouvoir le modifier à nouveau.",
     ],
 
 ];

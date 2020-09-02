@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Listeners\Notification;
 
-use App\Events\InfrastructureJudged;
+use App\Events\Infrastructure\InfrastructureJudged;
 use App\Notifications\InfrastructureJudged as NotificationInfrastructureJudged;
 use Illuminate\Support\Facades\Notification;
 

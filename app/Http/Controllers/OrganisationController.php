@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Organisation\TypeMigrated;
 use App\Http\Requests\Organisation\MigrateType;
 use App\Models\Communique;
 use App\Models\Organisation;
 use App\Models\OrganisationMember;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
@@ -152,8 +154,11 @@ class OrganisationController extends Controller
         $organisation = Organisation::findOrFail($id);
 
         $organisation->type = $request->type;
+        $organisation->type_migrated_at = Carbon::now();
 
         $organisation->save();
+
+        event(new TypeMigrated($organisation));
 
         return redirect()->back()
             ->with('message', 'success|Votre organisation est devenue une '
