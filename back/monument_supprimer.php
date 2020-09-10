@@ -21,24 +21,25 @@ $totalRows_ch_pat_confimation_suppression = mysql_num_rows($ch_pat_confimation_s
 
 // suppression des villes
 
-if ((isset($_POST['monument_ID'])) && ($_POST['monument_ID'] != "")) {
-  $deleteSQL = sprintf("DELETE FROM patrimoine WHERE ch_pat_id=%s",
-                       GetSQLValueString($_POST['monument_ID'], "int"));
+if((isset($_POST['monument_ID'])) && ($_POST['monument_ID'] != "")) {
+    $eloquentPatrimoine = \App\Models\Patrimoine::findOrFail($_POST['monument_ID']);
 
+    $eloquentPatrimoine->deleteInfluences();
 
-  $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+    $deleteSQL = sprintf("DELETE FROM patrimoine WHERE ch_pat_id=%s",
+        GetSQLValueString($_POST['monument_ID'], "int"));
+    $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
-$deleteSQL2 = sprintf("DELETE FROM dispatch_mon_cat WHERE ch_disp_mon_id=%s",
-                       GetSQLValueString($_POST['monument_ID'], "int"));
+    $deleteSQL2 = sprintf("DELETE FROM dispatch_mon_cat WHERE ch_disp_mon_id=%s",
+        GetSQLValueString($_POST['monument_ID'], "int"));
+    $Result2 = mysql_query($deleteSQL2, $maconnexion) or die(mysql_error());
 
+    getErrorMessage('success', "Le monument a été supprimé avec succès.");
 
-  $Result2 = mysql_query($deleteSQL2, $maconnexion) or die(mysql_error());
-  
-
-  $deleteGoTo = DEF_URI_PATH . "back/ville_modifier.php#mes-monuments";
-  appendQueryString($deleteGoTo);
-  header(sprintf("Location: %s", $deleteGoTo));
- exit;
+    $deleteGoTo = DEF_URI_PATH . "back/ville_modifier.php#mes-monuments";
+    appendQueryString($deleteGoTo);
+    header(sprintf("Location: %s", $deleteGoTo));
+    exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

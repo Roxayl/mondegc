@@ -6,7 +6,10 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\Influencable;
 use App\Models\Presenters\InfrastructurePresenter;
+use App\Models\Traits\DeletesInfluences;
+use App\Models\Traits\Influencable as GeneratesInfluence;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,9 +39,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class Infrastructure extends Model
+class Infrastructure extends Model implements Influencable
 {
-    use InfrastructurePresenter;
+    use InfrastructurePresenter, GeneratesInfluence, DeletesInfluences;
 
 	protected $table = 'infrastructures';
 	protected $primaryKey = 'ch_inf_id';
@@ -123,5 +126,53 @@ class Infrastructure extends Model
     {
         $morph = explode("\\", $morphType);
         return strtolower(end($morph));
+    }
+
+    public function generateInfluence() : void 
+    {
+        $notAccepted = function() { return $this->ch_inf_statut !== self::JUGEMENT_ACCEPTED; };
+
+        $this->removeOldInfluenceRows($notAccepted);
+        if($notAccepted()) {
+            return;
+        }
+
+        $totalResources = $this->infrastructure_officielle->mapResources();
+        $divider = 4;
+
+        $resourcesPerMonth = array_map(
+            function($val) use($divider) {
+                return (int)($val / $divider);
+            },
+            $totalResources);
+
+        for($i = 0; $i < $divider; $i++) {
+            $influence = new Influence;
+            $influence->influencable_type = Influence::getActualClassNameForMorph(get_class($this));
+            $influence->influencable_id = $this->ch_inf_id;
+
+            if($i >= $divider - 1) {
+                array_walk($totalResources,
+                    function($val, $key) use($divider, $totalResources, &$resourcesPerMonth) {
+                        $diff = $totalResources[$key] - ($resourcesPerMonth[$key] * $divider);
+                        if($diff !== 0) {
+                            $resourcesPerMonth[$key] += $diff;
+                        }
+                    });
+            }
+            $influence->fill($resourcesPerMonth);
+
+            $influence->generates_influence_at = $this->ch_inf_date->addMonths($i);
+            $influence->save();
+        }
+    }
+
+    public static function boot() {
+        parent::boot();
+
+        // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
+        static::deleting(function($infrastructure) {
+            $infrastructure->deleteInfluences();
+        });
     }
 }

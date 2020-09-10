@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\CustomUser;
+use App\Events\Pays\MapUpdated;
 use App\Models\Geometry;
 use App\Models\Pays as EloquentPays;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -105,6 +105,8 @@ if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
 
     $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
     mysql_free_result($geometries);
+
+    event(new MapUpdated($eloquentPays));
 }
 
 
@@ -138,6 +140,8 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
             GetSQLValueString($_POST['ch_geo_id'], "int"));
 
         $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+
+        getErrorMessage('success', "La zone " . __s($_POST['ch_geo_nom']) . ' a été modifiée !');
     }
 
     //recherche des mesures des zones de la carte pour calcul ressources
@@ -178,6 +182,8 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
 
     $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
     mysql_free_result($geometries);
+
+    event(new MapUpdated($eloquentPays));
 }
 
 ?>
@@ -343,8 +349,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
       <div class="span8">
           <?php
           $resources = [];
-          foreach(['budget', 'agriculture', 'commerce', 'education',
-             'environnement', 'industrie', 'recherche', 'tourisme'] as $resource)
+          foreach(config('enums.resources') as $resource)
           {
               $resources[$resource] = $row_InfoGenerale["ch_pay_{$resource}_carte"];
           }

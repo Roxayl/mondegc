@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use App\Models\Contracts\Infrastructurable;
+use App\Models\Managers\PaysMapManager;
 use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\PaysPresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
@@ -147,6 +148,16 @@ class Pays extends Model implements Searchable, Infrastructurable
 
 	public const PERMISSION_DIRIGEANT = 10;
 	public const PERMISSION_CODIRIGEANT = 5;
+
+	private ?PaysMapManager $mapManager = null;
+
+    public function getMapManager()
+    {
+        if(is_null($this->mapManager)) {
+            $this->mapManager = new PaysMapManager($this);
+        }
+        return $this->mapManager;
+    }
 
 	public function getSearchResult() : SearchResult
     {

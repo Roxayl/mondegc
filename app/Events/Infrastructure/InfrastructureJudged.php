@@ -2,11 +2,13 @@
 
 namespace App\Events\Infrastructure;
 
+use App\Events\Contracts\InfluencableEvent;
+use App\Models\Contracts\Influencable;
 use App\Models\Infrastructure;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class InfrastructureJudged
+class InfrastructureJudged implements InfluencableEvent
 {
     use Dispatchable, SerializesModels;
 
@@ -20,5 +22,10 @@ class InfrastructureJudged
     public function __construct(Infrastructure $infrastructure)
     {
         $this->infrastructure = $infrastructure;
+    }
+
+    public function getInfluencable() : Influencable
+    {
+        return $this->infrastructure;
     }
 }

@@ -52,8 +52,7 @@ $row_geometries = mysql_fetch_assoc($geometries);
 <?php } ?>
     <?php
     renderElement('temperance/resources', [
-        'resources' => compact(['budget', 'agriculture', 'commerce', 'education',
-             'environnement', 'industrie', 'recherche', 'tourisme'])
+        'resources' => compact(config('enums.resources'))
     ]); ?>
   </div>
   <?php } while ($row_geometries = mysql_fetch_assoc($geometries)); ?>

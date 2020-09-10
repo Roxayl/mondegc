@@ -83,7 +83,10 @@ if(isset($row_infoVille['ch_vil_ID'])) {
     $row_monument_ressources = mysql_fetch_assoc($monument_ressources);
 
 // Total ressources
-    $total_ressources = array('budget' => 0, 'industrie' => 0, 'commerce' => 0, 'agriculture' => 0, 'tourisme' => 0, 'recherche' => 0, 'environnement' => 0, 'education' => 0);
+    $total_ressources = array();
+    foreach(config('enums.resources') as $resource) {
+        $total_ressources[$resource] = 0;
+    }
     foreach($total_ressources as $resourceName => $value) {
         $total_ressources[$resourceName] = $row_monument_ressources[$resourceName] + $row_somme_ressources[$resourceName];
     }

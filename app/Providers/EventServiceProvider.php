@@ -21,11 +21,22 @@ class EventServiceProvider extends ServiceProvider
         // Infrastructure
         'App\Events\Infrastructure\InfrastructureJudged' => [
             'App\Listeners\Notification\SendInfraJudgementNotification',
+            'App\Listeners\Influence\GenerateInfluence',
         ],
 
         // Organisation
         'App\Events\Organisation\TypeMigrated' => [
             'App\Listeners\Notification\SendTypeMigratedNotification',
+        ],
+
+        // Patrimoine
+        'App\Events\Patrimoine\PatrimoineCategorized' => [
+            'App\Listeners\Influence\GenerateInfluence',
+        ],
+
+        // Pays
+        'App\Events\Pays\MapUpdated' => [
+            'App\Listeners\Influence\GenerateInfluence',
         ],
     ];
 
@@ -39,15 +50,5 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
 
         //
-    }
-
-    /**
-     * Determine if events and listeners should be automatically discovered.
-     *
-     * @return bool
-     */
-    public function shouldDiscoverEvents()
-    {
-        return true;
     }
 }

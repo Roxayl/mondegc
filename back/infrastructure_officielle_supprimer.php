@@ -12,31 +12,21 @@ header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
-if ((isset($_POST['ch_inf_off_id'])) && ($_POST['ch_inf_off_id'] != "")) {
+if((isset($_POST['ch_inf_off_id'])) && ($_POST['ch_inf_off_id'] != "")) {
 
     $thisInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($_POST['ch_inf_off_id']);
 
-  $deleteSQL = sprintf("DELETE FROM infrastructures_officielles WHERE ch_inf_off_id=%s",
-                       GetSQLValueString($_POST['ch_inf_off_id'], "int"));
+    $eloquentInfraOff = \App\Models\InfrastructureOfficielle::findOrFail($_POST['ch_inf_off_id']);
+    $eloquentInfraOff->delete();
 
-  
-  $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+    \GenCity\Monde\Logger\Log::createItem('infrastructures_officielles', (int)$_POST['ch_inf_off_id'],
+        'delete', null, array('entity' => $thisInfraOff->model->getInfo()));
 
-
-  $deleteSQL = sprintf("DELETE FROM infrastructures WHERE ch_inf_off_id=%s",
-                       GetSQLValueString($_POST['ch_inf_off_id'], "int"));
-
-  
-  $Result2 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
-
-  \GenCity\Monde\Logger\Log::createItem('infrastructures_officielles', (int)$_POST['ch_inf_off_id'],
-      'delete', null, array('entity' => $thisInfraOff->model->getInfo()));
-
-  $deleteGoTo = DEF_URI_PATH . "back/institut_economie.php";
-  appendQueryString($deleteGoTo);
-  $adresse = $deleteGoTo .'#liste-infrastructures-officielles';
-  header(sprintf("Location: %s", $deleteGoTo));
- exit;
+    $deleteGoTo = DEF_URI_PATH . "back/institut_economie.php";
+    appendQueryString($deleteGoTo);
+    $adresse = $deleteGoTo . '#liste-infrastructures-officielles';
+    header(sprintf("Location: %s", $deleteGoTo));
+    exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

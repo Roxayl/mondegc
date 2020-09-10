@@ -85,12 +85,22 @@ class InfrastructureOfficielle extends Model
     public function mapResources()
     {
         $resources = [];
-        foreach(['budget', 'agriculture', 'commerce', 'industrie',
-                 'tourisme', 'recherche', 'environnement', 'education'] as $resource) {
+        foreach(config('enums.resources') as $resource) {
             $field = 'ch_inf_off_' . ($resource === 'budget'
                     ? $resource : Str::ucfirst($resource));
             $resources[$resource] = $this->$field;
         }
         return $resources;
+    }
+
+    public static function boot() {
+        parent::boot();
+
+        // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
+        static::deleting(function($infrastructureOfficielle) {
+            $infrastructureOfficielle->infrastructures()->each(function($infrastructure) {
+                $infrastructure->delete();
+            });
+        });
     }
 }

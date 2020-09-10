@@ -12,25 +12,23 @@ header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
-if ((isset($_POST['ch_mon_cat_ID'])) && ($_POST['ch_mon_cat_ID'] != "")) {
-  $deleteSQL = sprintf("DELETE FROM monument_categories WHERE ch_mon_cat_ID=%s",
-                       GetSQLValueString($_POST['ch_mon_cat_ID'], "int"));
+if((isset($_POST['ch_mon_cat_ID'])) && ($_POST['ch_mon_cat_ID'] != "")) {
+    $eloquentMonumentCategory = \App\Models\MonumentCategory::findOrFail($_POST['ch_mon_cat_ID']);
+    $eloquentPatrimoines = $eloquentMonumentCategory->patrimoine();
 
-  
-  $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+    $eloquentMonumentCategory->delete();
 
-$deleteSQL = sprintf("DELETE FROM dispatch_mon_cat WHERE ch_disp_cat_id=%s",
-                       GetSQLValueString($_POST['ch_mon_cat_ID'], "int"));
+    // Recalcule l'influence générée par les monuments suite à la suppression de cette catégorie.
+    $eloquentPatrimoines->each(function($patrimoine) {
+        $patrimoine->generateInfluence();
+    });
 
-  
-  $Result2 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
-
-
-  $deleteGoTo = DEF_URI_PATH . "back/institut_patrimoine.php";
-  appendQueryString($deleteGoTo);
-  header(sprintf("Location: %s", $deleteGoTo));
- exit;
+    $deleteGoTo = DEF_URI_PATH . "back/institut_patrimoine.php";
+    appendQueryString($deleteGoTo);
+    header(sprintf("Location: %s", $deleteGoTo));
+    exit;
 }
+
 ?><!DOCTYPE html>
 <html lang="fr">
 <head>
