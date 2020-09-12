@@ -33,18 +33,16 @@ class NotificationPresenter
                 $element = Pays::find($notification->data['pays_id']);
 
                 if(empty($element)) {
-                    $continue = true;
+                    $continue = true; break;
                 }
-                else {
-                    $header = "NOUVEAU PAYS";
-                    $text = "Un nouveau pays, <strong>"
-                          . e($element->ch_pay_nom) . "</strong>"
-                          . ", a rejoint le concert des nations gécéennes. "
-                          . "Souhaitez-lui la bienvenue au sein du Monde GC.";
-                    $link = url('page-pays.php?ch_pay_id='
-                          . __s($element->ch_pay_id) . "#commentaires");
-                    $style = "background-color: #ff4e00;";
-                }
+                $header = "NOUVEAU PAYS";
+                $text = "Un nouveau pays, <strong>"
+                      . e($element->ch_pay_nom) . "</strong>"
+                      . ", a rejoint le concert des nations gécéennes. "
+                      . "Souhaitez-lui la bienvenue au sein du Monde GC.";
+                $link = url('page-pays.php?ch_pay_id='
+                      . __s($element->ch_pay_id) . "#commentaires");
+                $style = "background-color: #ff4e00;";
                 break;
 
             /*
@@ -54,14 +52,14 @@ class NotificationPresenter
             */
             case 'App\Notifications\InfrastructureJudged':
                 $element = Infrastructure::find($notification->data['infrastructure_id']);
+                if(empty($element)) {
+                    $continue = true; break;
+                }
 
                 $style = "background: linear-gradient(120deg, #ffe300 0%,#ff5c00 72%);";
                 $link = $element->infrastructurable->accessorUrl();
 
-                if(empty($element)) {
-                    $continue = true;
-                }
-                elseif($notification->data['accepted']) {
+                if($notification->data['accepted']) {
                     $header = "BIEN OUEJ !";
                     $text = "Votre infrastructure <strong>"
                           . e($element->nom_infra) . "</strong> à "
@@ -89,17 +87,15 @@ class NotificationPresenter
                     ->find($notification->data['organisation_member_id']);
 
                 if(empty($element)) {
-                    $continue = true;
+                    $continue = true; break;
                 }
-                else {
-                    $header = "DEMANDE D'ADMISSION REÇUE";
-                    $text = "<strong>" . e($element->pays->ch_pay_nom)
-                          . "</strong> a demandé à intégrer l'organisation <strong>"
-                          . e($element->organisation->name) . "</strong>. "
-                          . "Vous pouvez accepter ou refuser sa candidature.";
-                    $link = route('organisation.show', ['organisation' => $element->organisation_id]);
-                    $style = "background: linear-gradient(120deg, #EA0A0A 0%,#BE0FDC 72%);";
-                }
+                $header = "DEMANDE D'ADMISSION REÇUE";
+                $text = "<strong>" . e($element->pays->ch_pay_nom)
+                      . "</strong> a demandé à intégrer l'organisation <strong>"
+                      . e($element->organisation->name) . "</strong>. "
+                      . "Vous pouvez accepter ou refuser sa candidature.";
+                $link = route('organisation.show', ['organisation' => $element->organisation_id]);
+                $style = "background: linear-gradient(120deg, #EA0A0A 0%,#BE0FDC 72%);";
                 break;
 
             /*
@@ -112,17 +108,15 @@ class NotificationPresenter
                     ->find($notification->data['organisation_member_id']);
 
                 if(empty($element)) {
-                    $continue = true;
+                    $continue = true; break;
                 }
-                else {
-                    $header = "INVITATION REÇUE";
-                    $text = "<strong>" . e($element->pays->ch_pay_nom)
-                          . "</strong> a été invité à rejoindre l'organisation <strong>"
-                          . e($element->organisation->name) . "</strong>. "
-                          . "Vous pouvez accepter ou refuser cette invitation.";
-                    $link = route('organisation.show', ['organisation' => $element->organisation_id]);
-                    $style = "background: linear-gradient(120deg, #EA0A0A 0%,#BE0FDC 72%);";
-                }
+                $header = "INVITATION REÇUE";
+                $text = "<strong>" . e($element->pays->ch_pay_nom)
+                      . "</strong> a été invité à rejoindre l'organisation <strong>"
+                      . e($element->organisation->name) . "</strong>. "
+                      . "Vous pouvez accepter ou refuser cette invitation.";
+                $link = route('organisation.show', ['organisation' => $element->organisation_id]);
+                $style = "background: linear-gradient(120deg, #EA0A0A 0%,#BE0FDC 72%);";
                 break;
 
             /*
@@ -135,9 +129,10 @@ class NotificationPresenter
                     ->find($notification->data['organisation_member_id']);
 
                 if(empty($element)) {
-                    $continue = true;
+                    $continue = true; break;
                 }
-                elseif($notification->data['action'] === 'promotedAdministrator') {
+
+                if($notification->data['action'] === 'promotedAdministrator') {
                     $header = "PROMOTION !";
                     $text = "<strong>" . e($element->pays->ch_pay_nom)
                           . "</strong> a été promu Administrateur de l'organisation <strong>"
