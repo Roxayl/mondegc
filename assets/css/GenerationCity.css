@@ -1923,7 +1923,7 @@ table .btn {
 /* Images modal ressources
 ------------------------- */
 .img-modal-ressource {
-    height: 300px;
+    max-height: 400px;
     margin-bottom: 10px;
 }
 

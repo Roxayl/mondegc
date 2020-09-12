@@ -18,6 +18,19 @@
         <div class="span6">
             <h2>{{ $infrastructure->nom_infra }}</h2>
             <p>{{ $infrastructure->ch_inf_commentaire }}</p>
+            <p>
+                <div class="external-link-icon"
+                      style="background-image:url('https://www.generation-city.com/forum/new/favicon.png');">
+                </div>
+                <a href="{{ $infrastructure->ch_inf_lien_forum }}">Forum</a>
+                @if(!empty($infrastructure->lien_wiki))
+                    &#183;
+                    <div class="external-link-icon"
+                          style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');">
+                    </div>
+                    <a href="{{ $infrastructure->lien_wiki }}">Wiki GC</a>
+                @endif
+            </p>
         </div>
         <div class="span6">
             <div class="well">

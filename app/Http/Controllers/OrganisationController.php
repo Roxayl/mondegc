@@ -145,6 +145,7 @@ class OrganisationController extends Controller
     public function migrate($id)
     {
         $organisation = Organisation::findOrFail($id);
+        $this->authorize('update', $organisation);
 
         return view('organisation.migrate', compact(['organisation']));
     }
@@ -152,6 +153,7 @@ class OrganisationController extends Controller
     public function runMigration(MigrateType $request, $id)
     {
         $organisation = Organisation::findOrFail($id);
+        $this->authorize('update', $organisation);
 
         $organisation->type = $request->type;
         $organisation->type_migrated_at = Carbon::now();
