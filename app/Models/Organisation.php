@@ -6,10 +6,12 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\AggregatesInfluences;
 use App\Models\Contracts\Infrastructurable;
 use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\OrganisationPresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
+use App\Services\EconomyService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
@@ -37,7 +39,7 @@ use Spatie\Searchable\SearchResult;
  *
  * @package App\Models
  */
-class Organisation extends Model implements Searchable, Infrastructurable
+class Organisation extends Model implements Searchable, Infrastructurable, AggregatesInfluences
 {
     use OrganisationPresenter, InfrastructurablePresenter, HasInfrastructures;
 
@@ -89,6 +91,10 @@ class Organisation extends Model implements Searchable, Infrastructurable
 
 	public static array $typesCreatable = [
 	    self::TYPE_ORGANISATION, self::TYPE_GROUP
+    ];
+
+	public static array $typesWithEconomy = [
+	    self::TYPE_ALLIANCE, self::TYPE_ORGANISATION
     ];
 
 	public function getSearchResult() : SearchResult
@@ -204,5 +210,70 @@ class Organisation extends Model implements Searchable, Infrastructurable
         $pays = array_column($user->pays()->get()->toArray(), 'ch_pay_id');
         $permission = $this->membersAll()->whereIn('pays_id', $pays)->max('permissions');
         return $permission;
+    }
+
+    public function hasEconomy() : bool
+    {
+        return in_array($this->type, self::$typesWithEconomy, true);
+    }
+
+    public function membersGenerateResources() : bool
+    {
+        return $this->type === self::TYPE_ALLIANCE;
+    }
+
+    public function infrastructureResources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        foreach($this->infrastructures as $infrastructure) {
+            $generatedResources = $infrastructure->getGeneratedResources();
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] += $generatedResources[$resource];
+            }
+        }
+
+        return $sumResources;
+    }
+
+    public function paysResources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        // Les alliances bénéficient les ressources de leurs pays ; on les calcule
+        // le cas échéant.
+        if($this->type === self::TYPE_ALLIANCE) {
+
+            $paysMembers = $this->members;
+
+            foreach($paysMembers as $members) {
+                $thisPaysResources = $members->pays->resources();
+                foreach(config('enums.resources') as $resource) {
+                    $sumResources[$resource] = $thisPaysResources[$resource];
+                }
+            }
+        }
+
+        return $sumResources;
+    }
+
+    public function resources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        // Les groupes d'États ne génèrent pas de ressources ; on ne calcule pas les ressources
+        // le cas échéant et on renvoie directement un tableau de ressources à zéro.
+        if($this->type !== self::TYPE_GROUP) {
+
+            $infrastructureResources = $this->infrastructureResources();
+            $paysResources = $this->paysResources();
+
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] += $infrastructureResources[$resource]
+                                         + $paysResources[$resource];
+            }
+        }
+
+        return $sumResources;
     }
 }

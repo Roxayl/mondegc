@@ -42,7 +42,7 @@
                 @include('organisation.components.sidebar-header')
                 <li><a href="#actualites">Actualités</a></li>
                 <li><a href="#presentation">Présentation</a></li>
-                @if($organisation->allow_temperance)
+                @if($organisation->hasEconomy())
                 <li><a href="#economie">Économie</a></li>
                 @endif
                 <li>

@@ -28,7 +28,9 @@
             <ul class="nav nav-list bs-docs-sidenav">
                 @include('organisation.components.sidebar-header')
                 <li><a href="#presentation">Présentation</a></li>
-                <li><a href="#infrastructures">Infrastructures</a></li>
+                @if($organisation->hasEconomy())
+                    <li><a href="#infrastructures">Infrastructures</a></li>
+                @endif
             </ul>
         </div>
 
@@ -86,11 +88,14 @@
 
             </div>
 
+            @if($organisation->hasEconomy())
 
-            {!! \App\Services\HelperService::renderLegacyElement(
-                'infrastructure/back_list', ['infrastructurable' => $organisation]
-            ) !!}
-            <div class="modal container fade" id="Modal-Monument"></div>
+                {!! \App\Services\HelperService::renderLegacyElement(
+                    'infrastructure/back_list', ['infrastructurable' => $organisation]
+                ) !!}
+                <div class="modal container fade" id="Modal-Monument"></div>
+
+            @endif
 
         </div>
 

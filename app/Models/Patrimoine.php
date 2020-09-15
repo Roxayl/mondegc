@@ -88,6 +88,11 @@ class Patrimoine extends Model implements Influencable
         'ch_pat_commentaire',
     ];
 
+    public function ville()
+    {
+        return $this->belongsTo(Ville::class, 'ch_pat_villeID');
+    }
+
     public function monumentCategories()
     {
         return $this->belongsToMany(

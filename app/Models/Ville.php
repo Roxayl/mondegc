@@ -6,10 +6,12 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\AggregatesInfluences;
 use App\Models\Contracts\Infrastructurable;
 use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\VillePresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
+use App\Services\EconomyService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\Searchable;
@@ -53,7 +55,7 @@ use Spatie\Searchable\SearchResult;
  *
  * @package App\Models
  */
-class Ville extends Model implements Searchable, Infrastructurable
+class Ville extends Model implements Searchable, Infrastructurable, AggregatesInfluences
 {
     use InfrastructurablePresenter, VillePresenter, HasInfrastructures;
 
@@ -122,8 +124,57 @@ class Ville extends Model implements Searchable, Infrastructurable
 		return $this->belongsTo(Pays::class, 'ch_vil_paysID');
 	}
 
+	public function patrimoines()
+    {
+        return $this->hasMany(Patrimoine::class, 'ch_pat_villeID');
+    }
+
 	public function getUsers()
     {
         return $this->pays->users;
+    }
+
+    public function infrastructureResources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        $infrastructures = $this->infrastructures;
+        foreach($infrastructures as $infrastructure) {
+            $generatedResources = $infrastructure->getGeneratedResources();
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] += $generatedResources[$resource];
+            }
+        }
+
+        return $sumResources;
+    }
+
+    public function patrimoineResources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        $patrimoines = $this->patrimoines;
+        foreach($patrimoines as $patrimoine) {
+            $generatedResources = $patrimoine->getGeneratedResources();
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] += $generatedResources[$resource];
+            }
+        }
+
+        return $sumResources;
+    }
+
+    public function resources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        $infrastructureResources = $this->infrastructureResources();
+        $patrimoineResources = $this->patrimoineResources();
+        foreach(config('enums.resources') as $resource) {
+            $sumResources[$resource] +=
+                $infrastructureResources[$resource] + $patrimoineResources[$resource];
+        }
+
+        return $sumResources;
     }
 }

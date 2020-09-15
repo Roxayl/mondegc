@@ -34,6 +34,9 @@ trait ManagesInfrastructures
 
     protected function checkOrganisation(CustomUser $user, Organisation $infrastructurable)
     {
+        if(!$infrastructurable->hasEconomy()) {
+            return false;
+        }
         return Gate::check('administrate', $infrastructurable);
     }
 

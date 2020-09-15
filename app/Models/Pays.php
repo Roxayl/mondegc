@@ -6,11 +6,13 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\AggregatesInfluences;
 use App\Models\Contracts\Infrastructurable;
 use App\Models\Managers\PaysMapManager;
 use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\PaysPresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
+use App\Services\EconomyService;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Database\Eloquent\Collection;
@@ -72,7 +74,7 @@ use Spatie\Searchable\SearchResult;
  *
  * @package App\Models
  */
-class Pays extends Model implements Searchable, Infrastructurable
+class Pays extends Model implements Searchable, Infrastructurable, AggregatesInfluences
 {
     use InfrastructurablePresenter, PaysPresenter, HasInfrastructures;
 
@@ -211,6 +213,11 @@ class Pays extends Model implements Searchable, Infrastructurable
         return $this->belongsToMany(CustomUser::class, 'users_pays', 'ID_pays', 'ID_user');
     }
 
+    public function villes()
+    {
+        return $this->hasMany(Ville::class, 'ch_vil_paysID');
+    }
+
     public function geometries()
     {
         return $this->hasMany(Geometry::class, 'ch_geo_pay_id');
@@ -224,5 +231,50 @@ class Pays extends Model implements Searchable, Infrastructurable
     public function getUsers()
     {
         return $this->users()->get();
+    }
+
+    public function villeResources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        foreach($this->villes as $ville) {
+            $generatedResources = $ville->resources();
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] += $generatedResources[$resource];
+            }
+        }
+
+        return $sumResources;
+    }
+
+    public function infrastructureResources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        foreach($this->infrastructures as $infrastructure) {
+            $generatedResources = $infrastructure->getGeneratedResources();
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] += $generatedResources[$resource];
+            }
+        }
+
+        return $sumResources;
+    }
+
+    public function resources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        $villeResources = $this->villeResources();
+        $mapResources = $this->getMapManager()->mapResources();
+        $infrastructureResources = $this->infrastructureResources();
+
+        foreach(config('enums.resources') as $resource) {
+            $sumResources[$resource] += $villeResources[$resource]
+                                      + $mapResources[$resource]
+                                      + $infrastructureResources[$resource];
+        }
+
+        return $sumResources;
     }
 }

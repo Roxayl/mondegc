@@ -20,12 +20,12 @@ $memberCount = $organisation->members->count();
     </div>
 
     <div class="span10">
-        <?php if($organisation->allow_temperance): ?>
+        <?php if($organisation->hasEconomy()): ?>
         <div class="pull-right" style="position: absolute; right: 0;">
             <?php
-            $temperance = $organisation->temperance->toArray();
+            $resources = $organisation->resources();
             renderElement('temperance/resources_small',
-                array('resources' => $temperance)
+                array('resources' => $resources)
             ); ?>
         </div>
         <?php endif; ?>
