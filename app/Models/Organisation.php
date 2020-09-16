@@ -247,9 +247,9 @@ class Organisation extends Model implements Searchable, Infrastructurable, Aggre
             $paysMembers = $this->members;
 
             foreach($paysMembers as $members) {
-                $thisPaysResources = $members->pays->resources();
+                $thisPaysResources = $members->pays->resources(false);
                 foreach(config('enums.resources') as $resource) {
-                    $sumResources[$resource] = $thisPaysResources[$resource];
+                    $sumResources[$resource] += $thisPaysResources[$resource];
                 }
             }
         }

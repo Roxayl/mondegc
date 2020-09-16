@@ -686,9 +686,10 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         </div>
 
           <?php
-          $ressources_total = $eloquentPays->resources();
+          $ressources_total  = $eloquentPays->resources();
           $ressources_villes = $eloquentPays->villeResources();
           $ressources_infras = $eloquentPays->infrastructureResources();
+          $ressources_orgas  = $eloquentPays->organisationResources();
           $ressources_cartes = $eloquentPays->getMapManager()->mapResources();
           ?>
 
@@ -721,6 +722,14 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
                 <?php
                 renderElement('temperance/resources_small', array(
                     'resources' => $ressources_infras
+                ));
+                ?>
+                <p></p>
+              <h4><i class="icon-heart"></i> Balance des ressources issues des
+                  organisations dont fait partie le pays</h4>
+                <?php
+                renderElement('temperance/resources_small', array(
+                    'resources' => $ressources_orgas
                 ));
                 ?>
                 <p></p>

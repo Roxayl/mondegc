@@ -261,7 +261,24 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         return $sumResources;
     }
 
-    public function resources() : array
+    public function organisationResources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        foreach($this->organisationsAll() as $organisation) {
+            $generatedResources = $organisation->infrastructureResources();
+            $nbMembers = $organisation->members->count();
+
+            foreach(config('enums.resources') as $resource) {
+                $generatedResources[$resource] = (int)$generatedResources[$resource] / $nbMembers;
+                $sumResources[$resource] += $generatedResources[$resource];
+            }
+        }
+
+        return $sumResources;
+    }
+
+    public function resources($withOrganisation = true) : array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
@@ -269,10 +286,18 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         $mapResources = $this->getMapManager()->mapResources();
         $infrastructureResources = $this->infrastructureResources();
 
+        // Si 'withOrganisation' est mis à false, on n'appelle pas organisationResources().
+        // Ce paramètre existe et est mis à true parce que, lorsqu'on veut calculer les
+        // statistiques d'une organisation, on veut éviter une référence circulaire entre
+        // l'appel à Pays->resources() et Organisation->resources().
+        $organisationResources = !$withOrganisation ?
+            EconomyService::resourcesPrefilled() : $this->organisationResources();
+
         foreach(config('enums.resources') as $resource) {
             $sumResources[$resource] += $villeResources[$resource]
                                       + $mapResources[$resource]
-                                      + $infrastructureResources[$resource];
+                                      + $infrastructureResources[$resource]
+                                      + $organisationResources[$resource];
         }
 
         return $sumResources;
