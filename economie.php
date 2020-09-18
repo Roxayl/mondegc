@@ -1,8 +1,9 @@
 <?php
 
-//Connexion et deconnexion
+use App\Services\EconomyService;
 use Illuminate\Support\Facades\Gate;
 
+//Connexion et deconnexion
 include('php/log.php');
 
 //requete instituts
@@ -13,184 +14,23 @@ $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
-//requete somme ressources pour chaque pays 
-$maxRows_somme_ressources = 10;
-$pageNum_somme_ressources = 0;
-if (isset($_GET['pageNum_somme_ressources'])) {
-  $pageNum_somme_ressources = $_GET['pageNum_somme_ressources'];
+$selectedResource = 'budget';
+if(isset($_GET['cat']) && in_array($_GET['cat'], config('enums.resources'), true)) {
+    $selectedResource = $_GET['cat'];
 }
-$startRow_somme_ressources = $pageNum_somme_ressources * $maxRows_somme_ressources;
 
-$cat = "";
-if (isset($_GET['cat'])) {
-	if ($_GET['cat'] == "") {
-	$cat = 'commerce';
-} else {
-  $cat = $_GET['cat'];
-} } else {
-  $cat = 'commerce';
-} 
-
-$query_somme_ressources = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, 
-(SELECT SUM(ch_inf_off_budget) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_budget_carte 
-+ COALESCE((SELECT SUM(ch_mon_cat_budget) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
-AS budget,
-(SELECT SUM(ch_inf_off_Industrie) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_industrie_carte
-+ COALESCE((SELECT SUM(ch_mon_cat_industrie) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
-AS industrie,
-(SELECT SUM(ch_inf_off_Commerce) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_commerce_carte
-+ COALESCE((SELECT SUM(ch_mon_cat_commerce) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
- AS commerce,
-(SELECT SUM(ch_inf_off_Agriculture) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_agriculture_carte
-+ COALESCE((SELECT SUM(ch_mon_cat_agriculture) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
- AS agriculture,
-(SELECT SUM(ch_inf_off_Tourisme) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_tourisme_carte
-+ COALESCE((SELECT SUM(ch_mon_cat_tourisme) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
- AS tourisme,
-(SELECT SUM(ch_inf_off_Recherche) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_recherche_carte
-+ COALESCE((SELECT SUM(ch_mon_cat_recherche) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
- AS recherche,
-(SELECT SUM(ch_inf_off_Environnement) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_environnement_carte
-+ COALESCE((SELECT SUM(ch_mon_cat_environnement) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
- AS environnement,
-(SELECT SUM(ch_inf_off_Education) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_education_carte
-+ COALESCE((SELECT SUM(ch_mon_cat_education) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
- AS education
-FROM pays WHERE ch_pay_publication = 1 ORDER BY $cat DESC");
-//echo $query_somme_ressources; exit;
-$query_limit_somme_ressources = sprintf("%s LIMIT %d, %d", $query_somme_ressources, $startRow_somme_ressources, $maxRows_somme_ressources);
-$somme_ressources = mysql_query($query_limit_somme_ressources);
-$row_somme_ressources = mysql_fetch_assoc($somme_ressources);
-
-$all_somme_ressources = mysql_query($query_somme_ressources);
-$row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
-$totalRows_somme_ressources = mysql_num_rows($all_somme_ressources);
-$totalPages_somme_ressources = ceil($totalRows_somme_ressources/$maxRows_somme_ressources)-1;
-
-$queryString_somme_ressources = "";
-if (!empty($_SERVER['QUERY_STRING'])) {
-  $params = explode("&", $_SERVER['QUERY_STRING']);
-  $newParams = array();
-  foreach ($params as $param) {
-    if (stristr($param, "pageNum_somme_ressources") == false && 
-        stristr($param, "totalRows_somme_ressources") == false) {
-      array_push($newParams, $param);
-    }
-  }
-  if (count($newParams) != 0) {
-    $queryString_somme_ressources = "&" . htmlentities(implode("&", $newParams));
-  }
-}
-$queryString_somme_ressources = sprintf("&totalRows_somme_ressources=%d%s", $totalRows_somme_ressources, $queryString_somme_ressources);
-
-
-
-//calcul ressources mondiales 
-
-$query_somme_ressources_mondiales = sprintf("SELECT
-(SELECT SUM(ch_inf_off_budget) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_budget_carte 
-+ COALESCE((SELECT SUM(ch_mon_cat_budget) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
-AS budget,
-(SELECT SUM(ch_inf_off_Industrie) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_industrie_carte
-+ COALESCE((SELECT SUM(ch_mon_cat_industrie) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
-AS industrie,
-(SELECT SUM(ch_inf_off_Commerce) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_commerce_carte
-+ COALESCE((SELECT SUM(ch_mon_cat_commerce) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
- AS commerce,
-(SELECT SUM(ch_inf_off_Agriculture) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_agriculture_carte
-+ COALESCE((SELECT SUM(ch_mon_cat_agriculture) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
- AS agriculture,
-(SELECT SUM(ch_inf_off_Tourisme) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_tourisme_carte
-+ COALESCE((SELECT SUM(ch_mon_cat_tourisme) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
- AS tourisme,
-(SELECT SUM(ch_inf_off_Recherche) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_recherche_carte
-+ COALESCE((SELECT SUM(ch_mon_cat_recherche) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
- AS recherche,
-(SELECT SUM(ch_inf_off_Environnement) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_environnement_carte
-+ COALESCE((SELECT SUM(ch_mon_cat_environnement) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
- AS environnement,
-(SELECT SUM(ch_inf_off_Education) FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3 AND ch_inf_statut = 2)
-+ ch_pay_education_carte
-+ COALESCE((SELECT SUM(ch_mon_cat_education) FROM monument_categories
-   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-   INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = ch_pay_id), 0)
- AS education
-FROM pays WHERE ch_pay_publication = 1 GROUP BY ch_pay_id ORDER BY %s DESC", GetSQLValueString($cat, "text"));
-$somme_ressources_mondiales = mysql_query($query_somme_ressources_mondiales, $maconnexion) or die(mysql_error());
-$row_somme_ressources_mondiales = mysql_fetch_assoc($somme_ressources_mondiales);
-$totalRows_somme_ressources_mondiales = mysql_num_rows($somme_ressources_mondiales);
-
-do {
-$tot_mon_budget = $tot_mon_budget + $row_somme_ressources_mondiales['budget'];
-$tot_mon_industrie = $tot_mon_industrie + $row_somme_ressources_mondiales['industrie'];
-$tot_mon_commerce = $tot_mon_commerce + $row_somme_ressources_mondiales['commerce'];
-$tot_mon_agriculture = $tot_mon_agriculture + $row_somme_ressources_mondiales['agriculture'];
-$tot_mon_tourisme = $tot_mon_tourisme + $row_somme_ressources_mondiales['tourisme'];
-$tot_mon_recherche = $tot_mon_recherche + $row_somme_ressources_mondiales['recherche'];
-$tot_mon_environnement = $tot_mon_environnement + $row_somme_ressources_mondiales['environnement'];
-$tot_mon_education = $tot_mon_education + $row_somme_ressources_mondiales['education'];
-} while ($row_somme_ressources_mondiales = mysql_fetch_assoc($somme_ressources_mondiales));
-
-
+// Ressources
+$paysList = EconomyService::getPaysResources($selectedResource);
 
 $graph_ressources = array();
 $graph_country = array();
 $graph_colors = array();
 
-do {
-    $graph_ressources[] = $row_all_somme_ressources[$cat];
-    $graph_country[] = $row_all_somme_ressources['ch_pay_nom'];
+foreach($paysList as $thisPays) {
+    $graph_ressources[] = $thisPays['resources'][$selectedResource];
+    $graph_country[] = $thisPays['ch_pay_nom'];
     $graph_colors[] = '';
-} while($row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources));
-mysql_data_seek($all_somme_ressources, 0);
-
-$row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
-
+}
 
 ?><!DOCTYPE html>
 <html lang="fr">
@@ -285,7 +125,6 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
         <li><a href="#presentation">Pr&eacute;sentation</a></li>
         <li><a href="#ressources">Statistiques &eacute;conomiques</a></li>
         <li><a href="#temperance">Projet Tempérance</a></li>
-		<li><a href="#bourses">Bourses mondiales</a></li>
         <li><a href="#communiques">Communiqu&eacute;s officiels</a></li>
       </ul>
     </div>
@@ -337,222 +176,22 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
                 Exporter</a>
             <ul class="dropdown-menu" role="menu">
                 <li><a href="<?= route('data-export.temperance-pays') ?>">Statistiques des pays (existants)<br><small>Fichier CSV - Inclut toutes les ressources</small></a></li>
-                <li><a href="<?= route('data-export.temperance-pays-all') ?>">Statistiques des pays (existants et archivés)<br><small>Fichier CSV - Inclut toutes les ressources</small></a></li>
-                <li><a href="<?= route('data-export.temperance-organisation') ?>">Statistiques des organisations<br><small>Fichier CSV - Inclut toutes les ressources</small></a></li>
             </ul>
         </div>
         <div class="titre-bleu anchor" id="ressources">
           <h1>Statistiques &eacute;conomiques</h1>
         </div>
-       <div class="row-fluid">
-       <div class="span8 well">
 
-        <img class="token-list-eco pull-left" id="main-token-icon-eco" src="assets/img/ressources/<?= __s($cat) ?>.png" alt="icone <?= __s($cat) ?>" style="width: 50px;">
-        <form id="resources-form" action="<?= DEF_URI_PATH ?>economie.php#ressources" method="GET">
-          <select class="btn-large" name="cat" id="cat" onchange="$('#main-token-icon-eco').attr('src', 'https://squirrel.romukulot.fr/media/icons/ajax-loader2.gif'); setTimeout(function() { $('#resources-form').submit()}, 100);">
-            <option value="">S&eacute;lectionnez une ressource</option>
-            <option value="commerce" <?php if ($cat == 'commerce') {?>selected<?php } ?>>Commerce</option>
-			<option value="industrie" <?php if ($cat == 'industrie') {?>selected<?php } ?>>Industrie</option>
-            <option value="agriculture" <?php if ($cat == 'agriculture') {?>selected<?php } ?>>Agriculture</option>
-            <option value="tourisme" <?php if ($cat == 'tourisme') {?>selected<?php } ?>>Tourisme</option>
-            <option value="recherche" <?php if ($cat == 'recherche') {?>selected<?php } ?>>Recherche</option>
-            <option value="environnement" <?php if ($cat == 'environnement') {?>selected<?php } ?>>Environnement</option>
-            <option value="education" <?php if ($cat == 'education') {?>selected<?php } ?>>Education</option>
-			<option value="budget" <?php if ($cat == 'budget') {?>selected<?php } ?>>Budget</option>
-          </select>
-        </form>
+        <?php renderElement('institut/economy_stats',
+            compact(['paysList', 'selectedResource', 'graph_ressources', 'graph_country', 'graph_colors'])
+        ); ?>
 
-           <div class="chart-container">
-              <canvas id="eco-chart" width="600" height="320"></canvas>
-          </div>
-
-          <script type="text/javascript">
-
-          <?php
-          $graph_colors_list = array();
-          $graph_color_start = -0.250;
-          for($i = 0; $i < $totalRows_somme_ressources; $i++) {
-            $graph_colors_list[] = adjustBrightness(getResourceColor($cat),
-                $graph_color_start);
-            $graph_color_start += 0.016;
-          }
-          ?>
-
-          (function($, window, Chart, document, undefined) {
-
-            var chartColors = <?= json_encode($graph_colors_list) ?>;
-            var i = 0;
-
-            var getColor = function() {
-
-                var length = chartColors.length;
-                i++;
-                var returnValue = chartColors[i];
-                if(i + 1 >= length)
-                    i = 0;
-                return returnValue;
-
-            };
-
-            var colorArray = [];
-            for(var j = 0; j < <?= $totalRows_somme_ressources ?>; j++){
-                colorArray.push(getColor());
-            }
-
-            var ctx = $("#eco-chart");
-            var ecoChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    datasets: [{
-                        data: <?= json_encode($graph_ressources); ?>,
-                        backgroundColor: colorArray,
-                        label: "<?= $cat ?>"
-                    }],
-
-                    // These labels appear in the legend and in the tooltips when hovering different arcs
-                    labels: <?= json_encode($graph_country); ?>
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            gridLines: {
-                                offsetGridLines: true
-                            },
-                            ticks: {
-                                display: false
-                            }
-                        }]
-                    },
-                    legend: {
-                        display: false
-                    }
-                }
-            });
-
-          })(jQuery, window, Chart, document);
-
-
-          </script>
-
-       </div>
-          
-        <!-- affichage ressource et somme mondiale en fonction du choix -->
-        <div class="span4 well ressources">
-          <p><i class="icon-globe"></i> Balance mondiale&nbsp;:</p>
-          <?php if ($cat =="budget") { ?>
-          <a href="#" title="Budget"><img src="assets/img/ressources/budget.png" alt="icone Budget"></a>
-          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_budget, 0, ',', ' '); echo $chiffre_francais; ?></h3>
-          <?php } ?>
-          <?php if ($cat =="industrie") { ?>
-          <a href="#" title="Industrie"><img src="assets/img/ressources/industrie.png" alt="icone Industrie"></a>
-          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_industrie, 0, ',', ' '); echo $chiffre_francais; ?></h3>
-          <?php } ?>
-          <?php if ($cat =="commerce") { ?>
-          <a href="#" title="Commerce"><img src="assets/img/ressources/bureau.png" alt="icone Commerce"></a>
-          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_commerce, 0, ',', ' '); echo $chiffre_francais; ?></h3>
-          <?php } ?>
-          <?php if ($cat =="agriculture") { ?>
-          <a href="#" title="Agriculture"><img src="assets/img/ressources/agriculture.png" alt="icone Agriculture"></a>
-          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_agriculture, 0, ',', ' '); echo $chiffre_francais; ?></h3>
-          <?php } ?>
-          <?php if ($cat =="tourisme") { ?>
-          <a href="#" title="Tourisme"><img src="assets/img/ressources/tourisme.png" alt="icone Tourisme"></a>
-          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_tourisme, 0, ',', ' '); echo $chiffre_francais; ?></h3>
-          <?php } ?>
-          <?php if ($cat =="recherche") { ?>
-          <a href="#" title="Recherche"><img src="assets/img/ressources/recherche.png" alt="icone Recherche"></a>
-          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_recherche, 0, ',', ' '); echo $chiffre_francais; ?></h3>
-          <?php } ?>
-          <?php if ($cat =="environnement") { ?>
-          <a href="#" title="Environnement"><img src="assets/img/ressources/environnement.png" alt="icone Environnement"></a>
-          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_environnement, 0, ',', ' '); echo $chiffre_francais; ?></h3>
-          <?php } ?>
-          <?php if ($cat =="education") { ?>
-          <a href="#" title="Education"><img src="assets/img/ressources/education.png" alt="icone Education"></a>
-          <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($tot_mon_education, 0, ',', ' '); echo $chiffre_francais; ?></h3>
-          <?php } ?>
-        </div>
-       </div>
-        <!-- choix ressources  -->
-        <?php  
-		$rank= $startRow_somme_ressources; 
-		do { 
-		 $rank= $rank + 1; ?>
-        <!-- Pagination liste des pays et somme des ressources en fonction du choix  -->
-        <div class="well liste-ressources">
-          <div class="row-fluid">
-            <div class="span1">
-              <h3><?php echo $rank; ?></h3>
-            </div>
-            <div class="span1"><a href="page-pays.php?ch_pay_id=<?= e($row_somme_ressources['ch_pay_id']) ?>" title="lien vers la page du pays"><img src="<?php 
-			if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_somme_ressources['ch_pay_lien_imgdrapeau']))
-					{
-					$row_somme_ressources['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/Thumb/$1', $row_somme_ressources['ch_pay_lien_imgdrapeau']);
-					}
-			echo $row_somme_ressources['ch_pay_lien_imgdrapeau']; ?>"></a></div>
-            <div class="span6">
-              <h4><?= e($row_somme_ressources['ch_pay_nom']) ?></h4>
-            </div>
-            <?php if (($cat =="budget") AND ($row_somme_ressources['budget']!=NULL)) { ?>
-            <div class="span1 token-list-eco"> <a href="#" title="Budget"><img src="assets/img/ressources/budget.png" alt="icone Budget"></a> </div>
-            <div class="span3">
-              <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($row_somme_ressources['budget'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
-            </div>
-            <?php } elseif (($cat =="industrie") AND ($row_somme_ressources['industrie']!=NULL)) { ?>
-            <div class="span1 token-list-eco"> <a href="#" title="Industrie"><img src="assets/img/ressources/industrie.png" alt="icone Industrie"></a> </div>
-            <div class="span3">
-              <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($row_somme_ressources['industrie'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
-            </div>
-            <?php } elseif (($cat =="commerce") AND ($row_somme_ressources['commerce']!=NULL)) { ?>
-            <div class="span1 token-list-eco"> <a href="#" title="Commerce"><img src="assets/img/ressources/bureau.png" alt="icone Commerce"></a> </div>
-            <div class="span3">
-              <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($row_somme_ressources['commerce'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
-            </div>
-            <?php } elseif (($cat =="agriculture") AND ($row_somme_ressources['agriculture']!=NULL)) { ?>
-            <div class="span1 token-list-eco"> <a href="#" title="Agriculture"><img src="assets/img/ressources/agriculture.png" alt="icone Agriculture"></a> </div>
-            <div class="span3">
-              <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($row_somme_ressources['agriculture'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
-            </div>
-            <?php } elseif (($cat =="tourisme") AND ($row_somme_ressources['tourisme']!=NULL)) { ?>
-            <div class="span1 token-list-eco"> <a href="#" title="Tourisme"><img src="assets/img/ressources/tourisme.png" alt="icone Tourisme"></a> </div>
-            <div class="span3">
-              <h3><?php $chiffre_francais = number_format($row_somme_ressources['tourisme'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
-            </div>
-            <?php } elseif (($cat =="recherche") AND ($row_somme_ressources['recherche']!=NULL)) { ?>
-            <div class="span1 token-list-eco"> <a href="#" title="Recherche"><img src="assets/img/ressources/recherche.png" alt="icone Recherche"></a> </div>
-            <div class="span3">
-              <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($row_somme_ressources['recherche'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
-            </div>
-            <?php } elseif (($cat =="environnement") AND ($row_somme_ressources['environnement']!=NULL)) { ?>
-            <div class="span1 token-list-eco"> <a href="#" title="Environnement"><img src="assets/img/ressources/environnement.png" alt="icone Environnement"></a> </div>
-            <div class="span3">
-              <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($row_somme_ressources['environnement'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
-            </div>
-            <?php } elseif (($cat =="education") AND ($row_somme_ressources['education']!=NULL)) { ?>
-            <div class="span1 token-list-eco"> <a href="#" title="Education"><img src="assets/img/ressources/education.png" alt="icone Education"></a> </div>
-            <div class="span3">
-              <h3 class="token-<?= __s($cat) ?>"><?php $chiffre_francais = number_format($row_somme_ressources['education'], 0, ',', ' '); echo $chiffre_francais; ?></h3>
-            </div>
-            <?php } else {  ?>
-            <div class="span4"><p>NC</p></div>
-            <?php } ?>
-          </div>
-        </div>
-        <?php } while ($row_somme_ressources = mysql_fetch_assoc($somme_ressources)); ?>
-        <!-- Pagination liste des monuments de la categorie -->
-       <small class="pull-right">de <?php echo ($startRow_somme_ressources + 1) ?> &agrave; <?php echo min($startRow_somme_ressources + $maxRows_somme_ressources, $totalRows_somme_ressources) ?> sur <?php echo $totalRows_somme_ressources ?>
-            <?php if ($pageNum_somme_ressources > 0) { // Show if not first page ?>
-            <a class="btn" href="<?php printf("%s?pageNum_somme_ressources=%d%s#ressources", $currentPage, max(0, $pageNum_somme_ressources - 1), $queryString_somme_ressources); ?>"><i class=" icon-backward"></i></a>
-            <?php } // Show if not first page ?>
-            <?php if ($pageNum_somme_ressources < $totalPages_somme_ressources) { // Show if not last page ?>
-            <a class="btn" href="<?php printf("%s?pageNum_somme_ressources=%d%s#ressources", $currentPage, min($totalPages_somme_ressources, $pageNum_somme_ressources + 1), $queryString_somme_ressources); ?>"> <i class="icon-forward"></i></a>
-        <?php } // Show if not last page ?></small>
-            <div class="clearfix"></div>
+        <div class="clearfix"></div>
       </section>
             <!-- Temperance
     ================================================== -->
       <section>
-        <div class="titre-bleu anchor" id="temperance">
+        <div class="titre-bleu" id="temperance">
           <h1>Projet Tempérance</h1>
         </div>
         <div class="well">
@@ -567,19 +206,7 @@ $row_all_somme_ressources = mysql_fetch_assoc($all_somme_ressources);
           </p>
         </div>
       </section>
-	  <!-- Bourses mondiales
-    ================================================== -->
-        <!--
-      <section>
-        <div class="titre-bleu anchor" id="bourses">
-          <h1>Bourses mondiales</h1>
-        </div>
-        <div class="well">
-              <p>Les Bourses mondiales sont créées dans la continuité du projet Tempérance. Le but est de mettre en valeur vos ressources acquises via la mise en ligne de vos infrastrutures et via l'outil "zoning" du site GC. Mais de quelle manière ? Comment pourrez-vous faire prospérer votre Bourse ? La rubrique "En savoir plus" est à présent en ligne pour vous. Il est temps de se confronter aux défis du monde réel sur le site GC : Saurez-vous vous adapter au développement des autres pays membres ? Quels choix ferez-vous pour placer votre Bourse en tête ? Comment battrez-vous la tendance mondiale ? Bientôt, chers membres gécéens, vos propres résultats pour le projet des Bourses mondiales... </p>
-              <p><a class="btn btn-primary" href="projet-bourses.php">À propos du Projet Bourses</a></p>
-        </div>
-      </section>
-      -->
+
       <!-- communique officiel
     ================================================== -->
       <section>

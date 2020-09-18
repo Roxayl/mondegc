@@ -270,7 +270,7 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
             $nbMembers = $organisation->members->count();
 
             foreach(config('enums.resources') as $resource) {
-                $generatedResources[$resource] = (int)$generatedResources[$resource] / $nbMembers;
+                $generatedResources[$resource] = (int)($generatedResources[$resource] / $nbMembers);
                 $sumResources[$resource] += $generatedResources[$resource];
             }
         }
