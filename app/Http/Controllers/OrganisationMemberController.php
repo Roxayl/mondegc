@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Organisation\MembershipChanged;
 use App\Models\Organisation;
 use App\Models\OrganisationMember;
 use App\Models\Pays;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class OrganisationMemberController extends Controller
 {
@@ -135,6 +135,7 @@ class OrganisationMemberController extends Controller
         ]);
 
         $orgMember->sendNotifications($oldOrgMember);
+        event(new MembershipChanged($orgMember->organisation));
 
         return redirect()->route('organisation.showslug',
             $orgMember->organisation->showRouteParameter())
@@ -169,6 +170,7 @@ class OrganisationMemberController extends Controller
         $orgMember->delete();
 
         $orgMember->sendNotifications($oldOrgMember);
+        event(new MembershipChanged($orgMember->organisation));
 
         return redirect()->route('organisation.showslug',
             $orgMember->organisation->showRouteParameter())

@@ -27,6 +27,10 @@ class EventServiceProvider extends ServiceProvider
         // Organisation
         'App\Events\Organisation\TypeMigrated' => [
             'App\Listeners\Notification\SendTypeMigratedNotification',
+            'App\Listeners\Organisation\UpdateInfrastructureInfluences',
+        ],
+        'App\Events\Organisation\MembershipChanged' => [
+            'App\Listeners\Organisation\UpdateInfrastructureInfluences',
         ],
 
         // Patrimoine

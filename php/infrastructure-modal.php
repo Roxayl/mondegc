@@ -73,7 +73,7 @@ $row_infrastructure = mysql_fetch_assoc($infrastructure);
 
     <div class="span5">
 
-    <h3>Influence sur l'économie</h3>
+    <h4>Ressources générées</h4>
 
     <?php if ($row_infrastructure['ch_inf_statut'] == Infrastructure::JUGEMENT_ACCEPTED): ?>
       <div class="alert alert-success">
@@ -99,16 +99,19 @@ $row_infrastructure = mysql_fetch_assoc($infrastructure);
 
     <?php endif; ?>
 
-     <div class="icone-ressources">
-        <img src="<?= DEF_URI_PATH ?>assets/img/ressources/budget.png" alt="icone Budget"><p>&nbsp;Budget&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_budget']) ?></strong></p>
-        <img src="<?= DEF_URI_PATH ?>assets/img/ressources/industrie.png" alt="icone Industrie"><p>&nbsp;Industrie&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Industrie']) ?></strong></p>
-        <img src="<?= DEF_URI_PATH ?>assets/img/ressources/bureau.png" alt="icone Commerce"><p>&nbsp;Commerce&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Commerce']) ?></strong></p>
-        <img src="<?= DEF_URI_PATH ?>assets/img/ressources/agriculture.png" alt="icone Agriculture"><p>&nbsp;Agriculture&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Agriculture']) ?></strong></p>
-        <img src="<?= DEF_URI_PATH ?>assets/img/ressources/tourisme.png" alt="icone Tourisme"><p>&nbsp;Tourisme&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Tourisme']) ?></strong></p>
-        <img src="<?= DEF_URI_PATH ?>assets/img/ressources/recherche.png" alt="icone Recherche"><p>&nbsp;Recherche&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Recherche']) ?></strong></p>
-        <img src="<?= DEF_URI_PATH ?>assets/img/ressources/environnement.png" alt="icone Evironnement"><p>&nbsp;Environnement&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Environnement']) ?></strong></p>
-        <img src="<?= DEF_URI_PATH ?>assets/img/ressources/education.png" alt="icone Education"><p>&nbsp;Education&nbsp;: <strong><?= e($row_infrastructure['ch_inf_off_Education']) ?></strong></p>
+    <small>Cette infrastructure génère actuellement :</small>
+    <br>
+    <div style="margin-left: -36px; width: 180%;">
+        <?php renderElement('temperance/resources', [
+                'resources' => $eloquentInfrastructure->getGeneratedResources()->toArray()
+        ]); ?>
     </div>
+    <div class="clearfix"></div>
+    <br>
+    <small>L'infrastructure devrait générer au final :</small>
+    <?php renderElement('temperance/resources_small', [
+            'resources' => $eloquentInfrastructure->getFinalResources()->toArray()
+    ]); ?>
 
     <p>&nbsp;</p>
     <strong><p>R&egrave;gle&nbsp;:</p></strong>

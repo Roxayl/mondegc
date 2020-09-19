@@ -18,6 +18,18 @@ trait Influencable
         $influences = $this->influences()
             ->where('generates_influence_at', '<', Carbon::now());
 
+        return $this->filterInfluences($influences);
+    }
+
+    public function getFinalResources() : Collection
+    {
+        $influences = $this->influences();
+
+        return $this->filterInfluences($influences);
+    }
+
+    private function filterInfluences($influences) : Collection
+    {
         $select = '';
         $resources = config('enums.resources');
 

@@ -16,7 +16,6 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -36,6 +35,7 @@ use Spatie\Searchable\SearchResult;
  * @property Carbon|null $updated_at
  * 
  * @property Collection|OrganisationMember[] $organisation_members
+ * @property Collection|Infrastructure[] $infrastructures
  *
  * @package App\Models
  */

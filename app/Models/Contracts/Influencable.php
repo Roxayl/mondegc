@@ -22,4 +22,11 @@ interface Influencable
      * @return Collection Collection contenant les ressources générées par l'influencable.
      */
     public function getGeneratedResources() : Collection;
+
+    /**
+     * Obtient les ressources générées par l'influencable, en prenant en compte l'ensemble
+     * des influences créées.
+     * @return Collection Collection contenant les ressources générées par l'influencable.
+     */
+    public function getFinalResources() : Collection;
 }
