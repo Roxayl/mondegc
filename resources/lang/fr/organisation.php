@@ -11,7 +11,7 @@ return [
 
     'types' => [
         'alliance' => "Alliance",
-        'alliance-description' => "Les alliances sont au coeur des enjeux diplomatiques du Monde GC. Ce sont des unions économiques, politiques et militaire de premier ordre.",
+        'alliance-description' => "Les alliances sont au coeur des enjeux diplomatiques du Monde GC. Ce sont des unions économiques, politiques et militaires de premier ordre.",
         'alliance-criteria' => [
             "La puissance économique de l'alliance est composée des <strong>ressources des pays</strong>, ainsi que <strong>celles de l'alliance</strong>.",
             "L'alliance peut créer des <strong>infrastructures</strong>.",
@@ -25,7 +25,7 @@ return [
         ],
 
         'organisation' => "Organisation",
-        'organisation-description' => 'Les organisations regroupent les diverses pays autour de thématiques communes : sport, culture...',
+        'organisation-description' => 'Les organisations regroupent les diverses pays autour de thématiques communes : sport, culture, sciences...',
         'organisation-criteria' => [
             "La puissance économique de l'organisation est seulement composée des <strong>ressources propres</strong> de l'organisation.",
             "L'organisation peut créer des <strong>infrastructures</strong>.",
@@ -47,6 +47,8 @@ return [
 
     'create' => [
         'create-description' => "Vous êtes sur le point d'enrichir la vie diplomatique gécéenne en y ajoutant un nouvel acteur.<br>Chaque <strong>type d'organisation</strong> possède ses propres <strong>caractéristiques</strong>, afin de répondre à des besoins différents.<br>Une fois que votre organisation est suffisamment développée, vous pourrez peut-être la transformer en <strong>Alliance</strong>.",
+        'create-alliance-description' => "Vous ne pouvez pas créer d'alliance <i>ex nihilo</i>. Créez une organisation à la place, et vous pourrez la faire évoluer en alliance quand elle sera suffisamment développée !",
+        'create-unable' => "Vous ne pouvez pas créer ce type d'organisation.",
     ],
 
     'validation' => [

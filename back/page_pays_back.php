@@ -146,7 +146,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 $queryString_mesvilles = sprintf("&totalRows_mesvilles=%d%s", $totalRows_mesvilles, $queryString_mesvilles);
 
 //requete liste villes autre joueurs
-$maxRows_autres_villes = 8;
+$maxRows_autres_villes = 15;
 $pageNum_autres_villes = 0;
 if (isset($_GET['pageNum_autres_villes'])) {
   $pageNum_autres_villes = $_GET['pageNum_autres_villes'];
@@ -883,10 +883,10 @@ img.olTileImage {
             <tr>
               <td colspan="5"><p class="pull-right">de <?php echo ($startRow_mesvilles + 1) ?> &agrave; <?php echo min($startRow_mesvilles + $maxRows_mesvilles, $totalRows_mesvilles) ?> sur <?php echo $totalRows_mesvilles ?>
                   <?php if ($pageNum_mesvilles > 0) { // Show if not first page ?>
-                    <a class="btn" href="<?php printf("%s?pageNum_mesvilles=%d%s#mes-villes", $currentPage, max(0, $pageNum_mesvilles - 1), $queryString_mesvilles); ?>"><i class=" icon-backward"></i> </a>
+                    <a class="btn" href="<?php printf("%s?pageNum_mesvilles=%d%s#villes", $currentPage, max(0, $pageNum_mesvilles - 1), $queryString_mesvilles); ?>"><i class=" icon-backward"></i> </a>
                     <?php } // Show if not first page ?>
                   <?php if ($pageNum_mesvilles < $totalPages_mesvilles) { // Show if not last page ?>
-                    <a class="btn" href="<?php printf("%s?pageNum_mesvilles=%d%s#mes-villes", $currentPage, min($totalPages_mesvilles, $pageNum_mesvilles + 1), $queryString_mesvilles); ?>"> <i class="icon-forward"></i></a>
+                    <a class="btn" href="<?php printf("%s?pageNum_mesvilles=%d%s#villes", $currentPage, min($totalPages_mesvilles, $pageNum_mesvilles + 1), $queryString_mesvilles); ?>"> <i class="icon-forward"></i></a>
                     <?php } // Show if not last page ?>
                 </p>
               <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
@@ -964,10 +964,10 @@ img.olTileImage {
             <tr>
               <td colspan="6"><p class="pull-right">de <?php echo ($startRow_autres_villes + 1) ?> &agrave; <?php echo min($startRow_autres_villes + $maxRows_autres_villes, $totalRows_autres_villes) ?> sur <?php echo $totalRows_autres_villes ?>
                   <?php if ($pageNum_autres_villes > 0) { // Show if not first page ?>
-                    <a class="btn" href="<?php printf("%s?pageNum_autres_villes=%d%s#mes-villes", $currentPage, max(0, $pageNum_autres_villes - 1), $queryString_autres_villes); ?>"><i class=" icon-backward"></i> </a>
+                    <a class="btn" href="<?php printf("%s?pageNum_autres_villes=%d%s#villes", $currentPage, max(0, $pageNum_autres_villes - 1), $queryString_autres_villes); ?>"><i class=" icon-backward"></i> </a>
                     <?php } // Show if not first page ?>
                   <?php if ($pageNum_autres_villes < $totalPages_autres_villes) { // Show if not last page ?>
-                    <a class="btn" href="<?php printf("%s?pageNum_autres_villes=%d%s#mes-villes", $currentPage, min($totalPages_autres_villes, $pageNum_autres_villes + 1), $queryString_autres_villes); ?>"> <i class="icon-forward"></i></a>
+                    <a class="btn" href="<?php printf("%s?pageNum_autres_villes=%d%s#villes", $currentPage, min($totalPages_autres_villes, $pageNum_autres_villes + 1), $queryString_autres_villes); ?>"> <i class="icon-forward"></i></a>
                     <?php } // Show if not last page ?>
                 </p></td>
             </tr>
@@ -986,12 +986,24 @@ img.olTileImage {
 
       <!-- Routes et campagne
         ================================================== -->
+      <div class="pull-right-cta" style="margin-top: 30px;">
+        <form action="<?= DEF_URI_PATH ?>Carte-modifier.php" method="post">
+          <input name="paysID" type="hidden" value="<?php echo $colname_paysID; ?>">
+          <button class="btn btn-primary btn-cta" type="submit"
+                  title="lien vers les outils de dessin">
+              <i class="icon-pencil icon-white"></i>
+              Dessiner sur la carte</button>
+        </form>
+      </div>
       <section>
         <div id="routes-campagne" class="titre-vert anchor">
           <h1>Routes et campagne</h1>
         </div>
         <div class="alert alert-tips"> Vous pouvez dessiner des routes, des zones agricoles ou des zones naturelles entre vos villes sur la carte de votre pays. Ces zones vont avoir une influence sur l'économie et la population de votre pays </div>
-        <h3>Balance des ressources issues de la carte</h3>
+
+        <div class="well">
+
+          <h4>Balance des ressources issues de la carte</h4>
 
           <?php $ressources_cartes = array(
               'budget' => $row_InfoGenerale['ch_pay_budget_carte'],
@@ -1002,26 +1014,19 @@ img.olTileImage {
               'recherche' => $row_InfoGenerale['ch_pay_recherche_carte'],
               'environnement' => $row_InfoGenerale['ch_pay_environnement_carte'],
               'education' => $row_InfoGenerale['ch_pay_education_carte']
-          ); ?>
+          );
 
-          <?php
-            renderElement('temperance/resources', array(
+          renderElement('temperance/resources_small', array(
                 'resources' => $ressources_cartes,
                 'path' => '../'
             ));
           ?>
+          <br><br>
 
-        <div class="span12">
-          <p>&nbsp;</p>
-          <p>Population rurale&nbsp;: <strong>
+          <p>Population rurale&nbsp;: <i class="icon-user"></i><strong>
             <?php $chiffre_francais = number_format($row_InfoGenerale['ch_pay_population_carte'], 0, ',', ' '); echo $chiffre_francais; ?>
             habitants</strong></p>
-        </div>
-        <div class="span12">
-          <form action="<?= DEF_URI_PATH ?>Carte-modifier.php" method="post">
-            <input name="paysID" type="hidden" value="<?php echo $colname_paysID; ?>">
-            <button class="btn btn-primary" type="submit" title="lien vers les outils de dessin">Dessiner sur la carte</button>
-          </form>
+
         </div>
       <div class="clearfix"></div>
       </section>
@@ -1029,6 +1034,15 @@ img.olTileImage {
       <!-- Liste des Communiqués
         ================================================== -->
       <?php if ($thisPays->getUserPermission() >= Pays::$permissions['dirigeant']) { // Affichage si sup ou egal à dirigeant ?>
+
+      <div class="pull-right-cta" style="margin-top: 30px;">
+          <a href="<?= url('back/communique_ajouter.php?userID='
+              . auth()->user()->ch_use_id . '&cat=pays&com_element_id='
+              . $eloquentPays->ch_pay_id) ?>"
+             class="btn btn-primary btn-cta">
+              <i class="icon-plus-sign icon-white"></i> Ajouter un communiqué
+          </a>
+      </div>
       <section id="mes-communiques">
         <div id="mes-communiques" class="titre-vert anchor">
           <h1>Communiqu&eacute;s du pays</h1>

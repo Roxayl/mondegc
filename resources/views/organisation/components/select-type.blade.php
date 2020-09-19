@@ -38,13 +38,13 @@
 
                 @elseif($organisationType === $organisation::TYPE_ALLIANCE)
                     <small style="display: block;"><i class="icon-info-sign"></i>
-                        Vous ne pouvez pas créer d'alliance.
-                        Créez une organisation à la place, et vous pourrez la faire évoluer en alliance
-                        quand elle sera suffisamment développée !</small>
+                        {!! __("organisation.create.create-alliance-description") !!}
+                    </small>
 
                 @else
                     <small><i class="icon-info-sign"></i>
-                        Vous ne pouvez pas créer ce type d'organisation.</small>
+                        {!! __("organisation.create.create-unable") !!}
+                    </small>
                 @endif
             </div>
 

@@ -56,7 +56,7 @@ $queryString_communiques = sprintf("&totalRows_communiques=%d%s", $totalRows_com
       <?php do { ?>
       <tr id="communiqueID<?= e($row_communiques['ch_com_ID']) ?>">
         <td><?= e($row_communiques['ch_com_titre']) ?></td>
-        <td>Le <?php echo date("d/m/Y", strtotime($row_communiques['ch_com_date'])); ?> &agrave; <?php echo date("G:i", strtotime($row_communiques['ch_com_date'])); ?></td>
+        <td>Le <?php echo date("d/m/Y", strtotime($row_communiques['ch_com_date'])); ?></td>
         <td><!-- Button to trigger modal -->
           
           <div class="text-center">
