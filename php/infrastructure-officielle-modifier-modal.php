@@ -6,49 +6,55 @@ header('Content-Type: text/html; charset=utf-8');
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 appendQueryString($editFormAction);
 
-if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
+if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
 
     $oldInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($_POST['ch_inf_off_id']);
 
-  $updateSQL = sprintf("UPDATE infrastructures_officielles SET ch_inf_off_label=%s, ch_inf_off_date=%s, ch_inf_off_nom=%s, ch_inf_off_desc=%s, ch_inf_off_icone=%s, ch_inf_off_budget=%s, ch_inf_off_Industrie=%s, ch_inf_off_Commerce=%s, ch_inf_off_Agriculture=%s, ch_inf_off_Tourisme=%s, ch_inf_off_Recherche=%s, ch_inf_off_Environnement=%s, ch_inf_off_Education=%s WHERE ch_inf_off_id=%s",
-                       GetSQLValueString($_POST['ch_inf_off_label'], "text"),
-                       GetSQLValueString($_POST['ch_inf_off_date'], "date"),
-                       GetSQLValueString($_POST['ch_inf_off_nom'], "text"),
-                       GetSQLValueString($_POST['ch_inf_off_desc'], "text"),
-                       GetSQLValueString($_POST['ch_inf_off_icone'], "text"),
-                       GetSQLValueString($_POST['ch_inf_off_budget'], "int"),
-                       GetSQLValueString($_POST['ch_inf_off_Industrie'], "int"),
-					   GetSQLValueString($_POST['ch_inf_off_Commerce'], "int"),
-                       GetSQLValueString($_POST['ch_inf_off_Agriculture'], "int"),
-                       GetSQLValueString($_POST['ch_inf_off_Tourisme'], "int"),
-                       GetSQLValueString($_POST['ch_inf_off_Recherche'], "int"),
-                       GetSQLValueString($_POST['ch_inf_off_Environnement'], "int"),
-                       GetSQLValueString($_POST['ch_inf_off_Education'], "int"),
-                       GetSQLValueString($_POST['ch_inf_off_id'], "int"));
+    $updateSQL = sprintf("UPDATE infrastructures_officielles SET ch_inf_off_label=%s, ch_inf_off_date=%s, ch_inf_off_nom=%s, ch_inf_off_desc=%s, ch_inf_off_icone=%s, ch_inf_off_budget=%s, ch_inf_off_Industrie=%s, ch_inf_off_Commerce=%s, ch_inf_off_Agriculture=%s, ch_inf_off_Tourisme=%s, ch_inf_off_Recherche=%s, ch_inf_off_Environnement=%s, ch_inf_off_Education=%s WHERE ch_inf_off_id=%s",
+        GetSQLValueString($_POST['ch_inf_off_label'], "text"),
+        GetSQLValueString($_POST['ch_inf_off_date'], "date"),
+        GetSQLValueString($_POST['ch_inf_off_nom'], "text"),
+        GetSQLValueString($_POST['ch_inf_off_desc'], "text"),
+        GetSQLValueString($_POST['ch_inf_off_icone'], "text"),
+        GetSQLValueString($_POST['ch_inf_off_budget'], "int"),
+        GetSQLValueString($_POST['ch_inf_off_Industrie'], "int"),
+        GetSQLValueString($_POST['ch_inf_off_Commerce'], "int"),
+        GetSQLValueString($_POST['ch_inf_off_Agriculture'], "int"),
+        GetSQLValueString($_POST['ch_inf_off_Tourisme'], "int"),
+        GetSQLValueString($_POST['ch_inf_off_Recherche'], "int"),
+        GetSQLValueString($_POST['ch_inf_off_Environnement'], "int"),
+        GetSQLValueString($_POST['ch_inf_off_Education'], "int"),
+        GetSQLValueString($_POST['ch_inf_off_id'], "int"));
 
-  
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
-  $newInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($_POST['ch_inf_off_id']);
+    $newInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($_POST['ch_inf_off_id']);
 
-  // Gestion des groupes d'infrastructures
-  $delete_group = mysql_query('DELETE FROM infrastructures_officielles_groupes WHERE ID_infra_officielle = ' . mysql_real_escape_string($_POST['ch_inf_off_id']));
-  $insert_group = mysql_query(sprintf('INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle) VALUES(%s, %s)',
-      GetSQLValueString($_POST['groupe_infra']),
-      GetSQLValueString($_POST['ch_inf_off_id'])
-  ));
+    // Gestion des groupes d'infrastructures
+    $delete_group = mysql_query('DELETE FROM infrastructures_officielles_groupes WHERE ID_infra_officielle = ' . mysql_real_escape_string($_POST['ch_inf_off_id']));
+    $insert_group = mysql_query(sprintf('INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle) VALUES(%s, %s)',
+        GetSQLValueString($_POST['groupe_infra']),
+        GetSQLValueString($_POST['ch_inf_off_id'])
+    ));
 
-  \GenCity\Monde\Logger\Log::createItem('infrastructures_officielles', (int)$_POST['ch_inf_off_id'],
-      'update', null,
-      array('entity' => $newInfraOff->model->getInfo(), 'old_entity' => $oldInfraOff->model->getInfo()));
+    \GenCity\Monde\Logger\Log::createItem('infrastructures_officielles', (int)$_POST['ch_inf_off_id'],
+        'update', null,
+        array('entity' => $newInfraOff->model->getInfo(), 'old_entity' => $oldInfraOff->model->getInfo()));
 
-  getErrorMessage('success', "Une infrastructure officielle a été modifiée !");
+    // Recalculer les influences des infrastructures
+    $eloquentInfrastructures = \App\Models\Infrastructure
+        ::where('ch_inf_off_id', $newInfraOff->get('ch_inf_off_id'))->get();
+    foreach($eloquentInfrastructures as $infrastructure) {
+        $infrastructure->generateInfluence();
+    }
 
-  $updateGoTo = DEF_URI_PATH . "back/institut_economie.php";
-  appendQueryString($updateGoTo);
-  $adresse = $updateGoTo .'#liste-infrastructures-officielles';
-  header(sprintf("Location: %s", $adresse));
- exit;
+    getErrorMessage('success', "Une infrastructure officielle a été modifiée !");
+
+    $updateGoTo = DEF_URI_PATH . "back/institut_economie.php";
+    appendQueryString($updateGoTo);
+    $adresse = $updateGoTo . '#liste-infrastructures-officielles';
+    header(sprintf("Location: %s", $adresse));
+    exit;
 }
 
 

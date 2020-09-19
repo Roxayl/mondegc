@@ -1,5 +1,8 @@
 <?php
 
+use App\Events\Patrimoine\PatrimoineCategorized;
+use App\Models\Patrimoine;
+
 header('Content-Type: text/html; charset=utf-8');
 
 // renvoyer les données POST à soi-même
@@ -11,7 +14,7 @@ $mon_ID = isset($_GET['mon_id']) ? (int)$_GET['mon_id'] : 0;
 // Traitement données POST
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie_direct")) {
 
-    
+    $eloquentPatrimoine = Patrimoine::findOrFail($mon_ID);
 
     $new_cat_list = empty($_POST['ch_disp_cat_id']) ? array() : $_POST['ch_disp_cat_id'];
 
@@ -51,6 +54,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
             mysql_query($sqlQuery);
         }
     }
+
+    event(new PatrimoineCategorized($eloquentPatrimoine));
 
     $insertGoTo = DEF_URI_PATH . 'back/institut_patrimoine.php?mon_cat_ID=' .$row_mon_cat['ch_mon_cat_ID'].'';
     appendQueryString($insertGoTo);

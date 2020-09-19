@@ -26,13 +26,11 @@
 
         <div class="span3 bs-docs-sidebar">
             <ul class="nav nav-list bs-docs-sidenav">
-                <li class="row-fluid"><a href="#header">
-                    <img src="{{$organisation->logo}}" alt="Logo de {{$organisation->name}}">
-                    <p><strong>{{$organisation->name}}</strong></p>
-                    <p><em>{{$organisation->members->count()}} membre(s)</em></p>
-                    </a></li>
+                @include('organisation.components.sidebar-header')
                 <li><a href="#presentation">Présentation</a></li>
-                <li><a href="#infrastructures">Infrastructures</a></li>
+                @if($organisation->hasEconomy())
+                    <li><a href="#infrastructures">Infrastructures</a></li>
+                @endif
             </ul>
         </div>
 
@@ -53,21 +51,31 @@
                 {!! App\Services\HelperService::displayAlert() !!}
             </div>
 
+            {{-- S'il faut afficher un en-tête sur le type d'orga ?
+            <div class="well">
+                <div class="org-container org-{{ $organisation->type }}">
+                    <h3>{{ __("organisation.types.$organisation->type") }}</h3>
+                    <p>{{ __("organisation.types.{$organisation->type}-description") }}</p>
+                </div>
+            </div>
+            --}}
+
             <div id="presentation" class="titre-vert anchor">
                 <h1>Présentation</h1>
             </div>
 
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
             <div class="well">
+
+            <label>Type d'organisation
+                <span class="badge org-{{ $organisation->type }}">
+                {{ __("organisation.types.{$organisation->type}") }}</span>
+                <a href="{{ route('organisation.migrate',
+                    ['organisation' => $organisation->id]) }}"
+                   data-toggle="modal" data-target="#modal-container-small">
+                    Migrer vers un nouveau type...
+                </a>
+            </label>
+            <br>
 
             <form method="POST" action="{{route('organisation.update',
                 ['organisation' => $organisation->id])}}">
@@ -75,16 +83,19 @@
 
                 @include('organisation.components.form')
 
-                <input type="submit" class="btn btn-primary" value="Envoyer">
+                <button type="submit" class="btn btn-primary">Envoyer</button>
             </form>
 
             </div>
 
+            @if($organisation->hasEconomy())
 
-            {!! \App\Services\HelperService::renderLegacyElement(
-                'infrastructure/back_list', ['infrastructurable' => $organisation]
-            ) !!}
-            <div class="modal container fade" id="Modal-Monument"></div>
+                {!! \App\Services\HelperService::renderLegacyElement(
+                    'infrastructure/back_list', ['infrastructurable' => $organisation]
+                ) !!}
+                <div class="modal container fade" id="Modal-Monument"></div>
+
+            @endif
 
         </div>
 

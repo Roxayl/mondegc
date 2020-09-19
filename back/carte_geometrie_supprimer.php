@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\Pays\MapUpdated;
 use App\Models\Geometry;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -66,6 +67,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
                        GetSQLValueString($tot_emploi, "int"),
 					   GetSQLValueString($_GET['ch_geo_pay_id'], "int"));
 
+  event(new MapUpdated($geometry->pays));
   
   $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
   mysql_free_result($geometries);
@@ -76,7 +78,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
   }
   appendQueryString($deleteGoTo);
   header(sprintf("Location: %s", $deleteGoTo));
- exit;
+  exit;
 }
 ?><!DOCTYPE html>
 <html lang="fr">

@@ -3,7 +3,7 @@ if(!isset($data['type']))
     $data['type'] = 'infra';
 switch($data['type']) {
     case 'infra':
-        $url = url('php/infrastructure-modal-public.php?ch_inf_id=' . $data['id']);
+        $url = url('php/infrastructure-modal.php?ch_inf_id=' . $data['id']);
         break;
     case 'patrimoine':
         $url = url( 'php/patrimoine-modal.php?ch_pat_id=' . $data['id']);

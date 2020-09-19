@@ -13,8 +13,10 @@
     <h1>Actualités</h1>
 </div>
 
-@if($organisation->communiques->count())
+@if($communiques->total())
+    {{ $communiques->links() }}
     <h3>Communiqués</h3>
+
     <table class="table table-hover" cellspacing="1" width="100%">
     <thead>
         <tr class="tablehead2">
@@ -22,18 +24,24 @@
             <th>Titre</th>
             <th>Date de publication</th>
         </tr>
-        @foreach($organisation->communiques as $communique)
+        @foreach($communiques as $communique)
         <tr>
             <td></td>
             <td>
-        <a href="{{ url('page-communique.php?com_id=' . $communique->ch_com_ID) }}">
-            {{ $communique->ch_com_titre }}</a>
+                <a href="{{ url('page-communique.php?com_id=' . $communique->ch_com_ID) }}">
+                    {{ $communique->ch_com_titre }}</a>
+                @if($communique->ch_com_statut === $communique::STATUS_DRAFT)
+                    <span class="badge badge-warning">Brouillon</span>
+                @endif
             </td>
             <td>{{ $communique->ch_com_date->format('d/m/Y') }}</td>
         </tr>
         @endforeach
     </thead>
     </table>
+
+    {{ $communiques->links() }}
+    <div class="clearfix"></div>
 
 @else
     <div class="alert alert-tips">

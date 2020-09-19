@@ -4,7 +4,12 @@
 @section('styles')
 <style>
     .jumbotron {
-        background-image: url('{{$organisation->flag}}');
+        @if(!empty($organisation->flag))
+            background-image: url('{{$organisation->flag}}');
+        @else
+            background: linear-gradient(to right, #f80000 0%,#d000dd 72%);
+            background-size: 200%;
+        @endif
     }
 </style>
 <link href="{{url('SpryAssets/SpryValidationTextField.css')}}" rel="stylesheet" type="text/css">

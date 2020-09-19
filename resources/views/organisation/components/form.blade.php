@@ -31,13 +31,6 @@
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label" for="allow_temperance">
-            <input class="checkbox" name="allow_temperance" type="checkbox" id="allow_temperance" value="1" {{ old('allow_temperance', $organisation->allow_temperance) ? 'checked' : '' }} maxlength="190">
-            Calculer les données économiques <a href="#" rel="clickover" title="Calculer les données économiques" data-content="Cette case vous permet de définir que vous souhaitez que des statistiques économiques soient générés."><i class="icon-info-sign"></i></a></label>
-        <div class="controls"></div>
-    </div>
-
     <div id="sprytextarea1" class="control-group">
         <label class="control-label" for="text">Présentation</label>
         <div class="controls">

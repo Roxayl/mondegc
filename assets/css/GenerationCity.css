@@ -693,6 +693,48 @@ body > .navbar .brand {
 }
 
 
+/* Organisation */
+
+a.org-container, div.org-container {
+    border-radius: 15px;
+    padding: 0;
+    -webkit-box-shadow: 2px 2px 18px 7px rgba(203, 203, 203, 0.75);
+    -moz-box-shadow: 2px 2px 18px 7px rgba(203, 203, 203, 0.75);
+    box-shadow: 2px 2px 18px 7px rgba(203, 203, 203, 0.75);
+}
+
+.org-header {
+    color: #fafafa;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding: 10px 20px;
+}
+
+.org-description {
+    color: #0a0a0a;
+    background-color: #fafafa;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 10px;
+}
+
+a.org-container:hover {
+    text-decoration: none;
+}
+
+.org-alliance {
+    background-color: #1239FF;
+}
+
+.org-organisation {
+    background-color: #127CFF;
+}
+
+.org-group {
+    background-color: #85BCFF;
+}
+
+
 /* Dropdown
 -------------------------------------------------- */
 
@@ -927,11 +969,11 @@ ul.dropdown-menu.dropdown-double > div.drop-colonne-droite > li, ul.dropdown-men
 }
 
 .Master-link {
-    padding-top: 30px;
+    padding-top: 3px;
 }
 
 .Master-link p {
-    font-size: 1.5em;
+    font-size: 1.3em;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, .6), 0 0 2px rgba(0, 0, 0, .2);
 }
 
@@ -1704,6 +1746,20 @@ table .btn {
     top: auto;
 }
 
+@media (min-width: 979px) and (max-width: 1200px) {
+    .modal.container.modal-small {
+        width: 880px;
+        margin-left: -420px;
+    }
+}
+
+@media (min-width: 1200px) {
+	.modal.container.modal-small {
+		width: 880px;
+		margin-left: -460px;
+	}
+}
+
 /* Icones Ressources
 ------------------------- */
 .Icone-thumb {
@@ -1867,7 +1923,7 @@ table .btn {
 /* Images modal ressources
 ------------------------- */
 .img-modal-ressource {
-    height: 300px;
+    max-height: 400px;
     margin-bottom: 10px;
 }
 
@@ -2090,10 +2146,6 @@ Desktop large
         line-height: 1.2em;
     }
 
-    .Master-link p {
-        font-size: 1.5em;
-    }
-
     .header p {
         margin-left: 200px;
         margin-right: 200px;
@@ -2263,10 +2315,6 @@ Tablet to desktop
     .jumbotron p {
         font-size: 1.1em;
         line-height: 1.1em;
-    }
-
-    .Master-link p {
-        font-size: 1.5em;
     }
 
     .header p {
@@ -2666,10 +2714,6 @@ Tablet COLLAPSE
     .jumbotron p {
         font-size: 1.1em;
         line-height: 1.1em;
-    }
-
-    .Master-link p {
-        font-size: 1.5em;
     }
 
     .header p {

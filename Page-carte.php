@@ -3,7 +3,6 @@
 use App\Models\Pays;
 use App\Models\TemperancePays;
 
-
 //Connexion et deconnexion
 include('php/log.php');
 
@@ -134,13 +133,8 @@ if($_SERVER["REMOTE_ADDR"] === '127.0.0.1') {
     ob_end_clean();
 }
 
-// Obtenir les données Tempérance
-$temperance = TemperancePays::join('pays', 'id', '=', 'ch_pay_id')
-    ->select('temperance_pays.*')
-    ->where('ch_pay_publication', '=', Pays::$statut['active'])
-    ->get()->toArray();
-$temperancePays = array_combine( array_column($temperance, 'id'),
-                                 $temperance );
+// Ressources
+$paysResources = \App\Services\EconomyService::getPaysResources();
 
 ?>
 <!DOCTYPE html>
@@ -268,7 +262,7 @@ div.olControlPanel {
   <!-- Continent RFGC
     ================================================== -->
   <div class="titre-gris anchor" id="RFGC">
-    <h2>Pays : République fédérale de Génération City</h2>
+    <h2>Pays : République fédérale de Gécée</h2>
   </div>
   <div class="stat-continent pull-center">
     <p><span class="stat"><span class="chiffre"><?php echo $nbpays_RFGC; ?></span> provinces</span> <span class="stat"><span class="chiffre"><?php echo $nbvilles_RFGC; ?></span> villes</span> <span class="stat"><span class="chiffre">
@@ -289,7 +283,7 @@ div.olControlPanel {
 					}
             renderElement('pays/liste_pays', [
                     'pays' => $row_listePays,
-                    'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
+                    'temperance' => $paysResources[$row_listePays['ch_pay_id']]['resources'],
                 ]);
 			}
         } while ($row_listePays = mysql_fetch_assoc($listePays));
@@ -321,7 +315,7 @@ div.olControlPanel {
 					}
             renderElement('pays/liste_pays', [
                     'pays' => $row_listePays,
-                    'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
+                    'temperance' => $paysResources[$row_listePays['ch_pay_id']]['resources'],
                 ]);
 			}
         } while ($row_listePays = mysql_fetch_assoc($listePays));
@@ -371,7 +365,7 @@ div.olControlPanel {
 					}
             renderElement('pays/liste_pays', [
                     'pays' => $row_listePays,
-                    'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
+                    'temperance' => $paysResources[$row_listePays['ch_pay_id']]['resources'],
                 ]);
 			}
         } while ($row_listePays = mysql_fetch_assoc($listePays));
@@ -405,7 +399,7 @@ div.olControlPanel {
 					}
             renderElement('pays/liste_pays', [
                     'pays' => $row_listePays,
-                    'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
+                    'temperance' => $paysResources[$row_listePays['ch_pay_id']]['resources'],
                 ]);
 			}
         } while ($row_listePays = mysql_fetch_assoc($listePays));
@@ -439,7 +433,7 @@ div.olControlPanel {
 					}
 		renderElement('pays/liste_pays', [
                 'pays' => $row_listePays,
-                'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
+                'temperance' => $paysResources[$row_listePays['ch_pay_id']]['resources'],
             ]);
             }
         } while ($row_listePays = mysql_fetch_assoc($listePays));
@@ -473,7 +467,7 @@ div.olControlPanel {
 					}
 		    renderElement('pays/liste_pays', [
                 'pays' => $row_listePays,
-                'temperance' => $temperancePays[$row_listePays['ch_pay_id']],
+                'temperance' => $paysResources[$row_listePays['ch_pay_id']]['resources'],
             ]);
             }
         } while ($row_listePays = mysql_fetch_assoc($listePays));

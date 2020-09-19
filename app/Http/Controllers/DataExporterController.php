@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pays;
-use App\Models\TemperanceOrganisation;
-use App\Models\TemperancePays;
+use App\Services\EconomyService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use LogicException;
 
 class DataExporterController extends Controller
 {
@@ -24,12 +24,14 @@ class DataExporterController extends Controller
         ];
 
         # add headers for each column in the CSV download
-        array_unshift($data, array_keys($data[0]));
+        array_unshift($data, array_keys($data[array_key_first($data)]));
 
         $callback = function() use ($data) {
             $FH = fopen('php://output', 'w');
             foreach ($data as $row) {
-                fputcsv($FH, $row);
+                $status = fputcsv($FH, $row);
+                if($status === false)
+                    throw new LogicException("fputcsv() error");
             }
             fclose($FH);
         };
@@ -39,22 +41,18 @@ class DataExporterController extends Controller
 
     public function temperancePays(Request $request)
     {
-        $data = TemperancePays::join('pays', 'id', '=', 'ch_pay_id')
-            ->select('temperance_pays.*')
-            ->where('ch_pay_publication', '=', Pays::$statut['active'])
-            ->get()->toArray();
+        $paysList = EconomyService::getPaysResources();
+        $data = [];
+
+        foreach($paysList as $pays) {
+            $array = $pays['resources'];
+            $array['id'] = $pays['ch_pay_id'];
+            $array['type'] = Pays::class;
+            $array['name'] = $pays['ch_pay_nom'];
+
+            $data[] = $array;
+        }
+
         return $this->exportToCsv('temperance-pays', $data);
-    }
-
-    public function temperancePaysAll(Request $request)
-    {
-        $data = TemperancePays::all()->toArray();
-        return $this->exportToCsv('temperance-pays-archive', $data);
-    }
-
-    public function temperanceOrganisation(Request $request)
-    {
-        $data = TemperanceOrganisation::all()->toArray();
-        return $this->exportToCsv('temperance-organisation', $data);
     }
 }

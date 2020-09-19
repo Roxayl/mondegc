@@ -42,29 +42,13 @@
                 {!! App\Services\HelperService::displayAlert() !!}
             </div>
 
-            <div id="actualites" class="titre-vert anchor">
-                <h1>Créer une organisation</h1>
-            </div>
-
             <div class="well">
 
-            <form method="POST" action="{{route('organisation.store')}}">
-
-                @include('organisation.components.form')
-
-                <div class="control-group">
-                    <label for="pays_id">Choisir le propriétaire de l'organisation :</label>
-                    <select name="pays_id" id="pays_id">
-                        @foreach($pays as $thisPays):
-                            <option value="{{$thisPays->ch_pay_id}}"
-                                >{{$thisPays->ch_pay_nom}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <input type="submit" class="btn btn-primary" value="Envoyer">
-
-            </form>
+            @if(is_null($type))
+                @include('organisation.components.select-type')
+            @else
+                @include('organisation.components.create-form')
+            @endif
 
             </div>
 

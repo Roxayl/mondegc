@@ -43,5 +43,4 @@
             @endif
         </ul>
     </nav>
-    <div class="clearfix"></div>
 @endif

@@ -1,5 +1,6 @@
 
     {{ $infrastructures->appends(['type' => $type])->links() }}
+    <div class="clearfix"></div>
 
     <ul class="listes">
     @foreach($infrastructures as $infrastructure)
@@ -29,13 +30,7 @@
                     </small>
                     <br>
 
-                    @if(!is_null($infrastructure->infrastructurable))
-                        @include('infrastructure.judge.components.infrastructurable-snippet')
-                    @else
-                        <small style="color: red;">
-                            L'élément auquel appartient cette infrastructure a été supprimé.
-                        </small>
-                    @endif
+                    @include('infrastructure.judge.components.infrastructurable-snippet')
                 </div>
             </div>
         </li>
@@ -43,3 +38,4 @@
     </ul>
 
     {{ $infrastructures->appends(['type' => $type])->links() }}
+    <div class="clearfix"></div>

@@ -27,7 +27,7 @@
                         <li>
                             <a href="{{$dropdown['url']}}"
                             @if(isset($dropdown['popup']))
-                              data-toggle="modal" data-target="#modal-container"
+                              data-toggle="modal" data-target="#modal-container-small"
                             @endif
                             >{{$dropdown['text']}}</a>
                         </li>

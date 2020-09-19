@@ -3,8 +3,6 @@
 use GenCity\Monde\Pays;
 use GenCity\Monde\Ville;
 
-
-
 //deconnexion
 include(DEF_ROOTPATH . 'php/logout.php');
 
@@ -95,7 +93,7 @@ $paysID = $row_ville['ch_vil_paysID'];
 $thisVille = new Ville($_SESSION['ville_encours']);
 
 //requete Infrastructure
-$maxRows_infrastructure = 8;
+$maxRows_infrastructure = 15;
 $pageNum_infrastructure = 0;
 if (isset($_GET['pageNum_infrastructure'])) {
   $pageNum_infrastructure = $_GET['pageNum_infrastructure'];
@@ -133,7 +131,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 $queryString_infrastructure = sprintf("&totalRows_infrastructure=%d%s", $totalRows_infrastructure, $queryString_infrastructure);
 
 //requete Monuments
-$maxRows_monument = 8;
+$maxRows_monument = 15;
 $pageNum_monument = 0;
 if (isset($_GET['pageNum_monument'])) {
   $pageNum_monument = $_GET['pageNum_monument'];

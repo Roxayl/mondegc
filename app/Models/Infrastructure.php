@@ -6,7 +6,10 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\Influencable;
 use App\Models\Presenters\InfrastructurePresenter;
+use App\Models\Traits\DeletesInfluences;
+use App\Models\Traits\Influencable as GeneratesInfluence;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,9 +39,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class Infrastructure extends Model
+class Infrastructure extends Model implements Influencable
 {
-    use InfrastructurePresenter;
+    use InfrastructurePresenter, GeneratesInfluence, DeletesInfluences;
 
 	protected $table = 'infrastructures';
 	protected $primaryKey = 'ch_inf_id';
@@ -123,5 +126,77 @@ class Infrastructure extends Model
     {
         $morph = explode("\\", $morphType);
         return strtolower(end($morph));
+    }
+
+    public function generateInfluence() : void 
+    {
+        $notAccepted = function() { return $this->ch_inf_statut !== self::JUGEMENT_ACCEPTED; };
+
+        $this->removeOldInfluenceRows($notAccepted);
+        if($notAccepted()) {
+            return;
+        }
+
+        $totalResources = $this->infrastructure_officielle->mapResources();
+
+        if( !empty($this->infrastructurable) && $this->infrastructurable->getType() === 'organisation') {
+
+            // Dans le cas où l'organisation est une "alliance", on augmente les ressources
+            // 'positives' générées de 50% (multiplie par 1.5) et les ressources 'négatives'
+            // de 15% (multiplie de 1.15).
+            /* TODO On peut envisager une classe qui contient les modifications types aux ressources
+             * économiques ? Cela impliquerait de transformer les données de ressources du type
+             * 'array' à un classe spécifique... */
+            if($this->infrastructurable->type === Organisation::TYPE_ALLIANCE) {
+                $tmp = array_map(fn($val) => $val > 0 ? (int)($val * 1.5) : (int)($val * 1.15),
+                    $totalResources);
+                $totalResources = $tmp;
+            }
+
+            // On augmente les ressources générées selon la formule suivante :
+            // valeurResources * nbrMembresOrga ^ 1.2
+            $nbrMembresOrganisation = $this->infrastructurable->members->count();
+            $tmp = array_map(fn($val) => (int)($val * pow($nbrMembresOrganisation, 1.2)),
+                $totalResources);
+            $totalResources = $tmp;
+            unset($tmp);
+        }
+
+        $divider = 4;
+
+        $resourcesPerMonth = array_map(
+            function($val) use($divider) {
+                return (int)($val / $divider);
+            },
+            $totalResources);
+
+        for($i = 0; $i < $divider; $i++) {
+            $influence = new Influence;
+            $influence->influencable_type = Influence::getActualClassNameForMorph(get_class($this));
+            $influence->influencable_id = $this->ch_inf_id;
+
+            if($i >= $divider - 1) {
+                array_walk($totalResources,
+                    function($val, $key) use($divider, $totalResources, &$resourcesPerMonth) {
+                        $diff = $totalResources[$key] - ($resourcesPerMonth[$key] * $divider);
+                        if($diff !== 0) {
+                            $resourcesPerMonth[$key] += $diff;
+                        }
+                    });
+            }
+            $influence->fill($resourcesPerMonth);
+
+            $influence->generates_influence_at = $this->ch_inf_date->addMonths($i);
+            $influence->save();
+        }
+    }
+
+    public static function boot() {
+        parent::boot();
+
+        // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
+        static::deleting(function($infrastructure) {
+            $infrastructure->deleteInfluences();
+        });
     }
 }

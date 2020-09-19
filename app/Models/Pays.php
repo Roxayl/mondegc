@@ -6,11 +6,15 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\AggregatesInfluences;
 use App\Models\Contracts\Infrastructurable;
+use App\Models\Managers\PaysMapManager;
 use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\PaysPresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
+use App\Services\EconomyService;
 use Carbon\Carbon;
+use Closure;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\Searchable;
@@ -70,7 +74,7 @@ use Spatie\Searchable\SearchResult;
  *
  * @package App\Models
  */
-class Pays extends Model implements Searchable, Infrastructurable
+class Pays extends Model implements Searchable, Infrastructurable, AggregatesInfluences
 {
     use InfrastructurablePresenter, PaysPresenter, HasInfrastructures;
 
@@ -104,10 +108,6 @@ class Pays extends Model implements Searchable, Infrastructurable
 	];
 
 	protected $fillable = [
-		'ch_pay_label',
-		'ch_pay_publication',
-		'ch_pay_continent',
-		'ch_pay_emplacement',
 		'ch_pay_lien_forum',
 		'lien_wiki',
 		'ch_pay_nom',
@@ -116,7 +116,6 @@ class Pays extends Model implements Searchable, Infrastructurable
 		'ch_pay_lien_imgdrapeau',
 		'ch_pay_date',
 		'ch_pay_mis_jour',
-		'ch_pay_nb_update',
 		'ch_pay_forme_etat',
 		'ch_pay_capitale',
 		'ch_pay_langue_officielle',
@@ -139,25 +138,28 @@ class Pays extends Model implements Searchable, Infrastructurable
 		'ch_pay_text_culture',
 		'ch_pay_header_patrimoine',
 		'ch_pay_text_patrimoine',
-		'ch_pay_budget_carte',
-		'ch_pay_industrie_carte',
-		'ch_pay_commerce_carte',
-		'ch_pay_agriculture_carte',
-		'ch_pay_tourisme_carte',
-		'ch_pay_recherche_carte',
-		'ch_pay_environnement_carte',
-		'ch_pay_education_carte',
-		'ch_pay_population_carte',
-		'ch_pay_emploi_carte'
 	];
 
+	public const STATUS_ACTIVE = 1;
+	public const STATUS_ARCHIVED = 2;
+
 	public static array $statut = [
-	    'active' => 1,
-        'archived' => 2,
+	    'active' => self::STATUS_ACTIVE,
+        'archived' => self::STATUS_ARCHIVED,
     ];
 
 	public const PERMISSION_DIRIGEANT = 10;
 	public const PERMISSION_CODIRIGEANT = 5;
+
+	private ?PaysMapManager $mapManager = null;
+
+    public function getMapManager()
+    {
+        if(is_null($this->mapManager)) {
+            $this->mapManager = new PaysMapManager($this);
+        }
+        return $this->mapManager;
+    }
 
 	public function getSearchResult() : SearchResult
     {
@@ -171,9 +173,49 @@ class Pays extends Model implements Searchable, Infrastructurable
 		return $this->hasMany(OrganisationMember::class, 'pays_id');
 	}
 
+	private function getOrganisationMembership(Closure $f)
+    {
+        $query = $this->organisation_members()
+            ->join('organisation', 'organisation.id', 'organisation_id')
+            ->where('permissions', '>=', Organisation::PERMISSION_MEMBER);
+
+        return $f($query);
+    }
+
+	public function organisationsAll()
+    {
+        return $this->getOrganisationMembership(function($query) {
+            return $query->get()
+                         ->pluck('organisation');
+        });
+    }
+
+    public function alliance()
+    {
+        return $this->getOrganisationMembership(function($query) {
+            return $query->where('type', Organisation::TYPE_ALLIANCE)
+                         ->get()
+                         ->pluck('organisation')->first();
+        });
+    }
+
+    public function otherOrganisations()
+    {
+        return $this->getOrganisationMembership(function($query) {
+            return $query->where('type', '!=', Organisation::TYPE_ALLIANCE)
+                         ->get()
+                         ->pluck('organisation');
+        });
+    }
+
 	public function users()
     {
         return $this->belongsToMany(CustomUser::class, 'users_pays', 'ID_pays', 'ID_user');
+    }
+
+    public function villes()
+    {
+        return $this->hasMany(Ville::class, 'ch_vil_paysID');
     }
 
     public function geometries()
@@ -189,5 +231,75 @@ class Pays extends Model implements Searchable, Infrastructurable
     public function getUsers()
     {
         return $this->users()->get();
+    }
+
+    public function villeResources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        foreach($this->villes as $ville) {
+            $generatedResources = $ville->resources();
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] += $generatedResources[$resource];
+            }
+        }
+
+        return $sumResources;
+    }
+
+    public function infrastructureResources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        foreach($this->infrastructures as $infrastructure) {
+            $generatedResources = $infrastructure->getGeneratedResources();
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] += $generatedResources[$resource];
+            }
+        }
+
+        return $sumResources;
+    }
+
+    public function organisationResources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        foreach($this->organisationsAll() as $organisation) {
+            $generatedResources = $organisation->infrastructureResources();
+            $nbMembers = $organisation->members->count();
+
+            foreach(config('enums.resources') as $resource) {
+                $generatedResources[$resource] = (int)($generatedResources[$resource] / $nbMembers);
+                $sumResources[$resource] += $generatedResources[$resource];
+            }
+        }
+
+        return $sumResources;
+    }
+
+    public function resources($withOrganisation = true) : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        $villeResources = $this->villeResources();
+        $mapResources = $this->getMapManager()->mapResources();
+        $infrastructureResources = $this->infrastructureResources();
+
+        // Si 'withOrganisation' est mis à false, on n'appelle pas organisationResources().
+        // Ce paramètre existe et est mis à true parce que, lorsqu'on veut calculer les
+        // statistiques d'une organisation, on veut éviter une référence circulaire entre
+        // l'appel à Pays->resources() et Organisation->resources().
+        $organisationResources = !$withOrganisation ?
+            EconomyService::resourcesPrefilled() : $this->organisationResources();
+
+        foreach(config('enums.resources') as $resource) {
+            $sumResources[$resource] += $villeResources[$resource]
+                                      + $mapResources[$resource]
+                                      + $infrastructureResources[$resource]
+                                      + $organisationResources[$resource];
+        }
+
+        return $sumResources;
     }
 }

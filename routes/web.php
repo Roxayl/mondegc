@@ -43,6 +43,8 @@ Route::get('/page/{page}-{url}', 'PageController@index')->name('page.show');
 /* Organisation */
 Route::get('organisation/{id}-{slug}', 'OrganisationController@show')->name('organisation.showslug');
 Route::resource('organisation', 'OrganisationController');
+Route::get('organisation/{organisation}/migrate', 'OrganisationController@migrate')->name('organisation.migrate');
+Route::match(['put', 'patch'], 'organisation/{organisation}/migrate', 'OrganisationController@runMigration')->name('organisation.run-migration');
 
 /* OrganisationMember */
 Route::get('organisation/{organisation_id}/join', 'OrganisationMemberController@joinOrganisation')->name('organisation-member.join');
@@ -81,5 +83,3 @@ Route::post('user/notifications/mark-as-read', 'NotificationController@markAsRea
 
 /* DataExporter */
 Route::get('data-export/temperance-pays', 'DataExporterController@temperancePays')->name('data-export.temperance-pays');
-Route::get('data-export/temperance-pays-all', 'DataExporterController@temperancePaysAll')->name('data-export.temperance-pays-all');
-Route::get('data-export/temperance-organisation', 'DataExporterController@temperanceOrganisation')->name('data-export.temperance-organisation');

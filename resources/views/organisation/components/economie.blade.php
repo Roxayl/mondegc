@@ -1,7 +1,7 @@
 
 @inject('helperService', 'App\Services\HelperService')
 
-@if($organisation->allow_temperance)
+@if($organisation->hasEconomy())
 
     @can('manageInfrastructure', $organisation)
     <div class="cta-title pull-right-cta" style="margin-top: 30px;">
@@ -18,10 +18,10 @@
     </div>
 
     @php
-    $temperance = $organisation->temperance()->get()->first()->toArray();
+    $resources = $organisation->resources();
     @endphp
     {!! \App\Services\HelperService::renderLegacyElement('temperance/resources', [
-        'resources' => $temperance
+        'resources' => $resources
     ]) !!}
     <div class="clearfix"></div>
 
@@ -31,31 +31,43 @@
         <div class="accordion-group">
           <div class="accordion-heading">
             <a class="accordion-toggle" data-toggle="collapse" href="#economie-pays">
-                Balance économique par pays membre
+                Détail des ressources
             </a>
           </div>
           <div id="economie-pays" class="accordion-body collapse">
             <div class="accordion-inner">
 
-            @php
-            $temperancePays = $organisation->membersWithTemperance()->toArray();
-            @endphp
-            @foreach($temperancePays as $thisPays)
-                @php
-                    $paysResources = $thisPays['temperance'][0];
-                @endphp
-                <div>
-                    <img src="{{ $thisPays['pays']['ch_pay_lien_imgdrapeau'] }}"
-                         class="img-menu-drapeau"
-                         alt="{{ $thisPays['pays']['ch_pay_nom'] }}">
-                    <a href="{{ url('page-pays.php?ch_pay_id=' . $thisPays['pays_id']) }}">
-                        {{ $thisPays['pays']['ch_pay_nom'] }}</a>
-                    {!! $helperService::renderLegacyElement(
-                        'temperance/resources_small', [
-                            'resources' => $paysResources
-                        ]) !!}
-                </div>
-            @endforeach
+            <h4>Ressources issues des infrastructures de l'organisation</h4>
+            <div>
+                <img src="{{ $organisation->flag }}"
+                     class="img-menu-drapeau"
+                     alt="{{ $organisation->name }}">
+                <a href="{{ route('organisation.showslug', $organisation->showRouteParameter()) }}">
+                    {{ $organisation->name }}</a>
+                {!! $helperService::renderLegacyElement(
+                    'temperance/resources_small', [
+                        'resources' => $organisation->infrastructureResources()
+                    ]) !!}
+            </div>
+
+            @if($organisation->membersGenerateResources())
+                <h4>Ressources par pays membre</h4>
+
+                @foreach($organisation->members as $thisMember)
+                    @php $thisPays = $thisMember->pays; @endphp
+                    <div>
+                        <img src="{{ $thisPays->ch_pay_lien_imgdrapeau }}"
+                             class="img-menu-drapeau"
+                             alt="{{ $thisPays->ch_pay_nom }}">
+                        <a href="{{ url('page-pays.php?ch_pay_id=' . $thisPays->ch_pay_id) }}">
+                            {{ $thisPays->ch_pay_nom }}</a>
+                        {!! $helperService::renderLegacyElement(
+                            'temperance/resources_small', [
+                                'resources' => $thisPays->resources(false)
+                            ]) !!}
+                    </div>
+                @endforeach
+            @endif
 
             </div>
           </div>

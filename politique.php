@@ -12,9 +12,7 @@ $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
 
-$organisations = \App\Models\Organisation::with('members')
-    ->orderByDesc('allow_temperance')
-    ->get();
+$organisations = \App\Models\Organisation::allOrdered()->paginate();
 
 ?><!DOCTYPE html>
 <html lang="fr">
@@ -131,10 +129,11 @@ $organisations = \App\Models\Organisation::with('members')
           <div class="row-fluid">
             <div class="span12">
               <?php if(!empty($row_institut['ch_ins_img'])): ?>
-                <img alt="Icône de l'institut" class="pull-right" style="width: 35%; margin-left: 15px;"
+                <img alt="Icône de l'institut" class="pull-right"
+                     style="width: 35%; margin-left: 15px;"
                      src="<?= __s($row_institut['ch_ins_img']) ?>">
               <?php endif; ?>
-              <?php echo $row_institut['ch_ins_desc'] ?>
+              <?= htmlPurify($row_institut['ch_ins_desc']) ?>
             </div>
           </div>
         </div>
@@ -152,6 +151,11 @@ $organisations = \App\Models\Organisation::with('members')
         <div class="titre-bleu anchor" id="organisations">
           <h1>Organisations</h1>
         </div>
+        <div class="clearfix"></div>
+
+        <?= $organisations->links() ?>
+        <div class="clearfix"></div>
+
         <ul class="listes">
         <?php foreach($organisations as $organisation): ?>
 
@@ -162,7 +166,8 @@ $organisations = \App\Models\Organisation::with('members')
         <?php endforeach; ?>
         </ul>
 
-        <br><br>
+        <?= $organisations->links() ?>
+        <div class="clearfix"></div>
 
       </section>
 

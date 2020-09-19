@@ -6,10 +6,12 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\AggregatesInfluences;
 use App\Models\Contracts\Infrastructurable;
 use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\OrganisationPresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
+use App\Services\EconomyService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
@@ -26,15 +28,18 @@ use Spatie\Searchable\SearchResult;
  * @property string|null $logo
  * @property string|null $flag
  * @property string|null $text
+ * @property string $type
  * @property bool $allow_temperance
+ * @property Carbon|null $type_migrated_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Collection|OrganisationMember[] $organisation_members
+ * @property Collection|Infrastructure[] $infrastructures
  *
  * @package App\Models
  */
-class Organisation extends Model implements Searchable, Infrastructurable
+class Organisation extends Model implements Searchable, Infrastructurable, AggregatesInfluences
 {
     use OrganisationPresenter, InfrastructurablePresenter, HasInfrastructures;
 
@@ -52,16 +57,44 @@ class Organisation extends Model implements Searchable, Infrastructurable
         'allow_temperance' => 'boolean',
     ];
 
+	protected $dates = [
+	    'type_changed_at',
+    ];
+
 	protected $attributes = [
         'allow_temperance' => false,
     ];
 
-	static $permissions = [
-	    'owner' => 100,
-        'administrator' => 50,
-        'member' => 10,
-        'pending' => 5,
-        'invited' => 2,
+	public const PERMISSION_OWNER = 100;
+	public const PERMISSION_ADMINISTRATOR = 50;
+	public const PERMISSION_MEMBER = 10;
+	public const PERMISSION_PENDING = 5;
+	public const PERMISSION_INVITED = 2;
+
+    public static array $permissions = [
+        'owner' => self::PERMISSION_OWNER,
+        'administrator' => self::PERMISSION_ADMINISTRATOR,
+        'member' => self::PERMISSION_MEMBER,
+        'pending' => self::PERMISSION_PENDING,
+        'invited' => self::PERMISSION_INVITED,
+    ];
+
+	public const TYPE_ALLIANCE = 'alliance';
+	public const TYPE_ORGANISATION = 'organisation';
+	public const TYPE_GROUP = 'group';
+
+	public static array $types = [
+	    'alliance' => self::TYPE_ALLIANCE,
+        'organisation' => self::TYPE_ORGANISATION,
+        'group' => self::TYPE_GROUP,
+    ];
+
+	public static array $typesCreatable = [
+	    self::TYPE_ORGANISATION, self::TYPE_GROUP
+    ];
+
+	public static array $typesWithEconomy = [
+	    self::TYPE_ALLIANCE, self::TYPE_ORGANISATION
     ];
 
 	public function getSearchResult() : SearchResult
@@ -123,7 +156,11 @@ class Organisation extends Model implements Searchable, Infrastructurable
     public function communiques()
     {
         // TODO: https://laravel.com/docs/6.x/eloquent-relationships#one-to-many-polymorphic-relations
-        return $this->hasMany(Communique::class, 'ch_com_element_id', 'id')->where('ch_com_categorie', '=', 'organisation');
+        return $this->hasMany(Communique::class,
+            'ch_com_element_id', 'id')
+            ->where('ch_com_categorie', '=', 'organisation')
+            ->orderByDesc('ch_com_statut')
+            ->orderByDesc('ch_com_date');
     }
 
     public function getUsers($permission = null)
@@ -153,6 +190,16 @@ class Organisation extends Model implements Searchable, Infrastructurable
         return $query;
     }
 
+    public static function allOrdered()
+    {
+        return self::with('members')
+            ->orderByRaw("CASE type
+                WHEN 'alliance' THEN 1 WHEN 'organisation' THEN 2 WHEN 'group' THEN 3
+                ELSE 4 END")
+            ->orderByDesc('created_at')
+            ->orderByDesc('allow_temperance');
+    }
+
     public function getSlugAttribute()
     {
         return Str::slug($this->name);
@@ -163,5 +210,70 @@ class Organisation extends Model implements Searchable, Infrastructurable
         $pays = array_column($user->pays()->get()->toArray(), 'ch_pay_id');
         $permission = $this->membersAll()->whereIn('pays_id', $pays)->max('permissions');
         return $permission;
+    }
+
+    public function hasEconomy() : bool
+    {
+        return in_array($this->type, self::$typesWithEconomy, true);
+    }
+
+    public function membersGenerateResources() : bool
+    {
+        return $this->type === self::TYPE_ALLIANCE;
+    }
+
+    public function infrastructureResources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        foreach($this->infrastructures as $infrastructure) {
+            $generatedResources = $infrastructure->getGeneratedResources();
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] += $generatedResources[$resource];
+            }
+        }
+
+        return $sumResources;
+    }
+
+    public function paysResources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        // Les alliances bénéficient les ressources de leurs pays ; on les calcule
+        // le cas échéant.
+        if($this->type === self::TYPE_ALLIANCE) {
+
+            $paysMembers = $this->members;
+
+            foreach($paysMembers as $members) {
+                $thisPaysResources = $members->pays->resources(false);
+                foreach(config('enums.resources') as $resource) {
+                    $sumResources[$resource] += $thisPaysResources[$resource];
+                }
+            }
+        }
+
+        return $sumResources;
+    }
+
+    public function resources() : array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        // Les groupes d'États ne génèrent pas de ressources ; on ne calcule pas les ressources
+        // le cas échéant et on renvoie directement un tableau de ressources à zéro.
+        if($this->type !== self::TYPE_GROUP) {
+
+            $infrastructureResources = $this->infrastructureResources();
+            $paysResources = $this->paysResources();
+
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] += $infrastructureResources[$resource]
+                                         + $paysResources[$resource];
+            }
+        }
+
+        return $sumResources;
     }
 }

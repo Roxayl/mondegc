@@ -43,6 +43,8 @@ $_SESSION['last_work'] = 'page-monument.php?ch_pat_id='.$row_monument['ch_pat_id
 
 $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
 
+$eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
+
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->

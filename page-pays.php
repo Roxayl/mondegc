@@ -1,9 +1,9 @@
 <?php
 
-//Connexion et deconnexion
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
+//Connexion et deconnexion
 include('php/log.php');
 
 $colname_Pays = "-1";
@@ -49,27 +49,12 @@ $monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
 $row_monument = mysql_fetch_assoc($monument);
 $totalRows_monument = mysql_num_rows($monument);
 
-//Recherche de la balance des ressources monument du pays
-$query_monument_ressources = sprintf("SELECT SUM(ch_mon_cat_budget) AS budget,SUM(ch_mon_cat_industrie) AS industrie, SUM(ch_mon_cat_commerce) AS commerce, SUM(ch_mon_cat_agriculture) AS agriculture, SUM(ch_mon_cat_tourisme) AS tourisme, SUM(ch_mon_cat_recherche) AS recherche, SUM(ch_mon_cat_environnement) AS environnement, SUM(ch_mon_cat_education) AS education FROM monument_categories
-  INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-  INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_paysID = %s", GetSQLValueString($colname_Pays, "int"));
-$monument_ressources = mysql_query($query_monument_ressources, $maconnexion) or die(mysql_error());
-$row_monument_ressources = mysql_fetch_assoc($monument_ressources);
-
 //Recherche des faits historiques du pays
 
 $query_fait_his = sprintf("SELECT ch_his_id, ch_his_paysID, ch_his_date, ch_his_mis_jour, ch_his_nom, ch_his_statut, ch_his_personnage, ch_his_lien_img1, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_description, (SELECT GROUP_CONCAT(ch_disp_fait_hist_cat_id) FROM dispatch_fait_his_cat WHERE ch_his_ID = ch_disp_fait_hist_id) AS listcat FROM histoire WHERE ch_his_statut = 1 AND ch_his_paysID = %s ORDER BY ch_his_date_fait ASC", GetSQLValueString($colname_Pays, "int"));
 $fait_his = mysql_query($query_fait_his, $maconnexion) or die(mysql_error());
 $row_fait_his = mysql_fetch_assoc($fait_his);
 $totalRows_fait_his = mysql_num_rows($fait_his);
-
-//Recherche de la balance des ressources de la ville
-if (isset($colname_Pays)) {
-
-$query_somme_ressources = sprintf("SELECT SUM(ch_inf_off_budget) AS budget,SUM(ch_inf_off_Industrie) AS industrie, SUM(ch_inf_off_Commerce) AS commerce, SUM(ch_inf_off_Agriculture) AS agriculture, SUM(ch_inf_off_Tourisme) AS tourisme, SUM(ch_inf_off_Recherche) AS recherche, SUM(ch_inf_off_Environnement) AS environnement, SUM(ch_inf_off_Education) AS education FROM infrastructures_officielles INNER JOIN infrastructures ON infrastructures_officielles.ch_inf_off_id = infrastructures.ch_inf_off_id INNER JOIN villes ON ch_inf_villeid = ch_vil_ID INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_pay_id = %s AND ch_vil_capitale != 3 AND ch_inf_statut = 2", GetSQLValueString($colname_Pays, "int"));
-$somme_ressources = mysql_query($query_somme_ressources, $maconnexion) or die(mysql_error());
-$row_somme_ressources = mysql_fetch_assoc($somme_ressources);
-}
 
 //recherche de la liste des jeux
 
@@ -92,8 +77,9 @@ $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error())
 $row_geometries = mysql_fetch_assoc($geometries);
 
 // Obtention des organisations
-$orgMember = \App\Models\OrganisationMember::with('organisation')->where('pays_id', '=', $colname_Pays)->get();
 $eloquentPays = \App\Models\Pays::findOrFail($colname_Pays);
+$organisations = $eloquentPays->otherOrganisations();
+$alliance = $eloquentPays->alliance();
 
 $_SESSION['last_work'] = 'page-pays.php?ch_pay_id='.$row_Pays['ch_pay_id'];
 ?>
@@ -192,7 +178,7 @@ init();
 <header class="jumbotron subhead anchor" id="pays_stats">
   <div class="container">
     <?php if($thisPays->get('ch_pay_continent') === 'RFGC'): ?>
-      <h2>République fédérale de Génération City</h2>
+      <h2>République fédérale de Gécée</h2>
     <?php endif; ?>
     <h1><?= e($row_Pays['ch_pay_nom']) ?></h1>
   </div>
@@ -295,8 +281,19 @@ init();
       <?php
       ob_start();
       ?>
-      <div class="row-fluid">
+      <div class="row-fluid" style="margin-top: -40px;">
         <div class="span12 thumb">
+
+          <?php if(!empty($alliance)): ?>
+              <img src="<?= e($alliance->flag) ?>" alt="Drapeau de l'alliance <?= e($alliance->name) ?>"
+                   class="img-menu-drapeau">
+              Membre de
+              <a href="<?= route('organisation.showslug', $alliance->showRouteParameter()) ?>">
+                <?= e($alliance->name) ?>
+              </a>
+              <br><br>
+          <?php endif; ?>
+
           <img src="<?= e($row_Pays['ch_pay_lien_imgdrapeau']) ?>" alt="Drapeau du pays n°<?= e($row_Pays['ch_pay_id']) ?>" title="drapeau <?= e($row_Pays['ch_pay_nom']) ?>">
           <br>
           <em><?= __s($row_Pays['ch_pay_devise']) ?></em>
@@ -377,9 +374,12 @@ init();
 
       <?php
       $infobox_contents = ob_get_clean();
+      $infobox_title = __s($row_Pays['ch_pay_nom']);
+      if($thisPays->get('ch_pay_continent') === 'RFGC')
+          $infobox_title .= '<br><small>République fédérale de Gécée</small>';
 
       renderElement('infobox', array(
-          'title' => __s($row_Pays['ch_pay_nom']),
+          'title' => $infobox_title,
           'contents' => $infobox_contents
       ));
       ?>
@@ -433,42 +433,73 @@ init();
             <div class="titre-gris">
               <?php if (!empty($personnage->get('prenom_personnage'))
                      OR !empty($personnage->get('nom_personnage'))): ?>
-                  <h3><?= __s($personnage->get('prenom_personnage')) ?>
+                  <small style="padding: 0;"><?= __s($personnage->get('predicat')) ?></small>
+                  <h3 style="padding-top: 0;"><?= __s($personnage->get('prenom_personnage')) ?>
                       <?= __s($personnage->get('nom_personnage')) ?></h3>
+                  <br>
+                  <small><i class="icon-briefcase icone-large"></i>
+                      <?= __s($personnage->get('titre_personnage')) ?></small>
               <?php else: ?>
                 <h3>Pas de dirigeant</h3>
               <?php endif; ?>
             </div>
           </div>
           <div class="span9">
-            <div class="well">
-              <p><i><?= __s($personnage->get('predicat')) ?></i></p>
-              <p><i><?= __s($personnage->get('titre_personnage')) ?></i></p>
-            </div>
             <?php if (!empty($personnage->get('biographie'))): ?>
             <div class="well">
+              <h5>Biographie</h5>
               <p><?= __s($personnage->get('biographie')) ?></p>
             </div>
           </div>
           <?php endif; ?>
         </div>
 
-        <?php if(count($orgMember)): ?>
-        <h4>Organisations</h4>
-        <p><?= $thisPays->get('ch_pay_nom') ?> est membre des organisations suivantes :</p>
-        <ul style="list-style-type: none;">
-        <?php foreach($orgMember as $thisMembership): ?>
-            <li>
-                <img src="<?= __s($thisMembership->organisation->flag) ?>"
-                     alt="Drapeau de <?= __s($thisMembership->organisation->name) ?>"
-                     class="img-menu-drapeau">
-                <a href="<?= route('organisation.showslug',
-                         $thisMembership->organisation->showRouteParameter()) ?>">
-                    <?= __s($thisMembership->organisation->name) ?>
-                </a>
-            </li>
-        <?php endforeach; ?>
-        </ul>
+        <?php if($organisations->count() || !empty($alliance)): ?>
+            <h4>Organisations</h4>
+
+            <?php if(!empty($alliance)): ?>
+                <h5>Alliance</h5>
+
+                <div class="info-infrastructure-off span12" style="margin-left: -3px;">
+                    <h2><a href="<?= route('organisation.showslug',
+                            $alliance->showRouteParameter()) ?>"><?= e($alliance->name) ?></a></h2>
+
+                    <div class="row-fluid" style="margin-top: 10px;">
+                        <div class="span2">
+                            <img src="<?= e($alliance->flag) ?>" style="margin-left: 5px;"
+                                 alt="Drapeau de l'alliance <?= e($alliance->name) ?>">
+                        </div>
+                        <div class="span10">
+                            <p><?= e($thisPays->get('ch_pay_nom')) ?> est membre de l'alliance.</p>
+                            <?php renderElement('temperance/resources_small', [
+                                'resources' => $alliance->resources()
+                            ]); ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <?php if($organisations->count()): ?>
+                <br><br><br>
+                <h5>Autres organisations</h5>
+
+                <p><?= e($thisPays->get('ch_pay_nom')) ?> est membre des organisations
+                    suivantes :</p>
+                <ul style="list-style-type: none;">
+                <?php foreach($organisations as $organisation): ?>
+                    <li>
+                        <img src="<?= e($organisation->flag) ?>"
+                             alt="Drapeau de <?= e($organisation->name) ?>"
+                             class="img-menu-drapeau">
+                        <a href="<?= route('organisation.showslug',
+                                 $organisation->showRouteParameter()) ?>">
+                            <?= e($organisation->name) ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+
         <?php endif; ?>
 
         </div>
@@ -655,39 +686,11 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         </div>
 
           <?php
-
-          $ressources_total = array(
-              'budget' => $row_somme_ressources['budget']+$row_monument_ressources['budget']+$row_Pays['ch_pay_budget_carte'],
-              'industrie' => $row_somme_ressources['industrie']+$row_monument_ressources['industrie']+$row_Pays['ch_pay_industrie_carte'],
-              'commerce' => $row_somme_ressources['commerce']+$row_monument_ressources['commerce']+$row_Pays['ch_pay_commerce_carte'],
-              'agriculture' => $row_somme_ressources['agriculture']+$row_monument_ressources['agriculture']+$row_Pays['ch_pay_agriculture_carte'],
-              'tourisme' => $row_somme_ressources['tourisme']+$row_monument_ressources['tourisme']+$row_Pays['ch_pay_tourisme_carte'],
-              'recherche' => $row_somme_ressources['recherche']+$row_monument_ressources['recherche']+$row_Pays['ch_pay_recherche_carte'],
-              'environnement' => $row_somme_ressources['environnement']+$row_monument_ressources['environnement']+$row_Pays['ch_pay_environnement_carte'],
-              'education' => $row_somme_ressources['education']+$row_monument_ressources['education']+$row_Pays['ch_pay_education_carte']
-          );
-
-          $ressources_villes = array(
-              'budget' => $row_somme_ressources['budget']+$row_monument_ressources['budget'],
-              'industrie' => $row_somme_ressources['industrie']+$row_monument_ressources['industrie'],
-              'commerce' => $row_somme_ressources['commerce']+$row_monument_ressources['commerce'],
-              'agriculture' => $row_somme_ressources['agriculture']+$row_monument_ressources['agriculture'],
-              'tourisme' => $row_somme_ressources['tourisme']+$row_monument_ressources['tourisme'],
-              'recherche' => $row_somme_ressources['recherche']+$row_monument_ressources['recherche'],
-              'environnement' => $row_somme_ressources['environnement']+$row_monument_ressources['environnement'],
-              'education' => $row_somme_ressources['education']+$row_monument_ressources['education']
-          );
-
-          $ressources_cartes = array(
-              'budget' => $row_Pays['ch_pay_budget_carte'],
-              'industrie' => $row_Pays['ch_pay_industrie_carte'],
-              'commerce' => $row_Pays['ch_pay_commerce_carte'],
-              'agriculture' => $row_Pays['ch_pay_agriculture_carte'],
-              'tourisme' => $row_Pays['ch_pay_tourisme_carte'],
-              'recherche' => $row_Pays['ch_pay_recherche_carte'],
-              'environnement' => $row_Pays['ch_pay_environnement_carte'],
-              'education' => $row_Pays['ch_pay_education_carte']
-          );
+          $ressources_total  = $eloquentPays->resources();
+          $ressources_villes = $eloquentPays->villeResources();
+          $ressources_infras = $eloquentPays->infrastructureResources();
+          $ressources_orgas  = $eloquentPays->organisationResources();
+          $ressources_cartes = $eloquentPays->getMapManager()->mapResources();
           ?>
 
         <div class="well">
@@ -707,10 +710,26 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
             </div>
             <div id="economie-pays" class="accordion-body collapse">
             <div class="accordion-inner">
-              <h4><i class="icon-road"></i> Balance des ressources issues des villes du pays </h4>
+              <h4><i class="icon-road"></i> Balance des ressources issues des villes du pays</h4>
                 <?php
                 renderElement('temperance/resources_small', array(
                     'resources' => $ressources_villes
+                ));
+                ?>
+                <p></p>
+              <h4><i class="icon-road"></i> Balance des ressources issues des
+                  infrastructures du pays</h4>
+                <?php
+                renderElement('temperance/resources_small', array(
+                    'resources' => $ressources_infras
+                ));
+                ?>
+                <p></p>
+              <h4><i class="icon-heart"></i> Balance des ressources issues des
+                  organisations dont fait partie le pays</h4>
+                <?php
+                renderElement('temperance/resources_small', array(
+                    'resources' => $ressources_orgas
                 ));
                 ?>
                 <p></p>
