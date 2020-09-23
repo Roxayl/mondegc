@@ -44,6 +44,26 @@ trait Influencable
         return collect($influences->get()->first()->toArray());
     }
 
+    public function efficiencyRate() : int
+    {
+        $avgRate = [];
+        $currentResources = $this->getGeneratedResources();
+        $finalResources   = $this->getFinalResources();
+
+        foreach($currentResources as $key => $resource) {
+            $currentValue = abs($currentResources[$key]);
+            $finalValue   = abs($finalResources[$key]);
+            $thisRate = (float)($finalValue === 0 ? 0 : $currentValue / $finalValue);
+            $avgRate[] = $thisRate;
+        }
+
+        // Supprime les valeurs de taux égales à 0.
+        $avgRate = array_filter($avgRate);
+
+        if(!count($avgRate)) return 0;
+        return (int)round(array_sum($avgRate) / count($avgRate) * 100);
+    }
+
     /**
      * Supprime les anciennes entrées dans la table 'influences', lorsqu'on veut générer
      * à nouveau l'influence d'un influencable, par exemple.
