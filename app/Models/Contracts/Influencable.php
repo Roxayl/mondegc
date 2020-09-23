@@ -29,4 +29,10 @@ interface Influencable
      * @return Collection Collection contenant les ressources générées par l'influencable.
      */
     public function getFinalResources() : Collection;
+
+    /**
+     * Donne le rendement actuel, en pourcentage, de l'influencable actuel.
+     * @return int Taux de rendement sur 100.
+     */
+    public function efficiencyRate() : int;
 }

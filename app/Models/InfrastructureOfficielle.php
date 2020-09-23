@@ -88,7 +88,7 @@ class InfrastructureOfficielle extends Model
         foreach(config('enums.resources') as $resource) {
             $field = 'ch_inf_off_' . ($resource === 'budget'
                     ? $resource : Str::ucfirst($resource));
-            $resources[$resource] = $this->$field;
+            $resources[$resource] = (int)$this->$field;
         }
         return $resources;
     }

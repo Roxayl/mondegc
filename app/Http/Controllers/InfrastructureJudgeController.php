@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\Infrastructure\InfrastructureJudged;
 use App\Models\Infrastructure;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class InfrastructureJudgeController extends Controller
@@ -42,6 +43,7 @@ class InfrastructureJudgeController extends Controller
 
         $infrastructure->ch_inf_statut = $request->input('ch_inf_statut');
         $infrastructure->ch_inf_juge = auth()->user()->ch_use_id;
+        $infrastructure->judged_at = Carbon::now();
         if((int)$infrastructure->ch_inf_statut === Infrastructure::JUGEMENT_REJECTED) {
             $infrastructure->ch_inf_commentaire_juge =
                 $request->input('ch_inf_commentaire_juge');

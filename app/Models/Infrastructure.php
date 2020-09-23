@@ -34,6 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $ch_inf_commentaire
  * @property int|null $ch_inf_juge
  * @property string|null $ch_inf_commentaire_juge
+ * @property Carbon|null $judged_at
  * 
  * @property CustomUser $user
  *
@@ -58,7 +59,8 @@ class Infrastructure extends Model implements Influencable
 	];
 
 	protected $dates = [
-		'ch_inf_date'
+		'ch_inf_date',
+        'judged_at',
 	];
 
 	protected $fillable = [
@@ -110,6 +112,11 @@ class Infrastructure extends Model implements Influencable
 	{
 		return $this->belongsTo(CustomUser::class, 'user_creator');
 	}
+
+	public function judge()
+    {
+        return $this->belongsTo(CustomUser::class, 'ch_inf_juge');
+    }
 
 	public static function getMorphFromUrlParameter($parameter)
     {

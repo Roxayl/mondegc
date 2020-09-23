@@ -1,8 +1,7 @@
 <?php
 
 use App\Models\Infrastructure;
-
-header('Content-Type: text/html; charset=utf-8');
+use Carbon\Carbon;
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 appendQueryString($editFormAction);
@@ -12,92 +11,81 @@ if(isset ($_GET['ch_inf_id'])) {
     $ch_inf_id = $_GET['ch_inf_id'];
 }
 
+$eloquentInfrastructure = Infrastructure::with('infrastructure_officielle')
+    ->findOrFail($_GET['ch_inf_id']);
 
-$eloquentInfrastructure = Infrastructure::findOrFail($_GET['ch_inf_id']);
-
-$query_infrastructure = sprintf("SELECT * FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id=infrastructures_officielles.ch_inf_off_id LEFT OUTER JOIN users ON ch_inf_juge=ch_use_id WHERE ch_inf_id = %s ORDER BY ch_inf_date DESC", GetSQLValueString($ch_inf_id, "int"));
-$query_limit_infrastructure = sprintf("%s LIMIT %d, %d", $query_infrastructure, $startRow_infrastructure, $maxRows_infrastructure);
-$infrastructure = mysql_query($query_infrastructure, $maconnexion) or die(mysql_error());
-$row_infrastructure = mysql_fetch_assoc($infrastructure);
 ?> 
 
 <!-- Modal Header-->
-  <div class="modal-header">
-  <div class="pull-left"><img style="width:100px; margin-right: 10px; margin-top:-30px;" src="<?= e($row_infrastructure['ch_inf_off_icone']) ?>" alt="icone"></div>
+<div class="modal-header">
+    <div class="pull-left">
+        <img style="width:100px; margin-right: 10px; margin-top:-30px;"
+             src="<?= e($eloquentInfrastructure->infrastructure_officielle->ch_inf_off_icone) ?>"
+             alt="Icone infrastructure">
+    </div>
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">
-        <?= __s($row_infrastructure['nom_infra']) ?>
-        <small><?= e($row_infrastructure['ch_inf_off_nom']) ?></small><br>
+        <?= e($eloquentInfrastructure->nom_infra) ?>
+        <small><?= e($eloquentInfrastructure->infrastructure_officielle->ch_inf_off_nom)
+            ?></small><br>
         <?php
         echo view('infrastructure.judge.components.infrastructurable-snippet', [
             'infrastructure' => $eloquentInfrastructure,
         ]);
         ?>
     </h3>
-  </div>
-  <div class="modal-body">
+</div>
+
+<div class="modal-body">
 
   <div class="row-fluid">
 
     <div class="span7">
-    <img class="hidden-phone img-modal-ressource" id="img" src="<?= e($row_infrastructure['ch_inf_lien_image']) ?>" alt="image de l'infrastrucutre">
-    <div class="row-fluid">
-         <div class="span2 list-thumb-ressource">
-         <img onClick="ChangeImage(this.src);" class="img-thumb-ressource" src="<?= e($row_infrastructure['ch_inf_lien_image']) ?>" alt="image n°1">
-         </div>
-     <?php if (!empty($row_infrastructure['ch_inf_lien_image2'])) { ?>
-         <div class="span2 list-thumb-ressource">
-         <img onClick="ChangeImage(this.src);" class="img-thumb-ressource" src="<?php echo $row_infrastructure['ch_inf_lien_image2']; ?>" alt="image n°2">
-         </div>
+        <img class="hidden-phone img-modal-ressource" id="img" src="<?= e($eloquentInfrastructure->ch_inf_lien_image) ?>" alt="image de l'infrastrucutre">
+        <div class="row-fluid">
+             <div class="span2 list-thumb-ressource">
+             <img onClick="ChangeImage(this.src);" class="img-thumb-ressource"
+                  src="<?= e($eloquentInfrastructure->ch_inf_lien_image) ?>" alt="image n°1">
+             </div>
+        <?php if(!empty($eloquentInfrastructure->ch_inf_lien_image2)) { ?>
+             <div class="span2 list-thumb-ressource">
+             <img onClick="ChangeImage(this.src);" class="img-thumb-ressource"
+                  src="<?= e($eloquentInfrastructure->ch_inf_lien_image2) ?>" alt="image n°2">
+             </div>
         <?php } ?>
-        <?php if (!empty($row_infrastructure['ch_inf_lien_image3'])) { ?>
-        <div class="span2 list-thumb-ressource">
-         <img onClick="ChangeImage(this.src);" class="img-thumb-ressource" src="<?php echo $row_infrastructure['ch_inf_lien_image3']; ?>" alt="image n°3">
-         </div>
+        <?php if(!empty($eloquentInfrastructure->ch_inf_lien_image3)) { ?>
+             <div class="span2 list-thumb-ressource">
+             <img onClick="ChangeImage(this.src);" class="img-thumb-ressource"
+                  src="<?= e($eloquentInfrastructure->ch_inf_lien_image3) ?>" alt="image n°3">
+             </div>
         <?php } ?>
-        </div>
-    <p><?= __s($row_infrastructure['ch_inf_commentaire']) ?></p>
-    <?php if (!empty($row_infrastructure['ch_inf_lien_forum'])) { ?>
-    <a href="<?= e($row_infrastructure['ch_inf_lien_forum']) ?>" target="_blank">
-        <div class="external-link-icon"
-             style="background-image:url('http://www.generation-city.com/forum/new/favicon.png');"></div>
-        Lien sur le forum</a>
-    <?php } ?>
-    <?php if (!empty($row_infrastructure['lien_wiki'])) { ?> -
-    <a href="<?= __s($row_infrastructure['lien_wiki']) ?>" target="_blank">
-        <div class="external-link-icon"
-             style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></div>
-        Lien sur le Wiki GC</a>
-    <?php } ?>
+    </div>
+
+    <p><?= e($eloquentInfrastructure->ch_inf_commentaire) ?></p>
+
+    <div style="color: grey;">
+
+        <i class="icon-calendar"></i> Publiée le <?= dateFormat($eloquentInfrastructure->ch_inf_date) ?> &#183;
+
+        <?php if(!empty($eloquentInfrastructure->ch_inf_lien_forum)) { ?>
+        <a href="<?= e($eloquentInfrastructure->ch_inf_lien_forum) ?>" target="_blank">
+            <div class="external-link-icon"
+                 style="background-image:url('http://www.generation-city.com/forum/new/favicon.png');"></div>
+            Lien sur le forum</a>
+        <?php } ?>
+            <?php if(!empty($eloquentInfrastructure->lien_wiki)) { ?> &#183;
+        <a href="<?= e($eloquentInfrastructure->lien_wiki) ?>" target="_blank">
+            <div class="external-link-icon"
+                 style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></div>
+            Lien sur le Wiki GC</a>
+        <?php } ?>
+
+    </div>
     </div>
 
     <div class="span5">
 
     <h4>Ressources générées</h4>
-
-    <?php if ($row_infrastructure['ch_inf_statut'] == Infrastructure::JUGEMENT_ACCEPTED): ?>
-      <div class="alert alert-success">
-          <img src="<?= DEF_URI_PATH ?>assets/img/statutinfra_<?= e($row_infrastructure['ch_inf_statut']) ?>.png" alt="Statut"> Acceptée par les juges tempérants
-          <?php if ($row_infrastructure['ch_inf_juge'] != NULL) { ?><em>(jug&eacute; par <?= e($row_infrastructure['ch_use_login']) ?>)</em><?php }?>
-      </div>
-
-    <?php elseif ($row_infrastructure['ch_inf_statut'] == Infrastructure::JUGEMENT_REJECTED): ?>
-      <div class="alert alert-danger">
-          <p><img src="<?= DEF_URI_PATH ?>assets/img/statutinfra_<?= e($row_infrastructure['ch_inf_statut']) ?>.png" alt="Statut"> Refusée par les juges tempérants. Cette infrastructure n'influence pas l'économie.<p>
-          <?php if (($row_infrastructure['ch_inf_commentaire_juge'] != NULL) OR ($row_infrastructure['ch_inf_commentaire_juge'] != "")): ?>
-              <p><strong>Raison&nbsp;: <em>"<?= htmlPurify($row_infrastructure['ch_inf_commentaire_juge']) ?>"</em></strong></p>
-          <?php endif; ?>
-          <?php if ($row_infrastructure['ch_inf_juge'] != NULL): ?>
-              <em>(jug&eacute; par <?= e($row_infrastructure['ch_use_login']) ?>)</em>
-          <?php endif; ?>
-      </div>
-
-    <?php else: ?>
-      <div class="alert">
-          <img src="<?= DEF_URI_PATH ?>assets/img/statutinfra_<?= e($row_infrastructure['ch_inf_statut']) ?>.png" alt="Statut"> En attente de jugement. Son influence n'est pas encore prise en compte.
-      </div>
-
-    <?php endif; ?>
 
     <small>Cette infrastructure génère actuellement :</small>
     <br>
@@ -106,26 +94,80 @@ $row_infrastructure = mysql_fetch_assoc($infrastructure);
                 'resources' => $eloquentInfrastructure->getGeneratedResources()->toArray()
         ]); ?>
     </div>
+    <small>Rendement de l'infrastructure :
+        <strong><?= $eloquentInfrastructure->efficiencyRate() ?>%</strong></small>
     <div class="clearfix"></div>
+
     <br>
-    <small>L'infrastructure devrait générer au final :</small>
-    <?php renderElement('temperance/resources_small', [
-            'resources' => $eloquentInfrastructure->getFinalResources()->toArray()
-    ]); ?>
+    <?php
+
+    $diffLastInfluence = $eloquentInfrastructure->influences->max('generates_influence_at');
+
+    if($diffLastInfluence > Carbon::now()) : ?>
+        <small>L'infrastructure devrait générer
+            <?= $diffLastInfluence->diffForHumans() ?> :
+        </small>
+        <div style="margin-left: 8px;">
+            <?php renderElement('temperance/resources_small', [
+                    'resources' => $eloquentInfrastructure->getFinalResources()->toArray()
+            ]); ?>
+        </div>
+    <?php endif; ?>
 
     <p>&nbsp;</p>
-    <strong><p>R&egrave;gle&nbsp;:</p></strong>
-    <p><em><small style="color: grey; padding-left: 0;"><?= htmlPurify($row_infrastructure['ch_inf_off_desc']) ?></small></em></p>
+    <h4>Critère de jugement</h4>
+    <p>
+        <small style="color: grey; padding-left: 0; margin-left: 0;">
+            <?= htmlPurify($eloquentInfrastructure->infrastructure_officielle->ch_inf_off_desc) ?>
+        </small>
+    </p>
+
+    <?php if ($eloquentInfrastructure->ch_inf_statut == Infrastructure::JUGEMENT_ACCEPTED): ?>
+      <div style="color: #5f7b59;">
+          <img src="<?= DEF_URI_PATH ?>assets/img/statutinfra_<?= e($eloquentInfrastructure->ch_inf_statut) ?>.png" alt="Statut"> Acceptée par les juges tempérants<br>
+          <small style="color: inherit; padding-left: 20px;">Jugée
+            <?php if ($eloquentInfrastructure->ch_inf_juge != NULL): ?>
+              par <?= e($eloquentInfrastructure->judge->ch_use_login) ?>
+            <?php endif; ?>
+            <?php if(!empty($eloquentInfrastructure->judged_at)): ?>
+              le <?= dateFormat($eloquentInfrastructure->judged_at) ?>
+            <?php endif; ?>
+          </small>
+      </div>
+
+    <?php elseif ($eloquentInfrastructure->ch_inf_statut == Infrastructure::JUGEMENT_REJECTED): ?>
+      <div style="color: #ba5d5d;">
+          <p><img src="<?= DEF_URI_PATH ?>assets/img/statutinfra_<?= e($eloquentInfrastructure->ch_inf_statut) ?>.png" alt="Statut"> Refusée par les juges tempérants. Cette infrastructure n'influence pas l'économie.<p>
+          <?php if (($eloquentInfrastructure->ch_inf_commentaire_juge != NULL) OR ($eloquentInfrastructure->ch_inf_commentaire_juge != "")): ?>
+              <p><strong>Raison&nbsp;:</strong> <em>"<?= htmlPurify($eloquentInfrastructure->ch_inf_commentaire_juge) ?>"</em></p>
+          <?php endif; ?>
+          <?php if ($eloquentInfrastructure->ch_inf_juge != NULL): ?>
+              <small style="color: inherit;">Jugée par
+                  <?= e($eloquentInfrastructure->judge->ch_use_login) ?>
+                <?php if(!empty($eloquentInfrastructure->judged_at)): ?>
+                  le <?= dateFormat($eloquentInfrastructure->judged_at) ?>
+                <?php endif; ?>
+              </small>
+          <?php endif; ?>
+      </div>
+
+    <?php else: ?>
+      <div style="color: #979797;">
+          <img src="<?= DEF_URI_PATH ?>assets/img/statutinfra_<?= e($eloquentInfrastructure->ch_inf_statut) ?>.png" alt="Statut"> En attente de jugement. Son influence n'est pas encore prise en compte.
+      </div>
+
+    <?php endif; ?>
 
     </div>
   </div>
-  </div>
+</div>
 
-  <div class="modal-footer">
+<div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
-  </div>
-  <script type="text/javascript">
+</div>
+
+<script type="text/javascript">
     function ChangeImage(url) {
-      document.getElementById("img").src = url;
+        document.getElementById("img").src = url;
     }
-  </script>
+</script>
