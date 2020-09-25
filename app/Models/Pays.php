@@ -302,4 +302,15 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
 
         return $sumResources;
     }
+
+    public static function boot() {
+        parent::boot();
+
+        // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
+        static::deleting(function($pays) {
+            /** @var Pays $pays */
+            $pays->deleteAllInfrastructures();
+            $pays->getMapManager()->removeOldInfluenceRows();
+        });
+    }
 }

@@ -17,4 +17,11 @@ trait Infrastructurable
         return $this->morphMany(Infrastructure::class, 'infrastructurable')
             ->orderByDesc('ch_inf_date');
     }
+
+    public function deleteAllInfrastructures() : void
+    {
+        $this->infrastructures()->each(function($infrastructure) {
+            $infrastructure->delete();
+        });
+    }
 }

@@ -13,6 +13,11 @@ interface Infrastructurable
 
     public function infrastructuresAll();
 
+    /**
+     * Supprime toutes les infrastructures de l'infrastructurable concerné.
+     */
+    public function deleteAllInfrastructures() : void;
+
 
     /* Défini dans le trait InfrastructurablePresenter. */
 

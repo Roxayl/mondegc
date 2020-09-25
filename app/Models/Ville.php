@@ -177,4 +177,14 @@ class Ville extends Model implements Searchable, Infrastructurable, AggregatesIn
 
         return $sumResources;
     }
+
+    public static function boot() {
+        parent::boot();
+
+        // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
+        static::deleting(function($ville) {
+            /** @var Ville $ville */
+            $ville->deleteAllInfrastructures();
+        });
+    }
 }
