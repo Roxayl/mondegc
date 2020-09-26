@@ -104,6 +104,8 @@ if($cat == 'organisation') {
     }
 }
 
+$eloquentCommunique = \App\Models\Communique::findOrFail($colname_communique);
+
 ?>
 <!-- Modal Header-->
 <div class="modal-header">
@@ -156,6 +158,9 @@ if($cat == 'organisation') {
   <div class="titre-vert">
     <h1><?= __s($row_communique['ch_com_titre']) ?></h1>
   </div>
+  <div class="pull-right">
+      <small>Publié le <?= e($eloquentCommunique->ch_com_date->format('d/m/Y')) ?></small>
+  </div>
   <div class="well"><?= htmlPurify($row_communique['ch_com_contenu']) ?></div>
   
   <!-- REACTIONS -->
@@ -194,7 +199,7 @@ if($cat == 'organisation') {
                 ' . __s($paysReaction->get('ch_pay_nom')) . ' &#183; ' : '' ?>
               <?= __s($persoReaction->get('titre_personnage')) ?></h5>
           <!-- AFFICHAGE DATE -->
-          <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_commentaire['ch_com_date'])); ?></small>
+          <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i", strtotime($row_commentaire['ch_com_date'])); ?></small>
           <p><?= htmlPurify($row_commentaire['ch_com_contenu']) ?></p>
           <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?= e($row_commentaire['ch_use_paysID']) ?>#diplomatie">Afficher la page du pays</a>
 
@@ -202,7 +207,7 @@ if($cat == 'organisation') {
           <h4><?= e($row_commentaire['ch_use_predicat_dirigeant']) ?> <?= e($row_commentaire['ch_use_prenom_dirigeant']) ?> <?= e($row_commentaire['ch_use_nom_dirigeant']) ?></h4>
           <h5><?= e($row_commentaire['ch_use_titre_dirigeant']) ?></h5>
           <!-- AFFICHAGE DATE -->
-          <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_commentaire['ch_com_date'])); ?></small>
+          <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i", strtotime($row_commentaire['ch_com_date'])); ?></small>
           <p><?= htmlPurify($row_commentaire['ch_com_contenu']) ?></p>
           <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?= e($row_commentaire['ch_use_paysID']) ?>#diplomatie">Afficher son profil</a>
           <?php endif; ?>

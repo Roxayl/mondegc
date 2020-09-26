@@ -47,12 +47,10 @@
     @endcan
 
     @php
-    $day_diff = $member->created_at->diffInDays(\Carbon\Carbon::now());
     $description = "
         {$member->getPermissionLabel()}<br>
         Membre depuis le {$member->created_at->format('d/m/Y')}
-        (depuis {$day_diff} " .
-        \Illuminate\Support\Str::plural('jour', $day_diff) . ")";
+        (" . $member->created_at->diffForHumans() . ")";
     @endphp
 
     @include('blocks.infra_well', ['data' => [

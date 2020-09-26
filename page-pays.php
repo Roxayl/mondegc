@@ -767,7 +767,8 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
                   'overlay_text' => $infrastructure->infrastructure_officielle->ch_inf_off_nom,
                   'image' => $infrastructure->ch_inf_lien_image,
                   'nom' => $infrastructure->nom_infra,
-                  'description' => Str::limit($infrastructure->ch_inf_commentaire),
+                  'description' => $infrastructure->wellDescription(),
+                  'unescape_description' => true,
                 );
                 renderElement('infrastructure/well', $infraData);
 

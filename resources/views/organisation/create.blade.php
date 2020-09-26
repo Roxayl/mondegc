@@ -39,16 +39,14 @@
             </ul>
 
             <div class="well">
+
                 {!! App\Services\HelperService::displayAlert() !!}
-            </div>
 
-            <div class="well">
-
-            @if(is_null($type))
-                @include('organisation.components.select-type')
-            @else
-                @include('organisation.components.create-form')
-            @endif
+                @if(is_null($type))
+                    @include('organisation.components.select-type')
+                @else
+                    @include('organisation.components.create-form')
+                @endif
 
             </div>
 

@@ -2,6 +2,8 @@
 
 namespace App\Models\Presenters;
 
+use Illuminate\Support\Str;
+
 trait InfrastructurePresenter
 {
     static public function getJudgementTitle($type) : string
@@ -36,5 +38,13 @@ trait InfrastructurePresenter
             ]
         ];
         return (object)$map[$this->ch_inf_statut];
+    }
+
+    public function wellDescription() : string
+    {
+        $str  = "<em><i class='icon-calendar'></i> {$this->ch_inf_date->diffForHumans()}</em> &#183; ";
+        $str .= Str::limit(e($this->ch_inf_commentaire), 150);
+
+        return $str;
     }
 }

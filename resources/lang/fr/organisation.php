@@ -46,7 +46,7 @@ return [
     ],
 
     'create' => [
-        'create-description' => "Vous êtes sur le point d'enrichir la vie diplomatique gécéenne en y ajoutant un nouvel acteur.<br>Chaque <strong>type d'organisation</strong> possède ses propres <strong>caractéristiques</strong>, afin de répondre à des besoins différents.<br>Une fois que votre organisation est suffisamment développée, vous pourrez peut-être la transformer en <strong>Alliance</strong>.",
+        'create-description' => "Vous êtes sur le point d'enrichir la vie diplomatique gécéenne en y ajoutant un nouvel acteur.<br>Chaque <strong>type d'organisation</strong> possède ses propres <strong>caractéristiques</strong>, afin de répondre à des besoins différents.",
         'create-alliance-description' => "Vous ne pouvez pas créer d'alliance <i>ex nihilo</i>. Créez une organisation à la place, et vous pourrez la faire évoluer en alliance quand elle sera suffisamment développée !",
         'create-unable' => "Vous ne pouvez pas créer ce type d'organisation.",
     ],

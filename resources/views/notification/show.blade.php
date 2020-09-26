@@ -34,7 +34,7 @@
                     <h4>{{ $notificationData->header }}</h4>
                     <p>
                         <small class="inline" style="margin: 0; padding: 0; color: #0a0a0a;">
-                            {{ $notification->created_at->format('d-m-Y') }}</small>
+                            {{ $notification->created_at->diffForHumans() }}</small>
                         {!! $notificationData->text !!}
                     </p>
                 </div>

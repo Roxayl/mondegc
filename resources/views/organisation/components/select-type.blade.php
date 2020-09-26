@@ -7,6 +7,9 @@
         <div class="span10">
             <h3 style="margin: 10px 0;">L'union fait la force !</h3>
             <p>@lang('organisation.create.create-description')</p>
+            <p><a class="guide-link"
+          href="http://vasel.yt/wiki/index.php?title=GO/Organisations_internationales#Cr.C3.A9er_une_organisation"
+        >Quel type d'organisation pour moi ? GO!</a></p>
         </div>
     </div>
 
