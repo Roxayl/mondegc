@@ -36,6 +36,11 @@
           </div>
           <div id="economie-pays" class="accordion-body collapse">
             <div class="accordion-inner">
+                
+            <div class="pull-right">
+                <a href="http://vasel.yt/wiki/index.php?title=GO/Organisations_internationales#Types_d.27organisations"
+                   class="guide-link">Comment sont calculées les ressources ? GO!</a>
+            </div>
 
             <h4>Ressources issues des infrastructures de l'organisation</h4>
             <div>
@@ -98,8 +103,8 @@
                         ->infrastructure_officielle->ch_inf_off_nom,
                     'image' => $infrastructure->ch_inf_lien_image,
                     'nom' => $infrastructure->nom_infra,
-                    'description' => \Illuminate\Support\Str::limit(
-                        $infrastructure->ch_inf_commentaire),
+                    'description' => $infrastructure->wellDescription(),
+                    'unescape_description' => true,
                 ]); !!}
             @endforeach
             </div>

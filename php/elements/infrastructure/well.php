@@ -25,6 +25,7 @@ switch($data['type']) {
     <div class="infra-image" style="background-image: url('<?= $data['image'] ?>');"></div>
     <div class="infra-text">
         <a href="<?= e($url) ?>" data-toggle="modal" data-target="#Modal-Monument"><h4><?= e($data['nom']) ?></h4></a>
-        <p><?= e($data['description']) ?></p>
+        <p><?= !isset($data['unescape_description']) || !$data['unescape_description'] ?
+                e($data['description']) : $data['description'] ?></p>
     </div>
 </div>

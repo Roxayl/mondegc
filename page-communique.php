@@ -140,6 +140,8 @@ $totalRows_user = mysql_num_rows($user);
 
 $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_ID'];
 
+$eloquentCommunique = \App\Models\Communique::findOrFail($colname_communique);
+
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
@@ -176,7 +178,7 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
 <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url('<?php echo $background_jumbotron ?>');
+	background-image: url('<?= e($background_jumbotron) ?>');
 }
 </style>
 <!-- BOOTSTRAP -->
@@ -295,9 +297,12 @@ $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_I
     <!-- Titre  -->
   <div class="titre-vert">
       <h1><?= __s($row_communique['ch_com_titre']) ?></h1>
-    </div>
-    <!-- Contenu -->
-    <div class="well"><?= htmlPurify($row_communique['ch_com_contenu']) ?></div>
+  </div>
+  <div class="pull-right">
+      <small>Publié le <?= e($eloquentCommunique->ch_com_date->format('d/m/Y')) ?></small>
+  </div>
+  <!-- Contenu -->
+  <div class="well"><?= htmlPurify($row_communique['ch_com_contenu']) ?></div>
     <!-- Commentaire
         ================================================== -->
     <section>

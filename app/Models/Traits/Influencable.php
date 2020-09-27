@@ -64,14 +64,7 @@ trait Influencable
         return (int)round(array_sum($avgRate) / count($avgRate) * 100);
     }
 
-    /**
-     * Supprime les anciennes entrées dans la table 'influences', lorsqu'on veut générer
-     * à nouveau l'influence d'un influencable, par exemple.
-     * @param \Closure $f Fonction de vérification.
-     * @return bool Renvoie <code>true</code> lorsque les influences ont été supprimées ;
-     *              <code>false</code> sinon.
-     */
-    protected function removeOldInfluenceRows(\Closure $f = null) : bool
+    public function removeOldInfluenceRows(\Closure $f = null) : bool
     {
         $delete = false;
 

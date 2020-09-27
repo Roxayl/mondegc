@@ -79,12 +79,6 @@ INNER JOIN histoire ON ch_disp_fait_hist_id = ch_his_id INNER JOIN pays ON ch_hi
 INNER JOIN faithist_categories ON ch_fai_cat_ID = ch_disp_fait_hist_cat_id
 WHERE ch_fai_cat_statut = 1 AND ch_his_statut = 1 AND ch_pay_publication = 1
 UNION 
-SELECT ch_disp_MG_label AS type_notification, ch_disp_MG_id AS id, ch_disp_mem_statut AS statut, ch_disp_MG_label AS sous_categorie, ch_use_paysID AS id_element, ch_use_id AS id_auteur, ch_disp_MG_date AS date, ch_mem_group_nom AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_mem_group_ID AS id_institution, ch_mem_group_nom AS institution, ch_mem_group_icon AS img_institution, ch_mem_group_couleur AS pays_institution
-FROM dispatch_mem_group
-INNER JOIN users ON ch_disp_mem_id = ch_use_id
-INNER JOIN membres_groupes ON ch_mem_group_ID = ch_disp_group_id
-WHERE ch_mem_group_statut = 1 AND ch_disp_mem_statut <> 3
-UNION 
 SELECT ch_inf_label AS type_notification, ch_inf_id AS id, ch_inf_statut AS statut, ch_inf_off_icone AS sous_categorie, infrastructures.ch_inf_off_id AS id_element, ch_use_id AS id_auteur, ch_inf_date AS date, ch_inf_off_nom AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_vil_ID AS id_institution, ch_vil_nom AS institution, ch_inf_lien_image AS img_institution, ch_vil_paysID AS pays_institution
 FROM  infrastructures
 INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id
