@@ -1,6 +1,7 @@
-<?php 
+<?php
 
-// *** Connexion communique categorie pays
+use App\Models\Infrastructure;
+
 $maxRows_LastCommunique = 20;
 $pageNum_LastCommunique = 0;
 if (isset($_GET['pageNum_LastCommunique'])) {
@@ -56,8 +57,8 @@ SELECT commentaire_emis.ch_com_label AS type_notification, commentaire_emis.ch_c
 FROM communiques commentaire_emis
 INNER JOIN users visiteur ON ch_com_user_id = ch_use_id 
 INNER JOIN communiques institution ON commentaire_emis.ch_com_element_id = institution.ch_com_ID
-INNER JOIN users auteur ON institution.ch_com_user_id = auteur.ch_use_id 
-LEFT JOIN personnage ON(entity_id = institution.ch_com_pays_id AND entity = 'pays')
+INNER JOIN users auteur ON commentaire_emis.ch_com_user_id = auteur.ch_use_id 
+LEFT JOIN personnage ON(entity_id = commentaire_emis.ch_com_pays_id AND entity = 'pays')
 WHERE institution.ch_com_statut = 1 AND commentaire_emis.ch_com_categorie ='com_communique'
 UNION 
 SELECT ch_pay_label AS type_notification, ch_pay_id AS id, ch_pay_publication AS statut, ch_pay_label AS sous_categorie, ch_pay_id AS id_element, ch_pay_id AS id_auteur, ch_pay_mis_jour AS date, ch_pay_nom AS titre, lien_img AS photo_auteur, nom_personnage AS nom_auteur, entity_id AS paysID_auteur, prenom_personnage AS prenom_auteur, titre_personnage AS titre_auteur, ch_pay_id AS id_institution, ch_pay_nom AS institution, ch_pay_lien_imgdrapeau AS img_institution, ch_pay_id AS pays_institution
@@ -93,18 +94,10 @@ INNER JOIN histoire ON ch_disp_fait_hist_id = ch_his_id INNER JOIN pays ON ch_hi
 INNER JOIN faithist_categories ON ch_fai_cat_ID = ch_disp_fait_hist_cat_id
 WHERE ch_fai_cat_statut = 1 AND ch_his_statut = 1 AND ch_pay_publication = 1
 UNION 
-SELECT ch_disp_MG_label AS type_notification, ch_disp_MG_id AS id, ch_disp_mem_statut AS statut, ch_disp_MG_label AS sous_categorie, ch_use_paysID AS id_element, ch_use_id AS id_auteur, ch_disp_MG_date AS date, ch_mem_group_nom AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_mem_group_ID AS id_institution, ch_mem_group_nom AS institution, ch_mem_group_icon AS img_institution, ch_mem_group_couleur AS pays_institution
-FROM dispatch_mem_group
-INNER JOIN users ON ch_disp_mem_id = ch_use_id
-INNER JOIN membres_groupes ON ch_mem_group_ID = ch_disp_group_id
-WHERE ch_mem_group_statut = 1 AND ch_disp_mem_statut <> 3
-UNION 
-SELECT ch_inf_label AS type_notification, ch_inf_id AS id, ch_inf_statut AS statut, ch_inf_off_icone AS sous_categorie, infrastructures.ch_inf_off_id AS id_element, ch_use_id AS id_auteur, ch_inf_date AS date, ch_inf_off_nom AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_vil_ID AS id_institution, ch_vil_nom AS institution, ch_inf_lien_image AS img_institution, ch_vil_paysID AS pays_institution
+SELECT ch_inf_label AS type_notification, ch_inf_id AS id, ch_inf_statut AS statut, ch_inf_off_icone AS sous_categorie, infrastructures.ch_inf_off_id AS id_element, null AS id_auteur, COALESCE(judged_at, ch_inf_date) AS date, ch_inf_off_nom AS titre, null AS photo_auteur, null AS nom_auteur, null AS paysID_auteur, null AS prenom_auteur, null AS titre_auteur, null AS id_institution, null AS institution, ch_inf_lien_image AS img_institution, null AS pays_institution
 FROM  infrastructures
 INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id = infrastructures_officielles.ch_inf_off_id
-INNER JOIN villes ON ch_inf_villeid = ch_vil_ID
-INNER JOIN users ON ch_vil_user = ch_use_id
-WHERE ch_inf_statut = 2 AND ch_vil_capitale <> 3
+WHERE ch_inf_statut = 2
 UNION
 SELECT 'vote_ag_finished' AS type_notification, id AS id, is_valid AS statut, 'proposition' AS sous_categorie, id AS id_element, null AS id_auteur, debate_end AS date, question AS titre, null AS photo_auteur, null AS nom_auteur, ID_pays AS paysID_auteur, null AS prenom_auteur, null AS titre_auteur, null AS id_institution, null AS institution, null AS img_institution, null AS pays_institution
 FROM ocgc_proposals
@@ -549,7 +542,7 @@ do {
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-              <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> a cr&eacute;&eacute; un nouveau monument dans la ville <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>"> <?= e($row_LastCommunique['institution']) ?> </a>:</p>
+              <p>Un nouveau monument a vu le jour dans la ville <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>"> <?= e($row_LastCommunique['institution']) ?> </a>:</p>
               <h4><a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id']) ?>"> <?= e($row_LastCommunique['titre']) ?> </a> </h4>
             </div>
         </div>
@@ -712,7 +705,14 @@ do {
       </div>
     </li>
     <?php } ?>
-       <?php if ( $row_LastCommunique['type_notification'] == "infrastructure") { ?>
+       <?php if ( $row_LastCommunique['type_notification'] == "infrastructure") {
+
+           $thisInfrastructure = Infrastructure::with('infrastructurable')
+               ->find($row_LastCommunique['id']);
+           if(empty($thisInfrastructure)) {
+               break;
+           }
+           ?>
     <!-- Si c'est une nouvelle infrastructure jugee ok
 ================================================== -->
     <li class="fond-notification item">
@@ -723,7 +723,7 @@ do {
           &agrave;
           <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
           </small>
-          <p>L'infrastructure <?= e($row_LastCommunique['titre']) ?> cr&eacute;&eacute; dans la ville de <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>"><?= e($row_LastCommunique['institution']) ?></a> par <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"><?= e($row_LastCommunique['nom_auteur']) ?> <?= e($row_LastCommunique['prenom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> a &eacute;t&eacute; accept&eacute;e par les juges temp&eacute;rants</p>
+            <p>L'infrastructure <a href="<?= e(urlFromLegacy($thisInfrastructure->infrastructurable->accessorUrl()) . '#economie') ?>"><?= e($thisInfrastructure->nom_infra) ?></a> (<?= e($row_LastCommunique['titre']) ?>) créée dans <img src="<?= e($thisInfrastructure->infrastructurable->getFlag()) ?>" class="img-menu-drapeau"> <a href="<?= e(urlFromLegacy($thisInfrastructure->infrastructurable->accessorUrl())) ?>"><?= e($thisInfrastructure->infrastructurable->getName()) ?></a> a &eacute;t&eacute; accept&eacute;e par les juges temp&eacute;rants.</p>
         </div>
         <div class="span1 auteur icone-categorie">
           <?php if ($row_LastCommunique['img_institution']) {?>

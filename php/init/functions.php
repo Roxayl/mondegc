@@ -1254,6 +1254,18 @@ function legacyPage($path = '', $params = array())
 }
 
 
+/**
+ * Cette fonction répare les URLs générés via le helper route() de Laravel, qui sont erronés
+ * lorsqu'ils sont appelés depuis le site legacy.
+ * @param $url L'URL à réparer
+ * @return string|string[] L'URL réparé.
+ */
+function urlFromLegacy($url)
+{
+    return str_replace('/public/index.php', '', $url);
+}
+
+
 function appendQueryString(&$url)
 {
     if(isset($_SERVER['QUERY_STRING'])) {
