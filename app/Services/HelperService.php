@@ -46,6 +46,9 @@ class HelperService {
         static $purifier = null;
         if(is_null($purifier)) {
             $config = HTMLPurifier_Config::createDefault();
+            $config->set('HTML.SafeIframe', true);
+            $config->set('URI.SafeIframeRegexp',
+                '%^https://(.*)%');
             $purifier = new HTMLPurifier($config);
         }
         return $purifier->purify($text);

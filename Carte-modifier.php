@@ -16,10 +16,16 @@ if(!isset($_SESSION['userObject'])) {
 }
 
 //Récupération variables
-$colname_paysID = $_REQUEST['paysID'];
+if(isset($_POST['ch_geo_id'])) {
+    $eloquentGeometry = Geometry::findOrFail($_POST['ch_geo_id']);
+    $eloquentPays = $eloquentGeometry->pays;
+    $colname_paysID = $eloquentPays->ch_pay_id;
+} else {
+    $colname_paysID = $_REQUEST['paysID'];
+    $eloquentPays = EloquentPays::findOrFail($colname_paysID);
+}
 
 //Requete Pays
-
 $query_InfoGenerale = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_paysID, "int"));
 $InfoGenerale = mysql_query($query_InfoGenerale, $maconnexion) or die(mysql_error());
 $row_InfoGenerale = mysql_fetch_assoc($InfoGenerale);
@@ -29,7 +35,6 @@ $user_has_perm = $_SESSION['userObject']->minStatus('OCGC');
 $nonModifiableZones = ['terre', 'frontiere'];
 
 // Vérifier permissions
-$eloquentPays = EloquentPays::findOrFail($colname_paysID);
 if( !auth()->user()->hasMinPermission('ocgc') &&
     !auth()->user()->ownsPays($eloquentPays) )
 {
@@ -141,7 +146,8 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
 
         $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
 
-        getErrorMessage('success', "La zone " . __s($_POST['ch_geo_nom']) . ' a été modifiée !');
+        getErrorMessage('success', "La zone " . __s($_POST['ch_geo_nom'])
+            . ' (' . $eloquentGeometry->type_geometry->label . ') a été modifiée !');
     }
 
     //recherche des mesures des zones de la carte pour calcul ressources

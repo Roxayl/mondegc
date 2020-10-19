@@ -109,13 +109,12 @@ $_SESSION['an']=true;
 ================================================== -->
 
 <div class="row-fluid">
-    <div class="span8" id="postswrapper" style="padding-bottom: 15px;">
+    <div class="span8" id="postswrapper" style="padding-bottom: 5px;">
 
         <?php renderElement('errormsgs'); ?>
 
-        <div id="actu" class="titre-vert no-bg anchor">
-          <img src="assets/img/IconesBDD/100/Membre1.png" alt="icone user" style="margin-left: 3px;">
-          <h1 style="font-size: 30px;">Derni&egrave;res actualit&eacute;s</h1>
+        <div id="actu" class="titre-vert no-bg anchor" style="padding-top: 80px;">
+          <h1 style="font-size: 26px; padding-left: 16px;">Derni&egrave;res actualit&eacute;s</h1>
         </div>
         <?php include('last_MAJ.php'); ?>
     </div>
@@ -123,9 +122,8 @@ $_SESSION['an']=true;
 
         <div class="well"></div>
 
-        <div id="actu" class="titre-bleu no-bg anchor">
-          <img src="assets/img/IconesBDD/Bleu/100/Communique_bleu.png" alt="icone user" style="margin-left: 1px;">
-          <h1 style="font-size: 30px;">Communiqués publiés</h1>
+        <div id="actu" class="titre-bleu no-bg anchor" style="padding-top: 80px;">
+          <h1 style="font-size: 26px; padding-left: 16px;">Communiqués publiés</h1>
         </div>
         <?php
         $query_communiquesPays = "

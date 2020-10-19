@@ -417,7 +417,7 @@ init();
         </div>
 
         <div class="well">
-        <h4>Dirigeant</h4>
+        <h3 style="margin-left: 0;">Dirigeant</h3>
 
         <div class="row-fluid">
           <div class="span3">
@@ -454,13 +454,15 @@ init();
           <?php endif; ?>
         </div>
 
+        <div class="clearfix"></div>
+
         <?php if($organisations->count() || !empty($alliance)): ?>
-            <h4>Organisations</h4>
+            <h3 style="margin-left: 0;">Organisations</h3>
 
             <?php if(!empty($alliance)): ?>
                 <h5>Alliance</h5>
 
-                <div class="info-infrastructure-off span12" style="margin-left: -3px;">
+                <div class="info-infrastructure-off span12" style="margin-left: -3px; margin-bottom: 10px;">
                     <h2><a href="<?= route('organisation.showslug',
                             $alliance->showRouteParameter()) ?>"><?= e($alliance->name) ?></a></h2>
 
@@ -480,8 +482,9 @@ init();
             <?php endif; ?>
 
             <?php if($organisations->count()): ?>
-                <br><br><br>
-                <h5>Autres organisations</h5>
+                <?php if(!empty($alliance)): ?>
+                  <h5>Autres organisations</h5>
+                <?php endif; ?>
 
                 <p><?= e($thisPays->get('ch_pay_nom')) ?> est membre des organisations
                     suivantes :</p>

@@ -40,7 +40,7 @@ class PaysMapManager implements Influencable
         return $result;
     }
 
-    public function removeOldInfluenceRows(\Closure $f) : bool
+    public function removeOldInfluenceRows(\Closure $f = null) : bool
     {
        // On écrase la méthode définie dans le trait, car elle recherche une relation
        // dans Models\Pays... et comme PaysMapManager n'est pas une classe Eloquent...
