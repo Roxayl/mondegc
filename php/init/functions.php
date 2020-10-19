@@ -1262,7 +1262,11 @@ function legacyPage($path = '', $params = array())
  */
 function urlFromLegacy($url)
 {
-    return str_replace('/public/index.php', '', $url);
+    $directory_path = config('app.directory_path');
+    if(!empty($directory_path)) {
+        $directory_path = '/' . $directory_path;
+    }
+    return str_replace($directory_path . '/public/index.php', '', $url);
 }
 
 
