@@ -457,7 +457,7 @@ init();
         <div class="clearfix"></div>
 
         <?php if($organisations->count() || !empty($alliance)): ?>
-            <h3 style="margin-left: 0;">Organisations</h4>
+            <h3 style="margin-left: 0;">Organisations</h3>
 
             <?php if(!empty($alliance)): ?>
                 <h5>Alliance</h5>
