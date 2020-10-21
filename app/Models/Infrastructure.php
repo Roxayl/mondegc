@@ -146,15 +146,17 @@ class Infrastructure extends Model implements Influencable
 
         $totalResources = $this->infrastructure_officielle->mapResources();
 
-        if( !empty($this->infrastructurable) && $this->infrastructurable->getType() === 'organisation') {
+        if(!empty($this->infrastructurable) && $this->infrastructurable->getType() === 'organisation') {
 
-            // Dans le cas où l'organisation est une "alliance", on augmente les ressources
-            // 'positives' générées de 50% (multiplie par 1.5) et les ressources 'négatives'
-            // de 15% (multiplie de 1.15).
+            // Dans le cas où l'organisation est une "alliance" ou "agence GC", on augmente les
+            // ressources 'positives' générées de 50% (multiplie par 1.5) et les ressources
+            // 'négatives' de 15% (multiplie de 1.15).
             /* TODO On peut envisager une classe qui contient les modifications types aux ressources
              * économiques ? Cela impliquerait de transformer les données de ressources du type
              * 'array' à un classe spécifique... */
-            if($this->infrastructurable->type === Organisation::TYPE_ALLIANCE) {
+            if( in_array($this->infrastructurable->type,
+                  [Organisation::TYPE_AGENCY, Organisation::TYPE_ALLIANCE], true) )
+            {
                 $tmp = array_map(fn($val) => $val > 0 ? (int)($val * 1.5) : (int)($val * 1.15),
                     $totalResources);
                 $totalResources = $tmp;

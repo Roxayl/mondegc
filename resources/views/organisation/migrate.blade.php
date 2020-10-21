@@ -14,7 +14,7 @@
 
         @php $currentType = $organisation->type === $type; @endphp
 
-        <div class="span4 org-container org-{{ $organisation::$types[$type] }}"
+        <div class="span3 org-container org-{{ $organisation::$types[$type] }}"
             @if($currentType) style="border: 3px solid cornflowerblue" @endif >
 
             <div class="org-header">
@@ -22,14 +22,16 @@
             </div>
 
             <div class="org-description">
-                @if(!empty(__("organisation.types.{$type}-prerequisites")))
-                    Critères :
+                Critères :
+                @if(is_array(__("organisation.types.{$type}-prerequisites")))
                     <ul>
                     @foreach(__("organisation.types.{$type}-prerequisites")
                         as $criteria)
                         <li>{{ $criteria }}</li>
                     @endforeach
                     </ul>
+                @else
+                    <br><i>{{ __('organisation.migrate.no-criteria') }}</i>
                 @endif
 
                 @if(!$currentType)

@@ -79,14 +79,20 @@ class Organisation extends Model implements Searchable, Infrastructurable, Aggre
         'invited' => self::PERMISSION_INVITED,
     ];
 
+    public const TYPE_AGENCY = 'agency';
 	public const TYPE_ALLIANCE = 'alliance';
 	public const TYPE_ORGANISATION = 'organisation';
 	public const TYPE_GROUP = 'group';
 
 	public static array $types = [
+	    'agency' => self::TYPE_AGENCY,
 	    'alliance' => self::TYPE_ALLIANCE,
         'organisation' => self::TYPE_ORGANISATION,
         'group' => self::TYPE_GROUP,
+    ];
+
+	public static array $typesVisible = [
+	    self::TYPE_ALLIANCE, self::TYPE_ORGANISATION, self::TYPE_GROUP
     ];
 
 	public static array $typesCreatable = [
@@ -94,7 +100,7 @@ class Organisation extends Model implements Searchable, Infrastructurable, Aggre
     ];
 
 	public static array $typesWithEconomy = [
-	    self::TYPE_ALLIANCE, self::TYPE_ORGANISATION
+	    self::TYPE_AGENCY, self::TYPE_ALLIANCE, self::TYPE_ORGANISATION
     ];
 
 	public function getSearchResult() : SearchResult
@@ -194,10 +200,10 @@ class Organisation extends Model implements Searchable, Infrastructurable, Aggre
     {
         return self::with('members')
             ->orderByRaw("CASE type
-                WHEN 'alliance' THEN 1 WHEN 'organisation' THEN 2 WHEN 'group' THEN 3
+                WHEN 'agency'       THEN 1       WHEN 'alliance' THEN 2
+                WHEN 'organisation' THEN 3       WHEN 'group' THEN 4
                 ELSE 4 END")
-            ->orderByDesc('created_at')
-            ->orderByDesc('allow_temperance');
+            ->orderByDesc('created_at');
     }
 
     public function getSlugAttribute()

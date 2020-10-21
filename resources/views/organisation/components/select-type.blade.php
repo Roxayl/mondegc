@@ -15,7 +15,7 @@
 
     <br><br>
 
-    @foreach($organisation::$types as $organisationType)
+    @foreach($organisation::$typesVisible as $organisationType)
         <div class="row-fluid">
         <div class="span12 org-container" style="margin-bottom: 15px;">
 
