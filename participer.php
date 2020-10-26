@@ -3,7 +3,8 @@
 //Connexion et deconnexion
 include('php/log.php');
 
-$query_Last24H = "SELECT ch_use_login, ch_use_statut, ch_use_paysID FROM users WHERE ch_use_last_log > DATE_SUB(NOW(), INTERVAL 2 DAY) ORDER BY ch_use_login";
+$query_Last24H = "SELECT ch_use_login, ch_use_statut, ch_use_paysID FROM users
+    WHERE last_activity > DATE_SUB(NOW(), INTERVAL 2 DAY) ORDER BY ch_use_login";
 $Last24H = mysql_query($query_Last24H, $maconnexion) or die(mysql_error());
 $row_Last24H = mysql_fetch_assoc($Last24H);
 $totalRows_Last24H = mysql_num_rows($Last24H);

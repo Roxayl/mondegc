@@ -1,10 +1,5 @@
 <?php
 
-// *** Validate request to login to this site.
-if (!isset($_SESSION)) {
-
-}
-
 // *** Recherche de sessions.
 $clefSession = isset($_COOKIE['Session_mondeGC']) ? $_COOKIE['Session_mondeGC'] : NULL;
 
@@ -12,7 +7,7 @@ $clefSession = isset($_COOKIE['Session_mondeGC']) ? $_COOKIE['Session_mondeGC'] 
 if ($clefSession != NULL and $clefSession != "" and !isset($_SESSION['login_user'])) {
 
     
-    $Session_user_query=sprintf("SELECT ch_users_session_dispatch_sessionID, ch_use_session_id, ch_use_session_connect, ch_use_id, ch_use_login, ch_use_paysID, ch_use_statut, ch_use_acces, ch_use_last_log, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users_dispatch_session INNER JOIN users_session ON ch_users_session_dispatch_sessionID = ch_use_session_id INNER JOIN users ON ch_use_session_user_ID = ch_use_id WHERE ch_users_session_dispatch_Key =%s",GetSQLValueString($clefSession, "text"));
+    $Session_user_query=sprintf("SELECT ch_users_session_dispatch_sessionID, ch_use_session_id, ch_use_session_connect, ch_use_id, ch_use_login, ch_use_paysID, ch_use_statut, ch_use_acces, ch_use_last_log, last_activity, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users_dispatch_session INNER JOIN users_session ON ch_users_session_dispatch_sessionID = ch_use_session_id INNER JOIN users ON ch_use_session_user_ID = ch_use_id WHERE ch_users_session_dispatch_Key =%s",GetSQLValueString($clefSession, "text"));
     $Session_user = mysql_query($Session_user_query, $maconnexion) or die(mysql_error());
     $row_Session_user = mysql_fetch_assoc($Session_user);
     $loginFoundUser = mysql_num_rows($Session_user);
@@ -73,7 +68,7 @@ if ($clefSession != NULL and $clefSession != "" and !isset($_SESSION['login_user
         $_SESSION['titre_dirigeant'] = $row_Session_user['ch_use_titre_dirigeant'];
         $_SESSION['nom_dirigeant'] = $row_Session_user['ch_use_nom_dirigeant'];
         $_SESSION['prenom_dirigeant'] = $row_Session_user['ch_use_prenom_dirigeant'];
-        $_SESSION['derniere_visite'] = $row_Session_user['ch_use_last_log'];
+        $_SESSION['derniere_visite'] = $row_Session_user['last_activity'];
         $_SESSION['errormsgs'] = array();
         /**
          * @var \GenCity\Monde\User
@@ -95,7 +90,7 @@ if (isset($_POST['identifiant'])) {
   $MM_redirectLoginFailed = DEF_URI_PATH . "connexion.php";
    
   
-  $LoginRS__query=sprintf("SELECT ch_use_login, ch_use_password, ch_use_paysID, ch_use_id, ch_use_last_log, ch_use_statut, ch_use_acces, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users WHERE ch_use_login=%s AND ch_use_password=%s",
+  $LoginRS__query=sprintf("SELECT ch_use_login, ch_use_password, ch_use_paysID, ch_use_id, ch_use_last_log, last_activity, ch_use_statut, ch_use_acces, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users WHERE ch_use_login=%s AND ch_use_password=%s",
   GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text"));
   $LoginRS = mysql_query($LoginRS__query, $maconnexion) or die(mysql_error());
   $loginFoundUser = mysql_num_rows($LoginRS);
@@ -171,7 +166,7 @@ if ($loginFoundUser) {
 	$_SESSION['titre_dirigeant'] = $row_LoginRS['ch_use_titre_dirigeant'];
 	$_SESSION['nom_dirigeant'] = $row_LoginRS['ch_use_nom_dirigeant'];
 	$_SESSION['prenom_dirigeant'] = $row_LoginRS['ch_use_prenom_dirigeant'];
-	$_SESSION['derniere_visite'] = $row_LoginRS['ch_use_last_log'];
+	$_SESSION['derniere_visite'] = $row_LoginRS['last_activity'];
     $_SESSION['errormsgs'] = array();
     /**
      * @var \GenCity\Monde\User
@@ -202,6 +197,13 @@ else {
     $_SESSION['menu_connexion'] = 'show';
 	$_SESSION['menu_gestion'] = 'hidden';
   }
+
+
+// On met à jour la date de dernière activité.
+if(isset($_SESSION['userObject'])) {
+    mysql_query(sprintf('UPDATE users SET last_activity = NOW() WHERE ch_use_id = %s',
+        GetSQLValueString($_SESSION['userObject']->get('ch_use_id'))));
+}
 
 
 // ** Logout the current user. **
@@ -312,7 +314,8 @@ $row_pays = mysql_fetch_assoc($pays);
  * LARAVEL
  * Adaptation des sessions Laravel, pour synchroniser l'auth entre Laravel et Legacy.
  * La synchronisation est gérée par le middleware \App\Http\Middleware\SynchronizeAuthentication.
- */
+ ********/
+
 // Sessions Laravel
 if(isset($_SESSION['userObject'])) {
     session()->put('userLegacyId', $_SESSION['userObject']->get('ch_use_id'));
