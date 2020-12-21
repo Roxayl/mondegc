@@ -3,11 +3,9 @@
 //Connexion et deconnexion
 include('php/log.php');
 
-$query_Last24H = "SELECT ch_use_login, ch_use_statut, ch_use_paysID FROM users
+$query_Last24H = "SELECT ch_use_login, ch_use_statut, last_activity FROM users
     WHERE last_activity > DATE_SUB(NOW(), INTERVAL 2 DAY) ORDER BY ch_use_login";
 $Last24H = mysql_query($query_Last24H, $maconnexion) or die(mysql_error());
-$row_Last24H = mysql_fetch_assoc($Last24H);
-$totalRows_Last24H = mysql_num_rows($Last24H);
 
 $pageParticiper = new \GenCity\Monde\Page('participer');
 $pageParticiperCadre = new \GenCity\Monde\Page('participer_cadre');
@@ -99,21 +97,28 @@ img.olTileImage {
         <?= $pageParticiperCadre->content() ?>
 
         <div>
-          <h4>Joueurs connect&eacute;s ces derni&egrave;res 48 heures</h4>
-          <strong>
+          <h4>Joueurs connectés ces dernières 48 heures</h4>
           <p>
-            <?php do { 
-      if ($row_Last24H['ch_use_statut'] == 30) {?>
-            <a href="page-pays.php?ch_pay_id=<?php echo $row_Last24H['ch_use_paysID']; ?>#diplomatie" style="color:#FF4F4F; text-decoration:none"> <?php echo $row_Last24H['ch_use_login']; ?> </a> -
-            <?php } elseif ($row_Last24H['ch_use_statut'] == 20) {?>
-            <a href="page-pays.php?ch_pay_id=<?php echo $row_Last24H['ch_use_paysID']; ?>#diplomatie" style=" color:#FF9900; text-decoration:none"> <?php echo $row_Last24H['ch_use_login']; ?> </a> -
-            <?php } else {?>
-            <a href="page-pays.php?ch_pay_id=<?php echo $row_Last24H['ch_use_paysID']; ?>#diplomatie" style=" color:#FFFFFF; text-decoration:none"> <?php echo $row_Last24H['ch_use_login']; ?> </a> -
-            <?php } ?>
-            <?php } while ($row_Last24H = mysql_fetch_assoc($Last24H)); ?>
+          <?php while($row_Last24H = mysql_fetch_assoc($Last24H)) {
+            if ($row_Last24H['ch_use_statut'] == 30): ?>
+                <span style="color:#FF4F4F;"><?= e($row_Last24H['ch_use_login']) ?></span>
+            <?php elseif ($row_Last24H['ch_use_statut'] == 20): ?>
+                <span style="color:#FF9900;"><?= e($row_Last24H['ch_use_login']) ?></span>
+            <?php else: ?>
+                <span><?= e($row_Last24H['ch_use_login']) ?></span>
+            <?php endif; ?>
+
+            <?php
+            // Afficher l'utilisateur comme connecté en cas d'activité durant les 15 dernières minutes.
+            if(strtotime($row_Last24H['last_activity']) > time() - 60 * 15): ?>
+                <span style="display: inline-block; background-color: green; border-radius: 5px;
+                            width: 10px; height: 10px;" title="Connecté"></span>
+            <?php endif; ?>
+            &#183;
+          <?php } ?>
           </p>
-          </strong>
         </div>
+
       </div>
   </div>
   </div>
