@@ -190,7 +190,9 @@ init();
                                 <a tabindex="-1" href="back/communique_ajouter.php?paysID=<?= e($pays['ch_pay_id']) ?>&userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>&cat=pays&com_element_id=<?= e($pays['ch_pay_id']) ?>">
                                     <i class="icon-file"></i> Publier un communiqué</a></li>
                             <li class="dropdown-li-force">
-                                <a tabindex="0" href="back/infra_select_group.php?pays_id=<?= e($pays['ch_pay_id']) ?>">
+                                <a tabindex="0" href="<?= route('infrastructure.select-group',
+                                    ['infrastructurable_type' => 'pays',
+                                     'infrastructurable_id' => $pays['ch_pay_id']]) ?>">
                                     <i class="icon-home"></i> Ajouter une infrastructure</a></li>
                         </ul>
                     </div>

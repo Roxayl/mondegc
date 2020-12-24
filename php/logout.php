@@ -8,7 +8,7 @@ $clefSession = isset($_COOKIE['Session_mondeGC']) ? $_COOKIE['Session_mondeGC'] 
 
 if ($clefSession != NULL and $clefSession != "") {
 
-$Session_user_query=sprintf("SELECT ch_users_session_dispatch_sessionID, ch_use_acces, ch_use_session_id, ch_use_session_connect, ch_use_id, ch_use_login, ch_use_paysID, ch_use_statut, ch_use_last_log, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users_dispatch_session INNER JOIN users_session ON ch_users_session_dispatch_sessionID = ch_use_session_id INNER JOIN users ON ch_use_session_user_ID = ch_use_id WHERE ch_users_session_dispatch_Key =%s",GetSQLValueString($clefSession, "text"));
+$Session_user_query=sprintf("SELECT ch_users_session_dispatch_sessionID, ch_use_acces, ch_use_session_id, ch_use_session_connect, ch_use_id, ch_use_login, ch_use_paysID, ch_use_statut, ch_use_last_log, last_activity, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users_dispatch_session INNER JOIN users_session ON ch_users_session_dispatch_sessionID = ch_use_session_id INNER JOIN users ON ch_use_session_user_ID = ch_use_id WHERE ch_users_session_dispatch_Key =%s",GetSQLValueString($clefSession, "text"));
   $Session_user = mysql_query($Session_user_query, $maconnexion) or die(mysql_error());
   $row_Session_user = mysql_fetch_assoc($Session_user);
   $loginFoundUser = mysql_num_rows($Session_user);
@@ -70,7 +70,7 @@ $updateSQL = sprintf("UPDATE users SET ch_use_last_log=%s WHERE ch_use_id=%s",
 	$_SESSION['titre_dirigeant'] = $row_Session_user['ch_use_titre_dirigeant'];
 	$_SESSION['nom_dirigeant'] = $row_Session_user['ch_use_nom_dirigeant'];
 	$_SESSION['prenom_dirigeant'] = $row_Session_user['ch_use_prenom_dirigeant'];
-	$_SESSION['derniere_visite'] = $row_Session_user['ch_use_last_log'];
+	$_SESSION['derniere_visite'] = $row_Session_user['last_activity'];
     $_SESSION['errormsgs'] = array();
 
     $_SESSION['userObject'] = new \GenCity\Monde\User($row_Session_user['ch_use_id']);

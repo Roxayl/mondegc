@@ -83,7 +83,7 @@
           <div class="accordion-heading">
             <a class="accordion-toggle" data-toggle="collapse"
                href="#economie-infrastructures">
-                Infrastructures
+                Infrastructures de l'organisation
                 @if($organisation->infrastructures->count())
                     <span class="badge badge-info">
                         {{ $organisation->infrastructures->count() }}

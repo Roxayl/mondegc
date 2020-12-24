@@ -71,7 +71,7 @@
                 {{ __("organisation.types.{$organisation->type}") }}</span>
                 <a href="{{ route('organisation.migrate',
                     ['organisation' => $organisation->id]) }}"
-                   data-toggle="modal" data-target="#modal-container-small">
+                   data-toggle="modal" data-target="#modal-container">
                     Migrer vers un nouveau type...
                 </a>
             </label>

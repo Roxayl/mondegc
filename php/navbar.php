@@ -43,7 +43,7 @@ if(auth()->check()) {
 }
 
 /** Organisations */
-$navbar_organisationList = \App\Models\Organisation::orderBy('name')->get();
+$navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
 
 ?>
 
@@ -277,18 +277,38 @@ $navbar_organisationList = \App\Models\Organisation::orderBy('name')->get();
             <a href="<?= DEF_URI_PATH . 'politique.php' ?>" class="dropdown-toggle"
                data-toggle="dropdown" title="Organisations du Monde GC"
                 >Organisations <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="<?= DEF_URI_PATH . 'politique.php#organisations' ?>">
-                      <i class="icon-list"></i> Voir la liste des organisations
-                  </a></li>
-              <li class="nav-header">Organisations</li>
-              <?php foreach($navbar_organisationList as $thisOrganisation): ?>
-              <li><a href="<?= DEF_URI_PATH . 'organisation/' . $thisOrganisation->id ?>">
-                      <img src="<?= e($thisOrganisation->flag) ?>"
-                           class="img-menu-drapeau">
-                      <?= e($thisOrganisation->name) ?>
-                  </a></li>
-              <?php endforeach; ?>
+            <ul class="dropdown-menu dropdown-double hidden-phone">
+              <div class="drop-colonne-gauche">
+                  <li><a href="<?= DEF_URI_PATH . 'politique.php#organisations' ?>">
+                          <i class="icon-list"></i> Voir la liste des organisations
+                      </a></li>
+                  <?php
+                  $org_type_actuel = '';
+                  foreach($navbar_organisationList as $thisOrganisation):
+
+                      if($org_type_actuel !== $thisOrganisation->type):
+                          $org_type_actuel = $thisOrganisation->type;
+
+                          if($org_type_actuel === \App\Models\Organisation::TYPE_ORGANISATION): ?>
+                              </div>
+                              <div class="drop-colonne-droite">
+                          <?php endif; ?>
+                          <li class="nav-header" style="text-transform: none;">
+                              <span class="badge org-<?= $thisOrganisation->type ?>">
+                              <?= __("organisation.types.{$thisOrganisation->type}") ?>
+                              </span>
+                          </li>
+                      <?php
+                      endif;
+                      ?>
+
+                      <li><a href="<?= DEF_URI_PATH . 'organisation/' . $thisOrganisation->id ?>">
+                              <img src="<?= e($thisOrganisation->flag) ?>"
+                                   class="img-menu-drapeau">
+                              <?= e($thisOrganisation->name) ?>
+                          </a></li>
+                  <?php endforeach; ?>
+              </div>
             </ul>
           </li>
 

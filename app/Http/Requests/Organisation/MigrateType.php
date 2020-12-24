@@ -21,6 +21,17 @@ class MigrateType extends FormRequest
         return true;
     }
 
+    protected function canMigrateToAgency() : bool
+    {
+        $allowed = true;
+
+        if(!auth()->user()->hasMinPermission('admin')) {
+            $allowed = false;
+        }
+
+        return $allowed;
+    }
+
     protected function canMigrateToAlliance() : bool
     {
         $allowed = true;
@@ -96,6 +107,13 @@ class MigrateType extends FormRequest
            && $type === Organisation::TYPE_GROUP) {
             if(!$this->canMigrateToGroup()) {
                 $errors['type'] = __('organisation.validation.migrate-group-error');
+            }
+        }
+
+        if($this->organisation->type === Organisation::TYPE_AGENCY
+           || $type === Organisation::TYPE_AGENCY) {
+            if(!$this->canMigrateToAgency()) {
+                $errors['type'] = __('organisation.validation.migrate-agency-error');
             }
         }
 

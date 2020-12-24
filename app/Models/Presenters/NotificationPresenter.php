@@ -41,7 +41,7 @@ class NotificationPresenter
                       . ", a rejoint le concert des nations gécéennes. "
                       . "Souhaitez-lui la bienvenue au sein du Monde GC.";
                 $link = url('page-pays.php?ch_pay_id='
-                      . __s($element->ch_pay_id) . "#commentaires");
+                      . e($element->ch_pay_id) . "#commentaires");
                 $style = "background-color: #ff4e00;";
                 break;
 

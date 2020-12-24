@@ -722,6 +722,10 @@ a.org-container:hover {
     text-decoration: none;
 }
 
+.org-agency {
+    background-color: #182b45;
+}
+
 .org-alliance {
     background-color: #1239FF;
 }
@@ -759,7 +763,7 @@ a.org-container:hover {
 
 .dropdown-double {
     width: 580px;
-    height: 600px;
+    max-height: 600px;
     overflow: auto;
 }
 

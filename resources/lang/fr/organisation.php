@@ -10,6 +10,18 @@ return [
     */
 
     'types' => [
+        'agency' => "Agence GC",
+        'agency-description' => "Les agences GC sont des organismes de l'OCGC qui agissent dans des domaines spécifiques : la santé, l'environnement, l'agriculture...",
+        'agency-criteria' => [
+            "La puissance économique de l'agence GC est seulement composée des <strong>ressources propres</strong> de l'organisation.",
+            "L'agence GC peut créer des <strong>infrastructures</strong>.",
+            "Les ressources générées par l'agence GC sont <strong>réparties entre les pays membres</strong>.",
+            "Un pays peut rejoindre <strong>plusieurs</strong> agences GC.",
+        ],
+        'agency-prerequisites' => [
+            "Nécessite d'être administrateur du site",
+        ],
+
         'alliance' => "Alliance",
         'alliance-description' => "Les alliances sont au coeur des enjeux diplomatiques du Monde GC. Ce sont des unions économiques, politiques et militaires de premier ordre.",
         'alliance-criteria' => [
@@ -32,7 +44,7 @@ return [
             "Les ressources générées par l'organisation sont <strong>réparties entre les pays membres</strong>.",
             "Un pays peut rejoindre <strong>plusieurs</strong> organisations.",
         ],
-        'organisation-prerequisites' => [null],
+        'organisation-prerequisites' => [],
 
         'group' => "Groupe d'États",
         'group-description' => "Les groupes d'États permettent de regrouper les pays, sans créer de liens économiques entre eux.",
@@ -51,7 +63,12 @@ return [
         'create-unable' => "Vous ne pouvez pas créer ce type d'organisation.",
     ],
 
+    'migrate' => [
+        'no-criteria' => "Pas de critère",
+    ],
+
     'validation' => [
+        'migrate-agency-error' => "Cette organisation ne peut pas devenir une agence GC. Vérifiez que les conditions de ce type d'organisation sont respectées.",
         'migrate-alliance-error' => "Cette organisation ne peut pas devenir une alliance. Vérifiez que les conditions de ce type d'organisation sont respectées.",
         'migrate-group-error' => "Cette organisation ne peut pas devenir un groupe. Vérifiez que les conditions de ce type d'organisation sont respectées.",
         'migrate-too-early-error' => "Vous ne pouvez pas changer le type de votre organisation car vous l'avez déjà fait récemment. Vous devez attendre 7 jours après le précédent changement de type pour pouvoir le modifier à nouveau.",

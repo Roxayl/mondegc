@@ -1,7 +1,7 @@
 <?php
 
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+include(DEF_ROOTPATH . 'php/log.php');
 
 $_error = false;
 
