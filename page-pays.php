@@ -751,7 +751,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
               <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse"
                    href="#economie-infrastructures">
-                    Infrastructures
+                    Infrastructures du pays
                     <span class="badge badge-info">
                         <?= $eloquentPays->infrastructures->count() ?>
                     </span>

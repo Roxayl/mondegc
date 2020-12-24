@@ -763,7 +763,7 @@ a.org-container:hover {
 
 .dropdown-double {
     width: 580px;
-    height: 600px;
+    max-height: 600px;
     overflow: auto;
 }
 

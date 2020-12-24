@@ -24,10 +24,9 @@ if(isset($data['infrastructurable'])) {
 
         <div class="alert alert-tips">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-            Identifiez-ici les infrastructures que vous avez construites dans votre ville afin
-            qu'elle soient prises en compte dans l'économie de votre pays. Vous devez prouver
-            la construction de chaque infrastructure par une photo. Les infrastructures
-            identifiées seront modérées avant d'être comptabilisées.
+            Les infrastructures sont des éléments bâtis ou du roleplay qui permettent d'influencer l'économie.
+            <a href="http://vasel.yt/wiki/index.php?title=GO/Infrastructures"
+               class="guide-link">En savoir plus sur les infrastructures ? GO!</a>
         </div>
 
         <?php if(count($infrastructurable->infrastructuresAll)): ?>
