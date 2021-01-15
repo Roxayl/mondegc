@@ -30,7 +30,7 @@ class InfrastructureController extends Controller
             'infrastructurable_id' => $infrastructurable_id,
         ]);
 
-        $infrastructure_groupes = InfrastructureGroupe::all();
+        $infrastructure_groupes = InfrastructureGroupe::orderBy('order')->get();
 
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
 
