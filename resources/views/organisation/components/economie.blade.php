@@ -55,6 +55,16 @@
                     ]) !!}
             </div>
 
+            <div style="margin-top: 5px;">
+                <small>Ressources octroyées à chaque pays membre :</small>
+                {!! $helperService::renderLegacyElement(
+                    'temperance/resources_small', [
+                        'resources' => array_map(
+                            fn($val) => ($val / $organisation->members->count()),
+                            $organisation->infrastructureResources())
+                    ]) !!}
+            </div>
+
             @if($organisation->membersGenerateResources())
                 <h4>Ressources par pays membre</h4>
 

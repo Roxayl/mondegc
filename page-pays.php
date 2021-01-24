@@ -694,6 +694,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
           $ressources_infras = $eloquentPays->infrastructureResources();
           $ressources_orgas  = $eloquentPays->organisationResources();
           $ressources_cartes = $eloquentPays->getMapManager()->mapResources();
+          $inactivityCoefficient = $eloquentPays->inactivityCoefficient();
           ?>
 
         <div class="well">
@@ -704,6 +705,14 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
             ));
           ?>
           <div class="clearfix"></div>
+
+          <?php
+          if($inactivityCoefficient < 1): ?>
+              <small><i class="icon icon-info-sign"></i> L'<strong>inactivité</strong> de ce pays
+                  diminue les ressources positives qu'elle génère de <strong>
+                  <?= (1 - $inactivityCoefficient) * 100 ?>%</strong>.</small>
+              <br><br>
+          <?php endif; ?>
 
           <div class="accordion-group">
             <div class="accordion-heading">

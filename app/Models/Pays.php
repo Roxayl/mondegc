@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Closure;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -233,6 +234,39 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         return $this->users()->get();
     }
 
+    public function getLastActivity() : Carbon
+    {
+        $lastActivity = DB::select(
+            'SELECT MAX(COALESCE(ch_use_last_log, ch_use_date)) AS last_date FROM users
+             JOIN users_pays ON users_pays.ID_user = users.ch_use_id
+             WHERE users_pays.ID_pays = ?', [$this->ch_pay_id]);
+        return new Carbon($lastActivity[0]->last_date);
+    }
+
+    public function inactivityCoefficient() : float
+    {
+        $lastActivity = $this->getLastActivity();
+        $coefficient = 1;
+
+        if($lastActivity < Carbon::now()->subMonths(6)) {
+            $coefficient = 0.5;
+        }
+        elseif($lastActivity < Carbon::now()->subMonths(5)) {
+            $coefficient = 0.6;
+        }
+        elseif($lastActivity < Carbon::now()->subMonths(4)) {
+            $coefficient = 0.7;
+        }
+        elseif($lastActivity < Carbon::now()->subMonths(3)) {
+            $coefficient = 0.8;
+        }
+        elseif($lastActivity < Carbon::now()->subMonths(2)) {
+            $coefficient = 0.9;
+        }
+
+        return (float)$coefficient;
+    }
+
     public function villeResources() : array
     {
         $sumResources = EconomyService::resourcesPrefilled();
@@ -281,6 +315,7 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
     public function resources($withOrganisation = true) : array
     {
         $sumResources = EconomyService::resourcesPrefilled();
+        $inactivityCoefficient = $this->inactivityCoefficient();
 
         $villeResources = $this->villeResources();
         $mapResources = $this->getMapManager()->mapResources();
@@ -298,6 +333,12 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
                                       + $mapResources[$resource]
                                       + $infrastructureResources[$resource]
                                       + $organisationResources[$resource];
+
+            // Pour toutes les ressources positives, on peut être amené à diminuer la quantité
+            // de ressources données si le pays est inactif.
+            if($sumResources[$resource] > 0) {
+                $sumResources[$resource] *= $inactivityCoefficient;
+            }
         }
 
         return $sumResources;

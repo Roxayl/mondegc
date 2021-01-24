@@ -97,13 +97,12 @@ $eloquentInfrastructure = Infrastructure::with('infrastructure_officielle')
     <small>Rendement de l'infrastructure :
         <strong><?= $eloquentInfrastructure->efficiencyRate() ?>%</strong></small>
     <div class="clearfix"></div>
-
-    <br>
     <?php
 
     $diffLastInfluence = $eloquentInfrastructure->influences->max('generates_influence_at');
 
     if($diffLastInfluence > Carbon::now()) : ?>
+        <br>
         <small>L'infrastructure devrait générer
             <?= $diffLastInfluence->diffForHumans() ?> :
         </small>
@@ -113,6 +112,22 @@ $eloquentInfrastructure = Infrastructure::with('infrastructure_officielle')
             ]); ?>
         </div>
     <?php endif; ?>
+
+    <?php
+    if($eloquentInfrastructure->infrastructurable->getType() === 'organisation') {
+        $nbrMembers = $eloquentInfrastructure->infrastructurable->members->count();
+        ?>
+        <br>
+        <small>Cette infrastructure génère pour chaque pays membre de l'organisation :</small>
+        <div style="margin-left: 8px;">
+            <?php renderElement('temperance/resources_small', [
+                    'resources' => array_map(
+                        fn($val) => ($val / $nbrMembers),
+                        $eloquentInfrastructure->getGeneratedResources()->toArray())]); ?>
+        </div>
+        <?php
+    }
+    ?>
 
     <p>&nbsp;</p>
     <h4>Critère de jugement</h4>
