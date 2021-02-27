@@ -29,7 +29,6 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
-        "reliese/laravel": "^0.0.16",
         "spatie/laravel-searchable": "^1.6"
     },
     "require-dev": {
@@ -38,7 +37,8 @@
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^7.5",
+        "reliese/laravel": "^0.0.16"
     },
     "config": {
         "optimize-autoloader": true,

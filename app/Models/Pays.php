@@ -224,11 +224,6 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         return $this->hasMany(Geometry::class, 'ch_geo_pay_id');
     }
 
-    public function temperance()
-    {
-        return $this->hasOne(TemperancePays::class, 'id', 'ch_pay_id');
-    }
-
     public function getUsers()
     {
         return $this->users()->get();
@@ -337,7 +332,7 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
             // Pour toutes les ressources positives, on peut être amené à diminuer la quantité
             // de ressources données si le pays est inactif.
             if($sumResources[$resource] > 0) {
-                $sumResources[$resource] *= $inactivityCoefficient;
+                $sumResources[$resource] = (int)($sumResources[$resource] * $inactivityCoefficient);
             }
         }
 

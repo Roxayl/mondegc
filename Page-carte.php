@@ -1,8 +1,5 @@
 <?php
 
-use App\Models\Pays;
-use App\Models\TemperancePays;
-
 //Connexion et deconnexion
 include('php/log.php');
 
