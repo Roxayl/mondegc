@@ -144,21 +144,6 @@ class Organisation extends Model implements Searchable, Infrastructurable, Aggre
 	    return $this->hasMany(OrganisationMember::class);
     }
 
-    public function temperance()
-    {
-	    return $this->hasOne(TemperanceOrganisation::class, 'id', 'id');
-    }
-
-    public function membersWithTemperance()
-    {
-        return $this->members()
-            ->with(['pays', 'temperance'])
-            ->join('temperance_pays', 'organisation_members.pays_id', '=',
-                   'temperance_pays.id')
-            ->orderBy('temperance_pays.budget', 'DESC')
-            ->get();
-    }
-
     public function communiques()
     {
         // TODO: https://laravel.com/docs/6.x/eloquent-relationships#one-to-many-polymorphic-relations

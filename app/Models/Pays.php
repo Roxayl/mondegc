@@ -224,11 +224,6 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         return $this->hasMany(Geometry::class, 'ch_geo_pay_id');
     }
 
-    public function temperance()
-    {
-        return $this->hasOne(TemperancePays::class, 'id', 'ch_pay_id');
-    }
-
     public function getUsers()
     {
         return $this->users()->get();

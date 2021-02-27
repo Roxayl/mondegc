@@ -55,16 +55,6 @@ class OrganisationMember extends Model
 		return $this->belongsTo(Pays::class, 'pays_id', 'ch_pay_id');
 	}
 
-	public function temperance()
-    {
-	    return $this->hasManyThrough(TemperancePays::class, Pays::class,
-            'ch_pay_id',
-            'id',
-            'pays_id',
-            'ch_pay_id');
-
-    }
-
 	public function getPermissionLabel()
     {
         switch($this->permissions) {
