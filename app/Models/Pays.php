@@ -337,7 +337,7 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
             // Pour toutes les ressources positives, on peut être amené à diminuer la quantité
             // de ressources données si le pays est inactif.
             if($sumResources[$resource] > 0) {
-                $sumResources[$resource] *= $inactivityCoefficient;
+                $sumResources[$resource] = (int)($sumResources[$resource] * $inactivityCoefficient);
             }
         }
 
