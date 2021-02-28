@@ -16,6 +16,10 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
 
     $eloquentPatrimoine = Patrimoine::findOrFail($mon_ID);
 
+    if(!auth()->check() || !auth()->user()->can('manageCategories', Patrimoine::class)) {
+        abort(403);
+    }
+
     $new_cat_list = empty($_POST['ch_disp_cat_id']) ? array() : $_POST['ch_disp_cat_id'];
 
     // Obtenir l'affiliation actuelle du monument

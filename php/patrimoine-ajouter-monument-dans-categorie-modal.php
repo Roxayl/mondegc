@@ -12,6 +12,10 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
 
   $eloquentPatrimoine = Patrimoine::findOrFail($_POST['ch_disp_mon_id']);
 
+  if(!auth()->check() || !auth()->user()->can('manageCategories', Patrimoine::class)) {
+        abort(403);
+    }
+
   $insertSQL = sprintf("INSERT INTO dispatch_mon_cat (ch_disp_cat_id, ch_disp_mon_label, ch_disp_mon_id, ch_disp_date) VALUES (%s, %s, %s, %s)",
                        GetSQLValueString($_POST['ch_disp_cat_id'], "int"),
                        GetSQLValueString($_POST['ch_disp_mon_label'], "text"),
