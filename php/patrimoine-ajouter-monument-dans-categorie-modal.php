@@ -22,6 +22,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
 
   event(new PatrimoineCategorized($eloquentPatrimoine));
 
+  getErrorMessage('success', "Quête catégorisée avec succès !", true);
+
   $insertGoTo = DEF_URI_PATH . 'back/institut_patrimoine.php?mon_cat_ID = %s' .$row_mon_cat['ch_mon_cat_ID'].'';
   appendQueryString($insertGoTo);
   $adresse = $insertGoTo .'#classer-monument';

@@ -57,13 +57,10 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
 
     event(new PatrimoineCategorized($eloquentPatrimoine));
 
-    $insertGoTo = DEF_URI_PATH . 'back/institut_patrimoine.php?mon_cat_ID=' .$row_mon_cat['ch_mon_cat_ID'].'';
-    appendQueryString($insertGoTo);
-    $adresse = $insertGoTo .'#classer-monument';
-    header(sprintf("Location: %s", $adresse));
+    getErrorMessage('success', "Quête catégorisée avec succès !", true);
 
+    header('Location: ' . $_POST['previous_url']);
     exit;
-
 }
 
 
@@ -105,10 +102,11 @@ while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)
   <div class="modal-body">
     <!-- Boutons cachés -->
     <?php
-    $now= date("Y-m-d G:i:s");?>
+    $now = date("Y-m-d G:i:s"); ?>
     <input name="ch_mon_id" type="hidden" value="<?php echo $mon_ID; ?>">
     <input name="ch_disp_mon_label" type="hidden" value="disp_mon">
     <input name="ch_disp_date" type="hidden" value="<?php echo $now; ?>">
+    <input name="previous_url" type="hidden" value="<?= e(url()->previous()) ?>">
 
     <ul>
     <?php do { ?>

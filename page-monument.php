@@ -175,7 +175,7 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
         <li><a href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pay_id']) ?>"><?= e($row_monument['ch_pay_nom']) ?></a> <span class="divider">/</span></li>
         <li><a href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pay_id']) ?>#villes">Villes</a> <span class="divider">/</span></li>
         <li><a href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pay_id']) ?>&ch_ville_id=<?= e($row_monument['ch_vil_ID']) ?>"><?= __s($row_monument['ch_vil_nom']) ?></a> <span class="divider">/</span></li>
-        <li><a href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pay_id']) ?>&ch_ville_id=<?= e($row_monument['ch_vil_ID']) ?>#quêtes">Quêtes</a> <span class="divider">/</span></li>
+        <li><a href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pay_id']) ?>&ch_ville_id=<?= e($row_monument['ch_vil_ID']) ?>#quetes">Quêtes</a> <span class="divider">/</span></li>
       <li class="active"><?= e($row_monument['ch_pat_nom']) ?></li>
     </ul>
   <!-- Moderation
@@ -189,7 +189,9 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
     <input name="monument_ID" type="hidden" value="<?= e($row_monument['ch_pat_id']) ?>">
     <button class="btn btn-primary" type="submit" title="modifier ce monument"><i class="icon-pencil icon-white"></i></button>
   </form>
-  <a class="btn btn-primary btn-margin-left" href="../php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?= e($row_classer_mon['ch_disp_mon_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Modifier les catégories">Modifier les catégories</a></div>
+  <div class="pull-right">
+    <a class="btn btn-primary btn-margin-left" href="php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Modifier les catégories">Modifier les catégories</a>
+  </div>
   <?php } ?>
   <?php if ($row_users['ch_use_id'] == $_SESSION['user_ID']) { ?>
   <a class="btn btn-primary pull-right" href="php/partage-monument.php?ch_pat_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i>Partager sur le forum</a>
