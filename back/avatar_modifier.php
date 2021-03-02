@@ -141,8 +141,8 @@ if (isset($uploadconfirm)) {
 <script src="../assets/js/bootstrap-affix.js"></script>
 <script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
-<script src="../assets/js/bootstrap-clickover.js"></script>
-<script src="../assets/js/bootstrap-filestyle.min.js"></script>
+<script src="../assets/js/bootstrapx-clickover.js"></script>
+<script src="../assets/js/bootstrap-filestyle.js"></script>
 <script type="text/javascript">
     $('input[type=file]').bootstrapFileInput();
 </script>
