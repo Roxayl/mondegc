@@ -323,8 +323,9 @@ img.olTileImage {
         <li><a href="#transports">Transports</a></li>
         <?php } ?>
         <?php if ($row_monument || $row_infoVille['ch_vil_culture']) { ?>
-        <li><a href="#quêtes">Quêtes</a></li>
+        <li><a href="#culture">Culture</a></li>
         <?php } ?>
+        <li><a href="#quetes">Quêtes</a></li>
         <li><a href="#commentaires">Visites</a></li>
         <li><a href="page-pays.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>"><?= e($row_Pays['ch_pay_nom']) ?></a></li>
       </ul>
@@ -590,22 +591,33 @@ echo $population_ville_francais; ?></p>
       </section>
     <?php } ?>
 
-        <!-- Culture, ex-Transports
+        <!-- Transports
+    ================================================== -->
+    <?php if($row_infoVille['ch_vil_transports']) { ?>
+      <section>
+        <div class="titre-vert anchor" id="transports">
+          <h1>Transports</h1>
+        </div>
+        <div class="well"> <?= htmlPurify($row_infoVille['ch_vil_transports']) ?> </div>
+      </section>
+    <?php } ?>
+
+        <!-- Culture
     ================================================== -->
     <?php if($row_infoVille['ch_vil_culture']) { ?>
       <section>
-        <div class="titre-vert anchor" id="ch_vil_culture">
+        <div class="titre-vert anchor" id="culture">
           <h1>Culture</h1>
         </div>
         <div class="well"> <?= htmlPurify($row_infoVille['ch_vil_culture']) ?> </div>
       </section>
     <?php } ?>
 
-      <!-- Quêtes, ex-Patrimoine
+      <!-- Quêtes
         ================================================== -->
       <?php if ($row_monument || $row_infoVille['ch_vil_quêtes']) { ?>
       <section>
-        <div id="quêtes" class="titre-vert anchor">
+        <div class="titre-vert anchor" id="quetes">
           <h1>Quêtes</h1>
         </div>
         <!-- Liste des monuments
