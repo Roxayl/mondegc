@@ -22,7 +22,8 @@ $insertSQL = sprintf("INSERT INTO monument_categories (ch_mon_cat_label, ch_mon_
                        GetSQLValueString($_POST['ch_mon_cat_nom'], "text"),
                        GetSQLValueString($_POST['ch_mon_cat_desc'], "text"),
                        GetSQLValueString($_POST['ch_mon_cat_icon'], "text"),
-					   GetSQLValueString($_POST['ch_mon_cat_couleur'], "text"));
+					             GetSQLValueString($_POST['ch_mon_cat_couleur'], "text"),
+                       GetSQLValueString($_POST['ch_mon_cat_quete'], "text"));
 					   
 
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
@@ -373,7 +374,7 @@ $('#closemodal').click(function() {
           </div>
           <!-- Nom-->
           <div id="sprytextfield2" class="control-group">
-            <label class="control-label" for="ch_mon_cat_nom">Nom de la cat&eacute;gorie <a href="#" rel="clickover" title="Nom de la cat&eacute;gorie" data-content="30 caract&egrave;res maximum. Ce nom servira &agrave; identifier la cat&eacute;gorie dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
+            <label class="control-label" for="ch_mon_cat_nom">Nom de la cat&eacute;gorie <a href="#" rel="clickover" title="Nom de la cat&eacute;gorie" Ce nom servira &agrave; identifier la cat&eacute;gorie dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
             <div class="controls">
               <input class="input-xlarge" type="text" id="ch_mon_cat_nom" name="ch_mon_cat_nom">
               <br>
@@ -570,7 +571,7 @@ $('#closemodal').click(function() {
 
 <script type="text/javascript">
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
-var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "none", {minChars:2, maxChars:30, validateOn:["change"]});
+var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "none", {minChars:2, validateOn:["change"]});
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "url", {minChars:2, maxChars:250, validateOn:["change"]});
 var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:400, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>

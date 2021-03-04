@@ -527,7 +527,7 @@ do {
     <li class="item">
       <div class="row-fluid">
           <div class="titre-gris">
-            <h3>Nouveau monument</h3>
+            <h3>Nouvelle quête ouverte !</h3>
           </div>
           <div class="row-fluid fond-notification">
             <div class="span3">
@@ -542,7 +542,7 @@ do {
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-              <p>Un nouveau monument a vu le jour dans la ville <a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>"> <?= e($row_LastCommunique['institution']) ?> </a>:</p>
+              <p><a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>"><?= e($row_LastCommunique['institution']) ?></a> s'est lancé un nouveau défi :</p>
               <h4><a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id']) ?>"> <?= e($row_LastCommunique['titre']) ?> </a> </h4>
             </div>
         </div>
@@ -560,7 +560,7 @@ do {
           &agrave;
           <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
           </small>
-          <p>Le monument <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id']) ?>"><?= e($row_LastCommunique['nom_auteur']) ?></a> a rejoint la cat&eacute;gorie <a href="patrimoine.php?mon_catID=<?= e($row_LastCommunique['id_institution']) ?>#monument"><?= e($row_LastCommunique['institution']) ?></a></p>
+          <p><a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>"><?= e($row_LastCommunique['institution']) ?></a>  a atteint un nouveau stade dans sa Quête <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id']) ?>"><?= e($row_LastCommunique['nom_auteur']) ?></a> :  <a href="patrimoine.php?mon_cat_ID=<?= e($row_LastCommunique['id_institution']) ?>#monument"><?= e($row_LastCommunique['institution']) ?></a></p>
         </div>
         <div class="span1 auteur icone-categorie">
           <?php if ($row_LastCommunique['img_institution']) {?>

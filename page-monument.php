@@ -190,7 +190,7 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
     <button class="btn btn-primary" type="submit" title="modifier ce monument"><i class="icon-pencil icon-white"></i></button>
   </form>
   <div class="pull-right">
-    <a class="btn btn-primary btn-margin-left" href="php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Modifier les catégories">Modifier les catégories</a>
+    <a class="btn btn-primary btn-margin-left" style="height: 21px;" href="php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Modifier les catégories">Modifier les catégories</a>
   </div>
   <?php } ?>
   <?php if ($row_users['ch_use_id'] == $_SESSION['user_ID']) { ?>
@@ -204,20 +204,20 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
   </div>
   <div class="well">
     <div class="row-fluid">
-      <div class="span8">
-        <p><strong>Pays&nbsp;:</strong> <img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>"><?= __s($row_monument['ch_pay_nom']) ?></a></p>
-        <p><strong>Ville&nbsp;:</strong> <a class="" href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>&ch_ville_id=<?= e($row_monument['ch_pat_villeID']) ?>"><?= __s($row_monument['ch_vil_nom']) ?></a></p>
+      <div>
+        <p><img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>"><?= __s($row_monument['ch_pay_nom']) ?></a> • <a class="" href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>&ch_ville_id=<?= e($row_monument['ch_pat_villeID']) ?>"><?= __s($row_monument['ch_vil_nom']) ?></a></p>
         <p><?= __s($row_monument['ch_pat_description']) ?></p>
-        <!-- Liste des categories di monument -->
-        <p><strong>Cat&eacute;gories&nbsp;:</strong></p>
+        <!-- Liste des categories du monument -->
+        <p><strong>Objectifs atteints jusqu'à présent&nbsp;:</strong></p>
         <?php if ($row_monument['listcat']) { ?>
         <ul class="listes">
           <?php do { ?>
-            <li class="row-fluid">
+            <li class="row-fluid" style="background-image: url(assets/img/quete-fond-<?= __s($row_liste_mon_cat3['ch_mon_cat_couleur']) ?>.jpg); background-attachment: fixed; background-position: center; background-size: 110%;">
               <div class="span1 icone-categorie"><img src="<?= __s($row_liste_mon_cat3['ch_mon_cat_icon']) ?>" alt="icone <?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?>" style="background-color:<?= __s($row_liste_mon_cat3['ch_mon_cat_couleur']) ?>;"></div>
-              <div class="span7">
-                <p><strong><a href="patrimoine.php?mon_catID=<?php echo $row_liste_mon_cat3['ch_mon_cat_ID']; ?>#monument"><?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?></a></strong></p>
-              </div>
+              <div class="span7" style="width: 90%; margin-left: 0em;">
+                <p><strong><a href="patrimoine.php?mon_cat_ID=<?php echo $row_liste_mon_cat3['ch_mon_cat_ID']; ?>#monument"><?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?></a></strong> <br><?= __s($row_liste_mon_cat3['ch_mon_cat_desc']) ?> <br>
+                    <div style="vertical-align: baseline;"><img src="assets/img/ressources/budget.png" style="max-width: 15px" alt="icone Budget"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_budget']) ?></strong> <img src="assets/img/ressources/industrie.png" style="max-width: 15px" alt="icone Industrie"><strong> <?= e($row_liste_mon_cat3['ch_mon_cat_industrie']) ?></strong><img src="assets/img/ressources/bureau.png" style="max-width: 15px" alt="icone Commerce"><strong> <?= e($row_liste_mon_cat3['ch_mon_cat_commerce']) ?></strong><img src="assets/img/ressources/agriculture.png" style="max-width: 15px" alt="icone Agriculture"><strong> <?= e($row_liste_mon_cat3['ch_mon_cat_agriculture']) ?></strong><img src="assets/img/ressources/tourisme.png" style="max-width: 15px" alt="icone Tourisme"><strong> <?= e($row_liste_mon_cat3['ch_mon_cat_tourisme']) ?></strong><img src="assets/img/ressources/recherche.png" style="max-width: 15px" alt="icone Recherche"><strong> <?= e($row_liste_mon_cat3['ch_mon_cat_recherche']) ?></strong><img src="assets/img/ressources/environnement.png" style="max-width: 15px" alt="icone Evironnement"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_environnement']) ?></strong><img src="assets/img/ressources/education.png" style="max-width: 15px" alt="icone Education"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_education']) ?></strong>
+                  </div>
             </li>
             <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); ?>
         </ul>
@@ -227,16 +227,12 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
       <?php }?>
         <br>
         <p><strong>Influence sur l'économie :</strong></p>
-            <?php
-            renderElement('temperance/resources_small', array(
+             <div style="text-align: center;"><?php
+                renderElement('temperance/resources', array(
                 'resources' => $row_monument_ressources
-            ));
-            ?>
-          <div class="clearfix"></div>
+             ));
+            ?></div>
       </div>
-    <div class="span4">
-      <iframe width="100%" height="300px" frameborder="0" scrolling="no" src="<?= DEF_URI_PATH ?>Iframeposition.php?x=<?= __s($row_monument['ch_pat_coord_X']) ?>&y=<?= __s($row_monument['ch_pat_coord_Y']) ?>" name="iframe"></iframe>
-    </div>
   </div>
 </div>
 <!-- Commentaire

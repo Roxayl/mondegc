@@ -690,7 +690,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
         ================================================== -->
     <section>
       <div id="mes-monuments" class="titre-vert anchor">
-        <h1>Monuments</h1>
+        <h1>Quêtes</h1>
       </div>
       <div class="alert alert-tips">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -740,7 +740,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
               <form action="monument_ajouter.php" method="post">
                 <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
                 <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
-                <button class="btn btn-primary btn-margin-left" type="submit">Ajouter un monument</button>
+                <button class="btn btn-primary btn-margin-left" type="submit">Se lancer dans une nouvelle quête !</button>
               </form></td>
           </tr>
         </tfoot>
@@ -749,7 +749,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
       <form action="monument_ajouter.php" method="post">
         <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
         <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
-        <button class="btn btn-primary btn-margin-left" type="submit">Ajouter un monument</button>
+        <button class="btn btn-primary btn-margin-left" type="submit">Se lancer dans une nouvelle quête !</button>
       </form>
       <?php } ?>
     </section>

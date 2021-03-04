@@ -192,7 +192,7 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
     ================================================== -->
       <section>
         <div class="titre-bleu anchor" id="presentation">
-          <h1>Présentation</h1>
+          <h1>Lolilol</h1>
         </div>
         <div class="well">
           <div class="row-fluid">

@@ -73,7 +73,7 @@ $institutCulture = new Institut(Institut::$instituts['culture']);
 <!-- head Html -->
 <head>
 <meta charset="utf-8">
-<title>Monde GC - Ajouter un monument</title>
+<title>Monde GC - Nouvelle quête</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -142,7 +142,7 @@ return true;
       <!-- Moderation
      ================================================== -->
       <div id="monument" class="titre-vert anchor">
-        <h1>Ajouter un monument</h1>
+        <h1>Commencer une nouvelle quête</h1>
       </div>
       <?php if (($_SESSION['statut'] >= 20) AND ($row_users['ch_use_id'] != $_SESSION['user_ID'])) { ?>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/membre-modifier_back.php" method="get">
@@ -155,7 +155,7 @@ return true;
       </form>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="get">
         <input name="ville-ID" type="hidden" value="<?= e($row_monument['ch_pat_villeID']) ?>">
-        <button class="btn btn-danger" type="submit" title="page de gestion de la ville"> Modifier la ville</button>
+        <button class="btn btn-danger" type="submit" title="page de gestion de la ville"><i class="icon-pencil icon-white"></i> Modifier la ville</button>
       </form>
       <?php }?>
       <div class="clearfix"></div>
@@ -185,11 +185,11 @@ return true;
             <label>
               <input name="ch_pat_statut" type="radio" id="ch_pat_statut_2" value="2">
               invisible</label>
-            <span class="radioRequiredMsg">Choisissez un statut pour votre monument</span></div>
+            <span class="radioRequiredMsg">Choisissez un statut pour votre quête</span></div>
         </div>
         <!-- Nom -->
         <div id="sprytextfield2" class="control-group">
-          <label class="control-label" for="ch_pat_nom">Nom du Monument <a href="#" rel="clickover" title="Nom du monument" data-content="50 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
+          <label class="control-label" for="ch_pat_nom">Nom de la Quête <a href="#" rel="clickover" title="Nom de la quête" data-content="50 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
             <input class="span6" type="text" id="ch_pat_nom" name="ch_pat_nom" value="" placeholder="mon monument">
             <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>
@@ -290,7 +290,7 @@ return true;
             <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span></div>
         </div>
         <div class="controls">
-          <button type="submit" class="btn btn-primary">Envoyer</button>&nbsp;&nbsp;<a class="btn btn-danger" href="ville_modifier.php">Annuler</a>
+          <button type="submit" class="btn btn-primary">C'est parti !</button>&nbsp;&nbsp;<a class="btn btn-danger" href="ville_modifier.php">Annuler</a>
         </div>
         <input type="hidden" name="MM_insert" value="ajout_monument">
       </form>

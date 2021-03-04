@@ -323,7 +323,7 @@ img.olTileImage {
         <li><a href="#transports">Transports</a></li>
         <?php } ?>
         <?php if ($row_monument || $row_infoVille['ch_vil_culture']) { ?>
-        <li><a href="#patrimoine">Culture</a></li>
+        <li><a href="#quêtes">Quêtes</a></li>
         <?php } ?>
         <li><a href="#commentaires">Visites</a></li>
         <li><a href="page-pays.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>"><?= e($row_Pays['ch_pay_nom']) ?></a></li>
@@ -530,7 +530,7 @@ echo $population_ville_francais; ?></p>
                 ));
                 ?>
                 <p></p>
-              <h4><i class="icon-star"></i> Culture</h4>
+              <h4><i class="icon-star"></i> Quêtes</h4>
                 <?php
                 renderElement('temperance/resources_small', array(
                     'resources' => $row_patrimoine_ressources
@@ -590,27 +590,27 @@ echo $population_ville_francais; ?></p>
       </section>
     <?php } ?>
 
-        <!-- Transports
+        <!-- Culture, ex-Transports
     ================================================== -->
-    <?php if($row_infoVille['ch_vil_transports']) { ?>
+    <?php if($row_infoVille['ch_vil_culture']) { ?>
       <section>
-        <div class="titre-vert anchor" id="transports">
-          <h1>Transports</h1>
+        <div class="titre-vert anchor" id="ch_vil_culture">
+          <h1>Culture</h1>
         </div>
-        <div class="well"> <?= htmlPurify($row_infoVille['ch_vil_transports']) ?> </div>
+        <div class="well"> <?= htmlPurify($row_infoVille['ch_vil_culture']) ?> </div>
       </section>
     <?php } ?>
 
-      <!-- Patrimoine
+      <!-- Quêtes, ex-Patrimoine
         ================================================== -->
-      <?php if ($row_monument || $row_infoVille['ch_vil_culture']) { ?>
+      <?php if ($row_monument || $row_infoVille['ch_vil_quêtes']) { ?>
       <section>
-        <div id="patrimoine" class="titre-vert anchor">
-          <h1>Culture</h1>
+        <div id="quêtes" class="titre-vert anchor">
+          <h1>Quêtes</h1>
         </div>
         <!-- Liste des monuments
         ================================================== -->
-        <h3>Liste des monuments</h3>
+        <h3>Quêtes en cours</h3>
         <div id="infra-well-container">
         <?php do {
 
