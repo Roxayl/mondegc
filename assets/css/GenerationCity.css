@@ -305,7 +305,7 @@ input[type="submit"], .btn {
     border-color: rgba(250, 250, 2500, 1) rgba(250, 250, 2500, 1) rgba(250, 250, 2500, 1) rgba(250, 250, 2500, 1);
 }
 
-/* Bouton Primary----------------------------------------------------------------------------------- */
+/* Boutons ----------------------------------------------------------------------------------- */
 .btn-primary {
   display: inline-block;
   vertical-align: middle;
@@ -318,33 +318,16 @@ input[type="submit"], .btn {
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
-
-
-/*{
-    color: #ffffff;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    background-color: #ff4e00;
-    *background-color: #ff4e00;
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ff4e00), to(#ff4e00));
-    background-image: -webkit-linear-gradient(top, #ff4e00, #ff4e00);
-    background-image: -o-linear-gradient(top, #ff4e00, #ff4e00);
-    background-image: linear-gradient(to bottom, #ff4e00, #ff4e00);
-    background-image: -moz-linear-gradient(top, #ff4e00, #ff4e00);
-    background-repeat: repeat-x;
-    filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffff4e00', endColorstr='#ffff4e00', GradientType=0);
-    -webkit-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);
-}*/
-
-.btn {
-    border: solid 0px;
-    border-radius: 0px;
-}
 .btn-primary:hover {
     background-color: #ff4e00;
     color:white;
 }
 
+.btn {
+    border: solid 0;
+    border-radius: 0;
+    transition: border-radius 0.5s ease;
+}
 .btn:hover {
     border-radius: 10px;
     background-position: 0 -15px;
