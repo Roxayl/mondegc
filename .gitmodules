@@ -1,0 +1,3 @@
+[submodule "laradock_mondegc"]
+	path = laradock_mondegc
+	url = https://github.com/Laradock/laradock.git
