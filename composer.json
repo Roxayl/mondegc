@@ -1,7 +1,9 @@
 {
-    "name": "generationcity/mondegc",
+    "name": "roxayl/mondegc",
     "description": "Le site du Monde de Generation City",
     "type": "project",
+    "keywords": ["generation city", "php", "laravel"],
+    "homepage": "https://generation-city.com/monde/",
     "license": "proprietary",
     "authors": [
         {
@@ -9,10 +11,13 @@
             "role": "Developer"
         }, {
             "name": "Lesime",
-            "role": "Graphic designer"
+            "role": "Graphic Designer"
+        }, {
+            "name": "Myname",
+            "role": "Developer"
         }, {
             "name": "Roxel Lay",
-            "role": "Developer",
+            "role": "Main Developer",
             "email": "contact@romukulot.fr",
             "homepage": "https://romukulot.fr"
         }, {
