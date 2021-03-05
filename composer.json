@@ -33,6 +33,7 @@
         "doctrine/dbal": "^2.10",
         "ezyang/htmlpurifier": "^4.13",
         "fideloper/proxy": "^4.0",
+        "funkjedi/composer-include-files": "^1.1",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
         "spatie/laravel-searchable": "^1.6"
@@ -55,7 +56,10 @@
     "extra": {
         "laravel": {
             "dont-discover": []
-        }
+        },
+        "include_files": [
+            "app/Foundation/helpers.php"
+        ]
     },
     "autoload": {
         "psr-4": {
