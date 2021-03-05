@@ -478,6 +478,10 @@ input[type='submit'] {
     margin-top: 5px;
 }
 
+.cta-title {
+    margin-top: 26px;
+}
+
 .btn-connexion {
     margin: 20px 0 4px;
     padding-top: 4px;

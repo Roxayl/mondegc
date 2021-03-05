@@ -333,7 +333,7 @@ return true;
         <li><a href="#page_ville">Page ville</a></li>
         <li><a href="#mes-communiques">Communiqu&eacute;s officiels</a></li>
         <li><a href="#infrastructures">Infrastructures</a></li>
-        <li><a href="#mes-monuments">Monuments</a></li>
+        <li><a href="#quetes">Quêtes</a></li>
         <li><a href="page_pays_back.php?paysID=<?= e($row_ville['ch_pay_id']) ?>">Retour &agrave; mon pays</a></li>
       </ul>
     </div>
@@ -431,12 +431,12 @@ return true;
                   <label class="control-label" for="ch_vil_type_jeu">Type de jeu <a href="#" rel="clickover" title="Type de jeu" data-content="Indiquez le jeu dans lequel vous avez construit votre ville"><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
                     <select id="ch_vil_type_jeu" name="ch_vil_type_jeu">
-                      <option value="SC5" <?php if (!(strcmp("SC5", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Sim City 5</option>
-                      <option value="CXL" <?php if (!(strcmp("CXL", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Cities Xl</option>
+                      <option value="SC5" <?php if (!(strcmp("SC5", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>SimCity 5</option>
+                      <option value="CXL" <?php if (!(strcmp("CXL", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Cities XL</option>
                       <option value="CL" <?php if (!(strcmp("CL", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>City Life</option>
-                      <option value="SC4" <?php if (!(strcmp("SC4", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Sim City 4</option>
+                      <option value="SC4" <?php if (!(strcmp("SC4", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>SimCity 4</option>
                       <option value="SIM" <?php if (!(strcmp("SIM", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Les Sims</option>
-              <option value="SKY" <?php if (!(strcmp("SKY", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Cities Skylines</option>
+                      <option value="SKY" <?php if (!(strcmp("SKY", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Cities: Skylines</option>
                     </select>
                   </div>
                 </div>
@@ -664,8 +664,22 @@ return true;
         <input type="hidden" name="MM_update" value="ajout_ville">
       </form>
     </section>
+    <div class="clearfix"></div>
+
+
     <!-- Liste des Communiqués
         ================================================== -->
+    <?php if (auth()->check() && auth()->user()->ownsPays($eloquentVille->pays)): ?>
+      <div class="pull-right-cta cta-title">
+          <a href="<?= url('back/communique_ajouter.php?userID='
+              . auth()->user()->ch_use_id . '&cat=ville&com_element_id='
+              . $eloquentVille->pays->ch_pay_id) ?>"
+             class="btn btn-primary btn-cta">
+              <i class="icon-plus-sign icon-white"></i> Ajouter un communiqué
+          </a>
+      </div>
+    <?php endif; ?>
+
     <section>
       <div id="mes-communiques" class="titre-vert anchor">
         <h1>Communiqu&eacute;s</h1>
@@ -679,17 +693,30 @@ $com_cat = "ville";
 $com_element_id = $row_ville['ch_vil_ID'];
 include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
     </section>
-    
+    <div class="clearfix"></div>
+
+
     <!-- Liste des infrastructures
         ================================================== -->
     <?php
     renderElement('infrastructure/back_list', [
           'infrastructurable' => $eloquentVille,
     ]); ?>
-    <!-- Liste des monuments
+    <div class="clearfix"></div>
+
+
+    <!-- Liste des quêtes
         ================================================== -->
+    <div class="pull-right-cta cta-title">
+        <form action="monument_ajouter.php" method="post">
+            <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
+            <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
+            <button class="btn btn-primary btn-margin-left" type="submit">
+                <i class="icon icon-star icon-white"></i> Se lancer dans une nouvelle quête !</button>
+        </form>
+    </div>
     <section>
-      <div id="mes-monuments" class="titre-vert anchor">
+      <div id="quetes" class="titre-vert anchor">
         <h1>Quêtes</h1>
       </div>
       <div class="alert alert-tips">
@@ -731,16 +758,17 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
           <tr>
             <td colspan="5"><p class="pull-right">de <?php echo ($startRow_monument + 1) ?> &agrave; <?php echo min($startRow_monument + $maxRows_monument, $totalRows_monument) ?> sur <?php echo $totalRows_monument ?>
                 <?php if ($pageNum_monument > 0) { // Show if not first page ?>
-                  <a class="btn" href="<?php printf("%s?pageNum_monument=%d%s#mes-monuments", (int)$currentPage, max(0, $pageNum_monument - 1), $queryString_monument); ?>"><i class=" icon-backward"></i> </a>
+                  <a class="btn" href="<?php printf("%s?pageNum_monument=%d%s#quetes", (int)$currentPage, max(0, $pageNum_monument - 1), $queryString_monument); ?>"><i class=" icon-backward"></i> </a>
                   <?php } // Show if not first page ?>
                 <?php if ($pageNum_monument < $totalPages_monument) { // Show if not last page ?>
-                  <a class="btn" href="<?php printf("%s?pageNum_monument=%d%s#mes-monuments", $currentPage, min($totalPages_monument, $pageNum_monument + 1), $queryString_monument); ?>"> <i class="icon-forward"></i></a>
+                  <a class="btn" href="<?php printf("%s?pageNum_monument=%d%s#quetes", $currentPage, min($totalPages_monument, $pageNum_monument + 1), $queryString_monument); ?>"> <i class="icon-forward"></i></a>
                   <?php } // Show if not last page ?>
               </p>
               <form action="monument_ajouter.php" method="post">
                 <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
                 <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
-                <button class="btn btn-primary btn-margin-left" type="submit">Se lancer dans une nouvelle quête !</button>
+                <button class="btn btn-primary btn-margin-left" type="submit">Se lancer dans une nouvelle
+                    quête !</button>
               </form></td>
           </tr>
         </tfoot>
@@ -749,11 +777,13 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
       <form action="monument_ajouter.php" method="post">
         <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
         <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
-        <button class="btn btn-primary btn-margin-left" type="submit">Se lancer dans une nouvelle quête !</button>
+        <button class="btn btn-primary btn-margin-left" type="submit">Se lancer dans une
+            nouvelle quête !</button>
       </form>
       <?php } ?>
     </section>
   </div>
+
   <!-- END CONTENT
     ================================================== --> 
 </div>

@@ -9,7 +9,7 @@ if(isset($data['infrastructurable'])) {
 ?>
 
     <?php if(Gate::check('manageInfrastructure', $infrastructurable)): ?>
-    <div class="cta-title pull-right-cta" style="margin-top: 30px;">
+    <div class="cta-title pull-right-cta">
         <a href="<?= route('infrastructure.select-group',
             $infrastructurable->selectGroupRouteParameter()) ?>"
            class="btn btn-primary btn-cta">
