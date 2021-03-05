@@ -247,7 +247,7 @@ format: 'hex'});
         ================================================== -->
   <!-- formulaire de modification instituts
      ================================================== -->
-  <form class="pull-right-cta" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post" style="margin-top: 30px;">
+  <form class="pull-right-cta cta-title" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post">
     <input name="institut_id" type="hidden" value="<?= e($row_institut['ch_ins_ID']) ?>">
     <button class="btn btn-primary btn-cta" type="submit" title="modifier les informations sur l'institut"><i class="icon-edit icon-white"></i> Modifier la description</button>
   </form>
