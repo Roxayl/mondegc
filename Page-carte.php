@@ -15,26 +15,37 @@ $stat_pays = mysql_query($query_stat_pays, $maconnexion) or die(mysql_error());
 $row_stat_pays = mysql_fetch_assoc($stat_pays);
 $totalRows_stat_pays = mysql_num_rows($stat_pays);
 
-
 $query_stat_ville = "SELECT COUNT(ch_vil_ID) AS nbville, ch_pay_continent, SUM(ch_vil_population) AS nbhabitant FROM villes INNER JOIN pays ON ch_pay_id = ch_vil_paysID WHERE ch_vil_capitale != 3 AND ch_pay_publication = 1 GROUP BY ch_pay_id";
 $stat_ville = mysql_query($query_stat_ville, $maconnexion) or die(mysql_error());
 $row_stat_ville = mysql_fetch_assoc($stat_ville);
 $totalRows_stat_ville = mysql_num_rows($stat_ville);
 
+//Aurinea
 $nbhabitants_Aurinea = 0;
 $nbpays_Aurinea = 0;
+$nbvilles_Aurinea = 0;
+//RFGC
 $nbhabitants_RFGC = 0;
 $nbpays_RFGC = 0;
+$nbvilles_RFGC = 0;
+//Volcania
 $nbhabitants_Volcania = 0;
 $nbpays_Volcania = 0;
+$nbvilles_Volcania = 0;
+//Oceania
 $nbhabitants_Oceania = 0;
 $nbpays_Oceania = 0;
+$nbvilles_Oceania = 0;
+//Philicie
 $nbhabitants_Philicie = 0;
 $nbpays_Philicie = 0;
+$nbvilles_Philicie = 0;
+// Aldesyl
 $nbhabitants_Aldesyl = 0;
 $nbpays_Aldesyl = 0;
+$nbvilles_Aldesyl = 0;
 
-
+//Récupération des statistiques issues de la carte
 do {
     switch($row_stat_pays['ch_pay_continent']) {
         case "Aurinea" :
@@ -67,20 +78,7 @@ do {
 } while($row_stat_pays = mysql_fetch_assoc($stat_pays));
 mysql_data_seek($stat_pays, 0);
 
-
-$nbvilles_Aurinea = 0;
-$nbhabitants_Aurinea = 0;
-$nbvilles_RFGC = 0;
-$nbhabitants_RFGC = 0;
-$nbvilles_Volcania = 0;
-$nbhabitants_Volcania = 0;
-$nbvilles_Aldesyl = 0;
-$nbhabitants_Aldesyl = 0;
-$nbvilles_Oceania = 0;
-$nbhabitants_Oceania = 0;
-$nbvilles_Philicie = 0;
-$nbhabitants_Philicie = 0;
-
+//Récupération des statistiques issues des villes
 do {
     switch($row_stat_ville['ch_pay_continent']) {
         case "Aurinea" :
