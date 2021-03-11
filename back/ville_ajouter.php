@@ -221,12 +221,17 @@ return true;
           <label class="control-label" for="ch_vil_type_jeu">Type de jeu <a href="#" rel="clickover" title="Type de jeu" data-content="Indiquez le jeu dans lequel vous avez construit votre ville"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
             <select id="ch_vil_type_jeu" name="ch_vil_type_jeu">
-              <option value="SC5">Sim City 2013</option>
-              <option value="CXL" selected>Cities (X)Xl</option>
               <option value="CL">City Life</option>
-              <option value="SC4">Sim City 4</option>
-              <option value="SIM">Les Sims</option>
+              <option value="CXL" selected>Cities (X)Xl</option>
               <option value="SKY">Cities Skylines</option>
+              <option value="SIM">Les Sims</option>
+              <option value="SC5">Sim City 2013</option>
+              <option value="SC4">Sim City 4</option>
+              <option value="SC3">Sim City 3000</option>
+              <option value="TAP">The Architect</option>
+              <option value="MFT">Minecraft</option>
+              
+              
             </select>
           </div>
         </div>

@@ -423,10 +423,20 @@ echo $population_ville_francais; ?></p>
           <img src="assets/img/jeux-ico/cl.png" class="img-jeu">
           <?php } elseif ($row_infoVille['ch_vil_type_jeu'] == 'CXL'){ ?>
           <img src="assets/img/jeux-ico/cxl.png" class="img-jeu">
+          <?php } elseif ($row_infoVille['ch_vil_type_jeu'] == 'SKY'){ ?>
+          <img src="assets/img/jeux-ico/sky.png" class="img-jeu">
+          <?php } elseif ($row_infoVille['ch_vil_type_jeu'] == 'SIM'){ ?>
+          <img src="assets/img/jeux-ico/sim.png" class="img-jeu">
           <?php } elseif ($row_infoVille['ch_vil_type_jeu'] =='SC5'){ ?>
           <img src="assets/img/jeux-ico/sc5.png" class="img-jeu">
           <?php } elseif ($row_infoVille['ch_vil_type_jeu'] =='SC4'){ ?>
           <img src="assets/img/jeux-ico/sc4.png" class="img-jeu">
+          <?php } elseif ($row_infoVille['ch_vil_type_jeu'] =='SC3'){ ?>
+          <img src="assets/img/jeux-ico/sc3.png" class="img-jeu">
+          <?php } elseif ($row_infoVille['ch_vil_type_jeu'] =='TAP'){ ?>
+          <img src="assets/img/jeux-ico/tap.png" class="img-jeu">
+          <?php } elseif ($row_infoVille['ch_vil_type_jeu'] =='MFT'){ ?>
+          <img src="assets/img/jeux-ico/mft.png" class="img-jeu">
           <?php } else { ?>
           <p>Information sur le jeu manquante</p>
           <?php } ?>
