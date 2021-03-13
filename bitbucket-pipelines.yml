@@ -5,47 +5,52 @@
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: php:7.4.16
 
+definitions:
+  steps:
+    - step: &gitdiffdeploy
+        name: Git Diff & Deploy
+        deployment: production
+        script:
+          - apt-get update && apt-get install -y unzip git git-core
+          - LASTCOMMITHASH=`git rev-parse @`
+          - PREVIOUSCOMMITHASH=`git rev-parse @~`
+          - echo "Last commit is $LASTCOMMITHASH"
+          - echo "Previous commit is $PREVIOUSCOMMITHASH"
+          - git archive -o output.zip $LASTCOMMITHASH $(git diff --diff-filter=ACMRTUXB --name-only $PREVIOUSCOMMITHASH $LASTCOMMITHASH)
+          - find . -type f ! -iname "output.zip" -delete
+          - ls -R
+          - mkdir deploy
+          - unzip output.zip -d deploy
+          - ls
+          - cd deploy
+          - ls -R
+          - cd ..
+          - pipe: atlassian/ftp-deploy:0.3.5
+            variables:
+              USER: $FTP_MONDEGC_USERNAME
+              PASSWORD: $FTP_MONDEGC_PASSWORD
+              SERVER: $FTP_MONDEGC_HOST
+              REMOTE_PATH: '/'
+              LOCAL_PATH: "deploy"
+              DELETE_FLAG: 'false' # Don't delete existing files
+              DEBUG: 'true'
+    - step: &buildtest
+        name: Build/Test
+        caches:
+          - composer
+        script:
+          - apt-get update && apt-get install -y unzip
+          - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+          - composer install --ignore-platform-reqs
+          - php artisan monde:init
+        artifacts:
+          - vendor/**
+
 pipelines:
   branches:
     develop:
-      - step:
-          name: Build/Test
-          image: php:7.4.16
-          caches:
-            - composer
-          script:
-            - apt-get update && apt-get install -y unzip
-            - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-            - composer install --ignore-platform-reqs --no-dev
-            - php artisan monde:init
-          artifacts:
-            - vendor/**
+      - step: *buildtest
+      - step: *gitdiffdeploy
     master:
-      - step:
-          name: Git Diff & Deploy
-          image: php:7.4.16
-          script:
-            - apt-get update && apt-get install -y unzip git git-core
-            - git log
-            - LASTCOMMITHASH=`git rev-parse @`
-            - PREVIOUSCOMMITHASH=`git rev-parse @~`
-            - echo "Last commit is $LASTCOMMITHASH"
-            - echo "Previous commit is $PREVIOUSCOMMITHASH"
-            - git archive -o output.zip $LASTCOMMITHASH $(git diff --diff-filter=ACMRTUXB --name-only $PREVIOUSCOMMITHASH $LASTCOMMITHASH)
-            - find . -type f ! -iname "output.zip" -delete
-            - ls -R
-            - mkdir deploy
-            - unzip output.zip -d deploy
-            - ls
-            - cd deploy
-            - ls -R
-            - cd ..
-            - pipe: atlassian/ftp-deploy:0.3.5
-              variables:
-                USER: $FTP_MONDEGC_USERNAME
-                PASSWORD: $FTP_MONDEGC_PASSWORD
-                SERVER: $FTP_MONDEGC_HOST
-                REMOTE_PATH: '/'
-                LOCAL_PATH: "deploy"
-                DELETE_FLAG: 'false' # Don't delete existing files
-                DEBUG: 'true'
+      - step: *buildtest
+      - step: *gitdiffdeploy
