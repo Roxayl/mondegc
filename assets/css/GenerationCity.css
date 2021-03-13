@@ -307,16 +307,16 @@ input[type="submit"], .btn {
 
 /* Bouton Primary----------------------------------------------------------------------------------- */
 .btn-primary {
-  display: inline-block;
-  vertical-align: middle;
-  -webkit-transform: perspective(1px) translateZ(0);
-  transform: perspective(1px) translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  position: relative;
-  -webkit-transition-property: color;
-  transition-property: color;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
 }
 
 
@@ -339,6 +339,8 @@ input[type="submit"], .btn {
 .btn {
     border: solid 0px;
     border-radius: 0px;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
 }
 .btn-primary:hover {
     background-color: #ff4e00;
@@ -347,7 +349,7 @@ input[type="submit"], .btn {
 
 .btn:hover {
     border-radius: 10px;
-    background-position: 0 -15px;
+    background-position: 0;
     transition: border-radius 0.5s ease;
 }
 .btn:active {
