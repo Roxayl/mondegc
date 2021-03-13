@@ -172,10 +172,8 @@ init();
 
     </div>
     </section>
+    <div class="clearfix"></div>
 
-    <section>
-
-    <!-- PROPOSITIONS -->
     <?php if(isset($userPaysAllowedToVote)): ?>
     <div class="cta-title pull-right-cta">
         <a href="back/ocgc_proposal_create.php"
@@ -183,7 +181,9 @@ init();
             <i class="icon-white icon-pencil"></i> Lancer une proposition</a>
     </div>
     <?php endif; ?>
+    <section>
 
+    <!-- PROPOSITIONS -->
     <div class="titre-bleu" id="propositions">
       <h1>Propositions</h1>
     </div>

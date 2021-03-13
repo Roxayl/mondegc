@@ -274,7 +274,7 @@ $eloquentCommunique = \App\Models\Communique::findOrFail($colname_communique);
 
   <!-- Moderation
      ================================================== -->
-  <div class="cta-container" style="position: relative; top: 24px; margin-right: -15px;">
+  <div class="cta-container" style="position: relative; top: 25px; margin-right: -15px;">
     <?php if ($check_organisation && ($_SESSION['statut'] >= 20) OR ($row_user['ch_use_id'] == $_SESSION['user_ID'])) { ?>
      <div class="moderation">
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/communique_confirmation_supprimer.php" method="post">

@@ -92,6 +92,8 @@
                 {!! $helperService::displayAlert() !!}
             </div>
 
+            <div class="clearfix"></div>
+
             @include('organisation.components.actualites')
 
             @include('organisation.components.presentation')

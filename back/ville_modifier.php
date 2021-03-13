@@ -430,7 +430,7 @@ return true;
                 <div class="control-group">
                   <label class="control-label" for="ch_vil_type_jeu">Type de jeu <a href="#" rel="clickover" title="Type de jeu" data-content="Indiquez le jeu dans lequel vous avez construit votre ville"><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
-                    <select id="ch_vil_type_jeu" name="ch_vil_type_jeu">              
+                    <select id="ch_vil_type_jeu" name="ch_vil_type_jeu">
                       <option value="CL" <?php if (!(strcmp("CL", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>City Life</option>
                       <option value="CXL" <?php if (!(strcmp("CXL", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Cities (X)Xl</option>
                       <option value="SKY" <?php if (!(strcmp("SKY", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Cities Skylines</option>
@@ -667,8 +667,22 @@ return true;
         <input type="hidden" name="MM_update" value="ajout_ville">
       </form>
     </section>
+    <div class="clearfix"></div>
+
+
     <!-- Liste des Communiqués
         ================================================== -->
+    <?php if (auth()->check() && auth()->user()->ownsPays($eloquentVille->pays)): ?>
+      <div class="pull-right-cta cta-title">
+          <a href="<?= url('back/communique_ajouter.php?userID='
+              . auth()->user()->ch_use_id . '&cat=ville&com_element_id='
+              . $eloquentVille->pays->ch_pay_id) ?>"
+             class="btn btn-primary btn-cta">
+              <i class="icon-plus-sign icon-white"></i> Ajouter un communiqué
+          </a>
+      </div>
+    <?php endif; ?>
+
     <section>
       <div id="mes-communiques" class="titre-vert anchor">
         <h1>Communiqu&eacute;s</h1>
@@ -682,15 +696,28 @@ $com_cat = "ville";
 $com_element_id = $row_ville['ch_vil_ID'];
 include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
     </section>
-    
+    <div class="clearfix"></div>
+
+
     <!-- Liste des infrastructures
         ================================================== -->
     <?php
     renderElement('infrastructure/back_list', [
           'infrastructurable' => $eloquentVille,
     ]); ?>
-    <!-- Liste des monuments
+    <div class="clearfix"></div>
+
+
+    <!-- Liste des quêtes
         ================================================== -->
+    <div class="pull-right-cta cta-title">
+        <form action="monument_ajouter.php" method="post">
+            <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
+            <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
+            <button class="btn btn-primary btn-margin-left" type="submit">
+                <i class="icon icon-star icon-white"></i> Se lancer dans une nouvelle quête !</button>
+        </form>
+    </div>
     <section>
       <div id="mes-monuments" class="titre-vert anchor">
         <h1>Monuments</h1>
@@ -757,6 +784,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
       <?php } ?>
     </section>
   </div>
+
   <!-- END CONTENT
     ================================================== --> 
 </div>

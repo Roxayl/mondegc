@@ -1,6 +1,6 @@
 
 @can('administrate', $organisation)
-    <div class="cta-title pull-right-cta" style="margin-top: 20px;">
+    <div class="cta-title pull-right-cta">
         <a href=" {{ url('back/communique_ajouter.php?userID='.
             auth()->user()->ch_use_id . '&cat=organisation&com_element_id=' .
             $organisation->id) }}" class="btn btn-primary btn-cta">
@@ -41,7 +41,6 @@
     </table>
 
     {{ $communiques->links() }}
-    <div class="clearfix"></div>
 
 @else
     <div class="alert alert-tips">
@@ -49,3 +48,5 @@
         Allez hopop, on se motive les membres !
     </div>
 @endif
+
+<div class="clearfix"></div>

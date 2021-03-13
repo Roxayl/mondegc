@@ -21,11 +21,6 @@ $mondegc_config['front-controller']['path'] = str_replace('.', '/',
 
 $mondegc_config['front-controller']['require'] = DEF_ROOTPATH . $mondegc_config['front-controller']['path'] . '.php';
 
-if(isset($mondegc_config['env']) && $mondegc_config['env'] !== 'production') {
-    getErrorMessage('info',
-        "Using front controller (PHP " . phpversion() . ")<br>Required path: " . $mondegc_config['front-controller']['require']);
-}
-
 if(!file_exists($mondegc_config['front-controller']['require'])) {
     throw new NotFoundHttpException("Page non trouvée.");
 }

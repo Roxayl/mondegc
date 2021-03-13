@@ -88,6 +88,8 @@
 
             </div>
 
+            <div class="clearfix"></div>
+
             @if($organisation->hasEconomy())
 
                 {!! \App\Services\HelperService::renderLegacyElement(

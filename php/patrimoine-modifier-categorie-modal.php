@@ -116,7 +116,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
               <div class="controls">
                 <input class="input-xlarge" type="text" id="ch_mon_cat_nom" name="ch_mon_cat_nom" value="<?= e($row_liste_mon_cat['ch_mon_cat_nom']) ?>">
                 <br>
-                <span class="textfieldRequiredMsg">un nom est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">30 caract&egrave;res max.</span></div>
+                <span class="textfieldRequiredMsg">un nom est obligatoire.</span></div>
             </div>
             <!-- Icone -->
             <div id="sprytextfield23" class="control-group">
@@ -233,7 +233,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 </script>
 <script type="text/javascript">
 var spryradio20 = new Spry.Widget.ValidationRadio("spryradio20", {validateOn:["change"]});
-var sprytextfield21 = new Spry.Widget.ValidationTextField("sprytextfield21", "none", {minChars:2, maxChars:30, validateOn:["change"]});
+var sprytextfield21 = new Spry.Widget.ValidationTextField("sprytextfield21", "none", {validateOn:["change"]});
 var sprytextfield23 = new Spry.Widget.ValidationTextField("sprytextfield23", "url", {minChars:2, maxChars:250, validateOn:["change"]});
 var sprytextarea24 = new Spry.Widget.ValidationTextarea("sprytextarea24", {maxChars:400, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
