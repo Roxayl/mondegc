@@ -294,24 +294,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
               <h4><?= e($row_liste_mon_cat['ch_mon_cat_nom']) ?></h4>
               <p><?= e($row_liste_mon_cat['ch_mon_cat_desc']) ?></p>
                 <div class="row-fluid">
-                    <div class="span6 icone-ressources"> <img src="../assets/img/ressources/budget.png" alt="icone Budget">
-                    <p>Budget&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_budget']) ?></strong></p>				
-                    <img src="../assets/img/ressources/industrie.png" alt="icone Industrie">
-                    <p>Industrie&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_industrie']) ?></strong></p>							
-                    <img src="../assets/img/ressources/bureau.png" alt="icone Commerce">
-                    <p>Commerce&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_commerce']) ?></strong></p>					
-                    <img src="../assets/img/ressources/agriculture.png" alt="icone Agriculture">
-                    <p>Agriculture&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_agriculture']) ?></strong></p>
-				</div>					
-                    <div class="span6 icone-ressources"> <img src="../assets/img/ressources/tourisme.png" alt="icone Tourisme">
-                    <p>Tourisme&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_tourisme']) ?></strong></p>					
-                    <img src="../assets/img/ressources/recherche.png" alt="icone Recherche">
-                    <p>Recherche&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_recherche']) ?></strong></p>					
-                    <img src="../assets/img/ressources/environnement.png" alt="icone Evironnement">
-                    <p>Environnement&nbsp;:<strong><?= e($row_liste_mon_cat['ch_mon_cat_environnement']) ?></strong></p>			
-                    <img src="../assets/img/ressources/education.png" alt="icone Education">
-                    <p>Education&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_education']) ?></strong></p>
-                  </div>
+                    <img src="../assets/img/ressources/budget.png" alt="icone Budget" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_budget']) ?></strong>  <img src="../assets/img/ressources/industrie.png" alt="icone Industrie" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_industrie']) ?></strong>  <img src="../assets/img/ressources/bureau.png" alt="icone Commerce" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_commerce']) ?></strong>  <img src="../assets/img/ressources/agriculture.png" alt="icone Agriculture" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_agriculture']) ?></strong>  <img src="../assets/img/ressources/tourisme.png" alt="icone Tourisme" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_tourisme']) ?></strong>  <img src="../assets/img/ressources/recherche.png" alt="icone Recherche" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_recherche']) ?></strong>  <img src="../assets/img/ressources/environnement.png" alt="icone Evironnement" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_environnement']) ?></strong>  <img src="../assets/img/ressources/education.png" alt="icone Education" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_education']) ?></strong>
             </div>
           </li>
           <?php } while ($row_liste_mon_cat = mysql_fetch_assoc($liste_mon_cat)); ?>

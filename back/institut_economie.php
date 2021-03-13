@@ -26,7 +26,7 @@ if (isset($_GET['type_classement_inf'])) {
   $type_classement = $_GET['type_classement_inf'];
 } 
 
-$maxRows_liste_temperance = 10;
+$maxRows_liste_temperance = 2;
 $pageNum_liste_temperance = 0;
 if (isset($_GET['pageNum_liste_temperance'])) {
   $pageNum_liste_temperance = $_GET['pageNum_liste_temperance'];

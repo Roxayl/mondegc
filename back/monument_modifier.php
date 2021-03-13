@@ -158,7 +158,7 @@ return true;
       <!-- Moderation
      ================================================== -->
       <div id="monument" class="titre-vert anchor">
-        <h1>Modifier un monument</h1>
+        <h1>Modifier une quête</h1>
       </div>
       <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
@@ -208,21 +208,22 @@ return true;
         <input name="ch_pat_nb_update" type="hidden" value="<?php echo $nb_update; ?>">
         <!-- Statut -->
         <div id="spryradio1" class="control-group">
-          <div class="control-label">Statut <a href="#" rel="clickover" title="Statut de votre monument" data-content="
-    Visible : le monument sera visible pour les visiteurs du site.
-    Invisible : le monument sera cach&eacute; pour les visiteurs du site."><i class="icon-info-sign"></i></a></div>
+          <div class="control-label">Catégorie</div>
           <div class="controls">
             <label>
-              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"1"))) { echo "checked"; } ?> type="radio" name="ch_pat_statut" value="1" id="ch_pat_statut_1">
-              visible</label>
+              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"0"))) { echo "checked"; } ?> type="radio" name="ch_pat_statut" value="1" id="ch_pat_statut_1">
+              Entreprise</label>
             <label>
-              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"2"))) { echo "checked"; } ?> name="ch_pat_statut" type="radio" id="ch_pat_statut_2" value="2">
-              invisible</label>
-            <span class="radioRequiredMsg">Choisissez un statut pour votre monument</span></div>
+              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"1"))) { echo "checked"; } ?> name="ch_pat_statut" type="radio" id="ch_pat_statut_2" value="2">
+              Ville</label>
+            <label>
+              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"2"))) { echo "checked"; } ?> name="ch_pat_statut" type="radio" id="ch_pat_statut_3" value="3">
+              Pays</label>
+            <span class="radioRequiredMsg">Choisissez une catégorie pour votre Quête</span></div>
         </div>
         <!-- Nom -->
         <div id="sprytextfield2" class="control-group">
-          <label class="control-label" for="ch_pat_nom">Nom du monument <a href="#" rel="clickover" title="Nom du monument" data-content="50 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
+          <label class="control-label" for="ch_pat_nom">Nom de la Quête <a href="#" rel="clickover" title="Nom du monument" data-content="50 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
             <input class="span6" type="text" id="ch_pat_nom" name="ch_pat_nom" value="<?= e($row_monument['ch_pat_nom']) ?>" placeholder="mon monument">
             <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>

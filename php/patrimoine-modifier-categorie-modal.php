@@ -23,7 +23,6 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) {
 	ch_mon_cat_desc=%s, 
 	ch_mon_cat_icon=%s, 
 	ch_mon_cat_couleur=%s, 
-  ch_mon_cat_quete=%s, 
 	ch_mon_cat_budget=%s, 
 	ch_mon_cat_industrie=%s, 
 	ch_mon_cat_commerce=%s, 
@@ -42,7 +41,6 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) {
         GetSQLValueString($_POST['ch_mon_cat_desc'], "text"),
         GetSQLValueString($_POST['ch_mon_cat_icon'], "text"),
         GetSQLValueString($_POST['ch_mon_cat_couleur'], "text"),
-        GetSQLValueString($_POST['ch_mon_cat_quete'], "text"),
         GetSQLValueString($_POST['ch_mon_cat_budget'], "text"),
         GetSQLValueString($_POST['ch_mon_cat_industrie'], "text"),
         GetSQLValueString($_POST['ch_mon_cat_commerce'], "text"),
@@ -129,21 +127,13 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
                 <span class="textfieldRequiredMsg">une ic&ocirc;ne est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res max.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
             </div>
             <!-- Couleur -->
-            <div id="" class="control-group">
-              <label class="control-label" for="ch_mon_cat_icon">Couleur <a href="#" rel="clickover" title="Couleur" data-content="Choisissez une couleur de fond pour la cat&eacute;gorie"><i class="icon-info-sign"></i></a></label>
-              <div class="controls">
-                <div class="input-append color" data-color="<?= e($row_liste_mon_cat['ch_mon_cat_couleur']) ?>" data-color-format="hex" id="cp4">
-                  <input type="text" class="input-large" value="<?= e($row_liste_mon_cat['ch_mon_cat_couleur']) ?>" name="ch_mon_cat_couleur" id="ch_mon_cat_couleur">
-                  <span class="add-on"><i style="background-color: <?= e($row_liste_mon_cat['ch_mon_cat_couleur']) ?>)"></i></span> </div>
-              </div>
-            </div>
-            <!-- Quête, aka métacatégories version système D, je fais ce que je peux :aie: -->
             <div id="sprytextarea24" class="control-group">
-              <label class="control-label" for="ch_mon_cat_quete">Quête <a href="#" rel="clickover" title="Quete" data-content="Choisissez à quelle quête cet élément est destiné."><i class="icon-info-sign"></i></a></label>
+              <label class="control-label" for="ch_mon_cat_couleur">Couleur <a href="#" rel="clickover" title="Couleur" data-content="Choisissez une couleur de fond pour la cat&eacute;gorie"><i class="icon-info-sign"></i></a></label>
               <div class="controls">
-                <input class="input-xlarge" type="text" name="ch_mon_cat_quete" id="ch_mon_cat_quete" value="<?= e($row_liste_mon_cat['ch_mon_cat_quete']) ?>">
+                <input class="input-xlarge" type="text" name="ch_mon_cat_couleur" id="ch_mon_cat_couleur" value="<?= e($row_liste_mon_cat['ch_mon_cat_couleur']) ?>">
                 <br>
-                <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res max.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
+                <span class="textfieldRequiredMsg">une ic&ocirc;ne est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res max.</span></div>
+            </div>
             </div>
             <!-- Description -->
             <div id="sprytextarea24" class="control-group">

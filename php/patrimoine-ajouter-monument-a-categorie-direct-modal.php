@@ -69,14 +69,12 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
 
 
 //requete monument
-
 $query_liste_mon_cat = sprintf("SELECT ch_pat_id, ch_pat_nom FROM patrimoine WHERE ch_pat_id = %s", GetSQLValueString($mon_ID, ""));
 $liste_mon_cat = mysql_query($query_liste_mon_cat, $maconnexion) or die(mysql_error());
 $this_mon_cat = mysql_fetch_assoc($liste_mon_cat);
 
 //requete tous catégories
-
-$query_mon_cat = sprintf("SELECT ch_mon_cat_ID, ch_mon_cat_nom FROM monument_categories", GetSQLValueString($mon_ID, "int"));
+$query_mon_cat = sprintf("SELECT ch_mon_cat_ID, ch_mon_cat_nom, ch_mon_cat_desc FROM monument_categories ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
 $mon_cat = mysql_query($query_mon_cat, $maconnexion) or die(mysql_error());
 $row_mon_cat = mysql_fetch_assoc($mon_cat);
 $totalRows_mon_cat = mysql_num_rows($mon_cat);
@@ -101,7 +99,7 @@ while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)
 <form action="<?php echo $editFormAction; ?>" name="ajout-mon_categorie" method="POST" class="form-horizontal" id="ajout-mon_categorie">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Ajouter <?= e($this_mon_cat['ch_pat_nom']) ?> aux catégories</h3>
+    <h3 id="myModalLabel">Validez de nouveaux objectifs pour <strong><?= e($this_mon_cat['ch_pat_nom']) ?></strong></h3>
   </div>
   <div class="modal-body">
     <!-- Boutons cachés -->
@@ -117,7 +115,7 @@ while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)
         <li>
             <label for="ch_disp_cat_id_<?= e($row_mon_cat['ch_mon_cat_ID']) ?>"
                style="display: inline-block;">
-            <?= e($row_mon_cat['ch_mon_cat_nom']) ?></label>
+            <strong><?= e($row_mon_cat['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat['ch_mon_cat_desc']) ?><?= e($row_mon_cat['ch_mon_cat_couleur']) ?></label>
             <input type="checkbox" id="ch_disp_cat_id_<?= e($row_mon_cat['ch_mon_cat_ID']) ?>"
                    name="ch_disp_cat_id[]" value="<?= e($row_mon_cat['ch_mon_cat_ID']) ?>"
                    <?= in_array($row_mon_cat['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ?> />

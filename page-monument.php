@@ -33,7 +33,7 @@ $listcategories = ($row_monument['listcat']);
 			if ($row_monument['listcat']) {
           
 
-$query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
+$query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1 ORDER BY ch_mon_cat_couleur";
 $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
@@ -117,7 +117,7 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
   <div class="container container-carousel">
     <?php if ($row_monument['ch_pat_lien_img1'] OR $row_monument['ch_pat_lien_img2'] OR $row_monument['ch_pat_lien_img3'] OR $row_monument['ch_pat_lien_img4'] OR $row_monument['ch_pat_lien_img5']) { ?>
     <div class="titre-caroussel-container">
-        <h1 class="titre-caroussel"><?= __s($row_monument['ch_pat_nom']) ?></h1>
+        <?php if ($row_monument['ch_pat_statut']=1) { ?><h1 class="titre-caroussel">Entreprise</h1><?php } else { ?><h1 class="titre-caroussel">Quête</h1><?php }?>
     </div>
     <section id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
@@ -205,7 +205,8 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
   <div class="well">
     <div class="row-fluid">
       <div>
-        <p><img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>"><?= __s($row_monument['ch_pay_nom']) ?></a> • <a class="" href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>&ch_ville_id=<?= e($row_monument['ch_pat_villeID']) ?>"><?= __s($row_monument['ch_vil_nom']) ?></a></p>
+        <p><img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>"><?= __s($row_monument['ch_pay_nom']) ?></a> • <?php if ($row_monument['ch_pat_statut']=1) { ?> Entreprise référencée à <?php } else { ?><?php }?>
+        <a class="" href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>&ch_ville_id=<?= e($row_monument['ch_pat_villeID']) ?>"><?= __s($row_monument['ch_vil_nom']) ?></a></p>
         <p><?= __s($row_monument['ch_pat_description']) ?></p>
         <!-- Liste des categories du monument -->
         <p><strong>Objectifs atteints jusqu'à présent&nbsp;:</strong></p>
@@ -216,7 +217,7 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
               <div class="span1 icone-categorie"><img src="<?= __s($row_liste_mon_cat3['ch_mon_cat_icon']) ?>" alt="icone <?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?>" style="background-color:<?= __s($row_liste_mon_cat3['ch_mon_cat_couleur']) ?>;"></div>
               <div class="span7" style="width: 90%; margin-left: 0em;">
                 <p><strong><a href="patrimoine.php?mon_cat_ID=<?php echo $row_liste_mon_cat3['ch_mon_cat_ID']; ?>#monument"><?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?></a></strong> <br><?= __s($row_liste_mon_cat3['ch_mon_cat_desc']) ?> <br>
-                    <div style="vertical-align: baseline;"><img src="assets/img/ressources/budget.png" style="max-width: 15px" alt="icone Budget"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_budget']) ?></strong> <img src="assets/img/ressources/industrie.png" style="max-width: 15px" alt="icone Industrie"><strong> <?= e($row_liste_mon_cat3['ch_mon_cat_industrie']) ?></strong><img src="assets/img/ressources/bureau.png" style="max-width: 15px" alt="icone Commerce"><strong> <?= e($row_liste_mon_cat3['ch_mon_cat_commerce']) ?></strong><img src="assets/img/ressources/agriculture.png" style="max-width: 15px" alt="icone Agriculture"><strong> <?= e($row_liste_mon_cat3['ch_mon_cat_agriculture']) ?></strong><img src="assets/img/ressources/tourisme.png" style="max-width: 15px" alt="icone Tourisme"><strong> <?= e($row_liste_mon_cat3['ch_mon_cat_tourisme']) ?></strong><img src="assets/img/ressources/recherche.png" style="max-width: 15px" alt="icone Recherche"><strong> <?= e($row_liste_mon_cat3['ch_mon_cat_recherche']) ?></strong><img src="assets/img/ressources/environnement.png" style="max-width: 15px" alt="icone Evironnement"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_environnement']) ?></strong><img src="assets/img/ressources/education.png" style="max-width: 15px" alt="icone Education"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_education']) ?></strong>
+                    <div style="vertical-align: baseline; scale: 75%; margin-left: -2em; display: inline flow-root list-item; margin-top: -0.5em;"><img src="assets/img/ressources/budget.png" style="max-width: 15px" alt="icone Budget"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_budget']) ?></strong>  <img src="assets/img/ressources/industrie.png" style="max-width: 15px" alt="icone Industrie"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_industrie']) ?></strong>  <img src="assets/img/ressources/bureau.png" style="max-width: 15px" alt="icone Commerce"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_commerce']) ?></strong>  <img src="assets/img/ressources/agriculture.png" style="max-width: 15px" alt="icone Agriculture"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_agriculture']) ?></strong>  <img src="assets/img/ressources/tourisme.png" style="max-width: 15px" alt="icone Tourisme"><strong> <?= e($row_liste_mon_cat3['ch_mon_cat_tourisme']) ?></strong>  <img src="assets/img/ressources/recherche.png" style="max-width: 15px" alt="icone Recherche"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_recherche']) ?></strong>  <img src="assets/img/ressources/environnement.png" style="max-width: 15px" alt="icone Evironnement"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_environnement']) ?></strong>  <img src="assets/img/ressources/education.png" style="max-width: 15px" alt="icone Education"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_education']) ?></strong>
                   </div>
             </li>
             <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); ?>
