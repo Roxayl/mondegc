@@ -106,7 +106,7 @@ if (isset($_GET['mon_cat_ID'])) {
   $colname_classer_mon = NULL;
 } 
 
-$query_classer_mon = sprintf("SELECT monument.ch_disp_id as id, monument.ch_disp_mon_id, ch_pat_nom, ch_pat_mis_jour, ch_pat_lien_img1, (SELECT GROUP_CONCAT(categories.ch_disp_cat_id) FROM dispatch_mon_cat as categories WHERE monument.ch_disp_mon_id = categories.ch_disp_mon_id) AS listcat
+$query_classer_mon = sprintf("SELECT monument.ch_disp_id as id, monument.ch_disp_mon_id, ch_pat_nom, ch_pat_mis_jour, ch_pat_statut, ch_pat_lien_img1, (SELECT GROUP_CONCAT(categories.ch_disp_cat_id) FROM dispatch_mon_cat as categories WHERE monument.ch_disp_mon_id = categories.ch_disp_mon_id) AS listcat
 FROM dispatch_mon_cat as monument 
 INNER JOIN patrimoine ON monument.ch_disp_mon_id = ch_pat_id 
 WHERE monument.ch_disp_cat_id = %s OR %s IS NULL AND ch_pat_statut = 1 
@@ -285,7 +285,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
         <?php do { ?>
           <li class="row-fluid"> 
             <!-- ICONE categories -->
-            <div class="span2 icone-categorie"><img src="<?= e($row_liste_mon_cat['ch_mon_cat_icon']) ?>" alt="icone <?= e($row_liste_mon_cat['ch_mon_cat_nom']) ?>; <?php if ($row_liste_mon_cat['ch_mon_cat_statut'] ==2 ) {?>opacity:0.5;<?php }?>"></div>
+            <div class="span2 icone-categorie"><img src="<?= e($row_liste_mon_cat['ch_mon_cat_icon']) ?>" alt="icone <?= e($row_liste_mon_cat['ch_mon_cat_nom']) ?>;"></div>
             <!-- contenu categorie -->
             <div class="span10 info-listes"> 
               <!-- Boutons modifier / supprimer --> 
@@ -414,7 +414,7 @@ $('#closemodal').click(function() {
       <!-- Nom, date et lien vers la page du monument -->
       <div class="span6 info-listes">
         <h4><?= e($row_new_mon['ch_pat_nom']) ?></h4>
-        <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
+        <p><strong><?php if ($row_classer_mon['ch_pat_statut']==1) { ?>Entreprise<?php } if ($row_classer_mon['ch_pat_statut']==2) { ?>Ville<?php } if ($row_classer_mon['ch_pat_statut']==3) { ?>Pays / organisation<?php } else { ?><?php }?></strong> • Dernière MAJ le
           <?php  echo date("d/m/Y", strtotime($row_new_mon['ch_pat_mis_jour'])); ?>
           &agrave; <?php echo date("G:i:s", strtotime($row_new_mon['ch_pat_mis_jour'])); ?> </p>
         <div class="btn-group form-button-inline">
@@ -483,7 +483,7 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
       <!-- Nom, date et lien vers la page du monument -->
       <div class="span6 info-listes">
         <h4><?= e($row_classer_mon['ch_pat_nom']) ?></h4>
-        <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
+        <p><strong><?php if ($row_classer_mon['ch_pat_statut']==1) { ?>Entreprise<?php } if ($row_classer_mon['ch_pat_statut']==2) { ?>Ville<?php } if ($row_classer_mon['ch_pat_statut']==3) { ?>Pays / organisation<?php } else { ?><?php }?></strong> • Dernière MAJ le
           <?php  echo date("d/m/Y", strtotime($row_classer_mon['ch_pat_mis_jour'])); ?>
           &agrave; <?php echo date("G:i:s", strtotime($row_classer_mon['ch_pat_mis_jour'])); ?> </p>
          <div class="btn-group form-button-inline">
@@ -503,7 +503,7 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
         <?php if ($row_liste_mon_cat3) {?>
         <?php do { ?>
           <!-- Icone et popover de la categorie -->
-          <div class="span2 icone-categorie"><a href="#" rel="clickover" title="<?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" data-placement="left" data-content="<?php echo $row_liste_mon_cat3['ch_mon_cat_desc']; ?>"><img src="<?php echo $row_liste_mon_cat3['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" style="background-color:<?php echo $row_liste_mon_cat3['ch_mon_cat_couleur']; ?>; <?php if ($row_liste_mon_cat3['ch_mon_cat_statut'] ==2 ) {?>opacity:0.5;<?php }?>"></a></div>
+          <div class="span2 icone-categorie"><a href="#" rel="clickover" title="<?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" data-placement="left" data-content="<?php echo $row_liste_mon_cat3['ch_mon_cat_desc']; ?>"><img src="<?php echo $row_liste_mon_cat3['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>"></a></div>
           <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); ?>
         <?php } ?>
       </div>

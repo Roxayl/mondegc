@@ -117,7 +117,7 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
   <div class="container container-carousel">
     <?php if ($row_monument['ch_pat_lien_img1'] OR $row_monument['ch_pat_lien_img2'] OR $row_monument['ch_pat_lien_img3'] OR $row_monument['ch_pat_lien_img4'] OR $row_monument['ch_pat_lien_img5']) { ?>
     <div class="titre-caroussel-container">
-        <?php if ($row_monument['ch_pat_statut']=1) { ?><h1 class="titre-caroussel">Entreprise</h1><?php } else { ?><h1 class="titre-caroussel">Quête</h1><?php }?>
+        <?php if ($row_monument['ch_pat_statut']==1) { ?><h1 class="titre-caroussel">Entreprise</h1><?php } else { ?><h1 class="titre-caroussel">Quête</h1><?php }?>
     </div>
     <section id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
@@ -190,7 +190,7 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
     <button class="btn btn-primary" type="submit" title="modifier ce monument"><i class="icon-pencil icon-white"></i></button>
   </form>
   <div class="pull-right">
-    <a class="btn btn-primary btn-margin-left" style="height: 21px;" href="php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Modifier les catégories">Modifier les catégories</a>
+    <a class="btn btn-primary btn-margin-left" style="height: 21px;" href="php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Modifier les catégories">Gérer les objectifs de la quête</a>
   </div>
   <?php } ?>
   <?php if ($row_users['ch_use_id'] == $_SESSION['user_ID']) { ?>
@@ -205,7 +205,7 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
   <div class="well">
     <div class="row-fluid">
       <div>
-        <p><img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>"><?= __s($row_monument['ch_pay_nom']) ?></a> • <?php if ($row_monument['ch_pat_statut']=1) { ?> Entreprise référencée à <?php } else { ?><?php }?>
+        <p><img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>"><?= __s($row_monument['ch_pay_nom']) ?></a> • <?php if ($row_monument['ch_pat_statut']==1) { ?> Entreprise référencée à <?php } else { ?><?php }?>
         <a class="" href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>&ch_ville_id=<?= e($row_monument['ch_pat_villeID']) ?>"><?= __s($row_monument['ch_vil_nom']) ?></a></p>
         <p><?= __s($row_monument['ch_pat_description']) ?></p>
         <!-- Liste des categories du monument -->

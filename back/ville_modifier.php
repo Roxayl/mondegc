@@ -741,7 +741,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
               <td><?= __s($row_monument['ch_pat_nom']) ?></td>
               <td><?php echo date("d/m/Y", strtotime($row_monument['ch_pat_date'])); ?></td>
               <td>
-                  <a class="btn modal-fullscreen" href="../php/patrimoine-modal.php?ch_pat_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Voir les détails" style="margin-top: -22px;"><i class="icon-eye-open"></i></a>
+                  <a class="btn" href="../page-monument.php?ch_pat_id=<?= e($row_monument['ch_pat_id']) ?>" title="Voir les détails" style="margin-top: -22px;"><i class="icon-eye-open"></i></a>
               </td>
               <td><form action="monument_modifier.php" method="post">
                   <input name="monument_ID" type="hidden" value="<?= e($row_monument['ch_pat_id']) ?>">

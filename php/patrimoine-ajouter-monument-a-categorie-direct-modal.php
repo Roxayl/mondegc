@@ -67,14 +67,13 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
     exit;
 }
 
-
 //requete monument
-$query_liste_mon_cat = sprintf("SELECT ch_pat_id, ch_pat_nom FROM patrimoine WHERE ch_pat_id = %s", GetSQLValueString($mon_ID, ""));
+$query_liste_mon_cat = sprintf("SELECT ch_pat_id, ch_pat_nom, ch_pat_statut FROM patrimoine WHERE ch_pat_id = %s", GetSQLValueString($mon_ID, ""));
 $liste_mon_cat = mysql_query($query_liste_mon_cat, $maconnexion) or die(mysql_error());
 $this_mon_cat = mysql_fetch_assoc($liste_mon_cat);
 
 //requete tous catégories
-$query_mon_cat = sprintf("SELECT ch_mon_cat_ID, ch_mon_cat_nom, ch_mon_cat_desc FROM monument_categories ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
+$query_mon_cat = sprintf("SELECT ch_mon_cat_ID, ch_mon_cat_nom, ch_mon_cat_desc, ch_mon_cat_statut, ch_mon_cat_icon, ch_mon_cat_couleur FROM monument_categories ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
 $mon_cat = mysql_query($query_mon_cat, $maconnexion) or die(mysql_error());
 $row_mon_cat = mysql_fetch_assoc($mon_cat);
 $totalRows_mon_cat = mysql_num_rows($mon_cat);
@@ -110,23 +109,23 @@ while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)
     <input name="ch_disp_date" type="hidden" value="<?php echo $now; ?>">
     <input name="previous_url" type="hidden" value="<?= e(url()->previous()) ?>">
 
-    <ul>
+    <ul  class="listes">
     <?php do { ?>
-        <li>
+        <?php if($row_mon_cat['ch_mon_cat_statut'] == $this_mon_cat['ch_pat_statut']) { ?><li class="row-fluid" style="margin-top: 0px; background-color:">
             <label for="ch_disp_cat_id_<?= e($row_mon_cat['ch_mon_cat_ID']) ?>"
-               style="display: inline-block;">
-            <strong><?= e($row_mon_cat['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat['ch_mon_cat_desc']) ?><?= e($row_mon_cat['ch_mon_cat_couleur']) ?></label>
+               style="display: inline-block; text-decoration: <?php if ($row_mon_cat['ch_mon_cat_ID'] == in_array($row_mon_cat['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ) { ?>line-through<?php } else { ?><?php }?>; background-color:<?= __s($row_mon_cat['ch_mon_cat_couleur']) ?>;">
+            <img src="<?php echo $row_mon_cat['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_mon_cat['ch_mon_cat_nom']; ?>" style="height: 15px;"> <strong><?= e($row_mon_cat['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat['ch_mon_cat_desc']) ?></label>
             <input type="checkbox" id="ch_disp_cat_id_<?= e($row_mon_cat['ch_mon_cat_ID']) ?>"
                    name="ch_disp_cat_id[]" value="<?= e($row_mon_cat['ch_mon_cat_ID']) ?>"
                    <?= in_array($row_mon_cat['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ?> />
-        </li>
+        </li><?php } else { ?><?php }?>
     <?php } while ($row_mon_cat = mysql_fetch_assoc($mon_cat)); ?>
     </ul>
 
   </div>
   <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
-    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Annuler</button>
+    <button type="submit" class="btn btn-primary">Valider les nouveaux objetifs atteints !</button>
   </div>
   <input type="hidden" name="MM_insert" value="ajout-mon_categorie_direct">
 </form>

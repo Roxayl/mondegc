@@ -211,13 +211,13 @@ return true;
           <div class="control-label">Catégorie</div>
           <div class="controls">
             <label>
-              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"0"))) { echo "checked"; } ?> type="radio" name="ch_pat_statut" value="1" id="ch_pat_statut_1">
+              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"1"))) { echo "checked"; } ?> type="radio" name="ch_pat_statut" value="1" id="ch_pat_statut_1">
               Entreprise</label>
             <label>
-              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"1"))) { echo "checked"; } ?> name="ch_pat_statut" type="radio" id="ch_pat_statut_2" value="2">
+              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"2"))) { echo "checked"; } ?> name="ch_pat_statut" type="radio" id="ch_pat_statut_2" value="2">
               Ville</label>
             <label>
-              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"2"))) { echo "checked"; } ?> name="ch_pat_statut" type="radio" id="ch_pat_statut_3" value="3">
+              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"3"))) { echo "checked"; } ?> name="ch_pat_statut" type="radio" id="ch_pat_statut_3" value="3">
               Pays</label>
             <span class="radioRequiredMsg">Choisissez une catégorie pour votre Quête</span></div>
         </div>
