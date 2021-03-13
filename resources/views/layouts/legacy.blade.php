@@ -82,8 +82,8 @@
       </div>
     </footer>
 
-    <script src="/mondegc{{mix('/js/vendor-compiled.js')}}"></script>
-    <script src="/mondegc{{mix('/js/application-compiled.js')}}"></script>
+    <script src="{{mix('/js/vendor-compiled.js')}}"></script>
+    <script src="{{mix('/js/application-compiled.js')}}"></script>
     <script type="text/javascript">
     (function(window, document, $, undefined) {
         $(function() {
