@@ -975,6 +975,7 @@ img.olTileImage {
         </table>
       </section>
       <?php }  // fin affichage section autre villes si existantes.  ?>
+      <div class="clearfix"></div>
 
 
       <!-- Infrastructures
@@ -983,10 +984,11 @@ img.olTileImage {
       renderElement('infrastructure/back_list', [
           'infrastructurable' => $eloquentPays,
       ]); ?>
+      <div class="clearfix"></div>
 
       <!-- Routes et campagne
         ================================================== -->
-      <div class="pull-right-cta" style="margin-top: 30px;">
+      <div class="pull-right-cta cta-title">
         <form action="<?= DEF_URI_PATH ?>Carte-modifier.php" method="post">
           <input name="paysID" type="hidden" value="<?php echo $colname_paysID; ?>">
           <button class="btn btn-primary btn-cta" type="submit"
@@ -1028,14 +1030,14 @@ img.olTileImage {
             habitants</strong></p>
 
         </div>
-      <div class="clearfix"></div>
       </section>
+      <div class="clearfix"></div>
       
       <!-- Liste des Communiqués
         ================================================== -->
       <?php if ($thisPays->getUserPermission() >= Pays::$permissions['dirigeant']) { // Affichage si sup ou egal à dirigeant ?>
 
-      <div class="pull-right-cta" style="margin-top: 30px;">
+      <div class="pull-right-cta cta-title">
           <a href="<?= url('back/communique_ajouter.php?userID='
               . auth()->user()->ch_use_id . '&cat=pays&com_element_id='
               . $eloquentPays->ch_pay_id) ?>"
@@ -1056,6 +1058,7 @@ $com_cat = "pays";
 $com_element_id = $row_InfoGenerale['ch_pay_id'];
 include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
       </section>
+      <div class="clearfix"></div>
       <?php } // Affichage si sup ou egal à dirigeant ?>
       <!-- Liste des faits historiques
         ================================================== -->

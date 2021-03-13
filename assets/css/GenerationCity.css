@@ -305,7 +305,7 @@ input[type="submit"], .btn {
     border-color: rgba(250, 250, 2500, 1) rgba(250, 250, 2500, 1) rgba(250, 250, 2500, 1) rgba(250, 250, 2500, 1);
 }
 
-/* Bouton Primary----------------------------------------------------------------------------------- */
+/* Boutons ----------------------------------------------------------------------------------- */
 .btn-primary {
     display: inline-block;
     vertical-align: middle;
@@ -319,39 +319,23 @@ input[type="submit"], .btn {
     transition-duration: 0.3s;
 }
 
-
-/*{
-    color: #ffffff;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    background-color: #ff4e00;
-    *background-color: #ff4e00;
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ff4e00), to(#ff4e00));
-    background-image: -webkit-linear-gradient(top, #ff4e00, #ff4e00);
-    background-image: -o-linear-gradient(top, #ff4e00, #ff4e00);
-    background-image: linear-gradient(to bottom, #ff4e00, #ff4e00);
-    background-image: -moz-linear-gradient(top, #ff4e00, #ff4e00);
-    background-repeat: repeat-x;
-    filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffff4e00', endColorstr='#ffff4e00', GradientType=0);
-    -webkit-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);
-}*/
-
-.btn {
-    border: solid 0px;
-    border-radius: 0px;
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-}
 .btn-primary:hover {
     background-color: #ff4e00;
-    color:white;
+    color: white;
+}
+
+.btn {
+    border: solid 0;
+    border-radius: 0;
+    transition: border-radius 0.5s ease;
 }
 
 .btn:hover {
     border-radius: 10px;
-    background-position: 0;
     transition: border-radius 0.5s ease;
+    background-position: 0;
 }
+
 .btn:active {
     background-color: #1a2638;
     transition: background-color 0.1s ease;
@@ -495,6 +479,10 @@ input[type='submit'] {
     float: right;
     margin-right: -32px;
     margin-top: 5px;
+}
+
+.cta-title {
+    margin-top: 26px;
 }
 
 .btn-connexion {
@@ -1406,7 +1394,7 @@ footer .liens-rapides {
 
 footer li {
     display: inline;
-    margin: 0px 10px 0px 0px;
+    margin: 0 10px 0 0;
     padding: 0;
 }
 
@@ -1414,7 +1402,7 @@ footer li {
     position: relative;
     font-size: 0.8em;
     line-height: 0.8em;
-    margin: 0px -0px 0px 0px;
+    margin: 0;
     padding: 0;
     text-align: left;
     float: right;
@@ -1422,7 +1410,7 @@ footer li {
 }
 
 .copyright p {
-    margin: 5px 0px 0px;
+    margin: 5px 0 0;
     padding: 0;
     color: #182b45;
     display: block;
@@ -1481,7 +1469,6 @@ footer img {
 }
 
 #info h3 {
-    line-height: 1em;
     color: #FFFFFF;
     margin-bottom: 0;
     margin-left: 10px;
@@ -1786,10 +1773,10 @@ table .btn {
 }
 
 @media (min-width: 1200px) {
-	.modal.container.modal-small {
-		width: 880px;
-		margin-left: -460px;
-	}
+    .modal.container.modal-small {
+        width: 880px;
+        margin-left: -460px;
+    }
 }
 
 /* Icones Ressources
@@ -1870,7 +1857,6 @@ table .btn {
     -webkit-filter: sepia(1);
     -moz-filter: sepia(1);
     -o-filter: sepia(1);
-    -ms-filter: sepia(1);
 }
 
 .sepia img:hover {
@@ -1878,7 +1864,6 @@ table .btn {
     -webkit-filter: sepia(0);
     -moz-filter: sepia(0);
     -o-filter: sepia(0);
-    -ms-filter: sepia(0);
 }
 
 .sepia .titre-vert img {
@@ -1886,7 +1871,6 @@ table .btn {
     -webkit-filter: sepia(0);
     -moz-filter: sepia(0);
     -o-filter: sepia(0);
-    -ms-filter: sepia(0);
 }
 
 .sepia #map img:hover, .sepia #mapPosition img:hover {
@@ -1894,7 +1878,6 @@ table .btn {
     -webkit-filter: sepia(1);
     -moz-filter: sepia(1);
     -o-filter: sepia(1);
-    -ms-filter: sepia(1);
 }
 
 /* Modules ressources mondiales institut economie
@@ -2591,7 +2574,6 @@ Tablet COLLAPSE
         border-color: #ffffff #ffffff #ffffff #ffffff;
         border-color: rgba(250, 250, 250, 1) rgba(250, 250, 250, 1) rgba(250, 250, 0, 1) rgba(250, 250, 0, 1);
         filter: progid:dximagetransform.microsoft.gradient(startColorstr='#2c66ea', endColorstr='#1c4297', GradientType=0);
-        filter: progid:dximagetransform.microsoft.gradient(enabled=false);
     }
 
     button.btn.btn-navbar:focus, button.btn.btn-navbar:hover, button.btn.btn-navbar:active, button.btn.btn-navbar.active, button.btn.btn-navbar.disabled, button.btn.btn-navbar[disabled], button.btn.btn-navbar.collapsed:focus, button.btn.btn-navbar.collapsed:hover, button.btn.btn-navbar.collapsed:active, button.btn.btn-navbar.collapsed.active, button.btn.btn-navbar.collapsed.disabled, button.btn.btn-navbar.collapsed[disabled] {
@@ -2770,7 +2752,7 @@ Tablet COLLAPSE
     }
 
     .bandeau-stat li {
-        margin: 5px 0px 5px 10px;
+        margin: 5px 0 5px 10px;
         font-size: 0.9em;
         text-shadow: none;
     }
@@ -3061,7 +3043,7 @@ Tablet COLLAPSE
         display: block;
         width: 100%;
         margin: 0;
-        padding: 0px 0px 10px;
+        padding: 0 0 10px;
     }
 
     .search-results {

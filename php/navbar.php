@@ -101,7 +101,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
 
             $navbar_intitulePays = count($nav_userPays) > 1 ? 'Mes pays' : 'Mon pays';
             ?>
-            <div class="offset" style="margin-top: 37px;">
+            <div class="offset" style="margin-top: 38px;">
 
                 <div class="dropdown pull-right">
                   <a href="<?= DEF_URI_PATH ?>dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="Gérer mes pays"><i class="icon-pays-small-white"></i> <?= $navbar_intitulePays ?></a>

@@ -166,18 +166,20 @@ foreach($paysList as $thisPays) {
           </div>
         </div>
       </section>
+      <div class="clearfix"></div>
+
+
       <!-- Classements ressources
     ================================================== -->
+      <div class="cta-title pull-right-cta dropdown">
+        <a href="#" class="btn btn-primary btn-cta" data-toggle="dropdown">
+            <i class="icon-white icon-arrow-down"></i>
+            Exporter</a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="<?= route('data-export.temperance-pays') ?>">Statistiques des pays (existants)<br><small>Fichier CSV - Inclut toutes les ressources</small></a></li>
+        </ul>
+      </div>
       <section>
-
-        <div class="cta-title pull-right-cta dropdown" style="margin-top: 36px;">
-            <a href="#" class="btn btn-primary btn-cta" data-toggle="dropdown">
-                <i class="icon-white icon-arrow-down"></i>
-                Exporter</a>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="<?= route('data-export.temperance-pays') ?>">Statistiques des pays (existants)<br><small>Fichier CSV - Inclut toutes les ressources</small></a></li>
-            </ul>
-        </div>
         <div class="titre-bleu anchor" id="ressources">
           <h1>Statistiques &eacute;conomiques</h1>
         </div>
@@ -188,7 +190,9 @@ foreach($paysList as $thisPays) {
 
         <div class="clearfix"></div>
       </section>
-            <!-- Temperance
+
+
+      <!-- Temperance
     ================================================== -->
       <section>
         <div class="titre-bleu" id="temperance">
@@ -206,6 +210,7 @@ foreach($paysList as $thisPays) {
           </p>
         </div>
       </section>
+      <div class="clearfix"></div>
 
       <!-- communique officiel
     ================================================== -->
@@ -218,6 +223,7 @@ foreach($paysList as $thisPays) {
 	  $ch_com_element_id = $institut_id;
 	  include('php/communiques.php'); ?>
       </section>
+
     </div>
     <!-- END CONTENT
     ================================================== --> 

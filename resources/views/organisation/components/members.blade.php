@@ -1,6 +1,5 @@
 
-<div class="cta-container"
-     style="position: relative; top: 20px; margin-right: -15px;">
+<div class="cta-title pull-right-cta">
 @can('administrate', $organisation)
     <a href="<?= route('organisation-member.invite',
                  ['organisation_id' => $organisation->id]) ?>"
@@ -154,3 +153,5 @@
         <div class="alert alert-tips">Il n'y a pas de membres en attente de validation.</div>
     @endif
 @endcan
+
+<div class="clearfix"></div>
