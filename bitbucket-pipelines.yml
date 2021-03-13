@@ -18,7 +18,7 @@ definitions:
           - echo "Previous commit is $PREVIOUSCOMMITHASH"
           - git archive -o output.zip $LASTCOMMITHASH $(git diff --diff-filter=ACMRTUXB --name-only $PREVIOUSCOMMITHASH $LASTCOMMITHASH)
           - find . -type f ! -iname "output.zip" -delete
-          - ls -R
+          - ls
           - mkdir deploy
           - unzip output.zip -d deploy
           - ls
