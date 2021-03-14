@@ -123,7 +123,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
         map.addLayer(tmsoverlay3);
 
         // calque GC 2018 (non fonctionnel)
-        var tmsoverlay4 = new OpenLayers.Layer.TMS(" Geographique (2018 - beta)", "https://www.generation-city.com/monde/Carto/CarteGC_2018/",
+        var tmsoverlay4 = new OpenLayers.Layer.TMS(" Geographique (2018 - beta)", "Carto/CarteGC_2018/",
             {
                 serviceVersion: '.', layername: '.', alpha: false,
                 type: 'png', getURL: overlay_getTileURL,

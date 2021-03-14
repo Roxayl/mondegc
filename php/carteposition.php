@@ -91,9 +91,11 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				// construction de la carte
 
 	            map = new OpenLayers.Map('mapPosition', options);
+
+	            var tmsoverlay;
 				
- // calque de base geographique
-	            var tmsoverlay = new OpenLayers.Layer.TMS( " Geographique", "Carto/CarteGC_2018/",
+                // calque de base geographique
+                tmsoverlay = new OpenLayers.Layer.TMS( " Geographique", "Carto/CarteMondeGC_2013/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
@@ -102,11 +104,10 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 						attribution:"&copy; Myname"
 	                });
 	            map.addLayer(tmsoverlay);
+				if (! OpenLayers.Util.alphaHack()) { tmsoverlay.setOpacity(1); }
 				
 				// calque de base satellite
-
-				
-	            var tmsoverlay = new OpenLayers.Layer.TMS( " Satellite", "Carto/Carte-Monde-GC-sat/",
+	            tmsoverlay = new OpenLayers.Layer.TMS( " Satellite", "Carto/Carte-Monde-GC-sat/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
@@ -114,11 +115,11 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 						attribution:"&copy; Clamato & Franco de la Muerte-2012.",
 	                });
 	            map.addLayer(tmsoverlay);
-				if (OpenLayers.Util.alphaHack() == false) { tmsoverlay.setOpacity(1); }
+				if (! OpenLayers.Util.alphaHack()) { tmsoverlay.setOpacity(1); }
 				
 				
 				// calque de base neutre
-				var tmsoverlay = new OpenLayers.Layer.TMS( " Neutre", "Carto/Carte-Monde-GC-neutre/",
+				tmsoverlay = new OpenLayers.Layer.TMS( " Neutre", "Carto/Carte-Monde-GC-neutre/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
@@ -126,8 +127,19 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 						attribution:"&copy; Boxxy-2013"
 	                });
 	            map.addLayer(tmsoverlay);
-				if (OpenLayers.Util.alphaHack() == false) { tmsoverlay.setOpacity(1); }
-			
+				if (! OpenLayers.Util.alphaHack()) { tmsoverlay.setOpacity(1); }
+
+                // calque beta
+	            tmsoverlay = new OpenLayers.Layer.TMS( " Geographique (2018 - beta)", "Carto/CarteGC_2018/",
+	                {
+	                    serviceVersion: '.', layername: '.', alpha: true,
+						type: 'png', getURL: overlay_getTileURL,
+						isBaseLayer: true,
+						transitionEffect : "resize",
+						attribution:"&copy; Myname"
+	                });
+	            map.addLayer(tmsoverlay);
+				if (! OpenLayers.Util.alphaHack()) { tmsoverlay.setOpacity(1); }
 
 
             // allow testing of specific renderers via "?renderer=Canvas", etc
