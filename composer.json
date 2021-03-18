@@ -2,11 +2,15 @@
     "name": "roxayl/mondegc",
     "description": "Le site du Monde de Generation City",
     "type": "project",
-    "keywords": ["generation city", "php", "laravel"],
+    "keywords": ["generation city", "php", "laravel", "roleplay"],
     "homepage": "https://generation-city.com/monde/",
     "license": "proprietary",
     "authors": [
         {
+            "name": "AlfredVallamir",
+            "role": "Developer",
+            "homepage": "https://www.vallamir-co.fr/index.html"
+        }, {
             "name": "Calimero",
             "role": "Developer"
         }, {
@@ -26,7 +30,8 @@
         }
     ],
     "support": {
-        "forum": "https://www.forum-gc.com/"
+        "forum": "https://www.forum-gc.com/",
+        "source": "https://bitbucket.org/Roxayl/mondegc"
     },
     "require": {
         "php": "^7.4",
@@ -36,7 +41,8 @@
         "funkjedi/composer-include-files": "^1.1",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
-        "spatie/laravel-searchable": "^1.6"
+        "spatie/laravel-searchable": "^1.6",
+        "ext-json": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
