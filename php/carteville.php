@@ -68,7 +68,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
                             mouseWheelOptions: {interval: 100}
                         })
                     ],
-					numZoomLevels: 8,
+					numZoomLevels: mapMaxZoom,
 		            projection: new OpenLayers.Projection("EPSG:4326"),
 		            maxResolution: 0.703125,
 		            maxExtent: new OpenLayers.Bounds(-180, -90, 180, 90)
@@ -78,7 +78,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 	            map = new OpenLayers.Map('map', options);
 				
   // calque de base geographique
-	            var tmsoverlay1 = new OpenLayers.Layer.TMS( " Geographique", "Carto/CarteGC_2018/",
+                var tmsoverlay1 = new OpenLayers.Layer.TMS( " Geographique", "Carto/CarteMondeGC_2013/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
@@ -109,7 +109,19 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 						attribution:"&copy; Boxxy-2013"
 	                });
 	            map.addLayer(tmsoverlay3);
-  
+
+    // calque beta
+                var tmsoverlay4 = new OpenLayers.Layer.TMS( " Geographique (2018 - beta)", "Carto/CarteGC_2018/",
+	                {
+	                    serviceVersion: '.', layername: '.', alpha: true,
+						type: 'png', getURL: overlay_getTileURL,
+						isBaseLayer: true,
+						transitionEffect : "resize",
+						attribution:"&copy; Myname"
+	                });
+	            map.addLayer(tmsoverlay4);
+
+
               // allow testing of specific renderers via "?renderer=Canvas", etc
             var renderer = OpenLayers.Util.getParameters(window.location.href).renderer;
             renderer = (renderer) ? [renderer] : OpenLayers.Layer.Vector.prototype.renderers;

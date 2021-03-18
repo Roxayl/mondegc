@@ -233,7 +233,7 @@ include(DEF_ROOTPATH . 'php/navbar.php'); ?>
     <div class="well well-dark">
 
     <!-- ZONE DE DÉBATS -->
-    <div class="cta-title pull-right-cta">
+    <div class="cta-title pull-right-cta" style="margin-top: 6px">
     <?php if(isset($_SESSION['userObject'])): ?>
         <a href="../php/modal/proposal_debate_edit.php?ID_proposal=<?= $formProposal->get('id') ?>"
            data-toggle="modal" data-target="#Modal-Monument" class="btn btn-primary btn-cta">

@@ -101,7 +101,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
 
             $navbar_intitulePays = count($nav_userPays) > 1 ? 'Mes pays' : 'Mon pays';
             ?>
-            <div class="offset" style="margin-top: 35px;">
+            <div class="offset" style="margin-top: 38px;">
 
                 <div class="dropdown pull-right">
                   <a href="<?= DEF_URI_PATH ?>dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="Gérer mes pays"><i class="icon-pays-small-white"></i> <?= $navbar_intitulePays ?></a>
@@ -175,7 +175,12 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
             <center>
               <a href="<?= DEF_URI_PATH ?>dashboard.php" title="informations pratiques"><i class="icon icon-evenement"></i></a>
             </center>
-            <a href="<?= DEF_URI_PATH ?>dashboard.php" title="informations pratiques">Tableau de bord</a> </li>
+            <a href="<?= DEF_URI_PATH ?>dashboard.php" title="informations pratiques">Tableau de bord</a>
+          <ul class="dropdown-menu">            
+              <li><a href="https://www.forum-gc.com">Le forum</a></li>
+              <li><a href="http://vasel.yt/wiki/index.php?title=Accueil">Le Wiki</a></li>
+        <li><a href="https://squirrel.romukulot.fr/">Squirrel</a></li>
+            </ul></li>
         <?php endif; ?>
 
           <li class="dropdown <?php if ($carte || $menupays) { echo('active');}  ?>">

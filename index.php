@@ -113,7 +113,7 @@ $_SESSION['an']=true;
 
         <?php renderElement('errormsgs'); ?>
 
-        <div id="actu" class="titre-vert no-bg anchor" style="padding-top: 80px;">
+        <div id="actu" class="titre-vert no-bg anchor">
           <h1 style="font-size: 26px; padding-left: 16px;">Derni&egrave;res actualit&eacute;s</h1>
         </div>
         <?php include('last_MAJ.php'); ?>
@@ -122,7 +122,7 @@ $_SESSION['an']=true;
 
         <div class="well"></div>
 
-        <div id="actu" class="titre-bleu no-bg anchor" style="padding-top: 80px;">
+        <div id="actu" class="titre-bleu no-bg anchor">
           <h1 style="font-size: 26px; padding-left: 16px;">Communiqués publiés</h1>
         </div>
         <?php

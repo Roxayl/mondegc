@@ -4,7 +4,7 @@
 @if($organisation->hasEconomy())
 
     @can('manageInfrastructure', $organisation)
-    <div class="cta-title pull-right-cta" style="margin-top: 30px;">
+    <div class="cta-title pull-right-cta">
         <a href="{{ route('organisation.edit',
             ['organisation' => $organisation->id]) . '#infrastructures' }}"
            class="btn btn-primary btn-cta">
@@ -124,5 +124,7 @@
     </div> <!-- end .well -->
 
     <div class="modal container fade" id="Modal-Monument"></div>
+
+    <div class="clearfix"></div>
 
 @endif

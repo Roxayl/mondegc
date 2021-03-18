@@ -5,3 +5,4 @@
 <div class="well">
     {!! \App\Services\HelperService::purifyHtml($organisation->text) !!}
 </div>
+<div class="clearfix"></div>

@@ -109,9 +109,6 @@ $_SESSION['last_work'] = "institut_geographie.php";
 <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
 <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
-.jumbotron {
-	background-image: url('');
-}
 #map {
 	width: 100%;
 	height: 500px;
@@ -230,7 +227,7 @@ div.editPanel {
 
   <!-- formulaire de modification instituts
      ================================================== -->
-  <form class="pull-right-cta" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post" style="margin-top: 30px;">
+  <form class="pull-right-cta cta-title" action="<?= DEF_URI_PATH ?>back/insitut_modifier.php" method="post">
     <input name="institut_id" type="hidden" value="<?= e($row_institut['ch_ins_ID']) ?>">
     <button class="btn btn-primary btn-cta" type="submit" title="Modifier les informations sur le Comité"><i class="icon-edit icon-white"></i> Modifier la description</button>
   </form>
