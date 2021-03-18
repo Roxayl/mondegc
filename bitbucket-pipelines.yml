@@ -48,6 +48,7 @@ definitions:
           depth: full
         script:
           - apt-get update && apt-get install -y unzip git git-core
+          - git fetch && git pull --all
           - git push --mirror git@github.com:Roxayl/mondegc.git
 
 pipelines:
