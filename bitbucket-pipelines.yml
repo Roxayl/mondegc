@@ -18,12 +18,9 @@ definitions:
           - echo "Previous commit is $PREVIOUSCOMMITHASH"
           - git archive -o output.zip $LASTCOMMITHASH $(git diff --diff-filter=ACMRTUXB --name-only $PREVIOUSCOMMITHASH $LASTCOMMITHASH)
           - find . -type f ! -iname "output.zip" -delete
-          - ls
-          - mkdir deploy
+          - mkdir deploy && ls
           - unzip output.zip -d deploy
-          - ls
-          - cd deploy
-          - ls -R
+          - cd deploy && ls -R
           - cd ..
           - pipe: atlassian/ftp-deploy:0.3.5
             variables:
@@ -45,12 +42,21 @@ definitions:
           - php artisan monde:init
         artifacts:
           - vendor/**
+    - step: &mirrorgit
+        name: Mirror To GitHub
+        clone:
+          depth: full
+        script:
+          - apt-get update && apt-get install -y unzip git git-core
+          - git push --mirror git@github.com:Roxayl/mondegc.git
 
 pipelines:
   branches:
     develop:
       - step: *buildtest
+      - step: *mirrorgit
       - step: *gitdiffdeploy
     master:
       - step: *buildtest
+      - step: *mirrorgit
       - step: *gitdiffdeploy
