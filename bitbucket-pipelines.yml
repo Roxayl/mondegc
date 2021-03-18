@@ -42,22 +42,36 @@ definitions:
           - php artisan monde:init
         artifacts:
           - vendor/**
-    - step: &mirrorgit
-        name: Mirror To GitHub
+    - step: &pushgithubmaster
+        name: Push To GitHub (master)
         clone:
           depth: full
         script:
           - apt-get update && apt-get install -y unzip git git-core
-          - git fetch && git pull --all
-          - git push --mirror git@github.com:Roxayl/mondegc.git
+          - git remote add sync git@github.com:Roxayl/mondegc.git
+          - git checkout master
+          - git pull
+          - git push sync master
+    - step: &pushgithubdevelop
+        name: Push To GitHub (develop)
+        clone:
+          depth: full
+        script:
+          - apt-get update && apt-get install -y unzip git git-core
+          - git remote add sync git@github.com:Roxayl/mondegc.git
+          - git checkout develop
+          - git pull
+          - git push sync develop
 
 pipelines:
   branches:
     develop:
       - step: *buildtest
-      - step: *mirrorgit
-      - step: *gitdiffdeploy
+      - parallel:
+        - step: *pushgithubdevelop
+        - step: *gitdiffdeploy
     master:
       - step: *buildtest
-      - step: *mirrorgit
-      - step: *gitdiffdeploy
+      - parallel:
+        - step: *pushgithubmaster
+        - step: *gitdiffdeploy
