@@ -34,13 +34,14 @@ class InitializeProject extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return void
      */
     public function handle()
     {
         $this->copyEnv();
         $this->generateKey();
         $this->generateLegacyHashKey();
+        $this->call('monde:update');
         $this->info("Projet initialisé avec succès.");
     }
 

@@ -105,9 +105,12 @@ class Organisation extends Model implements Searchable, Infrastructurable, Aggre
 
 	public function getSearchResult() : SearchResult
     {
+        $context = "{$this->members->count()} membres";
+
 	    return new SearchResult(
-	        $this, $this->name, route('organisation.showslug',
-                $this->showRouteParameter())
+	        $this, $this->name, $context,
+            Str::limit(strip_tags($this->text), 150),
+            route('organisation.showslug', $this->showRouteParameter())
         );
     }
 

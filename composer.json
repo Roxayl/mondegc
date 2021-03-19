@@ -64,7 +64,7 @@
             "dont-discover": []
         },
         "include_files": [
-            "app/Foundation/helpers.php"
+            "app/Overrides/Foundation/helpers.php"
         ]
     },
     "autoload": {
