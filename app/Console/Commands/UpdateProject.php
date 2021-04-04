@@ -74,10 +74,10 @@ class UpdateProject extends Command
             foreach($this->fileCopies as $origin => $destination) {
                 $this->line("Copie de $origin ==> $destination");
 
-                $backupPath = $backupPath . '/' . basename($destination);
+                $fileBackupPath = $backupPath . '/' . basename($destination);
                 $destinationPath = base_path($destination);
                 $originPath = base_path($origin);
-                copy($destinationPath, $backupPath);
+                copy($destinationPath, $fileBackupPath);
                 copy($originPath, $destinationPath);
             }
             $this->info("Copies réalisées avec succès.");
