@@ -39,12 +39,13 @@ class UpdateProject extends Command
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return int
      */
-    public function handle(): void
+    public function handle(): int
     {
         $this->migrateDatabase();
         $this->copyFiles();
+        return 0;
     }
 
     private function migrateDatabase(): void

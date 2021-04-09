@@ -295,5 +295,5 @@ EOL;
 $participer = new \GenCity\Monde\Page('participer');
 $participer_cadre = new \GenCity\Monde\Page('participer_cadre');
 
-$participer->update($participer_content);
-$participer_cadre->update($participer_cadre_content);
+$participer->updatePage($participer_content);
+$participer_cadre->updatePage($participer_cadre_content);
