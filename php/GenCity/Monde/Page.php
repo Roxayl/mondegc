@@ -30,14 +30,19 @@ class Page extends BaseModel {
 
     }
 
-    public function update($content) {
+    public function updatePage($content) {
+
+        $this->set('content', $content);
+        $this->update();
+
+    }
+
+    public function update() {
 
         $sql = 'UPDATE legacy_pages SET content = %s WHERE this_id = %s';
         mysql_query(sprintf($sql,
-            GetSQLValueString($content, 'text'),
+            GetSQLValueString($this->model->content, 'text'),
             GetSQLValueString($this->model->this_id, 'text')));
-
-        $this->set('content', $content);
 
     }
 

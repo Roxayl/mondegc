@@ -95,7 +95,15 @@ $('#search-tabs-container a').click(function (ev) {
                         <div class="well search-results">
                         <ul>
                         @foreach($modelSearchResults as $searchResult)
-                            <li><a href="{{ $searchResult->url }}">{{ $searchResult->title }}</a></li>
+                            <li>
+                                <a href="{{ $searchResult->url }}">{{ $searchResult->title }}</a><br>
+                                @if(!empty($searchResult->context))
+                                    <small><i>{!! $searchResult->context !!}</i></small><br>
+                                @endif
+                                @if(!empty($searchResult->description))
+                                    <small>{!! $searchResult->description !!}</small>
+                                @endif
+                            </li>
                         @endforeach
                         </ul>
                         </div>

@@ -34,30 +34,32 @@ class InitializeProject extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $this->copyEnv();
         $this->generateKey();
         $this->generateLegacyHashKey();
+        $this->call('monde:update');
         $this->info("Projet initialisé avec succès.");
+        return 0;
     }
 
-    private function copyEnv()
+    private function copyEnv(): void
     {
         $this->line('Copie de .env.exemple --> .env');
         copy(base_path('.env.example'), base_path('.env'));
         $this->info('Fichier .env créé avec succès.');
     }
 
-    private function generateKey()
+    private function generateKey(): void
     {
         $this->line("Génération de la clé d'application : key:generate");
         $this->call('key:generate');
     }
 
-    private function generateLegacyHashKey()
+    private function generateLegacyHashKey(): void
     {
         $this->line("Génération de la clé de hachage (legacy) : LEGACY_SALT");
 
