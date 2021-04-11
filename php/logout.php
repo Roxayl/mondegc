@@ -144,7 +144,3 @@ appendQueryString($editFormAction);
 
 //Stocke URL dans une variable
 $url_en_cours = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-if(isset($_SERVER['HTTP_REFERER'])) {
-$page_precedente = "http://".$_SERVER["HTTP_REFERER"];
-	}
-?>

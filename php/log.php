@@ -270,6 +270,8 @@ unset($_COOKIE["Session_mondeGC"]);
 }
 
 
+//Stocke URL dans une variable
+$url_en_cours = "https://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
 // *** Enregistrement commentaires.
 
@@ -290,9 +292,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
   $Result3 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
   $insertGoTo = $url_en_cours;
-    $adresse = $insertGoTo .'#commentaires';
+  $adresse = $insertGoTo .'#commentaires';
   header(sprintf("Location: %s", $adresse));
- exit;
+  exit;
 }
 
 // *** Recherche et effacement des sessions de plus d'un mois .
@@ -315,12 +317,6 @@ $Session_expire_query=sprintf("SELECT ch_use_session_id FROM users_session WHERE
   
   $Result7 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 	}
-	
-	
-	//Stocke URL dans une variable
-$url_en_cours = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-
-
 
 $query_pays = "SELECT ch_pay_id FROM pays";
 $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
