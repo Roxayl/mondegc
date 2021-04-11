@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Session\TokenMismatchException;
+
 // *** Recherche de sessions.
 $clefSession = isset($_COOKIE['Session_mondeGC']) ? $_COOKIE['Session_mondeGC'] : NULL;
 
@@ -74,6 +76,9 @@ if ($clefSession != NULL and $clefSession != "" and !isset($_SESSION['login_user
          * @var \GenCity\Monde\User
          */
         $_SESSION['userObject'] = new \GenCity\Monde\User($row_Session_user['ch_use_id']);
+
+        // Réinitialiser le jeton CSRF.
+        session()->regenerateToken();
 
     }
 
@@ -173,6 +178,9 @@ if ($loginFoundUser) {
      */
     $_SESSION['userObject'] = new \GenCity\Monde\User($row_LoginRS['ch_use_id']);
 
+    // Réinitialiser le jeton CSRF.
+    session()->regenerateToken();
+
     getErrorMessage('success',
         "Bienvenue " . $_SESSION['userObject']->get('ch_use_login') . ' !');
 
@@ -207,12 +215,18 @@ if(isset($_SESSION['userObject'])) {
 
 
 // ** Logout the current user. **
-$logoutAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'].".php?doLogout=true";
+$logoutAction = DEF_URI_PATH . "index.php?doLogout=true&csrf_token=" . csrf_token();
 if ((isset($_SERVER['QUERY_STRING'])) && ($_SERVER['QUERY_STRING'] != "")){
   $logoutAction .="&". htmlentities($_SERVER['QUERY_STRING']);
 }
 
-if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
+if ( auth()->check() && isset($_GET['doLogout']) && ($_GET['doLogout'] === "true") ) {
+
+    // Vérification du jeton CSRF lors de la déconnexion
+    $logout_csrf_token = isset($_GET['csrf_token']) ? $_GET['csrf_token'] : '';
+    if($logout_csrf_token !== csrf_token()) {
+        throw new TokenMismatchException('CSRF token mismatch.');
+    }
 	
 // ** Effacement des session sur serveur. **
 	if ($clefSession != NULL and $clefSession != "") {
@@ -243,6 +257,9 @@ unset($_COOKIE["Session_mondeGC"]);
   unset($_SESSION['user_last_log']);
   unset($_SESSION['statut']);
   unset($_SESSION['userObject']);
+
+  // Réinitialiser le jeton CSRF.
+  session()->regenerateToken();
   
   $logoutGoTo = DEF_URI_PATH . $mondegc_config['front-controller']['path']. '.php';
 

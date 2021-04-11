@@ -9,7 +9,7 @@ if(!isset($institut)) $institut = false;
 if(!isset($participer)) $participer = false;
 if(!isset($generation_city)) $generation_city = false;
 
-$logoutAction = DEF_URI_PATH . "index.php?doLogout=true";
+$logoutAction = DEF_URI_PATH . "index.php?doLogout=true&csrf_token=" . csrf_token();
 $loginFormAction = DEF_URI_PATH . 'index.php';
 
 // Tri des pays par continent pour le menu deroulant

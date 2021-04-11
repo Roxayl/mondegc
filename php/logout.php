@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Session\TokenMismatchException;
+
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
 appendQueryString($editFormAction);
 
@@ -82,7 +84,13 @@ if ((isset($_SERVER['QUERY_STRING'])) && ($_SERVER['QUERY_STRING'] != "")){
   $logoutAction .="&". htmlentities($_SERVER['QUERY_STRING']);
 }
 
-if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
+if ( auth()->check() && isset($_GET['doLogout']) && ($_GET['doLogout'] === "true") ) {
+
+    // Vérification du jeton CSRF lors de la déconnexion
+    $logout_csrf_token = isset($_GET['csrf_token']) ? $_GET['csrf_token'] : '';
+    if($logout_csrf_token !== csrf_token()) {
+        throw new TokenMismatchException('CSRF token mismatch.');
+    }
 
 // *** Recherche de sessions.
 $clefSession = $_COOKIE['Session_mondeGC'];
@@ -111,14 +119,6 @@ unset($_COOKIE["Session_mondeGC"]);
 	
 	
   //to fully log out a visitor we need to clear the session variables
-  $_SESSION['login_user'] = NULL;
-  $_SESSION['pays_ID'] = NULL;
-  $_SESSION['PrevUrl'] = NULL;
-  $_SESSION['fond_ecran'] = NULL;
-  $_SESSION['connect'] = NULL;
-  $_SESSION['user_ID'] = NULL;
-  $_SESSION['user_last_log'] = NULL;
-  $_SESSION['statut'] = NULL;
   unset($_SESSION['login_user']);
   unset($_SESSION['pays_ID']);
   unset($_SESSION['PrevUrl']);
@@ -127,6 +127,9 @@ unset($_COOKIE["Session_mondeGC"]);
   unset($_SESSION['user_ID']);
   unset($_SESSION['user_last_log']);
   unset($_SESSION['statut']);
+
+  // Réinitialiser le jeton CSRF.
+  session()->regenerateToken();
 	
   $logoutGoTo = DEF_URI_PATH . "index.php";
   if ($logoutGoTo) {
