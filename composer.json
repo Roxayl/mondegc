@@ -36,6 +36,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "ext-json": "*",
+        "ext-pdo": "*",
         "doctrine/dbal": "^2.10",
         "ezyang/htmlpurifier": "^4.13",
         "fideloper/proxy": "^4.0",
