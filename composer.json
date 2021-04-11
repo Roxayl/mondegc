@@ -23,7 +23,7 @@
             "name": "Roxel Lay",
             "role": "Main Developer",
             "email": "contact@romukulot.fr",
-            "homepage": "https://romukulot.fr"
+            "homepage": "https://roxayl.fr"
         }, {
             "name": "Sakuro",
             "role": "Developer"
@@ -35,14 +35,16 @@
     },
     "require": {
         "php": "^7.4|^8.0",
+        "ext-json": "*",
+        "ext-pdo": "*",
         "doctrine/dbal": "^2.10",
         "ezyang/htmlpurifier": "^4.13",
         "fideloper/proxy": "^4.0",
         "funkjedi/composer-include-files": "^1.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
-        "spatie/laravel-searchable": "^1.6",
-        "ext-json": "*"
+        "laravel/ui": "^3.2",
+        "spatie/laravel-searchable": "^1.6"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

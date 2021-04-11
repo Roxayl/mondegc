@@ -22,7 +22,7 @@ if ((isset($_POST['ch_disp_id'])) && ($_POST['ch_disp_id'] != "")) {
 
   
   $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
-  $deleteGoTo = DEF_URI_PAHT . 'back/institut_patrimoine.php?mon_catID='. $cat .'';
+  $deleteGoTo = DEF_URI_PATH . 'back/institut_patrimoine.php?mon_catID='. $cat .'';
   appendQueryString($deleteGoTo);
   $adresse = $deleteGoTo .'#classer-monument';
   header(sprintf("Location: %s", $adresse));
