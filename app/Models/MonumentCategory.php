@@ -9,6 +9,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * Class MonumentCategory
@@ -23,7 +25,7 @@ use Illuminate\Support\Facades\DB;
  * @property string|null $ch_mon_cat_desc
  * @property string|null $ch_mon_cat_icon
  * @property string|null $ch_mon_cat_couleur
- * @property string|null $ch_mon_cat_quete
+ * @property string|null $ch_mon_cat_fond
  * @property int|null $ch_mon_cat_industrie
  * @property int|null $ch_mon_cat_commerce
  * @property int|null $ch_mon_cat_agriculture
@@ -61,7 +63,7 @@ class MonumentCategory extends Model
         'ch_mon_cat_desc',
         'ch_mon_cat_icon',
         'ch_mon_cat_couleur',
-        'ch_mon_cat_quete',
+        'ch_mon_cat_fond',
         'ch_mon_cat_industrie',
         'ch_mon_cat_commerce',
         'ch_mon_cat_agriculture',

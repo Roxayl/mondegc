@@ -89,7 +89,7 @@ $eloquentInfrastructure = Infrastructure::with('infrastructure_officielle')
 
     <small>Cette infrastructure génère actuellement :</small>
     <br>
-    <div style="margin-left: -36px; width: 180%;">
+    <div style="margin-left: -175px; width: 170%; scale: 70%;">
         <?php renderElement('temperance/resources', [
                 'resources' => $eloquentInfrastructure->getGeneratedResources()->toArray()
         ]); ?>

@@ -11,6 +11,8 @@ use App\Models\Traits\DeletesInfluences;
 use App\Models\Traits\Influencable as GeneratesInfluence;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * Class Patrimoine
@@ -43,7 +45,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class Patrimoine extends Model implements Influencable
+class Patrimoine extends Model implements Influencable, Searchable
 {
     use GeneratesInfluence, DeletesInfluences;
 
@@ -87,6 +89,14 @@ class Patrimoine extends Model implements Influencable
         'ch_pat_description',
         'ch_pat_commentaire',
     ];
+
+    public function getSearchResult() : SearchResult
+    {
+        return new SearchResult(
+            $this, $this->ch_pat_nom,
+            url("page-monument.php?ch_pat_id={$this->ch_pat_id}")
+        );
+    }
 
     public function ville()
     {

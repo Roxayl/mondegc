@@ -6,7 +6,7 @@ switch($data['type']) {
         $url = url('php/infrastructure-modal.php?ch_inf_id=' . $data['id']);
         break;
     case 'patrimoine':
-        $url = url( 'php/patrimoine-modal.php?ch_pat_id=' . $data['id']);
+        $url = url( 'page-monument.php?ch_pat_id=' . $data['id']);
         break;
     default:
         $url = '';
@@ -24,7 +24,7 @@ switch($data['type']) {
     <?php endif; ?>
     <div class="infra-image" style="background-image: url('<?= $data['image'] ?>');"></div>
     <div class="infra-text">
-        <a href="<?= e($url) ?>" data-toggle="modal" data-target="#Modal-Monument"><h4><?= e($data['nom']) ?></h4></a>
+        <a href="<?= e($url) ?>" <?php if ($data['type']=='infra') { ?> data-toggle="modal" data-target="#Modal-Monument<?php } else { ?><?php }?> "><h4><?= e($data['nom']) ?></h4></a>
         <p><?= !isset($data['unescape_description']) || !$data['unescape_description'] ?
                 e($data['description']) : $data['description'] ?></p>
     </div>

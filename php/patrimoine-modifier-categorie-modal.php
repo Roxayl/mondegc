@@ -22,7 +22,8 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) {
   ch_mon_cat_nom=%s, 
   ch_mon_cat_desc=%s, 
   ch_mon_cat_icon=%s, 
-  ch_mon_cat_couleur=%s, 
+  ch_mon_cat_couleur=%s,
+  bg_image_url=%s,
   ch_mon_cat_budget=%s, 
   ch_mon_cat_industrie=%s, 
   ch_mon_cat_commerce=%s, 
@@ -41,6 +42,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) {
         GetSQLValueString($_POST['ch_mon_cat_desc'], "text"),
         GetSQLValueString($_POST['ch_mon_cat_icon'], "text"),
         GetSQLValueString($_POST['ch_mon_cat_couleur'], "text"),
+        GetSQLValueString($_POST['bg_image_url'], "text"),
         GetSQLValueString($_POST['ch_mon_cat_budget'], "text"),
         GetSQLValueString($_POST['ch_mon_cat_industrie'], "text"),
         GetSQLValueString($_POST['ch_mon_cat_commerce'], "text"),
@@ -102,13 +104,13 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
           <div class="control-label">Catégorie</div>
           <div class="controls">
             <label>
-              <input <?php if (!(strcmp($row_liste_mon_cat['ch_mon_cat_statut'],"1"))) { echo "checked"; } ?> name="ch_mon_cat_statut" type="radio" id="ch_mon_cat_statut_1" value="1">
+              <input <?php if (!(strcmp($row_liste_mon_cat['ch_mon_cat_statut'],"0"))) { echo "checked"; } ?> name="ch_mon_cat_statut" type="radio" id="ch_mon_cat_statut_0" value="0">
               Entreprise</label>
             <label>
-              <input <?php if (!(strcmp($row_liste_mon_cat['ch_mon_cat_statut'],"2"))) { echo "checked"; } ?> name="ch_mon_cat_statut" type="radio" id="ch_mon_cat_statut_2" value="2">
+              <input <?php if (!(strcmp($row_liste_mon_cat['ch_mon_cat_statut'],"1"))) { echo "checked"; } ?> name="ch_mon_cat_statut" type="radio" id="ch_mon_cat_statut_1" value="1">
               Ville</label>
             <label>
-              <input <?php if (!(strcmp($row_liste_mon_cat['ch_mon_cat_statut'],"3"))) { echo "checked"; } ?> name="ch_mon_cat_statut" type="radio" id="ch_mon_cat_statut_3" value="3">
+              <input <?php if (!(strcmp($row_liste_mon_cat['ch_mon_cat_statut'],"2"))) { echo "checked"; } ?> name="ch_mon_cat_statut" type="radio" id="ch_mon_cat_statut_2" value="2">
               Pays</label>
             <span class="radioRequiredMsg">Choisissez une catégorie pour votre Quête</span></div>
         </div>
@@ -131,12 +133,19 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
             </div>
             <!-- Couleur -->
             <div id="" class="control-group">
-              <label class="control-label" for="ch_mon_cat_icon">Couleur <a href="#" rel="clickover" title="Couleur" data-content="Choisissez une couleur de fond pour la cat&eacute;gorie"><i class="icon-info-sign"></i></a></label>
+              <label class="control-label" for="ch_mon_cat_icon">Code et fond<a href="#" rel="clickover" title="Couleur" data-content="Choisissez une couleur de fond pour la cat&eacute;gorie"><i class="icon-info-sign"></i></a></label>
               <div class="controls">
-                <div class="input-append color" data-color="<?= e($row_liste_mon_cat['ch_mon_cat_couleur']) ?>" data-color-format="hex" id="cp4">
-                  <input type="text" class="input-large" value="<?= e($row_liste_mon_cat['ch_mon_cat_couleur']) ?>" name="ch_mon_cat_couleur" id="ch_mon_cat_couleur">
-                  <span class="add-on"><i style="background-color: <?= e($row_liste_mon_cat['ch_mon_cat_couleur']) ?>)"></i></span> </div>
+                <div class="input-append color" data-color="<?= e($row_liste_mon_cat['ch_mon_cat_couleur']) ?>" id="cp4">
+                  <input type="text" class="input-small" style="width: 3em;" value="<?= e($row_liste_mon_cat['ch_mon_cat_couleur']) ?>" name="ch_mon_cat_couleur" id="ch_mon_cat_couleur">
+                  </div>
               </div>
+            </div>
+            <!-- Fond -->
+            <div id="sprytextfield23" class="control-group" style="margin-top: -3.1em; margin-left: 4em;">
+              <div class="controls">
+                <input class="input-xsmall" type="text" name="bg_image_url" id="bg_image_url" value="<?= e($row_liste_mon_cat['bg_image_url']) ?>">
+                <br>
+                <span class="textfieldRequiredMsg">une ic&ocirc;ne est obligatoire.</span> <span class="textfieldMinCharsMsg">min 2 caract&egrave;res.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
             </div>
             <!-- Description -->
             <div id="sprytextarea24" class="control-group">
@@ -237,6 +246,6 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 <script type="text/javascript">
 var spryradio20 = new Spry.Widget.ValidationRadio("spryradio20", {validateOn:["change"]});
 var sprytextfield21 = new Spry.Widget.ValidationTextField("sprytextfield21", "none", {minChars:2, maxChars:100, validateOn:["change"]});
-var sprytextfield23 = new Spry.Widget.ValidationTextField("sprytextfield23", "url", {minChars:2, maxChars:250, validateOn:["change"]});
+var sprytextfield23 = new Spry.Widget.ValidationTextField("sprytextfield23", "url", {minChars:2, maxChars:1050, validateOn:["change"]});
 var sprytextarea24 = new Spry.Widget.ValidationTextarea("sprytextarea24", {maxChars:400, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>

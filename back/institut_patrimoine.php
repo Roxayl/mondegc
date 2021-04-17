@@ -341,20 +341,22 @@ $('#closemodal').click(function() {
           <input name="ch_mon_cat_date" type="hidden" value="<?php echo $now; ?>">
           <input name="ch_mon_cat_mis_jour" type="hidden" value="<?php echo $now; ?>">
           <input name="ch_mon_cat_nb_update" type="hidden" value=0 >
-          <!-- Statut -->
-          <div id="spryradio1" class="control-group">
-            <div class="control-label">Statut <a href="#" rel="clickover" title="Statut de la cat&eacute;gorie" data-content="
-    Visible : cette cat&eacute;gorie sera visible sur la page de l'institut du patrimoine.
-    Invisible : cette cat&eacute;gorie sera cach&eacute;e sur la page de l'institut du patrimoine."><i class="icon-info-sign"></i></a></div>
-            <div class="controls">
-              <label>
-                <input type="radio" name="ch_mon_cat_statut" value="1" id="ch_mon_cat_statut_1" checked="CHECKED">
-                visible</label>
-              <label>
-                <input name="ch_mon_cat_statut" type="radio" id="ch_mon_cat_statut_2" value="2">
-                invisible</label>
-              <span class="radioRequiredMsg">Choisissez un statut pour cette cat&eacute;gorie de monument</span></div>
-          </div>
+        <!-- Statut -->
+        <div id="spryradio20" class="control-group">
+          <div class="control-label">Catégorie</div>
+          <div class="controls">
+            <label>
+              <input <?php if (!(strcmp($row_liste_mon_cat['ch_mon_cat_statut'],"1"))) { echo "checked"; } ?> name="ch_mon_cat_statut" type="radio" id="ch_mon_cat_statut_1" value="1">
+              Entreprise</label>
+            <label>
+              <input <?php if (!(strcmp($row_liste_mon_cat['ch_mon_cat_statut'],"2"))) { echo "checked"; } ?> name="ch_mon_cat_statut" type="radio" id="ch_mon_cat_statut_2" value="2">
+              Ville</label>
+            <label>
+              <input <?php if (!(strcmp($row_liste_mon_cat['ch_mon_cat_statut'],"3"))) { echo "checked"; } ?> name="ch_mon_cat_statut" type="radio" id="ch_mon_cat_statut_3" value="3">
+              Pays</label>
+            <span class="radioRequiredMsg">Choisissez une catégorie pour votre Quête</span></div>
+        </div>
+
           <!-- Nom-->
           <div id="sprytextfield2" class="control-group">
             <label class="control-label" for="ch_mon_cat_nom">Nom de la cat&eacute;gorie <a href="#" rel="clickover" title="Nom de la cat&eacute;gorie" Ce nom servira &agrave; identifier la cat&eacute;gorie dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>

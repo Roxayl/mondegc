@@ -59,7 +59,7 @@ $totalRows_liste_group = mysql_num_rows($liste_group);
 }
 
 //Recherche des monuments de la ville
-$query_monument = sprintf("SELECT ch_pat_ID, ch_pat_paysID, ch_pat_date, ch_pat_mis_jour, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_description, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine WHERE ch_pat_statut = 1 AND ch_pat_villeID = %s ORDER BY ch_pat_mis_jour DESC", GetSQLValueString($colname_infoVille, "int"));
+$query_monument = sprintf("SELECT ch_pat_ID, ch_pat_paysID, ch_pat_date, ch_pat_mis_jour, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_description, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine WHERE ch_pat_villeID = %s ORDER BY ch_pat_mis_jour DESC", GetSQLValueString($colname_infoVille, "int"));
 $monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
 $row_monument = mysql_fetch_assoc($monument);
 $totalRows_monument = mysql_num_rows($monument);
@@ -311,7 +311,7 @@ img.olTileImage {
         <?php } ?>
         <li><a href="#presentation">Pr&eacute;sentation</a></li>
         <li><a href="#communiques">Communiqu&eacute;s</a></li>
-        <li><a href="#carte">Carte</a></li>
+        <?php if ($row_infoVille['ch_vil_capitale']==4) { ?><?php } else { ?><li><a href="#carte">Carte</a></li><?php }?>
         <?php if ($row_infrastructure || $row_monument) { ?>
         <li><a href="#Economie">Économie</a></li>
         <?php } ?>
@@ -403,19 +403,18 @@ img.olTileImage {
         <div class="well"> <img class="thumb-drapeau" src="<?= e($row_Pays['ch_pay_lien_imgdrapeau']) ?>">
           <strong>
             <?php if ($row_infoVille['ch_vil_capitale']==1) {
-    echo "capitale";
-} else { echo "ville"; } ?>
-            du pays <a href="page-pays.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>"><?= e($row_Pays['ch_pay_nom']) ?></a></strong>
+    echo "Capitale";} ?><?php if ($row_infoVille['ch_vil_capitale']==2) {echo "Ville";} ?><?php if ($row_infoVille['ch_vil_capitale']==4) {echo "Entité";} ?>
+            de <a href="page-pays.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>"><?= e($row_Pays['ch_pay_nom']) ?></a></strong>
           <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;:</strong>
             <?php  echo date("d/m/Y", strtotime($row_infoVille['ch_vil_mis_jour'])); ?>
           </p>
           <p><strong>Date de recensement dans le monde GC&nbsp;:</strong>
             <?php  echo date("d/m/Y", strtotime($row_infoVille['ch_vil_date_enregistrement'])); ?>
           </p>
-          <p><strong>Population :</strong>
+          <?php if ($row_infoVille['ch_vil_capitale']!==4) { ?><p><strong>Population :</strong>
             <?php
 $population_ville_francais = number_format($row_infoVille['ch_vil_population'], 0, ',', ' ');
-echo $population_ville_francais; ?></p>
+echo $population_ville_francais; ?></p><?php } else { ?><?php }?>
           <p><strong>Sp&eacute;cialit&eacute;&nbsp;:</strong> <?= e($row_infoVille['ch_vil_specialite']) ?></p>
         </div>
         <h4>R&eacute;alis&eacute;e avec</h4>
@@ -473,6 +472,7 @@ echo $population_ville_francais; ?></p>
       
       <!-- carte
     ================================================== -->
+      <?php if ($row_infoVille['ch_vil_capitale']==4) { ?><?php } else { ?>
       <section>
         <div class="titre-vert anchor" id="carte">
           <h1>Carte</h1>
@@ -500,6 +500,7 @@ echo $population_ville_francais; ?></p>
           <div id="map" class="span7"></div>
         </div>
       </section>
+      <?php }?>
       <!-- Economie
     ================================================== -->
       <?php if ($row_infrastructure || $row_monument) { ?>
@@ -630,7 +631,7 @@ echo $population_ville_francais; ?></p>
 			if ($row_monument['listcat']) {
                 
                 $query_liste_mon_cat3 = "SELECT * FROM monument_categories
-                    WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
+                    WHERE ch_mon_cat_ID In ($listcategories) -- AND ch_mon_cat_statut =1--";
                 $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
                 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
                 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);

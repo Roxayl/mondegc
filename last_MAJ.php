@@ -74,7 +74,7 @@ SELECT ch_pat_label AS type_notification, ch_pat_id AS id, ch_pat_statut AS stat
 FROM patrimoine 
 INNER JOIN villes ON ch_pat_villeID = ch_vil_ID INNER JOIN pays ON ch_vil_paysID = ch_pay_id
 INNER JOIN users ON ch_use_id = ch_vil_user
-WHERE ch_pat_statut = 1 AND ch_vil_capitale != 3 AND ch_pay_publication = 1 
+WHERE ch_vil_capitale != 3 AND ch_pay_publication = 1 
 UNION
 SELECT ch_his_label AS type_notification, ch_his_id AS id, ch_his_personnage AS statut, ch_his_date_fait AS sous_categorie, ch_his_date_fait2 AS id_element, ch_use_paysID AS id_auteur, ch_his_date AS date, ch_his_nom AS titre, ch_use_lien_imgpersonnage AS photo_auteur, ch_use_nom_dirigeant AS nom_auteur, ch_use_paysID AS paysID_auteur, ch_use_prenom_dirigeant AS prenom_auteur, ch_use_titre_dirigeant AS titre_auteur, ch_his_paysID AS id_institution, ch_pay_nom AS institution, ch_his_lien_img1 AS img_institution, ch_his_paysID AS pays_institution
 FROM histoire
@@ -86,7 +86,7 @@ SELECT ch_disp_mon_label AS type_notification, ch_disp_mon_id AS id, ch_mon_cat_
 FROM dispatch_mon_cat
 INNER JOIN patrimoine ON ch_disp_mon_id = ch_pat_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID INNER JOIN pays ON ch_vil_paysID = ch_pay_id
 INNER JOIN monument_categories ON ch_mon_cat_ID = ch_disp_cat_id
-WHERE ch_mon_cat_statut = 1 AND ch_vil_capitale != 3 AND ch_pay_publication = 1 
+WHERE ch_vil_capitale != 3 AND ch_pay_publication = 1 
 UNION 
 SELECT ch_disp_FH_label AS type_notification, ch_disp_fait_hist_id AS id, ch_fai_cat_statut AS statut, ch_his_label AS sous_categorie, ch_his_paysID AS id_element, ch_disp_fait_hist_id AS id_auteur, ch_disp_FH_date AS date, ch_fai_cat_nom AS titre, ch_his_lien_img1 AS photo_auteur, ch_his_nom AS nom_auteur, ch_his_paysID AS paysID_auteur, ch_his_nom AS prenom_auteur, ch_his_legende_img1 AS titre_auteur, ch_fai_cat_ID AS id_institution, ch_fai_cat_nom AS institution, ch_fai_cat_icon AS img_institution, ch_fai_cat_couleur AS pays_institution
 FROM dispatch_fait_his_cat
@@ -560,7 +560,7 @@ do {
           &agrave;
           <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
           </small>
-          <p><a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>"><?= e($row_LastCommunique['institution']) ?></a>  a atteint un nouveau stade dans sa Quête <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id']) ?>"><?= e($row_LastCommunique['nom_auteur']) ?></a> :  <a href="patrimoine.php?mon_cat_ID=<?= e($row_LastCommunique['id_institution']) ?>#monument"><?= e($row_LastCommunique['institution']) ?></a></p>
+          <p>Un nouveau stade a été atteint dans la Quête <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id']) ?>"><?= e($row_LastCommunique['nom_auteur']) ?></a> :  <a href="patrimoine.php?mon_cat_ID=<?= e($row_LastCommunique['id_institution']) ?>#monument"><?= e($row_LastCommunique['institution']) ?></a></p>
         </div>
         <div class="span1 auteur icone-categorie">
           <?php if ($row_LastCommunique['img_institution']) {?>

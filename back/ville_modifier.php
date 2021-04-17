@@ -454,13 +454,16 @@ return true;
                   <div class="controls">
                     <label>
                       <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"1"))) {echo "checked=\"checked\"";} ?> type="radio" name="ch_vil_capitale" value="1" id="ch_vil_capitale_0">
-                      capitale</label>
+                      Capitale</label>
                     <label>
                       <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"2"))) {echo "checked=\"checked\"";} ?> type="radio" name="ch_vil_capitale" value="2" id="ch_vil_capitale_1">
-                      visible</label>
+                      Ville ordinaire</label>
+                    <label>
+                      <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"4"))) {echo "checked=\"checked\"";} ?> type="radio" name="ch_vil_capitale" value="4" id="ch_vil_capitale_4">
+                      Entité extraterritoriale (Quartier diplomatique / Bourse)</label>
                     <label>
                       <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"3"))) {echo "checked=\"checked\"";} ?> type="radio" name="ch_vil_capitale" value="3" id="ch_vil_capitale_2">
-                      invisible</label>
+                      Brouillon</label>
                     <span class="radioRequiredMsg">Choisissez un statut pour votre ville</span></div>
                 </div>
                 <div id="sprytextfield3" class="control-group"> 
@@ -726,7 +729,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
       <table width="539" class="table table-hover">
         <thead>
           <tr class="tablehead">
-            <th width="5%" scope="col"><a href="#" rel="clickover" title="Statut de votre monument" data-content="Un monument peut-&ecirc;tre publi&eacute;e sur votre page pays ou masqu&eacute;e."><i class="icon-globe"></i></a></th>
+            <th width="9%" scope="col"><a href="#" rel="clickover" title="Statut de votre monument" data-content="Un monument peut-&ecirc;tre publi&eacute;e sur votre page pays ou masqu&eacute;e."><i class="icon-globe"></i></a></th>
             <th width="62%" scope="col">Nom</th>
             <th width="21%" scope="col">Date</th>
             <th width="4%" scope="col">&nbsp;</th>
@@ -737,7 +740,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
         <tbody>
           <?php do { ?>
             <tr>
-              <td><img src="../assets/img/statutvil_<?= e($row_monument['ch_pat_statut']) ?>.png" alt="Statut"></td>
+              <td><img src="<?= e($row_monument['ch_pat_lien_img1']) ?>"></td>
               <td><?= __s($row_monument['ch_pat_nom']) ?></td>
               <td><?php echo date("d/m/Y", strtotime($row_monument['ch_pat_date'])); ?></td>
               <td>
@@ -747,7 +750,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
                   <input name="monument_ID" type="hidden" value="<?= e($row_monument['ch_pat_id']) ?>">
                   <button class="btn btn-primary" type="submit" title="modifier ce monument"><i class="icon-pencil icon-white"></i></button>
                 </form></td>
-              <td><form action="monument_confirmation_supprimer.php" method="post"">
+              <td><form action="monument_confirmation_supprimer.php" method="post">
                   <input name="monument_ID" type="hidden" value="<?= e($row_monument['ch_pat_id']) ?>">
                   <button class="btn btn-danger" type="submit" title="supprimer ce monument"><i class="icon-trash icon-white"></i></button>
                 </form></td>
