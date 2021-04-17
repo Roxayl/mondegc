@@ -14,7 +14,7 @@ $totalRows_institut = mysql_num_rows($institut);
 
 $organisations = \App\Models\Organisation::allOrdered()->paginate();
 
-//requete liste categories monuments pour pouvoir selectionner la categorie 
+//requete liste categories monuments pour pouvoir selectionner la categorie
 
 $query_liste_mon_cat2 = "SELECT * FROM monument_categories WHERE ch_mon_cat_statut = 0  ORDER BY ch_mon_cat_couleur ASC";
 $liste_mon_cat2 = mysql_query($query_liste_mon_cat2, $maconnexion) or die(mysql_error());
@@ -22,7 +22,7 @@ $row_liste_mon_cat2 = mysql_fetch_assoc($liste_mon_cat2);
 $totalRows_liste_mon_cat2 = mysql_num_rows($liste_mon_cat2);
 
 
-//requete liste  monuments d'une catégorie 
+//requete liste  monuments d'une catégorie
 $maxRows_classer_mon = 12;
 $pageNum_classer_mon = 0;
 if (isset($_GET['pageNum_classer_mon'])) {
@@ -38,7 +38,7 @@ if (isset($_GET['mon_cat_ID'])) {
   $colname_classer_mon = $_GET['mon_cat_ID'];
 } } else {
   $colname_classer_mon = NULL;
-} 
+}
 
 $query_classer_mon = sprintf("SELECT monument.ch_disp_id as id, monument.ch_disp_mon_id, ch_pat_nom, ch_pat_description, ch_pat_mis_jour, ch_pat_lien_img1, ch_pat_villeID, ch_pat_paysID, ch_vil_nom, ch_vil_ID, ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, (SELECT GROUP_CONCAT(categories.ch_disp_cat_id) FROM dispatch_mon_cat as categories WHERE monument.ch_disp_mon_id = categories.ch_disp_mon_id) AS listcat
 FROM dispatch_mon_cat as monument 
@@ -65,7 +65,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
   $params = explode("&", $_SERVER['QUERY_STRING']);
   $newParams = array();
   foreach ($params as $param) {
-    if (stristr($param, "pageNum_classer_mon") == false && 
+    if (stristr($param, "pageNum_classer_mon") == false &&
         stristr($param, "totalRows_classer_mon") == false) {
       array_push($newParams, $param);
     }
@@ -213,13 +213,14 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
       </section>
       <div class="clearfix"></div>
 
+
  <!-- Monument indexe
     ================================================== -->
       <section>
         <div class="titre-bleu anchor" id="entreprises" href="entreprises">
           <h1>Entreprises</h1>
         </div>
-        <div class="row-fluid"> 
+        <div class="row-fluid">
           <!-- Liste pour choix de la categories -->
           <div id="select-categorie">
             <form action="<?= DEF_URI_PATH ?>politique.php#entreprises" method="GET">
@@ -233,7 +234,7 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
           </div>
           <!-- Affichage si des informations de la catégorie  -->
           <?php if (($colname_classer_mon != NULL) AND ($colname_classer_mon != "")) { // affiche bouton ajouter si une categorie est choisie ?>
-              
+
           <?php
           // *** Ressources patrimoine
         $query_monument_ressources = sprintf("SELECT SUM(ch_mon_cat_budget) AS budget,SUM(ch_mon_cat_industrie) AS industrie, SUM(ch_mon_cat_commerce) AS commerce, SUM(ch_mon_cat_agriculture) AS agriculture, SUM(ch_mon_cat_tourisme) AS tourisme, SUM(ch_mon_cat_recherche) AS recherche, SUM(ch_mon_cat_environnement) AS environnement, SUM(ch_mon_cat_education) AS education FROM monument_categories
@@ -241,7 +242,7 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
         $monument_ressources = mysql_query($query_monument_ressources, $maconnexion) or die(mysql_error());
         $row_monument_ressources = mysql_fetch_assoc($monument_ressources);
           ?>
-              
+
           <div class="well" style="background-image: url('<?= __s($row_info_cat['bg_image_url']) ?>'); background-attachment: fixed; background-position: center; background-size: 110%;">
             <div class="row-fluid">
               <div class="span8" style="width: 80%; padding-left: 1em; padding-bottom: 2em;">
@@ -265,7 +266,7 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
 
       $listcategories = ($row_classer_mon['listcat']);
       if ($row_classer_mon['listcat']) {
-                
+
                 $query_liste_mon_cat3 = "SELECT * FROM monument_categories
                     WHERE ch_mon_cat_ID In ($listcategories)";
                 $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
@@ -321,16 +322,16 @@ $('#closemodal').click(function() {
         </div>
       </section>
 
-      <!-- Organisations
-    ================================================== -->
-      <?php if(isset($_SESSION['userObject'])): ?>
-      <div class="cta-title pull-right-cta">
-          <a href="<?= route('organisation.create') ?>"
-             class="btn btn-primary btn-cta">
-          <i class="icon-white icon-pencil"></i> Créer une organisation</a>
-      </div>
-      <?php endif; ?>
+
       <section>
+
+        <?php if(isset($_SESSION['userObject'])): ?>
+        <div class="cta-title pull-right-cta" style="margin-top: 36px;">
+            <a href="<?= route('organisation.create') ?>"
+               class="btn btn-primary btn-cta">
+            <i class="icon-white icon-pencil"></i> Créer une organisation</a>
+        </div>
+        <?php endif; ?>
         <div class="titre-bleu anchor" id="organisations">
           <h1>Organisations</h1>
         </div>

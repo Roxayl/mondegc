@@ -2,11 +2,15 @@
     "name": "roxayl/mondegc",
     "description": "Le site du Monde de Generation City",
     "type": "project",
-    "keywords": ["generation city", "php", "laravel"],
+    "keywords": ["generation city", "php", "laravel", "roleplay"],
     "homepage": "https://generation-city.com/monde/",
     "license": "proprietary",
     "authors": [
         {
+            "name": "AlfredVallamir",
+            "role": "Developer",
+            "homepage": "https://www.vallamir-co.fr/index.html"
+        }, {
             "name": "Calimero",
             "role": "Developer"
         }, {
@@ -19,34 +23,38 @@
             "name": "Roxel Lay",
             "role": "Main Developer",
             "email": "contact@romukulot.fr",
-            "homepage": "https://romukulot.fr"
+            "homepage": "https://roxayl.fr"
         }, {
             "name": "Sakuro",
             "role": "Developer"
         }
     ],
     "support": {
-        "forum": "https://www.forum-gc.com/"
+        "forum": "https://www.forum-gc.com/",
+        "source": "https://bitbucket.org/Roxayl/mondegc"
     },
     "require": {
-        "php": "^7.4",
+        "php": "^7.4|^8.0",
+        "ext-json": "*",
+        "ext-pdo": "*",
         "doctrine/dbal": "^2.10",
         "ezyang/htmlpurifier": "^4.13",
         "fideloper/proxy": "^4.0",
         "funkjedi/composer-include-files": "^1.1",
-        "laravel/framework": "^6.0",
-        "laravel/tinker": "^1.0",
+        "laravel/framework": "^8.0",
+        "laravel/tinker": "^2.0",
+        "laravel/ui": "^3.2",
         "spatie/laravel-searchable": "^1.6"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
-        "filp/whoops": "^2.0",
+        "facade/ignition": "^2.3.6",
         "fzaninotto/faker": "^1.4",
         "kitloong/laravel-migrations-generator": "^4.4",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^3.0",
-        "phpunit/phpunit": "^7.5",
-        "reliese/laravel": "^0.0.16"
+        "nunomaduro/collision": "^5.0",
+        "phpunit/phpunit": "^9.0",
+        "reliese/laravel": "^1.1"
     },
     "config": {
         "optimize-autoloader": true,
@@ -58,7 +66,7 @@
             "dont-discover": []
         },
         "include_files": [
-            "app/Foundation/helpers.php"
+            "app/Overrides/Foundation/helpers.php"
         ]
     },
     "autoload": {

@@ -20,7 +20,7 @@ class Personnage extends BaseModel {
             GetSQLValueString($data['entity']), GetSQLValueString($data['entity_id']));
         $result = mysql_query($query);
         $result = mysql_fetch_assoc($result);
-        if(count($result) == 0) {
+        if(!$result) {
             return null;
         } else {
             $personnage_id = $result['id'];

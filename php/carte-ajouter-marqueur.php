@@ -87,7 +87,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 		        var map;
                 var mapBounds = new OpenLayers.Bounds( -180.0, -89.9811063294, 180.0, 90.0);
 			    var mapMinZoom = 0;
-			    var mapMaxZoom = 8;
+			    var mapMaxZoom = 7;
 				
 		        // avoid pink tiles
 		        OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
@@ -113,16 +113,17 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 		            projection: new OpenLayers.Projection("EPSG:4326"),
 		            maxResolution: 0.703125,
 		            maxExtent: new OpenLayers.Bounds(-180, -90, 180, 90),
-					numZoomLevels: 8,
-					
-		            };
+					numZoomLevels: mapMaxZoom,
+                };
 					
                 
 				// construction de la carte
 				map = new OpenLayers.Map('map', options);
+
+				var tmsoverlay;
 				
  // calque de base geographique
-	            var tmsoverlay = new OpenLayers.Layer.TMS( " Geographique", "../Carto/CarteGC_2018/",
+	            tmsoverlay = new OpenLayers.Layer.TMS( " Geographique", "../Carto/CarteMondeGC_2013/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
@@ -133,26 +134,39 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 	            map.addLayer(tmsoverlay);
 								
 				// calque de base satellite
-               var tmsoverlay = new OpenLayers.Layer.TMS( " Satellite", "../Carto/Carte-Monde-GC-sat/",
+               tmsoverlay = new OpenLayers.Layer.TMS( " Satellite", "../Carto/Carte-Monde-GC-sat/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
 						isBaseLayer: true,
-						attribution:"&copy; Clamato maps avec l'aide de Franco de la Muerte.",
+						attribution:"&copy; Clamato & Franco de la Muerte-2012",
 	                });
 	            map.addLayer(tmsoverlay);
-				if (OpenLayers.Util.alphaHack() == false) { tmsoverlay.setOpacity(1); }
+				if (! OpenLayers.Util.alphaHack()) { tmsoverlay.setOpacity(1); }
 				
 				
 				// calque de base neutre
-				var tmsoverlay = new OpenLayers.Layer.TMS( " Neutre", "../Carto/Carte-Monde-GC-neutre/",
+				tmsoverlay = new OpenLayers.Layer.TMS( " Neutre", "../Carto/Carte-Monde-GC-neutre/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
-						isBaseLayer: true
+						isBaseLayer: true,
+                        attribution: "&copy; Boxxy-2013"
 	                });
 	            map.addLayer(tmsoverlay);
-				if (OpenLayers.Util.alphaHack() == false) { tmsoverlay.setOpacity(1); }
+				if (! OpenLayers.Util.alphaHack()) { tmsoverlay.setOpacity(1); }
+
+                // calque GC 2018 (non fonctionnel)
+                tmsoverlay = new OpenLayers.Layer.TMS(" Geographique (2018 - beta)", "Carto/CarteGC_2018/",
+                    {
+                        serviceVersion: '.', layername: '.', alpha: false,
+                        type: 'png', getURL: overlay_getTileURL,
+                        isBaseLayer: true,
+                        transitionEffect: "resize",
+                        attribution: "&copy; Boxxy-2013, Sakuro-2018"
+                    });
+                map.addLayer(tmsoverlay);
+				if (! OpenLayers.Util.alphaHack()) { tmsoverlay.setOpacity(1); }
 
 	
 	

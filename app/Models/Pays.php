@@ -18,6 +18,7 @@ use Closure;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -88,7 +89,7 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
     const UPDATED_AT = 'ch_pay_mis_jour';
 
 	protected $casts = [
-		'ch_pay_publication' => 'bool',
+		'ch_pay_publication' => 'int',
 		'ch_pay_emplacement' => 'int',
 		'ch_pay_nb_update' => 'int',
 		'ch_pay_budget_carte' => 'int',
@@ -164,8 +165,13 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
 
 	public function getSearchResult() : SearchResult
     {
+        $context = "Continent " . $this->ch_pay_continent
+            . ((int)$this->ch_pay_publication === self::STATUS_ARCHIVED ? ' - Pays archivé' : '');
+
 	    return new SearchResult(
-	        $this, $this->ch_pay_nom, url('page-pays.php?ch_pay_id=' . $this->ch_pay_id)
+	        $this, $this->ch_pay_nom, $context,
+            Str::limit(strip_tags($this->ch_pay_text_presentation), 150),
+            url('page-pays.php?ch_pay_id=' . $this->ch_pay_id)
         );
     }
 

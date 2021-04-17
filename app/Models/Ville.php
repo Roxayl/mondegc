@@ -14,6 +14,7 @@ use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use App\Services\EconomyService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -113,8 +114,15 @@ class Ville extends Model implements Searchable, Infrastructurable, AggregatesIn
 
 	public function getSearchResult() : SearchResult
     {
+        $context = null;
+        if(!is_null($this->pays)) {
+            $context = 'Ville du pays <a href="page-pays.php?ch_pay_id='
+                . $this->ch_vil_paysID . '">' . $this->pays->ch_pay_nom . '</a>';
+        }
+
 	    return new SearchResult(
-	        $this, $this->ch_vil_nom,
+	        $this, $this->ch_vil_nom, $context,
+            Str::limit(strip_tags($this->ch_vil_contenu), 150),
             url("page-ville.php?ch_ville_id={$this->ch_vil_ID}&ch_pay_id={$this->ch_vil_paysID}")
         );
     }

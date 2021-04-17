@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 return [
 
     'version' => env('LEGACY_VERSION', '2.x'),
@@ -8,8 +10,6 @@ return [
 
     'enable_csrf_protection' => env('LEGACY_CSRF', true),
 
-    'salt' => env('LEGACY_SALT', function() {
-        throw new InvalidArgumentException("Configuration legacy.salt manquante");
-    }),
+    'salt' => env('LEGACY_SALT', Str::random(32)),
 
 ];

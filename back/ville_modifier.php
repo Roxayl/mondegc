@@ -431,12 +431,15 @@ return true;
                   <label class="control-label" for="ch_vil_type_jeu">Type de jeu <a href="#" rel="clickover" title="Type de jeu" data-content="Indiquez le jeu dans lequel vous avez construit votre ville"><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
                     <select id="ch_vil_type_jeu" name="ch_vil_type_jeu">
-                      <option value="SC5" <?php if (!(strcmp("SC5", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>SimCity 5</option>
-                      <option value="CXL" <?php if (!(strcmp("CXL", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Cities XL</option>
                       <option value="CL" <?php if (!(strcmp("CL", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>City Life</option>
-                      <option value="SC4" <?php if (!(strcmp("SC4", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>SimCity 4</option>
+                      <option value="CXL" <?php if (!(strcmp("CXL", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Cities (X)Xl</option>
+                      <option value="SKY" <?php if (!(strcmp("SKY", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Cities Skylines</option>
                       <option value="SIM" <?php if (!(strcmp("SIM", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Les Sims</option>
-                      <option value="SKY" <?php if (!(strcmp("SKY", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Cities: Skylines</option>
+                      <option value="SC5" <?php if (!(strcmp("SC5", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Sim City 2013</option>
+                      <option value="SC4" <?php if (!(strcmp("SC4", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Sim City 4</option>
+                      <option value="SC3" <?php if (!(strcmp("SC3", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Sim City 3000</option>
+                      <option value="TAP" <?php if (!(strcmp("TAP", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>The Architect</option>
+                      <option value="MFT" <?php if (!(strcmp("MIN", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Minecraft</option>
                     </select>
                   </div>
                 </div>

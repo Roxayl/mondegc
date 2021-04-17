@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach($allPages as $thisPage) {
         $oldPage = new \GenCity\Monde\Page($thisPage->get('this_id'));
         $thisContent = $_POST['ch_page_' . $thisPage->this_id];
-        $thisPage->update($thisContent);
+        $thisPage->updatePage($thisContent);
         if($oldPage->get('content') !== $thisContent) {
             \GenCity\Monde\Logger\Log::createItem('pages', $thisPage->get('id'), 'update',
                 null, array('entity' => $thisPage->model->getInfo(), 'old_entity' => $oldPage->model->getInfo()));

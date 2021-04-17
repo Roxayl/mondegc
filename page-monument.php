@@ -193,9 +193,9 @@ mysql_data_seek($ressource, 0);}
     <input name="monument_ID" type="hidden" value="<?= e($row_monument['ch_pat_id']) ?>">
     <button class="btn btn-primary" type="submit" title="modifier ce monument"><i class="icon-pencil icon-white"></i></button>
   </form>
-  <div class="pull-right">
-    <a class="btn btn-primary btn-margin-left" style="height: 21px;" href="php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Modifier les catégories">Gérer les objectifs de la quête</a>
-  </div>
+  <?php } ?>
+  <?php if ($_SESSION['statut'] >= 20) { ?>
+  <a class="btn btn-primary btn-margin-left" href="php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Modifier les catégories">Modifier les catégories</a>
   <?php } ?>
   <?php if ($row_users['ch_use_id'] == $_SESSION['user_ID']) { ?>
   <a class="btn btn-primary pull-right" href="php/partage-monument.php?ch_pat_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i>Partager sur le forum</a>
@@ -216,7 +216,7 @@ mysql_data_seek($ressource, 0);}
 
         <!-- Liste des categories du monument -->
         <p><strong><?php echo $nb_cat_ok ?> objectifs atteints jusqu'à présent&nbsp;:</strong></p>
-        <?php if ($row_monument['listcat']) { ?> 
+        <?php if ($row_monument['listcat']) { ?>
         <ul class="listes">
           <?php do { ?>
             <li class="row-fluid" style="background-image: url('<?= __s($row_liste_mon_cat3['bg_image_url']) ?>'); background-attachment: fixed; background-position: center; background-size: 110%;">
@@ -255,13 +255,13 @@ mysql_data_seek($ressource, 0);}
         <a href="<?= __s($row_monument['ch_pat_legende_img5']) ?>">
             <div class="external-link-icon"
                  style="background-image:url('http://www.generation-city.com/forum/new/favicon.png');"></div>
-            Voir son sujet sur le <bold>Forum de Génération City</bold></a>  • 
+            Voir son sujet sur le <bold>Forum de Génération City</bold></a>  •
         <?php } ?>
             <?php if($row_monument['ch_pat_lien_img5']) { ?>
         <a href="<?= __s($row_monument['ch_pat_lien_img5']) ?>" target="_blank">
             <div class="external-link-icon"
                  style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></div>
-            Voir sa présentation complète sur le <bold>Wiki GC</bold></a>  • 
+            Voir sa présentation complète sur le <bold>Wiki GC</bold></a>  •
         <?php } ?>
             <?php if($row_monument['ch_pat_legende_img1']) { ?>
         <a href="<?= __s($row_monument['ch_pat_legende_img1']) ?>" target="_blank">
@@ -271,7 +271,7 @@ mysql_data_seek($ressource, 0);}
         <?php } ?>
     </div>
   </div>
-  <div><?php 
+  <div><?php
 	  $ch_com_categorie = "com_monument";
 	  $ch_com_element_id = $colname_monument;
 	  include('php/commentaire.php'); ?></div>
