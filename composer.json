@@ -54,7 +54,7 @@
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.0",
-        "reliese/laravel": "^0.0.16"
+        "reliese/laravel": "^1.1"
     },
     "config": {
         "optimize-autoloader": true,
