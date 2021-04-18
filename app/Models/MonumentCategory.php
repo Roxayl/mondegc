@@ -9,8 +9,6 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Spatie\Searchable\Searchable;
-use Spatie\Searchable\SearchResult;
 
 /**
  * Class MonumentCategory
@@ -34,6 +32,7 @@ use Spatie\Searchable\SearchResult;
  * @property int|null $ch_mon_cat_environnement
  * @property int|null $ch_mon_cat_education
  * @property int|null $ch_mon_cat_budget
+ * @property string|null $bg_image_url
  *
  * @package App\Models
  */
