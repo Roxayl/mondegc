@@ -240,28 +240,20 @@ return true;
           <label class="control-label" for="ch_vil_armoiries">Armoiries de la ville <a href="#" rel="clickover" title="Armoiries de la ville" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com). l'image des armoiries sera automatiquement redimensionn&eacute;e en 250 pixel de large et 250 pixels de haut."><i class="icon-info-sign"></i></a></label>
           <div class="controls">
             <input class="span6" type="text" id="ch_vil_armoiries" name="ch_vil_armoiries" value="" placeholder="">
-            <p>&nbsp;</p>
             <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
         </div>
         <!-- Statut -->
         <div id="spryradio1" class="control-group">
-          <div class="control-label" >Statut de la ville <a href="#" rel="clickover" title="Statut de votre ville" data-content="Capitale : la ville sera identifiée comme la capitale de votre pays sur le site.
-    Visible : la ville sera visible pour les visiteurs du site.
-   Invisible : la ville sera invisible pour les visiteurs du site."><i class="icon-info-sign"></i></a></div>
+          <div class="control-label"><label>Statut de la ville</label></div>
           <div class="controls">
-            <label>
-              <input type="radio" name="ch_vil_capitale" value="1" id="ch_vil_capitale_0">
-              capitale</label>
-            <label>
-              <input name="ch_vil_capitale" type="radio" id="ch_vil_capitale_1" value="2" checked="CHECKED">
-              visible</label>
-            <label>
-              <input type="radio" name="ch_vil_capitale" value="3" id="ch_vil_capitale_2">
-              invisible</label>
+            <label><input type="radio" name="ch_vil_capitale" value="1" id="ch_vil_capitale_0"> Capitale</label>
+            <label><input type="radio" name="ch_vil_capitale" value="2" id="ch_vil_capitale_1"> Ville ordinaire</label>
+            <label><input type="radio" name="ch_vil_capitale" value="4" id="ch_vil_capitale_4"> Entité extraterritoriale (Quartier diplomatique / Bourse)</label>
+            <label><input type="radio" name="ch_vil_capitale" value="3" id="ch_vil_capitale_2"> Brouillon</label>
             <span class="radioRequiredMsg">Choisissez un statut pour votre ville</span></div>
         </div>
-        <div id="sprytextfield3" class="control-group"> 
-          <!-- Population -->
+        <!-- Population -->
+        <div id="sprytextfield3" class="control-group">
           <label class="control-label" for="ch_vil_population">Population <a href="#" rel="clickover" title="Population" data-content="Entrez le chiffre sans espaces"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
             <input class="input-xlarge" type="text" name="ch_vil_population" id="ch_vil_population" placeholder="0">
