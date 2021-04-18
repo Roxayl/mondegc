@@ -42,7 +42,7 @@ FROM dispatch_mon_cat as monument
 INNER JOIN patrimoine ON monument.ch_disp_mon_id = ch_pat_id
 INNER JOIN villes ON ch_pat_villeID = ch_vil_ID 
 INNER JOIN pays ON ch_pat_paysID = ch_pay_id 
-WHERE monument.ch_disp_cat_id = %s OR %s IS NULL AND ch_pat_statut = 1 
+WHERE monument.ch_disp_cat_id = %s OR %s IS NULL 
 GROUP BY monument.ch_disp_mon_id
 ORDER BY monument.ch_disp_date DESC", GetSQLValueString($colname_classer_mon, "int"), GetSQLValueString($colname_classer_mon, "int"));
 $query_limit_classer_mon = sprintf("%s LIMIT %d, %d", $query_classer_mon, $startRow_classer_mon, $maxRows_classer_mon);
@@ -239,7 +239,7 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
             <div class="row-fluid">
               <div class="span8">
                 <h3><?= e($row_info_cat['ch_mon_cat_nom']) ?></h3>
-                <p><?= e($row_info_cat['ch_mon_cat_desc']) ?></p
+                <p><?= e($row_info_cat['ch_mon_cat_desc']) ?></p>
                 <p><strong>Influence sur l'économie de cette catégorie :</strong></p>
                   <?php
                     renderElement('temperance/resources', array(
@@ -261,7 +261,7 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
 			if ($row_classer_mon['listcat']) {
                 
                 $query_liste_mon_cat3 = "SELECT * FROM monument_categories
-                    WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
+                    WHERE ch_mon_cat_ID In ($listcategories)";
                 $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
                 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
                 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);

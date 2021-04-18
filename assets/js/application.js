@@ -167,7 +167,7 @@ $(document).ready(function() {
     var environ = window.location.host;
     var baseurl;
     if (environ === "localhost") { // localhost
-        baseurl = window.location.protocol + "//" + window.location.host + "/" + "MondeGC/trunk/";
+        baseurl = window.location.protocol + "//" + window.location.host + "/" + "mondegc/";
     } else if(environ === "mondegc.test") { // vagrant
         baseurl = window.location.protocol + "//" + window.location.host + "/";
     } else if(environ === "generation-city.test") { // vagrant

@@ -333,7 +333,7 @@ return true;
         <li><a href="#page_ville">Page ville</a></li>
         <li><a href="#mes-communiques">Communiqu&eacute;s officiels</a></li>
         <li><a href="#infrastructures">Infrastructures</a></li>
-        <li><a href="#mes-monuments">Monuments</a></li>
+        <li><a href="#quetes">Quêtes</a></li>
         <li><a href="page_pays_back.php?paysID=<?= e($row_ville['ch_pay_id']) ?>">Retour &agrave; mon pays</a></li>
       </ul>
     </div>
@@ -457,13 +457,16 @@ return true;
                   <div class="controls">
                     <label>
                       <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"1"))) {echo "checked=\"checked\"";} ?> type="radio" name="ch_vil_capitale" value="1" id="ch_vil_capitale_0">
-                      capitale</label>
+                      Capitale</label>
                     <label>
                       <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"2"))) {echo "checked=\"checked\"";} ?> type="radio" name="ch_vil_capitale" value="2" id="ch_vil_capitale_1">
-                      visible</label>
+                      Ville ordinaire</label>
+                    <label>
+                      <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"4"))) {echo "checked=\"checked\"";} ?> type="radio" name="ch_vil_capitale" value="4" id="ch_vil_capitale_4">
+                      Entité extraterritoriale (Quartier diplomatique / Bourse)</label>
                     <label>
                       <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"3"))) {echo "checked=\"checked\"";} ?> type="radio" name="ch_vil_capitale" value="3" id="ch_vil_capitale_2">
-                      invisible</label>
+                      Brouillon</label>
                     <span class="radioRequiredMsg">Choisissez un statut pour votre ville</span></div>
                 </div>
                 <div id="sprytextfield3" class="control-group"> 
@@ -719,8 +722,8 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
         </form>
     </div>
     <section>
-      <div id="mes-monuments" class="titre-vert anchor">
-        <h1>Monuments</h1>
+      <div id="quetes" class="titre-vert anchor">
+        <h1>Quêtes <span class="badge badge-warning">BETA</span></h1>
       </div>
       <div class="alert alert-tips">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -729,7 +732,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
       <table width="539" class="table table-hover">
         <thead>
           <tr class="tablehead">
-            <th width="5%" scope="col"><a href="#" rel="clickover" title="Statut de votre monument" data-content="Un monument peut-&ecirc;tre publi&eacute;e sur votre page pays ou masqu&eacute;e."><i class="icon-globe"></i></a></th>
+            <th width="9%" scope="col"><a href="#" rel="clickover" title="Statut de votre monument" data-content="Un monument peut-&ecirc;tre publi&eacute;e sur votre page pays ou masqu&eacute;e."><i class="icon-globe"></i></a></th>
             <th width="62%" scope="col">Nom</th>
             <th width="21%" scope="col">Date</th>
             <th width="4%" scope="col">&nbsp;</th>
@@ -740,17 +743,17 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
         <tbody>
           <?php do { ?>
             <tr>
-              <td><img src="../assets/img/statutvil_<?= e($row_monument['ch_pat_statut']) ?>.png" alt="Statut"></td>
+              <td><img src="<?= e($row_monument['ch_pat_lien_img1']) ?>"></td>
               <td><?= __s($row_monument['ch_pat_nom']) ?></td>
               <td><?php echo date("d/m/Y", strtotime($row_monument['ch_pat_date'])); ?></td>
               <td>
-                  <a class="btn modal-fullscreen" href="../php/patrimoine-modal.php?ch_pat_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Voir les détails" style="margin-top: -22px;"><i class="icon-eye-open"></i></a>
+                  <a class="btn" href="../page-monument.php?ch_pat_id=<?= e($row_monument['ch_pat_id']) ?>" title="Voir les détails" style="margin-top: -22px;"><i class="icon-eye-open"></i></a>
               </td>
               <td><form action="monument_modifier.php" method="post">
                   <input name="monument_ID" type="hidden" value="<?= e($row_monument['ch_pat_id']) ?>">
                   <button class="btn btn-primary" type="submit" title="modifier ce monument"><i class="icon-pencil icon-white"></i></button>
                 </form></td>
-              <td><form action="monument_confirmation_supprimer.php" method="post"">
+              <td><form action="monument_confirmation_supprimer.php" method="post">
                   <input name="monument_ID" type="hidden" value="<?= e($row_monument['ch_pat_id']) ?>">
                   <button class="btn btn-danger" type="submit" title="supprimer ce monument"><i class="icon-trash icon-white"></i></button>
                 </form></td>
@@ -761,16 +764,17 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
           <tr>
             <td colspan="5"><p class="pull-right">de <?php echo ($startRow_monument + 1) ?> &agrave; <?php echo min($startRow_monument + $maxRows_monument, $totalRows_monument) ?> sur <?php echo $totalRows_monument ?>
                 <?php if ($pageNum_monument > 0) { // Show if not first page ?>
-                  <a class="btn" href="<?php printf("%s?pageNum_monument=%d%s#mes-monuments", (int)$currentPage, max(0, $pageNum_monument - 1), $queryString_monument); ?>"><i class=" icon-backward"></i> </a>
+                  <a class="btn" href="<?php printf("%s?pageNum_monument=%d%s#quetes", (int)$currentPage, max(0, $pageNum_monument - 1), $queryString_monument); ?>"><i class=" icon-backward"></i> </a>
                   <?php } // Show if not first page ?>
                 <?php if ($pageNum_monument < $totalPages_monument) { // Show if not last page ?>
-                  <a class="btn" href="<?php printf("%s?pageNum_monument=%d%s#mes-monuments", $currentPage, min($totalPages_monument, $pageNum_monument + 1), $queryString_monument); ?>"> <i class="icon-forward"></i></a>
+                  <a class="btn" href="<?php printf("%s?pageNum_monument=%d%s#quetes", $currentPage, min($totalPages_monument, $pageNum_monument + 1), $queryString_monument); ?>"> <i class="icon-forward"></i></a>
                   <?php } // Show if not last page ?>
               </p>
               <form action="monument_ajouter.php" method="post">
                 <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
                 <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
-                <button class="btn btn-primary btn-margin-left" type="submit">Ajouter un monument</button>
+                <button class="btn btn-primary btn-margin-left" type="submit">Se lancer dans une nouvelle
+                    quête !</button>
               </form></td>
           </tr>
         </tfoot>
@@ -779,7 +783,8 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
       <form action="monument_ajouter.php" method="post">
         <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
         <input name="ville_ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
-        <button class="btn btn-primary btn-margin-left" type="submit">Ajouter un monument</button>
+        <button class="btn btn-primary btn-margin-left" type="submit">Se lancer dans une
+            nouvelle quête !</button>
       </form>
       <?php } ?>
     </section>

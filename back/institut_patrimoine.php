@@ -22,7 +22,8 @@ $insertSQL = sprintf("INSERT INTO monument_categories (ch_mon_cat_label, ch_mon_
                        GetSQLValueString($_POST['ch_mon_cat_nom'], "text"),
                        GetSQLValueString($_POST['ch_mon_cat_desc'], "text"),
                        GetSQLValueString($_POST['ch_mon_cat_icon'], "text"),
-					   GetSQLValueString($_POST['ch_mon_cat_couleur'], "text"));
+					             GetSQLValueString($_POST['ch_mon_cat_couleur'], "text"),
+                       GetSQLValueString($_POST['ch_mon_cat_quete'], "text"));
 					   
 
   $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
@@ -105,7 +106,7 @@ if (isset($_GET['mon_cat_ID'])) {
   $colname_classer_mon = NULL;
 } 
 
-$query_classer_mon = sprintf("SELECT monument.ch_disp_id as id, monument.ch_disp_mon_id, ch_pat_nom, ch_pat_mis_jour, ch_pat_lien_img1, (SELECT GROUP_CONCAT(categories.ch_disp_cat_id) FROM dispatch_mon_cat as categories WHERE monument.ch_disp_mon_id = categories.ch_disp_mon_id) AS listcat
+$query_classer_mon = sprintf("SELECT monument.ch_disp_id as id, monument.ch_disp_mon_id, ch_pat_nom, ch_pat_mis_jour, ch_pat_statut, ch_pat_lien_img1, (SELECT GROUP_CONCAT(categories.ch_disp_cat_id) FROM dispatch_mon_cat as categories WHERE monument.ch_disp_mon_id = categories.ch_disp_mon_id) AS listcat
 FROM dispatch_mon_cat as monument 
 INNER JOIN patrimoine ON monument.ch_disp_mon_id = ch_pat_id 
 WHERE monument.ch_disp_cat_id = %s OR %s IS NULL AND ch_pat_statut = 1 
@@ -284,7 +285,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
         <?php do { ?>
           <li class="row-fluid"> 
             <!-- ICONE categories -->
-            <div class="span2 icone-categorie"><img src="<?= e($row_liste_mon_cat['ch_mon_cat_icon']) ?>" alt="icone <?= e($row_liste_mon_cat['ch_mon_cat_nom']) ?>; <?php if ($row_liste_mon_cat['ch_mon_cat_statut'] ==2 ) {?>opacity:0.5;<?php }?>"></div>
+            <div class="span2 icone-categorie"><img src="<?= e($row_liste_mon_cat['ch_mon_cat_icon']) ?>" alt="icone <?= e($row_liste_mon_cat['ch_mon_cat_nom']) ?>;"></div>
             <!-- contenu categorie -->
             <div class="span10 info-listes"> 
               <!-- Boutons modifier / supprimer --> 
@@ -293,24 +294,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
               <h4><?= e($row_liste_mon_cat['ch_mon_cat_nom']) ?></h4>
               <p><?= e($row_liste_mon_cat['ch_mon_cat_desc']) ?></p>
                 <div class="row-fluid">
-                    <div class="span6 icone-ressources"> <img src="../assets/img/ressources/budget.png" alt="icone Budget">
-                    <p>Budget&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_budget']) ?></strong></p>				
-                    <img src="../assets/img/ressources/industrie.png" alt="icone Industrie">
-                    <p>Industrie&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_industrie']) ?></strong></p>							
-                    <img src="../assets/img/ressources/bureau.png" alt="icone Commerce">
-                    <p>Commerce&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_commerce']) ?></strong></p>					
-                    <img src="../assets/img/ressources/agriculture.png" alt="icone Agriculture">
-                    <p>Agriculture&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_agriculture']) ?></strong></p>
-				</div>					
-                    <div class="span6 icone-ressources"> <img src="../assets/img/ressources/tourisme.png" alt="icone Tourisme">
-                    <p>Tourisme&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_tourisme']) ?></strong></p>					
-                    <img src="../assets/img/ressources/recherche.png" alt="icone Recherche">
-                    <p>Recherche&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_recherche']) ?></strong></p>					
-                    <img src="../assets/img/ressources/environnement.png" alt="icone Evironnement">
-                    <p>Environnement&nbsp;:<strong><?= e($row_liste_mon_cat['ch_mon_cat_environnement']) ?></strong></p>			
-                    <img src="../assets/img/ressources/education.png" alt="icone Education">
-                    <p>Education&nbsp;: <strong><?= e($row_liste_mon_cat['ch_mon_cat_education']) ?></strong></p>
-                  </div>
+                    <img src="../assets/img/ressources/budget.png" alt="icone Budget" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_budget']) ?></strong>  <img src="../assets/img/ressources/industrie.png" alt="icone Industrie" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_industrie']) ?></strong>  <img src="../assets/img/ressources/bureau.png" alt="icone Commerce" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_commerce']) ?></strong>  <img src="../assets/img/ressources/agriculture.png" alt="icone Agriculture" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_agriculture']) ?></strong>  <img src="../assets/img/ressources/tourisme.png" alt="icone Tourisme" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_tourisme']) ?></strong>  <img src="../assets/img/ressources/recherche.png" alt="icone Recherche" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_recherche']) ?></strong>  <img src="../assets/img/ressources/environnement.png" alt="icone Evironnement" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_environnement']) ?></strong>  <img src="../assets/img/ressources/education.png" alt="icone Education" style="max-width: 15px"> <strong><?= e($row_liste_mon_cat['ch_mon_cat_education']) ?></strong>
             </div>
           </li>
           <?php } while ($row_liste_mon_cat = mysql_fetch_assoc($liste_mon_cat)); ?>
@@ -357,23 +341,25 @@ $('#closemodal').click(function() {
           <input name="ch_mon_cat_date" type="hidden" value="<?php echo $now; ?>">
           <input name="ch_mon_cat_mis_jour" type="hidden" value="<?php echo $now; ?>">
           <input name="ch_mon_cat_nb_update" type="hidden" value=0 >
-          <!-- Statut -->
-          <div id="spryradio1" class="control-group">
-            <div class="control-label">Statut <a href="#" rel="clickover" title="Statut de la cat&eacute;gorie" data-content="
-    Visible : cette cat&eacute;gorie sera visible sur la page de l'institut du patrimoine.
-    Invisible : cette cat&eacute;gorie sera cach&eacute;e sur la page de l'institut du patrimoine."><i class="icon-info-sign"></i></a></div>
-            <div class="controls">
-              <label>
-                <input type="radio" name="ch_mon_cat_statut" value="1" id="ch_mon_cat_statut_1" checked="CHECKED">
-                visible</label>
-              <label>
-                <input name="ch_mon_cat_statut" type="radio" id="ch_mon_cat_statut_2" value="2">
-                invisible</label>
-              <span class="radioRequiredMsg">Choisissez un statut pour cette cat&eacute;gorie de monument</span></div>
-          </div>
+        <!-- Statut -->
+        <div id="spryradio20" class="control-group">
+          <div class="control-label">Catégorie</div>
+          <div class="controls">
+            <label>
+              <input <?php if (!(strcmp($row_liste_mon_cat['ch_mon_cat_statut'],"1"))) { echo "checked"; } ?> name="ch_mon_cat_statut" type="radio" id="ch_mon_cat_statut_1" value="1">
+              Entreprise</label>
+            <label>
+              <input <?php if (!(strcmp($row_liste_mon_cat['ch_mon_cat_statut'],"2"))) { echo "checked"; } ?> name="ch_mon_cat_statut" type="radio" id="ch_mon_cat_statut_2" value="2">
+              Ville</label>
+            <label>
+              <input <?php if (!(strcmp($row_liste_mon_cat['ch_mon_cat_statut'],"3"))) { echo "checked"; } ?> name="ch_mon_cat_statut" type="radio" id="ch_mon_cat_statut_3" value="3">
+              Pays</label>
+            <span class="radioRequiredMsg">Choisissez une catégorie pour votre Quête</span></div>
+        </div>
+
           <!-- Nom-->
           <div id="sprytextfield2" class="control-group">
-            <label class="control-label" for="ch_mon_cat_nom">Nom de la cat&eacute;gorie <a href="#" rel="clickover" title="Nom de la cat&eacute;gorie" data-content="30 caract&egrave;res maximum. Ce nom servira &agrave; identifier la cat&eacute;gorie dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
+            <label class="control-label" for="ch_mon_cat_nom">Nom de la cat&eacute;gorie <a href="#" rel="clickover" title="Nom de la cat&eacute;gorie" Ce nom servira &agrave; identifier la cat&eacute;gorie dans l'ensemble du monde GC. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
             <div class="controls">
               <input class="input-xlarge" type="text" id="ch_mon_cat_nom" name="ch_mon_cat_nom">
               <br>
@@ -430,7 +416,7 @@ $('#closemodal').click(function() {
       <!-- Nom, date et lien vers la page du monument -->
       <div class="span6 info-listes">
         <h4><?= e($row_new_mon['ch_pat_nom']) ?></h4>
-        <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
+        <p><strong><?php if ($row_classer_mon['ch_pat_statut']==1) { ?>Entreprise<?php } if ($row_classer_mon['ch_pat_statut']==2) { ?>Ville<?php } if ($row_classer_mon['ch_pat_statut']==3) { ?>Pays / organisation<?php } else { ?><?php }?></strong> • Dernière MAJ le
           <?php  echo date("d/m/Y", strtotime($row_new_mon['ch_pat_mis_jour'])); ?>
           &agrave; <?php echo date("G:i:s", strtotime($row_new_mon['ch_pat_mis_jour'])); ?> </p>
         <div class="btn-group form-button-inline">
@@ -499,7 +485,7 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
       <!-- Nom, date et lien vers la page du monument -->
       <div class="span6 info-listes">
         <h4><?= e($row_classer_mon['ch_pat_nom']) ?></h4>
-        <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
+        <p><strong><?php if ($row_classer_mon['ch_pat_statut']==1) { ?>Entreprise<?php } if ($row_classer_mon['ch_pat_statut']==2) { ?>Ville<?php } if ($row_classer_mon['ch_pat_statut']==3) { ?>Pays / organisation<?php } else { ?><?php }?></strong> • Dernière MAJ le
           <?php  echo date("d/m/Y", strtotime($row_classer_mon['ch_pat_mis_jour'])); ?>
           &agrave; <?php echo date("G:i:s", strtotime($row_classer_mon['ch_pat_mis_jour'])); ?> </p>
          <div class="btn-group form-button-inline">
@@ -519,7 +505,7 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
         <?php if ($row_liste_mon_cat3) {?>
         <?php do { ?>
           <!-- Icone et popover de la categorie -->
-          <div class="span2 icone-categorie"><a href="#" rel="clickover" title="<?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" data-placement="left" data-content="<?php echo $row_liste_mon_cat3['ch_mon_cat_desc']; ?>"><img src="<?php echo $row_liste_mon_cat3['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" style="background-color:<?php echo $row_liste_mon_cat3['ch_mon_cat_couleur']; ?>; <?php if ($row_liste_mon_cat3['ch_mon_cat_statut'] ==2 ) {?>opacity:0.5;<?php }?>"></a></div>
+          <div class="span2 icone-categorie"><a href="#" rel="clickover" title="<?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" data-placement="left" data-content="<?php echo $row_liste_mon_cat3['ch_mon_cat_desc']; ?>"><img src="<?php echo $row_liste_mon_cat3['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>"></a></div>
           <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); ?>
         <?php } ?>
       </div>
@@ -570,7 +556,7 @@ $('#closemodal').click(function() {
 
 <script type="text/javascript">
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});
-var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "none", {minChars:2, maxChars:30, validateOn:["change"]});
+var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "none", {minChars:2, validateOn:["change"]});
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "url", {minChars:2, maxChars:250, validateOn:["change"]});
 var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:400, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>

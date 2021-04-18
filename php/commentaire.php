@@ -41,7 +41,7 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
 
 <!-- REACTIONS -->
 <?php if ($row_commentaire) { ?>
-<ul class="listes listes-visiteurs">
+<ul class="listes listes-visiteurs" style="background: #abbcc8;">
   <?php do {
 
     $paysReaction = new \GenCity\Monde\Pays($row_commentaire['ch_use_paysID']);
@@ -55,7 +55,7 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
           <img src="<?= __s($persoReaction->get('lien_img')) ?>">
         <?php endif; ?>
     </div>
-    <div class="span9 info-listes">
+    <div class="span9 info-listes" style="background: white; padding-left: 1em; padding-right: 1em;">
       <!-- AFFICHAGE OUTILS MODERATION -->
     <div class="cta-container" style="position: relative; top: 3px; margin-right: -15px;">
       <?php if (($_SESSION['statut'] >= 20) OR ($_SESSION['user_ID'] == $row_commentaire['ch_com_user_id'])) { ?>
@@ -129,16 +129,14 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
     }
 
     ?>
-    <h3>Ecrire un commentaire</h3>
 
     <form action="" method="POST" name="ajout_communique" id="ajout_communique">
 
-<ul id="EcrireCommentaire" class="listes listes-visiteurs">
-  <li class="row-fluid">
-    <div class="span3"></div>
-    <div class="span9 info-listes">
-        <label> Publier en tant que :
-        <select name="ch_com_pays_id">
+<ul id="EcrireCommentaire" class="listes listes-visiteurs" style="background: #abbcc8;">
+  <li class="row-fluid" style="background: rgb(171, 188, 200);">
+    <div class="span9">
+        <label style="height: 45px;"><h3 style="border-color: #1D262C; color: #444444; border-style: solid; border-width: 0 0 1px; font-family: 'Titillium Web', sans-serif; font-size: 1rem; margin-left: -1em; width: 137%;">Publier un message au nom de</h3>
+        <select name="ch_com_pays_id" style="border: #1d262c; background: transparent; margin-top: -4.1em; height: 25px; width: 104%; margin-left: 14em; color: black;">
             <?php foreach($userPays as $thisPays): ?>
                 <option value="<?= __s($thisPays->get('ch_pay_id')) ?>">
                     <?= __s($thisPays->get('ch_pay_nom')) ?>
@@ -161,8 +159,7 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
         <input name="ch_com_statut" type="hidden" value="1">
         <!-- Contenu -->
         <textarea rows="15" name="ch_com_contenu" class="wysiwyg" id="ch_com_contenu"></textarea>
-        <p>&nbsp;</p>
-        <button type="submit" class="btn btn-primary btn-margin-left">Envoyer</button>
+        <button type="submit" style="margin-top: -4em" class="btn btn-primary btn-margin-left">Envoyer</button>
         <input type="hidden" name="MM_insert" value="ajout_communique">
       </form>
 <?php } ?>

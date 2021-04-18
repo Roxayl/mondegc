@@ -73,7 +73,7 @@ $institutCulture = new Institut(Institut::$instituts['culture']);
 <!-- head Html -->
 <head>
 <meta charset="utf-8">
-<title>Monde GC - Ajouter un monument</title>
+<title>Monde GC - Nouvelle quête</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -142,7 +142,7 @@ return true;
       <!-- Moderation
      ================================================== -->
       <div id="monument" class="titre-vert anchor">
-        <h1>Ajouter un monument</h1>
+        <h1>Commencer une nouvelle quête <span class="badge badge-warning">BETA</span></h1>
       </div>
       <?php if (($_SESSION['statut'] >= 20) AND ($row_users['ch_use_id'] != $_SESSION['user_ID'])) { ?>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/membre-modifier_back.php" method="get">
@@ -155,7 +155,7 @@ return true;
       </form>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/ville_modifier.php" method="get">
         <input name="ville-ID" type="hidden" value="<?= e($row_monument['ch_pat_villeID']) ?>">
-        <button class="btn btn-danger" type="submit" title="page de gestion de la ville"> Modifier la ville</button>
+        <button class="btn btn-danger" type="submit" title="page de gestion de la ville"><i class="icon-pencil icon-white"></i> Modifier la ville</button>
       </form>
       <?php }?>
       <div class="clearfix"></div>
@@ -163,7 +163,7 @@ return true;
       <form action="<?php echo e($editFormAction) ?>" method="POST" class="form-horizontal well" name="ajout_monument" Id="ajout_monument" onsubmit='return verif_champ(document.ajout_monument.form_coord_X.value);' >
         <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
-          Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; votre monument. Les monuments sont des constructions exceptionelles de votre pays. La promotion des monuments du Monde GC est confi&eacute;e au <a href="../patrimoine.php" title="lien vers la page consacr&eacute;e &agrave; l'Institut"><?= __s($institutCulture->get('ch_ins_nom')) ?></a>.</div>
+          Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e aux quêtes.</div>
         <!-- Bouton cachés -->
         <input name="ch_pat_paysID" type="hidden" value="<?php echo $paysID; ?>" >
         <input name="ch_pat_villeID" type="hidden" value="<?php echo $ville_ID; ?>">
@@ -175,23 +175,24 @@ return true;
         <input name="ch_pat_nb_update" type="hidden" value="0">
         <!-- Statut -->
         <div id="spryradio1" class="control-group">
-          <div class="control-label">Statut <a href="#" rel="clickover" title="Statut de votre monument" data-content="
-    Visible : le monument sera visible pour les visiteurs du site.
-    Invisible : le monument sera cach&eacute; pour les visiteurs du site."><i class="icon-info-sign"></i></a></div>
+          <div class="control-label">Catégorie</div>
           <div class="controls">
             <label>
-              <input type="radio" name="ch_pat_statut" value="1" id="ch_pat_statut_1" checked="CHECKED">
-              visible</label>
+              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"0"))) { echo "checked"; } ?> type="radio" name="ch_pat_statut" value="0" id="ch_pat_statut_0">
+              Entreprise</label>
             <label>
-              <input name="ch_pat_statut" type="radio" id="ch_pat_statut_2" value="2">
-              invisible</label>
-            <span class="radioRequiredMsg">Choisissez un statut pour votre monument</span></div>
+              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"1"))) { echo "checked"; } ?> name="ch_pat_statut" type="radio" id="ch_pat_statut_1" value="1">
+              Ville</label>
+            <label>
+              <input <?php if (!(strcmp($row_monument['ch_pat_statut'],"2"))) { echo "checked"; } ?> name="ch_pat_statut" type="radio" id="ch_pat_statut_2" value="2">
+              Pays</label>
+            <span class="radioRequiredMsg">Choisissez une catégorie pour votre Quête</span></div>
         </div>
         <!-- Nom -->
         <div id="sprytextfield2" class="control-group">
-          <label class="control-label" for="ch_pat_nom">Nom du Monument <a href="#" rel="clickover" title="Nom du monument" data-content="50 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
+          <label class="control-label" for="ch_pat_nom">Nom de la quête <a href="#" rel="clickover" title="Nom de la quête" data-content="50 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input class="span6" type="text" id="ch_pat_nom" name="ch_pat_nom" value="" placeholder="mon monument">
+            <input class="span6" type="text" id="ch_pat_nom" name="ch_pat_nom" value="" placeholder="Un nom sympa pour ma quête...">
             <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>
         </div>
         <!-- Description -->
@@ -206,7 +207,7 @@ return true;
         <div class="alert alert-danger">
           <button type="button" class="close" data-dismiss="alert">×</button>
           <h4>Attention&nbsp;!</h4>
-          Vous devez obligatoirement placer votre monument sur la carte du Monde GC. Veillez &agrave; placer votre monument &agrave; l'int&eacute;rieur des fronti&egrave;res de votre pays.</div>
+          Vous devez obligatoirement désigner un emplacement pour votre quête sur la carte du Monde GC. Veillez &agrave; placer le point &agrave; l'int&eacute;rieur des fronti&egrave;res de votre pays.</div>
         <!-- Coordonnées -->
         <div id="map"></div>
         <p>&nbsp;</p>
@@ -228,7 +229,7 @@ return true;
         <!-- Carousel -->
         <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
-          Le carrousel est une galerie d'images qui va d&eacute;filer en t&ecirc;te de la page de votre monument. La premi&egrave;re image sera reprise pour illustrer votre monument dans l'ensemble du site.</div>
+          Le carrousel est une galerie d'images qui va d&eacute;filer en t&ecirc;te de la page de la quête. La premi&egrave;re image sera reprise pour illustrer la quête dans l'ensemble du site.</div>
         <div id="sprytextfield5" class="control-group">
           <label class="control-label" for="ch_pat_lien_img1">Lien image n&deg;1 <a href="#" rel="clickover" title="Lien image" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
@@ -290,7 +291,7 @@ return true;
             <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span></div>
         </div>
         <div class="controls">
-          <button type="submit" class="btn btn-primary">Envoyer</button>&nbsp;&nbsp;<a class="btn btn-danger" href="ville_modifier.php">Annuler</a>
+          <button type="submit" class="btn btn-primary">C'est parti !</button>&nbsp;&nbsp;<a class="btn btn-danger" href="ville_modifier.php">Annuler</a>
         </div>
         <input type="hidden" name="MM_insert" value="ajout_monument">
       </form>

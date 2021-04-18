@@ -648,6 +648,14 @@ body > .navbar .brand {
     margin: 2px 3px;
     display: inline-block;
     vertical-align: top;
+    transition: 0.5s ease;
+}
+
+.infra-well:hover {
+    scale: 105%;
+    background: white;
+    box-shadow: 0 8px 9px -5px rgba(0,0,0,.1),0 15px 22px 2px rgba(19,5,5,.04),0 6px 28px 5px rgba(0,0,0,.1) !important;
+    transition: 0.5s ease;
 }
 
 .infra-image {
@@ -1246,6 +1254,13 @@ canvas#parliament-chart {
     margin-bottom: 0;
     padding: 5px;
     position: relative;
+    margin-left: 0em;
+    transition: margin-left 0.5s ease;
+}
+
+.listes li:hover {
+    margin-left: 1em;
+    transition: margin-left 0.5s cubic-bezier(.22,.61,.36,1);
 }
 
 li.dropdown-li-force {
@@ -1344,7 +1359,7 @@ li.dropdown-li-force {
 }
 
 .token .infra-nbr-ressource {
-    font-size: 16px;
+    font-size: 25px;
 }
 
 .token-budget {
@@ -1816,8 +1831,8 @@ table .btn {
     margin-top: 5px;
     padding: 3px;
     border-radius: 3px;
-    max-width: 40px;
-    width: 40px;
+    max-width: 50px;
+    width: 50px;
 }
 
 .icone-categorie div {
@@ -3152,4 +3167,19 @@ Tablet COLLAPSE
 
 .icon-trash {
     background-position: -456px 0;
+}
+
+.boite-bg:hover {
+    scale:95%;
+    transition: scale 0.5s ease;
+}
+
+.boite-bg {
+    scale:90%;
+    transition: scale 0.5s ease;
+}
+
+.thumbnail:hover {
+    scale:105%;
+    transition: scale 0.5s ease;
 }

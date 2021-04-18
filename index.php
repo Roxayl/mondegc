@@ -123,7 +123,7 @@ $_SESSION['an']=true;
         <div class="well"></div>
 
         <div id="actu" class="titre-bleu no-bg anchor">
-          <h1 style="font-size: 26px; padding-left: 16px;">Communiqués publiés</h1>
+          <h1 style="font-size: 26px; padding-left: 16px;">Communiqués popés</h1>
         </div>
         <?php
         $query_communiquesPays = "

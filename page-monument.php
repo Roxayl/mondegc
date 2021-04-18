@@ -33,11 +33,12 @@ $listcategories = ($row_monument['listcat']);
 			if ($row_monument['listcat']) {
           
 
-$query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
+$query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories) ORDER BY ch_mon_cat_couleur";
 $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
 }
+
 $_SESSION['last_work'] = 'page-monument.php?ch_pat_id='.$row_monument['ch_pat_id'];
 
 
@@ -45,12 +46,25 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
 
 $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
 
+//calculs
+$nb_cat_ok = 0;
+
+if ($query_liste_mon_cat3) {$ressource = mysql_query($query_liste_mon_cat3);
+
+while($row = mysql_fetch_assoc($ressource)) {
+if ($row_monument['listcat'])
+   {$nb_cat_ok = $nb_cat_ok + 1;}
+   else {$nb_cat_ok = 1;}
+}
+
+mysql_data_seek($ressource, 0);}
+
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
 <head>
 <meta charset="utf-8">
-<title>Monde GC - Monument : <?= __s($row_monument['ch_pat_nom']) ?></title>
+<title>Monde GC - Quête : <?= __s($row_monument['ch_pat_nom']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -117,15 +131,12 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
   <div class="container container-carousel">
     <?php if ($row_monument['ch_pat_lien_img1'] OR $row_monument['ch_pat_lien_img2'] OR $row_monument['ch_pat_lien_img3'] OR $row_monument['ch_pat_lien_img4'] OR $row_monument['ch_pat_lien_img5']) { ?>
     <div class="titre-caroussel-container">
-        <h1 class="titre-caroussel"><?= __s($row_monument['ch_pat_nom']) ?></h1>
+        <?php if ($row_monument['ch_pat_statut']==0) { ?><h1 class="titre-caroussel">Entreprise</h1><?php } else { ?><h1 class="titre-caroussel">Quête</h1><?php }?>
     </div>
     <section id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
         <?php if ($row_monument['ch_pat_lien_img1']) { ?>
-        <div class="item active" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img1']; ?>)">
-          <div class="carousel-caption">
-            <p><?= __s($row_monument['ch_pat_legende_img1']) ?></p>
-          </div>
+        <div class="item active" style="background-position: center; background-repeat: no-repeat; background-size: inherit; height: 460px; background-color: white; margin-top: -3em; background-image: url(<?php echo $row_monument['ch_pat_lien_img1']; ?>)">
         </div>
         <?php } ?>
         <?php if ($row_monument['ch_pat_lien_img2']) { ?>
@@ -149,13 +160,6 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
           </div>
         </div>
         <?php } ?>
-        <?php if ($row_monument['ch_pat_lien_img5']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img5']; ?>)">
-          <div class="carousel-caption">
-            <p><?= __s($row_monument['ch_pat_legende_img5']) ?></p>
-          </div>
-        </div>
-        <?php } ?>
       </div>
       <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a> <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a> </section>
     <!-- Titre si pas de carrousel
@@ -175,7 +179,7 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
         <li><a href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pay_id']) ?>"><?= e($row_monument['ch_pay_nom']) ?></a> <span class="divider">/</span></li>
         <li><a href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pay_id']) ?>#villes">Villes</a> <span class="divider">/</span></li>
         <li><a href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pay_id']) ?>&ch_ville_id=<?= e($row_monument['ch_vil_ID']) ?>"><?= __s($row_monument['ch_vil_nom']) ?></a> <span class="divider">/</span></li>
-        <li><a href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pay_id']) ?>&ch_ville_id=<?= e($row_monument['ch_vil_ID']) ?>#quêtes">Patrimoine</a> <span class="divider">/</span></li>
+        <li><a href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pay_id']) ?>&ch_ville_id=<?= e($row_monument['ch_vil_ID']) ?>#quetes">Quêtes</a> <span class="divider">/</span></li>
       <li class="active"><?= e($row_monument['ch_pat_nom']) ?></li>
     </ul>
   <!-- Moderation
@@ -204,22 +208,30 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
   </div>
   <div class="well">
     <div class="row-fluid">
-      <div class="span8">
-        <p><strong>Pays&nbsp;:</strong> <img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>"><?= __s($row_monument['ch_pay_nom']) ?></a></p>
-        <p><strong>Ville&nbsp;:</strong> <a class="" href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>&ch_ville_id=<?= e($row_monument['ch_pat_villeID']) ?>"><?= __s($row_monument['ch_vil_nom']) ?></a></p>
+      <div>
+        <div class="alert alert-info">
+            <h4>Je suis en <span class="badge badge-warning">BETA</span></h4>
+            <p>Les quêtes sont une fonctionnalité en cours de test. N'hésitez pas à faire vos retours sur le forum !</p>
+        </div>
+
+        <p><img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>"><?= __s($row_monument['ch_pay_nom']) ?></a> • <?php if ($row_monument['ch_pat_statut']==0) { ?> Entreprise référencée à <?php } else { ?><?php }?>
+        <a class="" href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>&ch_ville_id=<?= e($row_monument['ch_pat_villeID']) ?>"><?= __s($row_monument['ch_vil_nom']) ?></a></p>
         <p><?= __s($row_monument['ch_pat_description']) ?></p>
-        <!-- Liste des categories di monument -->
-        <p><strong>Cat&eacute;gories&nbsp;:</strong></p>
+
+
+        <!-- Liste des categories du monument -->
+        <p><strong><?php echo $nb_cat_ok ?> objectifs atteints jusqu'à présent&nbsp;:</strong></p>
         <?php if ($row_monument['listcat']) { ?>
         <ul class="listes">
           <?php do { ?>
-            <li class="row-fluid">
-              <div class="span1 icone-categorie"><img src="<?= __s($row_liste_mon_cat3['ch_mon_cat_icon']) ?>" alt="icone <?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?>" style="background-color:<?= __s($row_liste_mon_cat3['ch_mon_cat_couleur']) ?>;"></div>
-              <div class="span7">
-                <p><strong><a href="patrimoine.php?mon_catID=<?php echo $row_liste_mon_cat3['ch_mon_cat_ID']; ?>#monument"><?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?></a></strong></p>
-              </div>
+            <li class="row-fluid" style="background-image: url('<?= __s($row_liste_mon_cat3['bg_image_url']) ?>'); background-attachment: fixed; background-position: center; background-size: 110%;">
+              <div class="span1 icone-categorie"><img src="<?= __s($row_liste_mon_cat3['ch_mon_cat_icon']) ?>" alt="icone <?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?>"></div>
+              <div class="span7" style="width: 90%; margin-left: 0em;">
+                <p><strong><a href="politique.php?mon_cat_ID=<?php echo $row_liste_mon_cat3['ch_mon_cat_ID']; ?>#entreprises"><?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?></a></strong> <br><?= __s($row_liste_mon_cat3['ch_mon_cat_desc']) ?> <br>
+                    <div style="vertical-align: baseline; scale: 75%; margin-left: -2em; display: inline flow-root list-item; margin-top: -0.5em;"><img src="assets/img/ressources/budget.png" style="max-width: 15px" alt="icone Budget"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_budget']) ?></strong>  <img src="assets/img/ressources/industrie.png" style="max-width: 15px" alt="icone Industrie"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_industrie']) ?></strong>  <img src="assets/img/ressources/bureau.png" style="max-width: 15px" alt="icone Commerce"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_commerce']) ?></strong>  <img src="assets/img/ressources/agriculture.png" style="max-width: 15px" alt="icone Agriculture"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_agriculture']) ?></strong>  <img src="assets/img/ressources/tourisme.png" style="max-width: 15px" alt="icone Tourisme"><strong> <?= e($row_liste_mon_cat3['ch_mon_cat_tourisme']) ?></strong>  <img src="assets/img/ressources/recherche.png" style="max-width: 15px" alt="icone Recherche"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_recherche']) ?></strong>  <img src="assets/img/ressources/environnement.png" style="max-width: 15px" alt="icone Evironnement"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_environnement']) ?></strong>  <img src="assets/img/ressources/education.png" style="max-width: 15px" alt="icone Education"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_education']) ?></strong>
+                  </div>
             </li>
-            <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); ?>
+            <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)) ?>
         </ul>
         <?php mysql_free_result($liste_mon_cat3); ?>
       <?php } else { ?>
@@ -227,16 +239,12 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
       <?php }?>
         <br>
         <p><strong>Influence sur l'économie :</strong></p>
-            <?php
-            renderElement('temperance/resources_small', array(
+             <div><?php
+                renderElement('temperance/resources', array(
                 'resources' => $row_monument_ressources
-            ));
-            ?>
-          <div class="clearfix"></div>
+             ));
+            ?></div>
       </div>
-    <div class="span4">
-      <iframe width="100%" height="300px" frameborder="0" scrolling="no" src="<?= DEF_URI_PATH ?>Iframeposition.php?x=<?= __s($row_monument['ch_pat_coord_X']) ?>&y=<?= __s($row_monument['ch_pat_coord_Y']) ?>" name="iframe"></iframe>
-    </div>
   </div>
 </div>
 <!-- Commentaire
@@ -244,11 +252,34 @@ $eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
 <section>
   <div id="commentaires" class="titre-vert anchor">
     <h1>Contenu additionnel</h1>
+      <div class="alert alert-tips" style="padding-bottom: -0.3em">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          Cette partie vous permet d'enrichir votre <?php if ($row_monument['ch_pat_statut']==0) { ?>Entreprise<?php } else { ?>Quête<?php }?> avec du contenu additionnel, c'est-à-dire présenter certains aspects à part à travers un RP, une construction ou un projet que vous pouvez mettre en avant ici.<br> Cet ajout sera affiché sur la page d'accueil, et permettra de juges de voir si vous avez atteints de nouveaux objectifs ! <a href="http://vasel.yt/wiki/index.php?title=GO/Infrastructures" class="guide-link">Comment ça marche ? GO!</a></div>
+    <div style="background: white; padding-left: 2em; padding-bottom: 2em;">
+        <?php if($row_monument['ch_pat_legende_img5']) { ?>
+        <a href="<?= __s($row_monument['ch_pat_legende_img5']) ?>">
+            <div class="external-link-icon"
+                 style="background-image:url('http://www.generation-city.com/forum/new/favicon.png');"></div>
+            Voir son sujet sur le <bold>Forum de Génération City</bold></a>  •
+        <?php } ?>
+            <?php if($row_monument['ch_pat_lien_img5']) { ?>
+        <a href="<?= __s($row_monument['ch_pat_lien_img5']) ?>" target="_blank">
+            <div class="external-link-icon"
+                 style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></div>
+            Voir sa présentation complète sur le <bold>Wiki GC</bold></a>  •
+        <?php } ?>
+            <?php if($row_monument['ch_pat_legende_img1']) { ?>
+        <a href="<?= __s($row_monument['ch_pat_legende_img1']) ?>" target="_blank">
+            <div class="external-link-icon"
+                 style="background-image:url('http://squirrel.romukulot.fr/johk/profil/1-avatar-23864e8b7da23c4cd5b4.png');"></div>
+            Voir son profil sur <bold>Squirrel</bold></a>
+        <?php } ?>
+    </div>
   </div>
-  <?php 
+  <div><?php
 	  $ch_com_categorie = "com_monument";
 	  $ch_com_element_id = $colname_monument;
-	  include('php/commentaire.php'); ?>
+	  include('php/commentaire.php'); ?></div>
 </section>
 <!-- END CONTENT
     ================================================== -->
