@@ -118,27 +118,27 @@ img.olTileImage {
 <script>
 function verif_champ(form_coord_X)
 {
-if ((form_coord_X == "") || (form_coord_X == 0))
+if ((form_coord_X == "") || (form_coord_X == 9))
 { alert("Vous devez obligatoirement indiquer l'emplacement de votre ville en cliquant sur la carte");
 return false;
 }
 return true;
 }
-</script> 
+</script>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140">
 <!-- Navbar
     ================================================== -->
 <?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 </header>
-<div class="container" id="overview"> 
-  
+<div class="container" id="overview">
+
   <!-- Docs nav
     ================================================== -->
   <div class="row-fluid corps-page">
     <!-- Page CONTENT
     ================================================== -->
-    <div class=""> 
+    <div class="">
       <!-- Moderation
      ================================================== -->
       <div id="monument" class="titre-vert anchor">
@@ -168,7 +168,9 @@ return true;
         <input name="ch_pat_paysID" type="hidden" value="<?php echo $paysID; ?>" >
         <input name="ch_pat_villeID" type="hidden" value="<?php echo $ville_ID; ?>">
         <input name="ch_pat_label" type="hidden" value="monument">
-        <?php 
+        <input name="form_coord_X" type="hidden" value="0">
+        <input name="form_coord_Y" type="hidden" value="0">
+        <?php
 				  $now= date("Y-m-d G:i:s");?>
         <input name="ch_pat_date" type="hidden" value="<?php echo $now; ?>" >
         <input name="ch_pat_mis_jour" type="hidden" value="<?php echo $now; ?>">
@@ -202,28 +204,6 @@ return true;
             <textarea name="ch_pat_description" id="ch_pat_description" class="span6" rows="6"></textarea>
             <span class="textareaRequiredMsg">Une valeur est requise.</span> <span class="textareaMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textareaMaxCharsMsg">800 caract&egrave;res maximum.</span></div>
         </div>
-        <!-- Placement sur carte monde GC -->
-        <h3>Carte</h3>
-        <div class="alert alert-danger">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <h4>Attention&nbsp;!</h4>
-          Vous devez obligatoirement désigner un emplacement pour votre quête sur la carte du Monde GC. Veillez &agrave; placer le point &agrave; l'int&eacute;rieur des fronti&egrave;res de votre pays.</div>
-        <!-- Coordonnées -->
-        <div id="map"></div>
-        <p>&nbsp;</p>
-        <div class="control-group">
-          <label class="control-label">Coordonn&eacute;es X</label>
-          <div class="controls">
-            <input class="span2" type="text" name="form_coord_X" id="form_coord_X" placeholder="cliquez sur la carte" readonly required>
-          <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span> <span class="textfieldRequiredMsg">Une valeur est requise. Cliquez sur la carte</span></div>
-        </div>
-        <div class="control-group">
-          <label class="control-label">Coordonn&eacute;es Y</label>
-          <div class="controls">
-        <input class="span2" type="text" name="form_coord_Y" id="form_coord_Y" placeholder="cliquez sur la carte" readonly required>
-          </div>
-        </div>
-        <p>&nbsp;</p>
         <hr>
         <h3>Carrousel</h3>
         <!-- Carousel -->
