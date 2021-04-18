@@ -64,7 +64,7 @@ mysql_data_seek($ressource, 0);}
 <!-- head Html -->
 <head>
 <meta charset="utf-8">
-<title>Monde GC - Monument : <?= __s($row_monument['ch_pat_nom']) ?></title>
+<title>Monde GC - Quête : <?= __s($row_monument['ch_pat_nom']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -209,6 +209,11 @@ mysql_data_seek($ressource, 0);}
   <div class="well">
     <div class="row-fluid">
       <div>
+        <div class="alert alert-info">
+            <h4>Je suis en <span class="badge badge-warning">BETA</span></h4>
+            <p>Les quêtes sont une fonctionnalité en cours de test. N'hésitez pas à faire vos retours sur le forum !</p>
+        </div>
+
         <p><img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>"><?= __s($row_monument['ch_pay_nom']) ?></a> • <?php if ($row_monument['ch_pat_statut']==0) { ?> Entreprise référencée à <?php } else { ?><?php }?>
         <a class="" href="page-ville.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>&ch_ville_id=<?= e($row_monument['ch_pat_villeID']) ?>"><?= __s($row_monument['ch_vil_nom']) ?></a></p>
         <p><?= __s($row_monument['ch_pat_description']) ?></p>

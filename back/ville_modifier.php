@@ -723,7 +723,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
     </div>
     <section>
       <div id="quetes" class="titre-vert anchor">
-        <h1>Quêtes</h1>
+        <h1>Quêtes <span class="badge badge-warning">BETA</span></h1>
       </div>
       <div class="alert alert-tips">
         <button type="button" class="close" data-dismiss="alert">&times;</button>

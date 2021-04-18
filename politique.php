@@ -87,7 +87,7 @@ $info_cat = mysql_query($query_info_cat, $maconnexion) or die(mysql_error());
 $row_info_cat = mysql_fetch_assoc($info_cat);
 $totalRows_info_cat = mysql_num_rows($info_cat);
 ?>
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
 <head>
@@ -218,7 +218,7 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
     ================================================== -->
       <section>
         <div class="titre-bleu anchor" id="entreprises" href="entreprises">
-          <h1>Entreprises</h1>
+          <h1>Entreprises <span class="badge badge-warning">BETA</span></h1>
         </div>
         <div class="row-fluid">
           <!-- Liste pour choix de la categories -->
@@ -322,16 +322,17 @@ $('#closemodal').click(function() {
         </div>
       </section>
 
+      <div class="clearfix"></div>
 
+
+      <?php if(isset($_SESSION['userObject'])): ?>
+      <div class="cta-title pull-right-cta">
+          <a href="<?= route('organisation.create') ?>"
+             class="btn btn-primary btn-cta">
+          <i class="icon-white icon-pencil"></i> Créer une organisation</a>
+      </div>
+      <?php endif; ?>
       <section>
-
-        <?php if(isset($_SESSION['userObject'])): ?>
-        <div class="cta-title pull-right-cta" style="margin-top: 36px;">
-            <a href="<?= route('organisation.create') ?>"
-               class="btn btn-primary btn-cta">
-            <i class="icon-white icon-pencil"></i> Créer une organisation</a>
-        </div>
-        <?php endif; ?>
         <div class="titre-bleu anchor" id="organisations">
           <h1>Organisations</h1>
         </div>

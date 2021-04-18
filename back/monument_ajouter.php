@@ -142,7 +142,7 @@ return true;
       <!-- Moderation
      ================================================== -->
       <div id="monument" class="titre-vert anchor">
-        <h1>Commencer une nouvelle quête</h1>
+        <h1>Commencer une nouvelle quête <span class="badge badge-warning">BETA</span></h1>
       </div>
       <?php if (($_SESSION['statut'] >= 20) AND ($row_users['ch_use_id'] != $_SESSION['user_ID'])) { ?>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/membre-modifier_back.php" method="get">

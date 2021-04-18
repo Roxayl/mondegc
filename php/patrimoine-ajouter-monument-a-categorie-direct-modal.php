@@ -171,7 +171,7 @@ while($row = mysql_fetch_assoc($compte_b)) {
             <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse" href="#cat2">
                     Secteur(s) d'activité de l'entreprise
-                    <br><small><?php echo $nb_cat_a_ok ?> objectifs sur <?php echo $nb_cat_a ?> accomplis</small>
+                    <!--<br><small><?php echo $nb_cat_a_ok ?> objectifs sur <?php echo $nb_cat_a ?> accomplis</small>-->
                 </a>
             </div>
             <div id="cat2" class="accordion-body collapse">
@@ -198,7 +198,7 @@ while($row = mysql_fetch_assoc($compte_b)) {
             <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse" href="#cat3">
                     Conception
-                    <br><small>XX objectifs sur <?php echo $nb_cat_b ?> accomplis</small>
+                    <!--<br><small>XX objectifs sur <?php echo $nb_cat_b ?> accomplis</small>-->
                 </a>
             </div>
             <div id="cat3" class="accordion-body collapse">
