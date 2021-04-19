@@ -394,17 +394,17 @@ do {
 ================================================== -->
     <li class="fond-notification item">
       <div class="row-fluid">
-        <div class="span1 auteur"> <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"><img src="<?= e($row_LastCommunique['photo_auteur']) ?>" alt="visiteur"></a> </div>
+        <div class="span1 auteur"> <a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"><img src="<?= e($row_LastCommunique['photo_auteur']) ?>"></a> </div>
         <div class="span10"> <small>le
           <?php  echo date("d/m/Y", strtotime($row_LastCommunique['date'])); ?>
           &agrave;
           <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
           </small>
-          <p><a href="page-pays.php?ch_pay_id=<?= e($row_LastCommunique['paysID_auteur']) ?>#diplomatie"> <?= e($row_LastCommunique['prenom_auteur']) ?> <?= e($row_LastCommunique['nom_auteur']) ?></a> <?= e($row_LastCommunique['titre_auteur']) ?> <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id_institution']) ?>#commentaireID<?= e($row_LastCommunique['id']) ?>"> a visit&eacute;</a> le monument <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id_institution']) ?>"><?= e($row_LastCommunique['institution']) ?></a></p>
+          <p>Un<a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id_institution']) ?>#commentaireID<?= e($row_LastCommunique['id']) ?>"> nouveau message</a> a été publié sur la page de <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id_institution']) ?>"><?= e($row_LastCommunique['institution']) ?></a></p>
         </div>
         <div class="span1 auteur">
           <?php if ($row_LastCommunique['img_institution']) {?>
-          <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id_institution']) ?>"><img src="<?= e($row_LastCommunique['img_institution']) ?>" alt="photo monument"></a>
+          <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id_institution']) ?>"><img style="max-width: 120px; margin-left: -4em; max-height: 50px;" src="<?= e($row_LastCommunique['img_institution']) ?>" alt="photo monument"></a>
           <?php } else {?>
           <a href="page-monument.php?ch_pat_id=<?= e($row_LastCommunique['id_institution']) ?>" alt="photo monument"><img src="assets/img/imagesdefaut/ville.jpg" alt="photo monument"></a>
           <?php }?>
