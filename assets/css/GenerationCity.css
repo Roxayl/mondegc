@@ -652,10 +652,14 @@ body > .navbar .brand {
 }
 
 .infra-well:hover {
-    scale: 105%;
+    -moz-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05);
     background: white;
     box-shadow: 0 8px 9px -5px rgba(0,0,0,.1),0 15px 22px 2px rgba(19,5,5,.04),0 6px 28px 5px rgba(0,0,0,.1) !important;
-    transition: 0.5s ease;
+    transition: 0.4s ease;
 }
 
 .infra-image {
@@ -3170,16 +3174,28 @@ Tablet COLLAPSE
 }
 
 .boite-bg:hover {
-    scale:95%;
-    transition: scale 0.5s ease;
+    -moz-transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
+    transition: scale 0.4s ease;
 }
 
 .boite-bg {
-    scale:90%;
-    transition: scale 0.5s ease;
+    -moz-transform: scale(0.90);
+    -webkit-transform: scale(0.90);
+    -o-transform: scale(0.90);
+    -ms-transform: scale(0.90);
+    transform: scale(0.90);
+    transition: scale 0.4s ease;
 }
 
 .thumbnail:hover {
-    scale:105%;
-    transition: scale 0.5s ease;
+    -moz-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05);
+    transition: scale 0.4s ease;
 }
