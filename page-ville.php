@@ -670,18 +670,6 @@ echo $population_ville_francais; ?></p><?php } else { ?><?php }?>
         } while ($row_monument = mysql_fetch_assoc($monument)); ?>
         </div>
         <div class="well"> <?= htmlPurify($row_infoVille['ch_vil_culture']) ?> </div>
-
-        <div class="modal container fade" id="Modal-Monument"></div>
-        <script>
-$("a[data-toggle=modal]").click(function (e) {
-  lv_target = $(this).attr('data-target')
-  lv_url = $(this).attr('href')
-  $(lv_target).load(lv_url)})
-
-$('#closemodal').click(function() {
-    $('#Modal-Monument').modal('hide');
-});
-</script> 
       </section>
       <?php } ?>
       
