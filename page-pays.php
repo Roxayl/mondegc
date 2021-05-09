@@ -22,7 +22,7 @@ $row_villes = mysql_fetch_assoc($villes);
 $totalRows_villes = mysql_num_rows($villes);
 
 //Recherche des villes extraterritoriales
-$query_villes_extratrtr = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_user, ch_vil_date_enregistrement, ch_vil_mis_jour, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_use_login FROM villes INNER JOIN users ON ch_vil_user = ch_use_id WHERE ch_vil_capitale > 3 ORDER BY ch_vil_mis_jour DESC", GetSQLValueString($colname_Pays, "int"));
+$query_villes_extratrtr = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_user, ch_vil_date_enregistrement, ch_vil_mis_jour, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_use_login FROM villes INNER JOIN users ON ch_vil_user = ch_use_id WHERE ch_vil_capitale > 3 AND villes.ch_vil_paysID = %s ORDER BY ch_vil_mis_jour DESC", GetSQLValueString($colname_Pays, "int"));
 $villes_extratrtr = mysql_query($query_villes_extratrtr, $maconnexion) or die(mysql_error());
 $row_villes_extratrtr = mysql_fetch_assoc($villes_extratrtr);
 $totalRows_villes_extratrtr = mysql_num_rows($villes_extratrtr);

@@ -171,7 +171,7 @@ class Infrastructure extends Model implements Influencable
             unset($tmp);
         }
 
-        $divider = 4;
+        $divider = 2;
 
         $resourcesPerMonth = array_map(
             function($val) use($divider) {
