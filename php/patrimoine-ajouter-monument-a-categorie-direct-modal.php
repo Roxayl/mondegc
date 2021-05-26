@@ -90,6 +90,24 @@ $mon_cat_b = mysql_query($query_mon_cat_b, $maconnexion) or die(mysql_error());
 $row_mon_cat_b = mysql_fetch_assoc($mon_cat_b);
 $totalRows_mon_cat_b = mysql_num_rows($mon_cat_b);
 
+//requete catégorie 3
+$query_mon_cat_c = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 300 AND 399 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
+$mon_cat_c = mysql_query($query_mon_cat_c, $maconnexion) or die(mysql_error());
+$row_mon_cat_c = mysql_fetch_assoc($mon_cat_c);
+$totalRows_mon_cat_c = mysql_num_rows($mon_cat_c);
+
+//requete catégorie 4
+$query_mon_cat_d = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 400 AND 499 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
+$mon_cat_d = mysql_query($query_mon_cat_d, $maconnexion) or die(mysql_error());
+$row_mon_cat_d = mysql_fetch_assoc($mon_cat_d);
+$totalRows_mon_cat_d = mysql_num_rows($mon_cat_d);
+
+//requete catégorie 5
+$query_mon_cat_e = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur > 500 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
+$mon_cat_e = mysql_query($query_mon_cat_e, $maconnexion) or die(mysql_error());
+$row_mon_cat_e = mysql_fetch_assoc($mon_cat_e);
+$totalRows_mon_cat_e = mysql_num_rows($mon_cat_e);
+
 // requête catégories du monument
 // Obtenir l'affiliation actuelle du monument
 $query_current_monument_dispatch = sprintf("
@@ -197,7 +215,7 @@ while($row = mysql_fetch_assoc($compte_b)) {
                     <div class="accordion-group">
             <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse" href="#cat3">
-                    Conception
+                    Présentation
                     <!--<br><small>XX objectifs sur <?php echo $nb_cat_b ?> accomplis</small>-->
                 </a>
             </div>
@@ -220,6 +238,87 @@ while($row = mysql_fetch_assoc($compte_b)) {
             </div>
             </div>
           </div>
+
+                    <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" href="#cat4">
+                    Profil
+                    <!--<br><small>XX objectifs sur <?php echo $nb_cat_b ?> accomplis</small>-->
+                </a>
+            </div>
+            <div id="cat4" class="accordion-body collapse">
+            <div class="accordion-inner">
+    <ul  class="listes">
+    <?php do { ?>
+        <?php if($row_mon_cat_c['ch_mon_cat_statut'] == $this_mon_cat['ch_pat_statut']) { ?>
+            <li class="row-fluid" style="margin-top: 0px; background-size: cover; background-image: url('<?= __s($row_mon_cat_c['bg_image_url']) ?>');">
+            <label for="ch_disp_cat_id_<?= e($row_mon_cat_c['ch_mon_cat_ID']) ?>"
+               style="display: inline-block; text-decoration: <?php if ($row_mon_cat_c['ch_mon_cat_ID'] == in_array($row_mon_cat_c['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ) { ?>line-through<?php } else { ?><?php }?>;">
+            <img src="<?php echo $row_mon_cat_c['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_mon_cat_c['ch_mon_cat_nom']; ?>" style="height: 15px;"> <strong><?= e($row_mon_cat_c['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat_c['ch_mon_cat_desc']) ?></label>
+            <input type="checkbox" id="ch_disp_cat_id_<?= e($row_mon_cat_c['ch_mon_cat_ID']) ?>"
+                   name="ch_disp_cat_id[]" value="<?= e($row_mon_cat_c['ch_mon_cat_ID']) ?>"
+                   <?= in_array($row_mon_cat_c['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ?> />
+        </li><?php } else { ?><?php }?>
+    <?php } while ($row_mon_cat_c = mysql_fetch_assoc($mon_cat_c)); ?>
+    </ul>
+                <div class="clearfix"></div>
+            </div>
+            </div>
+          </div>
+
+    <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" href="#cat5">
+                    Marchés extérieurs
+                    <!--<br><small>XX objectifs sur <?php echo $nb_cat_b ?> accomplis</small>-->
+                </a>
+            </div>
+            <div id="cat5" class="accordion-body collapse">
+            <div class="accordion-inner">
+            <ul  class="listes">
+            <?php do { ?>
+                <?php if($row_mon_cat_d['ch_mon_cat_statut'] == $this_mon_cat['ch_pat_statut']) { ?>
+                <li class="row-fluid" style="margin-top: 0px; background-size: cover; background-image: url('<?= __s($row_mon_cat_d['bg_image_url']) ?>');">
+                   <label for="ch_disp_cat_id_<?= e($row_mon_cat_d['ch_mon_cat_ID']) ?>"
+                    style="display: inline-block; text-decoration: <?php if ($row_mon_cat_d['ch_mon_cat_ID'] == in_array($row_mon_cat_d['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ) { ?>line-through<?php } else { ?><?php }?>;">
+                   <img src="<?php echo $row_mon_cat_d['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_mon_cat_d['ch_mon_cat_nom']; ?>" style="height: 15px;"> <strong><?= e($row_mon_cat_d['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat_d['ch_mon_cat_desc']) ?></label>
+                   <input type="checkbox" id="ch_disp_cat_id_<?= e($row_mon_cat_d['ch_mon_cat_ID']) ?>"
+                   name="ch_disp_cat_id[]" value="<?= e($row_mon_cat_d['ch_mon_cat_ID']) ?>"
+                   <?= in_array($row_mon_cat_d['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ?> />
+                </li><?php } else { ?><?php }?>
+             <?php } while ($row_mon_cat_d = mysql_fetch_assoc($mon_cat_d)); ?>
+             </ul>
+                <div class="clearfix"></div>
+            </div>
+            </div>
+    </div>
+
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" href="#cat6">
+                    Notoriété
+                    <!--<br><small>XX objectifs sur <?php echo $nb_cat_b ?> accomplis</small>-->
+                </a>
+            </div>
+            <div id="cat6" class="accordion-body collapse">
+            <div class="accordion-inner">
+            <ul  class="listes">
+            <?php do { ?>
+                <?php if($row_mon_cat_e['ch_mon_cat_statut'] == $this_mon_cat['ch_pat_statut']) { ?>
+                <li class="row-fluid" style="margin-top: 0px; background-size: cover; background-image: url('<?= __s($row_mon_cat_e['bg_image_url']) ?>');">
+                   <label for="ch_disp_cat_id_<?= e($row_mon_cat_e['ch_mon_cat_ID']) ?>"
+                    style="display: inline-block; text-decoration: <?php if ($row_mon_cat_e['ch_mon_cat_ID'] == in_array($row_mon_cat_e['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ) { ?>line-through<?php } else { ?><?php }?>;">
+                   <img src="<?php echo $row_mon_cat_e['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_mon_cat_e['ch_mon_cat_nom']; ?>" style="height: 15px;"> <strong><?= e($row_mon_cat_e['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat_e['ch_mon_cat_desc']) ?></label>
+                   <input type="checkbox" id="ch_disp_cat_id_<?= e($row_mon_cat_e['ch_mon_cat_ID']) ?>"
+                   name="ch_disp_cat_id[]" value="<?= e($row_mon_cat_e['ch_mon_cat_ID']) ?>"
+                   <?= in_array($row_mon_cat_e['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ?> />
+                </li><?php } else { ?><?php }?>
+             <?php } while ($row_mon_cat_e = mysql_fetch_assoc($mon_cat_e)); ?>
+             </ul>
+                <div class="clearfix"></div>
+            </div>
+            </div>
+    </div>
 
   </div>
   <div class="modal-footer">
