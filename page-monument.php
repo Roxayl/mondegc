@@ -249,6 +249,10 @@ mysql_data_seek($ressource, 0);}
 </div>
 <!-- Commentaire
         ================================================== -->
+  <?php if ($_SESSION['statut'] >= 20) { ?>
+      <div class="pull-right-cta cta-title"> 
+          <a href="php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Modifier les catégories" class="btn btn-primary btn-cta" style="margin-top: -0.3em;">Modifier les catégories</a></div>
+  <?php } ?>
 <section>
   <div id="commentaires" class="titre-vert anchor">
     <h1>Contenu additionnel</h1>
