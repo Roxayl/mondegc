@@ -28,6 +28,7 @@ $users = mysql_query($query_users, $maconnexion) or die(mysql_error());
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
 
+
 // *** Requête pour infos sur les categories.
 $listcategories = ($row_monument['listcat']);
 			if ($row_monument['listcat']) {
@@ -37,6 +38,82 @@ $query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID I
 $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
+
+//requete TOUT
+$query_mon_cat = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur NOT BETWEEN 100 AND 199 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
+$mon_cat = mysql_query($query_mon_cat, $maconnexion) or die(mysql_error());
+$row_mon_cat = mysql_fetch_assoc($mon_cat);
+$totalRows_mon_cat = mysql_num_rows($mon_cat);
+
+//requete 0
+$query_mon_cat_GO_0 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur BETWEEN 0 AND 299 AND ch_mon_cat_couleur NOT BETWEEN 100 AND 199 ORDER BY ch_mon_cat_couleur";
+$mon_cat_GO_0 = mysql_query($query_mon_cat_GO_0, $maconnexion) or die(mysql_error());
+$row_mon_cat_GO_0 = mysql_fetch_assoc($mon_cat_GO_0);
+$totalRows_mon_cat_GO_0 = mysql_num_rows($mon_cat_GO_0);
+
+//requete 310
+$query_mon_cat_GO_310 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur = 310 ORDER BY ch_mon_cat_couleur";
+$mon_cat_GO_310 = mysql_query($query_mon_cat_GO_310, $maconnexion) or die(mysql_error());
+$row_mon_cat_GO_310 = mysql_fetch_assoc($mon_cat_GO_310);
+$totalRows_mon_cat_GO_310 = mysql_num_rows($mon_cat_GO_310);
+$nb_mon_cat_GO_310 = 0;
+if ($query_mon_cat_GO_310) {$ressource = mysql_query($query_mon_cat_GO_310);
+
+while($row = mysql_fetch_assoc($ressource)) {
+if ($row_monument['listcat'])
+   {$nb_mon_cat_GO_310 = $nb_mon_cat_GO_310 + 1;}
+   else {$nb_mon_cat_GO_310 = 1;}}}
+
+//requete 320
+$query_mon_cat_GO_320 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur = 320 ORDER BY ch_mon_cat_couleur";
+$mon_cat_GO_320 = mysql_query($query_mon_cat_GO_320, $maconnexion) or die(mysql_error());
+$row_mon_cat_GO_320 = mysql_fetch_assoc($mon_cat_GO_320);
+$totalRows_mon_cat_GO_320 = mysql_num_rows($mon_cat_GO_320);
+$nb_mon_cat_GO_320 = 0;
+if ($query_mon_cat_GO_320) {$ressource = mysql_query($query_mon_cat_GO_320);
+
+while($row = mysql_fetch_assoc($ressource)) {
+if ($row_monument['listcat'])
+   {$nb_mon_cat_GO_320 = $nb_mon_cat_GO_320 + 1;}
+   else {$nb_mon_cat_GO_320 = 1;}}}
+
+//requete 330
+$query_mon_cat_GO_330 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur = 330 ORDER BY ch_mon_cat_couleur";
+$mon_cat_GO_330 = mysql_query($query_mon_cat_GO_330, $maconnexion) or die(mysql_error());
+$row_mon_cat_GO_330 = mysql_fetch_assoc($mon_cat_GO_330);
+$totalRows_mon_cat_GO_330 = mysql_num_rows($mon_cat_GO_330);
+$nb_mon_cat_GO_330 = 0;
+if ($query_mon_cat_GO_330) {$ressource = mysql_query($query_mon_cat_GO_330);
+
+while($row = mysql_fetch_assoc($ressource)) {
+if ($row_monument['listcat'])
+   {$nb_mon_cat_GO_330 = $nb_mon_cat_GO_330 + 1;}
+   else {$nb_mon_cat_GO_330 = 1;}}}
+
+//requete 340
+$query_mon_cat_GO_340 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur = 340 ORDER BY ch_mon_cat_couleur";
+$mon_cat_GO_340 = mysql_query($query_mon_cat_GO_340, $maconnexion) or die(mysql_error());
+$row_mon_cat_GO_340 = mysql_fetch_assoc($mon_cat_GO_340);
+$totalRows_mon_cat_GO_340 = mysql_num_rows($mon_cat_GO_340);
+$nb_mon_cat_GO_340 = 0;
+if ($query_mon_cat_GO_340) {$ressource = mysql_query($query_mon_cat_GO_340);
+
+while($row = mysql_fetch_assoc($ressource)) {
+if ($row_monument['listcat'])
+   {$nb_mon_cat_GO_340 = $nb_mon_cat_GO_340 + 1;}
+   else {$nb_mon_cat_GO_340 = 1;}}}
+
+//requete 400
+$query_mon_cat_GO_400 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur BETWEEN 400 AND 480 ORDER BY ch_mon_cat_couleur";
+$mon_cat_GO_400 = mysql_query($query_mon_cat_GO_400, $maconnexion) or die(mysql_error());
+$row_mon_cat_GO_400 = mysql_fetch_assoc($mon_cat_GO_400);
+$totalRows_mon_cat_GO_400 = mysql_num_rows($mon_cat_GO_400);
+
+//requete 999
+$query_mon_cat_GO_999 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur = 999 ORDER BY ch_mon_cat_couleur";
+$mon_cat_GO_999 = mysql_query($query_mon_cat_GO_999, $maconnexion) or die(mysql_error());
+$row_mon_cat_GO_999 = mysql_fetch_assoc($mon_cat_GO_999);
+$totalRows_mon_cat_GO_999 = mysql_num_rows($mon_cat_GO_999);
 }
 
 $_SESSION['last_work'] = 'page-monument.php?ch_pat_id='.$row_monument['ch_pat_id'];
@@ -211,7 +288,7 @@ mysql_data_seek($ressource, 0);}
       <div>
         <div class="alert alert-info">
             <h4>Je suis en <span class="badge badge-warning">BETA</span></h4>
-            <p>Les quêtes sont une fonctionnalité en cours de test. N'hésitez pas à faire vos retours sur le forum !</p>
+            <p style="margin: 0px;">Les quêtes sont une fonctionnalité en cours de test. <a class=""  href="https://www.forum-gc.com/t7224-go-entreprises#292209">N'hésitez pas à faire vos retours sur le forum !</a></p>
         </div>
 
         <p><img src="<?= __s($thisPays->get('ch_pay_lien_imgdrapeau')) ?>" class="img-menu-drapeau"> <a class="" href="page-pays.php?ch_pay_id=<?= e($row_monument['ch_pat_paysID']) ?>"><?= __s($row_monument['ch_pay_nom']) ?></a> • <?php if ($row_monument['ch_pat_statut']==0) { ?> Entreprise référencée à <?php } else { ?><?php }?>
@@ -249,33 +326,182 @@ mysql_data_seek($ressource, 0);}
 </div>
 <!-- Commentaire
         ================================================== -->
+  <?php if ($_SESSION['statut'] >= 20) { ?>
+      <div class="pull-right-cta cta-title"> 
+          <a href="php/patrimoine-ajouter-monument-a-categorie-direct-modal.php?mon_id=<?= e($row_monument['ch_pat_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Modifier les catégories" class="btn btn-primary btn-cta" style="margin-top: -0.3em;">Modifier les catégories</a></div>
+  <?php } ?>
 <section>
   <div id="commentaires" class="titre-vert anchor">
     <h1>Contenu additionnel</h1>
       <div class="alert alert-tips" style="padding-bottom: -0.3em">
           <button type="button" class="close" data-dismiss="alert">×</button>
-          Cette partie vous permet d'enrichir votre <?php if ($row_monument['ch_pat_statut']==0) { ?>Entreprise<?php } else { ?>Quête<?php }?> avec du contenu additionnel, c'est-à-dire présenter certains aspects à part à travers un RP, une construction ou un projet que vous pouvez mettre en avant ici.<br> Cet ajout sera affiché sur la page d'accueil, et permettra de juges de voir si vous avez atteints de nouveaux objectifs ! <a href="http://vasel.yt/wiki/index.php?title=GO/Infrastructures" class="guide-link">Comment ça marche ? GO!</a></div>
-    <div style="background: white; padding-left: 2em; padding-bottom: 2em;">
+          Cette partie vous permet d'enrichir votre <?php if ($row_monument['ch_pat_statut']==0) { ?>Entreprise<?php } else { ?>Quête<?php }?> avec du contenu additionnel, c'est-à-dire présenter certains aspects à part à travers un RP, une construction ou un projet que vous pouvez mettre en avant ici.<br> Cet ajout sera affiché sur la page d'accueil, et permettra de juges de voir si vous avez atteints de nouveaux objectifs ! <a target="_blank" href="https://www.forum-gc.com/t7224-go-entreprises#292209" class="guide-link">Comment ça marche ? GO!</a></div>
+    <div style="background: white; padding-left: 2em; padding-bottom: 1em;">
         <?php if($row_monument['ch_pat_legende_img5']) { ?>
-        <a href="<?= __s($row_monument['ch_pat_legende_img5']) ?>">
+        <a target="_blank" href="<?= __s($row_monument['ch_pat_legende_img5']) ?>">
             <div class="external-link-icon"
                  style="background-image:url('http://www.generation-city.com/forum/new/favicon.png');"></div>
             Voir son sujet sur le <bold>Forum de Génération City</bold></a>  •
         <?php } ?>
             <?php if($row_monument['ch_pat_lien_img5']) { ?>
-        <a href="<?= __s($row_monument['ch_pat_lien_img5']) ?>" target="_blank">
+        <a target="_blank" href="<?= __s($row_monument['ch_pat_lien_img5']) ?>" target="_blank">
             <div class="external-link-icon"
                  style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></div>
             Voir sa présentation complète sur le <bold>Wiki GC</bold></a>  •
         <?php } ?>
             <?php if($row_monument['ch_pat_legende_img1']) { ?>
-        <a href="<?= __s($row_monument['ch_pat_legende_img1']) ?>" target="_blank">
+        <a target="_blank" href="<?= __s($row_monument['ch_pat_legende_img1']) ?>" target="_blank">
             <div class="external-link-icon"
                  style="background-image:url('http://squirrel.romukulot.fr/johk/profil/1-avatar-23864e8b7da23c4cd5b4.png');"></div>
             Voir son profil sur <bold>Squirrel</bold></a>
-        <?php } ?>
+        <?php } ?><br>
+
+<!-- Boite à outil du GO! -->
+<?php if ($row_users['ch_use_id'] == $_SESSION['user_ID']) { ?>
+<!--  C'est une entreprise-->
+<?php if($row_monument['ch_mon_cat_statut'] == 0) { ?>
+
+<div class="accordion-group">
+      <div class="accordion-heading guide-boite">
+        <a class="accordion-toggle" data-toggle="collapse" href="#cat0"><h4 style="margin-top: 0px; margin-bottom: 0px; text-transform: uppercase; font-weight: lighter; color:#101010; "><div class="external-link-icon"
+                 style="background-image:url('https://image.flaticon.com/icons/png/512/807/807313.png'); margin: 0em 0.2em 0.2em 0em;"></div> La boîte à Outils du GO!</h4></a>
+      </div>
+        <div id="cat0" class="accordion-body collapse">
+          <div class="accordion-inner" style="background: #f0eeec; border-left: 5px solid #ffcd00;">
+      <ul  class="listes">
+     <?= __s($row_monument['ch_pat_nom']) ?> peut encore se développer, voici quelques idées d'objectifs que tu pourrais essayer d'atteindre :
+   
+    <div class="slider" style="padding-top: 45%;">
+    <input type="radio" name="slider" title="slide1" checked="checked" class="slider__nav"/>
+    <input type="radio" name="slider" title="slide2" class="slider__nav"/>
+    <input type="radio" name="slider" title="slide3" class="slider__nav"/>
+    <input type="radio" name="slider" title="slide4" class="slider__nav"/>
+    <input type="radio" name="slider" title="slide5" class="slider__nav"/>
+    <input type="radio" name="slider" title="slide6" class="slider__nav"/>
+    <input type="radio" name="slider" title="slide7" class="slider__nav"/>
+
+
+    <div class="slider__inner" style="width: 700%;">
+          
+    <div class="slider__contents"><i class="slider__image fa fa-codepen"></i>
+      <h2 class="slider__caption">En avant les présentations !</h2>
+      <div class="slider__txt">
+      <?php do { ?><?php if($row_mon_cat_GO_0['ch_mon_cat_statut'] == 0) { ?>
+            <li class="row-fluid listes-blanc" style="margin-top: 0.5em; background-image: url('<?= __s($row_mon_cat_GO_0['bg_image_url']) ?>'); background-attachment: fixed; background-position: center; background-size: 110%;">
+              <div class="span1 icone-categorie" style="width: 4%;"><img src="<?= __s($row_mon_cat_GO_0['ch_mon_cat_icon']) ?>" alt="icone <?= __s($row_mon_cat_GO_0['ch_mon_cat_nom']) ?>" style="max-width: 25px; margin-left: -0.7em; margin-top: 0.45em;"></div>
+              <div class="span11" style="margin-left: 0em;">
+                <p><strong><a target="_blank" href="politique.php?mon_cat_ID=<?php echo $row_mon_cat_GO_0['ch_mon_cat_ID']; ?>#entreprises"><?= __s($row_mon_cat_GO_0['ch_mon_cat_nom']) ?></a></strong>, <?= __s($row_mon_cat_GO_0['ch_mon_cat_desc']) ?>
+                    <div style="scale: 85%; margin-left: -4em;  margin-bottom: -0.5em; margin-top: -0.5em; position: initial; text-align: initial;"><img src="assets/img/ressources/budget.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Budget"> <strong><?= e($row_mon_cat_GO_0['ch_mon_cat_budget']) ?></strong>  <img src="assets/img/ressources/industrie.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Industrie"> <strong><?= e($row_mon_cat_GO_0['ch_mon_cat_industrie']) ?></strong>  <img src="assets/img/ressources/bureau.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Commerce"> <strong><?= e($row_mon_cat_GO_0['ch_mon_cat_commerce']) ?></strong>  <img src="assets/img/ressources/agriculture.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Agriculture"> <strong><?= e($row_mon_cat_GO_0['ch_mon_cat_agriculture']) ?></strong>  <img src="assets/img/ressources/tourisme.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Tourisme"><strong> <?= e($row_mon_cat_GO_0['ch_mon_cat_tourisme']) ?></strong>  <img src="assets/img/ressources/recherche.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Recherche"> <strong><?= e($row_mon_cat_GO_0['ch_mon_cat_recherche']) ?></strong>  <img src="assets/img/ressources/environnement.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Evironnement"> <strong><?= e($row_mon_cat_GO_0['ch_mon_cat_environnement']) ?></strong>  <img src="assets/img/ressources/education.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Education"> <strong><?= e($row_mon_cat_GO_0['ch_mon_cat_education']) ?></strong>
+                  </div></p></div>
+            </li><?php } else { ?><?php }?>
+      <?php } while ($row_mon_cat_GO_0 = mysql_fetch_assoc($mon_cat_GO_0)); ?>
+      </div>
+    </div>
+    
+
+    <div class="slider__contents"><i class="slider__image fa fa-codepen"></i>
+      <h2 class="slider__caption">Un pour tous, tous pour un</h2>
+      <div class="slider__txt"><?php if($nb_mon_cat_GO_310 == 6) { ?><span style="font-weight: bold; color: #ff4e00;">Tu peux dôter <?= __s($row_monument['ch_pat_nom']) ?> d'une <a target="_blank" href="http://vasel.yt/wiki/index.php?title=GO/Entreprise#Conditions_de_travail">politique sociale</a> reprenant l'une des 6 classes suivantes, numérotées de A à F.<br> Alors, plutôt meilleur ami de tes employés ou au contraire boss tyranique prêt à sacrifier ses troupes pour de l'industrie et du budget ?</span><?php } else { ?>Rien n'est jamais figé dans la vie d'une entreprise,<br> tu peux donc demander à tout moment de changer de classe en matière sociale que ce soit pour améliorer le sort de tes employés... ou pas !<?php }?>
+      <?php do { ?>
+      <?php if($row_mon_cat_GO_310['ch_mon_cat_statut'] == 0) { ?>
+            <li class="row-fluid" style="margin-top: 0.5em; background-image: url('<?= __s($row_mon_cat_GO_310['bg_image_url']) ?>'); background-attachment: fixed; background-position: center; background-size: 110%;">
+              <div class="span1 icone-categorie" style="width: 4%;"><img src="<?= __s($row_mon_cat_GO_310['ch_mon_cat_icon']) ?>" alt="icone <?= __s($row_mon_cat_GO_310['ch_mon_cat_nom']) ?>" style="max-width: 25px; margin-left: -0.7em; margin-top: 0.45em;"></div>
+              <div class="span11" style="margin-left: 0em;">
+                <p><strong><a target="_blank" href="politique.php?mon_cat_ID=<?php echo $row_mon_cat_GO_310['ch_mon_cat_ID']; ?>#entreprises"><?= __s($row_mon_cat_GO_310['ch_mon_cat_nom']) ?></a></strong>, <?= __s($row_mon_cat_GO_310['ch_mon_cat_desc']) ?>
+                    <div style="scale: 85%; margin-left: -4em;  margin-bottom: -0.5em; margin-top: -0.5em; position: initial; text-align: initial;"><img src="assets/img/ressources/budget.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Budget"> <strong><?= e($row_mon_cat_GO_310['ch_mon_cat_budget']) ?></strong>  <img src="assets/img/ressources/industrie.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Industrie"> <strong><?= e($row_mon_cat_GO_310['ch_mon_cat_industrie']) ?></strong>  <img src="assets/img/ressources/bureau.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Commerce"> <strong><?= e($row_mon_cat_GO_310['ch_mon_cat_commerce']) ?></strong>  <img src="assets/img/ressources/agriculture.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Agriculture"> <strong><?= e($row_mon_cat_GO_310['ch_mon_cat_agriculture']) ?></strong>  <img src="assets/img/ressources/tourisme.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Tourisme"><strong> <?= e($row_mon_cat_GO_310['ch_mon_cat_tourisme']) ?></strong>  <img src="assets/img/ressources/recherche.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Recherche"> <strong><?= e($row_mon_cat_GO_310['ch_mon_cat_recherche']) ?></strong>  <img src="assets/img/ressources/environnement.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Evironnement"> <strong><?= e($row_mon_cat_GO_310['ch_mon_cat_environnement']) ?></strong>  <img src="assets/img/ressources/education.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Education"> <strong><?= e($row_mon_cat_GO_310['ch_mon_cat_education']) ?></strong>
+                  </div></p></div>
+            </li>
+      <?php } else { ?><?php }?>
+      <?php } while ($row_mon_cat_GO_310 = mysql_fetch_assoc($mon_cat_GO_310)); ?>
+      </div>
+    </div>
+    <div class="slider__contents"><i class="slider__image fa fa-codepen"></i>
+      <h2 class="slider__caption">Une force de la nature</h2>
+      <div class="slider__txt"><?php if($nb_mon_cat_GO_320 == 6) { ?><span style="font-weight: bold; color: #ff4e00;"><?= __s($row_monument['ch_pat_nom']) ?> peut se positionner sur le <a target="_blank" href="http://vasel.yt/wiki/index.php?title=GO/Entreprise#Respect_de_l.27environnement">respect à l'environnement</a>, en demandant l'une des 6 classes suivantes numérotées de A pour la première à F pour <italic>L'ennemi juré de la planète</italic>... Mais attention aux équilibres en ressources !</span><?php } else { ?>Tu as déjà choisi une classe environnementale pour <?= __s($row_monument['ch_pat_nom']) ?>,<br> mais rien ne t'empêche de changer à tout moment pour l'une des autres catégories qui s'afiche juste en dessous, en faisant un RP de transition pour demander à changer de catégorie par exemple !<?php }?><br>
+      <?php do { ?>
+      <?php if($row_mon_cat_GO_320['ch_mon_cat_statut'] == 0) { ?>
+            <li class="row-fluid" style="margin-top: 0.5em; background-image: url('<?= __s($row_mon_cat_GO_320['bg_image_url']) ?>'); background-attachment: fixed; background-position: center; background-size: 110%;">
+              <div class="span1 icone-categorie" style="width: 4%;"><img src="<?= __s($row_mon_cat_GO_320['ch_mon_cat_icon']) ?>" alt="icone <?= __s($row_mon_cat_GO_320['ch_mon_cat_nom']) ?>" style="max-width: 25px; margin-left: -0.7em; margin-top: 0.45em;"></div>
+              <div class="span11" style="margin-left: 0em;">
+                <p><strong><a target="_blank" href="politique.php?mon_cat_ID=<?php echo $row_mon_cat_GO_320['ch_mon_cat_ID']; ?>#entreprises"><?= __s($row_mon_cat_GO_320['ch_mon_cat_nom']) ?></a></strong>, <?= __s($row_mon_cat_GO_320['ch_mon_cat_desc']) ?>
+                    <div style="scale: 85%; margin-left: -4em;  margin-bottom: -0.5em; margin-top: -0.5em; position: initial; text-align: initial;"><img src="assets/img/ressources/budget.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Budget"> <strong><?= e($row_mon_cat_GO_320['ch_mon_cat_budget']) ?></strong>  <img src="assets/img/ressources/industrie.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Industrie"> <strong><?= e($row_mon_cat_GO_320['ch_mon_cat_industrie']) ?></strong>  <img src="assets/img/ressources/bureau.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Commerce"> <strong><?= e($row_mon_cat_GO_320['ch_mon_cat_commerce']) ?></strong>  <img src="assets/img/ressources/agriculture.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Agriculture"> <strong><?= e($row_mon_cat_GO_320['ch_mon_cat_agriculture']) ?></strong>  <img src="assets/img/ressources/tourisme.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Tourisme"><strong> <?= e($row_mon_cat_GO_320['ch_mon_cat_tourisme']) ?></strong>  <img src="assets/img/ressources/recherche.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Recherche"> <strong><?= e($row_mon_cat_GO_320['ch_mon_cat_recherche']) ?></strong>  <img src="assets/img/ressources/environnement.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Evironnement"> <strong><?= e($row_mon_cat_GO_320['ch_mon_cat_environnement']) ?></strong>  <img src="assets/img/ressources/education.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Education"> <strong><?= e($row_mon_cat_GO_320['ch_mon_cat_education']) ?></strong>
+                  </div></p></div>
+            </li>
+      <?php } else { ?><?php }?>
+      <?php } while ($row_mon_cat_GO_320 = mysql_fetch_assoc($mon_cat_GO_320)); ?>
+      </div>
+    </div>
+    <div class="slider__contents"><i class="slider__image fa fa-newspaper-o"></i>
+      <h2 class="slider__caption">Les affaires sont les affaires</h2>
+      <div class="slider__txt"><?php if($nb_mon_cat_GO_330 !== 6) { ?>Tu t'es déjà fait validé l'état actuel de ton entreprise...<br> mais rien ne t'empêche de demander à changer quand tu voudras commencer un nouveau RP !<?php } else { ?><span style="font-weight: bold; color: #ff4e00;">Pour le moment, <?= __s($row_monument['ch_pat_nom']) ?> n'a pas de <a target="_blank" href="http://vasel.yt/wiki/index.php?title=GO/Entreprise#Situation_financi.C3.A8re">situation financière</a> définie... et si tu demandais à te faire valider d'une des 6 classes suivantes ?<br>N'hésite pas à cliquer sur les titres de chaque classe pour voir quelles entreprises se sont elles déjà jetées à l'eau !</span><?php }?><br>
+      <?php do { ?><?php if($row_mon_cat_GO_330['ch_mon_cat_statut'] == 0) { ?>
+            <li class="row-fluid" style="margin-top: 0.5em; background-image: url('<?= __s($row_mon_cat_GO_330['bg_image_url']) ?>'); background-attachment: fixed; background-position: center; background-size: 110%;">
+              <div class="span1 icone-categorie" style="width: 4%;"><img src="<?= __s($row_mon_cat_GO_330['ch_mon_cat_icon']) ?>" alt="icone <?= __s($row_mon_cat_GO_330['ch_mon_cat_nom']) ?>" style="max-width: 25px; margin-left: -0.7em; margin-top: 0.45em;"></div>
+              <div class="span11" style="margin-left: 0em;">
+                <p><strong><a target="_blank" href="politique.php?mon_cat_ID=<?php echo $row_mon_cat_GO_330['ch_mon_cat_ID']; ?>#entreprises"><?= __s($row_mon_cat_GO_330['ch_mon_cat_nom']) ?></a></strong>, <?= __s($row_mon_cat_GO_330['ch_mon_cat_desc']) ?>
+                    <div style="scale: 85%; margin-left: -4em;  margin-bottom: -0.5em; margin-top: -0.5em; position: initial; text-align: initial;"><img src="assets/img/ressources/budget.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Budget"> <strong><?= e($row_mon_cat_GO_330['ch_mon_cat_budget']) ?></strong>  <img src="assets/img/ressources/industrie.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Industrie"> <strong><?= e($row_mon_cat_GO_330['ch_mon_cat_industrie']) ?></strong>  <img src="assets/img/ressources/bureau.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Commerce"> <strong><?= e($row_mon_cat_GO_330['ch_mon_cat_commerce']) ?></strong>  <img src="assets/img/ressources/agriculture.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Agriculture"> <strong><?= e($row_mon_cat_GO_330['ch_mon_cat_agriculture']) ?></strong>  <img src="assets/img/ressources/tourisme.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Tourisme"><strong> <?= e($row_mon_cat_GO_330['ch_mon_cat_tourisme']) ?></strong>  <img src="assets/img/ressources/recherche.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Recherche"> <strong><?= e($row_mon_cat_GO_330['ch_mon_cat_recherche']) ?></strong>  <img src="assets/img/ressources/environnement.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Evironnement"> <strong><?= e($row_mon_cat_GO_330['ch_mon_cat_environnement']) ?></strong>  <img src="assets/img/ressources/education.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Education"> <strong><?= e($row_mon_cat_GO_330['ch_mon_cat_education']) ?></strong>
+                  </div></p></div>
+            </li>
+      <?php } else { ?><?php }?><?php } while ($row_mon_cat_GO_330 = mysql_fetch_assoc($mon_cat_GO_330)); ?></div>
+    </div>
+    <div class="slider__contents"><i class="slider__image fa fa-newspaper-o"></i>
+      <h2 class="slider__caption">Libérééée, délivrééééeééée</h2>
+      <div class="slider__txt"><?php if($nb_mon_cat_GO_340 !== 6) { ?>Tu veux nationaliser ou au contraire privatiser ta compagnie, ou plus simplement changer son organisation ?<br> Rien de plus simple, il suffit de l'annoncer en commentaire juste ci dessous, en demandant la nouvelle classe que tu veux pour <?= __s($row_monument['ch_pat_nom']) ?> !<?php } else { ?><span style="font-weight: bold; color: #ff4e00;">Tu n'as pas encore précisé le <a target="_blank" href="http://vasel.yt/wiki/index.php?title=GO/Entreprise#Niveau_d.27autonomie">niveau d'autonomie</a> de <?= __s($row_monument['ch_pat_nom']) ?>,<br> alors qu'avec tu pourrais tant détailler ton RP national qu'en créer de nouveaux avec d'autres membres !</span><?php }?>
+      <?php do { ?><?php if($row_mon_cat_GO_340['ch_mon_cat_statut'] == 0) { ?>
+            <li class="row-fluid" style="margin-top: 0.5em; background-image: url('<?= __s($row_mon_cat_GO_340['bg_image_url']) ?>'); background-attachment: fixed; background-position: center; background-size: 110%;">
+              <div class="span1 icone-categorie" style="width: 4%;"><img src="<?= __s($row_mon_cat_GO_340['ch_mon_cat_icon']) ?>" alt="icone <?= __s($row_mon_cat_GO_340['ch_mon_cat_nom']) ?>" style="max-width: 25px; margin-left: -0.7em; margin-top: 0.45em;"></div>
+              <div class="span11" style="margin-left: 0em;">
+                <p><strong><a target="_blank" href="politique.php?mon_cat_ID=<?php echo $row_mon_cat_GO_340['ch_mon_cat_ID']; ?>#entreprises"><?= __s($row_mon_cat_GO_340['ch_mon_cat_nom']) ?></a></strong>, <?= __s($row_mon_cat_GO_340['ch_mon_cat_desc']) ?>
+                    <div style="scale: 85%; margin-left: -4em;  margin-bottom: -0.5em; margin-top: -0.5em; position: initial; text-align: initial;"><img src="assets/img/ressources/budget.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Budget"> <strong><?= e($row_mon_cat_GO_340['ch_mon_cat_budget']) ?></strong>  <img src="assets/img/ressources/industrie.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Industrie"> <strong><?= e($row_mon_cat_GO_340['ch_mon_cat_industrie']) ?></strong>  <img src="assets/img/ressources/bureau.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Commerce"> <strong><?= e($row_mon_cat_GO_340['ch_mon_cat_commerce']) ?></strong>  <img src="assets/img/ressources/agriculture.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Agriculture"> <strong><?= e($row_mon_cat_GO_340['ch_mon_cat_agriculture']) ?></strong>  <img src="assets/img/ressources/tourisme.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Tourisme"><strong> <?= e($row_mon_cat_GO_340['ch_mon_cat_tourisme']) ?></strong>  <img src="assets/img/ressources/recherche.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Recherche"> <strong><?= e($row_mon_cat_GO_340['ch_mon_cat_recherche']) ?></strong>  <img src="assets/img/ressources/environnement.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Evironnement"> <strong><?= e($row_mon_cat_GO_340['ch_mon_cat_environnement']) ?></strong>  <img src="assets/img/ressources/education.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Education"> <strong><?= e($row_mon_cat_GO_340['ch_mon_cat_education']) ?></strong>
+                  </div></p></div>
+            </li>
+      <?php } else { ?><?php }?><?php } while ($row_mon_cat_GO_340 = mysql_fetch_assoc($mon_cat_GO_340)); ?></div>
+    </div>
+    <div class="slider__contents"><i class="slider__image fa fa-television"></i>
+      <h2 class="slider__caption">À la conquête du Monde GC !</h2>
+      <div class="slider__txt">
+      <?php do { ?><?php if($row_mon_cat_GO_400['ch_mon_cat_statut'] == 0) { ?>
+            <li class="row-fluid listes-blanc" style="margin-top: 0.5em; background-image: url('<?= __s($row_mon_cat_GO_400['bg_image_url']) ?>'); background-attachment: fixed; background-position: center; background-size: 110%;">
+              <div class="span1 icone-categorie" style="width: 4%;"><img src="<?= __s($row_mon_cat_GO_400['ch_mon_cat_icon']) ?>" alt="icone <?= __s($row_mon_cat_GO_400['ch_mon_cat_nom']) ?>" style="max-width: 25px; margin-left: -0.7em; margin-top: 0.45em;"></div>
+              <div class="span11" style="margin-left: 0em;">
+                <p><strong><a target="_blank" href="politique.php?mon_cat_ID=<?php echo $row_mon_cat_GO_400['ch_mon_cat_ID']; ?>#entreprises"><?= __s($row_mon_cat_GO_400['ch_mon_cat_nom']) ?></a></strong>, <?= __s($row_mon_cat_GO_400['ch_mon_cat_desc']) ?>
+                    <div style="scale: 85%; margin-left: -4em;  margin-bottom: -0.5em; margin-top: -0.5em; position: initial; text-align: initial;"><img src="assets/img/ressources/budget.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Budget"> <strong><?= e($row_mon_cat_GO_400['ch_mon_cat_budget']) ?></strong>  <img src="assets/img/ressources/industrie.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Industrie"> <strong><?= e($row_mon_cat_GO_400['ch_mon_cat_industrie']) ?></strong>  <img src="assets/img/ressources/bureau.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Commerce"> <strong><?= e($row_mon_cat_GO_400['ch_mon_cat_commerce']) ?></strong>  <img src="assets/img/ressources/agriculture.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Agriculture"> <strong><?= e($row_mon_cat_GO_400['ch_mon_cat_agriculture']) ?></strong>  <img src="assets/img/ressources/tourisme.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Tourisme"><strong> <?= e($row_mon_cat_GO_400['ch_mon_cat_tourisme']) ?></strong>  <img src="assets/img/ressources/recherche.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Recherche"> <strong><?= e($row_mon_cat_GO_400['ch_mon_cat_recherche']) ?></strong>  <img src="assets/img/ressources/environnement.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Evironnement"> <strong><?= e($row_mon_cat_GO_400['ch_mon_cat_environnement']) ?></strong>  <img src="assets/img/ressources/education.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Education"> <strong><?= e($row_mon_cat_GO_400['ch_mon_cat_education']) ?></strong>
+                  </div></p></div>
+            </li><?php } else { ?><?php }?>
+      <?php } while ($row_mon_cat_GO_400 = mysql_fetch_assoc($mon_cat_GO_400)); ?>
+      </div>    </div>
+    <div class="slider__contents"><i class="slider__image fa fa-diamond"></i>
+      <h2 class="slider__caption">L'appel au public</h2>
+      <div class="slider__txt"><?php if($nb_cat_ok < 7 ) { ?><span style="font-weight: bold;"><?= __s($row_monument['ch_pat_nom']) ?> n'a validé que <?php echo $nb_cat_ok ?> objectifs pour le moment, mais c'est déjà un excellent début !</span><br><br> Quand ton entreprise se sera encore plus développée, tu pourras organiser un sondage pour mesurer sa <a target="_blank" href="http://vasel.yt/wiki/index.php?title=GO/Entreprise#Notori.C3.A9t.C3.A9">notoriété</a>.<br> Mais pour le moment, cela me semble un peu prématuré pour ne rien te cacher... mais en obtenant quelques autres objectifs présentés dans cette boite à outils, en un rien de temps tu seras fin prêt !<?php } else { ?>
+        <span style="font-weight: bold;">Félicitations, <?= __s($row_monument['ch_pat_nom']) ?> cumule déjà plus de <?php echo $nb_cat_ok ?> objectifs différents !</span><br><br>Si tu te sens prêt, tu peux lancer un sondage sur le <a target="_blank" href="<?= __s($row_monument['ch_pat_legende_img5']) ?>"> topic de <?= __s($row_monument['ch_pat_nom']) ?></a> sur le forum, avec en réponse les 6 classes suivantes :
+      <?php do { ?><?php if($row_mon_cat_GO_999['ch_mon_cat_statut'] == 0) { ?>
+            <li class="row-fluid" style="margin-top: 0.5em; background-image: url('<?= __s($row_mon_cat_GO_999['bg_image_url']) ?>'); background-attachment: fixed; background-position: center; background-size: 110%;">
+              <div class="span1 icone-categorie" style="width: 4%;"><img src="<?= __s($row_mon_cat_GO_999['ch_mon_cat_icon']) ?>" alt="icone <?= __s($row_mon_cat_GO_999['ch_mon_cat_nom']) ?>" style="max-width: 25px; margin-left: -0.7em; margin-top: 0.45em;"></div>
+              <div class="span11" style="margin-left: 0em;">
+                <p><strong><a target="_blank" href="politique.php?mon_cat_ID=<?php echo $row_mon_cat_GO_999['ch_mon_cat_ID']; ?>#entreprises"><?= __s($row_mon_cat_GO_999['ch_mon_cat_nom']) ?></a></strong>, <?= __s($row_mon_cat_GO_999['ch_mon_cat_desc']) ?>
+                    <div style="scale: 85%; margin-left: -4em;  margin-bottom: -0.5em; margin-top: -0.5em; position: initial; text-align: initial;"><img src="assets/img/ressources/budget.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Budget"> <strong><?= e($row_mon_cat_GO_999['ch_mon_cat_budget']) ?></strong>  <img src="assets/img/ressources/industrie.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Industrie"> <strong><?= e($row_mon_cat_GO_999['ch_mon_cat_industrie']) ?></strong>  <img src="assets/img/ressources/bureau.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Commerce"> <strong><?= e($row_mon_cat_GO_999['ch_mon_cat_commerce']) ?></strong>  <img src="assets/img/ressources/agriculture.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Agriculture"> <strong><?= e($row_mon_cat_GO_999['ch_mon_cat_agriculture']) ?></strong>  <img src="assets/img/ressources/tourisme.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Tourisme"><strong> <?= e($row_mon_cat_GO_999['ch_mon_cat_tourisme']) ?></strong>  <img src="assets/img/ressources/recherche.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Recherche"> <strong><?= e($row_mon_cat_GO_999['ch_mon_cat_recherche']) ?></strong>  <img src="assets/img/ressources/environnement.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Evironnement"> <strong><?= e($row_mon_cat_GO_999['ch_mon_cat_environnement']) ?></strong>  <img src="assets/img/ressources/education.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Education"> <strong><?= e($row_mon_cat_GO_999['ch_mon_cat_education']) ?></strong>
+                  </div></p></div>
+            </li>
+      <?php } else { ?><?php }?><?php } while ($row_mon_cat_GO_999 = mysql_fetch_assoc($mon_cat_GO_999)); ?>
+        Si au moins 7 membres votent, la solution la plus plebiscitée deviendra officiellement la classe de notoriété de ton entreprise. Tu peux aussi en élaborer des stratégies : envie d'être populaire mais d'en payer le prix, ou au contraire de t'illustrer comme un fauteur de trouble qui tire profit de ses possibles méfaits ? Il n'y a pas de mauvaise solution, tout dépend du RP que tu veux mener !
+      <?php }?></div>
     </div>
   </div>
+</div>
+
+<div style="padding-top: 1em;">Pense bien à déjà faire tes présentations sur le <a target="_blank" href="<?= __s($row_monument['ch_pat_legende_img5']) ?>">sujet de ton entreprise</a> sur le forum,<br> puis de demander ensuite juste en dessous à ce que ton objectif soit validé par le Comité Politique !</div><a target="_blank" href="http://vasel.yt/wiki/index.php?title=GO/Entreprise" class="guide-link">Envie de rentrer dans les détails ? GO!</a>
+
+    </ul>
+                <div class="clearfix"></div>
+            </div>
+            </div>
+</div>
+<?php } while ($row_mon_cat_GO_0 = mysql_fetch_assoc($mon_cat_GO_0)); ?>
+
+  <?php } ?>
+  </div>
+  </div>
+
   <div><?php
 	  $ch_com_categorie = "com_monument";
 	  $ch_com_element_id = $colname_monument;
