@@ -813,7 +813,7 @@ ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li.divider {
 }
 
 ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li.nav-lien-carte {
-    width: 200px;
+    width: 220px;
 }
 
 ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li.nav-lien-carte > a:hover {
@@ -825,9 +825,9 @@ ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li.nav-lien-carte >
 }
 
 ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li.nav-lien-carte div {
-    padding: 15px;
-    width: 200px;
-    height: 40px;
+    padding: 10px;
+    width: 220px;
+    height: 50px;
     vertical-align: text-bottom;
     background-image: url('../img/2019/navbar.png');
     border-radius: 5px;
@@ -835,8 +835,7 @@ ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li.nav-lien-carte d
 
 ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li.nav-lien-carte h3 {
     font-weight: bold;
-    position: absolute;
-    margin-top: 15px;
+    margin-top: 0;
 }
 
 ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li, ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li > a, ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li > a:hover, ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li > a:active, ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li > a:link, ul.dropdown-menu.dropdown-double > div.drop-colonne-gauche > li > a:visited {
@@ -3208,7 +3207,6 @@ Tablet COLLAPSE
 }
 
 /* TEST CARROUSEL ----------------*/
-@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
 *, *:before, *:after {
   box-sizing: border-box;
 }
