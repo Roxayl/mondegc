@@ -1,16 +1,16 @@
 RewriteEngine On
 
 # Condition : on conserve l'acces direct aux anciens dossiers du site legacy.
-RewriteCond %{REQUEST_URI} !^/mondegc/public/
-RewriteCond %{REQUEST_URI} !^/mondegc/assets/
-RewriteCond %{REQUEST_URI} !^/mondegc/back/
-RewriteCond %{REQUEST_URI} !^/mondegc/Carto/
-RewriteCond %{REQUEST_URI} !^/mondegc/lib/
-RewriteCond %{REQUEST_URI} !^/mondegc/php/
-RewriteCond %{REQUEST_URI} !^/mondegc/services/
-RewriteCond %{REQUEST_URI} !^/mondegc/userfiles/
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteCond %{REQUEST_URI} !^/assets/
+RewriteCond %{REQUEST_URI} !^/back/
+RewriteCond %{REQUEST_URI} !^/Carto/
+RewriteCond %{REQUEST_URI} !^/lib/
+RewriteCond %{REQUEST_URI} !^/php/
+RewriteCond %{REQUEST_URI} !^/services/
+RewriteCond %{REQUEST_URI} !^/userfiles/
 RewriteCond %{REQUEST_FILENAME} !\.php$
-RewriteRule ^(.*)$ /mondegc/public/$1 [L,QSA]
+RewriteRule ^(.*)$ /public/$1 [L,QSA]
 
 # Gerer les accès au site legacy.
 RewriteCond %{REQUEST_FILENAME} \.php$

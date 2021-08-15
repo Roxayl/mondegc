@@ -35,6 +35,7 @@
     },
     "require": {
         "php": "^7.4|^8.0",
+        "ext-mysqli": "*",
         "ext-json": "*",
         "ext-pdo": "*",
         "doctrine/dbal": "^2.10",
@@ -47,6 +48,7 @@
         "spatie/laravel-searchable": "^1.6"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.6",
         "beyondcode/laravel-dump-server": "^1.0",
         "facade/ignition": "^2.3.6",
         "fzaninotto/faker": "^1.4",
