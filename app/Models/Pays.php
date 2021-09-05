@@ -230,6 +230,11 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         return $this->hasMany(Geometry::class, 'ch_geo_pay_id');
     }
 
+    public function proposals()
+    {
+        return $this->hasMany(OcgcProposal::class, 'ID_pays');
+    }
+
     public function getUsers()
     {
         return $this->users()->get();

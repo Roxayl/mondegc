@@ -2,6 +2,9 @@
 
 namespace GenCity\Proposal;
 
+use App\Jobs\Discord\NotifyVotingProposal;
+use App\Models\OcgcProposal;
+
 class ProposalRoutine {
 
     public function __construct() {
@@ -13,6 +16,7 @@ class ProposalRoutine {
     public function runRoutine() {
 
         $this->checkValidPending();
+        $this->sendNotifications();
 
     }
 
@@ -31,6 +35,22 @@ class ProposalRoutine {
             $proposalValidate->accept();
         }
 
+    }
+
+    /**
+     * Envoie les notifications sur Discord lorsqu'une proposition est en cours de vote.
+     */
+    private function sendNotifications()
+    {
+        // Exécuter une fois sur quatre en moyenne.
+        $rand = rand(1, 4);
+        if($rand !== 1) return;
+
+        $pendingVotes = (new ProposalList)->getPendingVotes();
+        foreach($pendingVotes as $proposal) {
+            $eloquentProposal = OcgcProposal::find($proposal->get('id'));
+            NotifyVotingProposal::dispatch($eloquentProposal);
+        }
     }
 
 }

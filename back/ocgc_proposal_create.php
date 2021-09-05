@@ -1,5 +1,9 @@
 <?php
 
+use App\Jobs\Discord;
+use App\Models\OcgcProposal;
+
+
 //deconnexion
 include(DEF_ROOTPATH . 'php/logout.php');
 
