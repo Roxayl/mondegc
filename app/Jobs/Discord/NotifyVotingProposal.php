@@ -3,6 +3,7 @@
 namespace App\Jobs\Discord;
 
 use App\Jobs\Contracts\NotifiesDiscord;
+use App\Jobs\Traits\NotifiesDiscord as NotifiesDiscordTrait;
 use App\Models\DiscordNotification;
 use App\Models\OcgcProposal;
 use Illuminate\Bus\Queueable;
@@ -15,9 +16,11 @@ use Illuminate\Support\Str;
 
 class NotifyVotingProposal implements ShouldQueue, NotifiesDiscord
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, NotifiesDiscordTrait;
 
     private OcgcProposal $proposal;
+
+    private string $webhookName = 'ocgc';
 
     /**
      * Create a new job instance.
@@ -41,8 +44,7 @@ class NotifyVotingProposal implements ShouldQueue, NotifiesDiscord
      */
     public function handle(): void
     {
-        $notification = DiscordNotification::fetch($this);
-        $notification->send();
+        DiscordNotification::fetch($this)->send();
     }
 
     public function getModelIdentifier(): Model

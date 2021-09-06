@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use UnexpectedValueException;
 
 /**
  * Class OcgcProposal
@@ -129,7 +128,7 @@ class OcgcProposal extends Model
 
         // Vérifier que la valeur obtenue est correcte.
         if(is_null(self::$maxResponses) || ! self::$maxResponses) {
-            throw new UnexpectedValueException("Bad max response value.");
+            throw new \UnexpectedValueException("Bad max response value.");
         }
     }
 
