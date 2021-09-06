@@ -22,7 +22,7 @@ $row_villes = mysql_fetch_assoc($villes);
 $totalRows_villes = mysql_num_rows($villes);
 
 //Recherche des villes extraterritoriales
-$query_villes_extratrtr = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_user, ch_vil_date_enregistrement, ch_vil_mis_jour, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_use_login FROM villes INNER JOIN users ON ch_vil_user = ch_use_id WHERE ch_vil_capitale > 3 AND villes.ch_vil_paysID = %s ORDER BY ch_vil_mis_jour DESC", GetSQLValueString($colname_Pays, "int"));
+$query_villes_extratrtr = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_user, ch_vil_date_enregistrement, ch_vil_mis_jour, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_use_login FROM villes INNER JOIN users ON ch_vil_user = ch_use_id WHERE ch_vil_capitale > 3  AND villes.ch_vil_paysID = %s ORDER BY ch_vil_mis_jour DESC", GetSQLValueString($colname_Pays, "int"));
 $villes_extratrtr = mysql_query($query_villes_extratrtr, $maconnexion) or die(mysql_error());
 $row_villes_extratrtr = mysql_fetch_assoc($villes_extratrtr);
 $totalRows_villes_extratrtr = mysql_num_rows($villes_extratrtr);
@@ -49,7 +49,7 @@ $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
 //$query_monument = sprintf("SELECT ch_pat_ID, ch_pat_paysID, ch_pat_date, ch_pat_mis_jour, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_description, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine WHERE ch_pat_statut = 1 AND ch_pat_paysID = %s ORDER BY ch_pat_mis_jour DESC", GetSQLValueString($colname_Pays, "int"));
 //$monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
 //$row_monument = mysql_fetch_assoc($monument);
-//$totalRows_monument = mysql_num_rows($monument); 
+//$totalRows_monument = mysql_num_rows($monument);
 
 //Recherche des quêtes de CHAQUE ville
 $query_monument = sprintf("SELECT ch_pat_ID, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_description, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine WHERE ch_pat_villeID = %s ORDER BY ch_pat_mis_jour DESC", GetSQLValueString($colname_infoVille, "int"));
@@ -86,6 +86,58 @@ $organisations = $eloquentPays->otherOrganisations();
 $alliance = $eloquentPays->alliance();
 
 $_SESSION['last_work'] = 'page-pays.php?ch_pay_id='.$row_Pays['ch_pay_id'];
+
+
+//Mise à jour formulaire pays
+if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
+
+      $updateSQL = sprintf("UPDATE pays SET ch_pay_label=%s, ch_pay_publication=%s, ch_pay_continent=%s, ch_pay_emplacement=%s, ch_pay_lien_forum=%s, lien_wiki = %s, ch_pay_nom=%s, ch_pay_devise=%s, ch_pay_lien_imgheader=%s, ch_pay_lien_imgdrapeau=%s, ch_pay_date=%s, ch_pay_mis_jour=%s, ch_pay_nb_update=%s, ch_pay_forme_etat=%s, ch_pay_capitale=%s, ch_pay_langue_officielle=%s, ch_pay_monnaie=%s, ch_pay_header_presentation=%s, ch_pay_text_presentation=%s, ch_pay_header_geographie=%s, ch_pay_text_geographie=%s, ch_pay_header_politique=%s, ch_pay_text_politique=%s, ch_pay_header_histoire=%s, ch_pay_text_histoire=%s, ch_pay_header_economie=%s, ch_pay_text_economie=%s, ch_pay_header_transport=%s, ch_pay_text_transport=%s, ch_pay_header_sport=%s, ch_pay_text_sport=%s, ch_pay_header_culture=%s, ch_pay_text_culture=%s, ch_pay_header_patrimoine=%s, ch_pay_text_patrimoine=%s WHERE ch_pay_id=%s",
+                           GetSQLValueString($_POST['ch_pay_label'], "text"),
+                           GetSQLValueString($_POST['ch_pay_publication'], "int"),
+                           GetSQLValueString($ch_pay_continent, "text"),
+                           GetSQLValueString($_POST['ch_pay_emplacement'], "int"),
+                           GetSQLValueString($_POST['ch_pay_lien_forum'], "text"),
+                           GetSQLValueString($_POST['lien_wiki'], "text"),
+                           GetSQLValueString($_POST['ch_pay_nom'], "text"),
+                           GetSQLValueString($_POST['ch_pay_devise'], "text"),
+                           GetSQLValueString($_POST['ch_pay_lien_imgheader'], "text"),
+                           GetSQLValueString($_POST['ch_pay_lien_imgdrapeau'], "text"),
+                           GetSQLValueString($_POST['ch_pay_date'], "date"),
+                           GetSQLValueString($_POST['ch_pay_mis_jour'], "date"),
+                           GetSQLValueString($_POST['ch_pay_nb_update'], "int"),
+                           GetSQLValueString($_POST['ch_pay_forme_etat'], "text"),
+                           GetSQLValueString($_POST['ch_pay_capitale'], "text"),
+                           GetSQLValueString($_POST['ch_pay_langue_officielle'], "text"),
+                           GetSQLValueString($_POST['ch_pay_monnaie'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_presentation'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_presentation'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_geographie'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_geographie'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_politique'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_politique'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_histoire'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_histoire'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_economie'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_economie'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_transport'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_transport'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_sport'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_sport'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_culture'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_culture'], "text"),
+                           GetSQLValueString($_POST['ch_pay_header_patrimoine'], "text"),
+                           GetSQLValueString($_POST['ch_pay_text_patrimoine'], "text"),
+                           GetSQLValueString($_POST['ch_pay_id'], "int"));
+
+
+      $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+      getErrorMessage('success', "Le pays a été modifié avec succès !");
+
+  $updateGoTo = DEF_URI_PATH . "page-pays.php?ch_pay_id=" . (int)$_POST['ch_pay_id'];
+  appendQueryString($updateGoTo);
+  header(sprintf("Location: %s", $updateGoTo));
+  exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -154,10 +206,10 @@ $_SESSION['last_work'] = 'page-pays.php?ch_pay_id='.$row_Pays['ch_pay_id'];
 <script src="assets/js/bootstrap-scrollspy.js"></script>
 <script src="assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
-      $(function() { 
+      $(function() {
           $('[rel="clickover"]').clickover();})
 </script>
-<script> 
+<script>
  $( document ).ready(function() {
 init();
 });
@@ -188,8 +240,8 @@ init();
   </div>
 </header>
 
-<div class="container"> 
-  
+<div class="container">
+
   <!-- Docs nav
     ================================================== -->
   <div class="row-fluid">
@@ -411,7 +463,7 @@ init();
             >Communiqu&eacute;s</h1>
         </div>
         <div class="span7" style="margin: 0; margin-right: -12px;">
-        <?php 
+        <?php
 	  $ch_com_categorie = 'pays';
 	  $ch_com_element_id = $colname_Pays;
 	  include('php/communiques.php'); ?>
@@ -518,7 +570,7 @@ init();
         </div>
 
       </section>
-      
+
       <!-- Liste des villes
         ================================================== -->
       <?php if ($row_villes) { ?>
@@ -543,7 +595,7 @@ init();
                     <?php  echo date("d/m/Y", strtotime($row_villes['ch_vil_mis_jour'])); ?>
                   </p>
                   <p><strong>Population&nbsp;: </strong>
-                    <?php 
+                    <?php
 					  $population_ville_francais = number_format($row_villes['ch_vil_population'], 0, ',', ' ');
 					  echo $population_ville_francais; ?>
                     habitants</p>
@@ -560,7 +612,7 @@ init();
       <?php } ?>
       <!-- Géographie - Carte INTERACTIVE
     ================================================== -->
-      
+
       <section>
         <div id="geographie" class="titre-vert anchor">
           <h1>G&eacute;ographie</h1>
@@ -572,7 +624,7 @@ init();
           <?= htmlPurify($row_Pays['ch_pay_text_geographie']) ?></div>
         <?php } ?>
       </section>
-      
+
       <!-- Politique
         ================================================== -->
       <?php if ($row_Pays['ch_pay_header_politique'] OR $row_Pays['ch_pay_text_politique']) { ?>
@@ -597,10 +649,10 @@ init();
         ================================================== -->
         <div id="liste-faits">
           <ul class="listes">
-            <?php do { 
+            <?php do {
 			$listcategories = ($row_fait_his['listcat']);
 			if ($row_fait_his['listcat']) {
-          
+
 
 $query_liste_fai_cat3 = "SELECT * FROM faithist_categories WHERE ch_fai_cat_ID In ($listcategories) AND ch_fai_cat_statut = 1";
 $liste_fai_cat3 = mysql_query($query_liste_fai_cat3, $maconnexion) or die(mysql_error());
@@ -624,7 +676,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
                 <!-- si pers historique -->
                 <h4><?= e($row_fait_his['ch_his_nom']) ?></h4>
                 <p><?= e($row_fait_his['ch_his_profession']) ?> (<?php echo affDate($row_fait_his['ch_his_date_fait']); ?> - <?php echo affDate($row_fait_his['ch_his_date_fait2']); ?>)&nbsp; <em>
-                  <?php 
+                  <?php
 	  $d1 = new DateTime($row_fait_his['ch_his_date_fait']);
 	  $d2 = new DateTime($row_fait_his['ch_his_date_fait2']);
 	  $diff = get_timespan_string($d1, $d2);
@@ -634,7 +686,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
                 <!-- si pers vivant -->
                 <h4><?= e($row_fait_his['ch_his_nom']) ?></h4>
                 <p><?= e($row_fait_his['ch_his_profession']) ?> (<?php echo affDate($row_fait_his['ch_his_date_fait']); ?>-&nbsp;&nbsp;)&nbsp; <em>
-                  <?php 
+                  <?php
 	  $d1 = new DateTime($row_fait_his['ch_his_date_fait']);
 	  $d2 = new DateTime('NOW');
 	  $diff = get_timespan_string($d1, $d2);
@@ -695,7 +747,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 
       <section>
         <div id="economie" class="titre-vert anchor">
-          <h1>Économie</h1>
+          <h1>Économie <a href="#Modal-Section" data-toggle="modal" title="Modifier les catégories"><img style="all: initial;" src="https://i11.servimg.com/u/f11/18/33/87/18/edit-l10.png"></a></h1>
         </div>
 
           <?php
@@ -818,43 +870,75 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
                   <img src="<?= e($row_Pays['ch_pay_lien_imgdrapeau']) ?>" alt="ville">
                   <?php } ?>
                   </a> </div>
-                <div class="span6 info-listes">
+                  <div class="span6 info-listes">
                   <h4><?= e($row_villes_extratrtr['ch_vil_nom']) ?></h4>
                   <p><strong>Derni&egrave;re mise &agrave; jour&nbsp;: </strong>le
                     <?php  echo date("d/m/Y", strtotime($row_villes_extratrtr['ch_vil_mis_jour'])); ?>
                   </p>
                   <p><strong>Sp&eacute;cialit&eacute;&nbsp;: </strong> <?= e($row_villes_extratrtr['ch_vil_specialite']) ?></p>
                   </div></li><?php } while ($row_villes_extratrtr = mysql_fetch_assoc($villes_extratrtr)); ?>
-
-                  <!-- Partie entrprises -->
-       <?php if($row_monument['ch_mon_cat_ID'] = $row_villes_extratrtr['ch_vil_ID']) { ?>
-         <h4 style="text-align: center; color: #1a2638;"> <?php echo $row_monument['ch_pat_nom']; ?> a déjà atteint <?php echo $nb_cat_ok ?> objectifs !<br><small>Cliquez sur les icones pour avoir plus de détail.</small></h4>
-            <ul class="listes" style="text-align: center;">
-               <?php do { ?> <a href="#" rel="clickover" title="<?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?>" data-content="<?= __s($row_liste_mon_cat3['ch_mon_cat_desc']) ?>"><img style="max-width: 50px;" src="<?= __s($row_liste_mon_cat3['ch_mon_cat_icon']) ?>"></i></a>
-            <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)) ?>
-            </ul>
-           <?php mysql_free_result($liste_mon_cat3); ?>
-         <?php } else { ?>
-         <h4 style="text-align: center">Jusqu'à présent, <?php echo $row_monument['ch_pat_nom']; ?> ne s'est rien fait valider...</h4>
-      <?php }?>
-
         </div>
       <?php } ?>
           <?= htmlPurify($row_Pays['ch_pay_text_economie']) ?>
-        
+
       </section>
       <!-- Transport
         ================================================== -->
-      <?php if ($row_Pays['ch_pay_header_transport'] OR $row_Pays['ch_pay_text_transport']) { ?>
-      <section>
-        <div id="transport" class="titre-vert">
-          <h1>Transport</h1>
-        </div>
+  <?php if ($row_Pays['ch_pay_header_transport'] OR $row_Pays['ch_pay_text_transport']) { ?>
+  <section>
+
+            <?php if (($_SESSION['statut'] >= 20) OR ($row_User['ch_use_id'] == $_SESSION['user_ID'])) { ?>
+            <div class="accordion-group" style="border: none;">
+              <div class="accordion-heading" title="Cliquez pour modifier le contenu de cette section" style="border: none;padding: 0;"> <a class="accordion-toggle collapsed" data-toggle="collapse" href="#collapsetransports" style="padding: 0;">
+                <div id="transport" class="titre-vert" style="">
+                  <h1 style="">Transports</h1><img style="all: initial;position: absolute;margin: -2.4em -6em 0em 14.8em; cursor: pointer;" src="https://i11.servimg.com/u/f11/18/33/87/18/edit-l10.png">
+                      </div></a>
+              </div>
+              <form action="<?php echo $editFormAction; ?>" name="InfoHeader" method="POST" class="form-horizontal" id="InfoHeader">
+              <div id="collapsetransports" class="accordion-body collapse" style="height: 0px;">
+                <div class="accordion-inner" style="scale: 0.95; border: 5px dotted rgb(255, 78, 0); border-radius: 15px; box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 9px -5px, rgba(19, 5, 5, 0.04) 0px 15px 22px 2px, rgba(0, 0, 0, 0.1) 0px 6px 28px 5px !important; padding: 1em 0em 0em;">
+                  <!-- Header -->
+                    <div style="color: #ff4e00; padding: 1em; margin-top: -1em;" >Modifier cette section Transports de la présentation de mon pays</div>
+                  <textarea rows="20" name="ch_pay_text_economie" class="wysiwyg" id="ch_pay_text_economie"><?= htmlPurify($row_Pays['ch_pay_text_transport']) ?></textarea>
+                                          <!-- Bouton envoyer
+        ================================================== -->
+          <button type="submit" class="btn btn-primary" style="width: 96%; text-align: center; margin: 1em 1em; border-radius: 0px 0px 10px 10px;">Mettre à jour</button>
+          <input type="hidden" name="MM_update" value="InfoHeader">
+             </form>
+                </div>
+              </div>
+            </div><?php } else { ?><div id="transport" class="titre-vert" style=""><h1 style="">Transports</h1></div><?php } ?>
+
         <div class="well">
           <h5><strong><?= htmlPurify($row_Pays['ch_pay_header_transport']) ?></strong></h5>
           <?= htmlPurify($row_Pays['ch_pay_text_transport']) ?></div>
+  </section>
+  <?php } else { ?>
+    <?php if (($_SESSION['statut'] >= 20) OR ($row_User['ch_use_id'] == $_SESSION['user_ID'])) { ?>
+      <section>
+                    <div class="accordion-group" style="border: none; margin: 3em 0em;">
+              <div class="accordion-heading" title="Cliquez pour modifier le contenu de cette section" style="border: none;padding: 0;"> <a class="accordion-toggle collapsed" data-toggle="collapse" href="#collapsetransports" style="padding: 0;">
+
+                <div id="routes-campagne" class="thumbnail btn-ajout" style='width: 92%; margin: auto; height: 30px;'>
+                  <div>Ajouter une section Transports</div>
+                </div>
+                </a>
+              </div>
+              <form action="<?php echo $editFormAction; ?>" name="InfoHeader" method="POST" class="form-horizontal" id="InfoHeader">
+              <div id="collapsetransports" class="accordion-body collapse" style="height: 0px; margin-top: -1em;">
+                <div class="accordion-inner" style="scale: 0.95; border: 5px dotted rgb(255, 78, 0); border-radius: 15px; box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 9px -5px, rgba(19, 5, 5, 0.04) 0px 15px 22px 2px, rgba(0, 0, 0, 0.1) 0px 6px 28px 5px !important; padding: 1em 0em 0em; border-top: 0px;">
+                  <!-- Header -->
+                    <div style="color: #ff4e00; padding: 1em; margin-top: -1em;" >Plutôt royaume de l'automobile, plaque tournante du trafic aérien ou maritime, ou plutôt à la pointe pour les mobilités douces ? Présentez nous les spécificités de votre pays à propos des transports !</div>
+                  <textarea rows="20" name="ch_pay_text_economie" class="wysiwyg" id="ch_pay_text_economie"><?= htmlPurify($row_Pays['ch_pay_text_transport']) ?></textarea>
+                                          <!-- Bouton envoyer
+        ================================================== -->
+          <button type="submit" class="btn btn-primary" style="width: 96%; text-align: center; margin: 1em 1em; border-radius: 0px 0px 10px 10px;">Créer cette section</button>
+          <input type="hidden" name="MM_update" value="InfoHeader">
+             </form>
+                </div>
       </section>
-      <?php } ?>
+    <?php } ?>
+  <?php } ?>
       <!-- Sport
         ================================================== -->
       <?php if ($row_Pays['ch_pay_header_sport'] OR $row_Pays['ch_pay_text_sport']) { ?>
@@ -879,6 +963,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
           <?= htmlPurify($row_Pays['ch_pay_text_culture']) ?></div>
       </section>
       <?php } ?>
+
       <!-- Patrimoine
         ================================================== -->
       <?php if ($row_Pays['ch_pay_header_patrimoine'] OR $row_Pays['ch_pay_text_patrimoine'] OR $row_monument) { ?>
@@ -897,7 +982,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 			if ($row_monument['listcat']) {
 
                 $query_liste_mon_cat3 = "SELECT * FROM monument_categories
-                    WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
+                    WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =0";
                 $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
                 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
                 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
@@ -941,7 +1026,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         <div id="commentaires" class="titre-vert">
           <h1>Visites</h1>
         </div>
-        <?php 
+        <?php
 	  $ch_com_categorie = "com_pays";
 	  $ch_com_element_id = $colname_Pays;
 	  include('php/commentaire.php'); ?>
@@ -949,11 +1034,43 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div id="Modal-Section" class="modal hide fade" tabindex="-1" role="dialog" style="min-width: 50%;" aria-labelledby="ModalSecCont" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Modifier votre section</h3>
+  </div>
+  <div class="modal-body">
+  <form action="<?= DEF_URI_PATH ?>back/membre-modifier_back.php" name="InfoUser" method="POST" class="form-horizontal" id="InfoUser" enctype="multipart/form-data">
+    <div class="modal-footer">
+      <!-- Header -->
+
+                    <label for="ch_pay_header_economie">En-t&ecirc;te <a href="#" rel="clickover" title="En-t&ecirc;te &eacute;conomie" data-content="L'en-t&ecirc;te est mis en exergue dans la mise en page. 250 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
+                    <textarea rows="3" name="ch_pay_header_economie" class="span9" id="ch_pay_header_economie"><?= e($row_Pays['ch_pay_header_economie']) ?></textarea>
+                    <br>
+                    <span class="textareaMaxCharsMsg">250 caract&egrave;res max.</span>
+                  <p>&nbsp;</p>
+                  <!-- Contenu -->
+                  <label for="ch_pay_text_economie">Contenu</label>
+                  <textarea rows="20" name="ch_pay_text_economie" class="wysiwyg" id="ch_pay_text_economie"><?= e($row_Pays['ch_pay_text_economie']) ?></textarea>
+      <!-- Bouton envoyer
+        ================================================== -->
+      <button data-dismiss="modal" aria-hidden="true" class="btn">Fermer</button>
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+      <input type="hidden" name="MM_update" value="InfoUser">
+    </div>
+  </form>
+</div>
+
+
+</div>
+
 <!-- Footer
     ================================================== -->
 <?php include('php/footer.php'); ?>
 
-<!-- Footer
+<!-- Scripts
     ================================================== -->
 <script>
 $("a[data-toggle=modal]").click(function (e) {

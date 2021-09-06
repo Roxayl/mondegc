@@ -35,8 +35,9 @@
     },
     "require": {
         "php": "^7.4|^8.0",
-        "ext-mysqli": "*",
+        "ext-curl": "*",
         "ext-json": "*",
+        "ext-mysqli": "*",
         "ext-pdo": "*",
         "doctrine/dbal": "^2.10",
         "ezyang/htmlpurifier": "^4.13",

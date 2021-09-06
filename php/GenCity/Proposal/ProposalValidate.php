@@ -2,6 +2,9 @@
 
 namespace GenCity\Proposal;
 
+use App\Models\OcgcProposal;
+use App\Jobs\Discord;
+
 class ProposalValidate {
 
     private $proposal = null;
@@ -54,6 +57,10 @@ class ProposalValidate {
     public function accept() {
 
         $this->runQuery(Proposal::allValidationStatus('debatePending'));
+
+        /** @var OcgcProposal $eloquentProposal */
+        $eloquentProposal = OcgcProposal::findOrFail($this->proposal->get('id'));
+        Discord\NotifyCreatedProposal::dispatch($eloquentProposal);
 
         // Cette proposition est acceptée par l'OCGC après sa date de début de vote ;
         // on décale la phase de vote à la semaine suivante.
