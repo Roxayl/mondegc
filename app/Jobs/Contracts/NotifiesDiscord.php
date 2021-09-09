@@ -29,4 +29,10 @@ interface NotifiesDiscord
      * @return string
      */
     public function getWebhookName(): string;
+
+    /**
+     * Execute the job.
+     * @return void
+     */
+    public function handle(): void;
 }
