@@ -78,7 +78,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
       <div class="nav-collapse collapse"> 
         
         <!-- Formulaire connexion desktop / mobile -->
-        <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="connexion" class="navbar-form hidden-tablet <?= e($_SESSION['menu_connexion']) ?>">
+        <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="connexion" class="navbar-form hidden-tablet <?= e($_SESSION['menu_connexion']) ?>" style="margin-top: 4px;">
           <input type="hidden" name="__csrf_magic" value="<?= csrf_get_tokens() ?>">
           <input type="hidden" name="_token"
                  value="<?= \Illuminate\Support\Facades\Session::token() ?>">
@@ -88,7 +88,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
           <div>
             <input class="span2" type="password" placeholder="Mot de passe" name="mot_de_passe" id="mot_de_passe">
           </div>
-          <div>
+          <div style="margin-top: 8px;">
             <button type="submit" class="span2 btn btn-connexion">Connexion</button>
           </div>
         </form>

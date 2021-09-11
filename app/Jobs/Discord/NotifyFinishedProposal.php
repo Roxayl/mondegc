@@ -13,7 +13,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Str;
 
-class NotifyVotingProposal implements ShouldQueue, NotifiesDiscord
+class NotifyFinishedProposal implements ShouldQueue, NotifiesDiscord
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, NotifiesDiscordTrait;
 
@@ -44,8 +44,8 @@ class NotifyVotingProposal implements ShouldQueue, NotifiesDiscord
     public function generatePayload(): array
     {
         return [
-            'content' => "**VOTE EN COURS !**\r\n"
-                . "Une proposition est en cours de vote à l'Assemblée générale !",
+            'content' => "**VOTE TERMINÉ !**\r\n"
+                . "La procédure de vote de cette proposition est terminée.",
             'embeds' => [
                 [
                     'title' => trim(Str::limit($this->proposal->question, 120)),
@@ -76,13 +76,13 @@ class NotifyVotingProposal implements ShouldQueue, NotifiesDiscord
                             "inline" => true,
                         ],
                         [
-                            "name" => "Date limite de vote",
-                            "value" => $this->proposal->debate_end->format('d/m/Y à H:i'),
+                            "name" => "Votée le",
+                            "value" => $this->proposal->debate_end->format('d/m/Y'),
                             "inline" => false,
                         ],
                         [
-                            "name" => "Modalités",
-                            "value" => $this->proposal->responses()->implode(",\r\n"),
+                            "name" => "Résultat",
+                            "value" => $this->proposal->results()->pluck('intitule')->implode(",\r\n"),
                             "inline" => false,
                         ],
                     ]

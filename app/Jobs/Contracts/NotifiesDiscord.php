@@ -23,4 +23,16 @@ interface NotifiesDiscord
      * @return bool
      */
     public function isUnique(): bool;
+
+    /**
+     * Renvoie le nom du webhook où cette notification doit être publiée.
+     * @return string
+     */
+    public function getWebhookName(): string;
+
+    /**
+     * Execute the job.
+     * @return void
+     */
+    public function handle(): void;
 }

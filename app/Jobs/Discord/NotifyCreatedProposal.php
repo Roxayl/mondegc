@@ -3,7 +3,7 @@
 namespace App\Jobs\Discord;
 
 use App\Jobs\Contracts\NotifiesDiscord;
-use App\Models\DiscordNotification;
+use App\Jobs\Traits\NotifiesDiscord as NotifiesDiscordTrait;
 use App\Models\OcgcProposal;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -15,9 +15,11 @@ use Illuminate\Support\Str;
 
 class NotifyCreatedProposal implements ShouldQueue, NotifiesDiscord
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, NotifiesDiscordTrait;
 
     private OcgcProposal $proposal;
+
+    private string $webhookName = 'ocgc';
 
     /**
      * Create a new job instance.
@@ -34,17 +36,6 @@ class NotifyCreatedProposal implements ShouldQueue, NotifiesDiscord
         return true;
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle(): void
-    {
-        $notification = DiscordNotification::fetch($this);
-        $notification->send();
-    }
-
     public function getModelIdentifier(): Model
     {
         return $this->proposal;
@@ -53,7 +44,8 @@ class NotifyCreatedProposal implements ShouldQueue, NotifiesDiscord
     public function generatePayload(): array
     {
         return [
-            'content' => "Une nouvelle proposition a été créée à l'Assemblée générale et a été acceptée par l'OCGC. "
+            'content' => "**NOUVELLE PROPOSITION !**\r\n"
+                . "Une nouvelle proposition a été créée à l'Assemblée générale et a été acceptée par l'OCGC. "
                 . "Vous êtes invité à en débattre sur le forum.",
             'embeds' => [
                 [

@@ -273,8 +273,8 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     margin-bottom: 5px;
     font-size: 0.9em;
     line-height: normal;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 .form-button-inline {

@@ -7,11 +7,13 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use GenCity\Proposal\Proposal;
+use GenCity\Proposal\ProposalDecisionMaker;
+use GenCity\Proposal\VoteList;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use UnexpectedValueException;
 
 /**
  * Class OcgcProposal
@@ -129,7 +131,7 @@ class OcgcProposal extends Model
 
         // Vérifier que la valeur obtenue est correcte.
         if(is_null(self::$maxResponses) || ! self::$maxResponses) {
-            throw new UnexpectedValueException("Bad max response value.");
+            throw new \UnexpectedValueException("Bad max response value.");
         }
     }
 
@@ -160,6 +162,17 @@ class OcgcProposal extends Model
         }
 
         return collect($responses);
+    }
+
+    /**
+     * Renvoie le choix à l'issue du vote.
+     * @return Collection Collection de réponses.
+     */
+    public function results(): Collection
+    {
+        $decisionMaker = new ProposalDecisionMaker(new VoteList(new Proposal($this->id)));
+
+        return collect($decisionMaker->outputFormat());
     }
 
     /**
