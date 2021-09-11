@@ -1,14 +1,8 @@
 {
+    "name": "@roxayl/mondegc",
+    "homepage": "https://generation-city.com/monde/",
+    "license": "proprietary",
     "private": true,
-    "scripts": {
-        "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch": "npm run development -- --watch",
-        "watch-poll": "npm run watch -- --watch-poll",
-        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
-    },
     "devDependencies": {
         "axios": "^0.19",
         "bootstrap": "^4.1.0",
@@ -22,5 +16,14 @@
         "sass-loader": "^7.1.0",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.12"
+    },
+    "scripts": {
+        "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     }
 }
