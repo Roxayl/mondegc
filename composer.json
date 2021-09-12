@@ -75,8 +75,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Squirrel\\": "php/Squirrel/",
-            "GenCity\\": "php/GenCity/"
+            "GenCity\\": "legacy/php/GenCity/",
+            "Squirrel\\": "lib/Squirrel/"
         },
         "classmap": [
             "database/seeds",

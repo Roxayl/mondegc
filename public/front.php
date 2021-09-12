@@ -1,28 +1,29 @@
 <?php
 
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
-require_once('../php/init/legacy_init.php');
+require_once('../legacy/php/init/legacy_init.php');
 
 if($path === config('app.directory_path')) {
     $_GET['target'] = 'index';
 }
 
 if(!isset($_GET['target'])) {
-    throw new NotFoundHttpException("Page non trouvée.");
+    abort(404);
 }
 
 $mondegc_config['front-controller'] = [];
 
 $mondegc_config['front-controller']['enabled'] = true;
 
-$mondegc_config['front-controller']['path'] = str_replace('.', '/',
-                                                          filter_filename($_GET['target']));
+$mondegc_config_uri = str_replace('.', '/', filter_filename($_GET['target']));
+
+$mondegc_config['front-controller']['path'] = 'legacy/' . $mondegc_config_uri;
 
 $mondegc_config['front-controller']['require'] = DEF_ROOTPATH . $mondegc_config['front-controller']['path'] . '.php';
 
+$mondegc_config['front-controller']['url'] = DEF_URI_PATH . $mondegc_config_uri . '.php?' . $_SERVER['QUERY_STRING'];
+
 if(!file_exists($mondegc_config['front-controller']['require'])) {
-    throw new NotFoundHttpException("Page non trouvée.");
+    abort(404);
 }
 
 ob_start();
@@ -33,4 +34,3 @@ if(isset($mondegc_config['enable_csrf_protection']) && $mondegc_config['enable_c
 } else {
     return ob_get_clean();
 }
-

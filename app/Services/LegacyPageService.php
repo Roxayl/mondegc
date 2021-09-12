@@ -3,24 +3,25 @@
 namespace App\Services;
 
 use App\Http\Controllers\Legacy\LegacySiteController;
+use Illuminate\Http\Response;
 
-class LegacyPageService {
-
-    static private function callLegacyController($path)
+class LegacyPageService
+{
+    static private function callLegacyController($path): string
     {
-        $html = app(LegacySiteController::class)
-            ->index(request(), $path);
+        /** @var LegacySiteController $controller */
+        $controller = app(LegacySiteController::class);
 
-        // On supprime tout ce qui est avant le premier tag HTML '<' ; afin de supprimer
-        // l'en-tête de la requête (les headers notamment)
-        $pos = strpos($html, '<');
-        return substr($html, $pos);
+        /** @var Response $html */
+        $html = $controller->index(request(), $path);
+
+        return $html->content();
     }
 
-    static function navbar($navbar_context = null)
+    static function navbar($navbar_context = null): string
     {
         // On créé la variable permettant d'activer l'élément de menu spécifié.
-        if(!is_null($navbar_context) && in_array($navbar_context,
+        if(! is_null($navbar_context) && in_array($navbar_context,
                 ['accueil', 'dashboard', 'carte', 'menupays', 'pays',
                  'institut', 'participer', 'generation_city']))
         {
@@ -31,10 +32,9 @@ class LegacyPageService {
         return self::callLegacyController('php/navbarloader.php');
     }
 
-    static function carteGenerale()
+    static function carteGenerale(): string
     {
         $_GET['target'] = 'php.cartegenerale2';
         return self::callLegacyController('php/cartegenerale2.php');
     }
-
 }
