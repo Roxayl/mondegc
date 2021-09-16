@@ -1167,7 +1167,8 @@ function formatNum($number, $decimals = 0)
 /**
  * @param string $errorType Type d'erreur.
  * @param string|array $errorInfo Corps du message.
- * @param bool $put_on_session Détermine s'il faut stocker le message dans la session. Si ce paramètre est mis à <code>false</code>, le message est directement affiché.
+ * @param bool $put_on_session Détermine s'il faut stocker le message dans la session.
+     Si ce paramètre est mis à <code>false</code>, le message est directement affiché.
  */
 function getErrorMessage($errorType, $errorInfo, $put_on_session = true)
 {
@@ -1245,8 +1246,20 @@ function filter_filename($name)
 }
 
 
+/**
+ * Créé le lien vers une page du site 'legacy'.
+ * @param string $path Chemin à partir de l'URL de base, sans l'extension du fichier, suivant une syntaxe
+ *   dite "dot notation". Par exemple, pour accéder à https://site/back/ocgc_proposal_create.php, il
+ *   faudra passer "back.ocgc_proposal_create" en paramètre.
+ * @param array $params Liste de paramètres, qui seront ajoutés à l'URL.
+ * @return string L'URL vers la page legacy demandée.
+ */
 function legacyPage($path = '', $params = array())
 {
+    if($path === '') {
+        $path = 'index';
+    }
+
     $url = DEF_URI_PATH;
     $url .= str_replace('.', '/', $path);
     $url .= '.php' . (!empty($params) ? '?' : '') . http_build_query($params);
@@ -1266,7 +1279,7 @@ function urlFromLegacy($url)
     if(!empty($directory_path)) {
         $directory_path = '/' . $directory_path;
     }
-    return str_replace($directory_path . '/public/index.php', '', $url);
+    return str_replace($directory_path . '/public/legacy/index.php', '', $url);
 }
 
 

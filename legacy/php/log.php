@@ -242,10 +242,10 @@ if ( auth()->check() && isset($_GET['doLogout']) && ($_GET['doLogout'] === "true
   $Result5 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 	}
 
-// ** Effacement du cookie. **
-setcookie('Session_mondeGC', '', time() -3600, null, null, false, false);
-	// Unset key
-unset($_COOKIE["Session_mondeGC"]);
+  // ** Effacement du cookie. **
+  setcookie('Session_mondeGC', '', time() -3600, null, null, false, false);
+  // Unset key
+  unset($_COOKIE["Session_mondeGC"]);
 	
   //to fully log out a visitor we need to clear the session varialbles
   unset($_SESSION['login_user']);
@@ -257,11 +257,8 @@ unset($_COOKIE["Session_mondeGC"]);
   unset($_SESSION['user_last_log']);
   unset($_SESSION['statut']);
   unset($_SESSION['userObject']);
-
-  // Réinitialiser le jeton CSRF.
-  session()->regenerateToken();
   
-  $logoutGoTo = $mondegc_config['front-controller']['url'];
+  $logoutGoTo = legacyPage();
 
   getErrorMessage('success', "Vous vous êtes déconnecté.");
 

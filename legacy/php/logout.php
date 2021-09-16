@@ -113,11 +113,10 @@ $Session_user_query=sprintf("SELECT ch_use_session_id FROM users_dispatch_sessio
   $Result5 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
   // ** Effacement du cookie. **
-setcookie('Session_mondeGC', '', time() -3600, null, null, false, false);
-	// Unset key
-unset($_COOKIE["Session_mondeGC"]);
-	
-	
+  setcookie('Session_mondeGC', '', time() -3600, null, null, false, false);
+  // Unset key
+  unset($_COOKIE["Session_mondeGC"]);
+
   //to fully log out a visitor we need to clear the session variables
   unset($_SESSION['login_user']);
   unset($_SESSION['pays_ID']);
@@ -127,15 +126,10 @@ unset($_COOKIE["Session_mondeGC"]);
   unset($_SESSION['user_ID']);
   unset($_SESSION['user_last_log']);
   unset($_SESSION['statut']);
-
-  // Réinitialiser le jeton CSRF.
-  session()->regenerateToken();
 	
-  $logoutGoTo = DEF_URI_PATH . "index.php";
-  if ($logoutGoTo) {
-    header("Location: $logoutGoTo");
-    exit;
-  }
+  $logoutGoTo = legacyPage();
+  header("Location: $logoutGoTo");
+  exit;
 }
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
@@ -143,4 +137,4 @@ appendQueryString($editFormAction);
 
 
 //Stocke URL dans une variable
-$url_en_cours = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+$url_en_cours = "https://" .$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];

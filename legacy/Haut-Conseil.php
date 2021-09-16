@@ -1,4 +1,6 @@
-<?php//deconnexion
+<?php
+
+//deconnexion
 include('php/log.php');
 
 
