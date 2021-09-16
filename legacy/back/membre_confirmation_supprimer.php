@@ -1,7 +1,7 @@
 <?php
 
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=30))
 {
@@ -61,7 +61,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 
 <!-- Subhead
 ================================================== -->
@@ -84,7 +84,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 <div class="container corps-page"> </div>
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 
 <!-- Le javascript
     ================================================== -->

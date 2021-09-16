@@ -69,7 +69,7 @@ do {
             $nbpays_Oceania++;
             break;
         case "Philicie" :
-            $nbhabitants_Philicie += $row_stat_pays['ch_pay_population_cartes'];
+            $nbhabitants_Philicie += $row_stat_pays['ch_pay_population_carte'];
             $nbpays_Philicie++;
             break;
         default:
@@ -167,7 +167,7 @@ $paysResources = \App\Services\EconomyService::getPaysResources();
 <!-- CARTE -->
 <script src="assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('php/cartegenerale.php'); ?>
+<?php require('php/cartegenerale.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
@@ -226,7 +226,7 @@ div.olControlPanel {
 <body>
 <!-- Navbar
     ================================================== -->
-<?php $carte=true; include('php/navbar.php'); ?>
+<?php $carte=true; require('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron subhead anchor" id="carte-generale">
@@ -475,7 +475,7 @@ div.olControlPanel {
 
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 <script src="assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 </body>
 </html>

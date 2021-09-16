@@ -1,7 +1,7 @@
 <?php
 
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
@@ -77,11 +77,11 @@ $totalPages_listvilles = ceil($totalRows_listvilles/$maxRows_listvilles)-1;
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 <!-- Navbar haut-conseil
     ================================================== -->
 <div class="container corps-page">
-<?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/menu-haut-conseil.php'); ?>
   <!-- Page CONTENT
     ================================================== -->
   <div class="titre-bleu">
@@ -160,7 +160,7 @@ echo '</p>';  ?>
 </div>
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 
 <!-- Le javascript
     ================================================== -->

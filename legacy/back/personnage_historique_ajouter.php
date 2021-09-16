@@ -1,7 +1,7 @@
 <?php
 
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if(!isset($_SESSION['userObject'])) {
     header("Status: 301 Moved Permanently", false, 301);
@@ -113,7 +113,7 @@ img.olTileImage {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 </header>
 <div class="container" id="overview"> 
   
@@ -257,7 +257,7 @@ img.olTileImage {
 </div>
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 
 <!-- Le javascript
     ================================================== -->
@@ -265,7 +265,7 @@ img.olTileImage {
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include(DEF_ROOTPATH . 'php/carte-ajouter-marqueur.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/carte-ajouter-marqueur.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>

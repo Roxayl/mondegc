@@ -1,7 +1,7 @@
 <?php
 
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
@@ -68,7 +68,7 @@ $deleteSQL = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 
 <!-- Subhead
 ================================================== -->
@@ -79,7 +79,7 @@ $deleteSQL = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_
 </div>
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 
 <!-- Le javascript
     ================================================== -->

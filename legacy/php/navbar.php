@@ -195,7 +195,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Aurinea.png" class="img-continent"> R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</li>
                 <?php 
 				do { 
-                if ($row_menu['ch_pay_continent'] == 'RFGC') {
+                if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'RFGC') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
@@ -208,7 +208,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Aurinea.png" class="img-continent"> Continent Aurin&eacute;a</li>
                 <?php 
 				do { 
-                if ($row_menu['ch_pay_continent'] == 'Aurinea') {
+                if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'Aurinea') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
@@ -221,7 +221,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Volcania.png" class="img-continent"> Continent Volcania</li>
                 <?php 
 				do { 
-                if ($row_menu['ch_pay_continent'] == 'Volcania') {
+                if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'Volcania') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
@@ -235,7 +235,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Aldesyl.png" class="img-continent"> Continent Aldesyl</li>
                 <?php 
 				do { 
-                if ($row_menu['ch_pay_continent'] == 'Aldesyl') {
+                if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'Aldesyl') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
@@ -248,7 +248,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Oceania.png" class="img-continent"> Continent Oc&eacute;ania</li>
                 <?php 
 				do { 
-                if ($row_menu['ch_pay_continent'] == 'Oceania') {
+                if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'Oceania') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);
@@ -261,7 +261,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Philicie.png" class="img-continent"> Continent Philicie</li>
                 <?php 
 				do { 
-                if ($row_menu['ch_pay_continent'] == 'Philicie') {
+                if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'Philicie') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
 					$row_menu['ch_pay_lien_imgdrapeau'] = preg_replace('#^http://www.generation-city\.com/monde/userfiles/(.+)#', 				'http://www.generation-city.com/monde/userfiles/SmallThumb/$1', $row_menu['ch_pay_lien_imgdrapeau']);

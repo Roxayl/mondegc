@@ -130,7 +130,7 @@ init();
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140">
 <!-- Navbar
     ================================================== -->
-<?php $institut=true; include('php/navbar.php'); ?>
+<?php $institut=true; require('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron jumbotron-institut subhead anchor" id="info-institut">
@@ -215,6 +215,6 @@ init();
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 </body>
 </html>

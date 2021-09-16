@@ -1,7 +1,7 @@
 <?php
 
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=30))
 {
@@ -60,7 +60,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 <body data-spy="scroll" data-target=".bs-docs-sidebar" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div id="introheader" class="jumbotron">
@@ -81,7 +81,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 </div>
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>
 <!-- Le javascript
@@ -90,7 +90,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include(DEF_ROOTPATH . 'php/carteemplacements.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/carteemplacements.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>

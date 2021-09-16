@@ -231,7 +231,7 @@ mysql_data_seek($ressource, 0);}
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140">
 <!-- Navbar
     ================================================== -->
-<?php $pays=true; include('php/navbar.php'); ?>
+<?php $pays=true; require('php/navbar.php'); ?>
 <header id="info-ville" class="jumbotron subhead anchor">
   <!-- Titre  et Carousel
     ================================================== -->
@@ -588,7 +588,7 @@ mysql_data_seek($ressource, 0);}
   <div><?php
 	  $ch_com_categorie = "com_monument";
 	  $ch_com_element_id = $colname_monument;
-	  include('php/commentaire.php'); ?></div>
+	  require('php/commentaire.php'); ?></div>
 </section>
 <!-- END CONTENT
     ================================================== -->
@@ -596,7 +596,7 @@ mysql_data_seek($ressource, 0);}
 
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 
 <script>
 $("a[data-toggle=modal]").click(function (e) {

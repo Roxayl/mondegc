@@ -156,7 +156,7 @@ $mailSuccess = true;
 <body>
 <!-- Navbar
     ================================================== -->
-<?php $accueil=true; include('php/navbar.php'); ?>
+<?php $accueil=true; require('php/navbar.php'); ?>
 <!-- Page Content
 ================================================== -->
 <div class="container corps-page">
@@ -247,7 +247,7 @@ $mailSuccess = true;
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 
 <!-- Le javascript
     ================================================== -->

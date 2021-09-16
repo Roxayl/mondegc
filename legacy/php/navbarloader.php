@@ -1,7 +1,7 @@
 <?php
 
 //Connexion et deconnexion
-require(DEF_ROOTPATH . 'legacy/php/log.php');
+require(DEF_LEGACYROOTPATH . 'php/log.php');
 
 // Charger la navbar
-require(DEF_ROOTPATH . 'legacy/php/navbar.php');
+require(DEF_LEGACYROOTPATH . 'php/navbar.php');

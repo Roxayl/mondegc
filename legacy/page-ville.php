@@ -215,7 +215,7 @@ img.olTileImage {
 <!-- CARTE -->
 <script src="assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('php/carteville.php'); ?>
+<?php require('php/carteville.php'); ?>
 <script>
     $(document).ready(function () {
         init();
@@ -234,7 +234,7 @@ img.olTileImage {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" <?php if ($row_Pays['ch_pay_publication']== 2) { echo 'class="sepia" id="contain"';} ?>>
 <!-- Navbar
     ================================================== -->
-<?php $pays=true; include('php/navbar.php'); ?>
+<?php $pays=true; require('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header id="info-ville" class="jumbotron subhead anchor"> 
@@ -474,7 +474,7 @@ echo $population_ville_francais; ?></p><?php } else { ?><?php }?>
 	$ch_com_user_id = $row_User['ch_use_id'];
 	 $ch_com_categorie = 'ville';
 	  $ch_com_element_id = $colname_infoVille;
-	  include('php/communiques.php'); ?>
+	  require('php/communiques.php'); ?>
         </div>
       </section>
 
@@ -682,7 +682,7 @@ echo $population_ville_francais; ?></p><?php } else { ?><?php }?>
         <?php 
 	  $ch_com_categorie = "com_ville";
 	  $ch_com_element_id = $row_infoVille['ch_vil_ID'];
-	  include('php/commentaire.php'); ?>
+	  require('php/commentaire.php'); ?>
       </section>
       <!-- END CONTENT
     ================================================== --> 
@@ -691,7 +691,7 @@ echo $population_ville_francais; ?></p><?php } else { ?><?php }?>
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 <div class="modal container fade" id="Modal-Monument"></div>
 
 <!-- Le javascript

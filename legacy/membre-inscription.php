@@ -130,7 +130,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
 <body>
 <!-- Navbar
     ================================================== -->
-<?php $accueil=true; include('php/navbar.php'); ?>
+<?php $accueil=true; require('php/navbar.php'); ?>
 <!-- Page CONTENT
     ================================================== -->
 <div class="container">
@@ -298,7 +298,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
 
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 
 <!-- Le javascript
     ================================================== -->

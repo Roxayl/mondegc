@@ -69,7 +69,7 @@ img.olTileImage {
 <!-- CARTE -->
 <script src="assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('php/cartepays.php'); ?>
+<?php require('php/cartepays.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
@@ -94,7 +94,7 @@ img.olTileImage {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php $institut=true; include('php/navbar.php'); ?>
+<?php $institut=true; require('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron jumbotron-institut subhead anchor" id="info-institut" >
@@ -161,7 +161,7 @@ img.olTileImage {
         <?php 
 	 $ch_com_categorie = 'institut';
 	  $ch_com_element_id = $institut_id;
-	  include('php/communiques.php'); ?>
+	  require('php/communiques.php'); ?>
       </section>
     </div>
     <!-- END CONTENT
@@ -170,6 +170,6 @@ img.olTileImage {
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 </body>
 </html>

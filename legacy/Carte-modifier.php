@@ -310,7 +310,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
 <body>
 <!-- Navbar
     ================================================== -->
-<?php $carte=true; include("php/navbar.php"); ?>
+<?php $carte=true; require("php/navbar.php"); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron anchor" id="carte-generale">
@@ -978,7 +978,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
 
 <!-- Footer
     ================================================== -->
-<?php include("php/footer.php"); ?>
+<?php require("php/footer.php"); ?>
 
 <!-- Le javascript
     ================================================== -->
@@ -986,7 +986,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
 <!-- CARTE -->
 <script src="assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include("php/carte-modifier-zone.php"); ?>
+<?php require("php/carte-modifier-zone.php"); ?>
 <!-- BOOTSTRAP -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>

@@ -1,7 +1,7 @@
 <?php
 
 //deconnexion
-include(DEF_ROOTPATH . 'php/log.php');
+require(DEF_LEGACYROOTPATH . 'php/log.php');
 
 $_error = false;
 
@@ -185,7 +185,7 @@ img.olTileImage {
 <!-- Navbar
     ================================================== -->
 <?php $institut = true;
-include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 
 <!-- Subhead
 ================================================== -->
@@ -439,7 +439,7 @@ include(DEF_ROOTPATH . 'php/navbar.php'); ?>
 
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>

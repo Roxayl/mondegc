@@ -4,7 +4,7 @@ use GenCity\Monde\Pays;
 
  
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 if(!isset($_SESSION['userObject'])) {
     header("Status: 301 Moved Permanently", false, 301);
     header('Location: ' . legacyPage('connexion'));
@@ -72,7 +72,7 @@ if($thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 
 <!-- Page CONTENT
     ================================================== -->
@@ -88,7 +88,7 @@ if($thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
       </ul>
     <p>&nbsp;</p>
     <section>
-      <?php include(DEF_ROOTPATH . 'php/upload.php');
+      <?php require(DEF_LEGACYROOTPATH . 'php/upload.php');
 if (isset($uploadconfirm)) {
   $updateSQL = sprintf("UPDATE personnage SET lien_img=%s WHERE entity='pays' AND entity_id=%s",
                        GetSQLValueString($link, "text"),
@@ -130,7 +130,7 @@ if (isset($uploadconfirm)) {
 </div>
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 
 <!-- Le javascript
     ================================================== -->

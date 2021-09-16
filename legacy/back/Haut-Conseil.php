@@ -1,7 +1,7 @@
 <?php
 
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
@@ -49,7 +49,7 @@ exit();
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div id="introheader" class="jumbotron masthead">
@@ -57,7 +57,7 @@ exit();
     <!-- Navbar haut-conseil
     ================================================== -->
     <div style="text-align:left">
-      <?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
+      <?php require(DEF_LEGACYROOTPATH . 'php/menu-haut-conseil.php'); ?>
     </div>
     <h1>Conseil de l'OCGC</h1>
     <p><i>Bienvenue <?= __s($_SESSION['login_user']) ?>, membre du Conseil de l'OCGC</i></p>
@@ -65,7 +65,7 @@ exit();
 </div>
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 
 <!-- Le javascript
     ================================================== -->

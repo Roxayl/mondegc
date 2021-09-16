@@ -9,13 +9,13 @@ RewriteCond %{REQUEST_URI} !^{{$directory}}/lib/
 RewriteCond %{REQUEST_URI} !^{{$directory}}/php/
 RewriteCond %{REQUEST_URI} !^{{$directory}}/services/
 RewriteCond %{REQUEST_URI} !^{{$directory}}/userfiles/
-RewriteCond %{REQUEST_FILENAME} !\.php$
+RewriteCond %{REQUEST_URI} !\.php$
 RewriteRule ^(.*)$ {{$directory}}/public/$1 [L,QSA]
 
 # Gerer les accès au site legacy.
-RewriteCond %{REQUEST_FILENAME} \.php$
+RewriteCond %{REQUEST_URI} \.php$
 RewriteRule ^([a-zA-Z0-9\s_-]+)\.php$ public/index.php?target=$1 [nc,L,QSA]
-RewriteCond %{REQUEST_FILENAME} \.php$
+RewriteCond %{REQUEST_URI} \.php$
 RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ public/index.php?target=$1.$2 [nc,L,QSA]
-RewriteCond %{REQUEST_FILENAME} \.php$
+RewriteCond %{REQUEST_URI} \.php$
 RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9\s_-]+)\.php$ public/index.php?target=$1.$2.$3 [nc,L,QSA]

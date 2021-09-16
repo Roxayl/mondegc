@@ -98,7 +98,7 @@ init();
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140">
 <!-- Navbar
     ================================================== -->
-<?php $dashboard=true; include('php/navbar.php'); ?>
+<?php $dashboard=true; require('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron jumbotron-institut jumbotron-small subhead anchor" id="info-dashboard"
@@ -218,6 +218,6 @@ init();
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 </body>
 </html>

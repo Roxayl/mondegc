@@ -47,7 +47,7 @@ $pageParticiperCadre = new \GenCity\Monde\Page('participer_cadre');
 <!-- CARTE -->
 <script src="assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('php/carteemplacements-publique.php'); ?>
+<?php require('php/carteemplacements-publique.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
@@ -81,7 +81,7 @@ img.olTileImage {
 <body>
 <!-- Navbar
     ================================================== -->
-<?php $participer=true; include('php/navbar.php'); ?>
+<?php $participer=true; require('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron subhead anchor" id="carte-generale">
@@ -132,6 +132,6 @@ img.olTileImage {
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 </body>
 </html>

@@ -4,7 +4,7 @@ use App\Models\Infrastructure;
 use App\Models\Pays;
 
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if(!($_SESSION['statut']) or $_SESSION['statut'] < 30) {
     // Redirection vers page connexion
@@ -126,7 +126,7 @@ if(isset($_POST['Pays_ID'])) {
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div id="introheader" class="jumbotron">
@@ -136,7 +136,7 @@ if(isset($_POST['Pays_ID'])) {
 </div>
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 
 <!-- Le javascript
     ================================================== -->

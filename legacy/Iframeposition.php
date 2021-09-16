@@ -4,7 +4,7 @@
 <link href="Carto/OLdefault.css" rel="stylesheet">
 <script src="assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('php/carteposition.php'); ?>
+<?php require('php/carteposition.php'); ?>
 <style>
 body  {
 	margin: 0px;

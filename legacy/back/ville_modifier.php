@@ -4,7 +4,7 @@ use GenCity\Monde\Pays;
 use GenCity\Monde\Ville;
 
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if(!isset($_SESSION['userObject'])) {
     header("Status: 301 Moved Permanently", false, 301);
@@ -255,7 +255,7 @@ return true;
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header id="info-ville" class="jumbotron subhead anchor"> 
@@ -697,7 +697,7 @@ return true;
 $userID = $row_User['ch_use_id'];
 $com_cat = "ville";
 $com_element_id = $row_ville['ch_vil_ID'];
-include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
+require(DEF_LEGACYROOTPATH . 'php/communiques-back.php'); ?>
     </section>
     <div class="clearfix"></div>
 
@@ -796,7 +796,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
 <div class="modal container fade" id="Modal-Monument"></div>
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 
 <!-- Le javascript
     ================================================== -->
@@ -804,7 +804,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include(DEF_ROOTPATH . 'php/carte-ajouter-marqueur.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/carte-ajouter-marqueur.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>

@@ -1,7 +1,7 @@
 <?php
  
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 if(!isset($_SESSION['userObject'])) {
     header("Status: 301 Moved Permanently", false, 301);
     header('Location: ' . legacyPage('connexion'));
@@ -61,7 +61,7 @@ $thisPays = new \GenCity\Monde\Pays($colname_pays);
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 
 <!-- Page CONTENT
     ================================================== -->
@@ -77,7 +77,7 @@ $thisPays = new \GenCity\Monde\Pays($colname_pays);
     </ul>
 
     <section>
-      <?php include(DEF_ROOTPATH . 'php/upload.php');
+      <?php require(DEF_LEGACYROOTPATH . 'php/upload.php');
 if (isset($uploadconfirm)) {
   $updateSQL = sprintf("UPDATE pays SET ch_pay_lien_imgdrapeau=%s WHERE ch_pay_id=%s",
                        GetSQLValueString($link, "text"),
@@ -118,7 +118,7 @@ $totalRows_drapeau = mysql_num_rows($drapeau);
 </div>
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 
 <!-- Le javascript
     ================================================== -->

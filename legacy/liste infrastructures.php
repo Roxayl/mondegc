@@ -124,7 +124,7 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
 <script src="assets/js/bootstrap-modal.js"></script>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
-<?php include('php/navbar.php'); ?>
+<?php require('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container corps-page" id="overview">
@@ -266,6 +266,6 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
 
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 </body>
 </html>

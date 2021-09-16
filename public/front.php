@@ -27,10 +27,18 @@ if(!file_exists($mondegc_config['front-controller']['require'])) {
 }
 
 ob_start();
-@require($mondegc_config['front-controller']['require']);
 
-if(isset($mondegc_config['enable_csrf_protection']) && $mondegc_config['enable_csrf_protection']) {
-    return csrf_ob_handler(ob_get_clean(), null);
-} else {
-    return ob_get_clean();
+try {
+    @require($mondegc_config['front-controller']['require']);
+
+    if(isset($mondegc_config['enable_csrf_protection']) && $mondegc_config['enable_csrf_protection']) {
+        return csrf_ob_handler(ob_get_clean(), null);
+    } else {
+        return ob_get_clean();
+    }
+}
+
+catch(Exception $e) {
+    ob_get_clean();
+    throw($e);
 }

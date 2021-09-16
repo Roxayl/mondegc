@@ -66,7 +66,7 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140">
 <!-- Navbar
     ================================================== -->
-<?php $pays=true; include('php/navbar.php'); ?>
+<?php $pays=true; require('php/navbar.php'); ?>
 
 <!-- Page CONTENT
     ================================================== -->
@@ -188,7 +188,7 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
     <?php 
 	  $ch_com_categorie = "com_fait_his";
 	  $ch_com_element_id = $colname_fait_his;
-	  include('php/commentaire.php'); ?>
+	  require('php/commentaire.php'); ?>
   </section>
   <!-- END CONTENT
     ================================================== --> 
@@ -197,7 +197,7 @@ $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch
 <div class="modal container fade" id="Modal-Monument"></div>
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 
 <!-- Le javascript
     ================================================== -->

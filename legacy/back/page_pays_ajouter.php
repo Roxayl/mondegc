@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Notification;
 
 
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
@@ -164,11 +164,11 @@ img.olTileImage {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container corps-page">
-  <?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
+  <?php require(DEF_LEGACYROOTPATH . 'php/menu-haut-conseil.php'); ?>
   <div class="row-fluid">
   <!-- Debut formulaire Page Pays
         ================================================== -->
@@ -588,7 +588,7 @@ img.olTileImage {
 </div>
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 
 <!-- Le javascript
     ================================================== -->
@@ -596,7 +596,7 @@ img.olTileImage {
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include(DEF_ROOTPATH . 'php/carteemplacements.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/carteemplacements.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>

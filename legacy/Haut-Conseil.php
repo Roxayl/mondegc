@@ -49,7 +49,7 @@ $pageConseilOCGC = new \GenCity\Monde\Page('conseil_ocgc_desc');
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include('php/navbar.php'); ?>
+<?php require('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div id="introheader" class="jumbotron">
@@ -75,7 +75,7 @@ $pageConseilOCGC = new \GenCity\Monde\Page('conseil_ocgc_desc');
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 
 <!-- Le javascript
     ================================================== -->

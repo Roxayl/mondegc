@@ -184,7 +184,7 @@ $queryString_pays_arch = sprintf("&totalRows_pays_arch=%d%s", $totalRows_pays_ar
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php $institut=true; include('php/navbar.php'); ?>
+<?php $institut=true; require('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron jumbotron-medium jumbotron-institut subhead anchor" id="info-institut" >
@@ -413,7 +413,7 @@ $('#closemodal').click(function() {
         <?php 
 	 $ch_com_categorie = 'institut';
 	  $ch_com_element_id = $institut_id;
-	  include('php/communiques.php'); ?>
+	  require('php/communiques.php'); ?>
       </section>
     </div>
     <!-- END CONTENT
@@ -422,6 +422,6 @@ $('#closemodal').click(function() {
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 </body>
 </html>

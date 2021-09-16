@@ -197,7 +197,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
 <!-- CARTE -->
 <script src="assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php $menupays=true; include('php/cartepays.php'); ?>
+<?php $menupays=true; require('php/cartepays.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
@@ -228,7 +228,7 @@ init();
 
 <!-- Navbar
     ================================================== -->
-<?php $pays=true; include('php/navbar.php'); ?>
+<?php $pays=true; require('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron subhead anchor" id="pays_stats">
@@ -466,7 +466,7 @@ init();
         <?php
 	  $ch_com_categorie = 'pays';
 	  $ch_com_element_id = $colname_Pays;
-	  include('php/communiques.php'); ?>
+	  require('php/communiques.php'); ?>
         </div>
       </section>
 
@@ -1029,7 +1029,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
         <?php
 	  $ch_com_categorie = "com_pays";
 	  $ch_com_element_id = $colname_Pays;
-	  include('php/commentaire.php'); ?>
+	  require('php/commentaire.php'); ?>
       </section>
     </div>
   </div>
@@ -1068,7 +1068,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 
 <!-- Scripts
     ================================================== -->

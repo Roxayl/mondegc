@@ -4,7 +4,7 @@ use App\Models\Pays as EloquentPays;
 use GenCity\Monde\Pays;
  
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'])
 {
@@ -354,7 +354,7 @@ img.olTileImage {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 <?php if ($colname_paysID != NULL AND $row_InfoGenerale['ch_pay_publication'] !=3) { ?>
 <!-- Subhead
 ================================================== -->
@@ -1056,7 +1056,7 @@ img.olTileImage {
 $userID = $row_User['ch_use_id'];
 $com_cat = "pays";
 $com_element_id = $row_InfoGenerale['ch_pay_id'];
-include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
+require(DEF_LEGACYROOTPATH . 'php/communiques-back.php'); ?>
       </section>
       <div class="clearfix"></div>
       <?php } // Affichage si sup ou egal à dirigeant ?>
@@ -1273,7 +1273,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
 <?php } ?>
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 
 
 <!-- Le javascript
@@ -1282,7 +1282,7 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include(DEF_ROOTPATH . 'php/carteemplacements.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/carteemplacements.php'); ?>
 <script>
     $("a[data-toggle=modal]").click(function (e) {
         lv_target = $(this).attr('data-target')

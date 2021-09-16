@@ -1,7 +1,7 @@
 <?php
 
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if(!isset($_SESSION['userObject'])) {
 // Redirection vers page de connexion
@@ -134,7 +134,7 @@ appendQueryString($editFormAction);
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container" id="overview">
@@ -153,7 +153,7 @@ appendQueryString($editFormAction);
 
     <!-- Formulaire de modification du membre
          ================================================== -->
-    <?php include(DEF_ROOTPATH . 'php/membre-modifier.php'); ?>
+    <?php require(DEF_LEGACYROOTPATH . 'php/membre-modifier.php'); ?>
 
 </section>
 
@@ -163,7 +163,7 @@ appendQueryString($editFormAction);
 
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>

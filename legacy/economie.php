@@ -98,7 +98,7 @@ foreach($paysList as $thisPays) {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php $institut=true; include('php/navbar.php'); ?>
+<?php $institut=true; require('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <header class="jumbotron jumbotron-medium jumbotron-institut subhead anchor" id="info-institut" >
@@ -221,7 +221,7 @@ foreach($paysList as $thisPays) {
         <?php 
 	 $ch_com_categorie = 'institut';
 	  $ch_com_element_id = $institut_id;
-	  include('php/communiques.php'); ?>
+	  require('php/communiques.php'); ?>
       </section>
 
     </div>
@@ -231,6 +231,6 @@ foreach($paysList as $thisPays) {
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 </body>
 </html>

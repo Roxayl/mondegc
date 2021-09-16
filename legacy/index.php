@@ -74,7 +74,7 @@ $_SESSION['an']=true;
 <body>
 <!-- Navbar
     ================================================== -->
-<?php $accueil=true; include('php/navbar.php'); ?>
+<?php $accueil=true; require('php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 
@@ -97,7 +97,7 @@ $_SESSION['an']=true;
 </div>
 <!-- Bandeau stat
 ================================================== -->
-<?php include('php/bandeauStat.php'); ?>
+<?php require('php/bandeauStat.php'); ?>
 
 <!-- Icon Start
 ================================================== -->
@@ -116,7 +116,7 @@ $_SESSION['an']=true;
         <div id="actu" class="titre-vert no-bg anchor">
           <h1 style="font-size: 26px; padding-left: 16px;">Derni&egrave;res actualit&eacute;s</h1>
         </div>
-        <?php include('last_MAJ.php'); ?>
+        <?php require('last_MAJ.php'); ?>
     </div>
     <div class="span4" style="background-color: #EDEDED;">
 
@@ -198,6 +198,6 @@ ORDER BY date DESC LIMIT 0, 15";
 <!-- Footer
     ================================================== -->
 
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 </body>
 </html>

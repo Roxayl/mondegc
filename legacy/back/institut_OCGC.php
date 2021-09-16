@@ -1,7 +1,7 @@
 <?php
         
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
@@ -80,7 +80,7 @@ $_SESSION['last_work'] = "institut_OCGC.php";
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container" id="overview"> 
@@ -88,7 +88,7 @@ $_SESSION['last_work'] = "institut_OCGC.php";
   <!-- Page CONTENT
     ================================================== -->
   <section class="corps-page">
-  <?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
+  <?php require(DEF_LEGACYROOTPATH . 'php/menu-haut-conseil.php'); ?>
   
   <!-- Liste des Communiqués
         ================================================== -->
@@ -120,7 +120,7 @@ $_SESSION['last_work'] = "institut_OCGC.php";
 $com_cat = "institut";
 $userID = $_SESSION['user_ID'];
 $com_element_id = 1;
-include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
+require(DEF_LEGACYROOTPATH . 'php/communiques-back.php'); ?>
   </div>
   
   </div>
@@ -131,6 +131,6 @@ include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
 
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 </body>
 </html>

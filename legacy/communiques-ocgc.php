@@ -99,7 +99,7 @@ img.olTileImage {
 <!-- CARTE -->
 <script src="assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php include('php/cartepays.php'); ?>
+<?php require('php/cartepays.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
@@ -122,7 +122,7 @@ img.olTileImage {
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php $institut=true; include('php/navbar.php'); ?>
+<?php $institut=true; require('php/navbar.php'); ?>
 <!-- Page CONTENT
     ================================================== -->
 <div class="container">
@@ -173,6 +173,6 @@ img.olTileImage {
     ================================================== -->
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 </body>
 </html>

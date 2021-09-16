@@ -1,7 +1,7 @@
 <?php
 
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
@@ -234,7 +234,7 @@ format: 'hex'});
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container" id="overview"> 
@@ -242,7 +242,7 @@ format: 'hex'});
   <!-- Page CONTENT
     ================================================== -->
   <section class="corps-page">
-  <?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
+  <?php require(DEF_LEGACYROOTPATH . 'php/menu-haut-conseil.php'); ?>
 
   <!-- formulaire de modification instituts
      ================================================== -->
@@ -273,7 +273,7 @@ format: 'hex'});
 $com_cat = "institut";
 $userID = $_SESSION['user_ID'];
 $com_element_id = 4;
-include(DEF_ROOTPATH . 'php/communiques-back.php'); ?>
+require(DEF_LEGACYROOTPATH . 'php/communiques-back.php'); ?>
   </div>
   <!-- Categorie monuments
      ================================================== -->
@@ -536,7 +536,7 @@ $('#closemodal').click(function() {
 
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 
 <script type="text/javascript">
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});

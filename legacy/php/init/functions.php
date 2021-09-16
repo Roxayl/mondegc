@@ -1156,7 +1156,7 @@ function renderElement($element, $data = null)
 {
     if(!is_array($data))
         $data = array($data);
-    require(DEF_ROOTPATH . 'legacy/php/elements/' . $element . '.php');
+    require(DEF_LEGACYROOTPATH . 'php/elements/' . $element . '.php');
 }
 
 function formatNum($number, $decimals = 0)

@@ -1,7 +1,7 @@
 <?php
 
 //deconnexion
-include(DEF_ROOTPATH . 'php/logout.php');
+require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
 {
@@ -157,11 +157,11 @@ $totalRows_pays = mysql_num_rows($pays);
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/navbar.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 <!-- Subhead
 ================================================== -->
 <div class="container corps-page">
-  <?php include(DEF_ROOTPATH . 'php/menu-haut-conseil.php'); ?>
+  <?php require(DEF_LEGACYROOTPATH . 'php/menu-haut-conseil.php'); ?>
   <div class="titre-bleu">
     <h1>Cr&eacute;er un nouveau profil</h1>
   </div>
@@ -254,7 +254,7 @@ $totalRows_pays = mysql_num_rows($pays);
 </div>
 <!-- Footer
     ================================================== -->
-<?php include(DEF_ROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
 
 <!-- Le javascript
     ================================================== -->

@@ -205,7 +205,7 @@ $eloquentCommunique = \App\Models\Communique::findOrFail($colname_communique);
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140">
 <!-- Navbar
     ================================================== -->
-<?php include('php/navbar.php'); ?>
+<?php require('php/navbar.php'); ?>
 <!-- Page CONTENT
     ================================================== -->
 <div class="container corps-page">
@@ -312,7 +312,7 @@ $eloquentCommunique = \App\Models\Communique::findOrFail($colname_communique);
       <?php 
 	  $ch_com_categorie = "com_communique";
 	  $ch_com_element_id = $colname_communique;
-	  include('php/commentaire.php'); ?>
+	  require('php/commentaire.php'); ?>
     </section>
 
     <div class="modal container fade" id="myModal"></div>
@@ -323,7 +323,7 @@ $eloquentCommunique = \App\Models\Communique::findOrFail($colname_communique);
 </div>
 <!-- Footer
     ================================================== -->
-<?php include('php/footer.php'); ?>
+<?php require('php/footer.php'); ?>
 
 <script>
 $("a[data-toggle=modal]").click(function (e) {
