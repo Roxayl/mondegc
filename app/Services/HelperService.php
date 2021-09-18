@@ -37,7 +37,7 @@ class HelperService {
         if(!is_array($data))
             $data = array($data);
         ob_start();
-        require(base_path('php/elements/' . $element . '.php'));
+        require(base_path('legacy/php/elements/' . $element . '.php'));
         return ob_get_clean();
     }
 

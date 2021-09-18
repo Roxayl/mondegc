@@ -75,8 +75,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Squirrel\\": "php/Squirrel/",
-            "GenCity\\": "php/GenCity/"
+            "GenCity\\": "legacy/php/GenCity/",
+            "Squirrel\\": "lib/Squirrel/"
         },
         "classmap": [
             "database/seeds",
@@ -91,6 +91,15 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
+        "post-install-cmd": [
+            "@php artisan monde:override-vendor"
+        ],
+        "post-update-cmd": [
+            "@php artisan monde:override-vendor"
+        ],
+        "pre-autoload-dump": [
+            "@php artisan monde:override-vendor"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

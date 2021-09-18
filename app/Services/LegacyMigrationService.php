@@ -28,13 +28,15 @@ class LegacyMigrationService
 
         $count = count($this->queries);
 
-        foreach($this->queries as $query) {
-            print('<strong>1/' . $count . ': </strong>');
+        $cpt = 1;
+        foreach($this->queries as $i => $query) {
+            print("<strong>$cpt/$count : </strong>");
             print("Executing query: ");
             print('<pre>');
             print($query);
             print('</pre>');
             DB::statement($query);
+            $cpt++;
         }
 
         DB::commit();

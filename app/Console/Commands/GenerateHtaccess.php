@@ -18,7 +18,8 @@ class GenerateHtaccess extends Command
      *
      * @var string
      */
-    protected $description = 'Generates the root .htaccess file, according to the site\'s configuration';
+    protected $description = "Génère un fichier .htaccess au répertoire racine, "
+        . "selon la configuration de l'application";
 
     /**
      * Create a new command instance.
@@ -35,7 +36,7 @@ class GenerateHtaccess extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $template = file_get_contents(resource_path('templates/htaccess-template.txt'));
 

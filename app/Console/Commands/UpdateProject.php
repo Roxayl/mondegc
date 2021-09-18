@@ -15,10 +15,6 @@ class UpdateProject extends Command
      */
     protected $signature = 'monde:update';
 
-    protected $fileCopies = [
-        'app/Overrides/Searchable/SearchResult.php' => 'vendor/spatie/laravel-searchable/src/SearchResult.php'
-    ];
-
     /**
      * The console command description.
      *
@@ -61,29 +57,6 @@ class UpdateProject extends Command
 
     private function copyFiles(): void
     {
-        $this->line("\r\nCopie des fichiers");
-
-        try {
-            $backupPath = storage_path('app/copy-backup/' . Str::random(6));
-            mkdir($backupPath, 0777, true);
-        } catch(Exception $e) {
-            $this->error("Impossible de créer le dossier.");
-            return;
-        }
-
-        try {
-            foreach($this->fileCopies as $origin => $destination) {
-                $this->line("Copie de $origin ==> $destination");
-
-                $fileBackupPath = $backupPath . '/' . basename($destination);
-                $destinationPath = base_path($destination);
-                $originPath = base_path($origin);
-                copy($destinationPath, $fileBackupPath);
-                copy($originPath, $destinationPath);
-            }
-            $this->info("Copies réalisées avec succès.");
-        } catch(Exception $e) {
-            $this->error("Une des copies a échoué.");
-        }
+        $this->call('monde:override-vendor');
     }
 }

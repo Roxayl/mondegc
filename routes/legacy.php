@@ -3,4 +3,4 @@
 /*****
  * Legacy
  *****/
-Route::any("/{path?}", "Legacy\LegacySiteController@index")->where("path", ".*");
+Route::any("/{path?}", "LegacySiteController@index")->where("path", ".*");

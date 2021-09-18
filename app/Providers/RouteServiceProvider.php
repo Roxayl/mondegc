@@ -73,7 +73,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         // On ne préfixe pas les URLs vers le site legacy.
         Route::middleware('legacy')
-             ->namespace($this->namespace)
+             ->namespace($this->namespace . '\Legacy')
              ->group(base_path('routes/legacy.php'));
     }
 
