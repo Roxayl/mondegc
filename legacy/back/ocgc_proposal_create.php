@@ -12,7 +12,7 @@ if (!($_SESSION['statut']) or $_SESSION['statut'] < 10) {
     exit();
 }
 
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 $thisUser = new GenCity\Monde\User($_SESSION['user_ID']);

@@ -2,7 +2,7 @@
 
 use Illuminate\Session\TokenMismatchException;
 
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 // *** Recherche de sessions.
@@ -79,7 +79,7 @@ $updateSQL = sprintf("UPDATE users SET ch_use_last_log=%s WHERE ch_use_id=%s",
 }}
 
 // ** Logout the current user. **
-$logoutAction = DEF_URI_PATH . $mondegc_config['front-controller']['path']."?doLogout=true";
+$logoutAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri']."?doLogout=true";
 if ((isset($_SERVER['QUERY_STRING'])) && ($_SERVER['QUERY_STRING'] != "")){
   $logoutAction .="&". htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -132,7 +132,7 @@ $Session_user_query=sprintf("SELECT ch_use_session_id FROM users_dispatch_sessio
   exit;
 }
 
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 

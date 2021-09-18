@@ -16,7 +16,7 @@ exit();
 }
 
 //Mise a jour parametres donnees personnelles
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 //Récupération variables

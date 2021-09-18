@@ -114,7 +114,7 @@ $user = mysql_query($query_user, $maconnexion) or die(mysql_error());
 $row_user = mysql_fetch_assoc($user);
 $totalRows_user = mysql_num_rows($user);
 
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 /*** Traitement données POST ***/

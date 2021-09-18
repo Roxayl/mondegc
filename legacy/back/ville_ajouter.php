@@ -15,7 +15,7 @@ if (isset($_POST['paysID'])) {
   $paysID = $_POST['paysID'];
 }
 
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_ville")) {

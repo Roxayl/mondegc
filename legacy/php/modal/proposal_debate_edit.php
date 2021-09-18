@@ -1,7 +1,7 @@
 <?php
 
 // renvoyer les données POST à soi-même
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 if(!isset($_GET['ID_proposal'])) {

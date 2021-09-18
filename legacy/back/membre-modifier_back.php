@@ -9,7 +9,7 @@ if(!isset($_SESSION['userObject'])) {
     header('Location: ' . legacyPage('connexion'));
     exit();
 }
-$_SESSION['last_work'] = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php' . '?' . $_SERVER['QUERY_STRING'];
+$_SESSION['last_work'] = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php' . '?' . $_SERVER['QUERY_STRING'];
 
 //Recuperation variables
 $colname_User = $_SESSION['Temp_userID'];
@@ -25,7 +25,7 @@ $row_User = mysql_fetch_assoc($User);
 $totalRows_User = mysql_num_rows($User);
 
 //Mise a jour parametres donnees personnelles
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
@@ -87,7 +87,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
 
 }
 
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 ?>

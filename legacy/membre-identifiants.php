@@ -29,7 +29,7 @@ $UserID = mysql_query($query_UserID, $maconnexion) or die(mysql_error());
 $row_UserID = mysql_fetch_assoc($UserID);
 $totalRows_UserID = mysql_num_rows($UserID);
 
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {

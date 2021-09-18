@@ -91,7 +91,7 @@ mysql_free_result($institut);
 
 //Mise à jour formulaire pays
 $paysid = $row_pays['ch_pay_id'];
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
@@ -110,7 +110,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
 
 //Mise à jour formulaire institut
 $insid = $row_institut['ch_ins_ID'];
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut")) {

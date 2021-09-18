@@ -19,7 +19,7 @@ $user_prov = mysql_query($query_user_prov, $maconnexion) or die(mysql_error());
 $row_user_prov = mysql_fetch_assoc($user_prov);
 $totalRows_user_prov = mysql_num_rows($user_prov);
 
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {

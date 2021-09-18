@@ -30,7 +30,7 @@ $id_trouve= false;
 
 $paysid = $row_pays['ch_pay_id'];
 //Mise à jour formulaire pays
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {

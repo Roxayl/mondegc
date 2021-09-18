@@ -8,7 +8,7 @@ use GenCity\Monde\User;
 header('Content-Type: text/html; charset=utf-8');
 
 // renvoyer les données POST à soi-même
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 $user_pays_ID = isset($_GET['user_pays_ID']) ? (int)$_GET['user_pays_ID'] : 0;

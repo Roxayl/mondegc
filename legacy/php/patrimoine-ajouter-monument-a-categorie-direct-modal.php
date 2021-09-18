@@ -6,7 +6,7 @@ use App\Models\Patrimoine;
 header('Content-Type: text/html; charset=utf-8');
 
 // renvoyer les données POST à soi-même
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 $mon_ID = isset($_GET['mon_id']) ? (int)$_GET['mon_id'] : 0;

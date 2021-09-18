@@ -12,7 +12,7 @@ header('Location: ' . legacyPage('connexion'));
 exit();
 	}
 
-$_SESSION['last_work'] = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php'.'?'.$_SERVER['QUERY_STRING'];
+$_SESSION['last_work'] = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php'.'?'.$_SERVER['QUERY_STRING'];
 
 //requete instituts
 $institut_id = 6;
@@ -24,7 +24,7 @@ $totalRows_institut = mysql_num_rows($institut);
 
 $_SESSION['last_work'] = "institut_economie.php";
 
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 ?><!DOCTYPE html>

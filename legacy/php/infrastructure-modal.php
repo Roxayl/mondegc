@@ -3,7 +3,7 @@
 use App\Models\Infrastructure;
 use Carbon\Carbon;
 
-$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['path'] . '.php';
+$editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 $ch_inf_id = -1;
