@@ -204,7 +204,6 @@ img.olTileImage {
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
 <script src="assets/js/bootstrap-affix.js"></script>
-<script src="assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="assets/js/bootstrap-scrollspy.js"></script>
 <script src="assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
@@ -229,6 +228,10 @@ img.olTileImage {
 <script type="text/javascript" src="assets/js/Editeur.js"></script>
 <!-- SPRY ASSETS -->
 <script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
+
+<?php
+Eventy::action('display.legacy.beforeHeadClosingTag')
+?>
 </head>
 
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" <?php if ($row_Pays['ch_pay_publication']== 2) { echo 'class="sepia" id="contain"';} ?>>
@@ -692,6 +695,9 @@ echo $population_ville_francais; ?></p><?php } else { ?><?php }?>
 <!-- Footer
     ================================================== -->
 <?php require('php/footer.php'); ?>
+
+<script src="assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
+
 <div class="modal container fade" id="Modal-Monument"></div>
 
 <!-- Le javascript

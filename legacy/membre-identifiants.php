@@ -96,6 +96,10 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
 	background-image: url('assets/img/ImgIntroheader.jpg');
 }
 </style>
+
+<?php
+Eventy::action('display.legacy.beforeHeadClosingTag')
+?>
 </head>
 
 <body>

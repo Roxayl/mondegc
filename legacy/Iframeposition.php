@@ -19,6 +19,10 @@ body  {
 	padding:0px;
 }
 </style>
+
+<?php
+Eventy::action('display.legacy.beforeHeadClosingTag')
+?>
 </head>
 <body onLoad="init()">
 <div id="mapPosition"></div>

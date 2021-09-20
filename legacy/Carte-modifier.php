@@ -306,6 +306,10 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
         background-position: 0px -330px;
     }
 </style>
+
+<?php
+Eventy::action('display.legacy.beforeHeadClosingTag')
+?>
 </head>
 <body>
 <!-- Navbar

@@ -56,7 +56,11 @@ $currentPage = $_SERVER["PHP_SELF"];
 	background-image: url('<?= e($row_Pays['ch_pay_lien_imgheader']) ?>');
 	background-position:center;
 }
-</style></head>
+</style>
+<?php
+Eventy::action('display.legacy.beforeHeadClosingTag')
+?>
+</head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" onLoad="init()">
 <!-- Navbar
     ================================================== -->
@@ -82,8 +86,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 <!-- Footer
     ================================================== -->
 <?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
-</body>
-</html>
+
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -98,7 +101,10 @@ $currentPage = $_SERVER["PHP_SELF"];
 <script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
- <script type="text/javascript">
-      $(function() { 
-          $('[rel="clickover"]').clickover();})
-    </script>
+<script type="text/javascript">
+    $(function() {
+        $('[rel="clickover"]').clickover();
+    });
+</script>
+</body>
+</html>

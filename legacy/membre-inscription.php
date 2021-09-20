@@ -126,6 +126,10 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
 	background-image: url('assets/img/ImgIntroheader.jpg');
 }
 </style>
+
+<?php
+Eventy::action('display.legacy.beforeHeadClosingTag')
+?>
 </head>
 <body>
 <!-- Navbar

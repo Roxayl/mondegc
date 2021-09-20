@@ -147,6 +147,10 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 	<link href="../forum/new/MondeGCiframe.css" rel="stylesheet" type="text/css">
 	<title>Monde GC</title>
+
+<?php
+Eventy::action('display.legacy.beforeHeadClosingTag')
+?>
 </head>
 <body>
 <!-- CATEGORIE Dernières actualités

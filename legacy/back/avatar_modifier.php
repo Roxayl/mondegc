@@ -68,6 +68,10 @@ if($thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
 	background-image: url('../assets/img/ImgIntroheader.jpg');
 }
 </style>
+
+<?php
+Eventy::action('display.legacy.beforeHeadClosingTag')
+?>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- Navbar

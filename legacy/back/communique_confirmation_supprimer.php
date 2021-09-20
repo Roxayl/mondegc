@@ -67,7 +67,15 @@ $totalRows_ch_communique_confimation_suppression = mysql_num_rows($ch_communique
 }
 <?php }?>
 </style>
+
+<?php
+Eventy::action('display.legacy.beforeHeadClosingTag')
+?>
 </head>
+
+<?php
+Eventy::action('display.legacy.beforeHeadClosingTag')
+?>
 </head>
 
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">

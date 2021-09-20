@@ -166,6 +166,10 @@ img.olTileImage {
 	max-width: none;
 }
 </style>
+
+<?php
+Eventy::action('display.legacy.beforeHeadClosingTag')
+?>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140"> 
 <!-- Navbar
@@ -277,7 +281,7 @@ img.olTileImage {
         </div>
 
         <!--Images d'illustration -->
-        <h5 style="padding-left: 2em; padding-bottom: 0.5em;">Ajouter des illustrations pour la bannière de haut de page :</h3>
+        <h3 style="padding-left: 2em; padding-bottom: 0.5em;">Ajouter des illustrations pour la bannière de haut de page :</h3>
         <div id="sprytextfield7" class="control-group">
           <label class="control-label" for="ch_pat_lien_img2">Image<br>d'illustration 1</label>
           <div class="controls">
