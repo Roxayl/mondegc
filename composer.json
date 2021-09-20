@@ -46,7 +46,8 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.2",
-        "spatie/laravel-searchable": "^1.6"
+        "spatie/laravel-searchable": "^1.6",
+        "tormjens/eventy": "^0.7.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
