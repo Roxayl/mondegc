@@ -1279,7 +1279,7 @@ function urlFromLegacy($url)
     if(!empty($directory_path)) {
         $directory_path = '/' . $directory_path;
     }
-    return str_replace($directory_path . '/public/legacy/index.php', '', $url);
+    return str_replace($directory_path . '/public/index.php', '', $url);
 }
 
 

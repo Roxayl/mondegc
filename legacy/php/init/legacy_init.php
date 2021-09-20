@@ -5,18 +5,10 @@
  *************************/
  
 // Variables de configuration.
-$mondegc_config = array();
+$mondegc_config = [];
 
 // Environnement.
-if(\Illuminate\Support\Facades\App::environment() === 'local') {
-    if($_SERVER['HTTP_HOST'] === 'localhost') {
-        $mondegc_config['env'] = 'localhost';
-    } else {
-        $mondegc_config['env'] = 'vagrant';
-    }
-} else {
-    $mondegc_config['env'] = 'production';
-}
+$mondegc_config['env'] = strtolower(app()->environment());
 
 // Définir la configuration depuis Laravel.
 $mondegc_config['version'] = config('legacy.version');
