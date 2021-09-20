@@ -121,6 +121,10 @@ if(isset($_POST['Pays_ID'])) {
  background-position:center;
 }
 </style>
+
+<?php
+Eventy::action('display.legacy.beforeHeadClosingTag')
+?>
 </head>
 
 <body data-spy="scroll" data-target=".bs-docs-sidebar">

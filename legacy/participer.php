@@ -51,7 +51,6 @@ $pageParticiperCadre = new \GenCity\Monde\Page('participer_cadre');
 <!-- BOOTSTRAP -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
-<script src="assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script> 
  $( document ).ready(function() {
 init();
@@ -76,6 +75,10 @@ img.olTileImage {
 }
 }
 </style>
+
+<?php
+Eventy::action('display.legacy.beforeHeadClosingTag')
+?>
 </head>
 
 <body>
@@ -133,5 +136,6 @@ img.olTileImage {
 <!-- Footer
     ================================================== -->
 <?php require('php/footer.php'); ?>
+<script src="assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 </body>
 </html>

@@ -57,6 +57,10 @@ $_SESSION['ville_encours'] = $row_ch_pat_confimation_suppression['ch_pat_villeID
 	background-position: center;
 }
 </style>
+
+<?php
+Eventy::action('display.legacy.beforeHeadClosingTag')
+?>
 </head>
 
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">

@@ -61,6 +61,10 @@ if ((isset($_POST['ch_disp_FH_id'])) && ($_POST['ch_disp_FH_id'] != "")) {
 	background-image: url('../assets/img/fond_haut-conseil.jpg');
 }
 </style>
+
+<?php
+Eventy::action('display.legacy.beforeHeadClosingTag')
+?>
 </head>
 
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">

@@ -38,6 +38,8 @@
     <![endif]-->
 
     @yield('styles')
+
+    <x-blocks.script-configuration />
 </head>
 
 <body @yield('body_attributes')>
