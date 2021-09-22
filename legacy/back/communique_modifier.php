@@ -186,7 +186,7 @@ $totalRows_user = mysql_num_rows($user);
 </style>
 
 <?php
-Eventy::action('display.legacy.beforeHeadClosingTag')
+Eventy::action('display.beforeHeadClosingTag')
 ?>
 </head>
 

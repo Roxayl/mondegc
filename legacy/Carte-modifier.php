@@ -308,7 +308,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
 </style>
 
 <?php
-Eventy::action('display.legacy.beforeHeadClosingTag')
+Eventy::action('display.beforeHeadClosingTag')
 ?>
 </head>
 <body>

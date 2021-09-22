@@ -65,7 +65,7 @@ $deleteSQL = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_
 </style>
 
 <?php
-Eventy::action('display.legacy.beforeHeadClosingTag')
+Eventy::action('display.beforeHeadClosingTag')
 ?>
 </head>
 

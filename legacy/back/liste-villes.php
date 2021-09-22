@@ -75,7 +75,7 @@ $totalPages_listvilles = ceil($totalRows_listvilles/$maxRows_listvilles)-1;
 </style>
 
 <?php
-Eventy::action('display.legacy.beforeHeadClosingTag')
+Eventy::action('display.beforeHeadClosingTag')
 ?>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">

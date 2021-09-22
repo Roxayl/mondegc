@@ -118,7 +118,7 @@ img.olTileImage {
 <script type="text/javascript" src="assets/js/Editeur.js"></script>
 
 <?php
-Eventy::action('display.legacy.beforeHeadClosingTag')
+Eventy::action('display.beforeHeadClosingTag')
 ?>
 </head>
 

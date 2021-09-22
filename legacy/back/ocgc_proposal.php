@@ -181,7 +181,7 @@ img.olTileImage {
     </style>
 
 <?php
-Eventy::action('display.legacy.beforeHeadClosingTag')
+Eventy::action('display.beforeHeadClosingTag')
 ?>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140">

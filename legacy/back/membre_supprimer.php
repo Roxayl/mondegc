@@ -59,7 +59,7 @@ if ((isset($_POST['ch_use_id'])) && ($_POST['ch_use_id'] != "")) {
 </style>
 
 <?php
-Eventy::action('display.legacy.beforeHeadClosingTag')
+Eventy::action('display.beforeHeadClosingTag')
 ?>
 </head>
 

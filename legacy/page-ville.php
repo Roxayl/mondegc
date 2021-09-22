@@ -230,7 +230,7 @@ img.olTileImage {
 <script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
 
 <?php
-Eventy::action('display.legacy.beforeHeadClosingTag')
+Eventy::action('display.beforeHeadClosingTag')
 ?>
 </head>
 

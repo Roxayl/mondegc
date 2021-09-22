@@ -149,7 +149,7 @@ $_SESSION['dateunan'] = date('Y-m-d', time() - (3600 * 24 * 365));
 	<title>Monde GC</title>
 
 <?php
-Eventy::action('display.legacy.beforeHeadClosingTag')
+Eventy::action('display.beforeHeadClosingTag')
 ?>
 </head>
 <body>

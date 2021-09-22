@@ -61,7 +61,7 @@ if ((isset($_POST['communique-ID'])) && ($_POST['communique-ID'] != "")) {
 </style>
 
 <?php
-Eventy::action('display.legacy.beforeHeadClosingTag')
+Eventy::action('display.beforeHeadClosingTag')
 ?>
 </head>
 <!-- head Html -->
@@ -101,7 +101,7 @@ Eventy::action('display.legacy.beforeHeadClosingTag')
 </style>
 
 <?php
-Eventy::action('display.legacy.beforeHeadClosingTag')
+Eventy::action('display.beforeHeadClosingTag')
 ?>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">

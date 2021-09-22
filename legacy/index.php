@@ -71,7 +71,7 @@ $_SESSION['an']=true;
 
 
 <?php
-Eventy::action('display.legacy.beforeHeadClosingTag')
+Eventy::action('display.beforeHeadClosingTag')
 ?>
 </head>
 <body>

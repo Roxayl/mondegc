@@ -18,7 +18,6 @@ class NotificationController extends Controller
         return view('notification.show', compact(['notifications', 'unread']));
     }
 
-
     public function markAsRead(Request $request): JsonResponse
     {
         auth()->user()->unreadNotifications->markAsRead();

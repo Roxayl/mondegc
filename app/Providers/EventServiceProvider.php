@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Event;
+use App\View\Components\Blocks\ScriptConfiguration;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use TorMorten\Eventy\Facades\Eventy;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -53,6 +54,20 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
+        $this->addEventyActions();
+    }
+
+    /**
+     * Ajoute les actions pour les hooks Eventy.
+     *
+     * @return void
+     */
+    private function addEventyActions(): void
+    {
+        // Ici, on fait afficher une balise <script> avec les infos de configuration, juste avant
+        // la balise </head>.
+        Eventy::addAction('display.beforeHeadClosingTag', function() {
+            echo (new ScriptConfiguration)->render();
+        });
     }
 }

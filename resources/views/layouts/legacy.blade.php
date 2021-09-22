@@ -39,7 +39,7 @@
 
     @yield('styles')
 
-    <x-blocks.script-configuration />
+    {!! Eventy::action('display.beforeHeadClosingTag') !!}
 </head>
 
 <body @yield('body_attributes')>

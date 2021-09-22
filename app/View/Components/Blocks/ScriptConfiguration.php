@@ -39,7 +39,7 @@ class ScriptConfiguration extends Component
      */
     public function render(): View
     {
-        return view('components.blocks.script-configuration', [
+        return view('blocks.script-configuration', [
             'data' => $this->data,
         ]);
     }

@@ -57,7 +57,7 @@ $totalRows_ch_his_confimation_suppression = mysql_num_rows($ch_his_confimation_s
 </style>
 
 <?php
-Eventy::action('display.legacy.beforeHeadClosingTag')
+Eventy::action('display.beforeHeadClosingTag')
 ?>
 </head>
 
