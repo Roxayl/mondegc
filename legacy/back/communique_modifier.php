@@ -184,6 +184,10 @@ $totalRows_user = mysql_num_rows($user);
 	background-image: url('../assets/img/ImgIntroheader.jpg');
 }
 </style>
+
+<?php
+Eventy::action('display.beforeHeadClosingTag')
+?>
 </head>
 
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">

@@ -221,6 +221,10 @@ div.olControlPanel {
 	background-image: url("Carto/images/icon_legend_active.png");
 }
 </style>
+
+<?php
+Eventy::action('display.beforeHeadClosingTag')
+?>
 </head>
 
 <body>

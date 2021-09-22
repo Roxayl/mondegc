@@ -21,6 +21,10 @@ input {
 	margin-bottom: 3px;
 }
 </style>
+
+<?php
+Eventy::action('display.beforeHeadClosingTag')
+?>
 </head>
 
 <body>

@@ -127,7 +127,6 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
 <script src="assets/js/bootstrap-affix.js"></script>
-<script src="assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="assets/js/bootstrap-scrollspy.js"></script>
 <script src="assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
@@ -142,6 +141,10 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
 <script src="assets/js/Editeur.js"></script>
 <!-- SPRY ASSETS -->
 <script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
+
+<?php
+Eventy::action('display.beforeHeadClosingTag')
+?>
 </head>
 
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
@@ -333,5 +336,6 @@ $('#closemodal').click(function() {
 <!-- Footer
     ================================================== -->
 <?php require('php/footer.php'); ?>
+<script src="assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 </body>
 </html>

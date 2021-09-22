@@ -340,7 +340,6 @@ img.olTileImage {
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>
 <script src="../assets/js/bootstrap-affix.js"></script>
-<script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
@@ -350,6 +349,10 @@ img.olTileImage {
 <!-- MODAL -->
 <script src="../assets/js/bootstrap-modalmanager.js"></script>
 <script src="../assets/js/bootstrap-modal.js"></script>
+
+<?php
+Eventy::action('display.beforeHeadClosingTag')
+?>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
@@ -1279,6 +1282,7 @@ require(DEF_LEGACYROOTPATH . 'php/communiques-back.php'); ?>
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
+<script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <!-- CARTE -->
 <script src="../assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
 <script src="../assets/js/OpenLayers.js" type="text/javascript"></script>

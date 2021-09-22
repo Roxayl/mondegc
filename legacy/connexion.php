@@ -152,6 +152,10 @@ $mailSuccess = true;
 	background-image: url('assets/img/ImgIntroheader.jpg');
 }
 </style>
+
+<?php
+Eventy::action('display.beforeHeadClosingTag')
+?>
 </head>
 <body>
 <!-- Navbar

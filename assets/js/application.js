@@ -161,26 +161,16 @@ $(window).scroll(function() {
 
 }(window.jQuery);
 
-
 $(document).ready(function() {
 
-    var environ = window.location.host;
-    var baseurl;
-    if (environ === "localhost") { // localhost
-        baseurl = window.location.protocol + "//" + window.location.host + "/" + "mondegc/";
-    } else if(environ === "mondegc.test") { // vagrant
-        baseurl = window.location.protocol + "//" + window.location.host + "/";
-    } else if(environ === "generation-city.test") { // vagrant
-        baseurl = window.location.protocol + "//" + window.location.host + "/mondegc/";
-    } else { // production
-        baseurl = window.location.protocol + "//" + window.location.host + "/monde/";
-    }
+    let baseurl = window.MondegcData.base_url ?? 'https://www.generation-city.com/monde/';
 
-    var $notification_container = $('.dropdown-notification');
-    var notification_url_request = baseurl + 'user/notifications';
+    let $notification_container = $('.dropdown-notification');
+    let notification_url_request = baseurl + 'user/notifications';
 
     $notification_container.find('ul.dropdown-menu').html(
-        "<div class='well'><p><img src='https://squirrel.romukulot.fr/media/icons/ajax-loader2.gif'> Chargement...</p></div>");
+        "<div class='well'><p><img src='https://squirrel.romukulot.fr/media/icons/ajax-loader2.gif'>" +
+        "Chargement...</p></div>");
     $notification_container.find('a[data-toggle="dropdown"]').on('click', function(ev) {
         $.get(notification_url_request, function(returnedData) {
             $notification_container.find('ul.dropdown-menu').html(returnedData);
@@ -197,7 +187,7 @@ $(document).ready(function() {
             $notification_container.find('.notification-count').remove();
             $notification_container.find('.notification-toggle-btn').addClass('btn-transparent').removeClass('btn-primary');
             $notification_container.find('form.notification-markasread').remove();
-        }).fail(function() {
+        }).error(function() {
             $notification_container.find('ul.dropdown-menu').html("Une erreur s'est produite.");
         });
         return false;

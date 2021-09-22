@@ -58,6 +58,10 @@ $totalRows_ch_vil_confimation_suppression = mysql_num_rows($ch_vil_confimation_s
 	background-position: center;
 }
 </style>
+
+<?php
+Eventy::action('display.beforeHeadClosingTag')
+?>
 </head>
 
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">

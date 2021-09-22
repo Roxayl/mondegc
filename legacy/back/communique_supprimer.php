@@ -59,6 +59,10 @@ if ((isset($_POST['communique-ID'])) && ($_POST['communique-ID'] != "")) {
 	background-image: url("<?php echo $_SESSION['fond_ecran'] ?>");
 }
 </style>
+
+<?php
+Eventy::action('display.beforeHeadClosingTag')
+?>
 </head>
 <!-- head Html -->
 <head>
@@ -95,6 +99,10 @@ if ((isset($_POST['communique-ID'])) && ($_POST['communique-ID'] != "")) {
 	background-position: center;
 }
 </style>
+
+<?php
+Eventy::action('display.beforeHeadClosingTag')
+?>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar

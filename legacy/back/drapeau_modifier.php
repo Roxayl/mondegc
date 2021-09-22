@@ -57,6 +57,10 @@ $thisPays = new \GenCity\Monde\Pays($colname_pays);
 	background-image: url('../assets/img/ImgIntroheader.jpg');
 }
 </style>
+
+<?php
+Eventy::action('display.beforeHeadClosingTag')
+?>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- Navbar

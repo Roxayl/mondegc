@@ -38,6 +38,8 @@
     <![endif]-->
 
     @yield('styles')
+
+    {!! Eventy::action('display.beforeHeadClosingTag') !!}
 </head>
 
 <body @yield('body_attributes')>

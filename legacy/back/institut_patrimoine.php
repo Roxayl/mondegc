@@ -204,7 +204,6 @@ $_SESSION['last_work'] = "institut_patrimoine.php";
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>
 <script src="../assets/js/bootstrap-affix.js"></script>
-<script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="../assets/js/bootstrap-scrollspy.js"></script>
 <script src="../assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
@@ -229,6 +228,10 @@ $('#cp4').colorpicker({
 format: 'hex'});
 		});
 	</script>
+
+<?php
+Eventy::action('display.beforeHeadClosingTag')
+?>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
@@ -553,6 +556,8 @@ $('#closemodal').click(function() {
 <!-- Footer
     ================================================== -->
 <?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
+
+<script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 
 <script type="text/javascript">
 var spryradio1 = new Spry.Widget.ValidationRadio("spryradio1", {validateOn:["change"]});

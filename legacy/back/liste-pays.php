@@ -76,6 +76,10 @@ $totalPages_ListPays = ceil($totalRows_ListPays/$maxRows_ListPays)-1;
 	background-image: url('../assets/img/fond_haut-conseil.jpg');
 }
 </style>
+
+<?php
+Eventy::action('display.beforeHeadClosingTag')
+?>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar

@@ -63,6 +63,10 @@ $deleteSQL = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_
 	background-image: url('../assets/img/fond_haut-conseil.jpg');
 }
 </style>
+
+<?php
+Eventy::action('display.beforeHeadClosingTag')
+?>
 </head>
 
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">

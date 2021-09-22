@@ -77,7 +77,6 @@ foreach($paysList as $thisPays) {
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>
 <script src="assets/js/bootstrap-affix.js"></script>
-<script src="assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 <script src="assets/js/bootstrap-scrollspy.js"></script>
 <script src="assets/js/bootstrapx-clickover.js"></script>
 <script type="text/javascript">
@@ -94,6 +93,10 @@ foreach($paysList as $thisPays) {
 <script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
 <!-- Chart.js : génération de graphes -->
 <script src="assets/js/Chart.2.7.3.bundle.js"></script>
+
+<?php
+Eventy::action('display.beforeHeadClosingTag')
+?>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" onLoad="init()">
 <!-- Navbar
@@ -232,5 +235,6 @@ foreach($paysList as $thisPays) {
 <!-- Footer
     ================================================== -->
 <?php require('php/footer.php'); ?>
+<script src="assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 </body>
 </html>
