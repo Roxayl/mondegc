@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -32,6 +33,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Roleplay extends Model
 {
+    use HasFactory;
+
     protected $table = 'roleplay';
 
     protected $casts = [
@@ -63,7 +66,7 @@ class Roleplay extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(CustomUser::class, 'roleplay_users',
-            'user_id', 'roleplay_id')
+            'roleplay_id', 'user_id')
                     ->withPivot('id')
                     ->withTimestamps();
     }

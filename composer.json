@@ -76,13 +76,11 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/",
             "GenCity\\": "legacy/php/GenCity/",
             "Squirrel\\": "lib/Squirrel/"
-        },
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
