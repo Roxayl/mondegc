@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class CustomUser extends Authenticatable
 {
-    use Notifiable;
+    use HasFactory, Notifiable;
 
     protected $table = 'users';
 	protected $primaryKey = 'ch_use_id';
@@ -68,7 +69,10 @@ class CustomUser extends Authenticatable
 
     public function pays()
     {
-        return $this->belongsToMany(Pays::class, 'users_pays', 'ID_user', 'ID_pays');
+        return $this->belongsToMany(
+            Pays::class, 'users_pays',
+            'ID_user', 'ID_pays')
+            ->withPivot(['permissions']);
     }
 
     /**

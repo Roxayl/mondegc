@@ -16,6 +16,7 @@ use App\Services\EconomyService;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -78,7 +79,7 @@ use Spatie\Searchable\SearchResult;
  */
 class Pays extends Model implements Searchable, Infrastructurable, AggregatesInfluences
 {
-    use InfrastructurablePresenter, PaysPresenter, HasInfrastructures;
+    use HasFactory, InfrastructurablePresenter, PaysPresenter, HasInfrastructures;
 
     /**
      * @var array|int[]
@@ -152,6 +153,11 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
 
 	public const PERMISSION_DIRIGEANT = 10;
 	public const PERMISSION_CODIRIGEANT = 5;
+
+    /**
+     * @var array|int[] Donne un intervalle valide d'emplacements de pays.
+     */
+    private static array $countrySlotRange = [1, 59];
 
 	private ?PaysMapManager $mapManager = null;
 
@@ -235,9 +241,22 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         return $this->hasMany(OcgcProposal::class, 'ID_pays');
     }
 
+    public function personnage(): ?Personnage
+    {
+        return Personnage::where('entity', 'pays')->where('entity_id', $this->ch_pay_id)->first();
+    }
+
     public function getUsers()
     {
         return $this->users()->get();
+    }
+
+    /**
+     * @return array|int[]
+     */
+    public static function getCountrySlotRange(): array
+    {
+        return self::$countrySlotRange;
     }
 
     public function getLastActivity() : Carbon

@@ -13,7 +13,7 @@ class RoleplaySeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         /** Nombre de chapitres par roleplay à générer. */
         $chapterCount = 4;
@@ -28,7 +28,7 @@ class RoleplaySeeder extends Seeder
                 Chapter::factory()
                     ->count($chapterCount)
                     ->sequence(function($sequence) use ($chapterCount) {
-                        $i = ($sequence->index % 4) + 1;
+                        $i = ($sequence->index % $chapterCount) + 1;
                         return ['order' => $i];
                     }),
                 'chapters')
