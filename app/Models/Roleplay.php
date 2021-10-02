@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class Roleplay
@@ -28,6 +29,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property CustomUser $user
  * @property Collection|Chapter[] $chapters
  * @property Collection|CustomUser[] $users
+ *
+ * @method static Builder current()
  *
  * @package App\Models
  */
@@ -69,5 +72,20 @@ class Roleplay extends Model
             'roleplay_id', 'user_id')
                     ->withPivot('id')
                     ->withTimestamps();
+    }
+
+    /**
+     * Renvoie la liste des roleplays actuels, en cours.
+     * @param $query
+     * @return Builder
+     */
+    public function scopeCurrent($query): Builder
+    {
+        return $query
+            ->where('starting_date',  '<=', now()->addDay())
+            ->where(function (Builder $query) {
+                $query->whereNull('ending_date')
+                    ->orWhere('ending_date', '>=', now()->subDays(2));
+            });
     }
 }

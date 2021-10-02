@@ -1,5 +1,7 @@
 <?php
 
+use App\View\Components\Roleplay\IndexList;
+
 //Connexion et deconnexion
 include('php/log.php');
 
@@ -124,6 +126,8 @@ Eventy::action('display.beforeHeadClosingTag')
     <div class="span4" style="background-color: #EDEDED;">
 
         <div class="well"></div>
+
+        <?php echo (new IndexList())->render(); ?>
 
         <div id="actu" class="titre-bleu no-bg anchor">
           <h1 style="font-size: 26px; padding-left: 16px;">Communiqués popés</h1>
