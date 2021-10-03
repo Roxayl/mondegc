@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +23,7 @@
 | mais passe par le site legacy, on empêche leur accès ("abort(403)").
 |
 */
+
 Route::get('/laravel', fn() => view('welcome'));
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -91,6 +94,13 @@ Route::delete('infrastructure/{infrastructure_id}', 'InfrastructureController@de
 Route::get('economy/infrastructure-judge', 'InfrastructureJudgeController@index')->name('infrastructure-judge.index');
 Route::get('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJudgeController@show')->name('infrastructure-judge.show');
 Route::patch('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJudgeController@judge')->name('infrastructure-judge.judge');
+
+/*
+|--------------------------------------------------------------------------
+| Roleplay
+|--------------------------------------------------------------------------
+*/
+Route::resource('roleplay', 'RoleplayController');
 
 /*
 |--------------------------------------------------------------------------

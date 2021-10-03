@@ -3,7 +3,7 @@
 
     <div style="margin-left: 10px;">
         <a class="btn btn-primary" style="margin-top: 18px;"
-           href="#">
+           href="{{ urlFromLegacy(route('roleplay.create')) }}">
             <i class="icon-bell icon-white"></i>
             Créer un événement
         </a>
@@ -22,7 +22,7 @@
 
     <div class="span6">
         <a class="btn btn-primary" style="margin-top: 18px;"
-           href="#">
+           href="{{ urlFromLegacy(route('roleplay.create')) }}">
             <i class="icon-bell icon-white"></i>
             Créer un événement
         </a>
@@ -38,7 +38,7 @@
         <div class="thumbnails">
             <div class="span12">
                 <h4>
-                    <a href="#">
+                    <a href="{{ urlFromLegacy(route('roleplay.show', $rp)) }}">
                         {{ $rp->name }}
                     </a>
                 </h4>

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 /**
  * Class Chapter
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $order
  * @property int $user_id
  * @property string $name
+ * @property string $slug
  * @property Carbon $starting_date
  * @property Carbon|null $ending_date
  * @property Carbon|null $created_at
@@ -71,5 +73,10 @@ class Chapter extends Model
     public function resourceables(): HasMany
     {
         return $this->hasMany(ChapterResourceable::class);
+    }
+
+    public function getSlugAttribute(): string
+    {
+        return Str::slug($this->name);
     }
 }
