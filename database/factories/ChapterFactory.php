@@ -25,6 +25,9 @@ class ChapterFactory extends Factory
             'order' => 1,
             'user_id' => auth()->check() ? auth()->user()->id : 28,
             'name' => $this->faker->name(),
+            'summary' => $this->faker->realText(220),
+            'content' => '<p>' . nl2br($this->faker->realText(800)) . '</p>'
+                       . '<p>' . nl2br($this->faker->realText(400)) . '</p>',
             'starting_date' => now(),
             'ending_date' => null,
         ];

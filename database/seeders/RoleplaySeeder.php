@@ -19,7 +19,6 @@ class RoleplaySeeder extends Seeder
         $chapterCount = 4;
 
         Roleplay::factory()
-            ->count(3)
             ->sequence(
                 ['ending_date' => null],
                 ['ending_date' => now()->addDays(rand(7, 30))]

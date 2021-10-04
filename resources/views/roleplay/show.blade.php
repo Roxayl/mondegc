@@ -26,8 +26,8 @@
             <ul class="nav nav-list bs-docs-sidenav">
                 <li><a href="#">{{ $roleplay->name }}</a></li>
                 @foreach($roleplay->chapters as $chapter)
-                    <li><a href="#{{ $chapter->order }}-{{ $chapter->slug }}">
-                            {{ $chapter->name }}</a></li>
+                    <li><a href="#{{ $chapter->identifier }}">
+                            {{ $chapter->title }}</a></li>
                 @endforeach
             </ul>
         </div>
@@ -55,7 +55,9 @@
 
             <div class="clearfix"></div>
 
-            <p>Content</p>
+            @foreach($roleplay->chapters as $chapter)
+                <x-roleplay.chapter :chapter="$chapter"/>
+            @endforeach
 
         </div>
 

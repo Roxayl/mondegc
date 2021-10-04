@@ -23,6 +23,10 @@ use Illuminate\Support\Str;
  * @property int $user_id
  * @property string $name
  * @property string $slug
+ * @property string $title
+ * @property string $identifier
+ * @property string $summary
+ * @property string $content
  * @property Carbon $starting_date
  * @property Carbon|null $ending_date
  * @property Carbon|null $created_at
@@ -30,7 +34,7 @@ use Illuminate\Support\Str;
  * 
  * @property Roleplay $roleplay
  * @property CustomUser $user
- * @property Collection|ChapterResourceable[] $chapter_resourceables
+ * @property Collection|ChapterResourceable[] $resourceables
  *
  * @package App\Models
  */
@@ -56,6 +60,8 @@ class Chapter extends Model
         'order',
         'user_id',
         'name',
+        'summary',
+        'content',
         'starting_date',
         'ending_date'
     ];
@@ -78,5 +84,15 @@ class Chapter extends Model
     public function getSlugAttribute(): string
     {
         return Str::slug($this->name);
+    }
+
+    public function getTitleAttribute(): string
+    {
+        return "Chapitre " . $this->order . " : " . $this->name;
+    }
+
+    public function getIdentifierAttribute(): string
+    {
+        return $this->order . '-' . $this->slug;
     }
 }
