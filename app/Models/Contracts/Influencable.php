@@ -11,24 +11,24 @@ interface Influencable
      */
     public function influences();
 
-    /*
+    /**
      * Créé les entrées ou met à jour l'influence générée par l'influencable en fonction
      * de règles spécifiques pour chaque influencable.
      */
-    public function generateInfluence() : void;
+    public function generateInfluence(): void;
 
     /**
      * Obtient les ressources générées au moment actuel, par l'influencable.
      * @return Collection Collection contenant les ressources générées par l'influencable.
      */
-    public function getGeneratedResources() : Collection;
+    public function getGeneratedResources(): Collection;
 
     /**
      * Obtient les ressources générées par l'influencable, en prenant en compte l'ensemble
      * des influences créées.
      * @return Collection Collection contenant les ressources générées par l'influencable.
      */
-    public function getFinalResources() : Collection;
+    public function getFinalResources(): Collection;
 
     /**
      * Supprime les anciennes entrées dans la table 'influences', lorsqu'on veut générer
@@ -38,11 +38,11 @@ interface Influencable
      * @return bool Renvoie <code>true</code> lorsque les influences ont été supprimées ;
      *              <code>false</code> sinon.
      */
-    public function removeOldInfluenceRows(\Closure $f) : bool;
+    public function removeOldInfluenceRows(\Closure $f): bool;
 
     /**
      * Donne le rendement actuel, en pourcentage, de l'influencable actuel.
      * @return int Taux de rendement sur 100.
      */
-    public function efficiencyRate() : int;
+    public function efficiencyRate(): int;
 }

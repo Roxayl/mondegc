@@ -4,16 +4,17 @@ namespace App\Models\Traits;
 
 use App\Models\Influence;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
 
 trait Influencable
 {
-    public function influences()
+    public function influences(): MorphMany
     {
         return $this->morphMany(Influence::class, 'influencable');
     }
 
-    public function getGeneratedResources() : Collection
+    public function getGeneratedResources(): Collection
     {
         $influences = $this->influences()
             ->where('generates_influence_at', '<', Carbon::now());
@@ -21,14 +22,14 @@ trait Influencable
         return $this->filterInfluences($influences);
     }
 
-    public function getFinalResources() : Collection
+    public function getFinalResources(): Collection
     {
         $influences = $this->influences();
 
         return $this->filterInfluences($influences);
     }
 
-    private function filterInfluences($influences) : Collection
+    private function filterInfluences($influences): Collection
     {
         $select = '';
         $resources = config('enums.resources');
@@ -44,7 +45,7 @@ trait Influencable
         return collect($influences->get()->first()->toArray());
     }
 
-    public function efficiencyRate() : int
+    public function efficiencyRate(): int
     {
         $avgRate = [];
         $currentResources = $this->getGeneratedResources();
@@ -64,7 +65,7 @@ trait Influencable
         return (int)round(array_sum($avgRate) / count($avgRate) * 100);
     }
 
-    public function removeOldInfluenceRows(\Closure $f = null) : bool
+    public function removeOldInfluenceRows(\Closure $f = null): bool
     {
         $delete = false;
 

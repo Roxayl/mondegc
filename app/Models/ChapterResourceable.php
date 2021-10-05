@@ -6,9 +6,14 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\Influencable;
+use App\Models\Contracts\Resourceable;
+use App\Models\Traits\Influencable as GeneratesInfluence;
+use App\Services\EconomyService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Class ChapterResourceable
@@ -29,11 +34,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Carbon|null $updated_at
  * 
  * @property Chapter $chapter
+ * @property Resourceable $resourceable
  *
  * @package App\Models
  */
-class ChapterResourceable extends Model
+class ChapterResourceable extends Model implements Influencable
 {
+    use GeneratesInfluence;
+
     protected $table = 'chapter_resourceable';
 
     protected $casts = [
@@ -63,8 +71,41 @@ class ChapterResourceable extends Model
         'education'
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function chapter(): BelongsTo
     {
         return $this->belongsTo(Chapter::class);
+    }
+
+    /**
+     * @return MorphTo
+     */
+    public function resourceable(): MorphTo
+    {
+        return $this->morphTo('resourceable');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function generateInfluence(): void
+    {
+        $influencableType = Influence::getActualClassNameForMorph(get_class());
+
+        $this->removeOldInfluenceRows();
+
+        $sumResources = EconomyService::resourcesPrefilled();
+        foreach(config('enums.resources') as $resource) {
+            $sumResources[$resource] += $this->$resource;
+        }
+
+        $influence = new Influence;
+        $influence->influencable_type      = $influencableType;
+        $influence->influencable_id        = $this->id;
+        $influence->generates_influence_at = $this->created_at;
+        $influence->fill($sumResources)
+            ->save();
     }
 }

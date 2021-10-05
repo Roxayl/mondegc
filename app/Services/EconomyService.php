@@ -3,10 +3,14 @@
 namespace App\Services;
 
 use App\Models\Pays;
+use Illuminate\Support\Collection;
 
 class EconomyService
 {
-    public static function resourcesPrefilled() : array
+    /**
+     * @return array<string, float>
+     */
+    public static function resourcesPrefilled(): array
     {
         $return = [];
 
@@ -17,12 +21,18 @@ class EconomyService
         return $return;
     }
 
-    public static function getPaysResources($sortBy = null) : array
+    /**
+     * @param string|null $sortBy Clé dans laquelle trier les ressources.
+     * @return array<int, array<string, mixed>>
+     */
+    public static function getPaysResources(?string $sortBy = null): array
     {
+        /** @var Collection<int, Pays> $allPays */
         $allPays = Pays::where('ch_pay_publication', Pays::STATUS_ACTIVE)->get();
 
         $paysResources = [];
 
+        /** @var Pays $pays */
         foreach($allPays as $pays) {
             $paysResources[$pays['ch_pay_id']]['ch_pay_id'] = $pays->ch_pay_id;
             $paysResources[$pays['ch_pay_id']]['ch_pay_nom'] = $pays->ch_pay_nom;
