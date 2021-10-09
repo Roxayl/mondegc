@@ -144,7 +144,7 @@ function csrf_ob_handler($buffer, $flags) {
     static $is_html = false;
     if (!$is_html) {
         // not HTML until proven otherwise
-        if (stripos($buffer, '<html') !== false) {
+        if (stripos($buffer, '<html') !== false || stripos($buffer, '<form') !== false) {
             $is_html = true;
         } else {
             return $buffer;
@@ -152,8 +152,7 @@ function csrf_ob_handler($buffer, $flags) {
     }
     $tokens = csrf_get_tokens();
     $name = $GLOBALS['csrf']['input-name'];
-    $endslash = $GLOBALS['csrf']['xhtml'] ? ' /' : '';
-    $input = "<input type='hidden' name='$name' value='$tokens'$endslash>";
+    $input = csrf_get_form_input();
     $buffer = preg_replace('#(<form[^>]*method\s*=\s*["\']post["\'][^>]*>)#i', '$1' . $input, $buffer);
     if ($GLOBALS['csrf']['frame-breaker']) {
         $buffer = str_ireplace('</head>', '<script type="text/javascript">if (top != self) {top.location.href = self.location.href;}</script></head>', $buffer);
@@ -393,6 +392,19 @@ function csrf_generate_secret($len = 32) {
 function csrf_hash($value, $time = null) {
     if (!$time) $time = time();
     return sha1(csrf_get_secret() . $value . $time) . ',' . $time;
+}
+
+/**
+ * Gets the HTML output for a CSRF-protected form element.
+ */
+function csrf_get_form_input() {
+    $tokens = csrf_get_tokens();
+    $name = $GLOBALS['csrf']['input-name'];
+    $endslash = $GLOBALS['csrf']['xhtml'] ? ' /' : '';
+
+    $input = "<input type='hidden' name='$name' value='$tokens'$endslash>";
+
+    return $input;
 }
 
 // Load user configuration
