@@ -27,11 +27,10 @@ use Illuminate\Support\Facades\DB;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property CustomUser $user
+ * @property CustomUser $owner
  * @property Collection|Chapter[] $chapters
- * @property Collection|CustomUser[] $users
  *
- * @method static Builder current()
+ * @method static Builder current() Filtre sur la liste des roleplays actuels, en cours.
  *
  * @package App\Models
  */
@@ -68,7 +67,7 @@ class Roleplay extends Model
     }
 
     /**
-     * Renvoie la liste des roleplays actuels, en cours.
+     * Filtre sur la liste des roleplays actuels, en cours.
      * @param Builder $query
      * @return Builder
      */

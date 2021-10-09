@@ -46,7 +46,8 @@ use Spatie\Searchable\SearchResult;
  */
 class Organisation extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
-    use OrganisationPresenter, InfrastructurablePresenter, HasInfrastructures;
+    use HasInfrastructures;
+    use InfrastructurablePresenter, OrganisationPresenter;
 
 	protected $table = 'organisation';
 

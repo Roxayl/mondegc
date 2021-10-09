@@ -64,7 +64,8 @@ use Spatie\Searchable\SearchResult;
  */
 class Ville extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
-    use InfrastructurablePresenter, VillePresenter, HasInfrastructures;
+    use HasInfrastructures;
+    use InfrastructurablePresenter, VillePresenter;
 
 	protected $table = 'villes';
 	protected $primaryKey = 'ch_vil_ID';

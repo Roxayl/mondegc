@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Chapter;
 use App\Models\Roleplay;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RoleplaySeeder extends Seeder
 {
@@ -18,19 +19,21 @@ class RoleplaySeeder extends Seeder
         /** Nombre de chapitres par roleplay à générer. */
         $chapterCount = 4;
 
-        Roleplay::factory()
-            ->sequence(
-                ['ending_date' => null],
-                ['ending_date' => now()->addDays(rand(7, 30))]
-            )
-            ->has(
-                Chapter::factory()
-                    ->count($chapterCount)
-                    ->sequence(function($sequence) use ($chapterCount) {
-                        $i = ($sequence->index % $chapterCount) + 1;
-                        return ['order' => $i];
-                    }),
-                'chapters')
-            ->create();
+        DB::transaction(function() use ($chapterCount) {
+            Roleplay::factory()
+                ->sequence(
+                    ['ending_date' => null],
+                    ['ending_date' => now()->addDays(rand(7, 30))]
+                )
+                ->has(
+                    Chapter::factory()
+                        ->count($chapterCount)
+                        ->sequence(function($sequence) use ($chapterCount) {
+                            $i = ($sequence->index % $chapterCount) + 1;
+                            return ['order' => $i];
+                        }),
+                    'chapters')
+                ->create();
+        });
     }
 }

@@ -77,14 +77,15 @@ use Spatie\Searchable\SearchResult;
  * @property int|null $ch_pay_population_carte
  * @property int|null $ch_pay_emploi_carte
  * 
- * @property Collection|OrganisationMember[] $organisation_members
+ * @property Collection|OrganisationMember[] $organisationMembers
  * @property Collection|ChapterResourceable[] $chapterResources
  *
  * @package App\Models
  */
 class Pays extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
-    use HasFactory, InfrastructurablePresenter, PaysPresenter, HasInfrastructures;
+    use HasFactory, HasInfrastructures;
+    use InfrastructurablePresenter, PaysPresenter;
 
     /**
      * @var array|int[]
@@ -195,14 +196,14 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     /**
      * @return HasMany
      */
-	public function organisation_members(): HasMany
+	public function organisationMembers(): HasMany
     {
 		return $this->hasMany(OrganisationMember::class, 'pays_id');
 	}
 
 	private function getOrganisationMembership(Closure $f)
     {
-        $query = $this->organisation_members()
+        $query = $this->organisationMembers()
             ->join('organisation', 'organisation.id', 'organisation_id')
             ->where('permissions', '>=', Organisation::PERMISSION_MEMBER);
 
