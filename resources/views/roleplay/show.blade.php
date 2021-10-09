@@ -34,18 +34,11 @@
 
         <div class="span9 corps-page">
 
-            <ul class="breadcrumb pull-left">
-                <li><a href="{{ route('roleplay.index') }}">Roleplay</a>
+            <ul class="breadcrumb">
+                <li>Roleplay
                     <span class="divider">/</span></li>
                 <li class="active">{{ $roleplay->name }}</li>
             </ul>
-
-            <div class="pull-right">
-                <a class="btn btn-primary"
-                   href="{{ route('roleplay.edit', $roleplay) }}">
-                    <i class="icon-pencil icon-white"></i> Gérer le roleplay
-                </a>
-            </div>
 
             <div class="clearfix"></div>
 
@@ -54,6 +47,8 @@
             </div>
 
             <div class="clearfix"></div>
+
+            <x-roleplay.organizers :roleplay="$roleplay" />
 
             @foreach($roleplay->chapters as $chapter)
                 <x-roleplay.chapter :chapter="$chapter"/>

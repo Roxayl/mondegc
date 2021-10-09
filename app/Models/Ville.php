@@ -6,8 +6,9 @@
 
 namespace App\Models;
 
-use App\Models\Contracts\Resourceable;
 use App\Models\Contracts\Infrastructurable;
+use App\Models\Contracts\Resourceable;
+use App\Models\Contracts\Roleplayable;
 use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\VillePresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
@@ -61,7 +62,7 @@ use Spatie\Searchable\SearchResult;
  *
  * @package App\Models
  */
-class Ville extends Model implements Searchable, Infrastructurable, Resourceable
+class Ville extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
     use InfrastructurablePresenter, VillePresenter, HasInfrastructures;
 

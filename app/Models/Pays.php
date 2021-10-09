@@ -8,6 +8,7 @@ namespace App\Models;
 
 use App\Models\Contracts\Resourceable;
 use App\Models\Contracts\Infrastructurable;
+use App\Models\Contracts\Roleplayable;
 use App\Models\Managers\PaysMapManager;
 use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\PaysPresenter;
@@ -81,7 +82,7 @@ use Spatie\Searchable\SearchResult;
  *
  * @package App\Models
  */
-class Pays extends Model implements Searchable, Infrastructurable, Resourceable
+class Pays extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
     use HasFactory, InfrastructurablePresenter, PaysPresenter, HasInfrastructures;
 
