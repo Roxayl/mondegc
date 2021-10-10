@@ -25,6 +25,7 @@
         <div class="span3 bs-docs-sidebar">
             <ul class="nav nav-list bs-docs-sidenav">
                 <li><a href="#">{{ $roleplay->name }}</a></li>
+                <li><a href="#roleplay-organizers">Organisateurs</a></li>
                 @foreach($roleplay->chapters as $chapter)
                     <li><a href="#{{ $chapter->identifier }}">
                             {{ $chapter->title }}</a></li>

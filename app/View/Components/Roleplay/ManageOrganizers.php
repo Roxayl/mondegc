@@ -6,7 +6,7 @@ use App\Models\Roleplay;
 use App\View\Components\BaseComponent;
 use Illuminate\Contracts\View\View;
 
-class Organizers extends BaseComponent
+class ManageOrganizers extends BaseComponent
 {
     public Roleplay $roleplay;
 
@@ -20,6 +20,6 @@ class Organizers extends BaseComponent
      */
     public function render(): View
     {
-        return view('roleplay.components.organizers');
+        return view('roleplay.components.manage-organizers');
     }
 }

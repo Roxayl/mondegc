@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -101,6 +102,10 @@ Route::patch('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJud
 |--------------------------------------------------------------------------
 */
 Route::resource('roleplay', 'RoleplayController');
+Route::get('roleplay/{roleplay}/organizers', [Controllers\RoleplayController::class, 'organizers'])
+    ->name('roleplay.organizers');
+Route::get('roleplay/{roleplay}/manage-organizers', [Controllers\RoleplayController::class, 'manageOrganizers'])
+    ->name('roleplay.manage-organizers');
 
 /*
 |--------------------------------------------------------------------------

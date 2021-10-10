@@ -2,8 +2,8 @@
 <div class="component-block" id="organizers">
     <div class="cta-title pull-right-cta">
         <a href="#" class="btn btn-primary btn-cta component-trigger"
-           {!! $getTargetHtmlAttributes(route('roleplay.manage-organizers', $roleplay), 'organizers') !!}>
-            <i class="icon-white icon-pencil"></i> Modifier</a>
+           {!! $getTargetHtmlAttributes(route('roleplay.organizers', $roleplay), 'organizers') !!}>
+            <i class="icon-white icon-pencil"></i> Retour</a>
     </div>
 
     <div class="titre-bleu" id="roleplay-organizers">
@@ -20,6 +20,11 @@
             <a href="{{ url($organizer->accessorUrl()) }}">
                 {{ $organizer->getName() }}
             </a>
+
+            <button class="btn btn-primary">
+                <i class="icon-trash icon-white"></i>
+                Supprimer
+            </button>
         </li>
     @endforeach
     </ul>

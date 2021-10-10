@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Roleplay;
+use App\Services\StringBladeService;
+use App\View\Components\Roleplay\ManageOrganizers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\View\Component;
 
 class RoleplayController extends Controller
 {
@@ -49,6 +52,40 @@ class RoleplayController extends Controller
     public function show(Roleplay $roleplay): View
     {
         return view('roleplay.show')->with('roleplay', $roleplay);
+    }
+
+    /**
+     * @param Roleplay $roleplay
+     * @param StringBladeService $stringBlade
+     * @return Response
+     */
+    public function organizers(Roleplay $roleplay, StringBladeService $stringBlade): Response
+    {
+        $blade = '<x-roleplay.organizers :roleplay="$roleplay" />';
+
+        $html = $stringBlade->render(
+            $blade, compact('roleplay')
+        );
+
+        return response($html);
+    }
+
+    /**
+     * Affiche l'interface de gestion des organisateurs de roleplay.
+     *
+     * @param Roleplay $roleplay
+     * @param StringBladeService $stringBlade
+     * @return Response
+     */
+    public function manageOrganizers(Roleplay $roleplay, StringBladeService $stringBlade): Response
+    {
+        $blade = '<x-roleplay.manage-organizers :roleplay="$roleplay" />';
+
+        $html = $stringBlade->render(
+            $blade, compact('roleplay')
+        );
+
+        return response($html);
     }
 
     /**

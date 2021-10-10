@@ -24,7 +24,10 @@ mix.scripts([
     'assets/js/bootstrap-modal.js',
 ], 'public/js/vendor-compiled.js');
 
-mix.scripts(['assets/js/application.js'], 'public/js/application-compiled.js');
+mix.scripts([
+    'assets/js/application.js',
+    'resources/js/component-loader.js',
+], 'public/js/application-compiled.js');
 
 mix.scripts([
     'assets/js/Chart.2.7.3.bundle.js',
