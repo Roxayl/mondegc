@@ -12,3 +12,7 @@
 <div class="well">
     {!! $helperService::purifyHtml($chapter->content) !!}
 </div>
+
+<div class="well">
+    <x-roleplay.chapter-resources :chapter="$chapter" />
+</div>

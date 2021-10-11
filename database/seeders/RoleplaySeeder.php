@@ -3,7 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Chapter;
+use App\Models\ChapterResourceable;
+use App\Models\Organisation;
+use App\Models\Pays;
 use App\Models\Roleplay;
+use App\Models\Ville;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -31,7 +35,32 @@ class RoleplaySeeder extends Seeder
                         ->sequence(function($sequence) use ($chapterCount) {
                             $i = ($sequence->index % $chapterCount) + 1;
                             return ['order' => $i];
-                        }),
+                        })
+                        ->has(
+                            ChapterResourceable::factory()
+                                ->state(function(array $attributes, Chapter $chapter) {
+                                    return ['chapter_id' => $chapter->id];
+                                })
+                                ->count(rand(0, 3))
+                                ->sequence(
+                                    [
+                                      'resourceable_type'
+                                        => ChapterResourceable::getActualClassNameForMorph(Pays::class),
+                                      'resourceable_id'
+                                        => Pays::inRandomOrder()->first(),
+                                    ], [
+                                      'resourceable_type'
+                                        => ChapterResourceable::getActualClassNameForMorph(Organisation::class),
+                                      'resourceable_id'
+                                        => Organisation::inRandomOrder()->first(),
+                                    ], [
+                                      'resourceable_type'
+                                        => ChapterResourceable::getActualClassNameForMorph(Ville::class),
+                                      'resourceable_id'
+                                        => Ville::inRandomOrder()->first(),
+                                    ]),
+                            'resourceables'
+                        ),
                     'chapters')
                 ->create();
         });

@@ -8,9 +8,11 @@ namespace App\Models;
 
 use App\Models\Contracts\Influencable;
 use App\Models\Contracts\Resourceable;
+use App\Models\Traits\DeletesInfluences;
 use App\Models\Traits\Influencable as GeneratesInfluence;
 use App\Services\EconomyService;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -40,7 +42,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  */
 class ChapterResourceable extends Model implements Influencable
 {
-    use GeneratesInfluence;
+    use HasFactory, GeneratesInfluence, DeletesInfluences;
 
     protected $table = 'chapter_resourceable';
 
@@ -88,6 +90,19 @@ class ChapterResourceable extends Model implements Influencable
     }
 
     /**
+     * @return array<string, float>
+     */
+    public function resources(): array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+        foreach(config('enums.resources') as $resource) {
+            $sumResources[$resource] += $this->$resource;
+        }
+
+        return $sumResources;
+    }
+
+    /**
      * @inheritDoc
      */
     public function generateInfluence(): void
@@ -96,16 +111,27 @@ class ChapterResourceable extends Model implements Influencable
 
         $this->removeOldInfluenceRows();
 
-        $sumResources = EconomyService::resourcesPrefilled();
-        foreach(config('enums.resources') as $resource) {
-            $sumResources[$resource] += $this->$resource;
-        }
+        $resources = $this->resources();
 
         $influence = new Influence;
         $influence->influencable_type      = $influencableType;
         $influence->influencable_id        = $this->id;
         $influence->generates_influence_at = $this->created_at;
-        $influence->fill($sumResources)
+        $influence->fill($resources)
             ->save();
+    }
+
+    public static function boot() {
+        parent::boot();
+
+        // Générer les influences à la création du modèle.
+        static::created(function(ChapterResourceable $chapterResourceable) {
+            $chapterResourceable->generateInfluence();
+        });
+
+        // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
+        static::deleting(function(ChapterResourceable $chapterResourceable) {
+            $chapterResourceable->deleteInfluences();
+        });
     }
 }

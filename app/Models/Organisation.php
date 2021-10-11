@@ -337,10 +337,12 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
 
             $infrastructureResources = $this->infrastructureResources();
             $paysResources = $this->paysResources();
+            $roleplayResources = $this->roleplayResources();
 
             foreach(config('enums.resources') as $resource) {
                 $sumResources[$resource] += $infrastructureResources[$resource]
-                                         + $paysResources[$resource];
+                                         + $paysResources[$resource]
+                                         + $roleplayResources[$resource];
             }
         }
 
