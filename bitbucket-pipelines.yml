@@ -29,7 +29,7 @@ definitions:
               SERVER: $FTP_MONDEGC_HOST
               REMOTE_PATH: '/'
               LOCAL_PATH: "deploy"
-              DELETE_FLAG: 'false' # Don't delete existing files
+              DELETE_FLAG: 'false' # Attention, il ne faut pas supprimer les fichiers existants dans le FTP !
               DEBUG: 'true'
     - step: &buildtest
         name: Build/Test
@@ -42,36 +42,48 @@ definitions:
           - php artisan monde:init
         artifacts:
           - vendor/**
-    - step: &pushgithubmaster
-        name: Push To GitHub (master)
+    - step: &githubmirrorpush
+        name: Mirror with GitHub
         clone:
           depth: full
         script:
           - apt-get update && apt-get install -y unzip git git-core
+          - rm -r legacy #
           - git remote add sync git@github.com:Roxayl/mondegc.git
           - git checkout master
           - git pull
-          - git push sync master
-    - step: &pushgithubdevelop
-        name: Push To GitHub (develop)
+          - git push sync --mirror
+    - step: &pushgithublaravel
+        name: Push Laravel Code to Github
         clone:
           depth: full
         script:
           - apt-get update && apt-get install -y unzip git git-core
-          - git remote add sync git@github.com:Roxayl/mondegc.git
-          - git checkout develop
-          - git pull
-          - git push sync develop
+          - COMMIT_MESSAGE=`git log --format=%B -n 1 $BITBUCKET_COMMIT`
+          - COMMITTER_NAME=`git log --format=%an -n 1 $BITBUCKET_COMMIT`
+          - COMMITTER_MAIL=`git log --format=%ae -n 1 $BITBUCKET_COMMIT`
+          - rm -rf .git
+          - git init
+          - git remote add sync git@github.com:Roxayl/mondegc-laravel.git
+          - set +e
+          - git fetch && git pull --rebase
+          - set -e
+          - ls
+          - rm -f -r legacy
+          - git add .
+          - git config user.email "$COMMITTER_MAIL"
+          - git config user.name "$COMMITTER_NAME"
+          - git commit -m "$COMMIT_MESSAGE"
+          - git push sync --mirror
 
 pipelines:
   branches:
-    develop:
+    "{master,develop}":
       - step: *buildtest
       - parallel:
-        - step: *pushgithubdevelop
-        - step: *gitdiffdeploy
-    master:
-      - step: *buildtest
-      - parallel:
-        - step: *pushgithubmaster
-        - step: *gitdiffdeploy
+          - step: *githubmirrorpush
+          - step: *gitdiffdeploy
+          - step: *pushgithublaravel
+    '*':
+      - step: *githubmirrorpush
+      - step: *pushgithublaravel
