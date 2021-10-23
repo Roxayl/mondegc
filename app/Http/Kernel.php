@@ -72,6 +72,9 @@ class Kernel extends HttpKernel
 
         // App middleware
         'require-ajax' => \App\Http\Middleware\RequireAjax::class,
+
+        // Vendor middleware
+        'feature' => \YlsIdeas\FeatureFlags\Middleware\FeatureFlagState::class,
     ];
 
     /**

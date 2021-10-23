@@ -6,17 +6,23 @@
 
 namespace App\Models;
 
-use App\Models\Contracts\AggregatesInfluences;
 use App\Models\Contracts\Infrastructurable;
+use App\Models\Contracts\Resourceable;
+use App\Models\Contracts\Roleplayable;
 use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\VillePresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use App\Services\EconomyService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use YlsIdeas\FeatureFlags\Facades\Features;
 
 /**
  * Class Ville
@@ -53,12 +59,14 @@ use Spatie\Searchable\SearchResult;
  * @property string|null $ch_vil_culture
  * 
  * @property Pays $pays
+ * @property Collection|ChapterResourceable[] $chapterResources
  *
  * @package App\Models
  */
-class Ville extends Model implements Searchable, Infrastructurable, AggregatesInfluences
+class Ville extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
-    use InfrastructurablePresenter, VillePresenter, HasInfrastructures;
+    use HasInfrastructures;
+    use InfrastructurablePresenter, VillePresenter;
 
 	protected $table = 'villes';
 	protected $primaryKey = 'ch_vil_ID';
@@ -112,7 +120,10 @@ class Ville extends Model implements Searchable, Infrastructurable, AggregatesIn
 		'ch_vil_culture'
 	];
 
-	public function getSearchResult() : SearchResult
+    /**
+     * @return SearchResult
+     */
+	public function getSearchResult(): SearchResult
     {
         $context = null;
         if(!is_null($this->pays)) {
@@ -127,22 +138,40 @@ class Ville extends Model implements Searchable, Infrastructurable, AggregatesIn
         );
     }
 
-	public function pays()
-	{
+    /**
+     * @return BelongsTo
+     */
+	public function pays(): BelongsTo
+    {
 		return $this->belongsTo(Pays::class, 'ch_vil_paysID');
 	}
 
-	public function patrimoines()
+    /**
+     * @return HasMany
+     */
+	public function patrimoines(): HasMany
     {
         return $this->hasMany(Patrimoine::class, 'ch_pat_villeID');
     }
 
-	public function getUsers()
+
+    public function chapterResources(): MorphMany
+    {
+        return $this->morphMany(ChapterResourceable::class, 'resourceable');
+    }
+
+    /**
+     * @return Collection<int, CustomUser>
+     */
+	public function getUsers(): Collection
     {
         return $this->pays->users;
     }
 
-    public function infrastructureResources() : array
+    /**
+     * @return array<string, float>
+     */
+    public function infrastructureResources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
@@ -157,7 +186,10 @@ class Ville extends Model implements Searchable, Infrastructurable, AggregatesIn
         return $sumResources;
     }
 
-    public function patrimoineResources() : array
+    /**
+     * @return array<string, float>
+     */
+    public function patrimoineResources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
@@ -172,15 +204,42 @@ class Ville extends Model implements Searchable, Infrastructurable, AggregatesIn
         return $sumResources;
     }
 
-    public function resources() : array
+    /**
+     * @return array<string, float>
+     */
+    public function roleplayResources(): array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        if(Features::accessible('roleplay')) {
+            return $sumResources;
+        }
+
+        foreach($this->chapterResources as $chapterResource) {
+            $generatedResources = $chapterResource->getGeneratedResources();
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] = $generatedResources[$resource];
+            }
+        }
+
+        return $sumResources;
+    }
+
+    /**
+     * @return array<string, float>
+     */
+    public function resources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
         $infrastructureResources = $this->infrastructureResources();
         $patrimoineResources = $this->patrimoineResources();
+        $roleplayResources = $this->roleplayResources();
+
         foreach(config('enums.resources') as $resource) {
-            $sumResources[$resource] +=
-                $infrastructureResources[$resource] + $patrimoineResources[$resource];
+            $sumResources[$resource] += $infrastructureResources[$resource]
+                                      + $patrimoineResources[$resource]
+                                      + $roleplayResources[$resource];
         }
 
         return $sumResources;
