@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
+use Reliese\Coders\CodersServiceProvider;
+use YlsIdeas\FeatureFlags\Facades\Features;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         if($this->app->environment() === 'local') {
-            $this->app->register(\Reliese\Coders\CodersServiceProvider::class);
+            $this->app->register(CodersServiceProvider::class);
         }
     }
 
@@ -27,5 +29,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::defaultView('pagination.bootstrap-2');
+
+        Features::noScheduling();
     }
 }

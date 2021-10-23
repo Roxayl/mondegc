@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use YlsIdeas\FeatureFlags\Facades\Features;
 
 /**
  * Class Pays
@@ -408,6 +409,10 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     public function roleplayResources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
+
+        if(Features::accessible('roleplay')) {
+            return $sumResources;
+        }
 
         foreach($this->chapterResources as $chapterResource) {
             $generatedResources = $chapterResource->getGeneratedResources();

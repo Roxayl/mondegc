@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Roleplay;
 use App\Services\StringBladeService;
-use App\View\Components\Roleplay\ManageOrganizers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\View\Component;
 
 class RoleplayController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('feature:roleplay');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +22,8 @@ class RoleplayController extends Controller
      */
     public function index()
     {
-        //
+        // TODO: Not yet implemented.
+        return response()->noContent();
     }
 
     /**
@@ -29,18 +33,20 @@ class RoleplayController extends Controller
      */
     public function create()
     {
-        //
+        // TODO: Not yet implemented.
+        return response()->noContent();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return Response
      */
     public function store(Request $request)
     {
-        //
+        // TODO: Not yet implemented.
+        return response()->noContent();
     }
 
     /**
@@ -96,19 +102,21 @@ class RoleplayController extends Controller
      */
     public function edit(Roleplay $roleplay)
     {
-        //
+        // TODO: Not yet implemented.
+        return response()->noContent();
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param Roleplay $roleplay
      * @return Response
      */
     public function update(Request $request, Roleplay $roleplay)
     {
-        //
+        // TODO: Not yet implemented.
+        return response()->noContent();
     }
 
     /**
@@ -119,6 +127,7 @@ class RoleplayController extends Controller
      */
     public function destroy(Roleplay $roleplay)
     {
-        //
+        // TODO: Not yet implemented.
+        return response()->noContent();
     }
 }
