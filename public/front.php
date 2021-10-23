@@ -1,6 +1,6 @@
 <?php
 
-require_once('../legacy/php/init/legacy_init.php');
+require_once(base_path('legacy/php/init/legacy_init.php'));
 
 if($path === config('app.directory_path')) {
     $_GET['target'] = 'index';
