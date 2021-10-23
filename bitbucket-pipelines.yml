@@ -3,12 +3,13 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: php:7.4.16
+image: php:7.4.25
 
 definitions:
   steps:
-    - step: &gitdiffdeploy
-        name: Git Diff & Deploy
+
+    - step: &gitDiffAndDeploy
+        name: Git Diff and Deploy
         deployment: production
         script:
           - apt-get update && apt-get install -y unzip git git-core
@@ -31,8 +32,9 @@ definitions:
               LOCAL_PATH: "deploy"
               DELETE_FLAG: 'false' # Attention, il ne faut pas supprimer les fichiers existants dans le FTP !
               DEBUG: 'true'
-    - step: &buildtest
-        name: Build/Test
+
+    - step: &buildAndTest
+        name: Build and Test
         caches:
           - composer
         script:
@@ -40,9 +42,13 @@ definitions:
           - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
           - composer install --ignore-platform-reqs
           - php artisan monde:init
+        # - php artisan migrate
+        # - php artisan db:seed
+        # - php artisan test
         artifacts:
           - vendor/**
-    - step: &githubmirrorpush
+
+    - step: &mirrorWithGitHub
         name: Mirror with GitHub
         clone:
           depth: full
@@ -53,8 +59,9 @@ definitions:
           - git checkout master
           - git pull
           - git push sync --mirror
-    - step: &pushgithublaravel
-        name: Push Laravel Code to Github
+
+    - step: &pushLaravelCodeToGitHub
+        name: Push Laravel Code to GitHub
         clone:
           depth: full
         script:
@@ -78,12 +85,13 @@ definitions:
 
 pipelines:
   branches:
+
     "{master,develop}":
-      - step: *buildtest
       - parallel:
-          - step: *githubmirrorpush
-          - step: *gitdiffdeploy
-          - step: *pushgithublaravel
+          - step: *mirrorWithGitHub
+          - step: *pushLaravelCodeToGitHub
+      - step: *buildAndTest
+      - step: *gitDiffAndDeploy
+
     '*':
-      - step: *githubmirrorpush
-      - step: *pushgithublaravel
+      - step: *buildAndTest
