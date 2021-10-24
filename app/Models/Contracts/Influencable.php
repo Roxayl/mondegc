@@ -2,14 +2,15 @@
 
 namespace App\Models\Contracts;
 
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
 
 interface Influencable
 {
     /**
-     * @return mixed Relation entre l'influencable et les influences.
+     * @return MorphMany Relation entre l'influencable et les influences.
      */
-    public function influences();
+    public function influences(): MorphMany;
 
     /**
      * Créé les entrées ou met à jour l'influence générée par l'influencable en fonction

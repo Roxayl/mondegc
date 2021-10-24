@@ -75,6 +75,6 @@ class Influence extends Model
 
     public function influencable(): MorphTo
     {
-        $this->morphTo();
+        return $this->morphTo();
     }
 }

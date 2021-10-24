@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 trait InfrastructurePresenter
 {
-    static public function getJudgementTitle($type) : string
+    public static function getJudgementTitle($type): string
     {
         switch($type) {
             case 'pending':
@@ -21,7 +21,7 @@ trait InfrastructurePresenter
         return $title;
     }
 
-    public function getStatusData() : object
+    public function getStatusData(): object
     {
         $map = [
             self::JUGEMENT_PENDING => [
@@ -40,7 +40,7 @@ trait InfrastructurePresenter
         return (object)$map[$this->ch_inf_statut];
     }
 
-    public function wellDescription() : string
+    public function wellDescription(): string
     {
         $str  = "<em><i class='icon-calendar'></i> {$this->ch_inf_date->diffForHumans()}</em> &#183; ";
         $str .= Str::limit(e($this->ch_inf_commentaire), 150);
