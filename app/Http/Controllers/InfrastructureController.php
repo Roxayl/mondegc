@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Infrastructure;
 use App\Models\InfrastructureGroupe;
 use App\Models\InfrastructureOfficielle;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class InfrastructureController extends Controller
@@ -13,15 +16,20 @@ class InfrastructureController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(int $id): JsonResponse
     {
         $infrastructure = Infrastructure::with('infrastructurable')->findOrFail($id);
         return response()->json($infrastructure->toArray());
     }
 
-    public function selectGroup($infrastructurable_type, $infrastructurable_id)
+    /**
+     * @param string $infrastructurable_type
+     * @param int $infrastructurable_id
+     * @return View
+     */
+    public function selectGroup(string $infrastructurable_type, int $infrastructurable_id): View
     {
         $infrastructure = new Infrastructure();
         $infrastructure->fill([
@@ -40,11 +48,13 @@ class InfrastructureController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @param Request $request
-     * @param $infrastructurable_type
-     * @param $infrastructurable_id
+     * @param string $infrastructurable_type
+     * @param int $infrastructurable_id
+     * @return View
      */
-    public function create(Request $request, $infrastructurable_type, $infrastructurable_id)
+    public function create(Request $request, string $infrastructurable_type, int $infrastructurable_id): View
     {
         $infrastructure = new Infrastructure();
         $infrastructure->fill([
@@ -73,8 +83,9 @@ class InfrastructureController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $infrastructure = new Infrastructure();
         $infrastructure->fill($request->except(['_method', '_token']));
@@ -100,14 +111,15 @@ class InfrastructureController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Request $request
      * @param int $id
+     * @return View
      */
-    public function edit(Request $request, $id)
+    public function edit(int $id): View
     {
         $infrastructure = Infrastructure::findOrFail($id);
 
-        $infrastructureOfficielle = InfrastructureOfficielle::findOrFail($infrastructure->infrastructure_officielle->first()->ch_inf_off_id);
+        $infrastructureOfficielle = InfrastructureOfficielle::findOrFail(
+            $infrastructure->infrastructure_officielle->first()->ch_inf_off_id);
 
         $infrastructureGroupe = InfrastructureGroupe::findOrFail(
             $infrastructure->infrastructure_officielle
@@ -122,10 +134,11 @@ class InfrastructureController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): RedirectResponse
     {
         $infrastructure = Infrastructure::findOrFail($id);
         $infrastructure->fill($request->except(['_method', '_token']));
@@ -141,9 +154,11 @@ class InfrastructureController extends Controller
 
     /**
      * Affiche le formulaire de confirmation pour supprimer une infra.
-     * @param  int  $id
+     *
+     * @param int $id
+     * @return View
      */
-    public function delete($id)
+    public function delete(int $id): View
     {
         $infrastructure = Infrastructure::findOrFail($id);
 
@@ -155,9 +170,10 @@ class InfrastructureController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $infrastructure = Infrastructure::findOrFail($id);
 

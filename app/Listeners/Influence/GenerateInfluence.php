@@ -8,8 +8,6 @@ class GenerateInfluence
 {
     /**
      * Create the event listener.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -20,9 +18,8 @@ class GenerateInfluence
      * Handle the event.
      *
      * @param InfluencableEvent $event
-     * @return void
      */
-    public function handle(InfluencableEvent $event)
+    public function handle(InfluencableEvent $event): void
     {
         $influencable = $event->getInfluencable();
         $influencable->generateInfluence();

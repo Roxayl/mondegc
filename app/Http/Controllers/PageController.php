@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Page;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
-class PageController extends Controller {
-
-    public function index($page, $url) {
-
+class PageController extends Controller
+{
+    /**
+     * @param int $page
+     * @param string $url
+     * @return RedirectResponse|View
+     */
+    public function index(int $page, string $url)
+    {
         $page = Page::findOrFail($page)->getPageOrFail();
 
         if(trim($page->url) !== trim($url)) {
@@ -16,7 +22,5 @@ class PageController extends Controller {
         }
 
         return view('page')->with('page', $page);
-
     }
-
 }

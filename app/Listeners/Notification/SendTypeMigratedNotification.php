@@ -10,8 +10,6 @@ class SendTypeMigratedNotification
 {
     /**
      * Create the event listener.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -22,9 +20,8 @@ class SendTypeMigratedNotification
      * Handle the event.
      *
      * @param  TypeMigrated  $event
-     * @return void
      */
-    public function handle(TypeMigrated $event)
+    public function handle(TypeMigrated $event): void
     {
         $organisation = $event->organisation;
 

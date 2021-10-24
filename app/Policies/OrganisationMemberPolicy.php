@@ -11,7 +11,12 @@ class OrganisationMemberPolicy
 {
     use HandlesAuthorization;
 
-    public function update(CustomUser $user, OrganisationMember $orgMember)
+    /**
+     * @param CustomUser $user
+     * @param OrganisationMember $orgMember
+     * @return bool
+     */
+    public function update(CustomUser $user, OrganisationMember $orgMember): bool
     {
         // On ne permet pas de modifier les permissions d'un propriétaire.
         // Les droits d'un propriétaire font l'objet d'une autre méthode de transfert
@@ -34,7 +39,12 @@ class OrganisationMemberPolicy
                  Organisation::$permissions['administrator'];
     }
 
-    public function quit(CustomUser $user, OrganisationMember $orgMember)
+    /**
+     * @param CustomUser $user
+     * @param OrganisationMember $orgMember
+     * @return bool
+     */
+    public function quit(CustomUser $user, OrganisationMember $orgMember): bool
     {
         // Un propriétaire ne peut pas quitter une organisation.
         // Les droits d'un propriétaire font l'objet d'une autre méthode de transfert

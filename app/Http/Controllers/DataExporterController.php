@@ -8,10 +8,16 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use LogicException;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DataExporterController extends Controller
 {
-    protected function exportToCsv($filename, $data)
+    /**
+     * @param $filename
+     * @param $data
+     * @return StreamedResponse
+     */
+    protected function exportToCsv($filename, $data): StreamedResponse
     {
         $filename = $filename . '-' . Carbon::today()->format('Y-m-d') . '.csv';
 
@@ -39,7 +45,11 @@ class DataExporterController extends Controller
         return Response::stream($callback, 200, $headers);
     }
 
-    public function temperancePays(Request $request)
+    /**
+     * @param Request $request
+     * @return StreamedResponse
+     */
+    public function temperancePays(Request $request): StreamedResponse
     {
         $paysList = EconomyService::getPaysResources();
         $data = [];

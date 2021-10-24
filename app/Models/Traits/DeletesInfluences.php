@@ -9,7 +9,7 @@ trait DeletesInfluences
     /**
      * Supprime les influences de modèles liées à cet influencable.
      */
-    public function deleteInfluences() : void
+    public function deleteInfluences(): void
     {
         $influences = Influence
             ::where('influencable_type', Influence::getActualClassNameForMorph(get_class()))

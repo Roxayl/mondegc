@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use App\Notifications\OrganisationMemberInvited;
@@ -12,22 +8,31 @@ use App\Notifications\OrganisationMemberPermissionChanged;
 use App\Notifications\OrganisationMemberQuit;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Notification;
 
 /**
  * Class OrganisationMember
- * 
+ *
  * @property int $id
  * @property int|null $organisation_id
  * @property int $permissions
  * @property int|null $pays_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
  * @property Organisation $organisation
  * @property Pays $pays
- *
  * @package App\Models
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember query()
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember whereOrganisationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember wherePaysId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember wherePermissions($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember whereUpdatedAt($value)
+ * @mixin Model
  */
 class OrganisationMember extends Model
 {
@@ -45,17 +50,17 @@ class OrganisationMember extends Model
 		'pays_id'
 	];
 
-	public function organisation()
+	public function organisation(): BelongsTo
 	{
 		return $this->belongsTo(Organisation::class, 'organisation_id');
 	}
 
-	public function pays()
+	public function pays(): BelongsTo
 	{
 		return $this->belongsTo(Pays::class, 'pays_id', 'ch_pay_id');
 	}
 
-	public function getPermissionLabel()
+	public function getPermissionLabel(): string
     {
         switch($this->permissions) {
             case Organisation::$permissions['owner']:
@@ -76,8 +81,11 @@ class OrganisationMember extends Model
         return $label;
     }
 
-    public function sendNotifications(Model $oldMember = null) {
-
+    /**
+     * @param Model|null $oldMember
+     */
+    public function sendNotifications(Model $oldMember = null): void
+    {
         $oldPermission = !is_null($oldMember) ?
             (int)$oldMember->permissions : $this->permissions;
 
@@ -144,6 +152,5 @@ class OrganisationMember extends Model
             Notification::send($users,
                 new OrganisationMemberQuit($pays, $organisation));
         }
-
     }
 }

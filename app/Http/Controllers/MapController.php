@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Services\LegacyPageService;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
 
 class MapController extends Controller
 {
-    public function explore(Request $request) {
-
+    /**
+     * @return View
+     */
+    public function explore(): View
+    {
         $mapScript = LegacyPageService::carteGenerale();
 
         return view('map.explore', compact(['mapScript']));
-
     }
 }

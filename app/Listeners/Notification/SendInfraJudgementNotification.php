@@ -10,8 +10,6 @@ class SendInfraJudgementNotification
 {
     /**
      * Create the event listener.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -22,9 +20,8 @@ class SendInfraJudgementNotification
      * Handle the event.
      *
      * @param InfrastructureJudged $event
-     * @return void
      */
-    public function handle(InfrastructureJudged $event)
+    public function handle(InfrastructureJudged $event): void
     {
         $infrastructure = $event->infrastructure;
         $infrastructurable = $infrastructure->infrastructurable;

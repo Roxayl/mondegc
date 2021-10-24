@@ -738,7 +738,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 
         if(Gate::check('manageInfrastructure', $eloquentPays)):
         ?>
-            <div class="cta-title pull-right-cta" style="margin-top: 30px;">
+            <div class="cta-title pull-right-cta" style="margin-top: 22px;">
             <a href="<?= url('back/page_pays_back.php?paysID=' . $row_Pays['ch_pay_id']
                         . '#infrastructures') ?>"
                class="btn btn-primary btn-cta">
@@ -750,7 +750,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 
       <section>
         <div id="economie" class="titre-vert anchor">
-          <h1>Économie <a href="#Modal-Section" data-toggle="modal" title="Modifier les catégories"><img style="all: initial;" src="https://i11.servimg.com/u/f11/18/33/87/18/edit-l10.png"></a></h1>
+          <h1>Économie</h1>
         </div>
 
           <?php
@@ -887,61 +887,20 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
       </section>
       <!-- Transport
         ================================================== -->
-  <?php if ($row_Pays['ch_pay_header_transport'] OR $row_Pays['ch_pay_text_transport']) { ?>
+
+      <?php if ($row_Pays['ch_pay_header_transport'] OR $row_Pays['ch_pay_text_transport']) { ?>
   <section>
 
-            <?php if (($_SESSION['statut'] >= 20) OR ($row_User['ch_use_id'] == $_SESSION['user_ID'])) { ?>
-            <div class="accordion-group" style="border: none;">
-              <div class="accordion-heading" title="Cliquez pour modifier le contenu de cette section" style="border: none;padding: 0;"> <a class="accordion-toggle collapsed" data-toggle="collapse" href="#collapsetransports" style="padding: 0;">
-                <div id="transport" class="titre-vert" style="">
-                  <h1 style="">Transports</h1><img style="all: initial;position: absolute;margin: -2.4em -6em 0em 14.8em; cursor: pointer;" src="https://i11.servimg.com/u/f11/18/33/87/18/edit-l10.png">
-                      </div></a>
-              </div>
-              <form action="<?php echo $editFormAction; ?>" name="InfoHeader" method="POST" class="form-horizontal" id="InfoHeader">
-              <div id="collapsetransports" class="accordion-body collapse" style="height: 0px;">
-                <div class="accordion-inner" style="scale: 0.95; border: 5px dotted rgb(255, 78, 0); border-radius: 15px; box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 9px -5px, rgba(19, 5, 5, 0.04) 0px 15px 22px 2px, rgba(0, 0, 0, 0.1) 0px 6px 28px 5px !important; padding: 1em 0em 0em;">
-                  <!-- Header -->
-                    <div style="color: #ff4e00; padding: 1em; margin-top: -1em;" >Modifier cette section Transports de la présentation de mon pays</div>
-                  <textarea rows="20" name="ch_pay_text_economie" class="wysiwyg" id="ch_pay_text_economie"><?= htmlPurify($row_Pays['ch_pay_text_transport']) ?></textarea>
-                                          <!-- Bouton envoyer
-        ================================================== -->
-          <button type="submit" class="btn btn-primary" style="width: 96%; text-align: center; margin: 1em 1em; border-radius: 0px 0px 10px 10px;">Mettre à jour</button>
-          <input type="hidden" name="MM_update" value="InfoHeader">
-             </form>
-                </div>
-              </div>
-            </div><?php } else { ?><div id="transport" class="titre-vert" style=""><h1 style="">Transports</h1></div><?php } ?>
+        <div id="transport" class="titre-vert">
+            <h1>Transports</h1>
+        </div>
 
         <div class="well">
           <h5><strong><?= htmlPurify($row_Pays['ch_pay_header_transport']) ?></strong></h5>
           <?= htmlPurify($row_Pays['ch_pay_text_transport']) ?></div>
   </section>
-  <?php } else { ?>
-    <?php if (($_SESSION['statut'] >= 20) OR ($row_User['ch_use_id'] == $_SESSION['user_ID'])) { ?>
-      <section>
-                    <div class="accordion-group" style="border: none; margin: 3em 0em;">
-              <div class="accordion-heading" title="Cliquez pour modifier le contenu de cette section" style="border: none;padding: 0;"> <a class="accordion-toggle collapsed" data-toggle="collapse" href="#collapsetransports" style="padding: 0;">
+      <?php } ?>
 
-                <div id="routes-campagne" class="thumbnail btn-ajout" style='width: 92%; margin: auto; height: 30px;'>
-                  <div>Ajouter une section Transports</div>
-                </div>
-                </a>
-              </div>
-              <form action="<?php echo $editFormAction; ?>" name="InfoHeader" method="POST" class="form-horizontal" id="InfoHeader">
-              <div id="collapsetransports" class="accordion-body collapse" style="height: 0px; margin-top: -1em;">
-                <div class="accordion-inner" style="scale: 0.95; border: 5px dotted rgb(255, 78, 0); border-radius: 15px; box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 9px -5px, rgba(19, 5, 5, 0.04) 0px 15px 22px 2px, rgba(0, 0, 0, 0.1) 0px 6px 28px 5px !important; padding: 1em 0em 0em; border-top: 0px;">
-                  <!-- Header -->
-                    <div style="color: #ff4e00; padding: 1em; margin-top: -1em;" >Plutôt royaume de l'automobile, plaque tournante du trafic aérien ou maritime, ou plutôt à la pointe pour les mobilités douces ? Présentez nous les spécificités de votre pays à propos des transports !</div>
-                  <textarea rows="20" name="ch_pay_text_economie" class="wysiwyg" id="ch_pay_text_economie"><?= htmlPurify($row_Pays['ch_pay_text_transport']) ?></textarea>
-                                          <!-- Bouton envoyer
-        ================================================== -->
-          <button type="submit" class="btn btn-primary" style="width: 96%; text-align: center; margin: 1em 1em; border-radius: 0px 0px 10px 10px;">Créer cette section</button>
-          <input type="hidden" name="MM_update" value="InfoHeader">
-             </form>
-                </div>
-      </section>
-    <?php } ?>
-  <?php } ?>
       <!-- Sport
         ================================================== -->
       <?php if ($row_Pays['ch_pay_header_sport'] OR $row_Pays['ch_pay_text_sport']) { ?>
@@ -1036,37 +995,6 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
       </section>
     </div>
   </div>
-</div>
-
-<!-- Modal -->
-<div id="Modal-Section" class="modal hide fade" tabindex="-1" role="dialog" style="min-width: 50%;" aria-labelledby="ModalSecCont" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Modifier votre section</h3>
-  </div>
-  <div class="modal-body">
-  <form action="<?= DEF_URI_PATH ?>back/membre-modifier_back.php" name="InfoUser" method="POST" class="form-horizontal" id="InfoUser" enctype="multipart/form-data">
-    <div class="modal-footer">
-      <!-- Header -->
-
-                    <label for="ch_pay_header_economie">En-t&ecirc;te <a href="#" rel="clickover" title="En-t&ecirc;te &eacute;conomie" data-content="L'en-t&ecirc;te est mis en exergue dans la mise en page. 250 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
-                    <textarea rows="3" name="ch_pay_header_economie" class="span9" id="ch_pay_header_economie"><?= e($row_Pays['ch_pay_header_economie']) ?></textarea>
-                    <br>
-                    <span class="textareaMaxCharsMsg">250 caract&egrave;res max.</span>
-                  <p>&nbsp;</p>
-                  <!-- Contenu -->
-                  <label for="ch_pay_text_economie">Contenu</label>
-                  <textarea rows="20" name="ch_pay_text_economie" class="wysiwyg" id="ch_pay_text_economie"><?= e($row_Pays['ch_pay_text_economie']) ?></textarea>
-      <!-- Bouton envoyer
-        ================================================== -->
-      <button data-dismiss="modal" aria-hidden="true" class="btn">Fermer</button>
-      <button type="submit" class="btn btn-primary">Enregistrer</button>
-      <input type="hidden" name="MM_update" value="InfoUser">
-    </div>
-  </form>
-</div>
-
-
 </div>
 
 <!-- Footer

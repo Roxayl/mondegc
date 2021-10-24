@@ -5,11 +5,17 @@ namespace App\Http\Controllers;
 use App\Events\Infrastructure\InfrastructureJudged;
 use App\Models\Infrastructure;
 use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class InfrastructureJudgeController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * @param Request $request
+     * @return View
+     */
+    public function index(Request $request): View
     {
         $type = $request->has('type') ? $request->get('type') : 'pending';
         if(!in_array($type, ['pending', 'accepted', 'rejected'])) {
@@ -23,7 +29,11 @@ class InfrastructureJudgeController extends Controller
         return view('infrastructure.judge.index', compact(['infrastructures', 'type']));
     }
 
-    public function show($id)
+    /**
+     * @param int $id
+     * @return View
+     */
+    public function show(int $id): View
     {
         $infrastructure = Infrastructure::findOrFail($id);
 
@@ -32,7 +42,12 @@ class InfrastructureJudgeController extends Controller
         return view('infrastructure.judge.show', compact(['infrastructure']));
     }
 
-    public function judge(Request $request, $id)
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function judge(Request $request, int $id): RedirectResponse
     {
         $infrastructure = Infrastructure::findOrFail($id);
 

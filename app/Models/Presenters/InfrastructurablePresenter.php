@@ -8,7 +8,7 @@ use App\Models\InfrastructureOfficielle;
 
 trait InfrastructurablePresenter
 {
-    protected function getInfrastructurableData() : array
+    protected function getInfrastructurableData(): array
     {
         $fieldPrimaryKey = $this->primaryKey;
         return [
@@ -23,7 +23,7 @@ trait InfrastructurablePresenter
      * pour un modèle {@see \App\Models\Contracts\Infrastructurable} donné.
      * @return array Un array contenant les paramètres de la route.
      */
-    public function selectGroupRouteParameter() : array
+    public function selectGroupRouteParameter(): array
     {
         return $this->getInfrastructurableData();
     }
@@ -42,7 +42,7 @@ trait InfrastructurablePresenter
      */
     public function createRouteParameter(
         InfrastructureGroupe $infrastructureGroupe,
-        ?InfrastructureOfficielle $infrastructureOfficielle) : array
+        ?InfrastructureOfficielle $infrastructureOfficielle): array
     {
         $fieldPrimaryKey = $this->primaryKey;
         $params = $this->getInfrastructurableData();
@@ -53,7 +53,7 @@ trait InfrastructurablePresenter
         return $params;
     }
 
-    public function getType() : string
+    public function getType(): string
     {
         return Infrastructure::getUrlParameterFromMorph(self::class);
     }

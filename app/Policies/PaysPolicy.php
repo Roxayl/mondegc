@@ -10,7 +10,7 @@ class PaysPolicy
 {
     use HandlesAuthorization, ManagesInfrastructures;
 
-    public function viewAny(CustomUser $user)
+    public function viewAny(CustomUser $user): bool
     {
         return true;
     }

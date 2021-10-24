@@ -11,12 +11,12 @@ class VillePolicy
 {
     use HandlesAuthorization, ManagesInfrastructures;
 
-    public function viewAny(CustomUser $user)
+    public function viewAny(CustomUser $user): bool
     {
         return true;
     }
 
-    public function delete(CustomUser $user, Ville $ville)
+    public function delete(CustomUser $user, Ville $ville): bool
     {
         if($user->hasMinPermission('admin')) return true;
 

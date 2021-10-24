@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use App\Jobs\Contracts\NotifiesDiscord;
@@ -14,7 +10,7 @@ use Illuminate\Support\Str;
 
 /**
  * Class DiscordNotification
- * 
+ *
  * @property int $id
  * @property string $channel
  * @property string $type
@@ -24,8 +20,20 @@ use Illuminate\Support\Str;
  * @property boolean $is_sent
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @package App\Models
+ * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification query()
+ * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereChannel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereIsSent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereModelIdentifier($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification wherePayload($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereUuid($value)
+ * @mixin Model
  */
 class DiscordNotification extends Model
 {
@@ -107,7 +115,6 @@ class DiscordNotification extends Model
     /**
      * @param NotifiesDiscord $notification
      * @return DiscordWebhookService
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     private static function resolveWebhook(NotifiesDiscord $notification): DiscordWebhookService
     {
@@ -127,7 +134,7 @@ class DiscordNotification extends Model
     /**
      * Persiste les informations du modèle, et envoie la notification via le webhook.
      */
-    public function send()
+    public function send(): void
     {
         if(is_null($this->webhook)) {
             throw new \UnexpectedValueException("Webhook instance is not defined.");

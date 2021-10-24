@@ -47,10 +47,12 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.2",
         "spatie/laravel-searchable": "^1.6",
-        "tormjens/eventy": "^0.7.0"
+        "tormjens/eventy": "^0.7.0",
+        "ylsideas/feature-flags": "^1.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
+        "barryvdh/laravel-ide-helper": "2.9.1",
         "beyondcode/laravel-dump-server": "^1.0",
         "facade/ignition": "^2.3.6",
         "fzaninotto/faker": "^1.4",
@@ -58,10 +60,15 @@
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.0",
-        "reliese/laravel": "^1.1"
+        "psalm/plugin-laravel": "^1.5",
+        "reliese/laravel": "^1.1",
+        "vimeo/psalm": "^4.11"
     },
     "config": {
         "optimize-autoloader": true,
+        "platform": {
+          "php": "7.4"
+        },
         "preferred-install": "dist",
         "sort-packages": true
     },
@@ -76,13 +83,11 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/",
             "GenCity\\": "legacy/php/GenCity/",
             "Squirrel\\": "lib/Squirrel/"
-        },
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {

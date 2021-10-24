@@ -10,11 +10,6 @@ class ScriptConfiguration extends Component
 {
     private array $data;
 
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         if(defined('DEF_URI_PATH')) {
@@ -33,9 +28,7 @@ class ScriptConfiguration extends Component
     }
 
     /**
-     * Get the view / contents that represent the component.
-     *
-     * @return View
+     * @inheritDoc
      */
     public function render(): View
     {

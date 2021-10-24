@@ -9,8 +9,6 @@ class UpdateInfrastructureInfluences
 {
     /**
      * Create the event listener.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -21,9 +19,8 @@ class UpdateInfrastructureInfluences
      * Handle the event.
      *
      * @param MembershipChanged|TypeMigrated $event
-     * @return void
      */
-    public function handle($event)
+    public function handle($event): void
     {
         $organisation = $event->organisation;
 

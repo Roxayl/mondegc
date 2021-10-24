@@ -1,28 +1,28 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
-use App\Models\Contracts\AggregatesInfluences;
 use App\Models\Contracts\Infrastructurable;
+use App\Models\Contracts\Resourceable;
+use App\Models\Contracts\Roleplayable;
 use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\OrganisationPresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use App\Services\EconomyService;
 use Carbon\Carbon;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use YlsIdeas\FeatureFlags\Facades\Features;
 
 /**
  * Class Organisation
- * 
+ *
  * @property int $id
  * @property string|null $name
  * @property string|null $logo
@@ -33,15 +33,41 @@ use Spatie\Searchable\SearchResult;
  * @property Carbon|null $type_migrated_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
  * @property Collection|OrganisationMember[] $organisation_members
  * @property Collection|Infrastructure[] $infrastructures
- *
+ * @property Collection|ChapterResourceable[] $chapterResources
  * @package App\Models
+ * @property-read int|null $chapter_resources_count
+ * @property-read Collection|\App\Models\Communique[] $communiques
+ * @property-read int|null $communiques_count
+ * @property-read string $slug
+ * @property-read Collection|\App\Models\Infrastructure[] $infrastructuresAll
+ * @property-read int|null $infrastructures_all_count
+ * @property-read Collection|\App\Models\OrganisationMember[] $members
+ * @property-read int|null $members_count
+ * @property-read Collection|\App\Models\OrganisationMember[] $membersAll
+ * @property-read int|null $members_all_count
+ * @property-read Collection|\App\Models\OrganisationMember[] $membersPending
+ * @property-read int|null $members_pending_count
+ * @method static Builder|Organisation newModelQuery()
+ * @method static Builder|Organisation newQuery()
+ * @method static Builder|Organisation query()
+ * @method static Builder|Organisation whereAllowTemperance($value)
+ * @method static Builder|Organisation whereCreatedAt($value)
+ * @method static Builder|Organisation whereFlag($value)
+ * @method static Builder|Organisation whereId($value)
+ * @method static Builder|Organisation whereLogo($value)
+ * @method static Builder|Organisation whereName($value)
+ * @method static Builder|Organisation whereText($value)
+ * @method static Builder|Organisation whereType($value)
+ * @method static Builder|Organisation whereTypeMigratedAt($value)
+ * @method static Builder|Organisation whereUpdatedAt($value)
+ * @mixin Model
  */
-class Organisation extends Model implements Searchable, Infrastructurable, AggregatesInfluences
+class Organisation extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
-    use OrganisationPresenter, InfrastructurablePresenter, HasInfrastructures;
+    use HasInfrastructures;
+    use InfrastructurablePresenter, OrganisationPresenter;
 
 	protected $table = 'organisation';
 
@@ -103,7 +129,7 @@ class Organisation extends Model implements Searchable, Infrastructurable, Aggre
 	    self::TYPE_AGENCY, self::TYPE_ALLIANCE, self::TYPE_ORGANISATION
     ];
 
-	public function getSearchResult() : SearchResult
+	public function getSearchResult(): SearchResult
     {
         $context = "{$this->members->count()} membres";
 
@@ -114,19 +140,29 @@ class Organisation extends Model implements Searchable, Infrastructurable, Aggre
         );
     }
 
-	public function members()
+    /**
+     * @return HasMany
+     */
+	public function members(): HasMany
 	{
 		return $this->hasMany(OrganisationMember::class)
             ->where('permissions', '>=', Organisation::$permissions['member']);
 	}
 
-	public function membersPending()
+    /**
+     * @return HasMany
+     */
+	public function membersPending(): HasMany
     {
 	    return $this->hasMany(OrganisationMember::class)
             ->where('permissions', '=', Organisation::$permissions['pending']);
     }
 
-    public function membersInvited(?Authenticatable $user)
+    /**
+     * @param CustomUser|null $user
+     * @return HasMany
+     */
+    public function membersInvited(?CustomUser $user): HasMany
     {
         if(is_null($user)) {
     	    return $this->hasMany(OrganisationMember::class)
@@ -142,12 +178,18 @@ class Organisation extends Model implements Searchable, Infrastructurable, Aggre
         }
     }
 
-    public function membersAll()
+    /**
+     * @return HasMany
+     */
+    public function membersAll(): HasMany
     {
 	    return $this->hasMany(OrganisationMember::class);
     }
 
-    public function communiques()
+    /**
+     * @return HasMany
+     */
+    public function communiques(): HasMany
     {
         // TODO: https://laravel.com/docs/6.x/eloquent-relationships#one-to-many-polymorphic-relations
         return $this->hasMany(Communique::class,
@@ -157,7 +199,19 @@ class Organisation extends Model implements Searchable, Infrastructurable, Aggre
             ->orderByDesc('ch_com_date');
     }
 
-    public function getUsers($permission = null)
+    /**
+     * @return MorphMany
+     */
+    public function chapterResources(): MorphMany
+    {
+        return $this->morphMany(ChapterResourceable::class, 'resourceable');
+    }
+
+    /**
+     * @param ?scalar $permission
+     * @return \Illuminate\Support\Collection
+     */
+    public function getUsers($permission = null): \Illuminate\Support\Collection
     {
 	    if($permission === null)
 	        $permission = self::$permissions['administrator'];
@@ -184,7 +238,10 @@ class Organisation extends Model implements Searchable, Infrastructurable, Aggre
         return $query;
     }
 
-    public static function allOrdered()
+    /**
+     * @return Builder
+     */
+    public static function allOrdered(): Builder
     {
         return self::with('members')
             ->orderByRaw("CASE type
@@ -194,29 +251,45 @@ class Organisation extends Model implements Searchable, Infrastructurable, Aggre
             ->orderByDesc('created_at');
     }
 
-    public function getSlugAttribute()
+    /**
+     * @return string
+     */
+    public function getSlugAttribute(): string
     {
         return Str::slug($this->name);
     }
 
-    public function maxPermission(CustomUser $user)
+    /**
+     * @param CustomUser $user
+     * @return int
+     */
+    public function maxPermission(CustomUser $user): int
     {
         $pays = array_column($user->pays()->get()->toArray(), 'ch_pay_id');
-        $permission = $this->membersAll()->whereIn('pays_id', $pays)->max('permissions');
+        $permission = (int)$this->membersAll()->whereIn('pays_id', $pays)->max('permissions');
         return $permission;
     }
 
-    public function hasEconomy() : bool
+    /**
+     * @return bool
+     */
+    public function hasEconomy(): bool
     {
         return in_array($this->type, self::$typesWithEconomy, true);
     }
 
-    public function membersGenerateResources() : bool
+    /**
+     * @return bool
+     */
+    public function membersGenerateResources(): bool
     {
         return $this->type === self::TYPE_ALLIANCE;
     }
 
-    public function infrastructureResources() : array
+    /**
+     * @return array<string, float>
+     */
+    public function infrastructureResources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
@@ -230,7 +303,10 @@ class Organisation extends Model implements Searchable, Infrastructurable, Aggre
         return $sumResources;
     }
 
-    public function paysResources() : array
+    /**
+     * @return array<string, float>
+     */
+    public function paysResources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
@@ -251,7 +327,31 @@ class Organisation extends Model implements Searchable, Infrastructurable, Aggre
         return $sumResources;
     }
 
-    public function resources() : array
+    /**
+     * @return array<string, float>
+     */
+    public function roleplayResources(): array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        if(Features::accessible('roleplay')) {
+            return $sumResources;
+        }
+
+        foreach($this->chapterResources as $chapterResource) {
+            $generatedResources = $chapterResource->getGeneratedResources();
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] = $generatedResources[$resource];
+            }
+        }
+
+        return $sumResources;
+    }
+
+    /**
+     * @return array<string, float>
+     */
+    public function resources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
@@ -261,10 +361,12 @@ class Organisation extends Model implements Searchable, Infrastructurable, Aggre
 
             $infrastructureResources = $this->infrastructureResources();
             $paysResources = $this->paysResources();
+            $roleplayResources = $this->roleplayResources();
 
             foreach(config('enums.resources') as $resource) {
                 $sumResources[$resource] += $infrastructureResources[$resource]
-                                         + $paysResources[$resource];
+                                         + $paysResources[$resource]
+                                         + $roleplayResources[$resource];
             }
         }
 

@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use App\Models\Contracts\Influencable;
@@ -11,11 +7,14 @@ use App\Models\Presenters\InfrastructurePresenter;
 use App\Models\Traits\DeletesInfluences;
 use App\Models\Traits\Influencable as GeneratesInfluence;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Class Infrastructure
- * 
+ *
  * @property int $ch_inf_id
  * @property string $ch_inf_label
  * @property int $ch_inf_off_id
@@ -35,10 +34,40 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $ch_inf_juge
  * @property string|null $ch_inf_commentaire_juge
  * @property Carbon|null $judged_at
- * 
  * @property CustomUser $user
- *
  * @package App\Models
+ * @property int|null $infrastructurable_id
+ * @property string|null $infrastructurable_type
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Influence[] $influences
+ * @property-read int|null $influences_count
+ * @property-read Model|\Eloquent $infrastructurable
+ * @property-read \App\Models\InfrastructureOfficielle $infrastructure_officielle
+ * @property-read \App\Models\CustomUser|null $judge
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfCommentaire($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfCommentaireJuge($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfJuge($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfLabel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfLienForum($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfLienImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfLienImage2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfLienImage3($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfLienImage4($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfLienImage5($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfOffId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfStatut($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfVilleid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereInfrastructurableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereInfrastructurableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereJudgedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereLienWiki($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereNomInfra($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereUserCreator($value)
+ * @mixin Model
  */
 class Infrastructure extends Model implements Influencable
 {
@@ -83,42 +112,42 @@ class Infrastructure extends Model implements Influencable
 	public const JUGEMENT_ACCEPTED = 2;
 	public const JUGEMENT_REJECTED = 3;
 
-	public function infrastructurable()
+	public function infrastructurable(): MorphTo
     {
 	    return $this->morphTo();
     }
 
-    public static function pending()
+    public static function pending(): Builder
     {
         return self::where('ch_inf_statut', self::JUGEMENT_PENDING);
     }
 
-    public static function accepted()
+    public static function accepted(): Builder
     {
         return self::where('ch_inf_statut', self::JUGEMENT_ACCEPTED);
     }
 
-    public static function rejected()
+    public static function rejected(): Builder
     {
         return self::where('ch_inf_statut', self::JUGEMENT_REJECTED);
     }
 
-    public function infrastructure_officielle()
+    public function infrastructure_officielle(): BelongsTo
     {
         return $this->belongsTo(InfrastructureOfficielle::class, 'ch_inf_off_id');
     }
 
-	public function user()
+	public function user(): BelongsTo
 	{
 		return $this->belongsTo(CustomUser::class, 'user_creator');
 	}
 
-	public function judge()
+	public function judge(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class, 'ch_inf_juge');
     }
 
-	public static function getMorphFromUrlParameter($parameter)
+	public static function getMorphFromUrlParameter(string $parameter): string
     {
 	    switch($parameter) {
             case 'ville': $class = Ville::class; break;
@@ -129,15 +158,15 @@ class Infrastructure extends Model implements Influencable
         return self::getActualClassNameForMorph($class);
     }
 
-    public static function getUrlParameterFromMorph($morphType)
+    public static function getUrlParameterFromMorph(string $morphType): string
     {
         $morph = explode("\\", $morphType);
         return strtolower(end($morph));
     }
 
-    public function generateInfluence() : void 
+    public function generateInfluence(): void
     {
-        $notAccepted = function() { return $this->ch_inf_statut !== self::JUGEMENT_ACCEPTED; };
+        $notAccepted = fn() => $this->ch_inf_statut !== self::JUGEMENT_ACCEPTED;
 
         $this->removeOldInfluenceRows($notAccepted);
         if($notAccepted()) {
@@ -200,7 +229,8 @@ class Infrastructure extends Model implements Influencable
         }
     }
 
-    public static function boot() {
+    public static function boot()
+    {
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.

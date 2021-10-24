@@ -1,26 +1,28 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
-use App\Models\Contracts\AggregatesInfluences;
 use App\Models\Contracts\Infrastructurable;
+use App\Models\Contracts\Resourceable;
+use App\Models\Contracts\Roleplayable;
 use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\VillePresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use App\Services\EconomyService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use YlsIdeas\FeatureFlags\Facades\Features;
 
 /**
  * Class Ville
- * 
+ *
  * @property int $ch_vil_ID
  * @property int $ch_vil_paysID
  * @property int $ch_vil_user
@@ -51,14 +53,53 @@ use Spatie\Searchable\SearchResult;
  * @property string|null $ch_vil_transports
  * @property string|null $ch_vil_administration
  * @property string|null $ch_vil_culture
- * 
  * @property Pays $pays
- *
+ * @property Collection|ChapterResourceable[] $chapterResources
  * @package App\Models
+ * @property-read int|null $chapter_resources_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Infrastructure[] $infrastructuresAll
+ * @property-read int|null $infrastructures_all_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Patrimoine[] $patrimoines
+ * @property-read int|null $patrimoines_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilAdministration($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilArmoiries($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilCapitale($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilContenu($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilCoordX($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilCoordY($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilCulture($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilDateEnregistrement($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilHeader($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilID($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLabel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLegendeImg1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLegendeImg2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLegendeImg3($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLegendeImg4($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLegendeImg5($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLienImg1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLienImg2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLienImg3($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLienImg4($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLienImg5($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilMisJour($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilNbUpdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilNom($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilPaysID($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilPopulation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilSpecialite($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilTransports($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilTypeJeu($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilUser($value)
+ * @mixin Model
  */
-class Ville extends Model implements Searchable, Infrastructurable, AggregatesInfluences
+class Ville extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
-    use InfrastructurablePresenter, VillePresenter, HasInfrastructures;
+    use HasInfrastructures;
+    use InfrastructurablePresenter, VillePresenter;
 
 	protected $table = 'villes';
 	protected $primaryKey = 'ch_vil_ID';
@@ -112,7 +153,10 @@ class Ville extends Model implements Searchable, Infrastructurable, AggregatesIn
 		'ch_vil_culture'
 	];
 
-	public function getSearchResult() : SearchResult
+    /**
+     * @return SearchResult
+     */
+	public function getSearchResult(): SearchResult
     {
         $context = null;
         if(!is_null($this->pays)) {
@@ -127,22 +171,40 @@ class Ville extends Model implements Searchable, Infrastructurable, AggregatesIn
         );
     }
 
-	public function pays()
-	{
+    /**
+     * @return BelongsTo
+     */
+	public function pays(): BelongsTo
+    {
 		return $this->belongsTo(Pays::class, 'ch_vil_paysID');
 	}
 
-	public function patrimoines()
+    /**
+     * @return HasMany
+     */
+	public function patrimoines(): HasMany
     {
         return $this->hasMany(Patrimoine::class, 'ch_pat_villeID');
     }
 
-	public function getUsers()
+
+    public function chapterResources(): MorphMany
+    {
+        return $this->morphMany(ChapterResourceable::class, 'resourceable');
+    }
+
+    /**
+     * @return Collection<int, CustomUser>
+     */
+	public function getUsers(): Collection
     {
         return $this->pays->users;
     }
 
-    public function infrastructureResources() : array
+    /**
+     * @return array<string, float>
+     */
+    public function infrastructureResources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
@@ -157,7 +219,10 @@ class Ville extends Model implements Searchable, Infrastructurable, AggregatesIn
         return $sumResources;
     }
 
-    public function patrimoineResources() : array
+    /**
+     * @return array<string, float>
+     */
+    public function patrimoineResources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
@@ -172,21 +237,49 @@ class Ville extends Model implements Searchable, Infrastructurable, AggregatesIn
         return $sumResources;
     }
 
-    public function resources() : array
+    /**
+     * @return array<string, float>
+     */
+    public function roleplayResources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
-        $infrastructureResources = $this->infrastructureResources();
-        $patrimoineResources = $this->patrimoineResources();
-        foreach(config('enums.resources') as $resource) {
-            $sumResources[$resource] +=
-                $infrastructureResources[$resource] + $patrimoineResources[$resource];
+        if(Features::accessible('roleplay')) {
+            return $sumResources;
+        }
+
+        foreach($this->chapterResources as $chapterResource) {
+            $generatedResources = $chapterResource->getGeneratedResources();
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] = $generatedResources[$resource];
+            }
         }
 
         return $sumResources;
     }
 
-    public static function boot() {
+    /**
+     * @return array<string, float>
+     */
+    public function resources(): array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        $infrastructureResources = $this->infrastructureResources();
+        $patrimoineResources = $this->patrimoineResources();
+        $roleplayResources = $this->roleplayResources();
+
+        foreach(config('enums.resources') as $resource) {
+            $sumResources[$resource] += $infrastructureResources[$resource]
+                                      + $patrimoineResources[$resource]
+                                      + $roleplayResources[$resource];
+        }
+
+        return $sumResources;
+    }
+
+    public static function boot()
+    {
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.

@@ -1,13 +1,10 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
-use App\Models\Contracts\AggregatesInfluences;
+use App\Models\Contracts\Resourceable;
 use App\Models\Contracts\Infrastructurable;
+use App\Models\Contracts\Roleplayable;
 use App\Models\Managers\PaysMapManager;
 use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\PaysPresenter;
@@ -16,15 +13,20 @@ use App\Services\EconomyService;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use YlsIdeas\FeatureFlags\Facades\Features;
 
 /**
  * Class Pays
- * 
+ *
  * @property int $ch_pay_id
  * @property string $ch_pay_label
  * @property bool $ch_pay_publication
@@ -71,14 +73,77 @@ use Spatie\Searchable\SearchResult;
  * @property int|null $ch_pay_education_carte
  * @property int|null $ch_pay_population_carte
  * @property int|null $ch_pay_emploi_carte
- * 
- * @property Collection|OrganisationMember[] $organisation_members
- *
+ * @property Collection|OrganisationMember[] $organisationMembers
+ * @property Collection|ChapterResourceable[] $chapterResources
  * @package App\Models
+ * @property-read int|null $chapter_resources_count
+ * @property-read Collection|\App\Models\Geometry[] $geometries
+ * @property-read int|null $geometries_count
+ * @property-read Collection|\App\Models\Infrastructure[] $infrastructuresAll
+ * @property-read int|null $infrastructures_all_count
+ * @property-read int|null $organisation_members_count
+ * @property-read Collection|\App\Models\OcgcProposal[] $proposals
+ * @property-read int|null $proposals_count
+ * @property-read Collection|\App\Models\CustomUser[] $users
+ * @property-read int|null $users_count
+ * @property-read Collection|\App\Models\Ville[] $villes
+ * @property-read int|null $villes_count
+ * @method static \Database\Factories\PaysFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayAgricultureCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayBudgetCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayCapitale($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayCommerceCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayContinent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayDevise($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayEducationCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayEmplacement($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayEmploiCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayEnvironnementCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayFormeEtat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderCulture($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderEconomie($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderGeographie($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderHistoire($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderPatrimoine($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderPolitique($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderPresentation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderSport($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderTransport($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayIndustrieCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayLabel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayLangueOfficielle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayLienForum($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayLienImgdrapeau($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayLienImgheader($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayMisJour($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayMonnaie($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayNbUpdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayNom($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayPopulationCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayPublication($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayRechercheCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextCulture($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextEconomie($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextGeographie($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextHistoire($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextPatrimoine($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextPolitique($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextPresentation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextSport($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextTransport($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTourismeCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereLienWiki($value)
+ * @mixin Model
  */
-class Pays extends Model implements Searchable, Infrastructurable, AggregatesInfluences
+class Pays extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
-    use InfrastructurablePresenter, PaysPresenter, HasInfrastructures;
+    use HasFactory, HasInfrastructures;
+    use InfrastructurablePresenter, PaysPresenter;
 
     /**
      * @var array|int[]
@@ -153,9 +218,17 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
 	public const PERMISSION_DIRIGEANT = 10;
 	public const PERMISSION_CODIRIGEANT = 5;
 
+    /**
+     * @var array|int[] Donne un intervalle valide d'emplacements de pays.
+     */
+    private static array $countrySlotRange = [1, 59];
+
 	private ?PaysMapManager $mapManager = null;
 
-    public function getMapManager()
+    /**
+     * @return PaysMapManager
+     */
+    public function getMapManager(): PaysMapManager
     {
         if(is_null($this->mapManager)) {
             $this->mapManager = new PaysMapManager($this);
@@ -163,7 +236,10 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         return $this->mapManager;
     }
 
-	public function getSearchResult() : SearchResult
+    /**
+     * @return SearchResult
+     */
+	public function getSearchResult(): SearchResult
     {
         $context = "Continent " . $this->ch_pay_continent
             . ((int)$this->ch_pay_publication === self::STATUS_ARCHIVED ? ' - Pays archivé' : '');
@@ -175,21 +251,27 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         );
     }
 
-	public function organisation_members()
-	{
+    /**
+     * @return HasMany
+     */
+	public function organisationMembers(): HasMany
+    {
 		return $this->hasMany(OrganisationMember::class, 'pays_id');
 	}
 
 	private function getOrganisationMembership(Closure $f)
     {
-        $query = $this->organisation_members()
+        $query = $this->organisationMembers()
             ->join('organisation', 'organisation.id', 'organisation_id')
             ->where('permissions', '>=', Organisation::PERMISSION_MEMBER);
 
         return $f($query);
     }
 
-	public function organisationsAll()
+    /**
+     * @return Collection<int, Organisation>
+     */
+	public function organisationsAll(): \Illuminate\Support\Collection
     {
         return $this->getOrganisationMembership(function($query) {
             return $query->get()
@@ -197,7 +279,10 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         });
     }
 
-    public function alliance()
+    /**
+     * @return Organisation|null
+     */
+    public function alliance(): ?Organisation
     {
         return $this->getOrganisationMembership(function($query) {
             return $query->where('type', Organisation::TYPE_ALLIANCE)
@@ -206,7 +291,10 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         });
     }
 
-    public function otherOrganisations()
+    /**
+     * @return Collection<int, Organisation>
+     */
+    public function otherOrganisations(): \Illuminate\Support\Collection
     {
         return $this->getOrganisationMembership(function($query) {
             return $query->where('type', '!=', Organisation::TYPE_ALLIANCE)
@@ -215,32 +303,74 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         });
     }
 
-	public function users()
+    /**
+     * @return BelongsToMany
+     */
+	public function users(): BelongsToMany
     {
         return $this->belongsToMany(CustomUser::class, 'users_pays', 'ID_pays', 'ID_user');
     }
 
-    public function villes()
+    /**
+     * @return HasMany
+     */
+    public function villes(): HasMany
     {
         return $this->hasMany(Ville::class, 'ch_vil_paysID');
     }
 
-    public function geometries()
+    /**
+     * @return HasMany
+     */
+    public function geometries(): HasMany
     {
         return $this->hasMany(Geometry::class, 'ch_geo_pay_id');
     }
 
-    public function proposals()
+    /**
+     * @return HasMany
+     */
+    public function proposals(): HasMany
     {
         return $this->hasMany(OcgcProposal::class, 'ID_pays');
     }
 
-    public function getUsers()
+    /**
+     * @return MorphMany
+     */
+    public function chapterResources(): MorphMany
+    {
+        return $this->morphMany(ChapterResourceable::class, 'resourceable');
+    }
+
+    /**
+     * @return Personnage|null
+     */
+    public function personnage(): ?Personnage
+    {
+        return Personnage::where('entity', 'pays')->where('entity_id', $this->ch_pay_id)->first();
+    }
+
+    /**
+     * @return Collection<int, CustomUser>
+     */
+    public function getUsers(): Collection
     {
         return $this->users()->get();
     }
 
-    public function getLastActivity() : Carbon
+    /**
+     * @return array|int[]
+     */
+    public static function getCountrySlotRange(): array
+    {
+        return self::$countrySlotRange;
+    }
+
+    /**
+     * @return Carbon
+     */
+    public function getLastActivity(): Carbon
     {
         $lastActivity = DB::select(
             'SELECT MAX(COALESCE(ch_use_last_log, ch_use_date)) AS last_date FROM users
@@ -249,7 +379,10 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         return new Carbon($lastActivity[0]->last_date);
     }
 
-    public function inactivityCoefficient() : float
+    /**
+     * @return float
+     */
+    public function inactivityCoefficient(): float
     {
         $lastActivity = $this->getLastActivity();
         $coefficient = 1;
@@ -273,7 +406,10 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         return (float)$coefficient;
     }
 
-    public function villeResources() : array
+    /**
+     * @return array<string, float>
+     */
+    public function villeResources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
@@ -287,7 +423,10 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         return $sumResources;
     }
 
-    public function infrastructureResources() : array
+    /**
+     * @return array<string, float>
+     */
+    public function infrastructureResources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
@@ -301,7 +440,10 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         return $sumResources;
     }
 
-    public function organisationResources() : array
+    /**
+     * @return array<string, float>
+     */
+    public function organisationResources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
@@ -318,7 +460,32 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         return $sumResources;
     }
 
-    public function resources($withOrganisation = true) : array
+    /**
+     * @return array<string, float>
+     */
+    public function roleplayResources(): array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        if(Features::accessible('roleplay')) {
+            return $sumResources;
+        }
+
+        foreach($this->chapterResources as $chapterResource) {
+            $generatedResources = $chapterResource->getGeneratedResources();
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] = $generatedResources[$resource];
+            }
+        }
+
+        return $sumResources;
+    }
+
+    /**
+     * @param bool $withOrganisation Intègre les ressources de l'organisation dans le calcul des ressources du pays.
+     * @return array<string, float>
+     */
+    public function resources(bool $withOrganisation = true): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
         $inactivityCoefficient = $this->inactivityCoefficient();
@@ -326,6 +493,7 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         $villeResources = $this->villeResources();
         $mapResources = $this->getMapManager()->mapResources();
         $infrastructureResources = $this->infrastructureResources();
+        $roleplayResources = $this->roleplayResources();
 
         // Si 'withOrganisation' est mis à false, on n'appelle pas organisationResources().
         // Ce paramètre existe et est mis à true parce que, lorsqu'on veut calculer les
@@ -338,7 +506,8 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
             $sumResources[$resource] += $villeResources[$resource]
                                       + $mapResources[$resource]
                                       + $infrastructureResources[$resource]
-                                      + $organisationResources[$resource];
+                                      + $organisationResources[$resource]
+                                      + $roleplayResources[$resource];
 
             // Pour toutes les ressources positives, on peut être amené à diminuer la quantité
             // de ressources données si le pays est inactif.
@@ -350,7 +519,8 @@ class Pays extends Model implements Searchable, Infrastructurable, AggregatesInf
         return $sumResources;
     }
 
-    public static function boot() {
+    public static function boot()
+    {
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.

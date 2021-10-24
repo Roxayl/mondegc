@@ -1,17 +1,14 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Geometry
- * 
+ *
  * @property int $ch_geo_id
  * @property int|null $type_geometrie_id
  * @property string $ch_geo_wkt
@@ -24,10 +21,25 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $ch_geo_mesure
  * @property string|null $ch_geo_type
  * @property string|null $ch_geo_nom
- * 
  * @property TypeGeometry $type_geometry
- *
  * @package App\Models
+ * @property-read \App\Models\Pays $pays
+ * @method static \Illuminate\Database\Eloquent\Builder|Geometry newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Geometry newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Geometry query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoGeometries($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoMajUser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoMesure($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoMisJour($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoNom($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoPayId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoUser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoWkt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereTypeGeometrieId($value)
+ * @mixin Model
  */
 class Geometry extends Model
 {
@@ -62,12 +74,12 @@ class Geometry extends Model
 		'ch_geo_nom'
 	];
 
-	public function pays()
+	public function pays(): BelongsTo
     {
         return $this->belongsTo(Pays::class, 'ch_geo_pay_id');
     }
 
-	public function type_geometry()
+	public function type_geometry(): BelongsTo
 	{
 		return $this->belongsTo(TypeGeometry::class, 'type_geometrie_id');
 	}

@@ -2,12 +2,67 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * App\Models\CustomUser
+ *
+ * @property int $ch_use_id
+ * @property bool|null $ch_use_acces
+ * @property \Illuminate\Support\Carbon|null $ch_use_date
+ * @property \Illuminate\Support\Carbon|null $ch_use_last_log
+ * @property string|null $last_activity
+ * @property string|null $ch_use_login
+ * @property string|null $ch_use_password
+ * @property string|null $ch_use_mail
+ * @property int|null $ch_use_paysID
+ * @property int $ch_use_statut
+ * @property string|null $ch_use_lien_imgpersonnage
+ * @property string|null $ch_use_predicat_dirigeant
+ * @property string|null $ch_use_titre_dirigeant
+ * @property string|null $ch_use_nom_dirigeant
+ * @property string|null $ch_use_prenom_dirigeant
+ * @property string|null $ch_use_biographie_dirigeant
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Infrastructure[] $infrastructures
+ * @property-read int|null $infrastructures_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Log[] $logs
+ * @property-read int|null $logs_count
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\NotificationLegacy[] $notifications_legacy
+ * @property-read int|null $notifications_legacy_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Pays[] $pays
+ * @property-read int|null $pays_count
+ * @method static \Database\Factories\CustomUserFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser query()
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseAcces($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseBiographieDirigeant($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseLastLog($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseLienImgpersonnage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseLogin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseMail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseNomDirigeant($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUsePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUsePaysID($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUsePredicatDirigeant($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUsePrenomDirigeant($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseStatut($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseTitreDirigeant($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereLastActivity($value)
+ * @mixin Model
+ */
 class CustomUser extends Authenticatable
 {
-    use Notifiable;
+    use HasFactory, Notifiable;
 
     protected $table = 'users';
 	protected $primaryKey = 'ch_use_id';
@@ -51,24 +106,27 @@ class CustomUser extends Authenticatable
 	public const JUGE = 15;
 	public const MEMBER = 10;
 
-	public function infrastructures()
+	public function infrastructures(): HasMany
 	{
 		return $this->hasMany(Infrastructure::class, 'user_creator');
 	}
 
-	public function logs()
+	public function logs(): HasMany
 	{
 		return $this->hasMany(Log::class);
 	}
 
-	public function notifications_legacy()
+	public function notificationsLegacy(): HasMany
 	{
 		return $this->hasMany(NotificationLegacy::class, 'recipient_id');
 	}
 
-    public function pays()
+    public function pays(): BelongsToMany
     {
-        return $this->belongsToMany(Pays::class, 'users_pays', 'ID_user', 'ID_pays');
+        return $this->belongsToMany(
+            Pays::class, 'users_pays',
+            'ID_user', 'ID_pays')
+            ->withPivot(['permissions']);
     }
 
     /**
@@ -76,7 +134,7 @@ class CustomUser extends Authenticatable
      *
      * @return string
      */
-    public function getAuthIdentifierName()
+    public function getAuthIdentifierName(): string
     {
         return "ch_use_id";
     }
@@ -91,7 +149,10 @@ class CustomUser extends Authenticatable
         return $this->{$this->getAuthIdentifierName()};
     }
 
-    public function getAuthPassword()
+    /**
+     * @return string
+     */
+    public function getAuthPassword(): string
     {
       return $this->ch_use_password;
     }
@@ -101,7 +162,7 @@ class CustomUser extends Authenticatable
      *
      * @return string
      */
-    public function getReminderEmail()
+    public function getReminderEmail(): string
     {
         return $this->ch_use_mail;
     }
@@ -112,14 +173,18 @@ class CustomUser extends Authenticatable
      * @return bool Renvoie <code>true</code> lorsque l'utilisateur dirige le pays,
      *              <code>false</code> sinon.
      */
-    public function ownsPays(Pays $pays) : bool
+    public function ownsPays(Pays $pays): bool
     {
         return in_array($pays->ch_pay_id,
                  array_column($this->pays()->get()->toArray(), 'ch_pay_id'));
     }
 
-    public function hasMinPermission($level) {
-
+    /**
+     * @param string $level Prend les valeurs suivantes : "member", "juge", "ocgc", "admin".
+     * @return bool
+     */
+    public function hasMinPermission(string $level): bool
+    {
         switch($level) {
             case 'member':
                 $permission = self::MEMBER; break;
@@ -134,7 +199,5 @@ class CustomUser extends Authenticatable
         }
 
         return $this->ch_use_statut >= $permission;
-
     }
-
 }

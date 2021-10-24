@@ -10,12 +10,20 @@ class InfrastructurePolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(CustomUser $user)
+    /**
+     * @param CustomUser $user
+     * @return bool
+     */
+    public function viewAny(CustomUser $user): bool
     {
         return $user->hasMinPermission('juge');
     }
 
-    public function judgeInfrastructure(CustomUser $user)
+    /**
+     * @param CustomUser $user
+     * @return bool
+     */
+    public function judgeInfrastructure(CustomUser $user): bool
     {
         return $this->viewAny($user);
     }
