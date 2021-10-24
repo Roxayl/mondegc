@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use App\Models\Contracts\Infrastructurable;
@@ -26,7 +22,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
 
 /**
  * Class Ville
- * 
+ *
  * @property int $ch_vil_ID
  * @property int $ch_vil_paysID
  * @property int $ch_vil_user
@@ -57,11 +53,48 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property string|null $ch_vil_transports
  * @property string|null $ch_vil_administration
  * @property string|null $ch_vil_culture
- * 
  * @property Pays $pays
  * @property Collection|ChapterResourceable[] $chapterResources
- *
  * @package App\Models
+ * @property-read int|null $chapter_resources_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Infrastructure[] $infrastructuresAll
+ * @property-read int|null $infrastructures_all_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Patrimoine[] $patrimoines
+ * @property-read int|null $patrimoines_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilAdministration($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilArmoiries($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilCapitale($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilContenu($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilCoordX($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilCoordY($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilCulture($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilDateEnregistrement($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilHeader($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilID($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLabel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLegendeImg1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLegendeImg2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLegendeImg3($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLegendeImg4($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLegendeImg5($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLienImg1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLienImg2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLienImg3($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLienImg4($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLienImg5($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilMisJour($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilNbUpdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilNom($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilPaysID($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilPopulation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilSpecialite($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilTransports($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilTypeJeu($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilUser($value)
+ * @mixin Model
  */
 class Ville extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
@@ -245,7 +278,8 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
         return $sumResources;
     }
 
-    public static function boot() {
+    public static function boot()
+    {
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.

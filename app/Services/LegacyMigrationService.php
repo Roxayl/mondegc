@@ -12,24 +12,16 @@ class LegacyMigrationService
     private array $queries = [];
 
     /**
-     * Créé une instance du service de migration.
-     */
-    public function __construct()
-    {
-        return $this;
-    }
-
-    /**
      * Exécute la migration.
      */
-    public function run()
+    public function run(): void
     {
         DB::beginTransaction();
 
         $count = count($this->queries);
 
         $cpt = 1;
-        foreach($this->queries as $i => $query) {
+        foreach($this->queries as $query) {
             print("<strong>$cpt/$count : </strong>");
             print("Executing query: ");
             print('<pre>');
@@ -47,7 +39,7 @@ class LegacyMigrationService
      * @param string $query Requête SQL raw.
      * @return $this
      */
-    public function addQuery($query)
+    public function addQuery(string $query): self
     {
         $this->queries[] = $query;
 

@@ -14,10 +14,10 @@ class OrganisationPolicy
     /**
      * Determine whether the user can view any organisations.
      *
-     * @param  \App\Models\CustomUser  $user
-     * @return mixed
+     * @param CustomUser $user
+     * @return bool
      */
-    public function viewAny(CustomUser $user)
+    public function viewAny(CustomUser $user): bool
     {
         return true;
     }
@@ -25,11 +25,11 @@ class OrganisationPolicy
     /**
      * Determine whether the user can view the organisation.
      *
-     * @param  \App\Models\CustomUser  $user
-     * @param  \App\Models\Organisation  $organisation
-     * @return mixed
+     * @param CustomUser $user
+     * @param Organisation $organisation
+     * @return bool
      */
-    public function view(CustomUser $user, Organisation $organisation)
+    public function view(CustomUser $user, Organisation $organisation): bool
     {
         return true;
     }
@@ -37,10 +37,10 @@ class OrganisationPolicy
     /**
      * Determine whether the user can create organisations.
      *
-     * @param  \App\Models\CustomUser  $user
-     * @return mixed
+     * @param CustomUser $user
+     * @return bool
      */
-    public function create(CustomUser $user)
+    public function create(CustomUser $user): bool
     {
         return $user->hasMinPermission('member');
     }
@@ -48,24 +48,25 @@ class OrganisationPolicy
     /**
      * Determine whether the user can update the organisation.
      *
-     * @param  \App\Models\CustomUser  $user
-     * @param  \App\Models\Organisation  $organisation
-     * @return mixed
+     * @param CustomUser $user
+     * @param Organisation $organisation
+     * @return bool
      */
-    public function update(CustomUser $user, Organisation $organisation)
+    public function update(CustomUser $user, Organisation $organisation): bool
     {
         if($user->hasMinPermission('admin')) return true;
+
         return $this->administrate($user, $organisation);
     }
 
     /**
      * Determine whether the user can delete the organisation.
      *
-     * @param  \App\Models\CustomUser  $user
-     * @param  \App\Models\Organisation  $organisation
-     * @return mixed
+     * @param CustomUser $user
+     * @param Organisation $organisation
+     * @return bool
      */
-    public function delete(CustomUser $user, Organisation $organisation)
+    public function delete(CustomUser $user, Organisation $organisation): bool
     {
         return false;
     }
@@ -73,11 +74,11 @@ class OrganisationPolicy
     /**
      * Determine whether the user can restore the organisation.
      *
-     * @param  \App\Models\CustomUser  $user
-     * @param  \App\Models\Organisation  $organisation
-     * @return mixed
+     * @param CustomUser $user
+     * @param Organisation $organisation
+     * @return bool
      */
-    public function restore(CustomUser $user, Organisation $organisation)
+    public function restore(CustomUser $user, Organisation $organisation): bool
     {
         return false;
     }
@@ -85,11 +86,11 @@ class OrganisationPolicy
     /**
      * Determine whether the user can permanently delete the organisation.
      *
-     * @param  \App\Models\CustomUser  $user
-     * @param  \App\Models\Organisation  $organisation
-     * @return mixed
+     * @param CustomUser $user
+     * @param Organisation $organisation
+     * @return bool
      */
-    public function forceDelete(CustomUser $user, Organisation $organisation)
+    public function forceDelete(CustomUser $user, Organisation $organisation): bool
     {
         return false;
     }
@@ -97,11 +98,11 @@ class OrganisationPolicy
     /**
      * Détermine si l'utilisateur peut administrer l'organisation.
      *
-     * @param  \App\Models\CustomUser  $user
-     * @param  \App\Models\Organisation  $organisation
-     * @return mixed
+     * @param CustomUser $user
+     * @param Organisation $organisation
+     * @return bool
      */
-    public function administrate(CustomUser $user, Organisation $organisation)
+    public function administrate(CustomUser $user, Organisation $organisation): bool
     {
         return $organisation->maxPermission($user) >=
             Organisation::$permissions['administrator'];

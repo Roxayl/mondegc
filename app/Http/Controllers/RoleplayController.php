@@ -20,7 +20,7 @@ class RoleplayController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(): Response
     {
         // TODO: Not yet implemented.
         return response()->noContent();
@@ -31,7 +31,7 @@ class RoleplayController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create(): Response
     {
         // TODO: Not yet implemented.
         return response()->noContent();
@@ -43,7 +43,7 @@ class RoleplayController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): Response
     {
         // TODO: Not yet implemented.
         return response()->noContent();
@@ -100,7 +100,7 @@ class RoleplayController extends Controller
      * @param Roleplay $roleplay
      * @return Response
      */
-    public function edit(Roleplay $roleplay)
+    public function edit(Roleplay $roleplay): Response
     {
         // TODO: Not yet implemented.
         return response()->noContent();
@@ -113,7 +113,7 @@ class RoleplayController extends Controller
      * @param Roleplay $roleplay
      * @return Response
      */
-    public function update(Request $request, Roleplay $roleplay)
+    public function update(Request $request, Roleplay $roleplay): Response
     {
         // TODO: Not yet implemented.
         return response()->noContent();
@@ -125,7 +125,7 @@ class RoleplayController extends Controller
      * @param Roleplay $roleplay
      * @return Response
      */
-    public function destroy(Roleplay $roleplay)
+    public function destroy(Roleplay $roleplay): Response
     {
         // TODO: Not yet implemented.
         return response()->noContent();

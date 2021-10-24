@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use App\Models\Contracts\Infrastructurable;
@@ -27,7 +23,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
 
 /**
  * Class Organisation
- * 
+ *
  * @property int $id
  * @property string|null $name
  * @property string|null $logo
@@ -38,12 +34,36 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property Carbon|null $type_migrated_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
  * @property Collection|OrganisationMember[] $organisation_members
  * @property Collection|Infrastructure[] $infrastructures
  * @property Collection|ChapterResourceable[] $chapterResources
- *
  * @package App\Models
+ * @property-read int|null $chapter_resources_count
+ * @property-read Collection|\App\Models\Communique[] $communiques
+ * @property-read int|null $communiques_count
+ * @property-read string $slug
+ * @property-read Collection|\App\Models\Infrastructure[] $infrastructuresAll
+ * @property-read int|null $infrastructures_all_count
+ * @property-read Collection|\App\Models\OrganisationMember[] $members
+ * @property-read int|null $members_count
+ * @property-read Collection|\App\Models\OrganisationMember[] $membersAll
+ * @property-read int|null $members_all_count
+ * @property-read Collection|\App\Models\OrganisationMember[] $membersPending
+ * @property-read int|null $members_pending_count
+ * @method static Builder|Organisation newModelQuery()
+ * @method static Builder|Organisation newQuery()
+ * @method static Builder|Organisation query()
+ * @method static Builder|Organisation whereAllowTemperance($value)
+ * @method static Builder|Organisation whereCreatedAt($value)
+ * @method static Builder|Organisation whereFlag($value)
+ * @method static Builder|Organisation whereId($value)
+ * @method static Builder|Organisation whereLogo($value)
+ * @method static Builder|Organisation whereName($value)
+ * @method static Builder|Organisation whereText($value)
+ * @method static Builder|Organisation whereType($value)
+ * @method static Builder|Organisation whereTypeMigratedAt($value)
+ * @method static Builder|Organisation whereUpdatedAt($value)
+ * @mixin Model
  */
 class Organisation extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
@@ -140,10 +160,10 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     }
 
     /**
-     * @param Authenticatable|null $user
+     * @param CustomUser|null $user
      * @return HasMany
      */
-    public function membersInvited(?Authenticatable $user): HasMany
+    public function membersInvited(?CustomUser $user): HasMany
     {
         if(is_null($user)) {
     	    return $this->hasMany(OrganisationMember::class)

@@ -16,12 +16,12 @@ class MigrateType extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    protected function canMigrateToAgency() : bool
+    protected function canMigrateToAgency(): bool
     {
         $allowed = true;
 
@@ -32,7 +32,7 @@ class MigrateType extends FormRequest
         return $allowed;
     }
 
-    protected function canMigrateToAlliance() : bool
+    protected function canMigrateToAlliance(): bool
     {
         $allowed = true;
 
@@ -55,7 +55,7 @@ class MigrateType extends FormRequest
         return $allowed;
     }
 
-    protected function canMigrateToGroup() : bool
+    protected function canMigrateToGroup(): bool
     {
         $allowed = true;
 
@@ -67,7 +67,7 @@ class MigrateType extends FormRequest
         return $allowed;
     }
 
-    protected function canMigrateBasedOnTime() : bool
+    protected function canMigrateBasedOnTime(): bool
     {
         $allowed = true;
 
@@ -88,7 +88,7 @@ class MigrateType extends FormRequest
      * @return array
      * @throws ValidationException
      */
-    public function rules()
+    public function rules(): array
     {
         $this->organisation = Organisation::findOrFail(
             request()->route('organisation'));

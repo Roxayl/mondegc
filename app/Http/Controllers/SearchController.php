@@ -5,15 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Organisation;
 use App\Models\Pays;
 use App\Models\Ville;
-use App\Models\MonumentCategory;
 use App\Models\Patrimoine;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
 
 class SearchController extends Controller
 {
-    public function index(Request $request) {
-
+    public function index(Request $request): View
+    {
         $query = $request->input('query', '');
         if(empty($query)) {
             return view('search.search');
@@ -27,7 +27,5 @@ class SearchController extends Controller
             ->search($query);
 
         return view('search.search', compact(['query', 'results']));
-
     }
-
 }

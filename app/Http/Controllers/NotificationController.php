@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
+    /**
+     * @return View
+     */
     public function index(): View
     {
         $unread = auth()->user()->unreadNotifications;
@@ -18,6 +21,10 @@ class NotificationController extends Controller
         return view('notification.show', compact(['notifications', 'unread']));
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function markAsRead(Request $request): JsonResponse
     {
         auth()->user()->unreadNotifications->markAsRead();

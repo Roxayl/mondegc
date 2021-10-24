@@ -8,26 +8,33 @@ use App\Models\Communique;
 use App\Models\Organisation;
 use App\Models\OrganisationMember;
 use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class OrganisationController extends Controller
 {
-
     /**
      * Display a listing of the resource.
+     *
+     * @return RedirectResponse
      */
-    public function index()
+    public function index(): RedirectResponse
     {
         return redirect('politique.php#organisations');
     }
 
     /**
      * Show the form for creating a new resource.
+     *
+     * @param Request $request
+     * @return View
      */
-    public function create(Request $request)
+    public function create(Request $request): View
     {
         $this->authorize('create', Organisation::class);
         $organisation = new Organisation();
@@ -42,9 +49,10 @@ class OrganisationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $this->authorize('create', Organisation::class);
 
@@ -63,7 +71,7 @@ class OrganisationController extends Controller
             'permissions' => Organisation::$permissions['owner'],
             'pays_id' => $request->pays_id
         );
-        $member = OrganisationMember::create($memberData);
+        OrganisationMember::create($memberData);
 
         return redirect()->route('organisation.showslug',
               $organisation->showRouteParameter())
@@ -71,9 +79,13 @@ class OrganisationController extends Controller
     }
 
     /**
-     * Display the specified resource
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @param string|null $slug
+     * @return View|RedirectResponse
      */
-    public function show($id, $slug = null)
+    public function show(int $id, string $slug = null)
     {
         $organisation = Organisation::with(['members', 'membersPending'])
             ->findOrFail($id);
@@ -103,9 +115,10 @@ class OrganisationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     * @return View
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $organisation = Organisation::with('members')->findOrFail($id);
         $this->authorize('update', $organisation);
@@ -116,10 +129,11 @@ class OrganisationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): RedirectResponse
     {
         $organisation = Organisation::with('members')->findOrFail($id);
         $this->authorize('update', $organisation);
@@ -134,15 +148,18 @@ class OrganisationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
      */
-    public function destroy($id)
+    public function destroy(int $id): void
     {
-        throw new BadRequestHttpException();
+        abort(404);
     }
 
-    public function migrate($id)
+    /**
+     * @param int $id
+     * @return View
+     */
+    public function migrate(int $id): View
     {
         $organisation = Organisation::findOrFail($id);
         $this->authorize('update', $organisation);
@@ -150,7 +167,12 @@ class OrganisationController extends Controller
         return view('organisation.migrate', compact(['organisation']));
     }
 
-    public function runMigration(MigrateType $request, $id)
+    /**
+     * @param MigrateType $request
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function runMigration(MigrateType $request, int $id): RedirectResponse
     {
         $organisation = Organisation::findOrFail($id);
         $this->authorize('update', $organisation);

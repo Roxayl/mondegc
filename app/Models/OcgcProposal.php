@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -17,7 +13,7 @@ use Illuminate\Support\Str;
 
 /**
  * Class OcgcProposal
- * 
+ *
  * @property int $id
  * @property int|null $ID_pays
  * @property string|null $question
@@ -41,8 +37,35 @@ use Illuminate\Support\Str;
  * @property int|null $res_id
  * @property Carbon|null $created
  * @property Carbon|null $updated
- *
  * @package App\Models
+ * @property-read \App\Models\Pays|null $pays
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal query()
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereCreated($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereDebateEnd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereDebateStart($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereIDPays($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereIsValid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereLinkDebate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereLinkDebateName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereLinkWiki($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereLinkWikiName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereMotive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereQuestion($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereReponse1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereReponse2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereReponse3($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereReponse4($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereReponse5($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereResId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereResYear($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereThreshold($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereTypeReponse($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal whereUpdated($value)
+ * @mixin Model
  */
 class OcgcProposal extends Model
 {

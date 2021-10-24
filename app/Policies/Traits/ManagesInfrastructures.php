@@ -21,7 +21,7 @@ trait ManagesInfrastructures
      * @return bool
      */
     public function manageInfrastructure(
-        CustomUser $user, Infrastructurable $infrastructurable)
+        CustomUser $user, Infrastructurable $infrastructurable): bool
     {
         if($user->hasMinPermission('ocgc')) {
             return true;
@@ -32,7 +32,12 @@ trait ManagesInfrastructures
         return $this->$method($user, $infrastructurable);
     }
 
-    protected function checkOrganisation(CustomUser $user, Organisation $infrastructurable)
+    /**
+     * @param CustomUser $user
+     * @param Organisation $infrastructurable
+     * @return bool
+     */
+    protected function checkOrganisation(CustomUser $user, Organisation $infrastructurable): bool
     {
         if(!$infrastructurable->hasEconomy()) {
             return false;
@@ -40,13 +45,23 @@ trait ManagesInfrastructures
         return Gate::check('administrate', $infrastructurable);
     }
 
-    protected function checkVille(CustomUser $user, Ville $infrastructurable)
+    /**
+     * @param CustomUser $user
+     * @param Ville $infrastructurable
+     * @return bool
+     */
+    protected function checkVille(CustomUser $user, Ville $infrastructurable): bool
     {
         $pays = $infrastructurable->pays;
         return $this->checkPays($user, $pays);
     }
 
-    protected function checkPays(CustomUser $user, Pays $infrastructurable)
+    /**
+     * @param CustomUser $user
+     * @param Pays $infrastructurable
+     * @return bool
+     */
+    protected function checkPays(CustomUser $user, Pays $infrastructurable): bool
     {
         if($user->ownsPays($infrastructurable)) {
             return true;

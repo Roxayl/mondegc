@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use App\Models\Contracts\Resourceable;
@@ -30,7 +26,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
 
 /**
  * Class Pays
- * 
+ *
  * @property int $ch_pay_id
  * @property string $ch_pay_label
  * @property bool $ch_pay_publication
@@ -77,11 +73,72 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property int|null $ch_pay_education_carte
  * @property int|null $ch_pay_population_carte
  * @property int|null $ch_pay_emploi_carte
- * 
  * @property Collection|OrganisationMember[] $organisationMembers
  * @property Collection|ChapterResourceable[] $chapterResources
- *
  * @package App\Models
+ * @property-read int|null $chapter_resources_count
+ * @property-read Collection|\App\Models\Geometry[] $geometries
+ * @property-read int|null $geometries_count
+ * @property-read Collection|\App\Models\Infrastructure[] $infrastructuresAll
+ * @property-read int|null $infrastructures_all_count
+ * @property-read int|null $organisation_members_count
+ * @property-read Collection|\App\Models\OcgcProposal[] $proposals
+ * @property-read int|null $proposals_count
+ * @property-read Collection|\App\Models\CustomUser[] $users
+ * @property-read int|null $users_count
+ * @property-read Collection|\App\Models\Ville[] $villes
+ * @property-read int|null $villes_count
+ * @method static \Database\Factories\PaysFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayAgricultureCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayBudgetCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayCapitale($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayCommerceCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayContinent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayDevise($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayEducationCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayEmplacement($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayEmploiCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayEnvironnementCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayFormeEtat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderCulture($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderEconomie($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderGeographie($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderHistoire($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderPatrimoine($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderPolitique($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderPresentation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderSport($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayHeaderTransport($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayIndustrieCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayLabel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayLangueOfficielle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayLienForum($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayLienImgdrapeau($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayLienImgheader($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayMisJour($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayMonnaie($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayNbUpdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayNom($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayPopulationCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayPublication($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayRechercheCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextCulture($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextEconomie($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextGeographie($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextHistoire($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextPatrimoine($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextPolitique($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextPresentation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextSport($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextTransport($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTourismeCarte($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pays whereLienWiki($value)
+ * @mixin Model
  */
 class Pays extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
@@ -462,7 +519,8 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         return $sumResources;
     }
 
-    public static function boot() {
+    public static function boot()
+    {
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.

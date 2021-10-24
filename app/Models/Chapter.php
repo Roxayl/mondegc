@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -16,7 +12,7 @@ use Illuminate\Support\Str;
 
 /**
  * Class Chapter
- * 
+ *
  * @property int $id
  * @property int $roleplay_id
  * @property int $order
@@ -31,12 +27,28 @@ use Illuminate\Support\Str;
  * @property Carbon|null $ending_date
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
  * @property Roleplay $roleplay
  * @property CustomUser $user
  * @property Collection|ChapterResourceable[] $resourceables
- *
  * @package App\Models
+ * @property-read int|null $resourceables_count
+ * @property-read \App\Models\CustomUser $userCreator
+ * @method static \Database\Factories\ChapterFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chapter newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chapter newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chapter query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereEndingDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereRoleplayId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereStartingDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereSummary($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereUserId($value)
+ * @mixin Model
  */
 class Chapter extends Model
 {

@@ -1,18 +1,16 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class TypeGeometry
- * 
+ *
  * @property int $id
  * @property int $group_id
  * @property string $label
@@ -28,11 +26,29 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $coef_population
  * @property Carbon $created_at
  * @property Carbon $updated_at
- * 
  * @property TypeGeometriesGroup $type_geometries_group
  * @property Collection|Geometry[] $geometries
- *
  * @package App\Models
+ * @property-read int|null $geometries_count
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry query()
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry whereCoefAgriculture($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry whereCoefBudget($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry whereCoefCommerce($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry whereCoefEducation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry whereCoefEnvironnement($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry whereCoefIndustrie($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry whereCoefPopulation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry whereCoefRecherche($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry whereCoefTourisme($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry whereGroupId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry whereLabel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry whereTypeGeometrie($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry whereUpdatedAt($value)
+ * @mixin Model
  */
 class TypeGeometry extends Model
 {
@@ -66,12 +82,12 @@ class TypeGeometry extends Model
 		'coef_population'
 	];
 
-	public function type_geometries_group()
+	public function type_geometries_group(): BelongsTo
 	{
 		return $this->belongsTo(TypeGeometriesGroup::class, 'group_id');
 	}
 
-	public function geometries()
+	public function geometries(): HasMany
 	{
 		return $this->hasMany(Geometry::class, 'type_geometrie_id');
 	}

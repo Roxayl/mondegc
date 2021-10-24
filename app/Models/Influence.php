@@ -1,17 +1,14 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Class Influence
- * 
+ *
  * @property int $id
  * @property string $influencable_type
  * @property int|null $influencable_id
@@ -26,8 +23,25 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $generates_influence_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
- *
  * @package App\Models
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence whereAgriculture($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence whereBudget($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence whereCommerce($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence whereEducation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence whereEnvironnement($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence whereGeneratesInfluenceAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence whereIndustrie($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence whereInfluencableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence whereInfluencableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence whereRecherche($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence whereTourisme($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Influence whereUpdatedAt($value)
+ * @mixin Model
  */
 class Influence extends Model
 {
@@ -59,7 +73,7 @@ class Influence extends Model
         'tourisme'
     ];
 
-    public function influencable()
+    public function influencable(): MorphTo
     {
         $this->morphTo();
     }

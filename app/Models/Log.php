@@ -1,17 +1,14 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Log
- * 
+ *
  * @property int $id
  * @property string $target
  * @property int|null $target_id
@@ -19,10 +16,19 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $user_id
  * @property string|null $data_changes
  * @property Carbon $created
- * 
  * @property CustomUser $user
- *
  * @package App\Models
+ * @method static \Illuminate\Database\Eloquent\Builder|Log newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Log newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Log query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereCreated($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereDataChanges($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereTarget($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereTargetId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereTypeAction($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereUserId($value)
+ * @mixin Model
  */
 class Log extends Model
 {
@@ -47,7 +53,7 @@ class Log extends Model
 		'created'
 	];
 
-	public function user()
+	public function user(): BelongsTo
 	{
 		return $this->belongsTo(CustomUser::class);
 	}

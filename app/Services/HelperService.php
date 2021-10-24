@@ -7,9 +7,12 @@ use HTMLPurifier_Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ViewErrorBag;
 
-class HelperService {
-
-    static function displayAlert() : string
+class HelperService
+{
+    /**
+     * @return string
+     */
+    public static function displayAlert(): string
     {
         $output = '';
 
@@ -32,16 +35,27 @@ class HelperService {
         return $output;
     }
 
-    static function renderLegacyElement($element, $data)
+    /**
+     * @param string $element
+     * @param scalar|array $data
+     * @return string
+     */
+    public static function renderLegacyElement(string $element, $data): string
     {
-        if(!is_array($data))
+        if(!is_array($data)) {
             $data = array($data);
+        }
+
         ob_start();
         require(base_path('legacy/php/elements/' . $element . '.php'));
         return ob_get_clean();
     }
 
-    static function purifyHtml($text)
+    /**
+     * @param string|null $text
+     * @return string
+     */
+    public static function purifyHtml(?string $text): string
     {
         static $purifier = null;
         if(is_null($purifier)) {
@@ -53,5 +67,4 @@ class HelperService {
         }
         return $purifier->purify($text);
     }
-
 }

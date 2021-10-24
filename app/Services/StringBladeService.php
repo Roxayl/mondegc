@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Blade;
 
@@ -15,7 +16,7 @@ class StringBladeService
     /**
      * @var Filesystem
     */
-    protected $file;
+    protected Filesystem $file;
 
     /**
      * @var \Illuminate\View\View|\Illuminate\Contracts\View\Factory
@@ -34,37 +35,36 @@ class StringBladeService
     }
 
     /**
-     * Get Blade File path.
+     * Get Blade file path.
      *
-     * @param $bladeString
-     * @return bool|string
+     * @param string $bladeString
+     * @return string
+     * @throws FileNotFoundException
      */
-    protected function getBlade($bladeString)
+    protected function getBlade(string $bladeString): string
     {
         $bladePath = $this->generateBladePath();
 
         $content = Blade::compileString($bladeString);
 
-        return $this->file->put($bladePath, $content)
-            ? $bladePath
-            : false;
+        if(! $this->file->put($bladePath, $content)) {
+            throw new FileNotFoundException("Impossible de créer un fichier temporaire.");
+        }
+        return $bladePath;
     }
 
     /**
      * Get the rendered HTML.
      *
-     * @param $bladeString
+     * @param string $bladeString
      * @param array $data
      * @return bool|string
+     * @throws FileNotFoundException
      */
-    public function render($bladeString, $data = [])
+    public function render(string $bladeString, array $data = [])
     {
         // Put the php version of blade String to *.php temp file & returns the temp file path
         $bladePath = $this->getBlade($bladeString);
-
-        if (!$bladePath) {
-            return false;
-        }
 
         // Render the php temp file & return the HTML content
         $content = $this->viewer->file($bladePath, $data)->render();
@@ -80,14 +80,14 @@ class StringBladeService
      *
      * @return string
      */
-    protected function generateBladePath()
+    protected function generateBladePath(): string
     {
         $cachePath = rtrim(config('cache.stores.file.path'), '/');
         $tempFileName = sha1('string-blade' . microtime());
         $directory = "{$cachePath}/string-blades";
 
-        if (!is_dir($directory)) {
-            mkdir($directory, 0777);
+        if(!is_dir($directory)) {
+            mkdir($directory);
         }
 
         return "{$directory}/{$tempFileName}.php";

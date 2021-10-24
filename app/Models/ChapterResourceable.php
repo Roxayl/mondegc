@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use App\Models\Contracts\Influencable;
@@ -19,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Class ChapterResourceable
- * 
+ *
  * @property int $id
  * @property int $chapter_id
  * @property string $resourceable_type
@@ -34,11 +30,30 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property float $education
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
  * @property Chapter $chapter
  * @property Resourceable $resourceable
- *
  * @package App\Models
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Influence[] $influences
+ * @property-read int|null $influences_count
+ * @method static \Database\Factories\ChapterResourceableFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereAgriculture($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereBudget($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereChapterId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereCommerce($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereEducation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereEnvironnement($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereIndustrie($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereRecherche($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereResourceableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereResourceableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereTourisme($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereUpdatedAt($value)
+ * @mixin Model
  */
 class ChapterResourceable extends Model implements Influencable
 {

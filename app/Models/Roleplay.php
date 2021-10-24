@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use App\Models\Contracts\Roleplayable;
@@ -18,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 /**
  * Class Roleplay
- * 
+ *
  * @property int $id
  * @property string $name
  * @property int $user_id
@@ -26,13 +22,23 @@ use Illuminate\Support\Facades\DB;
  * @property Carbon|null $ending_date
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
  * @property CustomUser $owner
  * @property Collection|Chapter[] $chapters
- *
- * @method static Builder current() Filtre sur la liste des roleplays actuels, en cours.
- *
+ * @method static Builder|Roleplay current() Filtre sur la liste des roleplays actuels, en cours.
  * @package App\Models
+ * @property-read int|null $chapters_count
+ * @method static \Database\Factories\RoleplayFactory factory(...$parameters)
+ * @method static Builder|Roleplay newModelQuery()
+ * @method static Builder|Roleplay newQuery()
+ * @method static Builder|Roleplay query()
+ * @method static Builder|Roleplay whereCreatedAt($value)
+ * @method static Builder|Roleplay whereEndingDate($value)
+ * @method static Builder|Roleplay whereId($value)
+ * @method static Builder|Roleplay whereName($value)
+ * @method static Builder|Roleplay whereStartingDate($value)
+ * @method static Builder|Roleplay whereUpdatedAt($value)
+ * @method static Builder|Roleplay whereUserId($value)
+ * @mixin Model
  */
 class Roleplay extends Model
 {
