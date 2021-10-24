@@ -24,8 +24,8 @@ $monument_ressources = mysql_query($query_monument_ressources, $maconnexion) or 
 $row_monument_ressources_neutre = mysql_fetch_assoc($monument_ressources);
 
 
-        $lastActivity = $row_monument['ch_pat_mis_jour'];
-        $coefficient = 1 ;
+        $lastActivity = Carbon::createFromFormat('Y-m-d H:i:s', $row_monument['ch_pat_mis_jour']);
+        $coefficient = 1;
 
         if($lastActivity < Carbon::now()->subMonths(6)) {
             $coefficient = 0.1;
@@ -46,7 +46,7 @@ $totalRows_users = mysql_num_rows($users);
 
 // *** Requête pour infos sur les categories.
 $listcategories = ($row_monument['listcat']);
-			if ($row_monument['listcat']) {
+if ($row_monument['listcat']) {
 
 
 $query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories) ORDER BY ch_mon_cat_couleur";
@@ -144,25 +144,25 @@ $nb_cat_ok = 0;
 if ($query_liste_mon_cat3) {$ressource = mysql_query($query_liste_mon_cat3);
 
 while($row = mysql_fetch_assoc($ressource)) {
-if ($row_monument['listcat'])
-   {$nb_cat_ok = $nb_cat_ok + 1;}
-   else {$nb_cat_ok = 1;}
+    if($row_monument['listcat']) {
+        $nb_cat_ok = $nb_cat_ok + 1;
+    } else {
+        $nb_cat_ok = 1;
+    }
 }
 
 // Mise a jour actu de l'entreprise
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
-if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajouter_actu")) {
-  $updateSQL = sprintf("UPDATE patrimoine SET ch_pat_commentaire=%s WHERE ch_pat_id=%s",
-                       GetSQLValueString($_POST['ch_pat_commentaire'], "text"),
-                       GetSQLValueString($_POST['ch_pat_id'], "int"));
+if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajouter_actu")) {
+    $updateSQL = sprintf("UPDATE patrimoine SET ch_pat_commentaire=%s WHERE ch_pat_id=%s",
+        GetSQLValueString($_POST['ch_pat_commentaire'], "text"),
+        GetSQLValueString($_POST['ch_pat_id'], "int"));
 
-      $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
-      getErrorMessage('success', "L'actualité de l'entreprise a été modifiée avec succès !");
-    } else {
-      getErrorMessage('error', "Une erreur est survenue :(");
-    }
+    $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    getErrorMessage('success', "L'actualité de l'entreprise a été modifiée avec succès !");
+}
 
 mysql_data_seek($ressource, 0);}
 
@@ -329,6 +329,7 @@ Eventy::action('display.beforeHeadClosingTag')
         <!-- Dernières actualités -->
         <?php if($row_monument['ch_mon_cat_statut'] == 0) { ?>
 
+        <?php /*
         <div class="accordion-group">
               <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse" href="#spoiler-actu" style="background: #f0eeec;"><h4 style="margin-top: 0px; margin-bottom: 0px; text-transform: uppercase; font-weight: lighter; color:#101010; ">Dernières actualités de l'entreprise</h4><div class='' style="font-size: 13px;color: #577991;">Dernière mise à jour le <?php echo date("d/m/Y", strtotime($row_monument['ch_pat_mis_jour'])); ?></div></a>
@@ -357,8 +358,7 @@ Eventy::action('display.beforeHeadClosingTag')
 
                   <?php } ?>
                   </div></div>
-                </div><br><br>
-
+                </div><br><br> */ ?>
 
       <?php } ?>
 
@@ -390,17 +390,7 @@ Eventy::action('display.beforeHeadClosingTag')
                 'resources' => $row_monument_ressources
              ));
             ?></div>
-            <?php if ($coefficient < 1 ) { ?>
-            <div style="border: 5px dotted <?php if ($coefficient == 0.5 ) { ?>#cacaca<?php } else { ?>#1A2638<?php }?>;margin: 1em;padding: 0.5em 2em 1.5em; text-align: center;border-radius: 20px;">
 
-              <?php if ($coefficient == 0.5 ) { ?>
-                <h4>Cette entreprise n'a pas ajouté de nouvelle actualité depuis le <?php echo affDate($row_monument['ch_pat_mis_jour']); ?></h4><div><?= __s($row_monument['ch_pat_nom']) ?> n'a pas eu de nouveauté depuis plus de 3 mois,<br>
-                ses gains en ressources sont donc réduits de 50% pour privilégier les entreprises plus actives !</div>
-              <?php } elseif ($coefficient == 0.1 ) { ?>
-                <h4>Cette entreprise n'a pas ajouté de nouvelle actualité depuis le <?php echo affDate($row_monument['ch_pat_mis_jour']); ?></h4><div><?= __s($row_monument['ch_pat_nom']) ?> n'a pas eu de nouveauté depuis plus de 6 mois,<br>
-                ses gains en ressources sont donc réduits de 90% pour privilégier les entreprises actives !</div>
-              <?php }?>
-            </div><?php }?>
 <?php } ?>
       </div>
   </div>
