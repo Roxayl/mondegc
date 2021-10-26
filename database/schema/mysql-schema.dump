@@ -1,0 +1,848 @@
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+DROP TABLE IF EXISTS `chapter_resourceable`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `chapter_resourceable` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `chapter_id` bigint unsigned NOT NULL,
+  `resourceable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `resourceable_id` int NOT NULL,
+  `budget` double(8,2) NOT NULL,
+  `commerce` double(8,2) NOT NULL,
+  `industrie` double(8,2) NOT NULL,
+  `agriculture` double(8,2) NOT NULL,
+  `tourisme` double(8,2) NOT NULL,
+  `recherche` double(8,2) NOT NULL,
+  `environnement` double(8,2) NOT NULL,
+  `education` double(8,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `chapter_resourceable_chapter_id_foreign` (`chapter_id`),
+  KEY `chapter_resourceable_resourceable_id_index` (`resourceable_id`),
+  CONSTRAINT `chapter_resourceable_chapter_id_foreign` FOREIGN KEY (`chapter_id`) REFERENCES `chapters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `chapters`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `chapters` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `roleplay_id` bigint unsigned NOT NULL,
+  `order` int NOT NULL,
+  `user_id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `summary` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `starting_date` datetime NOT NULL,
+  `ending_date` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `chapters_roleplay_id_foreign` (`roleplay_id`),
+  KEY `chapters_user_id_foreign` (`user_id`),
+  CONSTRAINT `chapters_roleplay_id_foreign` FOREIGN KEY (`roleplay_id`) REFERENCES `roleplay` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `chapters_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`ch_use_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `communiques`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `communiques` (
+  `ch_com_ID` int NOT NULL AUTO_INCREMENT,
+  `ch_com_label` varchar(10) NOT NULL,
+  `ch_com_statut` int NOT NULL,
+  `ch_com_categorie` varchar(30) DEFAULT NULL,
+  `ch_com_element_id` int NOT NULL,
+  `ch_com_user_id` int NOT NULL,
+  `ch_com_date` datetime DEFAULT NULL,
+  `ch_com_date_mis_jour` datetime DEFAULT NULL,
+  `ch_com_titre` varchar(100) DEFAULT NULL,
+  `ch_com_contenu` mediumtext NOT NULL,
+  `ch_com_pays_id` int DEFAULT NULL,
+  PRIMARY KEY (`ch_com_ID`),
+  KEY `communiques_users_ch_use_id_fk` (`ch_com_user_id`),
+  CONSTRAINT `communiques_users_ch_use_id_fk` FOREIGN KEY (`ch_com_user_id`) REFERENCES `users` (`ch_use_id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `discord_notifications`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `discord_notifications` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `channel` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_identifier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_sent` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `dispatch_fait_his_cat`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dispatch_fait_his_cat` (
+  `ch_disp_FH_id` int NOT NULL AUTO_INCREMENT,
+  `ch_disp_FH_label` varchar(10) NOT NULL,
+  `ch_disp_fait_hist_cat_id` int NOT NULL,
+  `ch_disp_fait_hist_id` int NOT NULL,
+  `ch_disp_FH_date` datetime NOT NULL,
+  PRIMARY KEY (`ch_disp_FH_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `dispatch_mem_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dispatch_mem_group` (
+  `ch_disp_MG_id` int NOT NULL AUTO_INCREMENT,
+  `ch_disp_MG_label` varchar(10) NOT NULL,
+  `ch_disp_group_id` int NOT NULL,
+  `ch_disp_mem_id` int NOT NULL,
+  `ch_disp_mem_statut` tinyint NOT NULL,
+  `ch_disp_MG_date` datetime NOT NULL,
+  PRIMARY KEY (`ch_disp_MG_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `dispatch_mon_cat`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dispatch_mon_cat` (
+  `ch_disp_id` int NOT NULL AUTO_INCREMENT,
+  `ch_disp_mon_label` varchar(10) NOT NULL,
+  `ch_disp_cat_id` int NOT NULL,
+  `ch_disp_mon_id` int NOT NULL,
+  `ch_disp_date` datetime NOT NULL,
+  PRIMARY KEY (`ch_disp_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `faithist_categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `faithist_categories` (
+  `ch_fai_cat_ID` int NOT NULL AUTO_INCREMENT,
+  `ch_fai_cat_label` varchar(10) NOT NULL,
+  `ch_fai_cat_statut` int DEFAULT NULL,
+  `ch_fai_cat_date` datetime NOT NULL,
+  `ch_fai_cat_mis_jour` datetime NOT NULL,
+  `ch_fai_cat_nb_update` int NOT NULL,
+  `ch_fai_cat_nom` varchar(50) DEFAULT NULL,
+  `ch_fai_cat_desc` mediumtext,
+  `ch_fai_cat_icon` varchar(250) DEFAULT NULL,
+  `ch_fai_cat_couleur` varchar(7) DEFAULT NULL,
+  PRIMARY KEY (`ch_fai_cat_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `geometries`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `geometries` (
+  `ch_geo_id` int NOT NULL AUTO_INCREMENT,
+  `type_geometrie_id` int DEFAULT NULL,
+  `ch_geo_wkt` mediumtext NOT NULL,
+  `ch_geo_pay_id` int NOT NULL,
+  `ch_geo_user` int NOT NULL,
+  `ch_geo_maj_user` int NOT NULL,
+  `ch_geo_date` datetime NOT NULL,
+  `ch_geo_mis_jour` datetime NOT NULL,
+  `ch_geo_geometries` varchar(100) NOT NULL,
+  `ch_geo_mesure` decimal(20,3) NOT NULL,
+  `ch_geo_type` varchar(100) DEFAULT NULL,
+  `ch_geo_nom` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`ch_geo_id`),
+  KEY `geometries_type_geometries_id_fk` (`type_geometrie_id`),
+  KEY `geometries_pays_ch_pay_id_fk` (`ch_geo_pay_id`),
+  CONSTRAINT `geometries_pays_ch_pay_id_fk` FOREIGN KEY (`ch_geo_pay_id`) REFERENCES `pays` (`ch_pay_id`) ON UPDATE CASCADE,
+  CONSTRAINT `geometries_type_geometries_id_fk` FOREIGN KEY (`type_geometrie_id`) REFERENCES `type_geometries` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `histoire`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `histoire` (
+  `ch_his_id` int NOT NULL AUTO_INCREMENT,
+  `ch_his_label` varchar(10) NOT NULL,
+  `ch_his_paysID` tinyint NOT NULL,
+  `ch_his_statut` tinyint(1) NOT NULL DEFAULT '2',
+  `ch_his_personnage` int NOT NULL DEFAULT '1',
+  `ch_his_date` datetime DEFAULT NULL,
+  `ch_his_mis_jour` datetime DEFAULT NULL,
+  `ch_his_nb_update` int DEFAULT NULL,
+  `ch_his_date_fait` datetime NOT NULL,
+  `ch_his_date_fait2` datetime DEFAULT NULL,
+  `ch_his_profession` varchar(250) DEFAULT NULL,
+  `ch_his_nom` varchar(250) DEFAULT NULL,
+  `ch_his_lien_img1` varchar(250) DEFAULT NULL,
+  `ch_his_legende_img1` varchar(250) DEFAULT NULL,
+  `ch_his_description` mediumtext,
+  `ch_his_contenu` mediumtext,
+  PRIMARY KEY (`ch_his_id`),
+  KEY `fk_histoire_pays1_idx` (`ch_his_paysID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `influence`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `influence` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `influencable_type` varchar(191) NOT NULL,
+  `influencable_id` int DEFAULT NULL,
+  `budget` int NOT NULL DEFAULT '0',
+  `agriculture` int NOT NULL DEFAULT '0',
+  `commerce` int NOT NULL DEFAULT '0',
+  `education` int NOT NULL DEFAULT '0',
+  `environnement` int NOT NULL DEFAULT '0',
+  `industrie` int NOT NULL DEFAULT '0',
+  `recherche` int NOT NULL DEFAULT '0',
+  `tourisme` int NOT NULL DEFAULT '0',
+  `generates_influence_at` datetime NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `influence_influencable_type_influencable_id_index` (`influencable_type`,`influencable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `infrastructures`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `infrastructures` (
+  `ch_inf_id` int NOT NULL AUTO_INCREMENT,
+  `ch_inf_label` varchar(20) NOT NULL,
+  `ch_inf_off_id` int NOT NULL,
+  `ch_inf_villeid` int NOT NULL,
+  `ch_inf_date` datetime NOT NULL,
+  `ch_inf_statut` int NOT NULL,
+  `nom_infra` varchar(191) NOT NULL DEFAULT '',
+  `ch_inf_lien_image` varchar(250) DEFAULT NULL,
+  `ch_inf_lien_image2` varchar(250) DEFAULT NULL,
+  `ch_inf_lien_image3` varchar(250) DEFAULT NULL,
+  `ch_inf_lien_image4` varchar(250) DEFAULT NULL,
+  `ch_inf_lien_image5` varchar(250) DEFAULT NULL,
+  `ch_inf_lien_forum` varchar(250) DEFAULT NULL,
+  `lien_wiki` varchar(250) DEFAULT NULL,
+  `user_creator` int DEFAULT NULL,
+  `ch_inf_commentaire` mediumtext,
+  `ch_inf_juge` int DEFAULT NULL,
+  `ch_inf_commentaire_juge` mediumtext,
+  `judged_at` datetime DEFAULT NULL,
+  `infrastructurable_id` int DEFAULT NULL,
+  `infrastructurable_type` varchar(191) DEFAULT NULL,
+  PRIMARY KEY (`ch_inf_id`),
+  KEY `ch_inf_off_id__index` (`ch_inf_off_id`),
+  KEY `ch_inf_villeid__index` (`ch_inf_villeid`),
+  KEY `infrastructures_users_ch_use_id_fk` (`user_creator`),
+  CONSTRAINT `infrastructures_users_ch_use_id_fk` FOREIGN KEY (`user_creator`) REFERENCES `users` (`ch_use_id`) ON DELETE SET NULL ON UPDATE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `infrastructures_groupes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `infrastructures_groupes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nom_groupe` varchar(191) DEFAULT NULL,
+  `url_image` varchar(191) NOT NULL,
+  `order` int NOT NULL DEFAULT '1',
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `infrastructures_groupes_id_uindex` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `infrastructures_officielles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `infrastructures_officielles` (
+  `ch_inf_off_id` int NOT NULL AUTO_INCREMENT,
+  `ch_inf_off_label` varchar(10) NOT NULL,
+  `ch_inf_off_date` datetime NOT NULL,
+  `ch_inf_off_nom` varchar(250) NOT NULL,
+  `ch_inf_off_desc` mediumtext,
+  `ch_inf_off_icone` varchar(250) DEFAULT NULL,
+  `ch_inf_off_budget` int DEFAULT NULL,
+  `ch_inf_off_Industrie` int DEFAULT NULL,
+  `ch_inf_off_Commerce` int DEFAULT NULL,
+  `ch_inf_off_Agriculture` int DEFAULT NULL,
+  `ch_inf_off_Tourisme` int DEFAULT NULL,
+  `ch_inf_off_Recherche` int DEFAULT NULL,
+  `ch_inf_off_Environnement` int DEFAULT NULL,
+  `ch_inf_off_Education` int DEFAULT NULL,
+  PRIMARY KEY (`ch_inf_off_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `infrastructures_officielles_groupes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `infrastructures_officielles_groupes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ID_groupes` int DEFAULT NULL,
+  `ID_infra_officielle` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `infrastructures_officielles_groupes_id_uindex` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `instituts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `instituts` (
+  `ch_ins_ID` int NOT NULL AUTO_INCREMENT,
+  `ch_ins_label` varchar(10) NOT NULL,
+  `ch_ins_lien_forum` varchar(250) NOT NULL,
+  `ch_ins_date_enregistrement` datetime DEFAULT NULL,
+  `ch_ins_mis_jour` datetime DEFAULT NULL,
+  `ch_ins_nb_update` int NOT NULL,
+  `ch_ins_user_ID` int NOT NULL,
+  `ch_ins_coord_X` decimal(14,7) DEFAULT NULL,
+  `ch_ins_coord_Y` decimal(14,7) DEFAULT NULL,
+  `ch_ins_sigle` varchar(10) DEFAULT NULL,
+  `ch_ins_nom` varchar(250) NOT NULL,
+  `ch_ins_statut` tinyint(1) NOT NULL,
+  `ch_ins_logo` varchar(250) DEFAULT NULL,
+  `ch_ins_img` varchar(250) DEFAULT NULL,
+  `ch_ins_desc` mediumtext,
+  PRIMARY KEY (`ch_ins_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `legacy_pages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `legacy_pages` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `this_id` varchar(50) DEFAULT NULL,
+  `content` mediumtext,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pages_this_id_uindex` (`this_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `log` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `target` varchar(100) NOT NULL,
+  `target_id` int DEFAULT NULL,
+  `type_action` varchar(100) NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `data_changes` mediumtext,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `log_user_id_index` (`user_id`),
+  CONSTRAINT `log_users_ch_use_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`ch_use_id`) ON DELETE SET NULL ON UPDATE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `membres_groupes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `membres_groupes` (
+  `ch_mem_group_ID` int NOT NULL AUTO_INCREMENT,
+  `ch_mem_group_label` varchar(10) NOT NULL,
+  `ch_mem_group_statut` tinyint(1) DEFAULT NULL,
+  `ch_mem_group_date` datetime NOT NULL,
+  `ch_mem_group_mis_jour` datetime NOT NULL,
+  `ch_mem_group_nb_update` int NOT NULL,
+  `ch_mem_group_nom` varchar(50) DEFAULT NULL,
+  `ch_mem_group_desc` mediumtext,
+  `ch_mem_group_icon` varchar(250) DEFAULT NULL,
+  `ch_mem_group_couleur` varchar(7) DEFAULT NULL,
+  PRIMARY KEY (`ch_mem_group_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `migrations` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `monument_categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `monument_categories` (
+  `ch_mon_cat_ID` int NOT NULL AUTO_INCREMENT,
+  `ch_mon_cat_label` varchar(10) DEFAULT NULL,
+  `ch_mon_cat_statut` int NOT NULL,
+  `ch_mon_cat_date` datetime NOT NULL,
+  `ch_mon_cat_mis_jour` datetime NOT NULL,
+  `ch_mon_cat_nb_update` int NOT NULL,
+  `ch_mon_cat_nom` varchar(50) DEFAULT NULL,
+  `ch_mon_cat_desc` mediumtext,
+  `ch_mon_cat_icon` varchar(250) DEFAULT NULL,
+  `ch_mon_cat_couleur` varchar(7) DEFAULT NULL,
+  `ch_mon_cat_industrie` int DEFAULT NULL,
+  `ch_mon_cat_commerce` int DEFAULT NULL,
+  `ch_mon_cat_agriculture` int DEFAULT NULL,
+  `ch_mon_cat_tourisme` int DEFAULT NULL,
+  `ch_mon_cat_recherche` int DEFAULT NULL,
+  `ch_mon_cat_environnement` int DEFAULT NULL,
+  `ch_mon_cat_education` int DEFAULT NULL,
+  `ch_mon_cat_budget` int DEFAULT NULL,
+  `bg_image_url` varchar(191) DEFAULT NULL,
+  PRIMARY KEY (`ch_mon_cat_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `notation_temperance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notation_temperance` (
+  `ch_not_temp_id` int NOT NULL AUTO_INCREMENT,
+  `ch_not_temp_label` varchar(10) NOT NULL,
+  `ch_not_temp_date` datetime NOT NULL,
+  `ch_not_temp_juge` varchar(250) NOT NULL,
+  `ch_not_temp_temperance_id` int NOT NULL,
+  `ch_not_temp_q1` int DEFAULT NULL,
+  `ch_not_temp_q1_com` varchar(250) DEFAULT NULL,
+  `ch_not_temp_q2` int DEFAULT NULL,
+  `ch_not_temp_q2_com` varchar(250) DEFAULT NULL,
+  `ch_not_temp_q3` int DEFAULT NULL,
+  `ch_not_temp_q3_com` varchar(250) DEFAULT NULL,
+  `ch_not_temp_q4` int DEFAULT NULL,
+  `ch_not_temp_q4_com` varchar(250) DEFAULT NULL,
+  `ch_not_temp_q5` int DEFAULT NULL,
+  `ch_not_temp_q5_com` varchar(250) DEFAULT NULL,
+  `ch_not_temp_q6` int DEFAULT NULL,
+  `ch_not_temp_q6_com` varchar(250) DEFAULT NULL,
+  `ch_not_temp_q7` int DEFAULT NULL,
+  `ch_not_temp_q7_com` varchar(250) DEFAULT NULL,
+  `ch_not_temp_q8` int DEFAULT NULL,
+  `ch_not_temp_q8_com` varchar(250) DEFAULT NULL,
+  `ch_not_temp_q9` int DEFAULT NULL,
+  `ch_not_temp_q9_com` varchar(250) DEFAULT NULL,
+  `ch_not_temp_q10` int DEFAULT NULL,
+  `ch_not_temp_q10_com` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`ch_not_temp_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `notifications`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notifications` (
+  `id` char(36) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `notifiable_type` varchar(191) NOT NULL,
+  `notifiable_id` bigint unsigned NOT NULL,
+  `data` text NOT NULL,
+  `read_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `notifications_legacy`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notifications_legacy` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `recipient_id` int DEFAULT NULL,
+  `type_notif` varchar(25) NOT NULL,
+  `element` int DEFAULT NULL,
+  `unread` tinyint(1) NOT NULL DEFAULT '1',
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `notifications_recipient_id_index` (`recipient_id`),
+  CONSTRAINT `notifications_users_ch_use_id_fk` FOREIGN KEY (`recipient_id`) REFERENCES `users` (`ch_use_id`) ON DELETE SET NULL ON UPDATE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `ocgc_proposals`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ocgc_proposals` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ID_pays` int DEFAULT NULL,
+  `question` mediumtext,
+  `type` enum('IRL','RP') DEFAULT 'RP',
+  `type_reponse` enum('dual','multiple') DEFAULT 'dual' COMMENT 'Pour/Contre = ''dual'' ; vote multiple = ''multiple''',
+  `reponse_1` mediumtext,
+  `reponse_2` mediumtext,
+  `reponse_3` mediumtext,
+  `reponse_4` mediumtext,
+  `reponse_5` mediumtext,
+  `threshold` float(3,2) DEFAULT '0.50',
+  `is_valid` tinyint DEFAULT '1' COMMENT '0 = rejeté ; 1 = en attente ; 2 = accepté',
+  `motive` mediumtext COMMENT 'Expliquer pourquoi la proposition est validée ou pas par l''OCGC.',
+  `debate_start` datetime DEFAULT NULL,
+  `debate_end` datetime DEFAULT NULL,
+  `link_debate` mediumtext,
+  `link_debate_name` mediumtext,
+  `link_wiki` mediumtext,
+  `link_wiki_name` mediumtext,
+  `res_year` int DEFAULT NULL,
+  `res_id` int DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `proposal_id` (`res_year`,`res_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Propositions de loi à l''Assemblée Générale';
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `ocgc_votes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ocgc_votes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ID_proposal` int DEFAULT NULL,
+  `ID_pays` int DEFAULT NULL,
+  `reponse_choisie` int DEFAULT NULL COMMENT 'ID de la réponse. NULL = abstention ; 0 = vote blanc ; 1 à 5 = réponses',
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Votes aux propositions de l''Assemblée Générale';
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `organisation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `organisation` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) DEFAULT NULL,
+  `logo` varchar(191) DEFAULT NULL,
+  `flag` varchar(191) DEFAULT NULL,
+  `text` text,
+  `type` varchar(16) NOT NULL DEFAULT 'organisation',
+  `allow_temperance` tinyint(1) NOT NULL DEFAULT '0',
+  `type_migrated_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `organisation_id_index` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `organisation_members`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `organisation_members` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `organisation_id` int DEFAULT NULL,
+  `pays_id` int DEFAULT NULL,
+  `permissions` int NOT NULL DEFAULT '1',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `organisation_members_organisation_id_index` (`organisation_id`),
+  KEY `organisation_members_pays_id_index` (`pays_id`),
+  CONSTRAINT `organisation_members_organisation_id_fk` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `organisation_members_pays_ch_pay_id_fk` FOREIGN KEY (`pays_id`) REFERENCES `pays` (`ch_pay_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `pages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pages` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `content` text,
+  `seo_description` varchar(255) DEFAULT NULL,
+  `seo_keywords` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `published_at` datetime DEFAULT NULL,
+  `cover_image` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `patrimoine`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `patrimoine` (
+  `ch_pat_id` int NOT NULL AUTO_INCREMENT,
+  `ch_pat_label` varchar(10) NOT NULL,
+  `ch_pat_statut` int NOT NULL,
+  `ch_pat_paysID` tinyint NOT NULL,
+  `ch_pat_villeID` int NOT NULL,
+  `ch_pat_date` datetime DEFAULT NULL,
+  `ch_pat_mis_jour` datetime DEFAULT NULL,
+  `ch_pat_nb_update` int DEFAULT NULL,
+  `ch_pat_coord_X` decimal(14,7) DEFAULT NULL,
+  `ch_pat_coord_Y` decimal(14,7) DEFAULT NULL,
+  `ch_pat_nom` varchar(250) DEFAULT NULL,
+  `ch_pat_lien_img1` varchar(250) DEFAULT NULL,
+  `ch_pat_lien_img2` varchar(250) DEFAULT NULL,
+  `ch_pat_lien_img3` varchar(250) DEFAULT NULL,
+  `ch_pat_lien_img4` varchar(250) DEFAULT NULL,
+  `ch_pat_lien_img5` varchar(250) DEFAULT NULL,
+  `ch_pat_legende_img1` varchar(50) DEFAULT NULL,
+  `ch_pat_legende_img2` varchar(50) DEFAULT NULL,
+  `ch_pat_legende_img3` varchar(50) DEFAULT NULL,
+  `ch_pat_legende_img4` varchar(50) DEFAULT NULL,
+  `ch_pat_legende_img5` varchar(50) DEFAULT NULL,
+  `ch_pat_description` mediumtext,
+  `ch_pat_commentaire` mediumtext,
+  `ch_pat_juge` int DEFAULT NULL,
+  `ch_pat_commentaire_juge` mediumtext,
+  PRIMARY KEY (`ch_pat_id`),
+  KEY `fk_patrimoine_villes1_idx` (`ch_pat_villeID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `pays`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pays` (
+  `ch_pay_id` int NOT NULL AUTO_INCREMENT,
+  `ch_pay_label` varchar(10) NOT NULL,
+  `ch_pay_publication` tinyint(1) NOT NULL DEFAULT '1',
+  `ch_pay_continent` varchar(250) NOT NULL DEFAULT 'MondeGC',
+  `ch_pay_emplacement` int DEFAULT NULL,
+  `ch_pay_lien_forum` varchar(250) DEFAULT NULL,
+  `lien_wiki` varchar(250) DEFAULT NULL,
+  `ch_pay_nom` varchar(35) DEFAULT 'Territoire vierge',
+  `ch_pay_devise` varchar(100) DEFAULT 'Dans cette contrée, tout reste à  construire',
+  `ch_pay_lien_imgheader` varchar(250) DEFAULT 'http://www.generation-city.com/monde/assets/img/imagesdefaut//Imgheader.jpg',
+  `ch_pay_lien_imgdrapeau` varchar(250) DEFAULT 'http://www.generation-city.com/monde/assets/img/imagesdefaut//drapeau.jpg',
+  `ch_pay_date` date DEFAULT NULL,
+  `ch_pay_mis_jour` datetime NOT NULL,
+  `ch_pay_nb_update` int NOT NULL,
+  `ch_pay_forme_etat` varchar(50) DEFAULT 'pas de forme définie',
+  `ch_pay_capitale` varchar(50) DEFAULT 'pas de capitale choisie',
+  `ch_pay_langue_officielle` varchar(50) DEFAULT 'dialectes',
+  `ch_pay_monnaie` varchar(50) DEFAULT 'troc seulement',
+  `ch_pay_header_presentation` varchar(250) DEFAULT NULL,
+  `ch_pay_text_presentation` mediumtext,
+  `ch_pay_header_geographie` varchar(250) DEFAULT NULL,
+  `ch_pay_text_geographie` mediumtext,
+  `ch_pay_header_politique` varchar(250) DEFAULT NULL,
+  `ch_pay_text_politique` mediumtext,
+  `ch_pay_header_histoire` varchar(250) DEFAULT NULL,
+  `ch_pay_text_histoire` mediumtext,
+  `ch_pay_header_economie` varchar(250) DEFAULT NULL,
+  `ch_pay_text_economie` mediumtext,
+  `ch_pay_header_transport` varchar(250) DEFAULT NULL,
+  `ch_pay_text_transport` mediumtext,
+  `ch_pay_header_sport` varchar(250) DEFAULT NULL,
+  `ch_pay_text_sport` mediumtext,
+  `ch_pay_header_culture` varchar(250) DEFAULT NULL,
+  `ch_pay_text_culture` mediumtext,
+  `ch_pay_header_patrimoine` varchar(250) DEFAULT NULL,
+  `ch_pay_text_patrimoine` mediumtext,
+  `ch_pay_budget_carte` int DEFAULT '0',
+  `ch_pay_industrie_carte` int DEFAULT '0',
+  `ch_pay_commerce_carte` int DEFAULT '0',
+  `ch_pay_agriculture_carte` int DEFAULT '0',
+  `ch_pay_tourisme_carte` int DEFAULT '0',
+  `ch_pay_recherche_carte` int DEFAULT '0',
+  `ch_pay_environnement_carte` int DEFAULT '0',
+  `ch_pay_education_carte` int DEFAULT '0',
+  `ch_pay_population_carte` int DEFAULT '0',
+  `ch_pay_emploi_carte` int DEFAULT '0',
+  PRIMARY KEY (`ch_pay_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `personnage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `personnage` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `entity` mediumtext,
+  `entity_id` int DEFAULT NULL,
+  `nom_personnage` varchar(191) DEFAULT NULL,
+  `predicat` varchar(191) DEFAULT NULL,
+  `prenom_personnage` varchar(191) DEFAULT NULL,
+  `biographie` mediumtext,
+  `titre_personnage` varchar(191) DEFAULT NULL,
+  `lien_img` varchar(191) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `roleplay`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `roleplay` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int NOT NULL,
+  `starting_date` datetime NOT NULL,
+  `ending_date` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `roleplay_user_id_foreign` (`user_id`),
+  CONSTRAINT `roleplay_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`ch_use_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `roleplay_organizers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `roleplay_organizers` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `roleplay_id` bigint unsigned NOT NULL,
+  `organizer_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `organizer_id` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `roleplay_organizers_roleplay_id_foreign` (`roleplay_id`),
+  CONSTRAINT `roleplay_organizers_roleplay_id_foreign` FOREIGN KEY (`roleplay_id`) REFERENCES `roleplay` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `temperance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `temperance` (
+  `ch_temp_id` int NOT NULL AUTO_INCREMENT,
+  `ch_temp_label` varchar(10) NOT NULL,
+  `ch_temp_date` datetime NOT NULL,
+  `ch_temp_mis_jour` datetime NOT NULL,
+  `ch_temp_element` varchar(10) NOT NULL,
+  `ch_temp_element_id` int NOT NULL,
+  `ch_temp_statut` int NOT NULL,
+  `ch_temp_note` int DEFAULT NULL,
+  `ch_temp_tendance` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`ch_temp_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `type_geometries`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `type_geometries` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `group_id` int NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `type_geometrie` varchar(50) DEFAULT NULL,
+  `coef_budget` float(8,5) NOT NULL DEFAULT '1.00000',
+  `coef_industrie` float(8,5) NOT NULL DEFAULT '1.00000',
+  `coef_commerce` float(8,5) NOT NULL DEFAULT '1.00000',
+  `coef_agriculture` float(8,5) NOT NULL DEFAULT '1.00000',
+  `coef_tourisme` float(8,5) NOT NULL DEFAULT '1.00000',
+  `coef_recherche` float(8,5) NOT NULL DEFAULT '1.00000',
+  `coef_environnement` float(8,5) NOT NULL DEFAULT '1.00000',
+  `coef_education` float(8,5) NOT NULL DEFAULT '1.00000',
+  `coef_population` float(8,5) NOT NULL DEFAULT '1.00000',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `type_geometries_type_geometries_group_id_fk` (`group_id`),
+  CONSTRAINT `type_geometries_type_geometries_group_id_fk` FOREIGN KEY (`group_id`) REFERENCES `type_geometries_group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `type_geometries_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `type_geometries_group` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `intitule` varchar(50) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `ch_use_id` int NOT NULL AUTO_INCREMENT,
+  `ch_use_acces` tinyint(1) DEFAULT '1',
+  `ch_use_date` datetime DEFAULT NULL,
+  `ch_use_last_log` datetime DEFAULT NULL,
+  `last_activity` datetime DEFAULT NULL,
+  `ch_use_login` varchar(45) DEFAULT NULL,
+  `ch_use_password` varchar(32) DEFAULT NULL,
+  `ch_use_mail` varchar(250) DEFAULT NULL,
+  `ch_use_paysID` int DEFAULT NULL,
+  `ch_use_statut` tinyint(1) NOT NULL DEFAULT '1',
+  `ch_use_lien_imgpersonnage` varchar(250) DEFAULT NULL,
+  `ch_use_predicat_dirigeant` varchar(100) DEFAULT NULL,
+  `ch_use_titre_dirigeant` varchar(250) DEFAULT NULL,
+  `ch_use_nom_dirigeant` varchar(50) DEFAULT NULL,
+  `ch_use_prenom_dirigeant` varchar(50) DEFAULT NULL,
+  `ch_use_biographie_dirigeant` mediumtext,
+  PRIMARY KEY (`ch_use_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `users_dispatch_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users_dispatch_session` (
+  `ch_users_session_dispatch_ID` int NOT NULL AUTO_INCREMENT,
+  `ch_users_session_dispatch_Key` varchar(20) NOT NULL,
+  `ch_users_session_dispatch_sessionID` int NOT NULL,
+  PRIMARY KEY (`ch_users_session_dispatch_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `users_pays`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users_pays` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ID_pays` int NOT NULL,
+  `ID_user` int NOT NULL,
+  `permissions` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `users_provisoire`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users_provisoire` (
+  `ch_use_prov_ID` int NOT NULL AUTO_INCREMENT,
+  `ch_use_prov_login` varchar(45) DEFAULT NULL,
+  `ch_use_prov_clef` varchar(10) DEFAULT NULL,
+  `ch_use_prov_mail` varchar(250) DEFAULT NULL,
+  `ch_use_prov_paysID` tinyint DEFAULT NULL,
+  `ch_use_prov_statut` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`ch_use_prov_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `users_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users_session` (
+  `ch_use_session_id` int NOT NULL AUTO_INCREMENT,
+  `ch_use_session_login_user` varchar(250) NOT NULL,
+  `ch_use_session_user_ID` int NOT NULL,
+  `ch_use_session_connect` tinyint(1) NOT NULL,
+  `ch_use_session_date` datetime NOT NULL,
+  PRIMARY KEY (`ch_use_session_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `villes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `villes` (
+  `ch_vil_ID` int NOT NULL AUTO_INCREMENT,
+  `ch_vil_paysID` int NOT NULL,
+  `ch_vil_user` int NOT NULL,
+  `ch_vil_label` varchar(10) NOT NULL,
+  `ch_vil_date_enregistrement` datetime DEFAULT NULL,
+  `ch_vil_mis_jour` datetime DEFAULT NULL,
+  `ch_vil_nb_update` int DEFAULT NULL,
+  `ch_vil_coord_X` decimal(14,7) DEFAULT NULL,
+  `ch_vil_coord_Y` decimal(14,7) DEFAULT NULL,
+  `ch_vil_type_jeu` varchar(10) DEFAULT NULL,
+  `ch_vil_nom` varchar(50) DEFAULT 'Ma ville',
+  `ch_vil_armoiries` varchar(250) DEFAULT NULL,
+  `ch_vil_capitale` tinyint(1) NOT NULL DEFAULT '2',
+  `ch_vil_population` int DEFAULT '0',
+  `ch_vil_specialite` varchar(50) DEFAULT 'petit artisanat local',
+  `ch_vil_lien_img1` varchar(250) DEFAULT NULL,
+  `ch_vil_lien_img2` varchar(250) DEFAULT NULL,
+  `ch_vil_lien_img3` varchar(250) DEFAULT NULL,
+  `ch_vil_lien_img4` varchar(250) DEFAULT NULL,
+  `ch_vil_lien_img5` varchar(250) DEFAULT NULL,
+  `ch_vil_legende_img1` varchar(50) DEFAULT NULL,
+  `ch_vil_legende_img2` varchar(50) DEFAULT NULL,
+  `ch_vil_legende_img3` varchar(50) DEFAULT NULL,
+  `ch_vil_legende_img4` varchar(50) DEFAULT NULL,
+  `ch_vil_legende_img5` varchar(50) DEFAULT NULL,
+  `ch_vil_header` mediumtext,
+  `ch_vil_contenu` mediumtext,
+  `ch_vil_transports` mediumtext,
+  `ch_vil_administration` mediumtext,
+  `ch_vil_culture` mediumtext,
+  PRIMARY KEY (`ch_vil_ID`),
+  KEY `fk_villes_pays_idx` (`ch_vil_paysID`),
+  CONSTRAINT `villes_pays_ch_pay_id_fk` FOREIGN KEY (`ch_vil_paysID`) REFERENCES `pays` (`ch_pay_id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
