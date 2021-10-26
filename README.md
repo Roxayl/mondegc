@@ -10,8 +10,25 @@ un monde virtuel reposant sur les jeux de construction de ville et le jeu de rô
 * Interactivité via les communiqués, les réactions, les notifications et le système de vote intégré à l'Assemblée 
 générale
 
-Liens : [Site du Monde GC](https://generation-city.com/monde/) - [Le forum de la communauté](https://www.forum-gc.com/) 
-- [Discord](https://discord.gg/4VMfsaU)
+Liens : [Site du Monde GC](https://generation-city.com/monde/) -
+[Le forum de la communauté](https://www.forum-gc.com/) - [Discord](https://discord.gg/4VMfsaU)
+
+## Table des matières
+
+* [À propos](#à-propos)
+* [Structure des dépôts Git](#structure-des-dépôts-git)
+* [Installation](#installation)
+    * [Prérequis](#prérequis)
+    * [Installation via Docker](#installation-via-docker)
+        * [Installer Docker](#installer-docker)
+        * [Installer l'application](#installer-lapplication)
+    * [Lancement et arrêt de l'application](#lancement-et-arrêt-de-lapplication)
+* [Site Web et services associés](#site-web-et-services-associés)
+  * [PHPMyAdmin](#phpmyadmin)
+  * [MailHog](#mailhog)
+  * [Gestion des bibliothèques externes](#gestion-des-bibliothèques-externes)
+    * [Gérer les dépendances Composer](#gérer-des-dépendances-composer)
+    * [Gérer les assets CSS et JavaScript](#gérer-les-assets-css-et-javascript)
 
 ## À propos
 
@@ -26,13 +43,26 @@ framework. La [documentation](https://laravel.com/docs/8.x) de Laravel est riche
 son fonctionnement, intuitif et puissant, afin de pouvoir contribuer vous aussi au projet phare de la communauté 
 [Génération City](http://www.forum-gc.com/).
 
+## Structure des dépôts Git
+
+Les sources du site sont gérées par Git, hébergées sur un certain nombre de plateformes.
+
+ | Plateforme | Dépôt                                                               | Complet ? | Visibilité | Commentaires                             |
+ | ---------- | ------------------------------------------------------------------- | --------- | ---------- | ---------------------------------------- |
+ | Bitbucket  | [Roxayl/mondegc](https://bitbucket.org/Roxayl/mondegc/)             | Oui       | Privé      | Dépôt principal                          |
+ | GitHub     | [Roxayl/mondegc](https://github.com/Roxayl/mondegc)                 | Oui       | Privé      | Miroir du dépôt principal, lecture seule |
+ | GitHub     | [Roxayl/mondegc-laravel](https://github.com/Roxayl/mondegc-laravel) | **Non**   | Public     | Copie limitée du dépôt principal         |
+
+Notez que les sources du dépôt [Roxayl/mondegc-laravel](https://github.com/Roxayl/mondegc-laravel) sont incomplètes
+et vous ne pourrez pas installer et exécuter l'application à partir de celui-ci.
+
 ## Installation
 
 ### Prérequis
 
 Le Monde GC nécessite d'exécuter un environnement de développement comprenant les logiciels suivants :
 
-* **[PHP](https://www.php.net/) 7.4 ou supérieur**
+* **[PHP](https://www.php.net/) 7.4 à 8.0**
 * Un moteur de base de données : **[MySQL](https://www.mysql.com/fr/)** ou **[MariaDB](https://mariadb.org/)**
 * Un serveur Web : **[Apache](https://httpd.apache.org/)** (fortement conseillé) ou **[nginx](https://www.nginx.com/)**
 (nécessite d'adapter les règles de réécriture d'URL)
@@ -73,7 +103,7 @@ conteneurisées.
 
 Une fois que tout est installé, vous êtes prêt pour déployer l'application Web via Docker.
 
-1. Clonez le dépôt it dans un répertoire sur votre machine, en ligne de commande :
+1. Clonez le dépôt Git dans un répertoire sur votre machine, en ligne de commande :
 
    ```
     > git clone https://bitbucket.org/Roxayl/mondegc.git
