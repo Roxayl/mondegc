@@ -131,14 +131,20 @@ commande permettant d'installer les dépendances et bibliothèques externes PHP 
    ```
 
 5. Toujours dans le conteneur de l'application, exécutez la commande d'initialisation. Cette commande va notamment
-générer des clés et remplir la base de données. Vous pouvez ensuite sortir du conteneur via la commande ``exit``.
+générer des clés et d'autres variables d'environnement.
 
    ```
-    > php artisan monde:init
+    > php artisan monde:init-env
+   ```
+
+6. Initialisez ensuite la base de données. Enfin, vous pouvez sortir du conteneur via la commande ``exit``.
+
+   ```
+    > php artisan monde:init-db
     > exit
    ```
 
-6. Vwalà ! Retrouvez le Monde GC à l'adresse suivante : **[http://localhost](http://localhost)**.
+7. Vwalà ! Retrouvez le Monde GC à l'adresse suivante : **[http://localhost](http://localhost)**.
 
 ### Lancement et arrêt de l'application
 

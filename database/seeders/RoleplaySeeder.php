@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Chapter;
 use App\Models\ChapterResourceable;
+use App\Models\CustomUser;
 use App\Models\Organisation;
 use App\Models\Pays;
 use App\Models\Roleplay;
@@ -23,7 +24,10 @@ class RoleplaySeeder extends Seeder
         /** Nombre de chapitres par roleplay à générer. */
         $chapterCount = 4;
 
-        DB::transaction(function() use ($chapterCount) {
+        /** @var CustomUser $user */
+        $user = CustomUser::inRandomOrder()->first();
+
+        DB::transaction(function() use ($user, $chapterCount) {
             Roleplay::factory()
                 ->sequence(
                     ['ending_date' => null],
@@ -32,9 +36,12 @@ class RoleplaySeeder extends Seeder
                 ->has(
                     Chapter::factory()
                         ->count($chapterCount)
-                        ->sequence(function($sequence) use ($chapterCount) {
+                        ->sequence(function($sequence) use ($user, $chapterCount) {
                             $i = ($sequence->index % $chapterCount) + 1;
-                            return ['order' => $i];
+                            return [
+                                'user_id' => $user,
+                                'order' => $i
+                            ];
                         })
                         ->has(
                             ChapterResourceable::factory()
@@ -62,7 +69,9 @@ class RoleplaySeeder extends Seeder
                             'resourceables'
                         ),
                     'chapters')
-                ->create();
+                ->create([
+                    'user_id' => CustomUser::inRandomOrder()->first(),
+                ]);
         });
     }
 }
