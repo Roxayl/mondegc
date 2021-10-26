@@ -6,14 +6,14 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-class InitializeProject extends Command
+class InitializeEnvironment extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'monde:init';
+    protected $signature = 'monde:init-env';
 
     /**
      * The console command description.
@@ -49,8 +49,7 @@ class InitializeProject extends Command
         $this->copyEnv();
         $this->generateKey();
         $this->generateLegacyHashKey();
-        $this->call('monde:update');
-        $this->info("Projet initialisé avec succès.");
+        $this->info("Variables d'environnement initialisées avec succès.");
 
         return 0;
     }
