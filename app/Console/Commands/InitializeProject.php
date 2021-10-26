@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class InitializeProject extends Command
@@ -38,11 +39,19 @@ class InitializeProject extends Command
      */
     public function handle(): int
     {
+        // Vérifier que les conditions d'exécution du script d'initialisation sont ok.
+        if(File::exists('.env')) {
+            $this->error("Vous ne pouvez pas initialiser l'application car un fichier .env existe déjà.");
+            return 1;
+        }
+
+        // Exécuter effectivement la commande d'initialisation.
         $this->copyEnv();
         $this->generateKey();
         $this->generateLegacyHashKey();
         $this->call('monde:update');
         $this->info("Projet initialisé avec succès.");
+
         return 0;
     }
 
@@ -65,6 +74,7 @@ class InitializeProject extends Command
 
         $path = base_path('.env');
         $salt = Str::random(32);
+
         if (file_exists($path)) {
             file_put_contents($path, str_replace(
                 "\nLEGACY_SALT=",
