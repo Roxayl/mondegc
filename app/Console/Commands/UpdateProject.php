@@ -39,8 +39,8 @@ class UpdateProject extends Command
      */
     public function handle(): int
     {
-        $this->migrateDatabase();
         $this->copyFiles();
+        $this->migrateDatabase();
         return 0;
     }
 

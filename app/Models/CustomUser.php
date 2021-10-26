@@ -34,10 +34,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property-read int|null $logs_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\NotificationLegacy[] $notifications_legacy
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\NotificationLegacy[] $notificationsLegacy
  * @property-read int|null $notifications_legacy_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Pays[] $pays
  * @property-read int|null $pays_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Roleplay[] $ownedRoleplays
+ * @property-read int|null $owned_roleplays_count
  * @method static \Database\Factories\CustomUserFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomUser newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomUser newQuery()
@@ -115,6 +117,11 @@ class CustomUser extends Authenticatable
 	{
 		return $this->hasMany(Log::class);
 	}
+
+    public function ownedRoleplays(): HasMany
+    {
+        return $this->hasMany(Roleplay::class, 'user_id');
+    }
 
 	public function notificationsLegacy(): HasMany
 	{
