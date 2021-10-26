@@ -13,11 +13,12 @@ RUN apt-get update -qq && \
     gnupg \
     unzip \
     zip \
+    mariadb-client \
     sendmail \
     nodejs \
     npm && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Cette dernière étape (apt-get clean && rm -rf ...) supprime les fichiers temporaire d'apt, pour alléger l'image.
 
 # Extensions PHP.

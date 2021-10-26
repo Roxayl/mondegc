@@ -32,6 +32,7 @@ services:
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
+      UPLOAD_LIMIT: 50M
     ports:
       - "8080:80"
     links:
