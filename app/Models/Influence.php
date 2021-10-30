@@ -23,7 +23,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property Carbon $generates_influence_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
- * @package App\Models
  * @method static \Illuminate\Database\Eloquent\Builder|Influence newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Influence newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Influence query()

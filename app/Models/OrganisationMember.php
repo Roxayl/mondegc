@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Notification;
  * @property Carbon|null $updated_at
  * @property Organisation $organisation
  * @property Pays $pays
- * @package App\Models
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember query()

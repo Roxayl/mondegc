@@ -29,6 +29,7 @@ Liens : [Site du Monde GC](https://generation-city.com/monde/) -
   * [Gestion des bibliothèques externes](#gestion-des-bibliothèques-externes)
     * [Gérer les dépendances Composer](#gérer-des-dépendances-composer)
     * [Gérer les assets CSS et JavaScript](#gérer-les-assets-css-et-javascript)
+  * [Documentation de l'API](#documentation-de-lapi)
 
 ## À propos
 
@@ -194,3 +195,24 @@ Toujours dans le conteneur principal, les bibliothèques JavaScript décrits dan
 Vous pouvez ensuite compiler les assets CSS/SCSS et JavaScript en exécutant ``npm run dev``. Le comportement de la 
 compilation des assets est décrit dans le fichier [webpack.mix.js](./webpack.mix.js). Notez que les assets situés
 dans le répertoire [assets/](./assets) ne nécessitent pas d'être compilés.
+
+### Documentation de l'API
+
+Vous pouvez générer la documentation de l'API de l'application, via l'outil [phpDocumentor](https://www.phpdoc.org/). 
+Il vous permet de créer automatiquement les pages HTML décrivant des classes de l'application, à partir des 
+annotations [PHPDoc](https://fr.wikipedia.org/wiki/PHPDoc) contenues dans les sources.
+
+Pour cela, vous pouvez exécuter la commande suivante, à partir du répertoire racine :
+
+- sur un terminal PowerShell (Windows) :
+   ```
+    > docker run --rm -v ${pwd}:/data phpdoc/phpdoc:3 run
+   ```
+- sur un terminal Bash (Linux) :
+   ```
+    > docker run --rm -v $(pwd):/data phpdoc/phpdoc:3 run
+   ```
+
+Cette commande va installer l'image Docker de l'outil, et générer les pages de la documentation de l'API. Ces pages au
+format HTML seront rangés dans le dossier [docs/](./docs). Une fois générée, vous pouvez consulter la documentation à 
+l'adresse [http://localhost/docs/index.html](http://localhost/docs/index.html).

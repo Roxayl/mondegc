@@ -28,7 +28,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Carbon $updated_at
  * @property TypeGeometriesGroup $type_geometries_group
  * @property Collection|Geometry[] $geometries
- * @package App\Models
  * @property-read int|null $geometries_count
  * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry newQuery()

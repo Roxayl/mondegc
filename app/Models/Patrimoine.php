@@ -41,7 +41,6 @@ use Spatie\Searchable\SearchResult;
  * @property string|null $ch_pat_commentaire
  * @property int|null $ch_pat_juge
  * @property string|null $ch_pat_commentaire_juge
- * @package App\Models
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Influence[] $influences
  * @property-read int|null $influences_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\MonumentCategory[] $monumentCategories

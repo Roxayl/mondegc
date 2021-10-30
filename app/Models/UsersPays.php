@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property int $ID_pays
  * @property int $ID_user
  * @property int $permissions
- * @package App\Models
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OrganisationMember[] $organisation_members
  * @property-read int|null $organisation_members_count
  * @property-read \App\Models\Pays $pays

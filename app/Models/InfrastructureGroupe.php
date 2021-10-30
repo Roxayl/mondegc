@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $url_image
  * @property int $order
  * @property Carbon $created
- * @package App\Models
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\InfrastructureOfficielle[] $infrastructures_officielles
  * @property-read int|null $infrastructures_officielles_count
  * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureGroupe newModelQuery()

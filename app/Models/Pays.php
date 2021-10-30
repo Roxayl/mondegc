@@ -75,7 +75,6 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property int|null $ch_pay_emploi_carte
  * @property Collection|OrganisationMember[] $organisationMembers
  * @property Collection|ChapterResourceable[] $chapterResources
- * @package App\Models
  * @property-read int|null $chapter_resources_count
  * @property-read Collection|\App\Models\Geometry[] $geometries
  * @property-read int|null $geometries_count

@@ -22,7 +22,7 @@ return [
     */
 
     'feature' => [
-        'roleplay' => false,
+        'roleplay' => true,
     ],
 
     /*

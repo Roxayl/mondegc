@@ -30,7 +30,6 @@ use Illuminate\Support\Str;
  * @property Roleplay $roleplay
  * @property CustomUser $user
  * @property Collection|ChapterResourceable[] $resourceables
- * @package App\Models
  * @property-read int|null $resourceables_count
  * @property-read \App\Models\CustomUser $userCreator
  * @method static \Database\Factories\ChapterFactory factory(...$parameters)

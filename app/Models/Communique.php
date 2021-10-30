@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $ch_com_contenu
  * @property int|null $ch_com_pays_id
  * @property CustomUser $user
- * @package App\Models
  * @method static \Illuminate\Database\Eloquent\Builder|Communique newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Communique newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Communique query()

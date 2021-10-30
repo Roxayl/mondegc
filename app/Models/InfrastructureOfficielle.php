@@ -25,7 +25,6 @@ use Illuminate\Support\Str;
  * @property int|null $ch_inf_off_Recherche
  * @property int|null $ch_inf_off_Environnement
  * @property int|null $ch_inf_off_Education
- * @package App\Models
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\InfrastructureGroupe[] $infrastructure_groupe
  * @property-read int|null $infrastructure_groupe_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Infrastructure[] $infrastructures

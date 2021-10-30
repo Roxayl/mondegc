@@ -35,7 +35,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string|null $ch_inf_commentaire_juge
  * @property Carbon|null $judged_at
  * @property CustomUser $user
- * @package App\Models
  * @property int|null $infrastructurable_id
  * @property string|null $infrastructurable_type
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Influence[] $influences

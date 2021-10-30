@@ -36,7 +36,6 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property Collection|OrganisationMember[] $organisation_members
  * @property Collection|Infrastructure[] $infrastructures
  * @property Collection|ChapterResourceable[] $chapterResources
- * @package App\Models
  * @property-read int|null $chapter_resources_count
  * @property-read Collection|\App\Models\Communique[] $communiques
  * @property-read int|null $communiques_count

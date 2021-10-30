@@ -8,7 +8,6 @@ use GenCity\Monde\User;
 /**
  * Class VoteList
  * Classe liée aux votes d'une proposition.
- * @package GenCity\Proposal
  */
 class VoteList {
 
