@@ -3,10 +3,11 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./docker/Dockerfile
     container_name: mondegc_app
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - .:/var/www/html
     depends_on:
@@ -19,7 +20,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./.docker/mysql:/var/lib/mysql
+      - ./docker/mysql:/var/lib/mysql
     command:
       - "--default-authentication-plugin=mysql_native_password"
     environment:
