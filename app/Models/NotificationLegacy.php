@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property bool $unread
  * @property Carbon $created
  * @property CustomUser $user
- * @package App\Models
  * @method static \Illuminate\Database\Eloquent\Builder|NotificationLegacy newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|NotificationLegacy newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|NotificationLegacy query()

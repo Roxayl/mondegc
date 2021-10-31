@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * App\Models\Page
+ * Class Page
  *
  * @property int $id
  * @property string $title

@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Collection|TypeGeometry[] $type_geometries
- * @package App\Models
  * @property-read int|null $type_geometries_count
  * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometriesGroup newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometriesGroup newQuery()

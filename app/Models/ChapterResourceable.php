@@ -32,7 +32,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property Carbon|null $updated_at
  * @property Chapter $chapter
  * @property Resourceable $resourceable
- * @package App\Models
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Influence[] $influences
  * @property-read int|null $influences_count
  * @method static \Database\Factories\ChapterResourceableFactory factory(...$parameters)

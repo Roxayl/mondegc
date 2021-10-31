@@ -30,7 +30,6 @@ use Illuminate\Support\Facades\DB;
  * @property int|null $ch_mon_cat_education
  * @property int|null $ch_mon_cat_budget
  * @property string|null $bg_image_url
- * @package App\Models
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Patrimoine[] $patrimoine
  * @property-read int|null $patrimoine_count
  * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory newModelQuery()

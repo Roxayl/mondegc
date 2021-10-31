@@ -23,10 +23,10 @@ RUN apt-get update -qq && \
 
 # Extensions PHP.
 RUN docker-php-ext-install -j$(nproc) opcache pdo_mysql mysqli
-COPY .docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
+COPY docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
 
 # Apache et réécriture d'URL.
-COPY .docker/apache/vhost.conf /etc/apache2/sites-available/000-default.conf
-COPY .docker/apache/apache.conf /etc/apache2/conf-available/z-app.conf
+COPY docker/apache/vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY docker/apache/apache.conf /etc/apache2/conf-available/z-app.conf
 RUN a2enmod rewrite remoteip && \
     a2enconf z-app

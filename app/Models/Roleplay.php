@@ -25,7 +25,6 @@ use Illuminate\Support\Facades\DB;
  * @property CustomUser $owner
  * @property Collection|Chapter[] $chapters
  * @method static Builder|Roleplay current() Filtre sur la liste des roleplays actuels, en cours.
- * @package App\Models
  * @property-read int|null $chapters_count
  * @method static \Database\Factories\RoleplayFactory factory(...$parameters)
  * @method static Builder|Roleplay newModelQuery()

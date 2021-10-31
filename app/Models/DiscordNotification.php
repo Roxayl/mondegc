@@ -20,7 +20,6 @@ use Illuminate\Support\Str;
  * @property boolean $is_sent
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @package App\Models
  * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification query()

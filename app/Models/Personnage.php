@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $biographie
  * @property string|null $titre_personnage
  * @property string|null $lien_img
- * @package App\Models
  * @method static \Database\Factories\PersonnageFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Personnage newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Personnage newQuery()

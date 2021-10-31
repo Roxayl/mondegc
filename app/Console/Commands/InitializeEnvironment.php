@@ -49,6 +49,7 @@ class InitializeEnvironment extends Command
         $this->copyEnv();
         $this->generateKey();
         $this->generateLegacyHashKey();
+        $this->initTestingEnv();
         $this->info("Variables d'environnement initialisées avec succès.");
 
         return 0;
@@ -79,6 +80,24 @@ class InitializeEnvironment extends Command
                 "\nLEGACY_SALT=",
                 "\nLEGACY_SALT=". $salt,
                 file_get_contents($path)
+            ));
+        }
+    }
+
+    private function initTestingEnv(): void
+    {
+        $this->line('Copie de .env --> .env.testing');
+
+        $testingPath = base_path('.env.testing');
+
+        copy(base_path('.env'), $testingPath);
+
+        if (file_exists($testingPath)) {
+            $this->line('Base de données modifiée');
+            file_put_contents($testingPath, str_replace(
+                "\nDB_DATABASE=mondegc",
+                "\nDB_DATABASE=mondegc_testing",
+                file_get_contents($testingPath)
             ));
         }
     }

@@ -37,7 +37,6 @@ use Illuminate\Support\Str;
  * @property int|null $res_id
  * @property Carbon|null $created
  * @property Carbon|null $updated
- * @package App\Models
  * @property-read \App\Models\Pays|null $pays
  * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OcgcProposal newQuery()

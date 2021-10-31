@@ -55,7 +55,6 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property string|null $ch_vil_culture
  * @property Pays $pays
  * @property Collection|ChapterResourceable[] $chapterResources
- * @package App\Models
  * @property-read int|null $chapter_resources_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Infrastructure[] $infrastructuresAll
  * @property-read int|null $infrastructures_all_count
