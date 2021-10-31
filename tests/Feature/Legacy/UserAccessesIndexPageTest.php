@@ -7,29 +7,51 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserAccessesIndexPageTest extends TestCase
 {
+    use RefreshDatabase;
+
+    /**
+     * @var array|string[] Pages legacy à tester.
+     */
+    private array $pages = [
+        'index',
+        'assemblee',
+    ];
+
+    /**
+     * Définit les variables globales.
+     */
     public function __construct()
     {
         parent::__construct();
 
         // Set global variables.
-        $_SERVER['HTTPS'] = 'on';
-        $_SERVER['SERVER_PORT'] = '443';
+        $_SERVER['HTTPS'] = 'off';
+        $_SERVER['SERVER_PORT'] = '80';
         $_SERVER['HTTP_HOST'] = 'localhost';
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_GET['target'] = 'index';
-        $_SERVER['QUERY_STRING'] = '';
         $_SERVER['IP_ADDRESS'] = '192.168.1.1';
     }
 
     /**
-     * A basic test example.
+     * Tester l'accès à diverses pages legacy, en vérifiant simplement qu'une réponse 200 est donnée.
      *
      * @return void
      */
-    public function testAccessIndex()
+    public function testAccessLegacyPage()
     {
-        $response = $this->get('/index.php');
+        // Ajouter les données à la base.
+        $this->seed();
 
-        $response->assertStatus(200);
+        // Tester les pages une par une...
+        foreach($this->pages as $page) {
+            $uri = '/' . str_replace('.', '/', $page) . '.php';
+
+            $_GET['target'] = $page;
+            $_SERVER['REQUEST_METHOD'] = 'GET';
+            $_SERVER['QUERY_STRING'] = '';
+
+            $response = $this->get($uri);
+
+            $response->assertStatus(200);
+        }
     }
 }

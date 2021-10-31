@@ -18,18 +18,20 @@ Liens : [Site du Monde GC](https://generation-city.com/monde/) -
 * [À propos](#à-propos)
 * [Structure des dépôts Git](#structure-des-dépôts-git)
 * [Installation](#installation)
-    * [Prérequis](#prérequis)
+    * [Environnement](#environnement)
     * [Installation via Docker](#installation-via-docker)
         * [Installer Docker](#installer-docker)
         * [Installer l'application](#installer-lapplication)
     * [Lancement et arrêt de l'application](#lancement-et-arrêt-de-lapplication)
+* [Développement et tests](#développement-et-tests)
+    * [Gestion des bibliothèques externes](#gestion-des-bibliothèques-externes)
+        * [Gérer les dépendances Composer](#gérer-des-dépendances-composer)
+        * [Gérer les assets CSS et JavaScript](#gérer-les-assets-css-et-javascript)
+    * [Tests](#tests)
 * [Site Web et services associés](#site-web-et-services-associés)
-  * [PHPMyAdmin](#phpmyadmin)
-  * [MailHog](#mailhog)
-  * [Gestion des bibliothèques externes](#gestion-des-bibliothèques-externes)
-    * [Gérer les dépendances Composer](#gérer-des-dépendances-composer)
-    * [Gérer les assets CSS et JavaScript](#gérer-les-assets-css-et-javascript)
-  * [Documentation de l'API](#documentation-de-lapi)
+    * [PHPMyAdmin](#phpmyadmin)
+    * [MailHog](#mailhog)
+    * [Documentation de l'API](#documentation-de-lapi)
 
 ## À propos
 
@@ -38,7 +40,7 @@ Son développement a été repris par [Sakuro](https://www.forum-gc.com/u615) et
 avec la contribution de [Myname](https://www.forum-gc.com/u2345) et de [vallamir](https://www.forum-gc.com/u319). 
 L'aspect graphique est réalisé par [Lesime](https://www.forum-gc.com/u23) et romu23.
 
-Le site du Monde GC, depuis la [version 2.5](https://bitbucket.org/Roxayl/mondegc/src/release-2.5/) (juillet 2021), 
+Le site du Monde GC, depuis la [version 2.5](https://bitbucket.org/Roxayl/mondegc/src/release-2.5/) (juillet 2020), 
 repose sur le framework [Laravel](https://laravel.com/), et les nouvelles fonctionnalités du site reposent sur ce 
 framework. La [documentation](https://laravel.com/docs/8.x) de Laravel est riche et n'hésitez pas à vous renseigner sur 
 son fonctionnement, intuitif et puissant, afin de pouvoir contribuer vous aussi au projet phare de la communauté 
@@ -59,22 +61,23 @@ et vous ne pourrez pas installer et exécuter l'application à partir de celui-c
 
 ## Installation
 
-### Prérequis
+### Environnement
 
-Le Monde GC nécessite d'exécuter un environnement de développement comprenant les logiciels suivants :
+Le Monde GC s'exécute sur un environnement de développement comprenant les logiciels suivants :
 
 * **[PHP](https://www.php.net/) 7.4 à 8.0**
 * Un moteur de base de données : **[MySQL](https://www.mysql.com/fr/)** ou **[MariaDB](https://mariadb.org/)**
 * Un serveur Web : **[Apache](https://httpd.apache.org/)** (fortement conseillé) ou **[nginx](https://www.nginx.com/)**
 (nécessite d'adapter les règles de réécriture d'URL)
 * **[Composer](https://getcomposer.org/)**, le gestionnaire de dépendances pour PHP
-* **[Node.js et npm](https://www.npmjs.com/get-npm)**, un moteur JavaScript et un gestionnaire de dépendances pour des environnements JavaScript
+* **[Node.js et npm](https://www.npmjs.com/get-npm)**, un moteur JavaScript et un gestionnaire de dépendances pour des 
+environnements JavaScript
 
 ### Installation via Docker
 
 L'application fournit un fichier de configuration permettant d'exécuter l'application de manière conteneurisée, via 
 [Docker](https://fr.wikipedia.org/wiki/Docker_(logiciel)). La configuration est décrite dans les fichiers 
-[docker-compose.yml](./docker-compose.yml) et [Dockerfile](./Dockerfile).
+[docker-compose.yml](./docker-compose.yml) et [Dockerfile](./docker/Dockerfile).
 
 Ce guide fournit les étapes pour démarrer l'application Web sur votre machine. Elle détaille :
 
@@ -105,41 +108,34 @@ conteneurisées.
 Une fois que tout est installé, vous êtes prêt pour déployer l'application Web via Docker.
 
 1. Clonez le dépôt Git dans un répertoire sur votre machine, en ligne de commande :
-
    ```
     > git clone https://bitbucket.org/Roxayl/mondegc.git
    ```
 
 2. Lancez les conteneurs Docker de l'application via la commande suivante :
-
    ```
     > docker-compose up -d
    ```
 
 3. Accédez au conteneur de l'application via la commande à saisir dans un terminal, depuis le répertoire où est 
 installé l'application.
-
    ```
     > docker exec -ti mondegc_app sh
    ```
 
-4. Dans le conteneur de l'application, accédez au dossier comprenant les fichiers de l'application et exécutez la
+4. Dans le conteneur de l'application, accédez au dossier comprenant les fichiers de l'application et exécutez la 
 commande permettant d'installer les dépendances et bibliothèques externes PHP (gérée par Composer).
-
    ```
-    > cd /var/www/html
     > composer install
    ```
 
-5. Toujours dans le conteneur de l'application, exécutez la commande d'initialisation. Cette commande va notamment
+5. Toujours dans le conteneur de l'application, exécutez la commande d'initialisation. Cette commande va notamment 
 générer des clés et d'autres variables d'environnement.
-
    ```
     > php artisan monde:init-env
    ```
 
 6. Initialisez ensuite la base de données. Enfin, vous pouvez sortir du conteneur via la commande ``exit``.
-
    ```
     > php artisan monde:init-db
     > exit
@@ -152,7 +148,50 @@ générer des clés et d'autres variables d'environnement.
 Vous pouvez arrêter l'application via la commande ``docker-compose down``, à partir du répertoire racine. Relancez-la à 
 tout moment avec ``docker-compose up -d``.
 
-## Site Web et services associés
+## Développement et tests
+
+Le processus de développement suit les règles décrites par **Git Flow**. Pour plus d'informations,
+[cet article](https://les-enovateurs.com/gitflow-workflow-git-incontournableprojets-de-qualite/) donne des détails sur 
+le cadre posé par ce *workflow*.
+
+### Gestion des bibliothèques externes
+
+Pour accéder au répertoire de l'application au sein du **conteneur principal** ``mondegc_app``, vous pouvez taper les 
+commandes suivantes dans un terminal dans le répertoire racine :
+   ```
+    > docker exec -ti mondegc_app /bin/bash
+   ```
+
+À partir de là, vous pouvez accéder à l'interface en ligne de commande fournie par 
+[Artisan](https://laravel.com/docs/8.x/artisan), et gérer les dépendances NPM et Composer.
+
+#### Gérer des dépendances Composer
+
+L'application utilise [Composer](https://getcomposer.org/) afin d'installer et mettre à jour les bibliothèques qu'elle 
+utilise.
+
+Dans le conteneur principal, vous pouvez mettre à jour les bibliothèques externes décrites dans le fichier 
+[composer.json](./composer.json) via la commande ``composer update``.
+
+#### Gérer les assets CSS et JavaScript
+
+Lorsque vous modifiez les assets JavaScript et CSS/SCSS situés dans le dossier [/resources](./resources), vous devez 
+les compiler afin qu'ils soient générés dans le dossier [/public](./public) et accessibles via le navigateur Web.
+
+Pour ce faire, toujours dans le conteneur principal, les bibliothèques JavaScript décrits dans le fichier 
+[package.json](./package.json) peuvent être installés avec la commande ``npm install``.
+
+Vous pouvez ensuite compiler les assets CSS/SCSS et JavaScript en exécutant ``npm run dev``. Le comportement de la 
+compilation des assets est décrit dans le fichier [webpack.mix.js](./webpack.mix.js). Notez que les assets situés 
+dans le répertoire [/assets](./assets) ne nécessitent pas d'être compilés.
+
+### Tests
+
+Vous pouvez exécuter les tests unitaires et fonctionnels via PHPUnit, en exécutant dans le conteneur principal 
+``php artisan test``. Les tests utilisent une base de données dédiée, nommée ``mondegc_testing``. Leur exécution 
+n'affectera donc pas les données présentes sur votre base de données de développement.
+
+## Services complémentaires
 
 Vous pouvez accéder au site via l'adresse : [http://localhost](http://localhost). Par ailleurs, le fichier de 
 configuration Docker installe des services annexes permettant de faciliter la gestion des données du site Web, décrits 
@@ -161,40 +200,14 @@ ci-dessous.
 ### PHPMyAdmin
 
 Vous pouvez accéder à une instance de PHPMyAdmin, qui fournit une interface Web pour gérer la base de données, à 
-l'adresse : [http://localhost:8080](http://localhost:8080).
+l'adresse : [http://localhost:8080](http://localhost:8080). Les identifiants d'accès sont précisés dans le fichier 
+[.env](.env) généré lors de l'installation de l'application.
 
 ### MailHog
 
 MailHog fournit un serveur mail permettant de tester l'envoi de courriers électroniques sortants générés par 
 l'application. MailHog est configuré pour fonctionner dès l'initialisation du conteneur Docker. Vous pouvez accéder à 
 son interface Web à l'adresse : [http://localhost:8025](http://localhost:8025).
-
-### Gestion des bibliothèques externes
-
-Pour accéder au répertoire de l'application au sein du conteneur principal ``mondegc_app``, vous pouvez taper les 
-commandes suivantes dans un terminal dans le répertoire racine :
-
-   ```
-    > docker exec -ti mondegc_app sh
-    > cd /var/www/html
-   ```
-
-À partir de là, vous pouvez accéder à l'interface en ligne de commande fournie par 
-[Artisan](https://laravel.com/docs/8.x/artisan), et gérer les dépendances NPM et Composer.
-
-#### Gérer des dépendances Composer
-
-Après avoir effectué l'étape précédente, vous pouvez mettre à jour les bibliothèques externes décrites dans le fichier 
-[composer.json](./composer.json) via la commande ``composer update``.
-
-#### Gérer les assets CSS et JavaScript
-
-Toujours dans le conteneur principal, les bibliothèques JavaScript décrits dans le fichier 
-[package.json](./package.json) peuvent être installés avec la commande ``npm install``.
-
-Vous pouvez ensuite compiler les assets CSS/SCSS et JavaScript en exécutant ``npm run dev``. Le comportement de la 
-compilation des assets est décrit dans le fichier [webpack.mix.js](./webpack.mix.js). Notez que les assets situés
-dans le répertoire [assets/](./assets) ne nécessitent pas d'être compilés.
 
 ### Documentation de l'API
 
@@ -213,6 +226,6 @@ Pour cela, vous pouvez exécuter la commande suivante, à partir du répertoire 
     > docker run --rm -v $(pwd):/data phpdoc/phpdoc:3 run
    ```
 
-Cette commande va installer l'image Docker de l'outil, et générer les pages de la documentation de l'API. Ces pages au
+Cette commande va installer l'image Docker de l'outil, et générer les pages de la documentation de l'API. Ces pages au 
 format HTML seront rangés dans le dossier [docs/](./docs). Une fois générée, vous pouvez consulter la documentation à 
 l'adresse [http://localhost/docs/index.html](http://localhost/docs/index.html).
