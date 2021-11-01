@@ -106,6 +106,12 @@ Route::get('roleplay/{roleplay}/organizers', [Controllers\RoleplayController::cl
     ->name('roleplay.organizers');
 Route::get('roleplay/{roleplay}/manage-organizers', [Controllers\RoleplayController::class, 'manageOrganizers'])
     ->name('roleplay.manage-organizers');
+Route::get('roleplay/{roleplay}/add-organizer', [Controllers\RoleplayController::class, 'addOrganizer'])
+    ->name('roleplay.add-organizer');
+Route::post('roleplay/{roleplay}/create-organizer', [Controllers\RoleplayController::class, 'createOrganizer'])
+    ->name('roleplay.create-organizer');
+Route::delete('roleplay/{roleplay}/remove-organizer', [Controllers\RoleplayController::class, 'removeOrganizer'])
+    ->name('roleplay.remove-organizer');
 
 /*
 |--------------------------------------------------------------------------

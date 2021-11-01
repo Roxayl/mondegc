@@ -2,17 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contracts\Roleplayable;
+use App\Models\Factories\RoleplayableFactory;
 use App\Models\Roleplay;
 use App\Services\StringBladeService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 
 class RoleplayController extends Controller
 {
     public function __construct()
     {
         $this->middleware('feature:roleplay');
+    }
+
+    /**
+     * @param Request $request
+     * @return Roleplayable
+     * @throws ValidationException
+     */
+    private static function createRoleplayableFromForm(Request $request): Roleplayable
+    {
+        $form = $request->all();
+
+        $roleplayable = RoleplayableFactory::find($form['type'], $form['id']);
+
+        if($roleplayable === null) {
+            throw ValidationException::withMessages(["Ce roleplayable n'existe pas."]);
+        }
+
+        return $roleplayable;
     }
 
     /**
@@ -92,6 +114,49 @@ class RoleplayController extends Controller
         );
 
         return response($html);
+    }
+
+    public function addOrganizer(Roleplay $roleplay, StringBladeService $stringBlade): Response
+    {
+        $blade = '<x-roleplay.add-organizer :roleplay="$roleplay" />';
+
+        $html = $stringBlade->render(
+            $blade, compact('roleplay')
+        );
+
+        return response($html);
+    }
+
+    public function createOrganizer(Roleplay $roleplay, Request $request): RedirectResponse
+    {
+        $roleplayable = self::createRoleplayableFromForm($request);
+
+        if($roleplay->hasOrganizer($roleplayable)) {
+            throw ValidationException::withMessages(["C'est déjà un organisateur de ce roleplay."]);
+        }
+
+        $roleplay->addOrganizer($roleplayable);
+
+        return redirect()->route('roleplay.show', $roleplay)
+            ->with('message', "success|Cet organisateur a été ajouté avec succès.");
+    }
+
+    public function removeOrganizer(Roleplay $roleplay, Request $request): RedirectResponse
+    {
+        $roleplayable = self::createRoleplayableFromForm($request);
+
+        if(! $roleplay->hasOrganizer($roleplayable)) {
+            throw ValidationException::withMessages(["Ce n'est pas un organisateur de ce roleplay."]);
+        }
+
+        if($roleplay->organizers()->count() <= 1) {
+            throw ValidationException::withMessages(["Il doit y avoir au moins un organisateur."]);
+        }
+
+        $roleplay->removeOrganizer($roleplayable);
+
+        return redirect()->route('roleplay.show', $roleplay)
+            ->with('message', "success|Cet organisateur a été retiré avec succès.");
     }
 
     /**
