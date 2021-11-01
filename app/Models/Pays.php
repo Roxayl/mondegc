@@ -73,14 +73,16 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property int|null $ch_pay_education_carte
  * @property int|null $ch_pay_population_carte
  * @property int|null $ch_pay_emploi_carte
- * @property Collection|OrganisationMember[] $organisationMembers
- * @property Collection|ChapterResourceable[] $chapterResources
+ * @property-read Collection|Infrastructure[] $infrastructures
+ * @property-read int|null $infrastructures_count
+ * @property-read Collection|Infrastructure[] $infrastructuresAll
+ * @property-read int|null $infrastructures_all_count
+ * @property-read Collection|OrganisationMember[] $organisationMembers
+ * @property-read int|null $organisation_members_count
+ * @property-read Collection|ChapterResourceable[] $chapterResources
  * @property-read int|null $chapter_resources_count
  * @property-read Collection|\App\Models\Geometry[] $geometries
  * @property-read int|null $geometries_count
- * @property-read Collection|\App\Models\Infrastructure[] $infrastructuresAll
- * @property-read int|null $infrastructures_all_count
- * @property-read int|null $organisation_members_count
  * @property-read Collection|\App\Models\OcgcProposal[] $proposals
  * @property-read int|null $proposals_count
  * @property-read Collection|\App\Models\CustomUser[] $users
@@ -144,9 +146,6 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     use HasFactory, HasInfrastructures;
     use InfrastructurablePresenter, PaysPresenter;
 
-    /**
-     * @var array|int[]
-     */
     protected $table = 'pays';
 	protected $primaryKey = 'ch_pay_id';
     const CREATED_AT = 'ch_pay_date';
@@ -220,7 +219,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     /**
      * @var array|int[] Donne un intervalle valide d'emplacements de pays.
      */
-    private static array $countrySlotRange = [1, 59];
+    private static array $slotRange = [1, 59];
 
 	private ?PaysMapManager $mapManager = null;
 
@@ -268,7 +267,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     }
 
     /**
-     * @return Collection<int, Organisation>
+     * @return Collection<Organisation>
      */
 	public function organisationsAll(): \Illuminate\Support\Collection
     {
@@ -291,7 +290,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     }
 
     /**
-     * @return Collection<int, Organisation>
+     * @return Collection<Organisation>
      */
     public function otherOrganisations(): \Illuminate\Support\Collection
     {
@@ -307,7 +306,8 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
      */
 	public function users(): BelongsToMany
     {
-        return $this->belongsToMany(CustomUser::class, 'users_pays', 'ID_pays', 'ID_user');
+        return $this->belongsToMany(CustomUser::class, 'users_pays',
+            'ID_pays', 'ID_user');
     }
 
     /**
@@ -351,9 +351,9 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     }
 
     /**
-     * @return Collection<int, CustomUser>
+     * @return \Illuminate\Support\Collection<int, CustomUser>
      */
-    public function getUsers(): Collection
+    public function getUsers(): \Illuminate\Support\Collection
     {
         return $this->users()->get();
     }
@@ -361,9 +361,9 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     /**
      * @return array|int[]
      */
-    public static function getCountrySlotRange(): array
+    public static function getSlotRange(): array
     {
-        return self::$countrySlotRange;
+        return self::$slotRange;
     }
 
     /**
@@ -371,11 +371,20 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
      */
     public function getLastActivity(): Carbon
     {
-        $lastActivity = DB::select(
+        $result = DB::select(
             'SELECT MAX(COALESCE(ch_use_last_log, ch_use_date)) AS last_date FROM users
              JOIN users_pays ON users_pays.ID_user = users.ch_use_id
              WHERE users_pays.ID_pays = ?', [$this->ch_pay_id]);
-        return new Carbon($lastActivity[0]->last_date);
+
+        if(isset($result[0])) {
+            $date = new Carbon($result[0]->last_date);
+        } else {
+            // Si ce pays n'a pas d'utilisateur, on génère une date de dernière activité bien ancienne pour "simuler"
+            // le fait que ce pays est inactif depuis longtemps.
+            $date = Carbon::now()->subYears(2);
+        }
+
+        return $date;
     }
 
     /**
@@ -466,7 +475,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
-        if(Features::accessible('roleplay')) {
+        if(! Features::accessible('roleplay')) {
             return $sumResources;
         }
 

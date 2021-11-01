@@ -53,12 +53,14 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property string|null $ch_vil_transports
  * @property string|null $ch_vil_administration
  * @property string|null $ch_vil_culture
- * @property Pays $pays
- * @property Collection|ChapterResourceable[] $chapterResources
+ * @property-read Pays|null $pays
+ * @property-read \Illuminate\Database\Eloquent\Collection|ChapterResourceable[] $chapterResources
  * @property-read int|null $chapter_resources_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Infrastructure[] $infrastructuresAll
+ * @property-read \Illuminate\Database\Eloquent\Collection|Infrastructure[] $infrastructures
+ * @property-read int|null $infrastructures_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Infrastructure[] $infrastructuresAll
  * @property-read int|null $infrastructures_all_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Patrimoine[] $patrimoines
+ * @property-read \Illuminate\Database\Eloquent\Collection|Patrimoine[] $patrimoines
  * @property-read int|null $patrimoines_count
  * @method static \Illuminate\Database\Eloquent\Builder|Ville newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ville newQuery()
@@ -197,7 +199,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
      */
 	public function getUsers(): Collection
     {
-        return $this->pays->users;
+        return $this->pays->getUsers();
     }
 
     /**
@@ -243,7 +245,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
-        if(Features::accessible('roleplay')) {
+        if(! Features::accessible('roleplay')) {
             return $sumResources;
         }
 

@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Pays;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 
 class EconomyService
 {
@@ -27,7 +27,7 @@ class EconomyService
      */
     public static function getPaysResources(?string $sortBy = null): array
     {
-        /** @var Collection<int, Pays> $allPays */
+        /** @var Collection<Pays> $allPays */
         $allPays = Pays::where('ch_pay_publication', Pays::STATUS_ACTIVE)->get();
 
         $paysResources = [];

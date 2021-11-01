@@ -3,8 +3,15 @@
 namespace App\Models\Traits;
 
 use App\Models\Infrastructure;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
+/**
+ * @property-read Collection|Infrastructure[] $infrastructures
+ * @property-read int|null $infrastructures_count
+ * @property-read Collection|Infrastructure[] $infrastructuresAll
+ * @property-read int|null $infrastructures_all_count
+ */
 trait Infrastructurable
 {
     public function infrastructures(): MorphMany

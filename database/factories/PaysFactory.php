@@ -44,7 +44,7 @@ class PaysFactory extends Factory
      */
     private function fetchFreeSpot(): int
     {
-        $slotRange = Pays::getCountrySlotRange();
+        $slotRange = Pays::getSlotRange();
         $allSlots = collect(range($slotRange[0], $slotRange[1]));
 
         $occupiedSlots = Pays::select('ch_pay_emplacement')

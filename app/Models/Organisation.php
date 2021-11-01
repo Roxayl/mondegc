@@ -33,20 +33,20 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property Carbon|null $type_migrated_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property Collection|OrganisationMember[] $organisation_members
- * @property Collection|Infrastructure[] $infrastructures
- * @property Collection|ChapterResourceable[] $chapterResources
- * @property-read int|null $chapter_resources_count
- * @property-read Collection|\App\Models\Communique[] $communiques
- * @property-read int|null $communiques_count
  * @property-read string $slug
- * @property-read Collection|\App\Models\Infrastructure[] $infrastructuresAll
+ * @property-read Collection|Infrastructure[] $infrastructures
+ * @property-read int|null $infrastructures_count
+ * @property-read Collection|ChapterResourceable[] $chapterResources
+ * @property-read int|null $chapter_resources_count
+ * @property-read Collection|Communique[] $communiques
+ * @property-read int|null $communiques_count
+ * @property-read Collection|Infrastructure[] $infrastructuresAll
  * @property-read int|null $infrastructures_all_count
- * @property-read Collection|\App\Models\OrganisationMember[] $members
+ * @property-read Collection|OrganisationMember[] $members
  * @property-read int|null $members_count
- * @property-read Collection|\App\Models\OrganisationMember[] $membersAll
+ * @property-read Collection|OrganisationMember[] $membersAll
  * @property-read int|null $members_all_count
- * @property-read Collection|\App\Models\OrganisationMember[] $membersPending
+ * @property-read Collection|OrganisationMember[] $membersPending
  * @property-read int|null $members_pending_count
  * @method static Builder|Organisation newModelQuery()
  * @method static Builder|Organisation newQuery()
@@ -333,7 +333,7 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
-        if(Features::accessible('roleplay')) {
+        if(! Features::accessible('roleplay')) {
             return $sumResources;
         }
 
