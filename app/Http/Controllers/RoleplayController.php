@@ -7,6 +7,7 @@ use App\Models\Factories\RoleplayableFactory;
 use App\Models\Roleplay;
 use App\Services\StringBladeService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -80,6 +81,25 @@ class RoleplayController extends Controller
     public function show(Roleplay $roleplay): View
     {
         return view('roleplay.show')->with('roleplay', $roleplay);
+    }
+
+    public function roleplayables(Request $request): JsonResponse
+    {
+        $type   = $request->input('type');
+        $term   = $request->input('term');
+
+        $roleplayables = RoleplayableFactory::list($type, $term);
+
+        $result = [];
+        foreach($roleplayables as $roleplayable) {
+            $result[] = [
+                'id'    => $roleplayable->getKey(),
+                'value' => $roleplayable->getKey(),
+                'label' => $roleplayable->getName(),
+            ];
+        }
+
+        return response()->json($result);
     }
 
     /**

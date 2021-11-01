@@ -101,6 +101,8 @@ Route::patch('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJud
 | Roleplay
 |--------------------------------------------------------------------------
 */
+Route::get('roleplay/roleplayables', [Controllers\RoleplayController::class, 'roleplayables'])
+    ->name('roleplay.roleplayables');
 Route::resource('roleplay', 'RoleplayController');
 Route::get('roleplay/{roleplay}/organizers', [Controllers\RoleplayController::class, 'organizers'])
     ->name('roleplay.organizers');

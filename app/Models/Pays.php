@@ -234,6 +234,11 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         return $this->mapManager;
     }
 
+    public static function getNameColumn(): string
+    {
+        return 'ch_pay_nom';
+    }
+
     /**
      * @return SearchResult
      */

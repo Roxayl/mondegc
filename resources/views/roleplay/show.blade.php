@@ -7,6 +7,11 @@
     {{ $roleplay->name }}
 @endsection
 
+@section('styles')
+    <link href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" rel="stylesheet">
+
+@endsection
+
 @section('body_attributes') data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" @endsection
 
 @section('content')
@@ -60,4 +65,8 @@
     </div>
     </div>
 
+@endsection
+
+@section('scripts')
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 @endsection
