@@ -13,6 +13,8 @@
 
 @section('scripts')
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="../assets/js/Editeur.js"></script>
 @endsection
 
 @section('body_attributes') data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" @endsection

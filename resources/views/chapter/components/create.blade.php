@@ -8,4 +8,6 @@
     <h1>Créer un chapitre</h1>
 </div>
 
-@include('chapter.components.form')
+<div class="well">
+    @include('chapter.components.form')
+</div>
