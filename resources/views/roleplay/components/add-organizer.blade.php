@@ -1,18 +1,22 @@
 
 <form action="{{ route('roleplay.create-organizer', $roleplay) }}" method="POST">
     @csrf
+    <div class="form-group">
+        <select name="type" id="organizer-type">
+            <option value="organisation">Organisation
+            <option value="pays">Pays</option>
+            <option value="ville">Ville</option>
+        </select>
 
-    <select name="type" id="organizer-type">
-        <option value="organisation">Organisation
-        <option value="pays">Pays</option>
-        <option value="ville">Ville</option>
-    </select>
+        <input type="text" name="id" id="organizer-id-autocomplete" class="form-control-lg span6"
+               placeholder="Recherche :" />
 
-    <input type="text" name="id" id="organizer-id-autocomplete" />
+        <input type="hidden" name="id" id="organizer-id" />
+    </div>
 
-    <input type="hidden" name="id" id="organizer-id" />
-
-    <button type="submit" class="btn btn-outline-primary">Envoyer</button>
+    <button type="submit" class="btn btn-primary">
+        Envoyer
+    </button>
 
 </form>
 
@@ -22,15 +26,28 @@
 </a>
 
 <script>
-    (function($, document, window) {
+    (function ($, document, window) {
         let endpointUrl = "{{ route('roleplay.roleplayables') }}";
 
-        let $typeField = $('#organizer-type');
+        let $typeField = $('select#organizer-type');
         let $autocomplete = $('#organizer-id-autocomplete');
-        let $hiddenIdField = $('#organizer-id');
+        let $hiddenIdField = $('input#organizer-id');
+
+        let onTypeFieldChange = function() {
+            $autocomplete.val('');
+            $autocomplete.attr('placeholder', "Recherche : " + $typeField.val())
+            $hiddenIdField.val('');
+        };
+
+        $typeField.on('change', onTypeFieldChange);
+        onTypeFieldChange();
+
         $autocomplete.autocomplete({
-            source: endpointUrl,
-            select: function(event, ui) {
+            source: function (request, response) {
+                $.getJSON(endpointUrl, {type: $typeField.val(), term: $autocomplete.val()},
+                    response);
+            },
+            select: function (event, ui) {
                 console.log(ui.item);
                 $autocomplete.val(ui.item.label);
                 $hiddenIdField.val(ui.item.value);

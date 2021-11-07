@@ -2,7 +2,7 @@
 <form method="POST" action="{{ route('chapter.store') }}">
     @csrf
 
-    <div class="form-group form-">
+    <div class="form-group">
         <label for="chapter_name_field">Nom</label>
         <input type="text" id="chapter_name_field" class="form-control span9"
                name="name" value="{{ old('name', $chapter->name) }}"/>

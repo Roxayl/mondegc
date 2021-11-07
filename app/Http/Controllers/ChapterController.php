@@ -10,6 +10,11 @@ use Illuminate\Http\Response;
 
 class ChapterController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('feature:roleplay');
+    }
+
     /**
      * @param Roleplay $roleplay
      * @param StringBladeService $stringBlade
@@ -50,9 +55,9 @@ class ChapterController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): Response
     {
-        //
+        return response()->noContent();
     }
 
     /**
@@ -61,9 +66,9 @@ class ChapterController extends Controller
      * @param  Chapter  $chapter
      * @return Response
      */
-    public function show(Chapter $chapter)
+    public function show(Chapter $chapter): Response
     {
-        //
+        return response()->noContent();
     }
 
     /**
@@ -72,9 +77,9 @@ class ChapterController extends Controller
      * @param Chapter $chapter
      * @return Response
      */
-    public function edit(Chapter $chapter)
+    public function edit(Chapter $chapter): Response
     {
-        //
+        return response()->noContent();
     }
 
     /**
@@ -84,9 +89,9 @@ class ChapterController extends Controller
      * @param Chapter $chapter
      * @return Response
      */
-    public function update(Request $request, Chapter $chapter)
+    public function update(Request $request, Chapter $chapter): Response
     {
-        //
+        return response()->noContent();
     }
 
     /**
@@ -95,8 +100,8 @@ class ChapterController extends Controller
      * @param Chapter $chapter
      * @return Response
      */
-    public function destroy(Chapter $chapter)
+    public function destroy(Chapter $chapter): Response
     {
-        //
+        return response()->noContent();
     }
 }

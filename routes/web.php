@@ -117,7 +117,7 @@ Route::delete('roleplay/{roleplay}/remove-organizer', [Controllers\RoleplayContr
 
 /*
 |--------------------------------------------------------------------------
-| Roleplay
+| Chapter
 |--------------------------------------------------------------------------
 */
 Route::get('chapter/create/{roleplay}', [Controllers\ChapterController::class, 'create'])
