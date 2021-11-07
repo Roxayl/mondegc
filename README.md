@@ -28,7 +28,7 @@ Liens : [Site du Monde GC](https://generation-city.com/monde/) -
         * [Gérer les dépendances Composer](#gérer-des-dépendances-composer)
         * [Gérer les assets CSS et JavaScript](#gérer-les-assets-css-et-javascript)
     * [Tests](#tests)
-* [Site Web et services associés](#site-web-et-services-associés)
+* [Services complémentaires](#services-complémentaires)
     * [PHPMyAdmin](#phpmyadmin)
     * [MailHog](#mailhog)
     * [Documentation de l'API](#documentation-de-lapi)
@@ -141,7 +141,7 @@ générer des clés et d'autres variables d'environnement.
     > exit
    ```
 
-7. Vwalà ! Retrouvez le Monde GC à l'adresse suivante : **[http://localhost](http://localhost)**.
+7. Vwalà ! Retrouvez le Monde GC à l'adresse suivante : **[http://localhost](http://localhost)**. La base de données est initialisée avec un utilisateur par défaut, dont vous pouvez utiliser les identifiants pour vous connecter (nom d'utilisateur : ``Admin``, mot de passe : ``password``).
 
 ### Lancement et arrêt de l'application
 
@@ -163,7 +163,7 @@ commandes suivantes dans un terminal dans le répertoire racine :
    ```
 
 À partir de là, vous pouvez accéder à l'interface en ligne de commande fournie par 
-[Artisan](https://laravel.com/docs/8.x/artisan), et gérer les dépendances NPM et Composer.
+[Artisan](https://laravel.com/docs/8.x/artisan), gérer les dépendances NPM et Composer, et exécuter les tests.
 
 #### Gérer des dépendances Composer
 
@@ -175,21 +175,25 @@ Dans le conteneur principal, vous pouvez mettre à jour les bibliothèques exter
 
 #### Gérer les assets CSS et JavaScript
 
-Lorsque vous modifiez les assets JavaScript et CSS/SCSS situés dans le dossier [/resources](./resources), vous devez 
-les compiler afin qu'ils soient générés dans le dossier [/public](./public) et accessibles via le navigateur Web.
+Lorsque vous modifiez les assets JavaScript et CSS/SCSS situés dans le dossier [resources/](./resources), vous devez 
+les compiler afin qu'ils soient générés dans le dossier [public/](./public) et accessibles via le navigateur Web.
 
 Pour ce faire, toujours dans le conteneur principal, les bibliothèques JavaScript décrits dans le fichier 
 [package.json](./package.json) peuvent être installés avec la commande ``npm install``.
 
 Vous pouvez ensuite compiler les assets CSS/SCSS et JavaScript en exécutant ``npm run dev``. Le comportement de la 
 compilation des assets est décrit dans le fichier [webpack.mix.js](./webpack.mix.js). Notez que les assets situés 
-dans le répertoire [/assets](./assets) ne nécessitent pas d'être compilés.
+dans le répertoire [assets/](./assets) ne nécessitent pas d'être compilés.
 
 ### Tests
 
-Vous pouvez exécuter les tests unitaires et fonctionnels via PHPUnit, en exécutant dans le conteneur principal 
-``php artisan test``. Les tests utilisent une base de données dédiée, nommée ``mondegc_testing``. Leur exécution 
-n'affectera donc pas les données présentes sur votre base de données de développement.
+Vous pouvez exécuter les tests unitaires et fonctionnels via [PHPUnit](https://phpunit.de/), en exécutant dans le 
+conteneur principal ``php artisan test``. Les tests utilisent une base de données dédiée, nommée ``mondegc_testing``. 
+Leur exécution n'affectera donc pas les données présentes sur votre base de données de développement.
+
+L'application utilise un outil d'[analyse statique](https://jolicode.com/blog/l-analyse-statique-dans-le-monde-php) du 
+code fournie par [Psalm](https://psalm.dev/). La commande ``./vendor/bin/psalm`` permet d'analyser les sources à la 
+recherche de problèmes liés à des erreurs de typage.
 
 ## Services complémentaires
 

@@ -7,6 +7,16 @@
     {{ $roleplay->name }}
 @endsection
 
+@section('styles')
+    <link href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" rel="stylesheet">
+@endsection
+
+@section('scripts')
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="../assets/js/Editeur.js"></script>
+@endsection
+
 @section('body_attributes') data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" @endsection
 
 @section('content')
@@ -54,6 +64,10 @@
             @foreach($roleplay->chapters as $chapter)
                 <x-roleplay.chapter :chapter="$chapter"/>
             @endforeach
+
+            <div class="component-block" id="chapter-create">
+                <x-chapter.create-button :roleplay="$roleplay" />
+            </div>
 
         </div>
 

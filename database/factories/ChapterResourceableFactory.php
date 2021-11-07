@@ -31,7 +31,7 @@ class ChapterResourceableFactory extends Factory
 
         return $resources + [
             'resourceable_type' => ChapterResourceable::getActualClassNameForMorph(Pays::class),
-            'resourceable_id'   => Pays::inRandomOrder()->first(),
+            'resourceable_id'   => Pays::inRandomOrder()->first()->ch_pay_id,
         ];
     }
 }

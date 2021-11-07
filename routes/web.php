@@ -101,11 +101,30 @@ Route::patch('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJud
 | Roleplay
 |--------------------------------------------------------------------------
 */
+Route::get('roleplay/roleplayables', [Controllers\RoleplayController::class, 'roleplayables'])
+    ->name('roleplay.roleplayables');
 Route::resource('roleplay', 'RoleplayController');
 Route::get('roleplay/{roleplay}/organizers', [Controllers\RoleplayController::class, 'organizers'])
     ->name('roleplay.organizers');
 Route::get('roleplay/{roleplay}/manage-organizers', [Controllers\RoleplayController::class, 'manageOrganizers'])
     ->name('roleplay.manage-organizers');
+Route::get('roleplay/{roleplay}/add-organizer', [Controllers\RoleplayController::class, 'addOrganizer'])
+    ->name('roleplay.add-organizer');
+Route::post('roleplay/{roleplay}/create-organizer', [Controllers\RoleplayController::class, 'createOrganizer'])
+    ->name('roleplay.create-organizer');
+Route::delete('roleplay/{roleplay}/remove-organizer', [Controllers\RoleplayController::class, 'removeOrganizer'])
+    ->name('roleplay.remove-organizer');
+
+/*
+|--------------------------------------------------------------------------
+| Chapter
+|--------------------------------------------------------------------------
+*/
+Route::get('chapter/create/{roleplay}', [Controllers\ChapterController::class, 'create'])
+    ->name('chapter.create');
+Route::get('chapter/create-button/{roleplay}', [Controllers\ChapterController::class, 'createButton'])
+    ->name('chapter.create-button');
+Route::resource('chapter', 'ChapterController')->except(['create']);
 
 /*
 |--------------------------------------------------------------------------

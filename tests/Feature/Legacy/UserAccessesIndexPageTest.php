@@ -10,12 +10,9 @@ class UserAccessesIndexPageTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * @var array|string[] Pages legacy à tester.
+     * @var bool Checks if the database has been seeded.
      */
-    private array $pages = [
-        'index',
-        'assemblee',
-    ];
+    private bool $seeded;
 
     /**
      * Définit les variables globales.
@@ -23,6 +20,8 @@ class UserAccessesIndexPageTest extends TestCase
     public function __construct()
     {
         parent::__construct();
+
+        $this->seeded = false;
 
         // Set global variables.
         $_SERVER['HTTPS'] = 'off';
@@ -32,26 +31,74 @@ class UserAccessesIndexPageTest extends TestCase
     }
 
     /**
-     * Tester l'accès à diverses pages legacy, en vérifiant simplement qu'une réponse 200 est donnée.
+     * @param string $page Page legacy à tester ({@see pages}).
+     * @param int $assertStatus
+     */
+    private function accessLegacyPage(string $page, int $assertStatus = 200): void
+    {
+        if(! $this->seeded) {
+            $this->seed();
+            $this->seeded = true;
+        }
+
+        $uri = '/' . str_replace('.', '/', $page) . '.php';
+
+        $_GET['target'] = $page;
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['QUERY_STRING'] = '';
+
+        $response = $this->get($uri);
+
+        $response->assertStatus($assertStatus);
+    }
+
+    /**
+     * Tester l'accès à la page /index.php du site legacy.
      *
      * @return void
      */
-    public function testAccessLegacyPage()
+    public function testAccessIndexPage(): void
     {
-        // Ajouter les données à la base.
-        $this->seed();
+        $this->accessLegacyPage('index');
+    }
 
-        // Tester les pages une par une...
-        foreach($this->pages as $page) {
-            $uri = '/' . str_replace('.', '/', $page) . '.php';
+    /**
+     * Tester l'accès à la page /assemblee.php du site legacy.
+     *
+     * @return void
+     */
+    public function testAccessAssembleePage(): void
+    {
+        $this->accessLegacyPage('assemblee');
+    }
 
-            $_GET['target'] = $page;
-            $_SERVER['REQUEST_METHOD'] = 'GET';
-            $_SERVER['QUERY_STRING'] = '';
+    /**
+     * Tester l'accès à la page /economie.php du site legacy.
+     *
+     * @return void
+     */
+    public function testAccessEconomiePage(): void
+    {
+        $this->accessLegacyPage('economie');
+    }
 
-            $response = $this->get($uri);
+    /**
+     * Tester l'accès à la page /Page-carte.php du site legacy.
+     *
+     * @return void
+     */
+    public function testAccessPageCartePage(): void
+    {
+        $this->accessLegacyPage('Page-carte');
+    }
 
-            $response->assertStatus(200);
-        }
+    /**
+     * Tester l'accès à une page non-existante, dont la requête doit être traitée par le controller legacy.
+     *
+     * @return void
+     */
+    public function testAccessNonExistingPage(): void
+    {
+        $this->accessLegacyPage('page-not-existing', 404);
     }
 }

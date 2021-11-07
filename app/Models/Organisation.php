@@ -12,6 +12,7 @@ use App\Services\EconomyService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -33,20 +34,20 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property Carbon|null $type_migrated_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property Collection|OrganisationMember[] $organisation_members
- * @property Collection|Infrastructure[] $infrastructures
- * @property Collection|ChapterResourceable[] $chapterResources
- * @property-read int|null $chapter_resources_count
- * @property-read Collection|\App\Models\Communique[] $communiques
- * @property-read int|null $communiques_count
  * @property-read string $slug
- * @property-read Collection|\App\Models\Infrastructure[] $infrastructuresAll
+ * @property-read Collection|Infrastructure[] $infrastructures
+ * @property-read int|null $infrastructures_count
+ * @property-read Collection|ChapterResourceable[] $chapterResources
+ * @property-read int|null $chapter_resources_count
+ * @property-read Collection|Communique[] $communiques
+ * @property-read int|null $communiques_count
+ * @property-read Collection|Infrastructure[] $infrastructuresAll
  * @property-read int|null $infrastructures_all_count
- * @property-read Collection|\App\Models\OrganisationMember[] $members
+ * @property-read Collection|OrganisationMember[] $members
  * @property-read int|null $members_count
- * @property-read Collection|\App\Models\OrganisationMember[] $membersAll
+ * @property-read Collection|OrganisationMember[] $membersAll
  * @property-read int|null $members_all_count
- * @property-read Collection|\App\Models\OrganisationMember[] $membersPending
+ * @property-read Collection|OrganisationMember[] $membersPending
  * @property-read int|null $members_pending_count
  * @method static Builder|Organisation newModelQuery()
  * @method static Builder|Organisation newQuery()
@@ -65,7 +66,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  */
 class Organisation extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
-    use HasInfrastructures;
+    use HasFactory, HasInfrastructures;
     use InfrastructurablePresenter, OrganisationPresenter;
 
 	protected $table = 'organisation';
@@ -127,6 +128,11 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
 	public static array $typesWithEconomy = [
 	    self::TYPE_AGENCY, self::TYPE_ALLIANCE, self::TYPE_ORGANISATION
     ];
+
+    public static function getNameColumn(): string
+    {
+        return 'name';
+    }
 
 	public function getSearchResult(): SearchResult
     {
@@ -333,7 +339,7 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
-        if(Features::accessible('roleplay')) {
+        if(! Features::accessible('roleplay')) {
             return $sumResources;
         }
 

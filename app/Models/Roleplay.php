@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Contracts\Roleplayable;
+use App\Models\Factories\RoleplayableFactory;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -99,21 +100,11 @@ class Roleplay extends Model
         $roleplayOrganizers = collect();
 
         foreach($query as $row) {
+            /** @var Roleplayable|null $organizer */
+            $organizer = RoleplayableFactory::find($row->organizer_type, $row->organizer_id);
 
-            // Créé une instance d'un organisateur de roleplay.
-            // e.g. : \App\Models\Pays::find(28);
-            // soit {nom de la classe}::find( {paramètre} )
-            // soit {organizer_type}::find( {organizer_id} )
+            if($organizer === null) continue;
 
-            /** @var \Illuminate\Database\Eloquent\Collection $organizer */
-            $organizer = call_user_func(
-                [$row->organizer_type, 'find'],
-                [$row->organizer_id]
-            );
-
-            $organizer = $organizer->first();
-
-            /** @var Roleplayable $organizer */
             if(! $roleplayOrganizers->contains($organizer)) {
                 $roleplayOrganizers->add($organizer);
             }

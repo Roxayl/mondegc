@@ -44,7 +44,7 @@ class RoleplayFactory extends Factory
 
             // Lie ce roleplay à un roleplayable par défaut.
             /** @var Roleplayable $organizer */
-            $organizer = call_user_func($type, 'inRandomOrder')->first();
+            $organizer = call_user_func([$type, 'inRandomOrder'])->first();
             $rp->addOrganizer($organizer);
 
             // Lie ce roleplay à une organisation par défaut.

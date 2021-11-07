@@ -10,6 +10,7 @@ use App\Models\Presenters\VillePresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use App\Services\EconomyService;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -53,12 +54,14 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property string|null $ch_vil_transports
  * @property string|null $ch_vil_administration
  * @property string|null $ch_vil_culture
- * @property Pays $pays
- * @property Collection|ChapterResourceable[] $chapterResources
+ * @property-read Pays|null $pays
+ * @property-read \Illuminate\Database\Eloquent\Collection|ChapterResourceable[] $chapterResources
  * @property-read int|null $chapter_resources_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Infrastructure[] $infrastructuresAll
+ * @property-read \Illuminate\Database\Eloquent\Collection|Infrastructure[] $infrastructures
+ * @property-read int|null $infrastructures_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Infrastructure[] $infrastructuresAll
  * @property-read int|null $infrastructures_all_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Patrimoine[] $patrimoines
+ * @property-read \Illuminate\Database\Eloquent\Collection|Patrimoine[] $patrimoines
  * @property-read int|null $patrimoines_count
  * @method static \Illuminate\Database\Eloquent\Builder|Ville newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ville newQuery()
@@ -97,7 +100,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  */
 class Ville extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
-    use HasInfrastructures;
+    use HasFactory, HasInfrastructures;
     use InfrastructurablePresenter, VillePresenter;
 
 	protected $table = 'villes';
@@ -152,6 +155,11 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
 		'ch_vil_culture'
 	];
 
+    public static function getNameColumn(): string
+    {
+        return 'ch_vil_nom';
+    }
+
     /**
      * @return SearchResult
      */
@@ -197,7 +205,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
      */
 	public function getUsers(): Collection
     {
-        return $this->pays->users;
+        return $this->pays->getUsers();
     }
 
     /**
@@ -243,7 +251,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
-        if(Features::accessible('roleplay')) {
+        if(! Features::accessible('roleplay')) {
             return $sumResources;
         }
 

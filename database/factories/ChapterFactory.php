@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Chapter;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ChapterFactory extends Factory
@@ -27,7 +28,7 @@ class ChapterFactory extends Factory
             'summary' => $this->faker->realText(220),
             'content' => '<p>' . nl2br($this->faker->realText(800)) . '</p>'
                        . '<p>' . nl2br($this->faker->realText(400)) . '</p>',
-            'starting_date' => now(),
+            'starting_date' => Carbon::now(),
             'ending_date' => null,
         ];
     }

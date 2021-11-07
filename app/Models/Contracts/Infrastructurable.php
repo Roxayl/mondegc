@@ -5,6 +5,7 @@ namespace App\Models\Contracts;
 use App\Models\InfrastructureGroupe;
 use App\Models\InfrastructureOfficielle;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Collection;
 
 interface Infrastructurable
 {
@@ -57,5 +58,5 @@ interface Infrastructurable
 
     /* Défini dans les modèles. */
 
-    public function getUsers();
+    public function getUsers(): Collection;
 }

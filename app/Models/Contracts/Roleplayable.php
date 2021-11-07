@@ -27,4 +27,10 @@ interface Roleplayable
      * @return string
      */
     public function getType(): string;
+
+    /**
+     * Renvoie l'intitulé de la colonne de la table donnant le nom du modèle.
+     * @return string
+     */
+    public static function getNameColumn(): string;
 }
