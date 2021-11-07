@@ -154,6 +154,11 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
 		'ch_vil_culture'
 	];
 
+    public static function getNameColumn(): string
+    {
+        return 'ch_vil_nom';
+    }
+
     /**
      * @return SearchResult
      */

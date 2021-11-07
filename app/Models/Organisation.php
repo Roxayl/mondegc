@@ -128,6 +128,11 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
 	    self::TYPE_AGENCY, self::TYPE_ALLIANCE, self::TYPE_ORGANISATION
     ];
 
+    public static function getNameColumn(): string
+    {
+        return 'name';
+    }
+
 	public function getSearchResult(): SearchResult
     {
         $context = "{$this->members->count()} membres";
