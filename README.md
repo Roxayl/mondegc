@@ -141,7 +141,7 @@ générer des clés et d'autres variables d'environnement.
     > exit
    ```
 
-7. Vwalà ! Retrouvez le Monde GC à l'adresse suivante : **[http://localhost](http://localhost)**.
+7. Vwalà ! Retrouvez le Monde GC à l'adresse suivante : **[http://localhost](http://localhost)**. La base de données est initialisée avec un utilisateur par défaut, dont vous pouvez utiliser les identifiants pour vous connecter (nom d'utilisateur : ``Admin``, mot de passe : ``password``).
 
 ### Lancement et arrêt de l'application
 

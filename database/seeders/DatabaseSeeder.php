@@ -19,16 +19,28 @@ class DatabaseSeeder extends Seeder
     {
         DB::transaction(function() {
 
-            // Créer un utilisateur admin.
-            CustomUser::factory()
+            // Créer un premier utilisateur admin.
+            $adminUser = CustomUser::factory()
                     ->hasAttached(
                         Pays::factory(),
                         ['permissions' => Pays::PERMISSION_DIRIGEANT])
-                    ->create();
+                    ->create([
+                        'ch_use_login' => 'Admin',
+                        'ch_use_mail'  => 'contact@generation-city.com',
+                    ]);
+
+            if($adminUser) {
+                $this->command->info("Successfully created admin user.");
+                $this->command->table(['Username', 'Password'], [[$adminUser->ch_use_login, 'password']]);
+            } else {
+                $this->command->error("Unable to create admin user. Skipping...");
+            }
+
 
             // Exécuter les autres seeders.
             $this->call([
                 CustomUserSeeder::class,
+                RoleplayableSeeder::class,
                 RoleplaySeeder::class,
             ]);
 

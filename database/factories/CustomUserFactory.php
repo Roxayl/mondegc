@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\CustomUser;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -24,9 +25,9 @@ class CustomUserFactory extends Factory
     {
         return [
             'ch_use_acces'    => 1,
-            'ch_use_date'     => now(),
-            'ch_use_last_log' => now(),
-            'last_activity'   => now(),
+            'ch_use_date'     => Carbon::now(),
+            'ch_use_last_log' => Carbon::now(),
+            'last_activity'   => Carbon::now(),
             'ch_use_login'    => 'User_'. Str::random(5),
             'ch_use_password' => md5('password' . config('legacy.salt')),
             'ch_use_mail'     => $this->faker->email(),

@@ -12,6 +12,7 @@ use App\Services\EconomyService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -65,7 +66,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  */
 class Organisation extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
-    use HasInfrastructures;
+    use HasFactory, HasInfrastructures;
     use InfrastructurablePresenter, OrganisationPresenter;
 
 	protected $table = 'organisation';
