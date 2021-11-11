@@ -72,48 +72,48 @@ class Infrastructure extends Model implements Influencable
 {
     use InfrastructurePresenter, GeneratesInfluence, DeletesInfluences;
 
-	protected $table = 'infrastructures';
-	protected $primaryKey = 'ch_inf_id';
+    protected $table = 'infrastructures';
+    protected $primaryKey = 'ch_inf_id';
 
-	public const CREATED_AT = 'ch_inf_date';
-	public const UPDATED_AT = null;
+    public const CREATED_AT = 'ch_inf_date';
+    public const UPDATED_AT = null;
 
-	protected $casts = [
-		'ch_inf_off_id' => 'int',
-		'ch_inf_villeid' => 'int',
-		'ch_inf_statut' => 'int',
-		'user_creator' => 'int',
-		'ch_inf_juge' => 'int'
-	];
+    protected $casts = [
+        'ch_inf_off_id' => 'int',
+        'ch_inf_villeid' => 'int',
+        'ch_inf_statut' => 'int',
+        'user_creator' => 'int',
+        'ch_inf_juge' => 'int'
+    ];
 
-	protected $dates = [
-		'ch_inf_date',
+    protected $dates = [
+        'ch_inf_date',
         'judged_at',
-	];
+    ];
 
-	protected $fillable = [
-		'ch_inf_off_id',
-		'ch_inf_villeid',
-		'nom_infra',
-		'ch_inf_lien_image',
-		'ch_inf_lien_image2',
-		'ch_inf_lien_image3',
-		'ch_inf_lien_image4',
-		'ch_inf_lien_image5',
-		'ch_inf_lien_forum',
+    protected $fillable = [
+        'ch_inf_off_id',
+        'ch_inf_villeid',
+        'nom_infra',
+        'ch_inf_lien_image',
+        'ch_inf_lien_image2',
+        'ch_inf_lien_image3',
+        'ch_inf_lien_image4',
+        'ch_inf_lien_image5',
+        'ch_inf_lien_forum',
         'ch_inf_commentaire',
-		'lien_wiki',
+        'lien_wiki',
         'infrastructurable_type',
         'infrastructurable_id',
-	];
+    ];
 
-	public const JUGEMENT_PENDING  = 1;
-	public const JUGEMENT_ACCEPTED = 2;
-	public const JUGEMENT_REJECTED = 3;
+    public const JUGEMENT_PENDING = 1;
+    public const JUGEMENT_ACCEPTED = 2;
+    public const JUGEMENT_REJECTED = 3;
 
-	public function infrastructurable(): MorphTo
+    public function infrastructurable(): MorphTo
     {
-	    return $this->morphTo();
+        return $this->morphTo();
     }
 
     public static function pending(): Builder
@@ -136,23 +136,30 @@ class Infrastructure extends Model implements Influencable
         return $this->belongsTo(InfrastructureOfficielle::class, 'ch_inf_off_id');
     }
 
-	public function user(): BelongsTo
-	{
-		return $this->belongsTo(CustomUser::class, 'user_creator');
-	}
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(CustomUser::class, 'user_creator');
+    }
 
-	public function judge(): BelongsTo
+    public function judge(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class, 'ch_inf_juge');
     }
 
-	public static function getMorphFromUrlParameter(string $parameter): string
+    public static function getMorphFromUrlParameter(string $parameter): string
     {
-	    switch($parameter) {
-            case 'ville': $class = Ville::class; break;
-            case 'pays': $class = Pays::class; break;
-            case 'organisation': $class = Organisation::class; break;
-            default: throw new \InvalidArgumentException("Mauvais type de modèle.");
+        switch($parameter) {
+            case 'ville':
+                $class = Ville::class;
+                break;
+            case 'pays':
+                $class = Pays::class;
+                break;
+            case 'organisation':
+                $class = Organisation::class;
+                break;
+            default:
+                throw new \InvalidArgumentException("Mauvais type de modèle.");
         }
         return self::getActualClassNameForMorph($class);
     }

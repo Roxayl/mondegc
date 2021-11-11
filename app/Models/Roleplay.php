@@ -5,12 +5,12 @@ namespace App\Models;
 use App\Models\Contracts\Roleplayable;
 use App\Models\Factories\RoleplayableFactory;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -80,7 +80,7 @@ class Roleplay extends Model
     public function scopeCurrent(Builder $query): Builder
     {
         return $query
-            ->where('starting_date',  '<=', now()->addDay())
+            ->where('starting_date', '<=', now()->addDay())
             ->where(function (Builder $query) {
                 $query->whereNull('ending_date')
                     ->orWhere('ending_date', '>=', now()->subDays(2));
@@ -139,11 +139,11 @@ class Roleplay extends Model
         }
 
         DB::table('roleplay_organizers')->insert([
-            'roleplay_id'    => $this->id,
+            'roleplay_id' => $this->id,
             'organizer_type' => self::getActualClassNameForMorph(get_class($model)),
-            'organizer_id'   => $model->getKey(),
-            'created_at'     => Carbon::now(),
-            'updated_at'     => Carbon::now(),
+            'organizer_id' => $model->getKey(),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         return true;

@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * App\Models\CustomUser
@@ -67,66 +67,66 @@ class CustomUser extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table = 'users';
-	protected $primaryKey = 'ch_use_id';
-	public $timestamps = false;
+    protected $primaryKey = 'ch_use_id';
+    public $timestamps = false;
 
-	protected $casts = [
-		'ch_use_acces' => 'bool',
-		'ch_use_paysID' => 'int',
-		'ch_use_statut' => 'int'
-	];
+    protected $casts = [
+        'ch_use_acces' => 'bool',
+        'ch_use_paysID' => 'int',
+        'ch_use_statut' => 'int'
+    ];
 
-	protected $dates = [
-		'ch_use_date',
-		'ch_use_last_log'
-	];
+    protected $dates = [
+        'ch_use_date',
+        'ch_use_last_log'
+    ];
 
-	protected $hidden = [
-		'ch_use_password'
-	];
+    protected $hidden = [
+        'ch_use_password'
+    ];
 
-	protected $fillable = [
-		'ch_use_acces',
-		'ch_use_date',
-		'ch_use_last_log',
-		'ch_use_login',
-		'ch_use_password',
-		'ch_use_mail',
-		'ch_use_paysID',
-		'ch_use_statut',
-		'ch_use_lien_imgpersonnage',
-		'ch_use_predicat_dirigeant',
-		'ch_use_titre_dirigeant',
-		'ch_use_nom_dirigeant',
-		'ch_use_prenom_dirigeant',
-		'ch_use_biographie_dirigeant'
-	];
+    protected $fillable = [
+        'ch_use_acces',
+        'ch_use_date',
+        'ch_use_last_log',
+        'ch_use_login',
+        'ch_use_password',
+        'ch_use_mail',
+        'ch_use_paysID',
+        'ch_use_statut',
+        'ch_use_lien_imgpersonnage',
+        'ch_use_predicat_dirigeant',
+        'ch_use_titre_dirigeant',
+        'ch_use_nom_dirigeant',
+        'ch_use_prenom_dirigeant',
+        'ch_use_biographie_dirigeant'
+    ];
 
-	/* Niveau de permissions défini dans ch_use_statut */
-	public const ADMIN = 30;
-	public const OCGC = 20;
-	public const JUGE = 15;
-	public const MEMBER = 10;
+    /* Niveau de permissions défini dans ch_use_statut */
+    public const ADMIN = 30;
+    public const OCGC = 20;
+    public const JUGE = 15;
+    public const MEMBER = 10;
 
-	public function infrastructures(): HasMany
-	{
-		return $this->hasMany(Infrastructure::class, 'user_creator');
-	}
+    public function infrastructures(): HasMany
+    {
+        return $this->hasMany(Infrastructure::class, 'user_creator');
+    }
 
-	public function logs(): HasMany
-	{
-		return $this->hasMany(Log::class);
-	}
+    public function logs(): HasMany
+    {
+        return $this->hasMany(Log::class);
+    }
 
     public function ownedRoleplays(): HasMany
     {
         return $this->hasMany(Roleplay::class, 'user_id');
     }
 
-	public function notificationsLegacy(): HasMany
-	{
-		return $this->hasMany(NotificationLegacy::class, 'recipient_id');
-	}
+    public function notificationsLegacy(): HasMany
+    {
+        return $this->hasMany(NotificationLegacy::class, 'recipient_id');
+    }
 
     public function pays(): BelongsToMany
     {
@@ -161,7 +161,7 @@ class CustomUser extends Authenticatable
      */
     public function getAuthPassword(): string
     {
-      return $this->ch_use_password;
+        return $this->ch_use_password;
     }
 
     /**
@@ -183,7 +183,7 @@ class CustomUser extends Authenticatable
     public function ownsPays(Pays $pays): bool
     {
         return in_array($pays->ch_pay_id,
-                 array_column($this->pays()->get()->toArray(), 'ch_pay_id'));
+            array_column($this->pays()->get()->toArray(), 'ch_pay_id'));
     }
 
     /**
@@ -194,13 +194,17 @@ class CustomUser extends Authenticatable
     {
         switch($level) {
             case 'member':
-                $permission = self::MEMBER; break;
+                $permission = self::MEMBER;
+                break;
             case 'juge':
-                $permission = self::JUGE; break;
+                $permission = self::JUGE;
+                break;
             case 'ocgc':
-                $permission = self::OCGC; break;
+                $permission = self::OCGC;
+                break;
             case 'admin':
-                $permission = self::ADMIN; break;
+                $permission = self::ADMIN;
+                break;
             default:
                 throw new \InvalidArgumentException("Mauvais type de permission.");
         }

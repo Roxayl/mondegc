@@ -69,33 +69,33 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     use HasFactory, HasInfrastructures;
     use InfrastructurablePresenter, OrganisationPresenter;
 
-	protected $table = 'organisation';
+    protected $table = 'organisation';
 
-	protected $fillable = [
-		'name',
-		'logo',
-		'flag',
-		'text',
+    protected $fillable = [
+        'name',
+        'logo',
+        'flag',
+        'text',
         'allow_temperance'
-	];
+    ];
 
-	protected $casts = [
+    protected $casts = [
         'allow_temperance' => 'boolean',
     ];
 
-	protected $dates = [
-	    'type_changed_at',
+    protected $dates = [
+        'type_changed_at',
     ];
 
-	protected $attributes = [
+    protected $attributes = [
         'allow_temperance' => false,
     ];
 
-	public const PERMISSION_OWNER = 100;
-	public const PERMISSION_ADMINISTRATOR = 50;
-	public const PERMISSION_MEMBER = 10;
-	public const PERMISSION_PENDING = 5;
-	public const PERMISSION_INVITED = 2;
+    public const PERMISSION_OWNER = 100;
+    public const PERMISSION_ADMINISTRATOR = 50;
+    public const PERMISSION_MEMBER = 10;
+    public const PERMISSION_PENDING = 5;
+    public const PERMISSION_INVITED = 2;
 
     public static array $permissions = [
         'owner' => self::PERMISSION_OWNER,
@@ -106,27 +106,27 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     ];
 
     public const TYPE_AGENCY = 'agency';
-	public const TYPE_ALLIANCE = 'alliance';
-	public const TYPE_ORGANISATION = 'organisation';
-	public const TYPE_GROUP = 'group';
+    public const TYPE_ALLIANCE = 'alliance';
+    public const TYPE_ORGANISATION = 'organisation';
+    public const TYPE_GROUP = 'group';
 
-	public static array $types = [
-	    'agency' => self::TYPE_AGENCY,
-	    'alliance' => self::TYPE_ALLIANCE,
+    public static array $types = [
+        'agency' => self::TYPE_AGENCY,
+        'alliance' => self::TYPE_ALLIANCE,
         'organisation' => self::TYPE_ORGANISATION,
         'group' => self::TYPE_GROUP,
     ];
 
-	public static array $typesVisible = [
-	    self::TYPE_ALLIANCE, self::TYPE_ORGANISATION, self::TYPE_GROUP
+    public static array $typesVisible = [
+        self::TYPE_ALLIANCE, self::TYPE_ORGANISATION, self::TYPE_GROUP
     ];
 
-	public static array $typesCreatable = [
-	    self::TYPE_ORGANISATION, self::TYPE_GROUP
+    public static array $typesCreatable = [
+        self::TYPE_ORGANISATION, self::TYPE_GROUP
     ];
 
-	public static array $typesWithEconomy = [
-	    self::TYPE_AGENCY, self::TYPE_ALLIANCE, self::TYPE_ORGANISATION
+    public static array $typesWithEconomy = [
+        self::TYPE_AGENCY, self::TYPE_ALLIANCE, self::TYPE_ORGANISATION
     ];
 
     public static function getNameColumn(): string
@@ -134,12 +134,12 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
         return 'name';
     }
 
-	public function getSearchResult(): SearchResult
+    public function getSearchResult(): SearchResult
     {
         $context = "{$this->members->count()} membres";
 
-	    return new SearchResult(
-	        $this, $this->name, $context,
+        return new SearchResult(
+            $this, $this->name, $context,
             Str::limit(strip_tags($this->text), 150),
             route('organisation.showslug', $this->showRouteParameter())
         );
@@ -148,18 +148,18 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     /**
      * @return HasMany
      */
-	public function members(): HasMany
-	{
-		return $this->hasMany(OrganisationMember::class)
+    public function members(): HasMany
+    {
+        return $this->hasMany(OrganisationMember::class)
             ->where('permissions', '>=', Organisation::$permissions['member']);
-	}
+    }
 
     /**
      * @return HasMany
      */
-	public function membersPending(): HasMany
+    public function membersPending(): HasMany
     {
-	    return $this->hasMany(OrganisationMember::class)
+        return $this->hasMany(OrganisationMember::class)
             ->where('permissions', '=', Organisation::$permissions['pending']);
     }
 
@@ -170,15 +170,14 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     public function membersInvited(?CustomUser $user): HasMany
     {
         if(is_null($user)) {
-    	    return $this->hasMany(OrganisationMember::class)
+            return $this->hasMany(OrganisationMember::class)
                 ->where('permissions', '=', Organisation::$permissions['invited']);
-        }
-        else {
+        } else {
             return $this->hasMany(OrganisationMember::class)
                 ->join('users_pays', 'pays_id', '=', 'ID_pays')
                 ->select('organisation_members.*')
                 ->where('organisation_members.permissions', '=',
-                        Organisation::$permissions['invited'])
+                    Organisation::$permissions['invited'])
                 ->where('ID_user', '=', $user->ch_use_id);
         }
     }
@@ -188,7 +187,7 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
      */
     public function membersAll(): HasMany
     {
-	    return $this->hasMany(OrganisationMember::class);
+        return $this->hasMany(OrganisationMember::class);
     }
 
     /**
@@ -218,8 +217,9 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
      */
     public function getUsers($permission = null): \Illuminate\Support\Collection
     {
-	    if($permission === null)
-	        $permission = self::$permissions['administrator'];
+        if($permission === null) {
+            $permission = self::$permissions['administrator'];
+        }
 
         $members = $this->hasMany(OrganisationMember::class)
             ->where('permissions', '>=', $permission)
@@ -239,8 +239,7 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
             }
         }
 
-        $query = CustomUser::whereIn('ch_use_id', $users)->get();
-        return $query;
+        return CustomUser::whereIn('ch_use_id', $users)->get();
     }
 
     /**
@@ -370,8 +369,8 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
 
             foreach(config('enums.resources') as $resource) {
                 $sumResources[$resource] += $infrastructureResources[$resource]
-                                         + $paysResources[$resource]
-                                         + $roleplayResources[$resource];
+                    + $paysResources[$resource]
+                    + $roleplayResources[$resource];
             }
         }
 

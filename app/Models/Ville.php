@@ -103,57 +103,57 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
     use HasFactory, HasInfrastructures;
     use InfrastructurablePresenter, VillePresenter;
 
-	protected $table = 'villes';
-	protected $primaryKey = 'ch_vil_ID';
+    protected $table = 'villes';
+    protected $primaryKey = 'ch_vil_ID';
     const CREATED_AT = 'ch_vil_date_enregistrement';
     const UPDATED_AT = 'ch_vil_mis_jour';
 
-	protected $casts = [
-		'ch_vil_paysID' => 'int',
-		'ch_vil_user' => 'int',
-		'ch_vil_nb_update' => 'int',
-		'ch_vil_coord_X' => 'float',
-		'ch_vil_coord_Y' => 'float',
-		'ch_vil_capitale' => 'bool',
-		'ch_vil_population' => 'int'
-	];
+    protected $casts = [
+        'ch_vil_paysID' => 'int',
+        'ch_vil_user' => 'int',
+        'ch_vil_nb_update' => 'int',
+        'ch_vil_coord_X' => 'float',
+        'ch_vil_coord_Y' => 'float',
+        'ch_vil_capitale' => 'bool',
+        'ch_vil_population' => 'int'
+    ];
 
-	protected $dates = [
-		'ch_vil_date_enregistrement',
-		'ch_vil_mis_jour'
-	];
+    protected $dates = [
+        'ch_vil_date_enregistrement',
+        'ch_vil_mis_jour'
+    ];
 
-	protected $fillable = [
-		'ch_vil_paysID',
-		'ch_vil_user',
-		'ch_vil_label',
-		'ch_vil_date_enregistrement',
-		'ch_vil_mis_jour',
-		'ch_vil_nb_update',
-		'ch_vil_coord_X',
-		'ch_vil_coord_Y',
-		'ch_vil_type_jeu',
-		'ch_vil_nom',
-		'ch_vil_armoiries',
-		'ch_vil_capitale',
-		'ch_vil_population',
-		'ch_vil_specialite',
-		'ch_vil_lien_img1',
-		'ch_vil_lien_img2',
-		'ch_vil_lien_img3',
-		'ch_vil_lien_img4',
-		'ch_vil_lien_img5',
-		'ch_vil_legende_img1',
-		'ch_vil_legende_img2',
-		'ch_vil_legende_img3',
-		'ch_vil_legende_img4',
-		'ch_vil_legende_img5',
-		'ch_vil_header',
-		'ch_vil_contenu',
-		'ch_vil_transports',
-		'ch_vil_administration',
-		'ch_vil_culture'
-	];
+    protected $fillable = [
+        'ch_vil_paysID',
+        'ch_vil_user',
+        'ch_vil_label',
+        'ch_vil_date_enregistrement',
+        'ch_vil_mis_jour',
+        'ch_vil_nb_update',
+        'ch_vil_coord_X',
+        'ch_vil_coord_Y',
+        'ch_vil_type_jeu',
+        'ch_vil_nom',
+        'ch_vil_armoiries',
+        'ch_vil_capitale',
+        'ch_vil_population',
+        'ch_vil_specialite',
+        'ch_vil_lien_img1',
+        'ch_vil_lien_img2',
+        'ch_vil_lien_img3',
+        'ch_vil_lien_img4',
+        'ch_vil_lien_img5',
+        'ch_vil_legende_img1',
+        'ch_vil_legende_img2',
+        'ch_vil_legende_img3',
+        'ch_vil_legende_img4',
+        'ch_vil_legende_img5',
+        'ch_vil_header',
+        'ch_vil_contenu',
+        'ch_vil_transports',
+        'ch_vil_administration',
+        'ch_vil_culture'
+    ];
 
     public static function getNameColumn(): string
     {
@@ -163,7 +163,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
     /**
      * @return SearchResult
      */
-	public function getSearchResult(): SearchResult
+    public function getSearchResult(): SearchResult
     {
         $context = null;
         if(!is_null($this->pays)) {
@@ -171,8 +171,8 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
                 . $this->ch_vil_paysID . '">' . $this->pays->ch_pay_nom . '</a>';
         }
 
-	    return new SearchResult(
-	        $this, $this->ch_vil_nom, $context,
+        return new SearchResult(
+            $this, $this->ch_vil_nom, $context,
             Str::limit(strip_tags($this->ch_vil_contenu), 150),
             url("page-ville.php?ch_ville_id={$this->ch_vil_ID}&ch_pay_id={$this->ch_vil_paysID}")
         );
@@ -181,15 +181,15 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
     /**
      * @return BelongsTo
      */
-	public function pays(): BelongsTo
+    public function pays(): BelongsTo
     {
-		return $this->belongsTo(Pays::class, 'ch_vil_paysID');
-	}
+        return $this->belongsTo(Pays::class, 'ch_vil_paysID');
+    }
 
     /**
      * @return HasMany
      */
-	public function patrimoines(): HasMany
+    public function patrimoines(): HasMany
     {
         return $this->hasMany(Patrimoine::class, 'ch_pat_villeID');
     }
@@ -203,7 +203,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
     /**
      * @return Collection<int, CustomUser>
      */
-	public function getUsers(): Collection
+    public function getUsers(): Collection
     {
         return $this->pays->getUsers();
     }
@@ -251,7 +251,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
-        if(! Features::accessible('roleplay')) {
+        if(!Features::accessible('roleplay')) {
             return $sumResources;
         }
 
@@ -278,8 +278,8 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
 
         foreach(config('enums.resources') as $resource) {
             $sumResources[$resource] += $infrastructureResources[$resource]
-                                      + $patrimoineResources[$resource]
-                                      + $roleplayResources[$resource];
+                + $patrimoineResources[$resource]
+                + $roleplayResources[$resource];
         }
 
         return $sumResources;
@@ -290,7 +290,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function($ville) {
+        static::deleting(function ($ville) {
             /** @var Ville $ville */
             $ville->deleteAllInfrastructures();
         });
