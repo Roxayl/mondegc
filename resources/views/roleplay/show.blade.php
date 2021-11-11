@@ -9,12 +9,14 @@
 
 @section('styles')
     <link href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" rel="stylesheet">
+    <livewire:styles />
 @endsection
 
 @section('scripts')
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-    <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
-    <script type="text/javascript" src="../assets/js/Editeur.js"></script>
+    <script type="text/javascript" src="{{ url('assets/js/tinymce/tinymce.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url('assets/js/Editeur.js') }}"></script>
+    <livewire:scripts />
 @endsection
 
 @section('body_attributes') data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" @endsection
