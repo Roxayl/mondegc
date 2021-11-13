@@ -11,9 +11,17 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+ /*
+ |--------------------------------------------------------------------------
+ | Assets legacy globaux compilés pour le front-end Laravel
+ |--------------------------------------------------------------------------
+ |
+ | Ces assets sont chargés depuis le layout et sont disponibles dans toutes
+ | les pages servies par le front-end Laravel.
+ |
+ */
 
+// Compiler les libraries JS (jQuery, Bootstrap core, et plugins Bootstrap)
 mix.scripts([
     'assets/js/jquery.js',
     'assets/js/bootstrap.js',
@@ -24,10 +32,21 @@ mix.scripts([
     'assets/js/bootstrap-modal.js',
 ], 'public/js/vendor-compiled.js');
 
+// Compiler les assets de l'application.
 mix.scripts([
     'assets/js/application.js',
     'resources/js/component-loader.js',
 ], 'public/js/application-compiled.js');
+
+ /*
+ |--------------------------------------------------------------------------
+ | Assets spécifiques pour certaines pages pour le front-end Laravel
+ |--------------------------------------------------------------------------
+ |
+ | Ces assets sont chargés depuis le layout et sont disponibles dans toutes
+ | les pages servies par le front-end Laravel.
+ |
+ */
 
 mix.scripts([
     'assets/js/Chart.2.7.3.bundle.js',
@@ -36,9 +55,10 @@ mix.scripts([
 ], 'public/js/vendor-parliament-compiled.js');
 
 mix.scripts([
-    'resources/js/legacy/parliament.js',
+    'resources/js/parliament.js',
 ], 'public/js/parliament-compiled.js');
 
+// Rajouter le numéro de version à la fin des URLs, dans l'environnement de production.
 if (mix.inProduction()) {
     mix.version();
 }
