@@ -38,31 +38,42 @@ Route::post('logout', fn() => url('connexion.php?doLogout=true')) // FIXME: néc
 | Page
 |--------------------------------------------------------------------------
 */
-Route::get('/page/{page}-{url}', 'PageController@index')->name('page.show');
+Route::get('page/{page}-{url}', 'PageController@index')->name('page.show');
 
 /*
 |--------------------------------------------------------------------------
 | Organisation
 |--------------------------------------------------------------------------
 */
-Route::get('organisation/{id}-{slug}', 'OrganisationController@show')->name('organisation.showslug');
+Route::get('organisation/{id}-{slug}', 'OrganisationController@show')
+    ->name('organisation.showslug');
 Route::resource('organisation', 'OrganisationController');
-Route::get('organisation/{organisation}/migrate', 'OrganisationController@migrate')->name('organisation.migrate');
-Route::match(['put', 'patch'], 'organisation/{organisation}/migrate', 'OrganisationController@runMigration')->name('organisation.run-migration');
+Route::get('organisation/{organisation}/migrate', 'OrganisationController@migrate')
+    ->name('organisation.migrate');
+Route::match(['put', 'patch'], 'organisation/{organisation}/migrate', 'OrganisationController@runMigration')
+    ->name('organisation.run-migration');
 
 /*
 |--------------------------------------------------------------------------
 | OrganisationMember
 |--------------------------------------------------------------------------
 */
-Route::get('organisation/{organisation_id}/join', 'OrganisationMemberController@joinOrganisation')->name('organisation-member.join');
-Route::post('organisation/{organisation_id}/join', 'OrganisationMemberController@store')->name('organisation-member.store');
-Route::get('organisation/{organisation_id}/invite', 'OrganisationMemberController@invite')->name('organisation-member.invite');
-Route::post('organisation/{organisation_id}/invite', 'OrganisationMemberController@sendInvitation')->name('organisation-member.send-invitation');
-Route::get('organisation-member/{id}/edit', 'OrganisationMemberController@edit')->name('organisation-member.edit');
-Route::match(['put', 'patch'], 'organisation-member/{id}', 'OrganisationMemberController@update')->name('organisation-member.update');
-Route::get('organisation-member/{id}/delete', 'OrganisationMemberController@delete')->name('organisation-member.delete');
-Route::delete('organisation-member/{id}', 'OrganisationMemberController@destroy')->name('organisation-member.destroy');
+Route::get('organisation/{organisation_id}/join', 'OrganisationMemberController@joinOrganisation')
+    ->name('organisation-member.join');
+Route::post('organisation/{organisation_id}/join', 'OrganisationMemberController@store')
+    ->name('organisation-member.store');
+Route::get('organisation/{organisation_id}/invite', 'OrganisationMemberController@invite')
+    ->name('organisation-member.invite');
+Route::post('organisation/{organisation_id}/invite', 'OrganisationMemberController@sendInvitation')
+    ->name('organisation-member.send-invitation');
+Route::get('organisation-member/{id}/edit', 'OrganisationMemberController@edit')
+    ->name('organisation-member.edit');
+Route::match(['put', 'patch'], 'organisation-member/{id}', 'OrganisationMemberController@update')
+    ->name('organisation-member.update');
+Route::get('organisation-member/{id}/delete', 'OrganisationMemberController@delete')
+    ->name('organisation-member.delete');
+Route::delete('organisation-member/{id}', 'OrganisationMemberController@destroy')
+    ->name('organisation-member.destroy');
 
 /*
 |--------------------------------------------------------------------------
@@ -70,22 +81,32 @@ Route::delete('organisation-member/{id}', 'OrganisationMemberController@destroy'
 |--------------------------------------------------------------------------
 */
 Route::get('infrastructure/{id}', 'InfrastructureController@show')->name('infrastructure.show');
-Route::get('infrastructure/select-group/type:{infrastructurable_type}/id:{infrastructurable_id}', 'InfrastructureController@selectGroup')->name('infrastructure.select-group');
-Route::get('infrastructure/create/type:{infrastructurable_type}/id:{infrastructurable_id}', 'InfrastructureController@create')->name('infrastructure.create');
-Route::post('infrastructure/create', 'InfrastructureController@store')->name('infrastructure.store');
-Route::get('infrastructure/{infrastructure_id}/edit', 'InfrastructureController@edit')->name('infrastructure.edit');
-Route::match(['put', 'patch'], 'infrastructure/{infrastructure_id}', 'InfrastructureController@update')->name('infrastructure.update');
-Route::get('infrastructure/{infrastructure_id}/delete', 'InfrastructureController@delete')->name('infrastructure.delete');
-Route::delete('infrastructure/{infrastructure_id}', 'InfrastructureController@destroy')->name('infrastructure.destroy');
+Route::get('infrastructure/select-group/type:{infrastructurable_type}/id:{infrastructurable_id}',
+    'InfrastructureController@selectGroup')->name('infrastructure.select-group');
+Route::get('infrastructure/create/type:{infrastructurable_type}/id:{infrastructurable_id}',
+    'InfrastructureController@create')->name('infrastructure.create');
+Route::post('infrastructure/create', 'InfrastructureController@store')
+    ->name('infrastructure.store');
+Route::get('infrastructure/{infrastructure_id}/edit', 'InfrastructureController@edit')
+    ->name('infrastructure.edit');
+Route::match(['put', 'patch'], 'infrastructure/{infrastructure_id}', 'InfrastructureController@update')
+    ->name('infrastructure.update');
+Route::get('infrastructure/{infrastructure_id}/delete', 'InfrastructureController@delete')
+    ->name('infrastructure.delete');
+Route::delete('infrastructure/{infrastructure_id}', 'InfrastructureController@destroy')
+    ->name('infrastructure.destroy');
 
 /*
 |--------------------------------------------------------------------------
 | InfrastructureJudge
 |--------------------------------------------------------------------------
 */
-Route::get('economy/infrastructure-judge', 'InfrastructureJudgeController@index')->name('infrastructure-judge.index');
-Route::get('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJudgeController@show')->name('infrastructure-judge.show');
-Route::patch('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJudgeController@judge')->name('infrastructure-judge.judge');
+Route::get('economy/infrastructure-judge', 'InfrastructureJudgeController@index')
+    ->name('infrastructure-judge.index');
+Route::get('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJudgeController@show')
+    ->name('infrastructure-judge.show');
+Route::patch('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJudgeController@judge')
+    ->name('infrastructure-judge.judge');
 
 /*
 |--------------------------------------------------------------------------
@@ -137,11 +158,13 @@ Route::get('map', 'MapController@explore')->name('map');
 |--------------------------------------------------------------------------
 */
 Route::get('user/notifications', 'NotificationController@index')->name('notification');
-Route::post('user/notifications/mark-as-read', 'NotificationController@markAsRead')->name('notification.mark-as-read');
+Route::post('user/notifications/mark-as-read', 'NotificationController@markAsRead')
+    ->name('notification.mark-as-read');
 
 /*
 |--------------------------------------------------------------------------
 | DataExporter
 |--------------------------------------------------------------------------
 */
-Route::get('data-export/temperance-pays', 'DataExporterController@temperancePays')->name('data-export.temperance-pays');
+Route::get('data-export/temperance-pays', 'DataExporterController@temperancePays')
+    ->name('data-export.temperance-pays');
