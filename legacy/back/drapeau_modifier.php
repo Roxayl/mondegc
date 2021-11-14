@@ -122,7 +122,7 @@ $totalRows_drapeau = mysql_num_rows($drapeau);
 </div>
 <!-- Footer
     ================================================== -->
-<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footer.php'); ?>
 
 <!-- Le javascript
     ================================================== -->
