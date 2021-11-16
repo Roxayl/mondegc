@@ -81,7 +81,7 @@ class TypeGeometry extends Model
         'coef_population'
     ];
 
-    public function type_geometries_group(): BelongsTo
+    public function typeGeometriesGroup(): BelongsTo
     {
         return $this->belongsTo(TypeGeometriesGroup::class, 'group_id');
     }

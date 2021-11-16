@@ -135,7 +135,8 @@ class ChapterResourceable extends Model implements Influencable
             ->save();
     }
 
-    public static function boot() {
+    public static function boot()
+    {
         parent::boot();
 
         // Générer les influences à la création du modèle.

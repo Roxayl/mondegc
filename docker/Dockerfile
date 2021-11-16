@@ -15,6 +15,7 @@ RUN apt-get update -qq && \
     zip \
     mariadb-client \
     sendmail \
+    libpng-dev \
     nodejs \
     npm && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
@@ -22,7 +23,7 @@ RUN apt-get update -qq && \
 # Cette dernière étape (apt-get clean && rm -rf ...) supprime les fichiers temporaire d'apt, pour alléger l'image.
 
 # Extensions PHP.
-RUN docker-php-ext-install -j$(nproc) opcache pdo_mysql mysqli
+RUN docker-php-ext-install -j$(nproc) opcache pdo_mysql mysqli gd
 COPY docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
 
 # Apache et réécriture d'URL.

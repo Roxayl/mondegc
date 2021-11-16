@@ -54,7 +54,7 @@ class UsersPays extends Pivot
         return $this->belongsTo(Pays::class, 'ch_pay_id', 'ID_pays');
     }
 
-    public function organisation_members(): HasManyThrough
+    public function organisationMembers(): HasManyThrough
     {
         return $this->hasManyThrough(
             OrganisationMember::class,

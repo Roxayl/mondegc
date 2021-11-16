@@ -251,8 +251,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
                     strokeColor: "${couleurTrait}",
                     strokeWidth: "${epaisseurTrait}",
                     strokeDashstyle: "${Trait}",
-                    pointRadius: "5",
-                    cursor: "pointer"
+                    pointRadius: "5"
                 }, OpenLayers.Feature.Vector.style["default"])),
                 "select": new OpenLayers.Style({
                     strokeColor: "#e2001a",
@@ -457,7 +456,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
         map.addControl(new OpenLayers.Control.KeyboardDefaults());
         map.setCenter(new OpenLayers.LonLat(0, 0), 1);
         // ajout règles de selection
-        selectControl = new OpenLayers.Control.SelectFeature(
+        var selectControl = new OpenLayers.Control.SelectFeature(
             [vectors1, vectors2, vectors3],
             {
                 clickout: true, toggle: false,

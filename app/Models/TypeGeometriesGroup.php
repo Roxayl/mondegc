@@ -33,7 +33,7 @@ class TypeGeometriesGroup extends Model
         'intitule'
     ];
 
-    public function type_geometries(): HasMany
+    public function typeGeometries(): HasMany
     {
         return $this->hasMany(TypeGeometry::class, 'group_id');
     }

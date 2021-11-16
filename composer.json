@@ -36,6 +36,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "ext-curl": "*",
+        "ext-gd": "*",
         "ext-json": "*",
         "ext-mysqli": "*",
         "ext-pdo": "*",
