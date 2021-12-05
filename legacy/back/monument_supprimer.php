@@ -97,7 +97,7 @@ Eventy::action('display.beforeHeadClosingTag')
 <div class="container corps-page"> </div>
 <!-- Footer
     ================================================== -->
-<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footer.php'); ?>
 
 <!-- Le javascript
     ================================================== -->

@@ -11,7 +11,7 @@ class LegacyPageService
      * @param string $path Chemin d'accès (e.g. " /back/ocgc_proposal_create.php").
      * @return string Réponse sous forme de chaîne.
      */
-    static private function callLegacyController(string $path): string
+    private static function callLegacyController(string $path): string
     {
         /** @var LegacySiteController $controller */
         $controller = app(LegacySiteController::class);
@@ -32,7 +32,12 @@ class LegacyPageService
         return $response->content();
     }
 
-    static function navbar(?string $navbarContext = null): string
+    /**
+     * Contenu HTML de la barre de navigation.
+     * @param string|null $navbarContext Elément du menu à lmarquer comme actif.
+     * @return string
+     */
+    public static function navbar(?string $navbarContext = null): string
     {
         // On créé dynamiquement la variable permettant d'activer l'élément de menu spécifié.
         if(! is_null($navbarContext) && in_array($navbarContext,
@@ -45,7 +50,20 @@ class LegacyPageService
         return self::callLegacyController('php/navbarloader.php');
     }
 
-    static function carteGenerale(): string
+    /**
+     * Contenu HTML du footer.
+     * @return string
+     */
+    public static function footer(): string
+    {
+        return self::callLegacyController('php/footer.php');
+    }
+
+    /**
+     * Contenu HTML de la carte générale.
+     * @return string
+     */
+    public static function carteGenerale(): string
     {
         return self::callLegacyController('php/cartegenerale2.php');
     }

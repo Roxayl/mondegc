@@ -27,14 +27,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class TypeGeometriesGroup extends Model
 {
-	protected $table = 'type_geometries_group';
+    protected $table = 'type_geometries_group';
 
-	protected $fillable = [
-		'intitule'
-	];
+    protected $fillable = [
+        'intitule'
+    ];
 
-	public function type_geometries(): HasMany
-	{
-		return $this->hasMany(TypeGeometry::class, 'group_id');
-	}
+    public function typeGeometries(): HasMany
+    {
+        return $this->hasMany(TypeGeometry::class, 'group_id');
+    }
 }

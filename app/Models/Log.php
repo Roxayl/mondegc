@@ -31,29 +31,29 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Log extends Model
 {
-	protected $table = 'log';
-	public $timestamps = false;
+    protected $table = 'log';
+    public $timestamps = false;
 
-	protected $casts = [
-		'target_id' => 'int',
-		'user_id' => 'int'
-	];
+    protected $casts = [
+        'target_id' => 'int',
+        'user_id' => 'int'
+    ];
 
-	protected $dates = [
-		'created'
-	];
+    protected $dates = [
+        'created'
+    ];
 
-	protected $fillable = [
-		'target',
-		'target_id',
-		'type_action',
-		'user_id',
-		'data_changes',
-		'created'
-	];
+    protected $fillable = [
+        'target',
+        'target_id',
+        'type_action',
+        'user_id',
+        'data_changes',
+        'created'
+    ];
 
-	public function user(): BelongsTo
-	{
-		return $this->belongsTo(CustomUser::class);
-	}
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(CustomUser::class);
+    }
 }

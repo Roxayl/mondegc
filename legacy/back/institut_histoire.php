@@ -539,7 +539,7 @@ $('#closemodal').click(function() {
 
 <!-- Footer
     ================================================== -->
-<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footer.php'); ?>
 
 <script src="../assets/js/application.js?v=<?= $mondegc_config['version'] ?>"></script>
 

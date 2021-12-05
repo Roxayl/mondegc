@@ -28,23 +28,23 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  */
 class UsersPays extends Pivot
 {
-	protected $table = 'users_pays';
-	public $incrementing = true;
-	public $timestamps = false;
+    protected $table = 'users_pays';
+    public $incrementing = true;
+    public $timestamps = false;
 
-	protected $casts = [
-		'ID_pays' => 'int',
-		'ID_user' => 'int',
-		'permissions' => 'int'
-	];
+    protected $casts = [
+        'ID_pays' => 'int',
+        'ID_user' => 'int',
+        'permissions' => 'int'
+    ];
 
-	protected $fillable = [
-		'ID_pays',
-		'ID_user',
-		'permissions'
-	];
+    protected $fillable = [
+        'ID_pays',
+        'ID_user',
+        'permissions'
+    ];
 
-	public function users(): BelongsTo
+    public function users(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class, 'ch_use_id', 'ID_user');
     }
@@ -54,7 +54,7 @@ class UsersPays extends Pivot
         return $this->belongsTo(Pays::class, 'ch_pay_id', 'ID_pays');
     }
 
-    public function organisation_members(): HasManyThrough
+    public function organisationMembers(): HasManyThrough
     {
         return $this->hasManyThrough(
             OrganisationMember::class,

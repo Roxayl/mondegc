@@ -21,6 +21,6 @@ class PageController extends Controller
             return redirect("page/{$page->id}-{$page->url}");
         }
 
-        return view('page')->with('page', $page);
+        return view('page.show')->with('page', $page);
     }
 }

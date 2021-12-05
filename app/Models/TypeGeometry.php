@@ -51,43 +51,43 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class TypeGeometry extends Model
 {
-	protected $table = 'type_geometries';
+    protected $table = 'type_geometries';
 
-	protected $casts = [
-		'group_id' => 'int',
-		'coef_budget' => 'float',
-		'coef_industrie' => 'float',
-		'coef_commerce' => 'float',
-		'coef_agriculture' => 'float',
-		'coef_tourisme' => 'float',
-		'coef_recherche' => 'float',
-		'coef_environnement' => 'float',
-		'coef_education' => 'float',
-		'coef_population' => 'float'
-	];
+    protected $casts = [
+        'group_id' => 'int',
+        'coef_budget' => 'float',
+        'coef_industrie' => 'float',
+        'coef_commerce' => 'float',
+        'coef_agriculture' => 'float',
+        'coef_tourisme' => 'float',
+        'coef_recherche' => 'float',
+        'coef_environnement' => 'float',
+        'coef_education' => 'float',
+        'coef_population' => 'float'
+    ];
 
-	protected $fillable = [
-		'group_id',
-		'label',
-		'type_geometrie',
-		'coef_budget',
-		'coef_industrie',
-		'coef_commerce',
-		'coef_agriculture',
-		'coef_tourisme',
-		'coef_recherche',
-		'coef_environnement',
-		'coef_education',
-		'coef_population'
-	];
+    protected $fillable = [
+        'group_id',
+        'label',
+        'type_geometrie',
+        'coef_budget',
+        'coef_industrie',
+        'coef_commerce',
+        'coef_agriculture',
+        'coef_tourisme',
+        'coef_recherche',
+        'coef_environnement',
+        'coef_education',
+        'coef_population'
+    ];
 
-	public function type_geometries_group(): BelongsTo
-	{
-		return $this->belongsTo(TypeGeometriesGroup::class, 'group_id');
-	}
+    public function typeGeometriesGroup(): BelongsTo
+    {
+        return $this->belongsTo(TypeGeometriesGroup::class, 'group_id');
+    }
 
-	public function geometries(): HasMany
-	{
-		return $this->hasMany(Geometry::class, 'type_geometrie_id');
-	}
+    public function geometries(): HasMany
+    {
+        return $this->hasMany(Geometry::class, 'type_geometrie_id');
+    }
 }

@@ -42,44 +42,44 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Geometry extends Model
 {
-	protected $table = 'geometries';
-	protected $primaryKey = 'ch_geo_id';
-	public $timestamps = false;
+    protected $table = 'geometries';
+    protected $primaryKey = 'ch_geo_id';
+    public $timestamps = false;
 
-	protected $casts = [
-		'type_geometrie_id' => 'int',
-		'ch_geo_pay_id' => 'int',
-		'ch_geo_user' => 'int',
-		'ch_geo_maj_user' => 'int',
-		'ch_geo_mesure' => 'float'
-	];
+    protected $casts = [
+        'type_geometrie_id' => 'int',
+        'ch_geo_pay_id' => 'int',
+        'ch_geo_user' => 'int',
+        'ch_geo_maj_user' => 'int',
+        'ch_geo_mesure' => 'float'
+    ];
 
-	protected $dates = [
-		'ch_geo_date',
-		'ch_geo_mis_jour'
-	];
+    protected $dates = [
+        'ch_geo_date',
+        'ch_geo_mis_jour'
+    ];
 
-	protected $fillable = [
-		'type_geometrie_id',
-		'ch_geo_wkt',
-		'ch_geo_pay_id',
-		'ch_geo_user',
-		'ch_geo_maj_user',
-		'ch_geo_date',
-		'ch_geo_mis_jour',
-		'ch_geo_geometries',
-		'ch_geo_mesure',
-		'ch_geo_type',
-		'ch_geo_nom'
-	];
+    protected $fillable = [
+        'type_geometrie_id',
+        'ch_geo_wkt',
+        'ch_geo_pay_id',
+        'ch_geo_user',
+        'ch_geo_maj_user',
+        'ch_geo_date',
+        'ch_geo_mis_jour',
+        'ch_geo_geometries',
+        'ch_geo_mesure',
+        'ch_geo_type',
+        'ch_geo_nom'
+    ];
 
-	public function pays(): BelongsTo
+    public function pays(): BelongsTo
     {
         return $this->belongsTo(Pays::class, 'ch_geo_pay_id');
     }
 
-	public function type_geometry(): BelongsTo
-	{
-		return $this->belongsTo(TypeGeometry::class, 'type_geometrie_id');
-	}
+    public function typeGeometry(): BelongsTo
+    {
+        return $this->belongsTo(TypeGeometry::class, 'type_geometrie_id');
+    }
 }

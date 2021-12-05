@@ -36,6 +36,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "ext-curl": "*",
+        "ext-gd": "*",
         "ext-json": "*",
         "ext-mysqli": "*",
         "ext-pdo": "*",
@@ -45,7 +46,6 @@
         "funkjedi/composer-include-files": "^1.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^3.2",
         "spatie/laravel-searchable": "^1.6",
         "tormjens/eventy": "^0.7.0",
         "ylsideas/feature-flags": "^1.4"

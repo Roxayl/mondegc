@@ -395,8 +395,7 @@ $totalRows_VoiesPaysPetites = mysql_num_rows($VoiesPaysPetites);
                     strokeColor: "${couleurTrait}",
                     strokeWidth: "${epaisseurTrait}",
                     strokeDashstyle: "${Trait}",
-                    pointRadius: "5",
-                    cursor: "pointer"
+                    pointRadius: "5"
                 }, OpenLayers.Feature.Vector.style["default"])),
                 "select": new OpenLayers.Style({
                     strokeColor: "#e2001a",

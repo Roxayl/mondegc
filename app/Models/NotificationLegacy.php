@@ -29,29 +29,29 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class NotificationLegacy extends Model
 {
-	protected $table = 'notifications_legacy';
-	public $timestamps = false;
+    protected $table = 'notifications_legacy';
+    public $timestamps = false;
 
-	protected $casts = [
-		'recipient_id' => 'int',
-		'element' => 'int',
-		'unread' => 'bool'
-	];
+    protected $casts = [
+        'recipient_id' => 'int',
+        'element' => 'int',
+        'unread' => 'bool'
+    ];
 
-	protected $dates = [
-		'created'
-	];
+    protected $dates = [
+        'created'
+    ];
 
-	protected $fillable = [
-		'recipient_id',
-		'type_notif',
-		'element',
-		'unread',
-		'created'
-	];
+    protected $fillable = [
+        'recipient_id',
+        'type_notif',
+        'element',
+        'unread',
+        'created'
+    ];
 
-	public function user(): BelongsTo
-	{
-		return $this->belongsTo(CustomUser::class, 'recipient_id');
-	}
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(CustomUser::class, 'recipient_id');
+    }
 }

@@ -20,7 +20,7 @@
     <link href="{{url('assets/css/GenerationCity.css')}}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
     <!--[if gte IE 9]>
-        <style type="text/css">
+        <style>
             .gradient {
                filter: none;
             }
@@ -55,34 +55,7 @@
 
     <!-- Footer
     ================================================== -->
-    <footer class="footer">
-      <div class="container">
-      <div class="pull-center">
-        <p class="liens-rapides"><a href="#">haut de page</a></p>
-      </div>
-      <div>
-        <ul class="pull-left liens-rapides">
-          <li><a href="{{url('back/Haut-Conseil.php')}}">Conseil de l'OCGC</a></li>
-          @if (Auth::check())
-          <li><a href="{{ url("index.php?doLogout=true") }}">D&eacute;connexion</a></li>
-          @else
-          <li><a href="{{url('connexion.php')}}">Connexion</a></li>
-          @endif
-
-          <li><a href="{{url('participer.php#charte')}}">Charte</a></li>
-          <li><a href="https://www.generation-city.com/">G&eacute;n&eacute;ration City</a></li>
-          <li><a href="https://www.forum-gc.com/">Forum</a></li>
-        </ul>
-        <a href="https://www.generation-city.com/">
-            <img src="{{url('assets/img/2019/logoGC-small.png')}}">
-        </a>
-        <div class="copyright">
-          <p>Copyright &copy; G&eacute;n&eacute;ration-City - 2019 </p>
-          <p>Tous droits r&eacute;serv&eacute;s - Version 2</p>
-        </div>
-      </div>
-      </div>
-    </footer>
+    {!! $navbarProvider::footer() !!}
 
     <script src="{{mix('/js/vendor-compiled.js')}}"></script>
     <script src="{{mix('/js/application-compiled.js')}}"></script>

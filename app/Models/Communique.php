@@ -39,42 +39,42 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Communique extends Model
 {
-	protected $table = 'communiques';
-	protected $primaryKey = 'ch_com_ID';
+    protected $table = 'communiques';
+    protected $primaryKey = 'ch_com_ID';
 
-	protected $casts = [
-		'ch_com_statut' => 'int',
-		'ch_com_element_id' => 'int',
-		'ch_com_user_id' => 'int',
-		'ch_com_pays_id' => 'int'
-	];
+    protected $casts = [
+        'ch_com_statut' => 'int',
+        'ch_com_element_id' => 'int',
+        'ch_com_user_id' => 'int',
+        'ch_com_pays_id' => 'int'
+    ];
 
-	const CREATED_AT =  'ch_com_date';
-	const UPDATED_AT =  'ch_com_date_mis_jour';
+    const CREATED_AT = 'ch_com_date';
+    const UPDATED_AT = 'ch_com_date_mis_jour';
 
-	protected $dates = [
-		'ch_com_date',
-		'ch_com_date_mis_jour'
-	];
+    protected $dates = [
+        'ch_com_date',
+        'ch_com_date_mis_jour'
+    ];
 
-	protected $fillable = [
-		'ch_com_statut',
-		'ch_com_categorie',
-		'ch_com_element_id',
-		'ch_com_titre',
-		'ch_com_contenu',
-		'ch_com_pays_id'
-	];
+    protected $fillable = [
+        'ch_com_statut',
+        'ch_com_categorie',
+        'ch_com_element_id',
+        'ch_com_titre',
+        'ch_com_contenu',
+        'ch_com_pays_id'
+    ];
 
-	public const STATUS_PUBLISHED = 1;
-	public const STATUS_DRAFT = 2;
+    public const STATUS_PUBLISHED = 1;
+    public const STATUS_DRAFT = 2;
 
-	public function user(): BelongsTo
-	{
-		return $this->belongsTo(CustomUser::class, 'ch_com_user_id');
-	}
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(CustomUser::class, 'ch_com_user_id');
+    }
 
-	public function publisher()
+    public function publisher()
     {
         // TODO: https://laravel.com/docs/5.8/eloquent-relationships#one-to-many-polymorphic-relations
         // return $this->morphTo();

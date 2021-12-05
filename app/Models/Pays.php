@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Contracts\Resourceable;
 use App\Models\Contracts\Infrastructurable;
+use App\Models\Contracts\Resourceable;
 use App\Models\Contracts\Roleplayable;
 use App\Models\Managers\PaysMapManager;
 use App\Models\Presenters\InfrastructurablePresenter;
@@ -147,81 +147,81 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     use InfrastructurablePresenter, PaysPresenter;
 
     protected $table = 'pays';
-	protected $primaryKey = 'ch_pay_id';
+    protected $primaryKey = 'ch_pay_id';
     const CREATED_AT = 'ch_pay_date';
     const UPDATED_AT = 'ch_pay_mis_jour';
 
-	protected $casts = [
-		'ch_pay_publication' => 'int',
-		'ch_pay_emplacement' => 'int',
-		'ch_pay_nb_update' => 'int',
-		'ch_pay_budget_carte' => 'int',
-		'ch_pay_industrie_carte' => 'int',
-		'ch_pay_commerce_carte' => 'int',
-		'ch_pay_agriculture_carte' => 'int',
-		'ch_pay_tourisme_carte' => 'int',
-		'ch_pay_recherche_carte' => 'int',
-		'ch_pay_environnement_carte' => 'int',
-		'ch_pay_education_carte' => 'int',
-		'ch_pay_population_carte' => 'int',
-		'ch_pay_emploi_carte' => 'int'
-	];
+    protected $casts = [
+        'ch_pay_publication' => 'int',
+        'ch_pay_emplacement' => 'int',
+        'ch_pay_nb_update' => 'int',
+        'ch_pay_budget_carte' => 'int',
+        'ch_pay_industrie_carte' => 'int',
+        'ch_pay_commerce_carte' => 'int',
+        'ch_pay_agriculture_carte' => 'int',
+        'ch_pay_tourisme_carte' => 'int',
+        'ch_pay_recherche_carte' => 'int',
+        'ch_pay_environnement_carte' => 'int',
+        'ch_pay_education_carte' => 'int',
+        'ch_pay_population_carte' => 'int',
+        'ch_pay_emploi_carte' => 'int'
+    ];
 
-	protected $dates = [
-		'ch_pay_date',
-		'ch_pay_mis_jour'
-	];
+    protected $dates = [
+        'ch_pay_date',
+        'ch_pay_mis_jour'
+    ];
 
-	protected $fillable = [
-		'ch_pay_lien_forum',
-		'lien_wiki',
-		'ch_pay_nom',
-		'ch_pay_devise',
-		'ch_pay_lien_imgheader',
-		'ch_pay_lien_imgdrapeau',
-		'ch_pay_date',
-		'ch_pay_mis_jour',
-		'ch_pay_forme_etat',
-		'ch_pay_capitale',
-		'ch_pay_langue_officielle',
-		'ch_pay_monnaie',
-		'ch_pay_header_presentation',
-		'ch_pay_text_presentation',
-		'ch_pay_header_geographie',
-		'ch_pay_text_geographie',
-		'ch_pay_header_politique',
-		'ch_pay_text_politique',
-		'ch_pay_header_histoire',
-		'ch_pay_text_histoire',
-		'ch_pay_header_economie',
-		'ch_pay_text_economie',
-		'ch_pay_header_transport',
-		'ch_pay_text_transport',
-		'ch_pay_header_sport',
-		'ch_pay_text_sport',
-		'ch_pay_header_culture',
-		'ch_pay_text_culture',
-		'ch_pay_header_patrimoine',
-		'ch_pay_text_patrimoine',
-	];
+    protected $fillable = [
+        'ch_pay_lien_forum',
+        'lien_wiki',
+        'ch_pay_nom',
+        'ch_pay_devise',
+        'ch_pay_lien_imgheader',
+        'ch_pay_lien_imgdrapeau',
+        'ch_pay_date',
+        'ch_pay_mis_jour',
+        'ch_pay_forme_etat',
+        'ch_pay_capitale',
+        'ch_pay_langue_officielle',
+        'ch_pay_monnaie',
+        'ch_pay_header_presentation',
+        'ch_pay_text_presentation',
+        'ch_pay_header_geographie',
+        'ch_pay_text_geographie',
+        'ch_pay_header_politique',
+        'ch_pay_text_politique',
+        'ch_pay_header_histoire',
+        'ch_pay_text_histoire',
+        'ch_pay_header_economie',
+        'ch_pay_text_economie',
+        'ch_pay_header_transport',
+        'ch_pay_text_transport',
+        'ch_pay_header_sport',
+        'ch_pay_text_sport',
+        'ch_pay_header_culture',
+        'ch_pay_text_culture',
+        'ch_pay_header_patrimoine',
+        'ch_pay_text_patrimoine',
+    ];
 
-	public const STATUS_ACTIVE = 1;
-	public const STATUS_ARCHIVED = 2;
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_ARCHIVED = 2;
 
-	public static array $statut = [
-	    'active' => self::STATUS_ACTIVE,
+    public static array $statut = [
+        'active' => self::STATUS_ACTIVE,
         'archived' => self::STATUS_ARCHIVED,
     ];
 
-	public const PERMISSION_DIRIGEANT = 10;
-	public const PERMISSION_CODIRIGEANT = 5;
+    public const PERMISSION_DIRIGEANT = 10;
+    public const PERMISSION_CODIRIGEANT = 5;
 
     /**
      * @var array|int[] Donne un intervalle valide d'emplacements de pays.
      */
     private static array $slotRange = [1, 59];
 
-	private ?PaysMapManager $mapManager = null;
+    private ?PaysMapManager $mapManager = null;
 
     /**
      * @return PaysMapManager
@@ -242,13 +242,13 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     /**
      * @return SearchResult
      */
-	public function getSearchResult(): SearchResult
+    public function getSearchResult(): SearchResult
     {
         $context = "Continent " . $this->ch_pay_continent
             . ((int)$this->ch_pay_publication === self::STATUS_ARCHIVED ? ' - Pays archivé' : '');
 
-	    return new SearchResult(
-	        $this, $this->ch_pay_nom, $context,
+        return new SearchResult(
+            $this, $this->ch_pay_nom, $context,
             Str::limit(strip_tags($this->ch_pay_text_presentation), 150),
             url('page-pays.php?ch_pay_id=' . $this->ch_pay_id)
         );
@@ -257,12 +257,12 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     /**
      * @return HasMany
      */
-	public function organisationMembers(): HasMany
+    public function organisationMembers(): HasMany
     {
-		return $this->hasMany(OrganisationMember::class, 'pays_id');
-	}
+        return $this->hasMany(OrganisationMember::class, 'pays_id');
+    }
 
-	private function getOrganisationMembership(Closure $f)
+    private function getOrganisationMembership(Closure $f)
     {
         $query = $this->organisationMembers()
             ->join('organisation', 'organisation.id', 'organisation_id')
@@ -274,11 +274,11 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     /**
      * @return Collection<Organisation>
      */
-	public function organisationsAll(): \Illuminate\Support\Collection
+    public function organisationsAll(): \Illuminate\Support\Collection
     {
-        return $this->getOrganisationMembership(function($query) {
+        return $this->getOrganisationMembership(function ($query) {
             return $query->get()
-                         ->pluck('organisation');
+                ->pluck('organisation');
         });
     }
 
@@ -287,10 +287,10 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
      */
     public function alliance(): ?Organisation
     {
-        return $this->getOrganisationMembership(function($query) {
+        return $this->getOrganisationMembership(function ($query) {
             return $query->where('type', Organisation::TYPE_ALLIANCE)
-                         ->get()
-                         ->pluck('organisation')->first();
+                ->get()
+                ->pluck('organisation')->first();
         });
     }
 
@@ -299,17 +299,17 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
      */
     public function otherOrganisations(): \Illuminate\Support\Collection
     {
-        return $this->getOrganisationMembership(function($query) {
+        return $this->getOrganisationMembership(function ($query) {
             return $query->where('type', '!=', Organisation::TYPE_ALLIANCE)
-                         ->get()
-                         ->pluck('organisation');
+                ->get()
+                ->pluck('organisation');
         });
     }
 
     /**
      * @return BelongsToMany
      */
-	public function users(): BelongsToMany
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(CustomUser::class, 'users_pays',
             'ID_pays', 'ID_user');
@@ -402,17 +402,13 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
 
         if($lastActivity < Carbon::now()->subMonths(6)) {
             $coefficient = 0.5;
-        }
-        elseif($lastActivity < Carbon::now()->subMonths(5)) {
+        } elseif($lastActivity < Carbon::now()->subMonths(5)) {
             $coefficient = 0.6;
-        }
-        elseif($lastActivity < Carbon::now()->subMonths(4)) {
+        } elseif($lastActivity < Carbon::now()->subMonths(4)) {
             $coefficient = 0.7;
-        }
-        elseif($lastActivity < Carbon::now()->subMonths(3)) {
+        } elseif($lastActivity < Carbon::now()->subMonths(3)) {
             $coefficient = 0.8;
-        }
-        elseif($lastActivity < Carbon::now()->subMonths(2)) {
+        } elseif($lastActivity < Carbon::now()->subMonths(2)) {
             $coefficient = 0.9;
         }
 
@@ -480,7 +476,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
-        if(! Features::accessible('roleplay')) {
+        if(!Features::accessible('roleplay')) {
             return $sumResources;
         }
 
@@ -517,10 +513,10 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
 
         foreach(config('enums.resources') as $resource) {
             $sumResources[$resource] += $villeResources[$resource]
-                                      + $mapResources[$resource]
-                                      + $infrastructureResources[$resource]
-                                      + $organisationResources[$resource]
-                                      + $roleplayResources[$resource];
+                + $mapResources[$resource]
+                + $infrastructureResources[$resource]
+                + $organisationResources[$resource]
+                + $roleplayResources[$resource];
 
             // Pour toutes les ressources positives, on peut être amené à diminuer la quantité
             // de ressources données si le pays est inactif.
@@ -537,7 +533,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function($pays) {
+        static::deleting(function ($pays) {
             /** @var Pays $pays */
             $pays->deleteAllInfrastructures();
             $pays->getMapManager()->removeOldInfluenceRows();

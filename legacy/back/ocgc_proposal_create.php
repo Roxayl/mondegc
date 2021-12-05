@@ -332,7 +332,7 @@ require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 </div>
 <!-- Footer
     ================================================== -->
-<?php require(DEF_LEGACYROOTPATH . 'php/footerback.php'); ?>
+<?php require(DEF_LEGACYROOTPATH . 'php/footer.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.js"></script>

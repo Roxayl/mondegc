@@ -35,43 +35,48 @@ use Illuminate\Support\Facades\Notification;
  */
 class OrganisationMember extends Model
 {
-	protected $table = 'organisation_members';
+    protected $table = 'organisation_members';
 
-	protected $casts = [
-		'organisation_id' => 'int',
-		'permissions' => 'int',
-		'pays_id' => 'int'
-	];
+    protected $casts = [
+        'organisation_id' => 'int',
+        'permissions' => 'int',
+        'pays_id' => 'int'
+    ];
 
-	protected $fillable = [
-		'organisation_id',
-		'permissions',
-		'pays_id'
-	];
+    protected $fillable = [
+        'organisation_id',
+        'permissions',
+        'pays_id'
+    ];
 
-	public function organisation(): BelongsTo
-	{
-		return $this->belongsTo(Organisation::class, 'organisation_id');
-	}
+    public function organisation(): BelongsTo
+    {
+        return $this->belongsTo(Organisation::class, 'organisation_id');
+    }
 
-	public function pays(): BelongsTo
-	{
-		return $this->belongsTo(Pays::class, 'pays_id', 'ch_pay_id');
-	}
+    public function pays(): BelongsTo
+    {
+        return $this->belongsTo(Pays::class, 'pays_id', 'ch_pay_id');
+    }
 
-	public function getPermissionLabel(): string
+    public function getPermissionLabel(): string
     {
         switch($this->permissions) {
             case Organisation::$permissions['owner']:
-                $label = 'Propriétaire'; break;
+                $label = 'Propriétaire';
+                break;
             case Organisation::$permissions['administrator']:
-                $label = 'Administrateur'; break;
+                $label = 'Administrateur';
+                break;
             case Organisation::$permissions['member']:
-                $label = 'Membre'; break;
+                $label = 'Membre';
+                break;
             case Organisation::$permissions['pending']:
-                $label = 'En attente de validation'; break;
+                $label = 'En attente de validation';
+                break;
             case Organisation::$permissions['invited']:
-                $label = 'Invitation envoyée'; break;
+                $label = 'Invitation envoyée';
+                break;
             default:
                 throw new \InvalidArgumentException(
                     "Mauvais type de permission.");
@@ -90,8 +95,7 @@ class OrganisationMember extends Model
 
         // Pays en attente de validation rejetée.
         // Notifiés : Dirigeants du pays.
-        if($oldPermission === Organisation::$permissions['pending'] && !$this->exists)
-        {
+        if($oldPermission === Organisation::$permissions['pending'] && !$this->exists) {
             $pays = Pays::find($this->pays_id);
             $organisation = Organisation::find($this->organisation_id);
             $users = $pays->users;
@@ -114,16 +118,14 @@ class OrganisationMember extends Model
 
         // Pays en attente de validation, à modérer par un administateur.
         // Notifiés : Administrateurs de l'organisation.
-        elseif($this->permissions === Organisation::$permissions['pending'])
-        {
+        elseif($this->permissions === Organisation::$permissions['pending']) {
             $users = Organisation::find($this->organisation_id)->getUsers();
             Notification::send($users, new OrganisationMemberJoined($this));
         }
 
         // Pays invité à rejoindre l'organisation.
         // Notifiés : Utilisateurs gérant le pays invité.
-        elseif($this->permissions === Organisation::$permissions['invited'])
-        {
+        elseif($this->permissions === Organisation::$permissions['invited']) {
             $pays = Pays::find($this->pays_id);
             $users = $pays->users;
             Notification::send($users, new OrganisationMemberInvited($this));
@@ -132,8 +134,7 @@ class OrganisationMember extends Model
         // Pays devenu administrateur.
         // Notifiés : Utilisateurs membres de l'organisation.
         elseif($oldPermission >= Organisation::$permissions['member']
-            && $this->permissions === Organisation::$permissions['administrator'])
-        {
+            && $this->permissions === Organisation::$permissions['administrator']) {
             $users = Organisation::find(
                 $this->organisation_id)->getUsers(Organisation::$permissions['member']);
             Notification::send($users,
