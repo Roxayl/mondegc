@@ -4,10 +4,9 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-DROP TABLE IF EXISTS `chapter_resourceable`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `chapter_resourceable` (
+CREATE TABLE IF NOT EXISTS `chapter_resourceable` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `chapter_id` bigint unsigned NOT NULL,
   `resourceable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -28,10 +27,9 @@ CREATE TABLE `chapter_resourceable` (
   CONSTRAINT `chapter_resourceable_chapter_id_foreign` FOREIGN KEY (`chapter_id`) REFERENCES `chapters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `chapters`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `chapters` (
+CREATE TABLE IF NOT EXISTS `chapters` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `roleplay_id` bigint unsigned NOT NULL,
   `order` int NOT NULL,
@@ -50,10 +48,9 @@ CREATE TABLE `chapters` (
   CONSTRAINT `chapters_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`ch_use_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `communiques`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `communiques` (
+CREATE TABLE IF NOT EXISTS `communiques` (
   `ch_com_ID` int NOT NULL AUTO_INCREMENT,
   `ch_com_label` varchar(10) NOT NULL,
   `ch_com_statut` int NOT NULL,
@@ -70,10 +67,9 @@ CREATE TABLE `communiques` (
   CONSTRAINT `communiques_users_ch_use_id_fk` FOREIGN KEY (`ch_com_user_id`) REFERENCES `users` (`ch_use_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `discord_notifications`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `discord_notifications` (
+CREATE TABLE IF NOT EXISTS `discord_notifications` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `channel` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -86,10 +82,9 @@ CREATE TABLE `discord_notifications` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `dispatch_fait_his_cat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `dispatch_fait_his_cat` (
+CREATE TABLE IF NOT EXISTS `dispatch_fait_his_cat` (
   `ch_disp_FH_id` int NOT NULL AUTO_INCREMENT,
   `ch_disp_FH_label` varchar(10) NOT NULL,
   `ch_disp_fait_hist_cat_id` int NOT NULL,
@@ -98,10 +93,9 @@ CREATE TABLE `dispatch_fait_his_cat` (
   PRIMARY KEY (`ch_disp_FH_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `dispatch_mem_group`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `dispatch_mem_group` (
+CREATE TABLE IF NOT EXISTS `dispatch_mem_group` (
   `ch_disp_MG_id` int NOT NULL AUTO_INCREMENT,
   `ch_disp_MG_label` varchar(10) NOT NULL,
   `ch_disp_group_id` int NOT NULL,
@@ -111,10 +105,9 @@ CREATE TABLE `dispatch_mem_group` (
   PRIMARY KEY (`ch_disp_MG_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `dispatch_mon_cat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `dispatch_mon_cat` (
+CREATE TABLE IF NOT EXISTS `dispatch_mon_cat` (
   `ch_disp_id` int NOT NULL AUTO_INCREMENT,
   `ch_disp_mon_label` varchar(10) NOT NULL,
   `ch_disp_cat_id` int NOT NULL,
@@ -123,10 +116,9 @@ CREATE TABLE `dispatch_mon_cat` (
   PRIMARY KEY (`ch_disp_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `faithist_categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `faithist_categories` (
+CREATE TABLE IF NOT EXISTS `faithist_categories` (
   `ch_fai_cat_ID` int NOT NULL AUTO_INCREMENT,
   `ch_fai_cat_label` varchar(10) NOT NULL,
   `ch_fai_cat_statut` int DEFAULT NULL,
@@ -140,10 +132,9 @@ CREATE TABLE `faithist_categories` (
   PRIMARY KEY (`ch_fai_cat_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `geometries`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `geometries` (
+CREATE TABLE IF NOT EXISTS `geometries` (
   `ch_geo_id` int NOT NULL AUTO_INCREMENT,
   `type_geometrie_id` int DEFAULT NULL,
   `ch_geo_wkt` mediumtext NOT NULL,
@@ -163,10 +154,9 @@ CREATE TABLE `geometries` (
   CONSTRAINT `geometries_type_geometries_id_fk` FOREIGN KEY (`type_geometrie_id`) REFERENCES `type_geometries` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `histoire`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `histoire` (
+CREATE TABLE IF NOT EXISTS `histoire` (
   `ch_his_id` int NOT NULL AUTO_INCREMENT,
   `ch_his_label` varchar(10) NOT NULL,
   `ch_his_paysID` tinyint NOT NULL,
@@ -187,10 +177,9 @@ CREATE TABLE `histoire` (
   KEY `fk_histoire_pays1_idx` (`ch_his_paysID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `influence`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `influence` (
+CREATE TABLE IF NOT EXISTS `influence` (
   `id` int NOT NULL AUTO_INCREMENT,
   `influencable_type` varchar(191) NOT NULL,
   `influencable_id` int DEFAULT NULL,
@@ -209,10 +198,9 @@ CREATE TABLE `influence` (
   KEY `influence_influencable_type_influencable_id_index` (`influencable_type`,`influencable_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `infrastructures`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `infrastructures` (
+CREATE TABLE IF NOT EXISTS `infrastructures` (
   `ch_inf_id` int NOT NULL AUTO_INCREMENT,
   `ch_inf_label` varchar(20) NOT NULL,
   `ch_inf_off_id` int NOT NULL,
@@ -241,10 +229,9 @@ CREATE TABLE `infrastructures` (
   CONSTRAINT `infrastructures_users_ch_use_id_fk` FOREIGN KEY (`user_creator`) REFERENCES `users` (`ch_use_id`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `infrastructures_groupes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `infrastructures_groupes` (
+CREATE TABLE IF NOT EXISTS `infrastructures_groupes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nom_groupe` varchar(191) DEFAULT NULL,
   `url_image` varchar(191) NOT NULL,
@@ -254,10 +241,9 @@ CREATE TABLE `infrastructures_groupes` (
   UNIQUE KEY `infrastructures_groupes_id_uindex` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `infrastructures_officielles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `infrastructures_officielles` (
+CREATE TABLE IF NOT EXISTS `infrastructures_officielles` (
   `ch_inf_off_id` int NOT NULL AUTO_INCREMENT,
   `ch_inf_off_label` varchar(10) NOT NULL,
   `ch_inf_off_date` datetime NOT NULL,
@@ -275,10 +261,9 @@ CREATE TABLE `infrastructures_officielles` (
   PRIMARY KEY (`ch_inf_off_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `infrastructures_officielles_groupes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `infrastructures_officielles_groupes` (
+CREATE TABLE IF NOT EXISTS `infrastructures_officielles_groupes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `ID_groupes` int DEFAULT NULL,
   `ID_infra_officielle` int DEFAULT NULL,
@@ -286,10 +271,9 @@ CREATE TABLE `infrastructures_officielles_groupes` (
   UNIQUE KEY `infrastructures_officielles_groupes_id_uindex` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `instituts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `instituts` (
+CREATE TABLE IF NOT EXISTS `instituts` (
   `ch_ins_ID` int NOT NULL AUTO_INCREMENT,
   `ch_ins_label` varchar(10) NOT NULL,
   `ch_ins_lien_forum` varchar(250) NOT NULL,
@@ -308,10 +292,9 @@ CREATE TABLE `instituts` (
   PRIMARY KEY (`ch_ins_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `legacy_pages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `legacy_pages` (
+CREATE TABLE IF NOT EXISTS `legacy_pages` (
   `id` int NOT NULL AUTO_INCREMENT,
   `this_id` varchar(50) DEFAULT NULL,
   `content` mediumtext,
@@ -320,10 +303,9 @@ CREATE TABLE `legacy_pages` (
   UNIQUE KEY `pages_this_id_uindex` (`this_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `log` (
+CREATE TABLE IF NOT EXISTS `log` (
   `id` int NOT NULL AUTO_INCREMENT,
   `target` varchar(100) NOT NULL,
   `target_id` int DEFAULT NULL,
@@ -336,10 +318,9 @@ CREATE TABLE `log` (
   CONSTRAINT `log_users_ch_use_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`ch_use_id`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `membres_groupes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `membres_groupes` (
+CREATE TABLE IF NOT EXISTS `membres_groupes` (
   `ch_mem_group_ID` int NOT NULL AUTO_INCREMENT,
   `ch_mem_group_label` varchar(10) NOT NULL,
   `ch_mem_group_statut` tinyint(1) DEFAULT NULL,
@@ -353,20 +334,18 @@ CREATE TABLE `membres_groupes` (
   PRIMARY KEY (`ch_mem_group_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `migrations` (
+CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `migration` varchar(255) NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `monument_categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `monument_categories` (
+CREATE TABLE IF NOT EXISTS `monument_categories` (
   `ch_mon_cat_ID` int NOT NULL AUTO_INCREMENT,
   `ch_mon_cat_label` varchar(10) DEFAULT NULL,
   `ch_mon_cat_statut` int NOT NULL,
@@ -389,10 +368,9 @@ CREATE TABLE `monument_categories` (
   PRIMARY KEY (`ch_mon_cat_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `notation_temperance`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `notation_temperance` (
+CREATE TABLE IF NOT EXISTS `notation_temperance` (
   `ch_not_temp_id` int NOT NULL AUTO_INCREMENT,
   `ch_not_temp_label` varchar(10) NOT NULL,
   `ch_not_temp_date` datetime NOT NULL,
@@ -421,10 +399,9 @@ CREATE TABLE `notation_temperance` (
   PRIMARY KEY (`ch_not_temp_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `notifications`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `notifications` (
+CREATE TABLE IF NOT EXISTS `notifications` (
   `id` char(36) NOT NULL,
   `type` varchar(255) NOT NULL,
   `notifiable_type` varchar(191) NOT NULL,
@@ -437,10 +414,9 @@ CREATE TABLE `notifications` (
   KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `notifications_legacy`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `notifications_legacy` (
+CREATE TABLE IF NOT EXISTS `notifications_legacy` (
   `id` int NOT NULL AUTO_INCREMENT,
   `recipient_id` int DEFAULT NULL,
   `type_notif` varchar(25) NOT NULL,
@@ -452,10 +428,9 @@ CREATE TABLE `notifications_legacy` (
   CONSTRAINT `notifications_users_ch_use_id_fk` FOREIGN KEY (`recipient_id`) REFERENCES `users` (`ch_use_id`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `ocgc_proposals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ocgc_proposals` (
+CREATE TABLE IF NOT EXISTS `ocgc_proposals` (
   `id` int NOT NULL AUTO_INCREMENT,
   `ID_pays` int DEFAULT NULL,
   `question` mediumtext,
@@ -483,10 +458,9 @@ CREATE TABLE `ocgc_proposals` (
   UNIQUE KEY `proposal_id` (`res_year`,`res_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Propositions de loi à l''Assemblée Générale';
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `ocgc_votes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ocgc_votes` (
+CREATE TABLE IF NOT EXISTS `ocgc_votes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `ID_proposal` int DEFAULT NULL,
   `ID_pays` int DEFAULT NULL,
@@ -495,10 +469,9 @@ CREATE TABLE `ocgc_votes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Votes aux propositions de l''Assemblée Générale';
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `organisation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `organisation` (
+CREATE TABLE IF NOT EXISTS `organisation` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(191) DEFAULT NULL,
   `logo` varchar(191) DEFAULT NULL,
@@ -513,10 +486,9 @@ CREATE TABLE `organisation` (
   KEY `organisation_id_index` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `organisation_members`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `organisation_members` (
+CREATE TABLE IF NOT EXISTS `organisation_members` (
   `id` int NOT NULL AUTO_INCREMENT,
   `organisation_id` int DEFAULT NULL,
   `pays_id` int DEFAULT NULL,
@@ -530,10 +502,9 @@ CREATE TABLE `organisation_members` (
   CONSTRAINT `organisation_members_pays_ch_pay_id_fk` FOREIGN KEY (`pays_id`) REFERENCES `pays` (`ch_pay_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `pages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pages` (
+CREATE TABLE IF NOT EXISTS `pages` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `url` varchar(255) NOT NULL,
@@ -547,10 +518,9 @@ CREATE TABLE `pages` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `patrimoine`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `patrimoine` (
+CREATE TABLE IF NOT EXISTS `patrimoine` (
   `ch_pat_id` int NOT NULL AUTO_INCREMENT,
   `ch_pat_label` varchar(10) NOT NULL,
   `ch_pat_statut` int NOT NULL,
@@ -580,10 +550,9 @@ CREATE TABLE `patrimoine` (
   KEY `fk_patrimoine_villes1_idx` (`ch_pat_villeID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `pays`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pays` (
+CREATE TABLE IF NOT EXISTS `pays` (
   `ch_pay_id` int NOT NULL AUTO_INCREMENT,
   `ch_pay_label` varchar(10) NOT NULL,
   `ch_pay_publication` tinyint(1) NOT NULL DEFAULT '1',
@@ -633,10 +602,9 @@ CREATE TABLE `pays` (
   PRIMARY KEY (`ch_pay_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `personnage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `personnage` (
+CREATE TABLE IF NOT EXISTS `personnage` (
   `id` int NOT NULL AUTO_INCREMENT,
   `entity` mediumtext,
   `entity_id` int DEFAULT NULL,
@@ -649,10 +617,9 @@ CREATE TABLE `personnage` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `roleplay`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `roleplay` (
+CREATE TABLE IF NOT EXISTS `roleplay` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int NOT NULL,
@@ -665,10 +632,9 @@ CREATE TABLE `roleplay` (
   CONSTRAINT `roleplay_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`ch_use_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `roleplay_organizers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `roleplay_organizers` (
+CREATE TABLE IF NOT EXISTS `roleplay_organizers` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `roleplay_id` bigint unsigned NOT NULL,
   `organizer_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -680,10 +646,9 @@ CREATE TABLE `roleplay_organizers` (
   CONSTRAINT `roleplay_organizers_roleplay_id_foreign` FOREIGN KEY (`roleplay_id`) REFERENCES `roleplay` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `temperance`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `temperance` (
+CREATE TABLE IF NOT EXISTS `temperance` (
   `ch_temp_id` int NOT NULL AUTO_INCREMENT,
   `ch_temp_label` varchar(10) NOT NULL,
   `ch_temp_date` datetime NOT NULL,
@@ -696,10 +661,9 @@ CREATE TABLE `temperance` (
   PRIMARY KEY (`ch_temp_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `type_geometries`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `type_geometries` (
+CREATE TABLE IF NOT EXISTS `type_geometries` (
   `id` int NOT NULL AUTO_INCREMENT,
   `group_id` int NOT NULL,
   `label` varchar(255) NOT NULL,
@@ -720,10 +684,9 @@ CREATE TABLE `type_geometries` (
   CONSTRAINT `type_geometries_type_geometries_group_id_fk` FOREIGN KEY (`group_id`) REFERENCES `type_geometries_group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `type_geometries_group`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `type_geometries_group` (
+CREATE TABLE IF NOT EXISTS `type_geometries_group` (
   `id` int NOT NULL AUTO_INCREMENT,
   `intitule` varchar(50) NOT NULL,
   `created_at` datetime NOT NULL,
@@ -731,10 +694,9 @@ CREATE TABLE `type_geometries_group` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `ch_use_id` int NOT NULL AUTO_INCREMENT,
   `ch_use_acces` tinyint(1) DEFAULT '1',
   `ch_use_date` datetime DEFAULT NULL,
@@ -754,20 +716,18 @@ CREATE TABLE `users` (
   PRIMARY KEY (`ch_use_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `users_dispatch_session`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users_dispatch_session` (
+CREATE TABLE IF NOT EXISTS `users_dispatch_session` (
   `ch_users_session_dispatch_ID` int NOT NULL AUTO_INCREMENT,
   `ch_users_session_dispatch_Key` varchar(20) NOT NULL,
   `ch_users_session_dispatch_sessionID` int NOT NULL,
   PRIMARY KEY (`ch_users_session_dispatch_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `users_pays`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users_pays` (
+CREATE TABLE IF NOT EXISTS `users_pays` (
   `id` int NOT NULL AUTO_INCREMENT,
   `ID_pays` int NOT NULL,
   `ID_user` int NOT NULL,
@@ -775,10 +735,9 @@ CREATE TABLE `users_pays` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `users_provisoire`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users_provisoire` (
+CREATE TABLE IF NOT EXISTS `users_provisoire` (
   `ch_use_prov_ID` int NOT NULL AUTO_INCREMENT,
   `ch_use_prov_login` varchar(45) DEFAULT NULL,
   `ch_use_prov_clef` varchar(10) DEFAULT NULL,
@@ -788,10 +747,9 @@ CREATE TABLE `users_provisoire` (
   PRIMARY KEY (`ch_use_prov_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `users_session`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users_session` (
+CREATE TABLE IF NOT EXISTS `users_session` (
   `ch_use_session_id` int NOT NULL AUTO_INCREMENT,
   `ch_use_session_login_user` varchar(250) NOT NULL,
   `ch_use_session_user_ID` int NOT NULL,
@@ -800,10 +758,9 @@ CREATE TABLE `users_session` (
   PRIMARY KEY (`ch_use_session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `villes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `villes` (
+CREATE TABLE IF NOT EXISTS `villes` (
   `ch_vil_ID` int NOT NULL AUTO_INCREMENT,
   `ch_vil_paysID` int NOT NULL,
   `ch_vil_user` int NOT NULL,

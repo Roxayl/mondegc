@@ -70,7 +70,11 @@
             "php": "7.4"
         },
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "funkjedi/composer-include-files": true
+        }
     },
     "extra": {
         "laravel": {
