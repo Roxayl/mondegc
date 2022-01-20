@@ -14,4 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/resourceable/all', [Api\ResourceableController::class, 'index']);
+Route::middleware(['auth:api', 'throttle:15,1'])->group(function() {
+
+    Route::get('/resourceable/all', [Api\ResourceableController::class, 'index'])
+        ->name('api.resourceable.all');
+
+});
