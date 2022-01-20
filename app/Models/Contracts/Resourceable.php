@@ -21,4 +21,10 @@ interface Resourceable
      * @return array<string, float>
      */
     public function getResourcesAttribute(): array;
+
+    /**
+     * Donne le nom du modèle ressourçable.
+     * @return string
+     */
+    public function getName(): string;
 }

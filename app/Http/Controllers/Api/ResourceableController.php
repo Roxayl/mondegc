@@ -3,16 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ResourceableCollection;
+use App\Http\Resources\ModelCollection;
+use App\Models\Repositories\Resource;
 use App\Models\Repositories\Resourceable;
-use Illuminate\Http\Request;
 
 class ResourceableController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * @param string|null $type
+     * @return ModelCollection
+     */
+    public function fetch(?string $type): ModelCollection
     {
-        $resourceable = (new Resourceable)->query()->all()->withResources()->get();
+        $shortModelName = Resource::getModels()[$type];
+        $resourceable = (new Resourceable)->query()->fetch([$shortModelName])->get();
 
-        return new ResourceableCollection($resourceable);
+        return new ModelCollection($resourceable);
     }
 }

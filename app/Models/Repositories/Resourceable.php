@@ -2,22 +2,24 @@
 
 namespace App\Models\Repositories;
 
+use App\Models\Contracts\Resourceable as IResourceable;
 use App\Models\Organisation;
 use App\Models\Pays;
 use App\Models\Ville;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 /**
- * Cette classe permet de gérer des collections de modèles implémentant {@see \App\Models\Contracts\Resourceable}.
+ * Cette classe permet de gérer des collections de modèles implémentant {@see IResourceable}.
  */
-class Resourceable
+class Resourceable extends BaseRepository
 {
-    private ?Collection $data = null;
-
-    private static array $models = [
-        Organisation::class,
-        Pays::class,
-        Ville::class,
+    /**
+     * @var array|string[]
+     */
+    protected static array $models = [
+        'organisation' => Organisation::class,
+        'pays'         => Pays::class,
+        'ville'        => Ville::class,
     ];
 
     /**
@@ -28,37 +30,74 @@ class Resourceable
         return self::$models;
     }
 
-    public function query(): self
+    /**
+     * @return $this
+     */
+    public function all(): self
     {
-        $this->data = collect();
-
-        return $this;
+        return $this->fetch();
     }
 
-    public function all(): self
+    /**
+     * @param array|null $models
+     * @return $this
+     */
+    public function fetch(?array $models = null): self
     {
         $resourceables = collect();
 
-        foreach (self::$models as $model) {
+        if($models === null) {
+            $models = self::$models;
+        }
+
+        foreach ($models as $model) {
             $resourceables = $resourceables->merge($model::all());
         }
 
-        $this->data = $resourceables;
+        $this->collection = $resourceables;
 
         return $this;
     }
 
+    /**
+     * @return $this
+     */
+    public function pays(): self
+    {
+        return $this->fetch([Pays::class]);
+    }
+
+    /**
+     * @return $this
+     */
+    public function ville(): self
+    {
+        return $this->fetch([Ville::class]);
+    }
+
+    /**
+     * @return $this
+     */
+    public function organisation(): self
+    {
+        return $this->fetch([Organisation::class]);
+    }
+
+    /**
+     * @return $this
+     */
     public function withResources(): self
     {
-        $this->data->map(function($item) {
-            return $item->append('resources');
+        $this->collection->map(/**
+         * @param IResourceable|Model $resourceable
+         * @return IResourceable
+         */ function(IResourceable $resourceable) {
+            if(get_class($resourceable) === Ville::class) {
+                return $resourceable;
+            }
+            return $resourceable->append('resources');
         });
 
         return $this;
-    }
-
-    public function get(): ?Collection
-    {
-        return $this->data;
     }
 }
