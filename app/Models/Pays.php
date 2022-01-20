@@ -9,6 +9,7 @@ use App\Models\Managers\PaysMapManager;
 use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\PaysPresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
+use App\Models\Traits\Resourceable as HasResources;
 use App\Services\EconomyService;
 use Carbon\Carbon;
 use Closure;
@@ -143,7 +144,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  */
 class Pays extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
-    use HasFactory, HasInfrastructures;
+    use HasFactory, HasInfrastructures, HasResources;
     use InfrastructurablePresenter, PaysPresenter;
 
     protected $table = 'pays';

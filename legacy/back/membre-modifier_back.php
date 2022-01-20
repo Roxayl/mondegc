@@ -159,6 +159,33 @@ Eventy::action('display.beforeHeadClosingTag')
          ================================================== -->
     <?php require(DEF_LEGACYROOTPATH . 'php/membre-modifier.php'); ?>
 
+    <?php if(auth()->check() && (int)$row_User['ch_use_id'] === auth()->user()->getKey()): ?>
+
+      <div class="row">
+        <div class="span6">
+        </div>
+        <div class="span6">
+            <h4>Outils avancés</h4>
+            Jeton d'authentification à l'API :
+
+            <?php if(auth()->user()->api_token): ?>
+                <pre style="margin-right: 10px;"><?= e(auth()->user()->api_token) ?></pre>
+            <?php else: ?>
+                <i>Non défini</i>
+            <?php endif; ?>
+
+            <form method="POST"
+                  action="<?= e(route('user.update-api-token', [auth()->user()->getKey()])) ?>">
+                <?= csrf_field() ?>
+                <button type="submit" class="btn btn-primary btn-lg">
+                    Générer
+                </button>
+            </form>
+        </div>
+      </div>
+
+    <?php endif; ?>
+
 </section>
 
 </div>
