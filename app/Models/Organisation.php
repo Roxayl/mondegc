@@ -8,6 +8,7 @@ use App\Models\Contracts\Roleplayable;
 use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\OrganisationPresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
+use App\Models\Traits\Resourceable as HasResources;
 use App\Services\EconomyService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -66,7 +67,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  */
 class Organisation extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
-    use HasFactory, HasInfrastructures;
+    use HasFactory, HasInfrastructures, HasResources;
     use InfrastructurablePresenter, OrganisationPresenter;
 
     protected $table = 'organisation';

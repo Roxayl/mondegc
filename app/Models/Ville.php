@@ -8,6 +8,7 @@ use App\Models\Contracts\Roleplayable;
 use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\VillePresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
+use App\Models\Traits\Resourceable as HasResources;
 use App\Services\EconomyService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -100,7 +101,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  */
 class Ville extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
-    use HasFactory, HasInfrastructures;
+    use HasFactory, HasInfrastructures, HasResources;
     use InfrastructurablePresenter, VillePresenter;
 
     protected $table = 'villes';
