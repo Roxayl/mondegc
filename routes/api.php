@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['auth:api', 'throttle:12,1'])->group(function() {
+
+    Route::get('/resourceable/fetch/{type}', [Api\ResourceableController::class, 'fetch'])
+        ->name('api.resourceable.fetch');
+
+    Route::get('/resource/fetch/{type}', [Api\ResourceController::class, 'fetch'])
+        ->name('api.resource.fetch');
+
 });

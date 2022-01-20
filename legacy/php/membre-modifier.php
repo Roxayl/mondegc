@@ -27,33 +27,19 @@ $totalRows_pays = mysql_num_rows($pays);
 ?>
 
 <div class="well">
-  <div class="row-fluid"> 
-    <!-- image personnage -->
-    <div class="span3">
-    </div>
-    <!-- donnees personnage -->
-    <div class="span4">
+  <div class="row-fluid">
+    <div class="span6">
     </div>
     <!-- donnees personnelles -->
-    <div class="span5">
+    <div class="span6">
       <p><strong>Statut :</strong> <?php echo $Rang_statut; ?></p>
       <p><strong>Login :</strong> <?= e($row_User['ch_use_login']) ?></p>
       <p><strong>Mail :</strong> <?= e($row_User['ch_use_mail']) ?></p>
+
+      <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Paramètres compte</a>
     </div>
-  </div>
-  <div class="row-fluid"> 
-    <!-- bouton upload image personnage -->
-    <div class="span3">
-    </div>
-    <div class="span5">
-      <p class="visible-phone">&nbsp;</p>
-    </div>
-    <div class="span4"> 
-      <!-- Button to trigger modal --> 
-      <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Paramètres compte</a> </div>
   </div>
 </div>
-
 
 <!-- Formulaire profil
         ================================================== --> 
