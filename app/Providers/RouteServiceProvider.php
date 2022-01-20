@@ -44,6 +44,21 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
+     * Renvoie le préfixe de route, lorsque l'URL de base contient notamment un répertoire
+     * (e.g. http://localhost/monde/).
+     * @return string
+     */
+    public function getPrefix(): string
+    {
+        $prefix = '';
+        if(php_sapi_name() !== "cli") {
+            $prefix = config('app.directory_path', '');
+        }
+
+        return $prefix;
+    }
+
+    /**
      * Define the "web" routes for the application.
      *
      * These routes all receive session state, CSRF protection, etc.
@@ -52,10 +67,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        $prefix = '';
-        if(php_sapi_name() !== "cli") {
-            $prefix = config('app.directory_path', '');
-        }
+        $prefix = $this->getPrefix();
+
         Route::prefix($prefix)
              ->middleware('web')
              ->namespace($this->namespace)
@@ -86,9 +99,15 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
+        $prefix = $this->getPrefix();
+        if($prefix) {
+            $prefix .= '/';
+        }
+        $prefix .= 'api';
+
+        Route::prefix($prefix)
              ->middleware('api')
-             ->namespace($this->namespace)
+             ->namespace($this->namespace . '\Api')
              ->group(base_path('routes/api.php'));
     }
 }
