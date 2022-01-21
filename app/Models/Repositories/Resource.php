@@ -6,6 +6,9 @@ use App\Models\Contracts\Resourceable as IResourceable;
 use App\Models\Factories\ResourceableFactory;
 use Illuminate\Support\Collection;
 
+/**
+ * Cette classe permet de gérer des collections de modèles de ressources.
+ */
 class Resource extends Resourceable
 {
     /**
@@ -35,6 +38,9 @@ class Resource extends Resourceable
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function beforeGetting(): self
     {
         $this->collection->map(/**
@@ -42,7 +48,9 @@ class Resource extends Resourceable
          * @return Collection<int, Collection>|Collection[]
          */ function($resources) {
             /** @var IResourceable $resourceable */
-            $resourceable = ResourceableFactory::find($resources['model_type'], $resources['model_id']);
+            $resourceable = ResourceableFactory::find(
+                $resources->get('model_type'),
+                $resources->get('model_id'));
             $resources->put('resources', $resourceable->resources());
             return $resources;
         });

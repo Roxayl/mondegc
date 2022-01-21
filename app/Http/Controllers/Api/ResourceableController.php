@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ModelCollection;
 use App\Models\Repositories\BaseRepository;
 use App\Models\Repositories\Resource;
 use App\Models\Repositories\Resourceable;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ResourceableController extends Controller
@@ -16,9 +15,9 @@ class ResourceableController extends Controller
     /**
      * @param Request $request
      * @param string|null $type
-     * @return Json\ResourceCollection
+     * @return ResourceCollection
      */
-    public function fetch(Request $request, ?string $type): Json\ResourceCollection
+    public function fetch(Request $request, ?string $type): ResourceCollection
     {
         $shortModelName = Resource::getModels()[$type];
 
@@ -34,6 +33,6 @@ class ResourceableController extends Controller
             $perPage,
             $page);
 
-        return new ModelCollection($paginator);
+        return new ResourceCollection($paginator);
     }
 }

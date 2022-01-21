@@ -4,10 +4,14 @@ namespace App\Models\Repositories;
 
 use Illuminate\Support\Collection;
 
+/**
+ * Classe abstraite représentant une collection de modèles ou d'entités.
+ * @method self beforeGetting() Exécute une fonction avant d'appeler la méthode {@see get()}.
+ */
 abstract class BaseRepository
 {
     /**
-     * Nombre d'éléments par page.
+     * Nombre d'éléments par page, utilisé pour la pagination.
      */
     public const perPage = 10;
 

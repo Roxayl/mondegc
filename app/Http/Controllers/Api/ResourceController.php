@@ -3,21 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ResourceCollection;
 use App\Models\Repositories\BaseRepository;
 use App\Models\Repositories\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Http\Resources\Json;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ResourceController extends Controller
 {
     /**
      * @param Request $request
      * @param string|null $type
-     * @return Json\ResourceCollection
+     * @return ResourceCollection
      */
-    public function fetch(Request $request, ?string $type): Json\ResourceCollection
+    public function fetch(Request $request, ?string $type): ResourceCollection
     {
         $shortModelName = Resource::getModels()[$type];
 
