@@ -7,6 +7,16 @@ use Illuminate\Support\Collection;
 abstract class BaseRepository
 {
     /**
+     * Nombre d'éléments par page.
+     */
+    public const perPage = 10;
+
+    /**
+     * @var int|null Nombre d'éléments au total.
+     */
+    private ?int $totalCount;
+
+    /**
      * @var Collection<int, ?>|null
      */
     protected ?Collection $collection = null;
@@ -17,6 +27,7 @@ abstract class BaseRepository
     public function query(): self
     {
         $this->collection = collect();
+        $this->totalCount = null;
 
         return $this;
     }
@@ -26,7 +37,35 @@ abstract class BaseRepository
      */
     public function get(): ?Collection
     {
+        if(method_exists($this, 'beforeGetting')) {
+            $this->beforeGetting();
+        }
+
+        if($this->totalCount === null) {
+            $this->totalCount = $this->collection->count();
+        }
+
         return $this->collection;
+    }
+
+    /**
+     * @param int $page
+     * @return $this
+     */
+    public function paginate(int $page): self
+    {
+        $this->totalCount = $this->collection->count();
+        $this->collection = $this->collection->forPage($page, self::perPage);
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalCount(): int
+    {
+        return $this->totalCount;
     }
 
     /**

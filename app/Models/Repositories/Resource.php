@@ -3,6 +3,7 @@
 namespace App\Models\Repositories;
 
 use App\Models\Contracts\Resourceable as IResourceable;
+use App\Models\Factories\ResourceableFactory;
 use Illuminate\Support\Collection;
 
 class Resource extends Resourceable
@@ -26,11 +27,25 @@ class Resource extends Resourceable
                 'model_type' => get_class($resourceable),
                 'model_id'   => $resourceable->getKey(),
                 'name'       => $resourceable->getName(),
-                'ressources' => $resourceable->resources(),
             ]));
         });
 
         $this->collection = $resources;
+
+        return $this;
+    }
+
+    protected function beforeGetting(): self
+    {
+        $this->collection->map(/**
+         * @param Collection<int, Collection>|Collection[] $resources
+         * @return Collection<int, Collection>|Collection[]
+         */ function($resources) {
+            /** @var IResourceable $resourceable */
+            $resourceable = ResourceableFactory::find($resources['model_type'], $resources['model_id']);
+            $resources->put('resources', $resourceable->resources());
+            return $resources;
+        });
 
         return $this;
     }
