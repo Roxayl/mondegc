@@ -12,5 +12,7 @@ Homestead.json
 Homestead.yaml
 composer.phar
 phpdoc.xml
+_ide_helper.php
+.phpstorm.meta.php
 *.log
 *.code-workspace

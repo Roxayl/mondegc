@@ -15,23 +15,25 @@ Liens : [Site du Monde GC](https://generation-city.com/monde/) -
 
 ## Table des matières
 
-* [À propos](#à-propos)
-* [Structure des dépôts Git](#structure-des-dépôts-git)
-* [Installation](#installation)
-    * [Environnement](#environnement)
-    * [Installation via Docker](#installation-via-docker)
-        * [Installer Docker](#installer-docker)
-        * [Installer l'application](#installer-lapplication)
-    * [Lancement et arrêt de l'application](#lancement-et-arrêt-de-lapplication)
-* [Développement et tests](#développement-et-tests)
-    * [Gestion des bibliothèques externes](#gestion-des-bibliothèques-externes)
-        * [Gérer les dépendances Composer](#gérer-des-dépendances-composer)
-        * [Gérer les assets CSS et JavaScript](#gérer-les-assets-css-et-javascript)
-    * [Tests](#tests)
-* [Services complémentaires](#services-complémentaires)
-    * [PHPMyAdmin](#phpmyadmin)
-    * [MailHog](#mailhog)
-    * [Documentation de l'API](#documentation-de-lapi)
+- [Table des matières](#table-des-matières)
+- [À propos](#à-propos)
+- [Structure des dépôts Git](#structure-des-dépôts-git)
+- [Installation](#installation)
+    - [Environnement](#environnement)
+    - [Installation via Docker](#installation-via-docker)
+        - [Installer Docker](#installer-docker)
+        - [Installer l'application](#installer-lapplication)
+    - [Lancement et arrêt de l'application](#lancement-et-arrêt-de-lapplication)
+- [Développement et tests](#développement-et-tests)
+    - [Gestion des bibliothèques externes](#gestion-des-bibliothèques-externes)
+        - [Gérer des dépendances Composer](#gérer-des-dépendances-composer)
+        - [Gérer les assets CSS et JavaScript](#gérer-les-assets-css-et-javascript)
+    - [Tests](#tests)
+    - [Helpers](#helpers)
+- [Services complémentaires](#services-complémentaires)
+    - [PHPMyAdmin](#phpmyadmin)
+    - [MailHog](#mailhog)
+    - [Documentation de l'API](#documentation-de-lapi)
 
 ## À propos
 
@@ -141,7 +143,9 @@ générer des clés et d'autres variables d'environnement.
     > exit
    ```
 
-7. Vwalà ! Retrouvez le Monde GC à l'adresse suivante : **[http://localhost](http://localhost)**. La base de données est initialisée avec un utilisateur par défaut, dont vous pouvez utiliser les identifiants pour vous connecter (nom d'utilisateur : ``Admin``, mot de passe : ``password``).
+7. Vwalà ! Retrouvez le Monde GC à l'adresse suivante : **[http://localhost](http://localhost)**. La base de données 
+est initialisée avec un utilisateur par défaut, dont vous pouvez utiliser les identifiants pour vous connecter (nom 
+d'utilisateur : ``Admin``, mot de passe : ``password``).
 
 ### Lancement et arrêt de l'application
 
@@ -194,6 +198,22 @@ Leur exécution n'affectera donc pas les données présentes sur votre base de d
 L'application utilise un outil d'[analyse statique](https://jolicode.com/blog/l-analyse-statique-dans-le-monde-php) du 
 code fournie par [Psalm](https://psalm.dev/). La commande ``./vendor/bin/psalm`` permet d'analyser les sources à la 
 recherche de problèmes liés à des erreurs de typage.
+
+### Helpers
+
+L'application utilise [barryvdh/laravel-ide-helper](https://github.com/barryvdh/laravel-ide-helper) afin de générer 
+des *helpers*, sous forme de commentaires PHPDoc, permettant d'aider les logiciels de développement intégré à analyser 
+le code et contribuer à l'autocomplétion. Il est possible de générer les propriétés et méthodes liées aux modèles 
+[Eloquent](https://laravel.com/docs/8.x/eloquent) via la commande suivante. Les commentaires décrivant les propriétés 
+et méthodes des modèles sont intégrés dans le bloc PHPDoc de la classe concernée.
+
+```bash
+> php artisan ide-helper:models --write
+```
+
+Il est également possible de générer un *helper* pour les façades Laravel, ainsi qu'un fichier dédié à l'autocomplétion 
+par PhpStorm. Les commandes pour le faire sont décrits sur la 
+[documentation de la librairie](https://github.com/barryvdh/laravel-ide-helper#readme).
 
 ## Services complémentaires
 
