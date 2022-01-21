@@ -51,7 +51,7 @@ class Resourceable extends BaseRepository
         }
 
         foreach ($models as $model) {
-            $resourceables = $resourceables->merge($model::all());
+            $resourceables = $resourceables->merge($model::visible()->get());
         }
 
         $this->collection = $resourceables;

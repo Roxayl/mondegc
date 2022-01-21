@@ -11,6 +11,7 @@ use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use App\Models\Traits\Resourceable as HasResources;
 use App\Services\EconomyService;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -64,39 +65,42 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property-read int|null $infrastructures_all_count
  * @property-read \Illuminate\Database\Eloquent\Collection|Patrimoine[] $patrimoines
  * @property-read int|null $patrimoines_count
- * @method static \Illuminate\Database\Eloquent\Builder|Ville newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Ville newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Ville query()
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilAdministration($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilArmoiries($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilCapitale($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilContenu($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilCoordX($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilCoordY($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilCulture($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilDateEnregistrement($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilHeader($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilID($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLabel($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLegendeImg1($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLegendeImg2($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLegendeImg3($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLegendeImg4($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLegendeImg5($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLienImg1($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLienImg2($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLienImg3($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLienImg4($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilLienImg5($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilMisJour($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilNbUpdate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilNom($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilPaysID($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilPopulation($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilSpecialite($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilTransports($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilTypeJeu($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereChVilUser($value)
+ * @method static Builder|Ville newModelQuery()
+ * @method static Builder|Ville newQuery()
+ * @method static Builder|Ville query()
+ * @method static Builder|Ville whereChVilAdministration($value)
+ * @method static Builder|Ville whereChVilArmoiries($value)
+ * @method static Builder|Ville whereChVilCapitale($value)
+ * @method static Builder|Ville whereChVilContenu($value)
+ * @method static Builder|Ville whereChVilCoordX($value)
+ * @method static Builder|Ville whereChVilCoordY($value)
+ * @method static Builder|Ville whereChVilCulture($value)
+ * @method static Builder|Ville whereChVilDateEnregistrement($value)
+ * @method static Builder|Ville whereChVilHeader($value)
+ * @method static Builder|Ville whereChVilID($value)
+ * @method static Builder|Ville whereChVilLabel($value)
+ * @method static Builder|Ville whereChVilLegendeImg1($value)
+ * @method static Builder|Ville whereChVilLegendeImg2($value)
+ * @method static Builder|Ville whereChVilLegendeImg3($value)
+ * @method static Builder|Ville whereChVilLegendeImg4($value)
+ * @method static Builder|Ville whereChVilLegendeImg5($value)
+ * @method static Builder|Ville whereChVilLienImg1($value)
+ * @method static Builder|Ville whereChVilLienImg2($value)
+ * @method static Builder|Ville whereChVilLienImg3($value)
+ * @method static Builder|Ville whereChVilLienImg4($value)
+ * @method static Builder|Ville whereChVilLienImg5($value)
+ * @method static Builder|Ville whereChVilMisJour($value)
+ * @method static Builder|Ville whereChVilNbUpdate($value)
+ * @method static Builder|Ville whereChVilNom($value)
+ * @method static Builder|Ville whereChVilPaysID($value)
+ * @method static Builder|Ville whereChVilPopulation($value)
+ * @method static Builder|Ville whereChVilSpecialite($value)
+ * @method static Builder|Ville whereChVilTransports($value)
+ * @method static Builder|Ville whereChVilTypeJeu($value)
+ * @method static Builder|Ville whereChVilUser($value)
+ * @property-read \App\Models\array<string, $resources
+ * @method static \Database\Factories\VilleFactory factory(...$parameters)
+ * @method static Builder|Ville visible()
  * @mixin Model
  */
 class Ville extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
@@ -156,6 +160,9 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
         'ch_vil_culture'
     ];
 
+    /**
+     * @return string
+     */
     public static function getNameColumn(): string
     {
         return 'ch_vil_nom';
@@ -207,6 +214,14 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
     public function getUsers(): Collection
     {
         return $this->pays->getUsers();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function scopeVisible(Builder $query): Builder
+    {
+        return $query;
     }
 
     /**

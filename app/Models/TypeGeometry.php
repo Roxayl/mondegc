@@ -26,8 +26,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property float $coef_population
  * @property Carbon $created_at
  * @property Carbon $updated_at
- * @property TypeGeometriesGroup $type_geometries_group
  * @property Collection|Geometry[] $geometries
+ * @property-read \App\Models\TypeGeometriesGroup $typeGeometriesGroup
  * @property-read int|null $geometries_count
  * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometry newQuery()

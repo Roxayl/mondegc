@@ -21,17 +21,19 @@ class ResourceController extends Controller
         $shortModelName = Resource::getModels()[$type];
 
         $page = $request->input('page') ?? 1;
-        $perPage = BaseRepository::perPage;
+        // FIXME: la pagination ne fonctionne pas pour une raison ou une autre...
+        /* $perPage = BaseRepository::perPage; */
 
-        $repository = (new Resource)->query()->fetch([$shortModelName])->paginate($page);
+        $repository = (new Resource)->query()->fetch([$shortModelName])/*->paginate($page)*/;
         $collection = $repository->get();
 
+        /*
         $paginator = new LengthAwarePaginator(
             $collection,
             $repository->getTotalCount(),
             $perPage,
-            $page);
+            $page); */
 
-        return new ResourceCollection($paginator);
+        return new ResourceCollection($collection);
     }
 }

@@ -28,7 +28,7 @@ class EconomyService
     public static function getPaysResources(?string $sortBy = null): array
     {
         /** @var Collection<Pays> $allPays */
-        $allPays = Pays::where('ch_pay_publication', Pays::STATUS_ACTIVE)->get();
+        $allPays = Pays::visible()->get();
 
         $paysResources = [];
 

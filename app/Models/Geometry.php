@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property float $ch_geo_mesure
  * @property string|null $ch_geo_type
  * @property string|null $ch_geo_nom
- * @property TypeGeometry $type_geometry
+ * @property-read \App\Models\TypeGeometry|null $typeGeometry
  * @property-read \App\Models\Pays $pays
  * @method static \Illuminate\Database\Eloquent\Builder|Geometry newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Geometry newQuery()

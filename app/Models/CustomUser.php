@@ -19,6 +19,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $last_activity
  * @property string|null $ch_use_login
  * @property string|null $ch_use_password
+ * @property string|null $api_token
  * @property string|null $ch_use_mail
  * @property int|null $ch_use_paysID
  * @property int $ch_use_statut
@@ -54,6 +55,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseMail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseNomDirigeant($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUsePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereApiToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUsePaysID($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUsePredicatDirigeant($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUsePrenomDirigeant($value)
