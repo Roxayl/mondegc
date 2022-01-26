@@ -21,6 +21,7 @@ definitions:
           - find . -type f ! -iname "output.zip" -delete
           - mkdir deploy && ls
           - unzip output.zip -d deploy
+          - cp -R docs/* deploy/docs
           - cd deploy && ls -R
           - cd ..
           - pipe: atlassian/ftp-deploy:0.3.5
@@ -44,8 +45,10 @@ definitions:
           - php artisan monde:init-env
         # - php artisan monde:init-db
         # - php artisan test
+          - php artisan scribe:generate
         artifacts:
           - vendor/**
+          - docs/**
 
     - step: &mirrorWithGitHub
         name: Mirror with GitHub
