@@ -12,11 +12,18 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 class ResourceController extends Controller
 {
     /**
+     * /resource
+     *
+     * Ressources générées par les entités.
+     *
      * @param Request $request
-     * @param string|null $type
+     * @param string $type
      * @return ResourceCollection
+     *
+     * @urlParam  type  string required  Type de l'entité générant des ressources. Prend les valeurs "ville", "pays",
+     *                                   ou "organisation".
      */
-    public function fetch(Request $request, ?string $type): ResourceCollection
+    public function fetch(Request $request, string $type): ResourceCollection
     {
         $shortModelName = Resource::getModels()[$type];
 
