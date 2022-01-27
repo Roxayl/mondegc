@@ -50,6 +50,8 @@ class InitializeEnvironment extends Command
         $this->generateKey();
         $this->generateLegacyHashKey();
         $this->initTestingEnv();
+        $this->initScribeToken();
+
         $this->info("Variables d'environnement initialisées avec succès.");
 
         return 0;
@@ -75,13 +77,7 @@ class InitializeEnvironment extends Command
         $path = base_path('.env');
         $salt = Str::random(32);
 
-        if (file_exists($path)) {
-            file_put_contents($path, str_replace(
-                "\nLEGACY_SALT=",
-                "\nLEGACY_SALT=". $salt,
-                file_get_contents($path)
-            ));
-        }
+        $this->saveEnvValueToFile($path, 'LEGACY_SALT', $salt);
     }
 
     private function initTestingEnv(): void
@@ -93,12 +89,47 @@ class InitializeEnvironment extends Command
         copy(base_path('.env'), $testingPath);
 
         if (file_exists($testingPath)) {
-            $this->line('Base de données modifiée');
-            file_put_contents($testingPath, str_replace(
-                "\nDB_DATABASE=mondegc",
-                "\nDB_DATABASE=mondegc_testing",
-                file_get_contents($testingPath)
-            ));
+            $this->saveEnvValueToFile($testingPath, 'DB_DATABASE', 'mondegc_testing', 'mondegc');
+            $this->line('Base de données dans .env.testing modifiée');
         }
+    }
+
+    private function initScribeToken(): void
+    {
+        $this->line("Génération du jeton pour la génération de l'API");
+
+        $path = base_path('.env');
+        $token = Str::random(60);
+
+        $this->saveEnvValueToFile($path, 'SCRIBE_AUTH_KEY', $token);
+    }
+
+    /**
+     * Modifie la valeur d'une clé dans un fichier .env.
+     *
+     * @param string $path
+     * @param string $key
+     * @param string $newValue
+     * @param string|null $oldValue
+     * @return bool Renvoie <code>true</code> en cas de succès lors de l'écriture de la nouvelle valeur,
+     *              <code>false</code> sinon.
+     */
+    private function saveEnvValueToFile(string $path, string $key, string $newValue, ?string $oldValue = null): bool
+    {
+        if($oldValue === null) {
+            $oldValue = '';
+        }
+
+        if(!file_exists($path)) {
+            return false;
+        }
+
+        $success = file_put_contents($path, str_replace(
+            "\n$key=$oldValue",
+            "\n$key=" . $newValue,
+            file_get_contents($path)
+        ));
+
+        return !($success === false);
     }
 }

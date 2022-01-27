@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:api', 'throttle:12,1'])->group(function() {
+Route::middleware(['auth.api', 'throttle:12,1'])->group(function() {
 
     Route::get('/resourceable/fetch/{type}', [Api\ResourceableController::class, 'fetch'])
         ->name('api.resourceable.fetch');

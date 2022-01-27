@@ -22,7 +22,7 @@ class ResourceableController extends Controller
      * @return ResourceCollection
      *
      * @urlParam  type  string required  Type de l'entité générant des ressources. Prend les valeurs "ville", "pays",
-     *                                   ou "organisation".
+     *                                   ou "organisation". Example: organisation
      */
     public function fetch(Request $request, string $type): ResourceCollection
     {
