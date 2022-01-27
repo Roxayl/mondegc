@@ -19,9 +19,16 @@ class DiscordServiceProvider extends ServiceProvider
          * @param array $parameters L'identifiant du webhook à utiliser.
          * @return DiscordWebhookService
          */ DiscordWebhookService::class, function($app, array $parameters) {
-            $key = (config('app.debug') && app()->environment() !== 'production') || empty($parameters)
-                 ? 'debug' : $parameters[0];
-            $webhookUrl = config("discord.webhookUrl.$key");
+            if(
+                (config('app.debug') && app()->environment() !== 'production') ||
+                empty($parameters))
+            {
+                $key = 'debug';
+                $webhookUrl = config("discord.webhookUrl.$key");
+            } else {
+                $webhookUrl = array_values($parameters)[0];
+            }
+
             return new DiscordWebhookService($webhookUrl);
         });
     }
