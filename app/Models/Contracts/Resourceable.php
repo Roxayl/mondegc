@@ -2,6 +2,8 @@
 
 namespace App\Models\Contracts;
 
+use Illuminate\Database\Eloquent\Builder;
+
 interface Resourceable
 {
     /**
@@ -27,4 +29,11 @@ interface Resourceable
      * @return string
      */
     public function getName(): string;
+
+    /**
+     * Affiche uniquement les modèles non-supprimés.
+     * @param  Builder  $query
+     * @return Builder
+     */
+    public function scopeVisible(Builder $query): Builder;
 }

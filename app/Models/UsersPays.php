@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @method static \Illuminate\Database\Eloquent\Builder|UsersPays whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UsersPays wherePermissions($value)
  * @mixin Pivot
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OrganisationMember[] $organisationMembers
  */
 class UsersPays extends Pivot
 {

@@ -2,22 +2,22 @@
 
 namespace App\Models\Factories;
 
-use App\Models\Contracts\Roleplayable;
+use App\Models\Contracts\Resourceable;
 use App\Models\Organisation;
 use App\Models\Pays;
 use App\Models\Ville;
 
-class RoleplayableFactory
+class ResourceableFactory
 {
     use ModelFactory;
 
     /**
-     * Interface implémentée par les modèles roleplayables.
+     * Interface implémentée par les modèles resourçables.
      */
-    public const contract = Roleplayable::class;
+    public const contract = Resourceable::class;
 
     /**
-     * Liste des classes roleplayables.
+     * Liste des classes resourçables.
      */
     public const models = [
         Organisation::class,

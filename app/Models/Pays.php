@@ -13,6 +13,7 @@ use App\Models\Traits\Resourceable as HasResources;
 use App\Services\EconomyService;
 use Carbon\Carbon;
 use Closure;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -140,6 +141,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTextTransport($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Pays whereChPayTourismeCarte($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Pays whereLienWiki($value)
+ * @method static Builder|Pays visible()
  * @mixin Model
  */
 class Pays extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
@@ -362,6 +364,14 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     public function getUsers(): \Illuminate\Support\Collection
     {
         return $this->users()->get();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function scopeVisible(Builder $query): Builder
+    {
+        return $query->where('ch_pay_publication', Pays::STATUS_ACTIVE);
     }
 
     /**

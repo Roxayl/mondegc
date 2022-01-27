@@ -15,23 +15,26 @@ Liens : [Site du Monde GC](https://generation-city.com/monde/) -
 
 ## Table des matières
 
-* [À propos](#à-propos)
-* [Structure des dépôts Git](#structure-des-dépôts-git)
-* [Installation](#installation)
-    * [Environnement](#environnement)
-    * [Installation via Docker](#installation-via-docker)
-        * [Installer Docker](#installer-docker)
-        * [Installer l'application](#installer-lapplication)
-    * [Lancement et arrêt de l'application](#lancement-et-arrêt-de-lapplication)
-* [Développement et tests](#développement-et-tests)
-    * [Gestion des bibliothèques externes](#gestion-des-bibliothèques-externes)
-        * [Gérer les dépendances Composer](#gérer-des-dépendances-composer)
-        * [Gérer les assets CSS et JavaScript](#gérer-les-assets-css-et-javascript)
-    * [Tests](#tests)
-* [Services complémentaires](#services-complémentaires)
-    * [PHPMyAdmin](#phpmyadmin)
-    * [MailHog](#mailhog)
-    * [Documentation de l'API](#documentation-de-lapi)
+- [Table des matières](#table-des-matières)
+- [À propos](#à-propos)
+- [Structure des dépôts Git](#structure-des-dépôts-git)
+- [Installation](#installation)
+  - [Environnement](#environnement)
+  - [Installation via Docker](#installation-via-docker)
+    - [Installer Docker](#installer-docker)
+    - [Installer l'application](#installer-lapplication)
+  - [Lancement et arrêt de l'application](#lancement-et-arrêt-de-lapplication)
+- [Développement et tests](#développement-et-tests)
+  - [Gestion des bibliothèques externes](#gestion-des-bibliothèques-externes)
+    - [Gérer des dépendances Composer](#gérer-des-dépendances-composer)
+    - [Gérer les assets CSS et JavaScript](#gérer-les-assets-css-et-javascript)
+  - [Tests](#tests)
+  - [Helpers](#helpers)
+- [Services complémentaires](#services-complémentaires)
+  - [PHPMyAdmin](#phpmyadmin)
+  - [MailHog](#mailhog)
+  - [Documentation de l'API](#documentation-de-lapi)
+- [API publique](#api-publique)
 
 ## À propos
 
@@ -50,11 +53,11 @@ son fonctionnement, intuitif et puissant, afin de pouvoir contribuer vous aussi 
 
 Les sources du site sont gérées par Git, hébergées sur un certain nombre de plateformes.
 
- | Plateforme | Dépôt                                                               | Complet ? | Visibilité | Commentaires                             |
- | ---------- | ------------------------------------------------------------------- | --------- | ---------- | ---------------------------------------- |
- | Bitbucket  | [Roxayl/mondegc](https://bitbucket.org/Roxayl/mondegc/)             | Oui       | Privé      | Dépôt principal                          |
- | GitHub     | [Roxayl/mondegc](https://github.com/Roxayl/mondegc)                 | Oui       | Privé      | Miroir du dépôt principal, lecture seule |
- | GitHub     | [Roxayl/mondegc-laravel](https://github.com/Roxayl/mondegc-laravel) | **Non**   | Public     | Copie limitée du dépôt principal         |
+| Plateforme | Dépôt                                                               | Complet ? | Visibilité | Commentaires                             |
+| ---------- | ------------------------------------------------------------------- | --------- | ---------- | ---------------------------------------- |
+| Bitbucket  | [Roxayl/mondegc](https://bitbucket.org/Roxayl/mondegc/)             | Oui       | Privé      | Dépôt principal                          |
+| GitHub     | [Roxayl/mondegc](https://github.com/Roxayl/mondegc)                 | Oui       | Privé      | Miroir du dépôt principal, lecture seule |
+| GitHub     | [Roxayl/mondegc-laravel](https://github.com/Roxayl/mondegc-laravel) | **Non**   | Public     | Copie limitée du dépôt principal         |
 
 Notez que les sources du dépôt [Roxayl/mondegc-laravel](https://github.com/Roxayl/mondegc-laravel) sont incomplètes
 et vous ne pourrez pas installer et exécuter l'application à partir de celui-ci.
@@ -141,7 +144,9 @@ générer des clés et d'autres variables d'environnement.
     > exit
    ```
 
-7. Vwalà ! Retrouvez le Monde GC à l'adresse suivante : **[http://localhost](http://localhost)**. La base de données est initialisée avec un utilisateur par défaut, dont vous pouvez utiliser les identifiants pour vous connecter (nom d'utilisateur : ``Admin``, mot de passe : ``password``).
+7. Vwalà ! Retrouvez le Monde GC à l'adresse suivante : **[http://localhost](http://localhost)**. La base de données 
+est initialisée avec un utilisateur par défaut, dont vous pouvez utiliser les identifiants pour vous connecter (nom 
+d'utilisateur : ``Admin``, mot de passe : ``password``).
 
 ### Lancement et arrêt de l'application
 
@@ -195,6 +200,22 @@ L'application utilise un outil d'[analyse statique](https://jolicode.com/blog/l-
 code fournie par [Psalm](https://psalm.dev/). La commande ``./vendor/bin/psalm`` permet d'analyser les sources à la 
 recherche de problèmes liés à des erreurs de typage.
 
+### Helpers
+
+L'application utilise [barryvdh/laravel-ide-helper](https://github.com/barryvdh/laravel-ide-helper) afin de générer 
+des *helpers*, sous forme de commentaires PHPDoc, permettant d'aider les logiciels de développement intégré à analyser 
+le code et contribuer à l'autocomplétion. Il est possible de générer les propriétés et méthodes liées aux modèles 
+[Eloquent](https://laravel.com/docs/8.x/eloquent) via la commande suivante. Les commentaires décrivant les propriétés 
+et méthodes des modèles sont intégrés dans le bloc PHPDoc de la classe concernée.
+
+```bash
+> php artisan ide-helper:models --write
+```
+
+Il est également possible de générer un *helper* pour les façades Laravel, ainsi qu'un fichier dédié à l'autocomplétion 
+par PhpStorm. Les commandes pour le faire sont décrits sur la 
+[documentation de la librairie](https://github.com/barryvdh/laravel-ide-helper#readme).
+
 ## Services complémentaires
 
 Vous pouvez accéder au site via l'adresse : [http://localhost](http://localhost). Par ailleurs, le fichier de 
@@ -215,9 +236,9 @@ son interface Web à l'adresse : [http://localhost:8025](http://localhost:8025).
 
 ### Documentation de l'API
 
-Vous pouvez générer la documentation de l'API de l'application, via l'outil [phpDocumentor](https://www.phpdoc.org/). 
-Il vous permet de créer automatiquement les pages HTML décrivant des classes de l'application, à partir des 
-annotations [PHPDoc](https://fr.wikipedia.org/wiki/PHPDoc) contenues dans les sources.
+Vous pouvez générer la documentation de l'API des sources de l'application, via l'outil 
+[phpDocumentor](https://www.phpdoc.org/). Il vous permet de créer automatiquement les pages HTML décrivant des classes 
+de l'application, à partir des annotations [PHPDoc](https://fr.wikipedia.org/wiki/PHPDoc) contenues dans les sources.
 
 Pour cela, vous pouvez exécuter la commande suivante, à partir du répertoire racine :
 
@@ -233,3 +254,28 @@ Pour cela, vous pouvez exécuter la commande suivante, à partir du répertoire 
 Cette commande va installer l'image Docker de l'outil, et générer les pages de la documentation de l'API. Ces pages au 
 format HTML seront rangés dans le dossier [docs/](./docs). Une fois générée, vous pouvez consulter la documentation à 
 l'adresse [http://localhost/docs/index.html](http://localhost/docs/index.html).
+
+Il est également possible de générer la documentation de l'[API publique](#api-publique), permettant aux autres 
+services d'accéder aux données de l'application. Cette documentation est générée par 
+[Scribe](https://scribe.readthedocs.io/en/latest/). Pour ce faire, vous pouvez exécuter la commande dans le conteneur 
+de l'application : ```php artisan scribe:generate```. Cette commande va stocker les pages Web dans le répertoire 
+[docs/public-api/](./docs/public-api).
+
+## API publique
+
+Le site du Monde GC fournit un service permettant d'accéder aux données de l'application, en vue d'être utilisées par 
+d'autres services.
+
+Chaque utilisateur peut générer un jeton d'authentification à partir de son compte (dans le menu "Mes pays" sur 
+l'interface Web, "Gérer mon compte", puis dans la section "Outils avancés", appuyer sur "Générer").
+
+Vous pouvez accéder à une ressource en passant le jeton en tant que 
+"[Bearer Token](https://swagger.io/docs/specification/authentication/bearer-authentication/)". Un exemple de requête en 
+ligne de commande avec [cURL](https://curl.se/) serait le suivant :
+
+```
+curl -i http://localhost/api/resource/fetch/pays \
+-H "Authorization: Bearer Rn4u3IA3bqPqNSqhbGJkcpQFOAq2K30T5OI20wJ2D9Q55BpMco7tV1ppU0QT"
+```
+
+Pour plus d'informations sur l'API, consultez la [page dédiée](https://generation-city.com/monde/docs/public-api) !

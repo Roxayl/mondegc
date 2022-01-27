@@ -64,6 +64,9 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @method static Builder|Organisation whereTypeMigratedAt($value)
  * @method static Builder|Organisation whereUpdatedAt($value)
  * @mixin Model
+ * @property-read \App\Models\array<string, $resources
+ * @method static \Database\Factories\OrganisationFactory factory(...$parameters)
+ * @method static Builder|Organisation visible()
  */
 class Organisation extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
@@ -210,6 +213,14 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     public function chapterResources(): MorphMany
     {
         return $this->morphMany(ChapterResourceable::class, 'resourceable');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function scopeVisible(Builder $query): Builder
+    {
+        return $query;
     }
 
     /**

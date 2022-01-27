@@ -50,7 +50,7 @@ class NotifyVotingProposal implements ShouldQueue, NotifiesDiscord
                 [
                     'title' => trim(Str::limit($this->proposal->question, 120)),
                     'type' => 'rich',
-                    'url' => url('ocgc_proposal.php?id=' . $this->proposal->id),
+                    'url' => url('back/ocgc_proposal.php?id=' . $this->proposal->id),
                     'author' => [
                         'name' => "Assemblée générale de l'OCGC",
                         'url' => url('assemblee.php'),
