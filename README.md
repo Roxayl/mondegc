@@ -68,7 +68,7 @@ et vous ne pourrez pas installer et exécuter l'application à partir de celui-c
 
 Le Monde GC s'exécute sur un environnement de développement comprenant les logiciels suivants :
 
-* **[PHP](https://www.php.net/) 7.4 à 8.0**
+* **[PHP](https://www.php.net/) 8.0**
 * Un moteur de base de données : **[MySQL](https://www.mysql.com/fr/)** ou **[MariaDB](https://mariadb.org/)**
 * Un serveur Web : **[Apache](https://httpd.apache.org/)** (fortement conseillé) ou **[nginx](https://www.nginx.com/)**
 (nécessite d'adapter les règles de réécriture d'URL)
