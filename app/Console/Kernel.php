@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\StoreResourceHistory;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,8 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $storeResourceHistory = app()->make(StoreResourceHistory::class);
+        $schedule->job($storeResourceHistory)
+            ->twiceMonthly(1, 14, '10:00');
     }
 
     /**
