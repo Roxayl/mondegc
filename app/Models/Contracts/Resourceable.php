@@ -4,25 +4,13 @@ namespace App\Models\Contracts;
 
 use Illuminate\Database\Eloquent\Builder;
 
-interface Resourceable
+interface Resourceable extends SimpleResourceable
 {
-    /**
-     * Renvoie les ressources d'un modèle ressourçable.
-     * @return array<string, float>
-     */
-    public function resources(): array;
-
     /**
      * Renvoie les ressources apportées par un {@link Chapitre chapitre de roleplay} d'un modèle ressourçable.
      * @return array<string, float>
      */
     public function roleplayResources(): array;
-
-    /**
-     * Renvoie les ressources d'un modèle ressourçable.
-     * @return array<string, float>
-     */
-    public function getResourcesAttribute(): array;
 
     /**
      * Donne le nom du modèle ressourçable.
