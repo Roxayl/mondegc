@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     {
         $storeResourceHistory = app()->make(StoreResourceHistory::class);
         $schedule->job($storeResourceHistory)
-            ->twiceMonthly(1, 14, '10:00');
+            ->twiceMonthly(1, 15, '10:00');
     }
 
     /**

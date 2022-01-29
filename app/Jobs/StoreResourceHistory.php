@@ -47,7 +47,7 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
         $this->checkShouldRun();
 
         DB::transaction(function() {
-            /** @var \App\Models\Contracts\Resourceable&GeneratesResourceHistory $resourceable */
+            /** @var Contracts\Resourceable&GeneratesResourceHistory $resourceable */
             foreach($this->resourceable as $resourceable) {
                 $requiredTrait = GeneratesResourceHistory::class;
                 if(! in_array($requiredTrait, class_uses_recursive($resourceable))) {
@@ -98,16 +98,16 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
         /** @var Carbon|null $lastSuccessfulExecution */
         $lastSuccessfulExecution = ResourceHistory::latest()->first()?->created_at;
 
-        if($lastSuccessfulExecution !== null) {
-            // On évite toute exécution si la précédente a moins de 7 jours.
-            if($lastSuccessfulExecution < $now->subDays(7)) {
-                return false;
-            }
+        // On évite toute exécution si la précédente a moins de 7 jours.
+        if($lastSuccessfulExecution !== null && $lastSuccessfulExecution < $now->subDays(7)) {
+            return false;
+        }
 
-            // On exécute seulement si nous sommes le 1er ou le 14ème de chaque mois.
-            if($now->day !== 1 && $now->day !== 14) {
-                return false;
-            }
+        // On exécute seulement si nous sommes :
+        //  - entre le 1er et le 2ème jour de chaque mois ; ou
+        //  - entre le 14ème et 16ème jour de chaque mois.
+        if(! in_array($now->day, [1, 2, 14, 15, 16], true)) {
+            return false;
         }
 
         return true;
