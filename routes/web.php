@@ -176,3 +176,14 @@ Route::post('user/notifications/mark-as-read', 'NotificationController@markAsRea
 */
 Route::get('data-export/temperance-pays', 'DataExporterController@temperancePays')
     ->name('data-export.temperance-pays');
+
+Route::get('test-resource-graph', function() {
+    $resourceables = \App\Models\Factories\ResourceableFactory::list([\App\Models\Pays::class], 'p')
+        ->filter(function($resourceable) {
+            return $resourceable->ch_pay_publication !== \App\Models\Pays::STATUS_ARCHIVED;
+        });
+
+    $graph = new \App\View\Components\ResourceHistory\GraphPerResource($resourceables, 'commerce');
+
+    return $graph->render();
+});
