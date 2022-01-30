@@ -45,6 +45,7 @@ class GraphPerResource extends Graph
         return view('blocks.resource-graph', [
             'chartData'    => $this->chartData,
             'resourceName' => $this->resourceName,
+            'graphId'      => $this->graphId,
         ]);
     }
 

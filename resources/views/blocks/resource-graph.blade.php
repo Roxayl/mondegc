@@ -1,5 +1,12 @@
 
-<canvas id="eco-line-chart" style="width: 100%; height:640px;"></canvas>
+<div class="pull-right" style="margin-top: -48px; margin-right: -30px;">
+    <button class="btn btn-primary" id="{{ $graphId }}-toggle-legend-btn">
+        Afficher/masquer la légende
+    </button>
+</div>
+<div class="clearfix"></div>
+
+<canvas id="{{ $graphId }}" style="width: 100%; height:578px;"></canvas>
 
 <script>
     (function () {
@@ -37,9 +44,22 @@
         };
 
         window.onload = function () {
-            let ctx = document.getElementById("eco-line-chart").getContext("2d");
+            let ctx = document.getElementById("{{ $graphId }}").getContext("2d");
             window.myLine = new Chart(ctx, config);
         };
+
+        let legendBtn = $
+
+        $(document).on('click', '#{{ $graphId }}-toggle-legend-btn', function(ev) {
+            ev.preventDefault();
+            try {
+                // toggle visibility of legend
+                window.myLine.options.legend.display = !window.myLine.options.legend.display;
+                window.myLine.update();
+            } catch(err) {
+                console.error(err);
+            }
+        });
 
     })();
 

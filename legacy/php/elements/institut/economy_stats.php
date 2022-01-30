@@ -96,10 +96,12 @@ use Illuminate\Support\Str;
 
     <h3 id="ressources-historique">Historique</h3>
 
-    <div class="chart-container" style="width: 100%; height:640px;">
+    <div class="chart-container" style="width: 100%; height:588px;">
         <?php
         $resourceables = Pays::visible()->get();
-        echo (new GraphPerResource($resourceables, $data['selectedResource']))->render();
+        echo (new GraphPerResource($resourceables, $data['selectedResource']))
+            ->setGraphId('eco-line-chart')
+            ->render();
         ?>
     </div>
 

@@ -13,13 +13,29 @@ abstract class Graph extends Component
     public array $chartData;
 
     /**
+     * @var string
+     */
+    public string $graphId = 'line-resource-chart';
+
+    /**
      * @return View
      */
     public function render(): View
     {
         return view('blocks.resource-graph', [
             'chartData'    => $this->chartData,
+            'graphId'      => $this->graphId,
         ]);
+    }
+
+    /**
+     * @param string $id
+     * @return $this
+     */
+    public function setGraphId(string $id): self
+    {
+        $this->graphId = $id;
+        return $this;
     }
 
     /**
