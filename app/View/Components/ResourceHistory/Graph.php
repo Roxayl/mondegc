@@ -18,7 +18,7 @@ abstract class Graph extends Component
     public function render(): View
     {
         return view('blocks.resource-graph', [
-            'chartData' => $this->chartData
+            'chartData'    => $this->chartData,
         ]);
     }
 

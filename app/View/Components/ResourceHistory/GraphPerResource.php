@@ -5,6 +5,8 @@ namespace App\View\Components\ResourceHistory;
 use App\Models\Contracts\Resourceable;
 use App\Models\ResourceHistory;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class GraphPerResource extends Graph
 {
@@ -36,6 +38,17 @@ class GraphPerResource extends Graph
     }
 
     /**
+     * @return View
+     */
+    public function render(): View
+    {
+        return view('blocks.resource-graph', [
+            'chartData'    => $this->chartData,
+            'resourceName' => $this->resourceName,
+        ]);
+    }
+
+    /**
      * @return array
      */
     private function generateDatasets(): array
@@ -44,7 +57,7 @@ class GraphPerResource extends Graph
 
         foreach($this->resourceables as $resourceable) {
             $dataset = [
-                'label' => $this->resourceName . ' de ' . $resourceable->getName(),
+                'label' => Str::limit($resourceable->getName(), 25),
                 'data' => [],
                 'fill' => false,
                 'borderColor' => '#' . $this->generateColorHex()

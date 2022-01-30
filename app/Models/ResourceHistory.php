@@ -132,6 +132,10 @@ class ResourceHistory extends Model implements SimpleResourceable
                      ->where('resourceable_id', $resourceable->getKey());
     }
 
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
     public function scopeChartSelect(Builder $query): Builder
     {
         return $query
