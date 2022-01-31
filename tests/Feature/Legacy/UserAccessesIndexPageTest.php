@@ -10,9 +10,11 @@ class UserAccessesIndexPageTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * @var bool Checks if the database has been seeded.
+     * Indicates whether the default seeder should run before each test.
+     *
+     * @var bool
      */
-    private bool $seeded;
+    protected $seed = true;
 
     /**
      * Définit les variables globales.
@@ -36,11 +38,6 @@ class UserAccessesIndexPageTest extends TestCase
      */
     private function accessLegacyPage(string $page, int $assertStatus = 200): void
     {
-        if(! $this->seeded) {
-            $this->seed();
-            $this->seeded = true;
-        }
-
         $uri = '/' . str_replace('.', '/', $page) . '.php';
 
         $_GET['target'] = $page;
