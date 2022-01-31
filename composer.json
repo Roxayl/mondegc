@@ -46,6 +46,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "funkjedi/composer-include-files": "^1.1",
         "guzzlehttp/guzzle": "^7.0.1",
+        "julien-boudry/condorcet": "^3.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "spatie/laravel-searchable": "^1.6",

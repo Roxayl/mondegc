@@ -8,6 +8,7 @@ use GenCity\Proposal\ProposalDecisionMaker;
 use GenCity\Proposal\VoteList;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -118,6 +119,9 @@ class OcgcProposal extends Model
         'RP'  => "Résolution",
     ];
 
+    public const typeResponseDual = 'dual';
+    public const typeResponseMultiple = 'multiple';
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -134,6 +138,19 @@ class OcgcProposal extends Model
         return $this->belongsTo(Pays::class, 'ID_pays', 'ch_pay_id');
     }
 
+    /**
+     * Votes de la proposition.
+     * @return HasMany
+     */
+    public function votes(): HasMany
+    {
+        return $this->hasMany(OcgcVote::class, 'ID_proposal');
+    }
+
+    /**
+     * Définit le nombre maximal de réponses, en récupérant les informations de la base de données.
+     * @return void
+     */
     private function setMaxResponses(): void
     {
         // Obtenir le nombre maximal de réponses à partir des attributs de la base de données (e.g."reponse_5").
@@ -215,5 +232,18 @@ class OcgcProposal extends Model
         return $this->typeDetail() . ' '
             . Str::substr($this->res_year, 2, 2) . '-'
             . Str::padLeft($this->res_id, 3, '0');
+    }
+
+    /**
+     * @return string
+     */
+    public function getRankingAlgorithm(): string
+    {
+        $algorithms = [
+            self::typeResponseDual     => 'FPTP',
+            self::typeResponseMultiple => 'Instant-runoff',
+        ];
+
+        return $algorithms[$this->type_reponse];
     }
 }
