@@ -2,7 +2,7 @@
     "name": "roxayl/mondegc",
     "description": "Le site du Monde de Generation City",
     "type": "project",
-    "keywords": ["generation city", "php", "laravel", "roleplay"],
+    "keywords": ["generation city", "laravel", "roleplay"],
     "homepage": "https://generation-city.com/monde/",
     "license": "proprietary",
     "authors": [
@@ -34,7 +34,7 @@
         "source": "https://bitbucket.org/Roxayl/mondegc"
     },
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.0",
         "ext-curl": "*",
         "ext-gd": "*",
         "ext-json": "*",
@@ -43,7 +43,9 @@
         "doctrine/dbal": "^2.10",
         "ezyang/htmlpurifier": "^4.13",
         "fideloper/proxy": "^4.0",
+        "fruitcake/laravel-cors": "^2.0",
         "funkjedi/composer-include-files": "^1.1",
+        "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "spatie/laravel-searchable": "^1.6",
@@ -54,13 +56,13 @@
         "barryvdh/laravel-debugbar": "^3.6",
         "barryvdh/laravel-ide-helper": "2.9.1",
         "beyondcode/laravel-dump-server": "^1.0",
-        "facade/ignition": "^2.3.6",
-        "fzaninotto/faker": "^1.4",
+        "facade/ignition": "^2.5",
+        "fakerphp/faker": "^1.9.1",
         "kitloong/laravel-migrations-generator": "^4.4",
         "knuckleswtf/scribe": "^3.22",
-        "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.0",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^5.10",
+        "phpunit/phpunit": "^9.5.10",
         "psalm/plugin-laravel": "^1.5",
         "reliese/laravel": "^1.1",
         "vimeo/psalm": "^4.11"
@@ -68,7 +70,7 @@
     "config": {
         "optimize-autoloader": true,
         "platform": {
-            "php": "7.4"
+            "php": "8.0"
         },
         "preferred-install": "dist",
         "sort-packages": true,

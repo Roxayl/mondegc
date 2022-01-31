@@ -22,4 +22,7 @@ Route::middleware(['auth.api', 'throttle:12,1'])->group(function() {
     Route::get('/resource/fetch/{type}', [Api\ResourceController::class, 'fetch'])
         ->name('api.resource.fetch');
 
+    Route::get('/admin/store-resource-history', [Api\AdminController::class, 'storeResourceHistory'])
+        ->name('api.admin.store-resource-history');
+
 });

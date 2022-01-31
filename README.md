@@ -68,7 +68,7 @@ et vous ne pourrez pas installer et exécuter l'application à partir de celui-c
 
 Le Monde GC s'exécute sur un environnement de développement comprenant les logiciels suivants :
 
-* **[PHP](https://www.php.net/) 7.4 à 8.0**
+* **[PHP](https://www.php.net/) 8.0**
 * Un moteur de base de données : **[MySQL](https://www.mysql.com/fr/)** ou **[MariaDB](https://mariadb.org/)**
 * Un serveur Web : **[Apache](https://httpd.apache.org/)** (fortement conseillé) ou **[nginx](https://www.nginx.com/)**
 (nécessite d'adapter les règles de réécriture d'URL)
@@ -115,13 +115,13 @@ Une fois que tout est installé, vous êtes prêt pour déployer l'application W
     > git clone https://bitbucket.org/Roxayl/mondegc.git
    ```
 
-2. Lancez les conteneurs Docker de l'application via la commande suivante :
+2. Lancez les conteneurs Docker de l'application via la commande suivante, depuis le répertoire où est
+   installé l'application :
    ```
     > docker-compose up -d
    ```
 
-3. Accédez au conteneur de l'application via la commande à saisir dans un terminal, depuis le répertoire où est 
-installé l'application.
+3. Accédez au conteneur de l'application via la commande à saisir dans un terminal.
    ```
     > docker exec -ti mondegc_app sh
    ```
@@ -193,8 +193,10 @@ dans le répertoire [assets/](./assets) ne nécessitent pas d'être compilés.
 ### Tests
 
 Vous pouvez exécuter les tests unitaires et fonctionnels via [PHPUnit](https://phpunit.de/), en exécutant dans le 
-conteneur principal ``php artisan test``. Les tests utilisent une base de données dédiée, nommée ``mondegc_testing``. 
-Leur exécution n'affectera donc pas les données présentes sur votre base de données de développement.
+conteneur principal ``php artisan test``. L'environnement de test utilise les variables présentes dans le fichier 
+``.env.testing``, que vous pouvez générer via la commande ``php artisan monde:init-testing``. Par défaut, les tests 
+utilisent une base de données dédiée, nommée ``mondegc_testing``. Leur exécution n'affectera donc pas les données 
+présentes sur votre base de données de développement.
 
 L'application utilise un outil d'[analyse statique](https://jolicode.com/blog/l-analyse-statique-dans-le-monde-php) du 
 code fournie par [Psalm](https://psalm.dev/). La commande ``./vendor/bin/psalm`` permet d'analyser les sources à la 

@@ -93,6 +93,7 @@ foreach($paysList as $thisPays) {
 <script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
 <!-- Chart.js : génération de graphes -->
 <script src="assets/js/Chart.2.7.3.bundle.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 
 <?php
 Eventy::action('display.beforeHeadClosingTag')
@@ -127,6 +128,8 @@ Eventy::action('display.beforeHeadClosingTag')
           </a></li>
         <li><a href="#presentation">Pr&eacute;sentation</a></li>
         <li><a href="#ressources">Statistiques &eacute;conomiques</a></li>
+        <li style="padding-left: 20px;"><a href="#ressources-instantane">Instantané</a></li>
+        <li style="padding-left: 20px;"><a href="#ressources-historique">Historique</a></li>
         <li><a href="#temperance">Projet Tempérance</a></li>
         <li><a href="#communiques">Communiqu&eacute;s officiels</a></li>
       </ul>

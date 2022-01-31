@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
-class InitializeDatabase extends Command
+class InitializeDatabase extends Initializer
 {
     /**
      * The name and signature of the console command.

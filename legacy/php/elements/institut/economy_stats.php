@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Pays;
+use App\View\Components\ResourceHistory\GraphPerResource;
 use Illuminate\Support\Str;
 
 ?>
@@ -29,6 +31,8 @@ use Illuminate\Support\Str;
         </div>
         <div class="span1"></div>
     </div>
+
+    <h3 id="ressources-instantane">Instantané</h3>
 
     <div class="chart-container">
        <canvas id="eco-chart" style="width: 100%; height:320px;"></canvas>
@@ -87,7 +91,21 @@ use Illuminate\Support\Str;
     endforeach;
     ?>
     </ul>
+
     </div>
+
+    <h3 id="ressources-historique">Historique</h3>
+
+    <div class="chart-container" style="width: 100%; height:588px;">
+        <?php
+        $resourceables = Pays::visible()->get();
+        echo (new GraphPerResource($resourceables, $data['selectedResource']))
+            ->setGraphId('eco-line-chart')
+            ->render();
+        ?>
+    </div>
+
+    <div class="clearfix"></div>
 
     <script type="text/javascript">
 
