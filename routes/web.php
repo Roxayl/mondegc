@@ -142,9 +142,11 @@ Route::delete('roleplay/{roleplay}/remove-organizer', [Controllers\RoleplayContr
 */
 Route::get('chapter/create/{roleplay}', [Controllers\ChapterController::class, 'create'])
     ->name('chapter.create');
+Route::post('chapter/{roleplay}', [Controllers\ChapterController::class, 'store'])
+    ->name('chapter.store');
 Route::get('chapter/create-button/{roleplay}', [Controllers\ChapterController::class, 'createButton'])
     ->name('chapter.create-button');
-Route::resource('chapter', 'ChapterController')->except(['create']);
+Route::resource('chapter', 'ChapterController')->except(['create', 'store']);
 
 /*
 |--------------------------------------------------------------------------

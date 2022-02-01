@@ -2,7 +2,12 @@
 @inject('helperService', '\App\Services\HelperService')
 
 <div class="titre-bleu" id="{{ $chapter->identifier }}">
-    <h1>{{ $chapter->title }}</h1>
+    <h1>
+        {{ $chapter->title }}
+        @if($chapter->isCurrent())
+            <span class="badge badge-info inline">En cours</span>
+        @endif
+    </h1>
 </div>
 
 <div class="well">

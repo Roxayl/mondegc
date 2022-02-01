@@ -265,11 +265,11 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         return $this->hasMany(OrganisationMember::class, 'pays_id');
     }
 
-    private function getOrganisationMembership(Closure $f)
+    private function getOrganisationMembership(Closure $f, $permissions = Organisation::PERMISSION_MEMBER)
     {
         $query = $this->organisationMembers()
             ->join('organisation', 'organisation.id', 'organisation_id')
-            ->where('permissions', '>=', Organisation::PERMISSION_MEMBER);
+            ->where('permissions', '>=', $permissions);
 
         return $f($query);
     }
@@ -307,6 +307,20 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
                 ->get()
                 ->pluck('organisation');
         });
+    }
+
+    /**
+     * Donne les organisations gérées par le pays (donc sur lesquelles le pays a un niveau de permission d'au
+     * moins administrateur).
+     * @return \Illuminate\Support\Collection<int, Organisation>
+     */
+    public function managedOrganisations(): \Illuminate\Support\Collection
+    {
+        return $this->getOrganisationMembership(
+            fn ($query) => $query,
+            Organisation::PERMISSION_ADMINISTRATOR)
+            ->get()
+            ->pluck('organisation');
     }
 
     /**

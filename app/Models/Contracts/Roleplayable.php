@@ -2,6 +2,8 @@
 
 namespace App\Models\Contracts;
 
+use Illuminate\Support\Collection;
+
 interface Roleplayable
 {
     /**
@@ -33,4 +35,10 @@ interface Roleplayable
      * @return string
      */
     public static function getNameColumn(): string;
+
+    /**
+     * Renvoie les propriétaires de ce modèle roleplayable.
+     * @return Collection
+     */
+    public function getUsers(): Collection;
 }

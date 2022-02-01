@@ -77,33 +77,74 @@ class Chapter extends Model
         'ending_date'
     ];
 
+    const validationRules = [
+        'name' => ['min:2', 'max:191', 'required'],
+        'summary' => ['min:2', 'required']
+    ];
+
+    /**
+     * @return BelongsTo
+     */
     public function roleplay(): BelongsTo
     {
         return $this->belongsTo(Roleplay::class);
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function userCreator(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class, 'user_id', 'ch_use_id');
     }
 
+    /**
+     * @return HasMany
+     */
     public function resourceables(): HasMany
     {
         return $this->hasMany(ChapterResourceable::class);
     }
 
+    /**
+     * Détermine si le chapitre en question est le chapitre courant.
+     * @return bool
+     */
+    public function isCurrent(): bool
+    {
+        return $this->is($this->roleplay->currentChapter());
+    }
+
+    /**
+     * @return string
+     */
     public function getSlugAttribute(): string
     {
         return Str::slug($this->name);
     }
 
+    /**
+     * @return string
+     */
     public function getTitleAttribute(): string
     {
         return "Chapitre " . $this->order . " : " . $this->name;
     }
 
+    /**
+     * @return string
+     */
     public function getIdentifierAttribute(): string
     {
         return $this->order . '-' . $this->slug;
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function (Chapter $chapter) {
+            $chapter->order = Chapter::whereRoleplayId($chapter->roleplay_id)->max('order') + 1;
+        });
     }
 }

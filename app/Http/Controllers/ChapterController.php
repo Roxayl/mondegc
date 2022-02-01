@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Chapter;
 use App\Models\Roleplay;
 use App\Services\StringBladeService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -52,12 +53,34 @@ class ChapterController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param Roleplay $roleplay
      * @param Request $request
-     * @return Response
+     * @return RedirectResponse
      */
-    public function store(Request $request): Response
+    public function store(Roleplay $roleplay, Request $request): RedirectResponse
     {
-        return response()->noContent();
+        $chapter = new Chapter();
+
+        // Gérer les relations.
+        $chapter->setRelation('roleplay', $roleplay);
+        $chapter->roleplay_id = $roleplay->getKey();
+        $chapter->user_id = auth()->user()->getAuthIdentifier();
+
+        // Gérer les accès à la création de chapitre.
+        $this->authorize('manage', $chapter);
+
+        // Valider et remplir les champs saisis dans le formulaire.
+        $request->validate(Chapter::validationRules);
+        $chapter->fill($request->only(['name', 'summary', 'content']));
+
+        // Définir les dates de début et de fin de chapitre.
+        $chapter->starting_date = now();
+        $chapter->ending_date = null;
+
+        $chapter->save();
+
+        return redirect()->route('roleplay.show', $roleplay)
+            ->with('message', 'success|Chapitre ajouté avec succès !');
     }
 
     /**

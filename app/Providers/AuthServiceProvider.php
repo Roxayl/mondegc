@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models;
+use App\Policies;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -12,13 +14,15 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
-        'App\Models\Infrastructure' => 'App\Policies\InfrastructurePolicy',
-        'App\Models\Organisation' => 'App\Policies\OrganisationPolicy',
-        'App\Models\OrganisationMember' => 'App\Policies\OrganisationMemberPolicy',
-        'App\Models\Patrimoine' => 'App\Policies\PatrimoinePolicy',
-        'App\Models\Pays' => 'App\Policies\PaysPolicy',
-        'App\Models\Ville' => 'App\Policies\VillePolicy',
+        // 'Model\Model::class' => Policies\ModelPolicy::class,
+        Models\Infrastructure::class => Policies\InfrastructurePolicy::class,
+        Models\Organisation::class => Policies\OrganisationPolicy::class,
+        Models\OrganisationMember::class => Policies\OrganisationMemberPolicy::class,
+        Models\Patrimoine::class => Policies\PatrimoinePolicy::class,
+        Models\Pays::class => Policies\PaysPolicy::class,
+        Models\Roleplay::class => Policies\RoleplayPolicy::class,
+        Models\Chapter::class => Policies\ChapterPolicy::class,
+        Models\Ville::class => Policies\VillePolicy::class,
     ];
 
     /**

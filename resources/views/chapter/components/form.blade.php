@@ -1,5 +1,5 @@
 
-<form method="POST" action="{{ route('chapter.store') }}">
+<form method="POST" action="{{ route('chapter.store', ['roleplay' => $roleplay]) }}">
     @csrf
 
     <div class="form-group">
