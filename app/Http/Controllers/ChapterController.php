@@ -73,10 +73,8 @@ class ChapterController extends Controller
         $request->validate(Chapter::validationRules);
         $chapter->fill($request->only(['name', 'summary', 'content']));
 
-        // Définir les dates de début et de fin de chapitre.
-        $chapter->starting_date = now();
-        $chapter->ending_date = null;
-
+        // Enregistrer le modèle. Les champs "starting_date", "ending_date", et "order" sont définis à partir
+        // de l'événement "creating" dispatché par le modèle (voir \App\Models\Chapter::boot()).
         $chapter->save();
 
         return redirect()->route('roleplay.show', $roleplay)

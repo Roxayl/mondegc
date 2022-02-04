@@ -143,8 +143,10 @@ class Chapter extends Model
     {
         parent::boot();
 
-        static::saving(function (Chapter $chapter) {
+        static::creating(function (Chapter $chapter) {
             $chapter->order = Chapter::whereRoleplayId($chapter->roleplay_id)->max('order') + 1;
+            $chapter->starting_date = now();
+            $chapter->ending_date = null;
         });
     }
 }
