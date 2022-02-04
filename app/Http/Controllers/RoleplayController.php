@@ -21,6 +21,9 @@ class RoleplayController extends Controller
     }
 
     /**
+     * Créé une instance d'un roleplayable à partir des paramètre passés dans la requête {@see Request}.
+     * Il est nécessaire que les champs "type" et "id" soient présents dans les paramètres de la requête.
+     *
      * @param Request $request
      * @return Roleplayable
      * @throws ValidationException
@@ -29,6 +32,7 @@ class RoleplayController extends Controller
     {
         $form = $request->all();
 
+        /** @var Roleplayable|null $roleplayable */
         $roleplayable = RoleplayableFactory::find($form['type'], $form['id']);
 
         if($roleplayable === null) {
@@ -83,6 +87,12 @@ class RoleplayController extends Controller
         return view('roleplay.show')->with('roleplay', $roleplay);
     }
 
+    /**
+     * Renvoie les résultats d'une recherche de roleplayables, pour l'interface d'ajout d'organisateurs de roleplay.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function roleplayables(Request $request): JsonResponse
     {
         $type   = $request->input('type');
@@ -103,6 +113,8 @@ class RoleplayController extends Controller
     }
 
     /**
+     * Donne le contenu HTML du bloc listant les organisateurs du roleplay.
+     *
      * @param Roleplay $roleplay
      * @param StringBladeService $stringBlade
      * @return Response
@@ -136,6 +148,13 @@ class RoleplayController extends Controller
         return response($html);
     }
 
+    /**
+     * Affiche l'interface d'ajout d'organisateurs de roleplay.
+     *
+     * @param Roleplay $roleplay
+     * @param StringBladeService $stringBlade
+     * @return Response
+     */
     public function addOrganizer(Roleplay $roleplay, StringBladeService $stringBlade): Response
     {
         $blade = '<x-roleplay.add-organizer :roleplay="$roleplay" />';
@@ -147,6 +166,13 @@ class RoleplayController extends Controller
         return response($html);
     }
 
+    /**
+     * Ajoute un organisateur à un roleplay, et redirige vers la page du roleplay.
+     *
+     * @param Roleplay $roleplay
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function createOrganizer(Roleplay $roleplay, Request $request): RedirectResponse
     {
         $roleplayable = self::createRoleplayableFromForm($request);
@@ -161,6 +187,13 @@ class RoleplayController extends Controller
             ->with('message', "success|Cet organisateur a été ajouté avec succès.");
     }
 
+    /**
+     * Supprime un organisateur du roleplay, et redirige vers la page du roleplay.
+     *
+     * @param Roleplay $roleplay
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function removeOrganizer(Roleplay $roleplay, Request $request): RedirectResponse
     {
         $roleplayable = self::createRoleplayableFromForm($request);

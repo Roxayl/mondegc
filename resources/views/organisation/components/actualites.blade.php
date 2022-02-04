@@ -2,7 +2,7 @@
 @can('administrate', $organisation)
     <div class="cta-title pull-right-cta">
         <a href=" {{ url('back/communique_ajouter.php?userID='.
-            auth()->user()->ch_use_id . '&cat=organisation&com_element_id=' .
+            auth()->user()->getAuthIdentifier() . '&cat=organisation&com_element_id=' .
             $organisation->id) }}" class="btn btn-primary btn-cta">
             <i class="icon-white icon-plus-sign"></i>
             Publier un nouveau communiqué</a>

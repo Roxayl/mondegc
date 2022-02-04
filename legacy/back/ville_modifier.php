@@ -682,7 +682,7 @@ Eventy::action('display.beforeHeadClosingTag')
     <?php if (auth()->check() && auth()->user()->ownsPays($eloquentVille->pays)): ?>
       <div class="pull-right-cta cta-title">
           <a href="<?= url('back/communique_ajouter.php?userID='
-              . auth()->user()->ch_use_id . '&cat=ville&com_element_id='
+              . auth()->user()->getAuthIdentifier() . '&cat=ville&com_element_id='
               . $eloquentVille->pays->ch_pay_id) ?>"
              class="btn btn-primary btn-cta">
               <i class="icon-plus-sign icon-white"></i> Ajouter un communiqué

@@ -12,6 +12,12 @@ use Spatie\Searchable\Search;
 
 class SearchController extends Controller
 {
+    /**
+     * Renvoie la page de l'outil de recherche.
+     *
+     * @param Request $request
+     * @return View
+     */
     public function index(Request $request): View
     {
         $query = $request->input('query', '');

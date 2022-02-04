@@ -57,7 +57,7 @@ class InfrastructureJudgeController extends Controller
             throw new \InvalidArgumentException("Mauvais type de statut.");
 
         $infrastructure->ch_inf_statut = $request->input('ch_inf_statut');
-        $infrastructure->ch_inf_juge = auth()->user()->ch_use_id;
+        $infrastructure->ch_inf_juge = auth()->user()->getAuthIdentifier();
         $infrastructure->judged_at = Carbon::now();
         if((int)$infrastructure->ch_inf_statut === Infrastructure::JUGEMENT_REJECTED) {
             $infrastructure->ch_inf_commentaire_juge =
