@@ -3,10 +3,10 @@
 namespace App\View\Components\Roleplay;
 
 use App\Models\Chapter as ChapterModel;
+use App\View\Components\BaseComponent;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
 
-class Chapter extends Component
+class Chapter extends BaseComponent
 {
     private ChapterModel $chapter;
 

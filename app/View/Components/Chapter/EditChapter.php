@@ -7,16 +7,16 @@ use App\Models\Roleplay;
 use App\View\Components\BaseComponent;
 use Illuminate\View\View;
 
-class CreateChapter extends BaseComponent
+class EditChapter extends BaseComponent
 {
     public Chapter $chapter;
 
     public Roleplay $roleplay;
 
-    public function __construct(Roleplay $roleplay)
+    public function __construct(Chapter $chapter)
     {
-        $this->chapter = new Chapter();
-        $this->roleplay = $roleplay;
+        $this->chapter = $chapter;
+        $this->roleplay = $chapter->roleplay;
     }
 
     /**
@@ -24,6 +24,6 @@ class CreateChapter extends BaseComponent
      */
     public function render(): View
     {
-        return view('chapter.components.create');
+        return view('chapter.components.edit');
     }
 }

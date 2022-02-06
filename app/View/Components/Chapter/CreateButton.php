@@ -4,6 +4,7 @@ namespace App\View\Components\Chapter;
 
 use App\Models\Roleplay;
 use App\View\Components\BaseComponent;
+use Illuminate\View\View;
 
 class CreateButton extends BaseComponent
 {
@@ -17,7 +18,7 @@ class CreateButton extends BaseComponent
     /**
      * @inheritDoc
      */
-    public function render()
+    public function render(): View
     {
         return view('chapter.components.create-button');
     }

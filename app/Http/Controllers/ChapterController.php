@@ -84,23 +84,37 @@ class ChapterController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  Chapter  $chapter
+     * @param Chapter $chapter
+     * @param StringBladeService $stringBlade
      * @return Response
      */
-    public function show(Chapter $chapter): Response
+    public function show(Chapter $chapter, StringBladeService $stringBlade): Response
     {
-        return response()->noContent();
+        $blade = '<x-roleplay.chapter :chapter="$chapter"/>';
+
+        $html = $stringBlade->render(
+            $blade, compact('chapter')
+        );
+
+        return response($html);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param Chapter $chapter
+     * @param StringBladeService $stringBlade
      * @return Response
      */
-    public function edit(Chapter $chapter): Response
+    public function edit(Chapter $chapter, StringBladeService $stringBlade): Response
     {
-        return response()->noContent();
+        $blade = '<x-chapter.edit-chapter :chapter="$chapter"/>';
+
+        $html = $stringBlade->render(
+            $blade, compact('chapter')
+        );
+
+        return response($html);
     }
 
     /**
@@ -108,11 +122,22 @@ class ChapterController extends Controller
      *
      * @param Request $request
      * @param Chapter $chapter
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, Chapter $chapter): Response
+    public function update(Request $request, Chapter $chapter): RedirectResponse
     {
-        return response()->noContent();
+        $this->authorize('manage', $chapter);
+
+        // Valider et remplir les champs saisis dans le formulaire.
+        $request->validate(Chapter::validationRules);
+        $chapter->fill($request->only(['name', 'summary', 'content']));
+
+        // Enregistrer le modèle. Les champs "starting_date", "ending_date", et "order" sont définis à partir
+        // de l'événement "creating" dispatché par le modèle (voir \App\Models\Chapter::boot()).
+        $chapter->save();
+
+        return redirect()->route('roleplay.show', $chapter->roleplay)
+            ->with('message', 'success|Chapitre modifié avec succès !');
     }
 
     /**
