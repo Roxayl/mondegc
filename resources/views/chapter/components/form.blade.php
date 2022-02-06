@@ -15,8 +15,14 @@
 
 <div class="form-group">
     <label for="chapter_content_field">Texte</label>
-    <textarea id="chapter_content_field" class="wysiwyg form-control span9"
+    <textarea id="chapter_content_field" class="wysiwyg form-control span9" rows="10"
               name="content">{{ old('content', $chapter->content) }}</textarea>
+</div>
+
+<div class="form-group">
+    <label for="chapter_reason_field">Raison de la modification</label>
+    <input type="text" id="chapter_reason_field" class="form-control span9"
+           name="reason" value="{{ old('reason') }}"/>
 </div>
 
 <div class="form-group">

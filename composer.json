@@ -48,6 +48,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
+        "mpociot/versionable": "^4.3",
         "spatie/laravel-searchable": "^1.6",
         "tormjens/eventy": "^0.7.0",
         "ylsideas/feature-flags": "^1.4"

@@ -8,6 +8,8 @@ use App\Services\StringBladeService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 
 class ChapterController extends Controller
 {
@@ -71,7 +73,10 @@ class ChapterController extends Controller
 
         // Valider et remplir les champs saisis dans le formulaire.
         $request->validate(Chapter::validationRules);
-        $chapter->fill($request->only(['name', 'summary', 'content']));
+        $chapter->fill($request->only($chapter->getFillable()));
+
+        // Raisons de la modification.
+        $chapter->setReasonAttribute($request->input('reason'));
 
         // Enregistrer le modèle. Les champs "starting_date", "ending_date", et "order" sont définis à partir
         // de l'événement "creating" dispatché par le modèle (voir \App\Models\Chapter::boot()).
@@ -130,7 +135,10 @@ class ChapterController extends Controller
 
         // Valider et remplir les champs saisis dans le formulaire.
         $request->validate(Chapter::validationRules);
-        $chapter->fill($request->only(['name', 'summary', 'content']));
+        $chapter->fill($request->only($chapter->getFillable()));
+
+        // Raisons de la modification.
+        $chapter->setReasonAttribute($request->input('reason'));
 
         // Enregistrer le modèle. Les champs "starting_date", "ending_date", et "order" sont définis à partir
         // de l'événement "creating" dispatché par le modèle (voir \App\Models\Chapter::boot()).
@@ -149,5 +157,21 @@ class ChapterController extends Controller
     public function destroy(Chapter $chapter): Response
     {
         return response()->noContent();
+    }
+
+    /**
+     * Affiche l'historique des modifications d'un chapitre.
+     *
+     * @param Chapter $chapter
+     * @return View
+     */
+    public function history(Chapter $chapter): View
+    {
+        $firstChapter = $chapter->roleplay->chapters->first();
+        $versions = $chapter->versions()->latest('version_id')->get();
+        $canRevert = Gate::allows('revert', $chapter);
+
+        return view('chapter.history',
+            compact('chapter', 'firstChapter', 'versions', 'canRevert'));
     }
 }

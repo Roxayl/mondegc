@@ -4,6 +4,9 @@
 <div id="chapter-container-{{ $chapter->identifier }}">
 
     <div class="cta-title pull-right-cta" style="margin-top: 7px;">
+        <a href="{{ route('chapter.history', $chapter) }}" class="btn btn-primary btn-cta">
+            <i class="icon-time icon-white"></i> Historique
+        </a>
         <a href="#" class="btn btn-primary btn-cta component-trigger"
            {!! $getTargetHtmlAttributes(route('chapter.edit', $chapter),
                                         'chapter-container-' . $chapter->identifier) !!}>

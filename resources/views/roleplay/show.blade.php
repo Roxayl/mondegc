@@ -37,8 +37,12 @@
                 <li><a href="#">{{ $roleplay->name }}</a></li>
                 <li><a href="#roleplay-organizers">Organisateurs</a></li>
                 @foreach($roleplay->chapters as $chapter)
-                    <li><a href="#{{ $chapter->identifier }}">
-                            {{ $chapter->title }}</a></li>
+                    <li><a href="#chapter-{{ $chapter->identifier }}">
+                        {{ $chapter->title }}
+                        @if($chapter->isCurrent())
+                            <span class="badge badge-info inline">En cours</span>
+                        @endif
+                    </a></li>
                 @endforeach
             </ul>
         </div>

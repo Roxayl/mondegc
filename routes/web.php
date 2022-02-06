@@ -146,7 +146,17 @@ Route::post('chapter/{roleplay}', [Controllers\ChapterController::class, 'store'
     ->name('chapter.store');
 Route::get('chapter/create-button/{roleplay}', [Controllers\ChapterController::class, 'createButton'])
     ->name('chapter.create-button');
+Route::get('chapter/history/{chapter}', [Controllers\ChapterController::class, 'history'])
+    ->name('chapter.history');
 Route::resource('chapter', 'ChapterController')->except(['create', 'store']);
+
+/*
+|--------------------------------------------------------------------------
+| Version
+|--------------------------------------------------------------------------
+*/
+Route::post('version/revert/{version}', [Controllers\VersionController::class, 'revert'])
+    ->name('version.revert');
 
 /*
 |--------------------------------------------------------------------------

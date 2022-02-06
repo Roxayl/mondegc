@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use Mpociot\Versionable\VersionableTrait;
 
 /**
  * Class Chapter
@@ -52,29 +53,25 @@ use Illuminate\Support\Str;
 class Chapter extends Model
 {
     use HasFactory;
+    use VersionableTrait;
 
     protected $table = 'chapters';
 
     protected $casts = [
         'roleplay_id' => 'int',
         'order' => 'int',
-        'user_id' => 'int'
+        'user_id' => 'int',
     ];
 
     protected $dates = [
         'starting_date',
-        'ending_date'
+        'ending_date',
     ];
 
     protected $fillable = [
-        'roleplay_id',
-        'order',
-        'user_id',
         'name',
         'summary',
         'content',
-        'starting_date',
-        'ending_date'
     ];
 
     const validationRules = [
