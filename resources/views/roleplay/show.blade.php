@@ -36,7 +36,7 @@
             <ul class="nav nav-list bs-docs-sidenav">
                 <li><a href="#">{{ $roleplay->name }}</a></li>
                 <li><a href="#roleplay-organizers">Organisateurs</a></li>
-                @foreach($roleplay->chapters as $chapter)
+                @foreach($chapters as $chapter)
                     <li><a href="#chapter-{{ $chapter->identifier }}">
                         {{ $chapter->title }}
                         @if($chapter->isCurrent())
@@ -72,7 +72,7 @@
 
             <x-roleplay.organizers :roleplay="$roleplay" />
 
-            @foreach($roleplay->chapters as $chapter)
+            @foreach($chapters as $chapter)
                 <x-roleplay.chapter :chapter="$chapter"/>
             @endforeach
 

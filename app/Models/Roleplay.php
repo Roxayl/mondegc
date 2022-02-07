@@ -5,12 +5,14 @@ namespace App\Models;
 use App\Models\Contracts\Roleplayable;
 use App\Models\Factories\RoleplayableFactory;
 use Carbon\Carbon;
+use Database\Factories\RoleplayFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query;
 use Illuminate\Support;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +31,7 @@ use Illuminate\Support\Facades\DB;
  * @property Collection|Chapter[] $chapters
  * @method static Builder|Roleplay current() Filtre sur la liste des roleplays actuels, en cours.
  * @property-read int|null $chapters_count
- * @method static \Database\Factories\RoleplayFactory factory(...$parameters)
+ * @method static RoleplayFactory factory(...$parameters)
  * @method static Builder|Roleplay newModelQuery()
  * @method static Builder|Roleplay newQuery()
  * @method static Builder|Roleplay query()
@@ -40,11 +42,17 @@ use Illuminate\Support\Facades\DB;
  * @method static Builder|Roleplay whereStartingDate($value)
  * @method static Builder|Roleplay whereUpdatedAt($value)
  * @method static Builder|Roleplay whereUserId($value)
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static Query\Builder|Roleplay onlyTrashed()
+ * @method static Builder|Roleplay whereDeletedAt($value)
+ * @method static Query\Builder|Roleplay withTrashed()
+ * @method static Query\Builder|Roleplay withoutTrashed()
  * @mixin Model
  */
 class Roleplay extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $table = 'roleplay';
 

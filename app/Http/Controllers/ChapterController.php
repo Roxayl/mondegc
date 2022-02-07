@@ -149,14 +149,32 @@ class ChapterController extends Controller
     }
 
     /**
+     * Affiche la page de confirmation de la suppression du chapitre.
+     *
+     * @param Chapter $chapter
+     * @return View
+     */
+    public function delete(Chapter $chapter): View
+    {
+        return view('chapter.delete')->with('chapter', $chapter);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param Chapter $chapter
-     * @return Response
+     * @return RedirectResponse
      */
-    public function destroy(Chapter $chapter): Response
+    public function destroy(Chapter $chapter): RedirectResponse
     {
-        return response()->noContent();
+        $this->authorize('manage', $chapter);
+
+        $roleplay = $chapter->roleplay;
+
+        $chapter->delete();
+
+        return redirect()->route('roleplay.show', $roleplay)
+            ->with('message', 'success|Chapitre supprimé avec succès.');
     }
 
     /**

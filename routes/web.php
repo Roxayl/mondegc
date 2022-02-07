@@ -124,6 +124,8 @@ Route::patch('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJud
 Route::get('roleplay/roleplayables', [Controllers\RoleplayController::class, 'roleplayables'])
     ->name('roleplay.roleplayables');
 Route::resource('roleplay', 'RoleplayController');
+Route::get('roleplay/delete/{roleplay}', [Controllers\RoleplayController::class, 'delete'])
+    ->name('roleplay.delete');
 Route::get('roleplay/{roleplay}/organizers', [Controllers\RoleplayController::class, 'organizers'])
     ->name('roleplay.organizers');
 Route::get('roleplay/{roleplay}/manage-organizers', [Controllers\RoleplayController::class, 'manageOrganizers'])
@@ -148,6 +150,8 @@ Route::get('chapter/create-button/{roleplay}', [Controllers\ChapterController::c
     ->name('chapter.create-button');
 Route::get('chapter/history/{chapter}', [Controllers\ChapterController::class, 'history'])
     ->name('chapter.history');
+Route::get('chapter/delete/{chapter}', [Controllers\ChapterController::class, 'delete'])
+    ->name('chapter.delete');
 Route::resource('chapter', 'ChapterController')->except(['create', 'store']);
 
 /*

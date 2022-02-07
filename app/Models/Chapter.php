@@ -3,11 +3,15 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Database\Factories\ChapterFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query;
 use Illuminate\Support\Str;
 use Mpociot\Versionable\VersionableTrait;
 
@@ -33,26 +37,35 @@ use Mpociot\Versionable\VersionableTrait;
  * @property Collection|ChapterResourceable[] $resourceables
  * @property-read int|null $resourceables_count
  * @property-read \App\Models\CustomUser $userCreator
- * @method static \Database\Factories\ChapterFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Chapter newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Chapter newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Chapter query()
- * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereContent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereEndingDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereRoleplayId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereStartingDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereSummary($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chapter whereUserId($value)
+ * @method static ChapterFactory factory(...$parameters)
+ * @method static Builder|Chapter newModelQuery()
+ * @method static Builder|Chapter newQuery()
+ * @method static Builder|Chapter query()
+ * @method static Builder|Chapter whereContent($value)
+ * @method static Builder|Chapter whereCreatedAt($value)
+ * @method static Builder|Chapter whereEndingDate($value)
+ * @method static Builder|Chapter whereId($value)
+ * @method static Builder|Chapter whereName($value)
+ * @method static Builder|Chapter whereOrder($value)
+ * @method static Builder|Chapter whereRoleplayId($value)
+ * @method static Builder|Chapter whereStartingDate($value)
+ * @method static Builder|Chapter whereSummary($value)
+ * @method static Builder|Chapter whereUpdatedAt($value)
+ * @method static Builder|Chapter whereUserId($value)
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-write mixed $reason
+ * @property-read Collection|\Mpociot\Versionable\Version[] $versions
+ * @property-read int|null $versions_count
+ * @method static Query\Builder|Chapter onlyTrashed()
+ * @method static Builder|Chapter whereDeletedAt($value)
+ * @method static Query\Builder|Chapter withTrashed()
+ * @method static Query\Builder|Chapter withoutTrashed()
  * @mixin Model
  */
 class Chapter extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     use VersionableTrait;
 
     protected $table = 'chapters';
@@ -158,6 +171,25 @@ class Chapter extends Model
             $chapter->order = $maxOrder + 1;
             $chapter->starting_date = now();
             $chapter->ending_date = null;
+        });
+
+        static::deleting(function (Chapter $chapter) {
+            // Lors de la suppression d'un chapitre, il faut réordonner la séquence des numéros d'ordre (pour éviter
+            // les trous dans les numéros de chapitre...).
+
+            /** @var Collection<Chapter> $chapters */
+            $chapters = Chapter::query()
+                ->whereRoleplayId($chapter->roleplay_id)
+                ->where('id', '!=', $chapter->id)
+                ->orderBy('order')
+                ->get();
+
+            for($i = 0; $i < $chapters->count(); $i++) {
+                /** @var Chapter $chapter */
+                $chapter = $chapters->get($i);
+                $chapter->order = $i + 1;
+                $chapter->save();
+            }
         });
     }
 }

@@ -139,7 +139,34 @@ class RoleplayController extends Controller
      */
     public function show(Roleplay $roleplay): View
     {
-        return view('roleplay.show')->with('roleplay', $roleplay);
+        $chapters = $roleplay->chapters()->orderBy('order')->get();
+
+        return view('roleplay.show', compact('roleplay', 'chapters'));
+    }
+
+    /**
+     * Affiche la page de confirmation de la suppression de roleplay.
+     *
+     * @param Roleplay $roleplay
+     * @return View
+     */
+    public function delete(Roleplay $roleplay): View
+    {
+        return view('roleplay.delete')->with('roleplay', $roleplay);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Roleplay $roleplay
+     * @return RedirectResponse
+     */
+    public function destroy(Roleplay $roleplay): RedirectResponse
+    {
+        $roleplay->delete();
+
+        return redirect()->to(url('index.php'))
+            ->with('message', 'success|Roleplay supprimé avec succès.');
     }
 
     /**
@@ -265,17 +292,5 @@ class RoleplayController extends Controller
 
         return redirect()->route('roleplay.show', $roleplay)
             ->with('message', "success|Cet organisateur a été retiré avec succès.");
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Roleplay $roleplay
-     * @return Response
-     */
-    public function destroy(Roleplay $roleplay): Response
-    {
-        // TODO: Not yet implemented.
-        return response()->noContent();
     }
 }
