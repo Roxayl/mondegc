@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Chapter;
 use App\Models\Roleplay;
 use App\Services\StringBladeService;
+use App\View\Components\Blocks\TextDiff;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
+use Mpociot\Versionable\Version;
 
 class ChapterController extends Controller
 {
@@ -19,6 +21,8 @@ class ChapterController extends Controller
     }
 
     /**
+     * Affiche le bouton de création de roleplay.
+     *
      * @param Roleplay $roleplay
      * @param StringBladeService $stringBlade
      * @return Response
@@ -191,5 +195,28 @@ class ChapterController extends Controller
 
         return view('chapter.history',
             compact('chapter', 'firstChapter', 'versions', 'canRevert'));
+    }
+
+    /**
+     * Compare deux versions d'un chapitre.
+     *
+     * @param Version $version1
+     * @param Version $version2
+     * @return View
+     */
+    public function diff(Version $version1, Version $version2): View
+    {
+        $model1 = $version1->getModel();
+        $model2 = $version2->getModel();
+
+        $nameDiffComponent = new TextDiff($model2->name, $model1->name);
+        $summaryDiffComponent = new TextDiff($model2->summary, $model1->summary);
+        $contentDiffComponent = new TextDiff($model2->content, $model1->content);
+
+        $nameDiff = $nameDiffComponent->render();
+        $summaryDiff = $summaryDiffComponent->render();
+        $contentDiff = $contentDiffComponent->render();
+
+        return view('chapter.diff', compact('nameDiff', 'summaryDiff', 'contentDiff'));
     }
 }

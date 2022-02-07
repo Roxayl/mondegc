@@ -62,10 +62,9 @@
                                           class="form-inline">
                                         @csrf
                                         @if(! $version->isFirst())
-                                            <a href="{{ route('version.diff', [
+                                            <a href="{{ route('chapter.diff', [
                                                     'version1' => $version,
-                                                    'version2' => $version->previous(),
-                                                    'key'      => 'content'
+                                                    'version2' => $version->previous()
                                                 ]) }}"
                                                 class="btn btn-primary"
                                                 data-toggle="modal" data-target="#modal-container">

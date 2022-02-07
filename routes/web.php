@@ -144,6 +144,8 @@ Route::delete('roleplay/{roleplay}/remove-organizer', [Controllers\RoleplayContr
 */
 Route::get('chapter/create/{roleplay}', [Controllers\ChapterController::class, 'create'])
     ->name('chapter.create');
+Route::get('chapter/diff/{version1}/{version2}', [Controllers\ChapterController::class, 'diff'])
+    ->name('chapter.diff');
 Route::post('chapter/{roleplay}', [Controllers\ChapterController::class, 'store'])
     ->name('chapter.store');
 Route::get('chapter/create-button/{roleplay}', [Controllers\ChapterController::class, 'createButton'])

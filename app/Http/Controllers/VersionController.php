@@ -39,6 +39,8 @@ class VersionController extends Controller
     }
 
     /**
+     * Affiche la diff entre deux versions.
+     *
      * @param Version $version1
      * @param Version $version2
      * @param string $key
@@ -53,7 +55,7 @@ class VersionController extends Controller
             throw new \InvalidArgumentException("Mauvais type de clé.");
         }
 
-        $diffComponent = new TextDiff($model1->$key, $model2->$key);
+        $diffComponent = new TextDiff($model2->$key, $model1->$key);
 
         return response($diffComponent->render());
     }
