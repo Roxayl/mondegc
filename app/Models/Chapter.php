@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Versionable;
 use Carbon\Carbon;
 use Database\Factories\ChapterFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,7 +14,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query;
 use Illuminate\Support\Str;
-use Mpociot\Versionable\VersionableTrait;
 
 /**
  * Class Chapter
@@ -36,7 +36,7 @@ use Mpociot\Versionable\VersionableTrait;
  * @property CustomUser $user
  * @property Collection|ChapterResourceable[] $resourceables
  * @property-read int|null $resourceables_count
- * @property-read \App\Models\CustomUser $userCreator
+ * @property-read CustomUser $userCreator
  * @method static ChapterFactory factory(...$parameters)
  * @method static Builder|Chapter newModelQuery()
  * @method static Builder|Chapter newQuery()
@@ -54,7 +54,7 @@ use Mpociot\Versionable\VersionableTrait;
  * @method static Builder|Chapter whereUserId($value)
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-write mixed $reason
- * @property-read Collection|\Mpociot\Versionable\Version[] $versions
+ * @property-read Collection|Version[] $versions
  * @property-read int|null $versions_count
  * @method static Query\Builder|Chapter onlyTrashed()
  * @method static Builder|Chapter whereDeletedAt($value)
@@ -66,7 +66,7 @@ class Chapter extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    use VersionableTrait;
+    use Versionable;
 
     protected $table = 'chapters';
 
@@ -79,6 +79,10 @@ class Chapter extends Model
     protected $dates = [
         'starting_date',
         'ending_date',
+    ];
+
+    protected $hidden = [
+        'order',
     ];
 
     protected $fillable = [

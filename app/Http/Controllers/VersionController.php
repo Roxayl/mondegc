@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\View\Components\Blocks\TextDiff;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Mpociot\Versionable\Version;
 
@@ -34,5 +36,25 @@ class VersionController extends Controller
         });
 
         return redirect()->back()->with('message', 'success|Modèle restauré avec succès.');
+    }
+
+    /**
+     * @param Version $version1
+     * @param Version $version2
+     * @param string $key
+     * @return Response
+     */
+    public function diff(Version $version1, Version $version2, string $key): Response
+    {
+        $model1 = $version1->getModel();
+        $model2 = $version2->getModel();
+
+        if(! in_array($key, $model1->getFillable())) {
+            throw new \InvalidArgumentException("Mauvais type de clé.");
+        }
+
+        $diffComponent = new TextDiff($model1->$key, $model2->$key);
+
+        return response($diffComponent->render());
     }
 }

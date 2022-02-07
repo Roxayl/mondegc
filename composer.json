@@ -36,8 +36,10 @@
     "require": {
         "php": "^8.0",
         "ext-curl": "*",
+        "ext-dom": "*",
         "ext-gd": "*",
         "ext-json": "*",
+        "ext-libxml": "*",
         "ext-mysqli": "*",
         "ext-pdo": "*",
         "doctrine/dbal": "^2.10",
@@ -49,6 +51,7 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "mpociot/versionable": "^4.3",
+        "phpspec/php-diff": "^1.1",
         "spatie/laravel-searchable": "^1.6",
         "tormjens/eventy": "^0.7.0",
         "ylsideas/feature-flags": "^1.4"

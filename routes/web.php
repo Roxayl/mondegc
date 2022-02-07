@@ -161,6 +161,8 @@ Route::resource('chapter', 'ChapterController')->except(['create', 'store']);
 */
 Route::post('version/revert/{version}', [Controllers\VersionController::class, 'revert'])
     ->name('version.revert');
+Route::get('version/diff/{version1}/{version2}/{key}', [Controllers\VersionController::class, 'diff'])
+    ->name('version.diff');
 
 /*
 |--------------------------------------------------------------------------

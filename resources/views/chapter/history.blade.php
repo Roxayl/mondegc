@@ -61,9 +61,23 @@
                                     <form method="POST" action="{{ route('version.revert', $version) }}"
                                           class="form-inline">
                                         @csrf
-                                        <button class="btn btn-primary">
-                                            <i class="icon-time icon-white"></i> Restaurer
-                                        </button>
+                                        @if(! $version->isFirst())
+                                            <a href="{{ route('version.diff', [
+                                                    'version1' => $version,
+                                                    'version2' => $version->previous(),
+                                                    'key'      => 'content'
+                                                ]) }}"
+                                                class="btn btn-primary"
+                                                data-toggle="modal" data-target="#modal-container">
+                                                <i class="icon-comment icon-white"></i> Comparer
+                                            </a>
+                                        @endif
+
+                                        @if(! $version->isLast())
+                                            <button class="btn btn-primary">
+                                                <i class="icon-time icon-white"></i> Restaurer
+                                            </button>
+                                        @endif
                                     </form>
                                 @endif
                             </td>
