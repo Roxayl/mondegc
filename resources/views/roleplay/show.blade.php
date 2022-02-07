@@ -69,9 +69,11 @@
                 <x-roleplay.chapter :chapter="$chapter"/>
             @endforeach
 
-            <div class="component-block" id="chapter-create">
-                <x-chapter.create-button :roleplay="$roleplay" />
-            </div>
+            @can('manage', $roleplay)
+                <div class="component-block" id="chapter-create">
+                    <x-chapter.create-button :roleplay="$roleplay" />
+                </div>
+            @endcan
 
         </div>
 

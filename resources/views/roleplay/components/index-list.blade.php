@@ -3,6 +3,7 @@
 
     <div style="margin-left: 10px;">
         <a class="btn btn-primary" style="margin-top: 18px;"
+           data-toggle="modal" data-target="#myModal"
            href="{{ urlFromLegacy(route('roleplay.create')) }}">
             <i class="icon-bell icon-white"></i>
             Créer un événement
@@ -22,6 +23,7 @@
 
     <div class="span6">
         <a class="btn btn-primary" style="margin-top: 18px;"
+           data-toggle="modal" data-target="#myModal"
            href="{{ urlFromLegacy(route('roleplay.create')) }}">
             <i class="icon-bell icon-white"></i>
             Créer un événement

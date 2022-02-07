@@ -54,14 +54,15 @@ class Roleplay extends Model
 
     protected $dates = [
         'starting_date',
-        'ending_date'
+        'ending_date',
     ];
 
     protected $fillable = [
         'name',
-        'user_id',
-        'starting_date',
-        'ending_date'
+    ];
+
+    public const validationRules = [
+        'name' => 'required|min:2|max:191',
     ];
 
     public function owner(): BelongsTo
@@ -206,5 +207,15 @@ class Roleplay extends Model
             ->delete();
 
         return true;
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (Roleplay $roleplay) {
+            $roleplay->starting_date = now();
+            $roleplay->ending_date = null;
+        });
     }
 }

@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class RoleplayController extends Controller
@@ -56,24 +57,47 @@ class RoleplayController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
-    public function create(): Response
+    public function create(): View
     {
-        // TODO: Not yet implemented.
-        return response()->noContent();
+        $this->authorize('create', Roleplay::class);
+
+        $roleplay = new Roleplay();
+
+        return view('roleplay.create')->with('roleplay', $roleplay);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return RedirectResponse
      */
-    public function store(Request $request): Response
+    public function store(Request $request): RedirectResponse
     {
-        // TODO: Not yet implemented.
-        return response()->noContent();
+        $this->authorize('create', Roleplay::class);
+
+        $request->validate(Roleplay::validationRules);
+
+        DB::beginTransaction();
+
+        $roleplay = new Roleplay();
+        $roleplay->user_id = auth()->user()->getAuthIdentifier();
+        $roleplay->fill($request->only($roleplay->getFillable()));
+        $roleplay->save();
+
+        /** @var Roleplayable|null $organizer */
+        $organizer = RoleplayableFactory::find($request->input('type'), $request->input('id'));
+        if(! $organizer) {
+            throw ValidationException::withMessages(["Cette entité n'existe pas."]);
+        }
+        $roleplay->addOrganizer($organizer);
+
+        DB::commit();
+
+        return redirect()->route('roleplay.show', $roleplay)
+            ->with('message', 'success|Roleplay créé avec succès.');
     }
 
     /**

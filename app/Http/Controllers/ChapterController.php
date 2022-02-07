@@ -76,7 +76,7 @@ class ChapterController extends Controller
         $chapter->fill($request->only($chapter->getFillable()));
 
         // Raisons de la modification.
-        $chapter->setReasonAttribute($request->input('reason'));
+        $chapter->setReasonAttribute($request->input('reason') ?? "Création d'un nouveau chapitre");
 
         // Enregistrer le modèle. Les champs "starting_date", "ending_date", et "order" sont définis à partir
         // de l'événement "creating" dispatché par le modèle (voir \App\Models\Chapter::boot()).

@@ -141,7 +141,21 @@ class Chapter extends Model
         parent::boot();
 
         static::creating(function (Chapter $chapter) {
-            $chapter->order = Chapter::whereRoleplayId($chapter->roleplay_id)->max('order') + 1;
+            /** @var int $maxOrder Dernier numéro d'ordre de chapitre pour un roleplay donné. */
+            $maxOrder = Chapter::whereRoleplayId($chapter->roleplay_id)->max('order') ?? 0;
+
+            // Lors de la création d'un nouveau chapitre, il faut marquer le chapitre précédent comme "terminé".
+            /** @var Chapter|null $previousChapter Chapitre précédent. */
+            $previousChapter = Chapter::whereRoleplayId($chapter->roleplay_id)->latest('order')->first();
+
+            // Evidemment, il faut que le chapitre existe au préalable ($previousChapter vaut 'null' lorsqu'on créé
+            // le tout premier chapitre du roleplay).
+            if($previousChapter) {
+                $previousChapter->ending_date = now();
+                $previousChapter->save();
+            }
+
+            $chapter->order = $maxOrder + 1;
             $chapter->starting_date = now();
             $chapter->ending_date = null;
         });

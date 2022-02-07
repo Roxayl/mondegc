@@ -8,6 +8,7 @@ use App\Policies\Contracts\VersionablePolicy;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
 
 class ChapterPolicy implements VersionablePolicy
 {
@@ -15,13 +16,14 @@ class ChapterPolicy implements VersionablePolicy
 
     /**
      * Vérifie si un utilisateur peut gérer les chapitres d'un roleplay.
+     *
      * @param CustomUser $user
      * @param Chapter $chapter
      * @return bool
      */
     public function manage(CustomUser $user, Chapter $chapter): bool
     {
-        return $chapter->roleplay->hasOrganizerAmong($user->roleplayables());
+        return Gate::allows('manage', $chapter->roleplay);
     }
 
     /**
