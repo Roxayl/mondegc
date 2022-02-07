@@ -101,6 +101,37 @@ class RoleplayController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param Roleplay $roleplay
+     * @return View
+     */
+    public function edit(Roleplay $roleplay): View
+    {
+        return view('roleplay.edit')->with('roleplay', $roleplay);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @param Roleplay $roleplay
+     * @return RedirectResponse
+     */
+    public function update(Request $request, Roleplay $roleplay): RedirectResponse
+    {
+        $this->authorize('manage', $roleplay);
+
+        $roleplay->fill($request->only($roleplay->getFillable()));
+
+        $roleplay->save();
+
+        return redirect()->route('roleplay.show', $roleplay)->with(
+            'message', 'success|Roleplay modifié avec succès.'
+        );
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param Roleplay $roleplay
@@ -234,31 +265,6 @@ class RoleplayController extends Controller
 
         return redirect()->route('roleplay.show', $roleplay)
             ->with('message', "success|Cet organisateur a été retiré avec succès.");
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Roleplay $roleplay
-     * @return Response
-     */
-    public function edit(Roleplay $roleplay): Response
-    {
-        // TODO: Not yet implemented.
-        return response()->noContent();
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param Roleplay $roleplay
-     * @return Response
-     */
-    public function update(Request $request, Roleplay $roleplay): Response
-    {
-        // TODO: Not yet implemented.
-        return response()->noContent();
     }
 
     /**

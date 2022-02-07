@@ -49,11 +49,18 @@
 
         <div class="span9 corps-page">
 
-            <ul class="breadcrumb">
+            <ul class="breadcrumb pull-left">
                 <li>Roleplay
                     <span class="divider">/</span></li>
                 <li class="active">{{ $roleplay->name }}</li>
             </ul>
+
+            <div class="pull-right">
+                <a href="{{ route('roleplay.edit', $roleplay) }}" class="btn btn-primary"
+                   data-toggle="modal" data-target="#modal-container-small">
+                    <i class="icon-edit icon-white"></i> Modifier
+                </a>
+            </div>
 
             <div class="clearfix"></div>
 
