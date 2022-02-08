@@ -42,20 +42,24 @@ class VersionController extends Controller
      * Affiche la diff entre deux versions.
      *
      * @param Version $version1
-     * @param Version $version2
+     * @param Version|null $version2
      * @param string $key
      * @return Response
      */
-    public function diff(Version $version1, Version $version2, string $key): Response
+    public function diff(Version $version1, ?Version $version2, string $key): Response
     {
         $model1 = $version1->getModel();
-        $model2 = $version2->getModel();
+        if($version2 === null) {
+            $model2 = new ($model1::class);
+        } else {
+            $model2 = $version2->getModel();
+        }
 
         if(! in_array($key, $model1->getFillable())) {
             throw new \InvalidArgumentException("Mauvais type de clé.");
         }
 
-        $diffComponent = new TextDiff($model2->$key, $model1->$key);
+        $diffComponent = new TextDiff((string)$model2->$key, $model1->$key);
 
         return response($diffComponent->render());
     }

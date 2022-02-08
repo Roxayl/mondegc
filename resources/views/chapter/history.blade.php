@@ -39,6 +39,9 @@
                 {!! $helperService::displayAlert() !!}
             </div>
 
+            <div class="pull-right" style="margin-top: -30px; margin-bottom: -20px;">
+                {{ $versions->links() }}
+            </div>
             <div class="clearfix"></div>
 
             <table class="table">
@@ -61,16 +64,14 @@
                                     <form method="POST" action="{{ route('version.revert', $version) }}"
                                           class="form-inline">
                                         @csrf
-                                        @if(! $version->isFirst())
-                                            <a href="{{ route('chapter.diff', [
-                                                    'version1' => $version,
-                                                    'version2' => $version->previous()
-                                                ]) }}"
-                                                class="btn btn-primary"
-                                                data-toggle="modal" data-target="#modal-container">
-                                                <i class="icon-comment icon-white"></i> Comparer
-                                            </a>
-                                        @endif
+
+                                        <a href="{{ route('chapter.diff', [
+                                                'version1' => $version,
+                                                'version2' => $version->previous(),
+                                            ]) }}"
+                                            class="btn btn-primary diff-toggle-btn">
+                                            <i class="icon-comment icon-white"></i> Comparer
+                                        </a>
 
                                         @if(! $version->isLast())
                                             <button class="btn btn-primary">
@@ -81,13 +82,56 @@
                                 @endif
                             </td>
                         </tr>
+                        <tr class="hidden diff-container">
+                            <td colspan="4" style="margin-left: 30px;">
+                                {{-- Diff chargé via AJAX --}}
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
+
+            {{ $versions->links() }}
 
         </div>
 
     </div>
     </div>
+
+@endsection
+
+@section('scripts')
+
+    @parent
+
+    <script>
+        (function($, document, window) {
+            $(document).on('click', 'a.diff-toggle-btn', function(ev) {
+                ev.preventDefault();
+
+                let $btn = $(ev.currentTarget);
+                let $nextTr = $btn.closest('tr').next();
+                let url = $btn.attr('href');
+
+                if(! $nextTr.hasClass('hidden')) {
+                    $nextTr.addClass('hidden').find('td').html();
+                    return;
+                }
+
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    beforeSend: function() {
+                        $nextTr.removeClass('hidden');
+                        $nextTr.find('td').html('<small>Chargement...</small>');
+                    },
+                    success: function(response) {
+                        console.log($nextTr, $nextTr.find('td'));
+                        $nextTr.find('td').html(response);
+                    },
+                });
+            });
+        })(jQuery, document, window);
+    </script>
 
 @endsection

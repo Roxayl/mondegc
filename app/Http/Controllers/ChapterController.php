@@ -190,7 +190,7 @@ class ChapterController extends Controller
     public function history(Chapter $chapter): View
     {
         $firstChapter = $chapter->roleplay->chapters->first();
-        $versions = $chapter->versions()->latest('version_id')->get();
+        $versions = $chapter->versions()->latest('version_id')->paginate(15);
         $canRevert = Gate::allows('revert', $chapter);
 
         return view('chapter.history',
@@ -201,17 +201,21 @@ class ChapterController extends Controller
      * Compare deux versions d'un chapitre.
      *
      * @param Version $version1
-     * @param Version $version2
+     * @param Version|null $version2
      * @return View
      */
-    public function diff(Version $version1, Version $version2): View
+    public function diff(Version $version1, ?Version $version2 = null): View
     {
         $model1 = $version1->getModel();
-        $model2 = $version2->getModel();
+        if($version2 === null) {
+            $model2 = new ($model1::class);
+        } else {
+            $model2 = $version2->getModel();
+        }
 
-        $nameDiffComponent = new TextDiff($model2->name, $model1->name);
-        $summaryDiffComponent = new TextDiff($model2->summary, $model1->summary);
-        $contentDiffComponent = new TextDiff($model2->content, $model1->content);
+        $nameDiffComponent = new TextDiff((string)$model2->name, $model1->name);
+        $summaryDiffComponent = new TextDiff((string)$model2->summary, $model1->summary);
+        $contentDiffComponent = new TextDiff((string)$model2->content, $model1->content);
 
         $nameDiff = $nameDiffComponent->render();
         $summaryDiff = $summaryDiffComponent->render();
