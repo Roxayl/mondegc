@@ -39,7 +39,23 @@ class RoleplayPolicy
      */
     public function create(CustomUser $user): bool
     {
-        return $user->hasMinPermission('member') && $user->pays->count() > 0;
+        return $this->display($user)
+            && $user->hasMinPermission('member')
+            && $user->pays->count() > 0;
+    }
+
+    /**
+     * Détermine s'il est possible de créer des chapitres.
+     *
+     * @param CustomUser $user
+     * @param Roleplay $roleplay
+     * @return bool
+     */
+    public function createChapters(CustomUser $user, Roleplay $roleplay): bool
+    {
+        return $this->display($user)
+            && $roleplay->isValid()
+            && $this->manage($user, $roleplay);
     }
 
     /**
@@ -51,6 +67,7 @@ class RoleplayPolicy
      */
     public function manage(CustomUser $user, Roleplay $roleplay): bool
     {
-        return $roleplay->hasOrganizerAmong($user->roleplayables());
+        return $this->display($user)
+            && $roleplay->hasOrganizerAmong($user->roleplayables());
     }
 }

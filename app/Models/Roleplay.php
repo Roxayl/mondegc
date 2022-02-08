@@ -73,11 +73,17 @@ class Roleplay extends Model
         'name' => 'required|min:2|max:191',
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function owner(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class, 'user_id', 'ch_use_id');
     }
 
+    /**
+     * @return HasMany
+     */
     public function chapters(): HasMany
     {
         return $this->hasMany(Chapter::class);
@@ -85,6 +91,8 @@ class Roleplay extends Model
 
     /**
      * Filtre sur la liste des roleplays actuels, en cours.
+     * Ce filtre va considérer que les roleplays terminés il y a moins de 2 jours sont toujours "actuels".
+     *
      * @param Builder $query
      * @return Builder
      */
@@ -100,15 +108,17 @@ class Roleplay extends Model
 
     /**
      * Détermine si le roleplay est toujours en cours (ou clôturé).
+     *
      * @return bool
      */
     public function isValid(): bool
     {
-        return $this->ending_date === null;
+        return $this->ending_date === null || $this->ending_date > now();
     }
 
     /**
      * Renvoie le chapitre en cours pour ce roleplay.
+     *
      * @return Chapter|null
      */
     public function currentChapter(): ?Chapter
@@ -122,7 +132,16 @@ class Roleplay extends Model
     }
 
     /**
+     * Marque un roleplay comme terminé.
+     */
+    public function close(): void
+    {
+        $this->ending_date = now();
+    }
+
+    /**
      * Donne une collection des {@link Roleplayable organisateurs du roleplay}.
+     *
      * @return Collection<int, Roleplayable>
      */
     public function organizers(): Collection

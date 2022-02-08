@@ -178,6 +178,35 @@ class RoleplayController extends Controller
     }
 
     /**
+     * @param Roleplay $roleplay
+     * @return View
+     */
+    public function confirmClose(Roleplay $roleplay): View
+    {
+        $this->authorize('display', Roleplay::class);
+        $this->authorize('manage', $roleplay);
+
+        return view('roleplay.confirm-close')->with('roleplay', $roleplay);
+    }
+
+    /**
+     * @param Roleplay $roleplay
+     * @return RedirectResponse
+     */
+    public function close(Roleplay $roleplay): RedirectResponse
+    {
+        $this->authorize('display', Roleplay::class);
+        $this->authorize('manage', $roleplay);
+
+        $roleplay->close();
+
+        $roleplay->save();
+
+        return redirect()->route('roleplay.show', $roleplay)
+            ->with('message', 'success|Ce roleplay a été fermé.');
+    }
+
+    /**
      * Renvoie les résultats d'une recherche de roleplayables, pour l'interface d'ajout d'organisateurs de roleplay.
      *
      * @param Request $request

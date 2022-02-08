@@ -35,7 +35,7 @@ class ChapterPolicy implements VersionablePolicy
      */
     public function manage(CustomUser $user, Chapter $chapter): bool
     {
-        return Gate::allows('display', Roleplay::class)
+        return $this->display($user)
             && Gate::allows('manage', $chapter->roleplay);
     }
 
@@ -44,6 +44,6 @@ class ChapterPolicy implements VersionablePolicy
      */
     public function revert(CustomUser|Authenticatable $user, Chapter|Model $model): bool
     {
-        return $this->manage($user, $model);
+        return $this->display($user) && $this->manage($user, $model);
     }
 }

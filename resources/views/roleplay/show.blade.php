@@ -70,13 +70,21 @@
 
             <div class="clearfix"></div>
 
+            @if(! $roleplay->isValid())
+                <div class="well">
+                    <div class="alert alert-info">
+                        <i class="icon-ok"></i> Allez, ce roleplay est terminé !
+                    </div>
+                </div>
+            @endif
+
             <x-roleplay.organizers :roleplay="$roleplay" />
 
             @foreach($chapters as $chapter)
                 <x-roleplay.chapter :chapter="$chapter"/>
             @endforeach
 
-            @can('manage', $roleplay)
+            @can('createChapters', $roleplay)
                 <div class="component-block" id="chapter-create">
                     <x-chapter.create-button :roleplay="$roleplay" />
                 </div>

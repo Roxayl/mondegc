@@ -124,6 +124,10 @@ Route::patch('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJud
 Route::get('roleplay/roleplayables', [Controllers\RoleplayController::class, 'roleplayables'])
     ->name('roleplay.roleplayables');
 Route::resource('roleplay', 'RoleplayController');
+Route::get('roleplay/confirm-close/{roleplay}', [Controllers\RoleplayController::class, 'confirmClose'])
+    ->name('roleplay.confirm-close');
+Route::match(['put', 'patch'], 'roleplay/close/{roleplay}', [Controllers\RoleplayController::class, 'close'])
+    ->name('roleplay.close');
 Route::get('roleplay/delete/{roleplay}', [Controllers\RoleplayController::class, 'delete'])
     ->name('roleplay.delete');
 Route::get('roleplay/{roleplay}/organizers', [Controllers\RoleplayController::class, 'organizers'])
