@@ -4,6 +4,7 @@ RewriteEngine On
 RewriteCond %{REQUEST_URI} !^{{$directory}}/public/
 RewriteCond %{REQUEST_URI} !^{{$directory}}/assets/
 RewriteCond %{REQUEST_URI} !^{{$directory}}/back/
+RewriteCond %{REQUEST_URI} !^{{$directory}}/docs
 RewriteCond %{REQUEST_URI} !^{{$directory}}/Carto/
 RewriteCond %{REQUEST_URI} !^{{$directory}}/lib/
 RewriteCond %{REQUEST_URI} !^{{$directory}}/php/

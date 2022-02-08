@@ -7,7 +7,7 @@
         <a href="{{ route('chapter.history', $chapter) }}" class="btn btn-primary btn-cta">
             <i class="icon-time icon-white"></i> Historique
         </a>
-        <a href="#" id="chapter-{{ $chapter->identifer }}-plus" class="btn btn-primary btn-cta component-trigger"
+        <a href="#" id="chapter-{{ $chapter->identifier }}-plus" class="btn btn-primary btn-cta component-trigger"
            {!! $getTargetHtmlAttributes(route('chapter.edit', $chapter),
                                         'chapter-container-' . $chapter->identifier) !!}>
             <i class="icon-white icon-pencil"></i> Modifier</a>
@@ -15,7 +15,7 @@
             <a href="#" class="btn btn-primary btn-cta dropdown-toggle" data-toggle="dropdown">
                 <i class="icon-plus icon-white"></i> Plus...
             </a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="chapter-{{ $chapter->identifer }}-plus">
+            <ul class="dropdown-menu" role="menu" aria-labelledby="chapter-{{ $chapter->identifier }}-plus">
                 <li><a tabindex="-1" href="{{ route('chapter.delete', $chapter) }}"
                        data-toggle="modal" data-target="#modal-container-small">
                         <i class="icon-trash"></i> Supprimer le chapitre</a></li>
