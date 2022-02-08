@@ -55,6 +55,10 @@ class VersionController extends Controller
             $model2 = $version2->getModel();
         }
 
+        if($model1::class !== $model2::class) {
+            throw new \LogicException("Modèles des versions non identiques.");
+        }
+
         if(! in_array($key, $model1->getFillable())) {
             throw new \InvalidArgumentException("Mauvais type de clé.");
         }

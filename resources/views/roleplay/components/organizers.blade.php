@@ -20,12 +20,12 @@
             <li style="margin-bottom: 3px;">
                 <img src="{{ $organizer->getFlag() }}" alt="Drapeau de {{ $organizer->getName() }}"
                      class="img-menu-drapeau">
-                <a href="{{ url($organizer->accessorUrl()) }}">
+                <a href="{{ $organizer->accessorUrl() }}">
                     {{ $organizer->getName() }}
                 </a>
                 <button type="button" class="btn" style="visibility: hidden;">
                     <i class="icon-trash icon-white"></i>
-                    Supprimer
+                    Supprimer <!-- placeholder -->
                 </button>
             </li>
         @endforeach

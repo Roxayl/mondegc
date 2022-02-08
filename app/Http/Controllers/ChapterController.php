@@ -44,7 +44,7 @@ class ChapterController extends Controller
      */
     public function create(Roleplay $roleplay, StringBladeService $stringBlade): Response
     {
-        $this->authorize('display', Chapter::class);
+        $this->authorize('createChapters', $roleplay);
 
         $blade = '<x-chapter.create-chapter :roleplay="$roleplay" />';
 
@@ -64,7 +64,7 @@ class ChapterController extends Controller
      */
     public function store(Roleplay $roleplay, Request $request): RedirectResponse
     {
-        $this->authorize('display', Chapter::class);
+        $this->authorize('createChapters', $roleplay);
 
         $chapter = new Chapter();
 
@@ -72,9 +72,6 @@ class ChapterController extends Controller
         $chapter->setRelation('roleplay', $roleplay);
         $chapter->roleplay_id = $roleplay->getKey();
         $chapter->user_id = auth()->user()->getAuthIdentifier();
-
-        // Gérer les accès à la création de chapitre.
-        $this->authorize('manage', $chapter);
 
         // Valider et remplir les champs saisis dans le formulaire.
         $request->validate(Chapter::validationRules);
@@ -87,7 +84,7 @@ class ChapterController extends Controller
         // de l'événement "creating" dispatché par le modèle (voir \App\Models\Chapter::boot()).
         $chapter->save();
 
-        return redirect()->route('roleplay.show', $roleplay)
+        return redirect(route('roleplay.show', $roleplay) . '#chapter-' . $chapter->identifier)
             ->with('message', 'success|Chapitre ajouté avec succès !');
     }
 
@@ -120,7 +117,7 @@ class ChapterController extends Controller
      */
     public function edit(Chapter $chapter, StringBladeService $stringBlade): Response
     {
-        $this->authorize('display', Chapter::class);
+        $this->authorize('manage', $chapter);
 
         $blade = '<x-chapter.edit-chapter :chapter="$chapter"/>';
 
@@ -140,8 +137,6 @@ class ChapterController extends Controller
      */
     public function update(Request $request, Chapter $chapter): RedirectResponse
     {
-        $this->authorize('display', Chapter::class);
-
         $this->authorize('manage', $chapter);
 
         // Valider et remplir les champs saisis dans le formulaire.
@@ -155,7 +150,7 @@ class ChapterController extends Controller
         // de l'événement "creating" dispatché par le modèle (voir \App\Models\Chapter::boot()).
         $chapter->save();
 
-        return redirect()->route('roleplay.show', $chapter->roleplay)
+        return redirect(route('roleplay.show', $chapter->roleplay) . '#chapter-' . $chapter->identifier)
             ->with('message', 'success|Chapitre modifié avec succès !');
     }
 
@@ -167,7 +162,7 @@ class ChapterController extends Controller
      */
     public function delete(Chapter $chapter): View
     {
-        $this->authorize('display', Chapter::class);
+        $this->authorize('manage', $chapter);
 
         return view('chapter.delete')->with('chapter', $chapter);
     }
@@ -180,7 +175,6 @@ class ChapterController extends Controller
      */
     public function destroy(Chapter $chapter): RedirectResponse
     {
-        $this->authorize('display', Chapter::class);
         $this->authorize('manage', $chapter);
 
         $roleplay = $chapter->roleplay;

@@ -19,7 +19,7 @@
 
 @section('modal_footer')
     <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
-    <button type="submit" class="btn btn-success">
+    <button type="submit" class="btn btn-warning">
         Clôturer
     </button>
 @endsection

@@ -44,6 +44,7 @@
                         @endif
                     </a></li>
                 @endforeach
+                <li><a href="#roleplay-next">Écrire la suite</a></li>
             </ul>
         </div>
 
@@ -56,10 +57,12 @@
             </ul>
 
             <div class="pull-right">
-                <a href="{{ route('roleplay.edit', $roleplay) }}" class="btn btn-primary"
-                   data-toggle="modal" data-target="#modal-container-small">
-                    <i class="icon-edit icon-white"></i> Modifier
-                </a>
+                @can('manage', $roleplay)
+                    <a href="{{ route('roleplay.edit', $roleplay) }}" class="btn btn-primary"
+                       data-toggle="modal" data-target="#modal-container-small">
+                        <i class="icon-edit icon-white"></i> Modifier
+                    </a>
+                @endcan
             </div>
 
             <div class="clearfix"></div>
@@ -85,6 +88,12 @@
             @endforeach
 
             @can('createChapters', $roleplay)
+                <div class="titre-bleu" id="roleplay-next">
+                    <h1>
+                        Écrire la suite
+                    </h1>
+                </div>
+
                 <div class="component-block" id="chapter-create">
                     <x-chapter.create-button :roleplay="$roleplay" />
                 </div>

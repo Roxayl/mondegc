@@ -6,7 +6,7 @@
         <i class="icon-white icon-pencil"></i> Créer un chapitre
     </a>
 
-    <a href="{{ route('roleplay.confirm-close', $roleplay) }}" class="btn btn-success"
+    <a href="{{ route('roleplay.confirm-close', $roleplay) }}" class="btn btn-warning"
        data-toggle="modal" data-target="#modal-container-small">
         Clôturer ce roleplay
     </a>

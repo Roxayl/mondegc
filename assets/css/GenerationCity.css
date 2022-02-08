@@ -472,7 +472,10 @@ input[type='submit'] {
 }
 
 .btn-cta {
-    padding: 3px 5px;
+    padding: 4px 5px;
+}
+.btn-cta i {
+    vertical-align: initial;
 }
 
 .pull-right-cta {

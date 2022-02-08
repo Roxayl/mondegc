@@ -60,24 +60,21 @@
                             <td>{{ $version->created_at->format('Y/m/d à H:i:s') }}</td>
                             <td>{{ $version->reason }}</td>
                             <td>
+                                <a href="{{ route('chapter.diff', [
+                                        'version1' => $version,
+                                        'version2' => $version->previous(),
+                                    ]) }}"
+                                    class="btn btn-primary diff-toggle-btn">
+                                    <i class="icon-indent-left icon-white"></i> Comparer
+                                </a>
+
                                 @if($canRevert)
                                     <form method="POST" action="{{ route('version.revert', $version) }}"
-                                          class="form-inline">
+                                          class="form-inline" style="display: inline;">
                                         @csrf
-
-                                        <a href="{{ route('chapter.diff', [
-                                                'version1' => $version,
-                                                'version2' => $version->previous(),
-                                            ]) }}"
-                                            class="btn btn-primary diff-toggle-btn">
-                                            <i class="icon-comment icon-white"></i> Comparer
-                                        </a>
-
-                                        @if(! $version->isLast())
-                                            <button class="btn btn-primary">
-                                                <i class="icon-time icon-white"></i> Restaurer
-                                            </button>
-                                        @endif
+                                        <button class="btn btn-primary">
+                                            <i class="icon-time icon-white"></i> Restaurer
+                                        </button>
                                     </form>
                                 @endif
                             </td>
