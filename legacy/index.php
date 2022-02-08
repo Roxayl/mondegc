@@ -1,8 +1,9 @@
 <?php
 
-use App\View\Components\Roleplay;
+use App\Models\Roleplay;
+use App\View\Components\Roleplay as RoleplayComponent;
+use Illuminate\Support\Facades\Gate;
 use TorMorten\Eventy\Facades\Eventy;
-use YlsIdeas\FeatureFlags\Facades\Features;
 
 //Connexion et deconnexion
 include('php/log.php');
@@ -137,8 +138,8 @@ Eventy::action('display.beforeHeadClosingTag')
         <div class="well"></div>
 
         <?php
-        if(Features::accessible('roleplay')) {
-            echo (new Roleplay\IndexList())->render();
+        if(Gate::allows('display', Roleplay::class)) {
+            echo (new RoleplayComponent\IndexList())->render();
         }
         ?>
 

@@ -15,11 +15,6 @@ use Mpociot\Versionable\Version;
 
 class ChapterController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('feature:roleplay');
-    }
-
     /**
      * Affiche le bouton de création de roleplay.
      *
@@ -29,6 +24,8 @@ class ChapterController extends Controller
      */
     public function createButton(Roleplay $roleplay, StringBladeService $stringBlade): Response
     {
+        $this->authorize('display', Chapter::class);
+
         $blade = '<x-chapter.create-button :roleplay="$roleplay" />';
 
         $html = $stringBlade->render(
@@ -47,6 +44,8 @@ class ChapterController extends Controller
      */
     public function create(Roleplay $roleplay, StringBladeService $stringBlade): Response
     {
+        $this->authorize('display', Chapter::class);
+
         $blade = '<x-chapter.create-chapter :roleplay="$roleplay" />';
 
         $html = $stringBlade->render(
@@ -65,6 +64,8 @@ class ChapterController extends Controller
      */
     public function store(Roleplay $roleplay, Request $request): RedirectResponse
     {
+        $this->authorize('display', Chapter::class);
+
         $chapter = new Chapter();
 
         // Gérer les relations.
@@ -99,6 +100,8 @@ class ChapterController extends Controller
      */
     public function show(Chapter $chapter, StringBladeService $stringBlade): Response
     {
+        $this->authorize('display', Chapter::class);
+
         $blade = '<x-roleplay.chapter :chapter="$chapter"/>';
 
         $html = $stringBlade->render(
@@ -117,6 +120,8 @@ class ChapterController extends Controller
      */
     public function edit(Chapter $chapter, StringBladeService $stringBlade): Response
     {
+        $this->authorize('display', Chapter::class);
+
         $blade = '<x-chapter.edit-chapter :chapter="$chapter"/>';
 
         $html = $stringBlade->render(
@@ -135,6 +140,8 @@ class ChapterController extends Controller
      */
     public function update(Request $request, Chapter $chapter): RedirectResponse
     {
+        $this->authorize('display', Chapter::class);
+
         $this->authorize('manage', $chapter);
 
         // Valider et remplir les champs saisis dans le formulaire.
@@ -160,6 +167,8 @@ class ChapterController extends Controller
      */
     public function delete(Chapter $chapter): View
     {
+        $this->authorize('display', Chapter::class);
+
         return view('chapter.delete')->with('chapter', $chapter);
     }
 
@@ -171,6 +180,7 @@ class ChapterController extends Controller
      */
     public function destroy(Chapter $chapter): RedirectResponse
     {
+        $this->authorize('display', Chapter::class);
         $this->authorize('manage', $chapter);
 
         $roleplay = $chapter->roleplay;
@@ -189,6 +199,8 @@ class ChapterController extends Controller
      */
     public function history(Chapter $chapter): View
     {
+        $this->authorize('display', Chapter::class);
+
         $firstChapter = $chapter->roleplay->chapters->first();
         $versions = $chapter->versions()->latest('version_id')->paginate(15);
         $canRevert = Gate::allows('revert', $chapter);
@@ -206,6 +218,8 @@ class ChapterController extends Controller
      */
     public function diff(Version $version1, ?Version $version2 = null): View
     {
+        $this->authorize('display', Chapter::class);
+
         $model1 = $version1->getModel();
         if($version2 === null) {
             $model2 = new ($model1::class);

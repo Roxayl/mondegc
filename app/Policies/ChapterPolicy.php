@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Chapter;
 use App\Models\CustomUser;
+use App\Models\Roleplay;
 use App\Policies\Contracts\VersionablePolicy;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -15,6 +16,17 @@ class ChapterPolicy implements VersionablePolicy
     use HandlesAuthorization;
 
     /**
+     * Détermine si l'utilisateur peut afficher les chapitres et utiliser le système de roleplay.
+     *
+     * @param CustomUser|null $user
+     * @return bool
+     */
+    public function display(?CustomUser $user): bool
+    {
+        return Gate::allows('display', Roleplay::class);
+    }
+
+    /**
      * Vérifie si un utilisateur peut gérer les chapitres d'un roleplay.
      *
      * @param CustomUser $user
@@ -23,7 +35,8 @@ class ChapterPolicy implements VersionablePolicy
      */
     public function manage(CustomUser $user, Chapter $chapter): bool
     {
-        return Gate::allows('manage', $chapter->roleplay);
+        return Gate::allows('display', Roleplay::class)
+            && Gate::allows('manage', $chapter->roleplay);
     }
 
     /**

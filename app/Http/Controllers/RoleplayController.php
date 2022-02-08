@@ -16,11 +16,6 @@ use Illuminate\Validation\ValidationException;
 
 class RoleplayController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('feature:roleplay');
-    }
-
     /**
      * Créé une instance d'un roleplayable à partir des paramètre passés dans la requête {@see Request}.
      * Il est nécessaire que les champs "type" et "id" soient présents dans les paramètres de la requête.
@@ -51,6 +46,8 @@ class RoleplayController extends Controller
     public function index(): Response
     {
         // TODO: Not yet implemented.
+        $this->authorize('display', Roleplay::class);
+
         return response()->noContent();
     }
 
@@ -61,6 +58,7 @@ class RoleplayController extends Controller
      */
     public function create(): View
     {
+        $this->authorize('display', Roleplay::class);
         $this->authorize('create', Roleplay::class);
 
         $roleplay = new Roleplay();
@@ -76,6 +74,7 @@ class RoleplayController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $this->authorize('display', Roleplay::class);
         $this->authorize('create', Roleplay::class);
 
         $request->validate(Roleplay::validationRules);
@@ -108,6 +107,8 @@ class RoleplayController extends Controller
      */
     public function edit(Roleplay $roleplay): View
     {
+        $this->authorize('display', Roleplay::class);
+
         return view('roleplay.edit')->with('roleplay', $roleplay);
     }
 
@@ -120,6 +121,7 @@ class RoleplayController extends Controller
      */
     public function update(Request $request, Roleplay $roleplay): RedirectResponse
     {
+        $this->authorize('display', Roleplay::class);
         $this->authorize('manage', $roleplay);
 
         $roleplay->fill($request->only($roleplay->getFillable()));
@@ -139,6 +141,8 @@ class RoleplayController extends Controller
      */
     public function show(Roleplay $roleplay): View
     {
+        $this->authorize('display', Roleplay::class);
+
         $chapters = $roleplay->chapters()->orderBy('order')->get();
 
         return view('roleplay.show', compact('roleplay', 'chapters'));
@@ -152,6 +156,8 @@ class RoleplayController extends Controller
      */
     public function delete(Roleplay $roleplay): View
     {
+        $this->authorize('display', Roleplay::class);
+
         return view('roleplay.delete')->with('roleplay', $roleplay);
     }
 
@@ -163,6 +169,8 @@ class RoleplayController extends Controller
      */
     public function destroy(Roleplay $roleplay): RedirectResponse
     {
+        $this->authorize('display', Roleplay::class);
+
         $roleplay->delete();
 
         return redirect()->to(url('index.php'))
@@ -177,6 +185,8 @@ class RoleplayController extends Controller
      */
     public function roleplayables(Request $request): JsonResponse
     {
+        $this->authorize('display', Roleplay::class);
+
         $type   = $request->input('type');
         $term   = $request->input('term');
 
@@ -203,6 +213,8 @@ class RoleplayController extends Controller
      */
     public function organizers(Roleplay $roleplay, StringBladeService $stringBlade): Response
     {
+        $this->authorize('display', Roleplay::class);
+
         $blade = '<x-roleplay.organizers :roleplay="$roleplay" />';
 
         $html = $stringBlade->render(
@@ -221,6 +233,8 @@ class RoleplayController extends Controller
      */
     public function manageOrganizers(Roleplay $roleplay, StringBladeService $stringBlade): Response
     {
+        $this->authorize('display', Roleplay::class);
+
         $blade = '<x-roleplay.manage-organizers :roleplay="$roleplay" />';
 
         $html = $stringBlade->render(
@@ -239,6 +253,8 @@ class RoleplayController extends Controller
      */
     public function addOrganizer(Roleplay $roleplay, StringBladeService $stringBlade): Response
     {
+        $this->authorize('display', Roleplay::class);
+
         $blade = '<x-roleplay.add-organizer :roleplay="$roleplay" />';
 
         $html = $stringBlade->render(
@@ -257,6 +273,8 @@ class RoleplayController extends Controller
      */
     public function createOrganizer(Roleplay $roleplay, Request $request): RedirectResponse
     {
+        $this->authorize('display', Roleplay::class);
+
         $roleplayable = self::createRoleplayableFromForm($request);
 
         if($roleplay->hasOrganizer($roleplayable)) {
@@ -278,6 +296,8 @@ class RoleplayController extends Controller
      */
     public function removeOrganizer(Roleplay $roleplay, Request $request): RedirectResponse
     {
+        $this->authorize('display', Roleplay::class);
+
         $roleplayable = self::createRoleplayableFromForm($request);
 
         if(! $roleplay->hasOrganizer($roleplayable)) {
