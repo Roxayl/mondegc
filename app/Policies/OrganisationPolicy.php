@@ -71,7 +71,7 @@ class OrganisationPolicy
         if($user->hasMinPermission('admin')) return true;
 
         return $organisation->maxPermission($user) >=
-            Organisation::$permissions['administrator'];
+            Organisation::$permissions['owner'];
     }
 
     /**

@@ -68,7 +68,7 @@
                                     <i class="icon-indent-left icon-white"></i> Comparer
                                 </a>
 
-                                @if($canRevert)
+                                @if($canRevert && ! $version->isLast())
                                     <form method="POST" action="{{ route('version.revert', $version) }}"
                                           class="form-inline" style="display: inline;">
                                         @csrf

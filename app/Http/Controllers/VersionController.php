@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Version;
 use App\View\Components\Blocks\TextDiff;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Mpociot\Versionable\Version;
+use Illuminate\Validation\ValidationException;
 
 class VersionController extends Controller
 {
@@ -23,6 +24,10 @@ class VersionController extends Controller
             $model = $version->getModel();
 
             $this->authorize('revert', $model);
+
+            if($version->isLast()) {
+                throw ValidationException::withMessages(["Cette version est déjà la dernière."]);
+            }
 
             $oldReason = $version->reason;
 
