@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c447149fe3fba421943e4f30d7e0ae9",
+    "content-hash": "f66d6bfe61599243fcec782752248f94",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -121,6 +121,67 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
+        },
+        {
+            "name": "caxy/php-htmldiff",
+            "version": "v0.1.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/caxy/php-htmldiff.git",
+                "reference": "3f8ee7edda3d7c6d2e58a02d70a12d3242c84ea5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/caxy/php-htmldiff/zipball/3f8ee7edda3d7c6d2e58a02d70a12d3242c84ea5",
+                "reference": "3f8ee7edda3d7c6d2e58a02d70a12d3242c84ea5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-mbstring": "*",
+                "ezyang/htmlpurifier": "^4.7",
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "doctrine/cache": "~1.0",
+                "phpunit/phpunit": "~9.0"
+            },
+            "suggest": {
+                "doctrine/cache": "Used for caching the calculated diffs using a Doctrine Cache Provider"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Caxy\\HtmlDiff": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Josh Schroeder",
+                    "email": "jschroeder@caxy.com",
+                    "homepage": "http://www.caxy.com"
+                }
+            ],
+            "description": "A library for comparing two HTML files/snippets and highlighting the differences using simple HTML.",
+            "homepage": "https://github.com/caxy/php-htmldiff",
+            "keywords": [
+                "diff",
+                "html"
+            ],
+            "support": {
+                "issues": "https://github.com/caxy/php-htmldiff/issues",
+                "source": "https://github.com/caxy/php-htmldiff/tree/v0.1.14"
+            },
+            "time": "2022-01-19T11:09:59+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -2195,6 +2256,72 @@
                 }
             ],
             "time": "2021-10-01T21:08:31+00:00"
+        },
+        {
+            "name": "mpociot/versionable",
+            "version": "4.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mpociot/versionable.git",
+                "reference": "66d811b40e7677e1f542e024ed4a32cf9b2be9f8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mpociot/versionable/zipball/66d811b40e7677e1f542e024ed4a32cf9b2be9f8",
+                "reference": "66d811b40e7677e1f542e024ed4a32cf9b2be9f8",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.3 || ^6.0 || ^7.0 || ^8.0",
+                "php": ">=7.1.0 || >=7.2.5"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^3.1 || ^4.0 || ^5.0 || ^6.0",
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mpociot\\Versionable\\Providers\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/migrations",
+                    "tests/VersionableTestCase.php"
+                ],
+                "psr-0": {
+                    "Mpociot\\Versionable": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcel Pociot",
+                    "email": "m.pociot@gmail.com"
+                }
+            ],
+            "description": "Allows to create Laravel 4 / 5 / 6 / 7 Model versioning and restoring",
+            "homepage": "http://github.com/mpociot/versionable",
+            "keywords": [
+                "ardent",
+                "history",
+                "laravel",
+                "model",
+                "restore",
+                "version"
+            ],
+            "support": {
+                "issues": "https://github.com/mpociot/versionable/issues",
+                "source": "https://github.com/mpociot/versionable"
+            },
+            "time": "2021-12-16T10:19:30+00:00"
         },
         {
             "name": "nesbot/carbon",

@@ -11,10 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class OrganisationController extends Controller
 {
@@ -85,7 +83,7 @@ class OrganisationController extends Controller
      * @param string|null $slug
      * @return View|RedirectResponse
      */
-    public function show(int $id, string $slug = null)
+    public function show(int $id, string $slug = null): View|RedirectResponse
     {
         $organisation = Organisation::with(['members', 'membersPending'])
             ->findOrFail($id);
@@ -120,10 +118,13 @@ class OrganisationController extends Controller
      */
     public function edit(int $id): View
     {
+        /** @var Organisation $organisation */
         $organisation = Organisation::with('members')->findOrFail($id);
         $this->authorize('update', $organisation);
 
-        return view('organisation.edit')->with('organisation', $organisation);
+        $canDelete = Gate::allows('delete', $organisation);
+
+        return view('organisation.edit', compact('organisation', 'canDelete'));
     }
 
     /**
@@ -146,16 +147,37 @@ class OrganisationController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Affiche le formulaire de confirmation de la suppression de l'organisation.
      *
-     * @param int $id
+     * @param Organisation $organisation
+     * @return View
      */
-    public function destroy(int $id): void
+    public function delete(Organisation $organisation): View
     {
-        abort(404);
+        $this->authorize('delete', $organisation);
+
+        return view('organisation.delete')->with('organisation', $organisation);
     }
 
     /**
+     * Remove the specified resource from storage.
+     *
+     * @param Organisation $organisation
+     * @return RedirectResponse
+     */
+    public function destroy(Organisation $organisation): RedirectResponse
+    {
+        $this->authorize('delete', $organisation);
+
+        $organisation->delete();
+
+        return redirect('politique.php')
+            ->with('message', "success|L'organisation a été supprimée avec succès.");
+    }
+
+    /**
+     * Affiche l'interface permettant de migrer le type d'une organisation.
+     *
      * @param int $id
      * @return View
      */
@@ -168,6 +190,8 @@ class OrganisationController extends Controller
     }
 
     /**
+     * Migre une organisation.
+     *
      * @param MigrateType $request
      * @param int $id
      * @return RedirectResponse

@@ -1,8 +1,9 @@
 <?php
 
-use App\View\Components\Roleplay;
+use App\Models\Roleplay;
+use App\View\Components\Roleplay as RoleplayComponent;
+use Illuminate\Support\Facades\Gate;
 use TorMorten\Eventy\Facades\Eventy;
-use YlsIdeas\FeatureFlags\Facades\Features;
 
 //Connexion et deconnexion
 include('php/log.php');
@@ -32,6 +33,7 @@ $_SESSION['an']=true;
 <link href="assets/css/bootstrap-modal.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
+<link href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" rel="stylesheet">
 <!-- TemplateEndEditable -->
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -56,6 +58,11 @@ $_SESSION['an']=true;
     background-position: 0 -240px;
     background-attachment: fixed;
 }
+.ui-autocomplete {
+    position: absolute;
+    cursor: default;
+    z-index: 1500 !important; /* Les popups ont un z-index de 1050, donc il faudra quelque chose de supérieur... */
+}
 </style>
 <!-- Le javascript
     ================================================== -->
@@ -72,6 +79,7 @@ $_SESSION['an']=true;
 <!-- MODAL -->
 <script src="assets/js/bootstrap-modalmanager.js"></script>
 <script src="assets/js/bootstrap-modal.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 
 
 <?php
@@ -130,8 +138,8 @@ Eventy::action('display.beforeHeadClosingTag')
         <div class="well"></div>
 
         <?php
-        if(Features::accessible('roleplay')) {
-            echo (new Roleplay\IndexList())->render();
+        if(Gate::allows('display', Roleplay::class)) {
+            echo (new RoleplayComponent\IndexList())->render();
         }
         ?>
 

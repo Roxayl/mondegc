@@ -99,6 +99,20 @@
 
             @endif
 
+            @if($canDelete)
+                <div class="clearfix"></div>
+                <div class="well">
+                    <div class="alert alert-danger">
+                        <h4>Zone de danger</h4>
+
+                        <a href="{{ route('organisation.delete', $organisation) }}" class="btn btn-danger"
+                            data-toggle="modal" data-target="#modal-container-small">
+                            <i class="icon-trash icon-white"></i> Supprimer cette organisation
+                        </a>
+                    </div>
+                </div>
+            @endif
+
         </div>
 
     </div>

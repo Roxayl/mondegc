@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Pays;
 use App\Services\EconomyService;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use LogicException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -13,11 +12,14 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class DataExporterController extends Controller
 {
     /**
-     * @param $filename
-     * @param $data
+     * Formate des données <code>$data</code> dans une chaîne au format CSV, et provoque le téléchargement du fichier
+     * sous forme de réponse HTTP.
+     *
+     * @param string $filename
+     * @param array $data
      * @return StreamedResponse
      */
-    protected function exportToCsv($filename, $data): StreamedResponse
+    protected function exportToCsv(string $filename, array $data): StreamedResponse
     {
         $filename = $filename . '-' . Carbon::today()->format('Y-m-d') . '.csv';
 
@@ -46,10 +48,9 @@ class DataExporterController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return StreamedResponse
      */
-    public function temperancePays(Request $request): StreamedResponse
+    public function temperancePays(): StreamedResponse
     {
         $paysList = EconomyService::getPaysResources();
         $data = [];

@@ -5,7 +5,7 @@ namespace Tests\Feature\Legacy;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UserAccessesIndexPageTest extends TestCase
+class VisitorAccessesIndexPageTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -22,8 +22,6 @@ class UserAccessesIndexPageTest extends TestCase
     public function __construct()
     {
         parent::__construct();
-
-        $this->seeded = false;
 
         // Set global variables.
         $_SERVER['HTTPS'] = 'off';
@@ -60,6 +58,36 @@ class UserAccessesIndexPageTest extends TestCase
     }
 
     /**
+     * Tester l'accès à la page /Page-carte.php du site legacy.
+     *
+     * @return void
+     */
+    public function testAccessPageCartePage(): void
+    {
+        $this->accessLegacyPage('Page-carte');
+    }
+
+    /**
+     * Tester l'accès à la page de l'OCGC du site legacy.
+     *
+     * @return void
+     */
+    public function testAccessOcgcPage(): void
+    {
+        $this->accessLegacyPage('OCGC');
+    }
+
+    /**
+     * Tester l'accès à la page des communiqués de l'OCGC du site legacy.
+     *
+     * @return void
+     */
+    public function testAccessCommuniquesOcgcPage(): void
+    {
+        $this->accessLegacyPage('communiques-ocgc');
+    }
+
+    /**
      * Tester l'accès à la page /assemblee.php du site legacy.
      *
      * @return void
@@ -80,13 +108,13 @@ class UserAccessesIndexPageTest extends TestCase
     }
 
     /**
-     * Tester l'accès à la page /Page-carte.php du site legacy.
+     * Tester l'accès à la page du Comité Politique du site legacy.
      *
      * @return void
      */
-    public function testAccessPageCartePage(): void
+    public function testAccessPolitiquePage(): void
     {
-        $this->accessLegacyPage('Page-carte');
+        $this->accessLegacyPage('politique');
     }
 
     /**

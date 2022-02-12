@@ -22,7 +22,8 @@ return [
     */
 
     'feature' => [
-        'roleplay' => false,
+        'roleplay' => true,
+        'roleplay-only-restricted' => true,
     ],
 
     /*

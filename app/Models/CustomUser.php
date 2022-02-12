@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\Roleplayable;
+use Illuminate\Database\Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 
 /**
  * App\Models\CustomUser
@@ -29,17 +32,17 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $ch_use_nom_dirigeant
  * @property string|null $ch_use_prenom_dirigeant
  * @property string|null $ch_use_biographie_dirigeant
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Infrastructure[] $infrastructures
+ * @property-read Eloquent\Collection|\App\Models\Infrastructure[] $infrastructures
  * @property-read int|null $infrastructures_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Log[] $logs
+ * @property-read Eloquent\Collection|\App\Models\Log[] $logs
  * @property-read int|null $logs_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\NotificationLegacy[] $notificationsLegacy
+ * @property-read Eloquent\Collection|\App\Models\NotificationLegacy[] $notificationsLegacy
  * @property-read int|null $notifications_legacy_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Pays[] $pays
+ * @property-read Eloquent\Collection|\App\Models\Pays[] $pays
  * @property-read int|null $pays_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Roleplay[] $ownedRoleplays
+ * @property-read Eloquent\Collection|\App\Models\Roleplay[] $ownedRoleplays
  * @property-read int|null $owned_roleplays_count
  * @method static \Database\Factories\CustomUserFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomUser newModelQuery()
@@ -130,12 +133,55 @@ class CustomUser extends Authenticatable
         return $this->hasMany(NotificationLegacy::class, 'recipient_id');
     }
 
+    /**
+     * Donne les pays gérés par l'utilisateur, avec les niveaux de permission qu'il possède sur le pays.
+     * @return BelongsToMany
+     */
     public function pays(): BelongsToMany
     {
         return $this->belongsToMany(
             Pays::class, 'users_pays',
             'ID_user', 'ID_pays')
             ->withPivot(['permissions']);
+    }
+
+    /**
+     * @return Eloquent\Collection<Pays>
+     */
+    public function getPays(): Eloquent\Collection
+    {
+        return $this->pays;
+    }
+
+    /**
+     * Donne les villes gérées par l'utilisateur, au travers de ses pays.
+     * @return Collection<int, Ville>
+     */
+    public function villes(): Collection
+    {
+        $villes = collect();
+
+        // Obtenir les villes des pays gérés par l'utilisateur.
+        foreach($this->pays as $pays) {
+            $villes = $villes->merge($pays->villes);
+        }
+
+        return $villes;
+    }
+
+    /**
+     * Donne les organisations gérées par l'utilisateur, au travers de ses pays.
+     * @return Collection<int, Organisation>
+     */
+    public function organisations(): Collection
+    {
+        $organisations = collect();
+
+        foreach($this->pays as $pays) {
+            $organisations = $organisations->merge($pays->managedOrganisations());
+        }
+
+        return $organisations;
     }
 
     /**
@@ -151,9 +197,9 @@ class CustomUser extends Authenticatable
     /**
      * Get the unique identifier for the user.
      *
-     * @return mixed
+     * @return int
      */
-    public function getAuthIdentifier()
+    public function getAuthIdentifier(): int
     {
         return $this->{$this->getAuthIdentifierName()};
     }
@@ -185,7 +231,24 @@ class CustomUser extends Authenticatable
     public function ownsPays(Pays $pays): bool
     {
         return in_array($pays->ch_pay_id,
-            array_column($this->pays()->get()->toArray(), 'ch_pay_id'));
+            array_column($this->pays->toArray(), 'ch_pay_id'));
+    }
+
+    /**
+     * Donne les modèles roleplayables gérés par l'utilisateur.
+     * @return Collection
+     * @see Roleplayable
+     */
+    public function roleplayables(): Collection
+    {
+        $methods = ['getPays', 'organisations', 'villes'];
+
+        $roleplayables = collect();
+        foreach($methods as $method) {
+            $roleplayables = $roleplayables->merge($this->$method());
+        }
+
+        return $roleplayables;
     }
 
     /**
@@ -194,22 +257,13 @@ class CustomUser extends Authenticatable
      */
     public function hasMinPermission(string $level): bool
     {
-        switch($level) {
-            case 'member':
-                $permission = self::MEMBER;
-                break;
-            case 'juge':
-                $permission = self::JUGE;
-                break;
-            case 'ocgc':
-                $permission = self::OCGC;
-                break;
-            case 'admin':
-                $permission = self::ADMIN;
-                break;
-            default:
-                throw new \InvalidArgumentException("Mauvais type de permission.");
-        }
+        $permission = match ($level) {
+            'member' => self::MEMBER,
+            'juge'   => self::JUGE,
+            'ocgc'   => self::OCGC,
+            'admin'  => self::ADMIN,
+            default  => throw new \InvalidArgumentException("Mauvais type de permission."),
+        };
 
         return $this->ch_use_statut >= $permission;
     }

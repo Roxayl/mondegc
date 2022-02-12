@@ -168,13 +168,19 @@ function csrf_ob_handler($buffer, $flags) {
             $buffer
         );
         $script = '<script type="text/javascript">
-            $(document).ajaxSuccess(function() {
+            try {
+                $(document).ajaxSuccess(function() {
+                    try {
+                        CsrfMagic.end();
+                    } catch(err) { console.log("Erreur CsrfMagic: ", err); }
+                });
+            } catch(err) { console.log("Erreur CsrfMagic: ", err); }
+            </script>' .
+            '<script type="text/javascript">
                 try {
                     CsrfMagic.end();
-                } catch(err) { console.log("Erreur CsrfMagic"); }
-            });
-            </script>' .
-            '<script type="text/javascript">CsrfMagic.end();</script>';
+                } catch(err) { console.log("Erreur CsrfMagic: ", err); }
+            </script>';
         $buffer = str_ireplace('</body>', $script . '</body>', $buffer, $count);
         if (!$count) {
             $buffer .= $script;

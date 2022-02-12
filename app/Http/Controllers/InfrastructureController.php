@@ -93,7 +93,7 @@ class InfrastructureController extends Controller
         $infrastructure->ch_inf_label = 'infrastructure';
         $infrastructure->ch_inf_villeid = $infrastructure->infrastructurable_id;
         $infrastructure->ch_inf_statut = Infrastructure::JUGEMENT_PENDING;
-        $infrastructure->user_creator = auth()->user()->ch_use_id;
+        $infrastructure->user_creator = auth()->user()->getAuthIdentifier();
         $infrastructure->ch_inf_juge = null;
         $infrastructure->ch_inf_commentaire_juge = null;
         $infrastructure->infrastructurable_type = Infrastructure

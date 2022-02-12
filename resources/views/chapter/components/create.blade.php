@@ -11,5 +11,7 @@
 <div class="clearfix"></div>
 
 <div class="well">
-    @include('chapter.components.form')
+    <form method="POST" action="{{ route('chapter.store', ['roleplay' => $roleplay]) }}">
+        @include('chapter.components.form')
+    </form>
 </div>

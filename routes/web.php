@@ -58,6 +58,8 @@ Route::get('organisation/{id}-{slug}', 'OrganisationController@show')
 Route::resource('organisation', 'OrganisationController');
 Route::get('organisation/{organisation}/migrate', 'OrganisationController@migrate')
     ->name('organisation.migrate');
+Route::get('organisation/{organisation}/delete', [Controllers\OrganisationController::class, 'delete'])
+    ->name('organisation.delete');
 Route::match(['put', 'patch'], 'organisation/{organisation}/migrate', 'OrganisationController@runMigration')
     ->name('organisation.run-migration');
 
@@ -124,6 +126,12 @@ Route::patch('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJud
 Route::get('roleplay/roleplayables', [Controllers\RoleplayController::class, 'roleplayables'])
     ->name('roleplay.roleplayables');
 Route::resource('roleplay', 'RoleplayController');
+Route::get('roleplay/confirm-close/{roleplay}', [Controllers\RoleplayController::class, 'confirmClose'])
+    ->name('roleplay.confirm-close');
+Route::match(['put', 'patch'], 'roleplay/close/{roleplay}', [Controllers\RoleplayController::class, 'close'])
+    ->name('roleplay.close');
+Route::get('roleplay/delete/{roleplay}', [Controllers\RoleplayController::class, 'delete'])
+    ->name('roleplay.delete');
 Route::get('roleplay/{roleplay}/organizers', [Controllers\RoleplayController::class, 'organizers'])
     ->name('roleplay.organizers');
 Route::get('roleplay/{roleplay}/manage-organizers', [Controllers\RoleplayController::class, 'manageOrganizers'])
@@ -142,9 +150,27 @@ Route::delete('roleplay/{roleplay}/remove-organizer', [Controllers\RoleplayContr
 */
 Route::get('chapter/create/{roleplay}', [Controllers\ChapterController::class, 'create'])
     ->name('chapter.create');
+Route::get('chapter/diff/{version1}/{version2?}', [Controllers\ChapterController::class, 'diff'])
+    ->name('chapter.diff');
+Route::post('chapter/{roleplay}', [Controllers\ChapterController::class, 'store'])
+    ->name('chapter.store');
 Route::get('chapter/create-button/{roleplay}', [Controllers\ChapterController::class, 'createButton'])
     ->name('chapter.create-button');
-Route::resource('chapter', 'ChapterController')->except(['create']);
+Route::get('chapter/history/{chapter}', [Controllers\ChapterController::class, 'history'])
+    ->name('chapter.history');
+Route::get('chapter/delete/{chapter}', [Controllers\ChapterController::class, 'delete'])
+    ->name('chapter.delete');
+Route::resource('chapter', 'ChapterController')->except(['create', 'store']);
+
+/*
+|--------------------------------------------------------------------------
+| Version
+|--------------------------------------------------------------------------
+*/
+Route::post('version/revert/{version}', [Controllers\VersionController::class, 'revert'])
+    ->name('version.revert');
+Route::get('version/diff/{version1}/{version2?}/{key}', [Controllers\VersionController::class, 'diff'])
+    ->name('version.diff');
 
 /*
 |--------------------------------------------------------------------------

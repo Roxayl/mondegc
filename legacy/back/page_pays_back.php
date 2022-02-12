@@ -1042,7 +1042,7 @@ Eventy::action('display.beforeHeadClosingTag')
 
       <div class="pull-right-cta cta-title">
           <a href="<?= url('back/communique_ajouter.php?userID='
-              . auth()->user()->ch_use_id . '&cat=pays&com_element_id='
+              . auth()->user()->getAuthIdentifier() . '&cat=pays&com_element_id='
               . $eloquentPays->ch_pay_id) ?>"
              class="btn btn-primary btn-cta">
               <i class="icon-plus-sign icon-white"></i> Ajouter un communiqué
