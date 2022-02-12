@@ -269,6 +269,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     {
         $query = $this->organisationMembers()
             ->join('organisation', 'organisation.id', 'organisation_id')
+            ->whereNull('organisation.deleted_at')
             ->where('permissions', '>=', $permissions);
 
         return $f($query);

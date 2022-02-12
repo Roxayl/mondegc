@@ -58,6 +58,8 @@ Route::get('organisation/{id}-{slug}', 'OrganisationController@show')
 Route::resource('organisation', 'OrganisationController');
 Route::get('organisation/{organisation}/migrate', 'OrganisationController@migrate')
     ->name('organisation.migrate');
+Route::get('organisation/{organisation}/delete', [Controllers\OrganisationController::class, 'delete'])
+    ->name('organisation.delete');
 Route::match(['put', 'patch'], 'organisation/{organisation}/migrate', 'OrganisationController@runMigration')
     ->name('organisation.run-migration');
 

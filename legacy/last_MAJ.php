@@ -29,8 +29,8 @@ UNION
 SELECT communique_organisation.ch_com_label AS communique_organisation, communique_organisation.ch_com_ID AS id, communique_organisation.ch_com_statut AS statut, communique_organisation.ch_com_categorie AS sous_categorie, communique_organisation.ch_com_element_id AS id_element, communique_organisation.ch_com_user_id AS id_auteur, communique_organisation.ch_com_date AS date, communique_organisation.ch_com_titre AS titre, lien_img AS photo_auteur, nom_personnage AS nom_auteur, entity_id AS paysID_auteur, prenom_personnage AS prenom_auteur, titre_personnage AS titre_auteur, organisation.id AS id_institution, organisation.name AS institution, organisation.flag AS img_institution, organisation.id AS pays_institution
 FROM communiques communique_organisation 
 INNER JOIN organisation ON communique_organisation.ch_com_element_id = organisation.id
-LEFT JOIN personnage ON(entity_id = organisation.id AND entity = 'ville')
-WHERE communique_organisation.ch_com_statut = 1 AND communique_organisation.ch_com_categorie ='organisation' OR communique_organisation.ch_com_categorie ='com_organisation'
+LEFT JOIN personnage ON(entity_id = organisation.id AND entity = 'organisation')
+WHERE communique_organisation.ch_com_statut = 1 AND communique_organisation.ch_com_categorie ='organisation' OR communique_organisation.ch_com_categorie ='com_organisation' AND organisation.deleted_at IS NULL
 UNION 
 SELECT communique_institut.ch_com_label AS type_notification, communique_institut.ch_com_ID AS id, communique_institut.ch_com_statut AS statut, communique_institut.ch_com_categorie AS sous_categorie, communique_institut.ch_com_element_id AS id_element, communique_institut.ch_com_user_id AS id_auteur, communique_institut.ch_com_date AS date, communique_institut.ch_com_titre AS titre, lien_img AS photo_auteur, nom_personnage AS nom_auteur, entity_id AS paysID_auteur, prenom_personnage AS prenom_auteur, titre_personnage AS titre_auteur, ch_ins_ID AS id_institution, ch_ins_nom AS institution, ch_ins_logo AS img_institution, ch_ins_ID AS pays_institution
 FROM communiques communique_institut 
@@ -707,10 +707,9 @@ do {
     <?php } ?>
        <?php if ( $row_LastCommunique['type_notification'] == "infrastructure") {
 
-           $thisInfrastructure = Infrastructure::with('infrastructurable')
-               ->find($row_LastCommunique['id']);
-           if(empty($thisInfrastructure)) {
-               break;
+           $thisInfrastructure = Infrastructure::find($row_LastCommunique['id']);
+           if(empty($thisInfrastructure) || empty($thisInfrastructure->infrastructurable)) {
+               continue;
            }
            ?>
     <!-- Si c'est une nouvelle infrastructure jugee ok

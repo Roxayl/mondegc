@@ -68,7 +68,10 @@ class OrganisationPolicy
      */
     public function delete(CustomUser $user, Organisation $organisation): bool
     {
-        return false;
+        if($user->hasMinPermission('admin')) return true;
+
+        return $organisation->maxPermission($user) >=
+            Organisation::$permissions['administrator'];
     }
 
     /**

@@ -11,12 +11,14 @@ use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use App\Models\Traits\Resourceable as HasResources;
 use App\Services\EconomyService;
 use Carbon\Carbon;
+use Database\Factories\OrganisationFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -63,13 +65,13 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @method static Builder|Organisation whereType($value)
  * @method static Builder|Organisation whereTypeMigratedAt($value)
  * @method static Builder|Organisation whereUpdatedAt($value)
- * @mixin Model
- * @property-read \App\Models\array<string, $resources
- * @method static \Database\Factories\OrganisationFactory factory(...$parameters)
+ * @method static OrganisationFactory factory(...$parameters)
  * @method static Builder|Organisation visible()
+ * @mixin Model
  */
 class Organisation extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
+    use SoftDeletes;
     use HasFactory, HasInfrastructures, HasResources;
     use InfrastructurablePresenter, OrganisationPresenter;
 
@@ -227,7 +229,7 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
      * @param ?scalar $permission
      * @return \Illuminate\Support\Collection
      */
-    public function getUsers($permission = null): \Illuminate\Support\Collection
+    public function getUsers(float|bool|int|string $permission = null): \Illuminate\Support\Collection
     {
         if($permission === null) {
             $permission = self::$permissions['administrator'];
