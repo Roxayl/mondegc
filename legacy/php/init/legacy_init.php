@@ -14,12 +14,13 @@ $mondegc_config['env'] = strtolower(app()->environment());
 $mondegc_config['version'] = config('legacy.version');
 $mondegc_config['hide_errors'] = config('legacy.hide_errors');
 $mondegc_config['enable_csrf_protection'] = config('legacy.enable_csrf_protection');
-$mondegc_config['db'] = array(
+$mondegc_config['db'] = [
     'hostname' => config('database.connections.mysql.host'),
+    'port'     => config('database.connections.mysql.port'),
     'username' => config('database.connections.mysql.username'),
     'password' => config('database.connections.mysql.password'),
     'database' => config('database.connections.mysql.database'),
-);
+];
 $mondegc_config['path'] = !empty(config('app.directory_path'))
                         ? config('app.directory_path') . '/'
                         : '';
@@ -72,7 +73,15 @@ if(version_compare(phpversion(), '7.0.0', '>=')) {
  *    Base de données    *
  *************************/
 
-$maconnexion = @mysql_pconnect($mondegc_config['db']['hostname'], $mondegc_config['db']['username'], $mondegc_config['db']['password']) or trigger_error(mysql_error(), E_USER_ERROR);
+$maconnexion = mysql_pconnect(
+    $mondegc_config['db']['hostname'] . ':' . $mondegc_config['db']['port'],
+    $mondegc_config['db']['username'],
+    $mondegc_config['db']['password']
+);
+
+if(! $maconnexion) {
+    throw new Exception(mysql_error());
+}
 
 if($mondegc_config['env'] !== 'production') {
     mysql_set_charset('utf8mb4', $maconnexion);
