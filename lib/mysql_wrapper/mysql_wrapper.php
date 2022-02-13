@@ -76,7 +76,7 @@ if (!extension_loaded('mysql') && !function_exists('mysql_connect')) {
 	{
 		global $__MYSQLI_WRAPPER_LINK;
 
-		$__MYSQLI_WRAPPER_LINK = mysqli_connect('p:' . $server, $username, $password);
+		$__MYSQLI_WRAPPER_LINK = mysqli_connect($server, $username, $password);
 		return $__MYSQLI_WRAPPER_LINK;
 	}
 
@@ -234,10 +234,10 @@ if (!extension_loaded('mysql') && !function_exists('mysql_connect')) {
 	}
 
 	/**
-	 * @param mysqli $mysqli
+	 * @param mysqli|bool $mysqli
 	 * @return string
 	 */
-	function mysql_error(mysqli $mysqli = null)
+	function mysql_error(mysqli|bool $mysqli = null)
 	{
 		return mysqli_error(getLinkIdentifier($mysqli));
 	}
