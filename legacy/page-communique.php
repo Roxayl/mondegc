@@ -338,5 +338,5 @@ $("a[data-toggle=modal]").click(function (e) {
 
 $('.popover-html').popover({ html : true});
 </script>
-</html>
 </body>
+</html>
