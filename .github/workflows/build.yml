@@ -1,0 +1,84 @@
+name: build
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+
+  run-tests:
+    name: "Run PHPUnit tests"
+    runs-on: ubuntu-20.04
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: mondegc_testing
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          extensions: gd, mbstring, mysqli, opcache, pdo, pdo_mysql
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Initialize environment
+        run: |
+          chmod -R 777 storage bootstrap/cache
+          php artisan monde:init-env && php artisan monde:init-testing
+
+      - name: Run migrations
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PASSWORD: root
+          DB_DATABASE: mondegc_testing
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+        run: php artisan migrate -v
+
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PASSWORD: root
+          DB_DATABASE: mondegc_testing
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+        run: php artisan test
+
+  deploy-ftp:
+    name: Deploy via FTP
+    runs-on: ubuntu-20.04
+    needs: run-tests
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')
+
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          extensions: gd, mbstring, mysqli, opcache, pdo, pdo_mysql
+      - uses: actions/checkout@v2
+
+      - name: Deploy to Production
+        uses: SamKirkland/FTP-Deploy-Action@4.2.0
+        with:
+          protocol: ftp
+          server: mgvx.ftp.infomaniak.com
+          port: 21
+          username: ${{ secrets.FTP_MONDEGC_USERNAME }}
+          password: ${{ secrets.FTP_MONDEGC_PASSWORD }}
+          local-dir: ./
+          server-dir: ./
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/lib/**
+          log-level: standard

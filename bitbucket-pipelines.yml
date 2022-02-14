@@ -8,60 +8,6 @@ image: php:8.0
 definitions:
   steps:
 
-    - step: &gitDiffAndDeploy
-        name: Git Diff and Deploy
-        deployment: production
-        script:
-          - apt-get update && apt-get install -y unzip git git-core
-          - LASTCOMMITHASH=`git rev-parse @`
-          - PREVIOUSCOMMITHASH=`git rev-parse @~`
-          - echo "Last commit is $LASTCOMMITHASH"
-          - echo "Previous commit is $PREVIOUSCOMMITHASH"
-          - git archive -o output.zip $LASTCOMMITHASH $(git diff --diff-filter=ACMRTUXB --name-only $PREVIOUSCOMMITHASH $LASTCOMMITHASH)
-          - find . -type f ! -iname "output.zip" -delete
-          - mkdir deploy && ls
-          - unzip output.zip -d deploy
-          - cp -R docs/* deploy/docs
-          - cd deploy && ls -R
-          - cd ..
-          - pipe: atlassian/ftp-deploy:0.3.5
-            variables:
-              USER: $FTP_MONDEGC_USERNAME
-              PASSWORD: $FTP_MONDEGC_PASSWORD
-              SERVER: $FTP_MONDEGC_HOST
-              REMOTE_PATH: '/'
-              LOCAL_PATH: "deploy"
-              DELETE_FLAG: 'false' # Attention, il ne faut pas supprimer les fichiers existants dans le FTP !
-              DEBUG: 'true'
-
-    - step: &buildAndTest
-        name: Build and Test
-        caches:
-          - composer
-        script:
-          - apt-get update && apt-get install -y unzip
-          - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-          - composer install --ignore-platform-reqs
-          - php artisan monde:init-env
-        # - php artisan monde:init-db
-        # - php artisan test
-          - php artisan scribe:generate
-        artifacts:
-          - vendor/**
-          - docs/**
-
-    - step: &mirrorWithGitHub
-        name: Mirror with GitHub
-        clone:
-          depth: full
-        script:
-          - apt-get update && apt-get install -y unzip git git-core
-          - rm -r legacy #
-          - git remote add sync git@github.com:Roxayl/mondegc.git
-          - git checkout master
-          - git pull
-          - git push sync --mirror
-
     - step: &pushLaravelCodeToGitHub
         name: Push Laravel Code to GitHub
         clone:
@@ -89,11 +35,4 @@ pipelines:
   branches:
 
     "{master,develop}":
-      - parallel:
-          - step: *mirrorWithGitHub
-          - step: *pushLaravelCodeToGitHub
-      - step: *buildAndTest
-      - step: *gitDiffAndDeploy
-
-    '*':
-      - step: *buildAndTest
+      - step: *pushLaravelCodeToGitHub
