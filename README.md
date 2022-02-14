@@ -1,5 +1,10 @@
 
-![Le Monde GC](https://generation-city.com/monde/assets/img/2019/logo-navbar.png)
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://generation-city.com/monde/assets/img/2019/logo-navbar.png" width="420" alt="Monde GC"></a></p>
+
+<p align="center">
+<a href="https://github.com/Roxayl/mondegc/actions"><img src="https://github.com/Roxayl/mondegc/actions/workflows/build.yml/badge.svg" alt="CI" /></a>
+<a href="https://discord.gg/qPSn8nsS2p"><img src="https://img.shields.io/discord/328496654514782209" alt="Discord" /></a>
+</p>
 
 Le Monde GC constitue l'application Web de référence du [Monde de Génération City](https://generation-city.com/monde/), 
 un monde virtuel reposant sur les jeux de construction de ville et le jeu de rôle entre nations.
@@ -55,8 +60,8 @@ Les sources du site sont gérées par Git, hébergées sur un certain nombre de 
 
 | Plateforme | Dépôt                                                               | Complet ? | Visibilité | Commentaires                             |
 | ---------- | ------------------------------------------------------------------- | --------- | ---------- | ---------------------------------------- |
-| Bitbucket  | [Roxayl/mondegc](https://bitbucket.org/Roxayl/mondegc/)             | Oui       | Privé      | Dépôt principal                          |
-| GitHub     | [Roxayl/mondegc](https://github.com/Roxayl/mondegc)                 | Oui       | Privé      | Miroir du dépôt principal, lecture seule |
+| GitHub     | [Roxayl/mondegc](https://github.com/Roxayl/mondegc)                 | Oui       | Privé      | Dépôt principal                          |
+| Bitbucket  | [Roxayl/mondegc](https://bitbucket.org/Roxayl/mondegc/)             | Oui       | Privé      | Miroir du dépôt principal, lecture seule |
 | GitHub     | [Roxayl/mondegc-laravel](https://github.com/Roxayl/mondegc-laravel) | **Non**   | Public     | Copie limitée du dépôt principal         |
 
 Notez que les sources du dépôt [Roxayl/mondegc-laravel](https://github.com/Roxayl/mondegc-laravel) sont incomplètes
