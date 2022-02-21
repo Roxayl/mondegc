@@ -2,48 +2,36 @@
 
 namespace Tests\Feature\Legacy;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-class VisitorAccessesIndexPageTest extends TestCase
+class VisitorAccessesLegacyPageTest extends AccessLegacyPage
 {
-    use RefreshDatabase;
-
-    /**
-     * Indicates whether the default seeder should run before each test.
-     *
-     * @var bool
-     */
-    protected $seed = true;
-
-    /**
-     * Définit les variables globales.
-     */
     public function __construct()
     {
         parent::__construct();
+    }
 
-        // Set global variables.
-        $_SERVER['HTTPS'] = 'off';
-        $_SERVER['SERVER_PORT'] = '80';
-        $_SERVER['HTTP_HOST'] = 'localhost';
-        $_SERVER['IP_ADDRESS'] = '192.168.1.1';
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
     }
 
     /**
      * @param string $page Page legacy à tester ({@see pages}).
      * @param int $assertStatus
      */
-    private function accessLegacyPage(string $page, int $assertStatus = 200): void
+    protected function accessLegacyPage(string $page, int $assertStatus = 200): void
     {
         $uri = '/' . str_replace('.', '/', $page) . '.php';
 
+        // Initialiser l'application legacy.
         $_GET['target'] = $page;
         $_SERVER['REQUEST_METHOD'] = 'GET';
         $_SERVER['QUERY_STRING'] = '';
 
+        // Accéder à la page legacy et vérifier la réponse.
         $response = $this->get($uri);
-
         $response->assertStatus($assertStatus);
     }
 
@@ -118,6 +106,26 @@ class VisitorAccessesIndexPageTest extends TestCase
     }
 
     /**
+     * Tester l'accès à la page du Comité Culture du site legacy.
+     *
+     * @return void
+     */
+    public function testAccessPatrimoinePage(): void
+    {
+        $this->accessLegacyPage('patrimoine');
+    }
+
+    /**
+     * Tester l'accès à la page du Comité Histoire du site legacy.
+     *
+     * @return void
+     */
+    public function testAccessHistoirePage(): void
+    {
+        $this->accessLegacyPage('histoire');
+    }
+
+    /**
      * Tester l'accès à une page non-existante, dont la requête doit être traitée par le controller legacy.
      *
      * @return void
@@ -125,5 +133,13 @@ class VisitorAccessesIndexPageTest extends TestCase
     public function testAccessNonExistingPage(): void
     {
         $this->accessLegacyPage('page-not-existing', 404);
+    }
+
+    /**
+     * @return void
+     */
+    public function tearDown(): void
+    {
+        parent::tearDown();
     }
 }
