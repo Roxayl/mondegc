@@ -12,7 +12,7 @@ class PatrimoineCategorized implements InfluencableEvent
 {
     use Dispatchable, SerializesModels;
 
-    public ?Patrimoine $patrimoine;
+    public Patrimoine $patrimoine;
 
     /**
      * Create a new event instance.
@@ -24,7 +24,7 @@ class PatrimoineCategorized implements InfluencableEvent
         $this->patrimoine = $patrimoine;
     }
 
-    public function getInfluencable() : Influencable
+    public function getInfluencable(): Influencable
     {
         return $this->patrimoine;
     }

@@ -46,6 +46,7 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Renvoie le préfixe de route, lorsque l'URL de base contient notamment un répertoire
      * (e.g. http://localhost/monde/).
+     *
      * @return string
      */
     public function getPrefix(): string
