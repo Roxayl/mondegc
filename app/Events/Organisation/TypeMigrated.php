@@ -10,7 +10,7 @@ class TypeMigrated
 {
     use Dispatchable, SerializesModels;
 
-    public ?Organisation $organisation;
+    public Organisation $organisation;
 
     /**
      * Create a new event instance.

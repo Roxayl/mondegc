@@ -93,20 +93,18 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
      */
     public function shouldRun(): bool
     {
-        $now = now();
-
         /** @var Carbon|null $lastSuccessfulExecution */
         $lastSuccessfulExecution = ResourceHistory::latest()->first()?->created_at;
 
         // On évite toute exécution si la précédente a moins de 7 jours.
-        if($lastSuccessfulExecution !== null && $lastSuccessfulExecution < $now->subDays(7)) {
+        if($lastSuccessfulExecution !== null && $lastSuccessfulExecution > now()->subDays(7)) {
             return false;
         }
 
         // On exécute seulement si nous sommes :
         //  - entre le 1er et le 2ème jour de chaque mois ; ou
         //  - entre le 14ème et 16ème jour de chaque mois.
-        if(! in_array($now->day, [1, 2, 14, 15, 16], true)) {
+        if(! in_array(now()->day, [1, 2, 14, 15, 16], true)) {
             return false;
         }
 

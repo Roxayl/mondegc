@@ -14,22 +14,24 @@ class DiscordServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind(/**
-         * @param $app
-         * @param array $parameters L'identifiant du webhook à utiliser.
-         * @return DiscordWebhookService
-         */ DiscordWebhookService::class, function($app, array $parameters) {
-            if(
-                (config('app.debug') && app()->environment() !== 'production') ||
-                empty($parameters))
-            {
-                $key = 'debug';
-                $webhookUrl = config("discord.webhookUrl.$key");
-            } else {
-                $webhookUrl = array_values($parameters)[0];
-            }
+        $this->app->bind(DiscordWebhookService::class,
+            /**
+             * @param $app
+             * @param array $parameters [0]: L'identifiant du webhook à utiliser.
+             * @return DiscordWebhookService
+             */
+            function($app, array $parameters) {
+                if(
+                    (config('app.debug') && app()->environment() !== 'production') ||
+                    empty($parameters))
+                {
+                    $key = 'debug';
+                    $webhookUrl = config("discord.webhookUrl.$key");
+                } else {
+                    $webhookUrl = array_values($parameters)[0];
+                }
 
-            return new DiscordWebhookService($webhookUrl);
-        });
+                return new DiscordWebhookService($webhookUrl);
+            });
     }
 }

@@ -12,7 +12,7 @@ class MapUpdated implements InfluencableEvent
 {
     use Dispatchable, SerializesModels;
 
-    public ?Pays $pays;
+    public Pays $pays;
 
     /**
      * Create a new event instance.
@@ -24,7 +24,7 @@ class MapUpdated implements InfluencableEvent
         $this->pays = $pays;
     }
 
-    public function getInfluencable() : Influencable
+    public function getInfluencable(): Influencable
     {
         return $this->pays->getMapManager();
     }

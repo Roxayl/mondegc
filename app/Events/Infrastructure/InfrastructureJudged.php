@@ -12,7 +12,7 @@ class InfrastructureJudged implements InfluencableEvent
 {
     use Dispatchable, SerializesModels;
 
-    public ?Infrastructure $infrastructure;
+    public Infrastructure $infrastructure;
 
     /**
      * Create a new event instance.

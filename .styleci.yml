@@ -3,11 +3,15 @@ php:
   disabled:
     - unused_use
   finder:
+    exclude:
+      - "legacy"
     not-name:
-      - index.php
-      - server.php
+      - "index.php"
+      - "server.php"
 js:
   finder:
+    exclude:
+      - "legacy"
     not-name:
-      - webpack.mix.js
+      - "webpack.mix.js"
 css: true
