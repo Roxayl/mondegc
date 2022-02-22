@@ -6,7 +6,7 @@ use App\Models\CustomUser;
 use GenCity\Monde;
 use Illuminate\Auth\AuthenticationException;
 
-class AuthenticatorService
+class AuthenticationService
 {
     public function __construct()
     {

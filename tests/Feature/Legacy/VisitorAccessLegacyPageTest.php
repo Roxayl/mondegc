@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Legacy;
 
-class VisitorAccessesLegacyPageTest extends AccessLegacyPage
+class VisitorAccessLegacyPageTest extends AccessLegacyPage
 {
     public function __construct()
     {
@@ -18,31 +18,13 @@ class VisitorAccessesLegacyPageTest extends AccessLegacyPage
     }
 
     /**
-     * @param string $page Page legacy à tester ({@see pages}).
-     * @param int $assertStatus
-     */
-    protected function accessLegacyPage(string $page, int $assertStatus = 200): void
-    {
-        $uri = '/' . str_replace('.', '/', $page) . '.php';
-
-        // Initialiser l'application legacy.
-        $_GET['target'] = $page;
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_SERVER['QUERY_STRING'] = '';
-
-        // Accéder à la page legacy et vérifier la réponse.
-        $response = $this->get($uri);
-        $response->assertStatus($assertStatus);
-    }
-
-    /**
      * Tester l'accès à la page /index.php du site legacy.
      *
      * @return void
      */
     public function testAccessIndexPage(): void
     {
-        $this->accessLegacyPage('index');
+        $this->assertAccessLegacyPage('index');
     }
 
     /**
@@ -52,7 +34,7 @@ class VisitorAccessesLegacyPageTest extends AccessLegacyPage
      */
     public function testAccessPageCartePage(): void
     {
-        $this->accessLegacyPage('Page-carte');
+        $this->assertAccessLegacyPage('Page-carte');
     }
 
     /**
@@ -62,7 +44,7 @@ class VisitorAccessesLegacyPageTest extends AccessLegacyPage
      */
     public function testAccessOcgcPage(): void
     {
-        $this->accessLegacyPage('OCGC');
+        $this->assertAccessLegacyPage('OCGC');
     }
 
     /**
@@ -72,7 +54,7 @@ class VisitorAccessesLegacyPageTest extends AccessLegacyPage
      */
     public function testAccessCommuniquesOcgcPage(): void
     {
-        $this->accessLegacyPage('communiques-ocgc');
+        $this->assertAccessLegacyPage('communiques-ocgc');
     }
 
     /**
@@ -82,7 +64,7 @@ class VisitorAccessesLegacyPageTest extends AccessLegacyPage
      */
     public function testAccessAssembleePage(): void
     {
-        $this->accessLegacyPage('assemblee');
+        $this->assertAccessLegacyPage('assemblee');
     }
 
     /**
@@ -92,7 +74,7 @@ class VisitorAccessesLegacyPageTest extends AccessLegacyPage
      */
     public function testAccessEconomiePage(): void
     {
-        $this->accessLegacyPage('economie');
+        $this->assertAccessLegacyPage('economie');
     }
 
     /**
@@ -102,7 +84,7 @@ class VisitorAccessesLegacyPageTest extends AccessLegacyPage
      */
     public function testAccessPolitiquePage(): void
     {
-        $this->accessLegacyPage('politique');
+        $this->assertAccessLegacyPage('politique');
     }
 
     /**
@@ -112,7 +94,7 @@ class VisitorAccessesLegacyPageTest extends AccessLegacyPage
      */
     public function testAccessPatrimoinePage(): void
     {
-        $this->accessLegacyPage('patrimoine');
+        $this->assertAccessLegacyPage('patrimoine');
     }
 
     /**
@@ -122,7 +104,7 @@ class VisitorAccessesLegacyPageTest extends AccessLegacyPage
      */
     public function testAccessHistoirePage(): void
     {
-        $this->accessLegacyPage('histoire');
+        $this->assertAccessLegacyPage('histoire');
     }
 
     /**
@@ -132,7 +114,7 @@ class VisitorAccessesLegacyPageTest extends AccessLegacyPage
      */
     public function testAccessNonExistingPage(): void
     {
-        $this->accessLegacyPage('page-not-existing', 404);
+        $this->assertAccessLegacyPage('page-not-existing', 404);
     }
 
     /**

@@ -3,10 +3,12 @@
 namespace Tests\Feature\Legacy;
 
 use App\Models\CustomUser;
-use App\Services\AuthenticatorService;
+use App\Services\AuthenticationService;
 
 class UserAccessLegacyPageTest extends AccessLegacyPage
 {
+    private ?CustomUser $user = null;
+
     public function __construct()
     {
         parent::__construct();
@@ -26,28 +28,11 @@ class UserAccessLegacyPageTest extends AccessLegacyPage
 
         // Se connecter avec le premier utilisateur, administrateur.
         require_once(base_path('legacy/php/init/legacy_init.php'));
-        $user = CustomUser::first();
-        $this->actingAs($user);
-        $authService = new AuthenticatorService();
-        $authService->login($user);
-    }
-
-    /**
-     * @param string $page Page legacy à tester en tant qu'utilisateur authentifié.
-     * @param int $assertStatus
-     */
-    protected function accessLegacyPageLogged(string $page, int $assertStatus = 200): void
-    {
-        $uri = '/' . str_replace('.', '/', $page) . '.php';
-
-        // Initialiser l'application legacy.
-        $_GET['target'] = $page;
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_SERVER['QUERY_STRING'] = '';
-
-        // Accéder à la page legacy et vérifier la réponse.
-        $response = $this->get($uri);
-        $response->assertStatus($assertStatus);
+        $this->user = CustomUser::first();
+        $this->assertNotNull($this->user);
+        $this->actingAs($this->user);
+        $authService = new AuthenticationService();
+        $authService->login($this->user);
     }
 
     /**
@@ -57,7 +42,8 @@ class UserAccessLegacyPageTest extends AccessLegacyPage
      */
     public function testAccessIndexPage(): void
     {
-        $this->accessLegacyPageLogged('index');
+        $this->assertAuthenticated();
+        $this->assertAccessLegacyPage('index');
     }
 
     /**
@@ -67,7 +53,8 @@ class UserAccessLegacyPageTest extends AccessLegacyPage
      */
     public function testAccessDashboardPage(): void
     {
-        $this->accessLegacyPageLogged('dashboard');
+        $this->assertAuthenticated();
+        $this->assertAccessLegacyPage('dashboard');
     }
 
     /**
@@ -77,7 +64,24 @@ class UserAccessLegacyPageTest extends AccessLegacyPage
      */
     public function testAccessOcgcProposalCreatePage(): void
     {
-        $this->accessLegacyPageLogged('back.ocgc_proposal_create');
+        $this->assertAuthenticated();
+        $this->assertAccessLegacyPage('back.ocgc_proposal_create');
+    }
+
+    /**
+     * Accède à la page de gestion de pays en tant qu'utilisateur authentifié.
+     */
+    public function testPagePaysBackPage(): void
+    {
+        $pays = $this->user->pays->first();
+
+        $this->assertAuthenticated();
+        $this->markTestIncomplete("Ce test ne fonctionne pas pour le moment.");
+
+        $this->assertAccessLegacyPage(
+            page: 'back.page_pays_back',
+            query: ['paysID' => $pays->getKey()]
+        );
     }
 
     /**

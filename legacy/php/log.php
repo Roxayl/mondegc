@@ -1,6 +1,6 @@
 <?php
 
-use App\Services\AuthenticatorService;
+use App\Services\AuthenticationService;
 use Illuminate\Session\TokenMismatchException;
 
 // *** Recherche de sessions.
@@ -28,14 +28,14 @@ if ($clefSession != null and $clefSession != "" and !isset($_SESSION['login_user
 
             $Result5 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
-            $authService = new AuthenticatorService();
+            $authService = new AuthenticationService();
             $authService->logout();
         }
     }
 
     // ** Si utilisateur trouve **
     if ($loginFoundUser) {
-        $authService = new AuthenticatorService();
+        $authService = new AuthenticationService();
         $authService->loginUsingId($row_Session_user['ch_use_id']);
 
         // Redirige pour "actualiser" le statut de connexion dans l'application Laravel.
@@ -101,7 +101,7 @@ if (isset($_POST['identifiant'])) {
 
         $Result2 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
 
-        $authService = new AuthenticatorService();
+        $authService = new AuthenticationService();
         $authService->loginUsingId($row_LoginRS['ch_use_id']);
 
         getErrorMessage('success',
@@ -159,7 +159,7 @@ if (auth()->check() && isset($_GET['doLogout']) && ($_GET['doLogout'] === "true"
         $Result5 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
     }
 
-    $authService = new AuthenticatorService();
+    $authService = new AuthenticationService();
     $authService->logout();
 
     $logoutGoTo = legacyPage();

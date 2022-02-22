@@ -1,6 +1,6 @@
 <?php
 
-use App\Services\AuthenticatorService;
+use App\Services\AuthenticationService;
 use Illuminate\Session\TokenMismatchException;
 
 $editFormAction = DEF_URI_PATH.$mondegc_config['front-controller']['uri'].'.php';
@@ -31,7 +31,7 @@ if ($clefSession != null and $clefSession != "") {
             $Result5 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
         }
 
-        $authService = new AuthenticatorService();
+        $authService = new AuthenticationService();
         $authService->logout();
 
         $loginFoundUser = null;
@@ -40,7 +40,7 @@ if ($clefSession != null and $clefSession != "") {
 
 // ** Si utilisateur trouve ** 
     if ($loginFoundUser) {
-        $authService = new AuthenticatorService();
+        $authService = new AuthenticationService();
         $authService->loginUsingId($row_Session_user['ch_use_id']);
     }
 }
@@ -78,7 +78,7 @@ if (auth()->check() && isset($_GET['doLogout']) && ($_GET['doLogout'] === "true"
 
     $Result5 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
 
-    $authService = new AuthenticatorService();
+    $authService = new AuthenticationService();
     $authService->logout();
 
     $logoutGoTo = legacyPage();
