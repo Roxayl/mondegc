@@ -30,7 +30,7 @@ defined("DEF_ROOTPATH") or define("DEF_ROOTPATH",
     base_path() . DIRECTORY_SEPARATOR);
 defined("DEF_LEGACYROOTPATH") or define("DEF_LEGACYROOTPATH",
     DEF_ROOTPATH . 'legacy' . DIRECTORY_SEPARATOR);
-define("DEF_URI_PATH",
+defined("DEF_URI_PATH") or define("DEF_URI_PATH",
         ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443
             ? 'https' : 'http' )
         . '://' . $_SERVER['HTTP_HOST'] . '/'
@@ -48,7 +48,7 @@ if($mondegc_config['hide_errors'] === true) {
  *************************/
 
 // Fonctions diverses
-require(DEF_LEGACYROOTPATH . 'php/init/functions.php');
+require_once(DEF_LEGACYROOTPATH . 'php/init/functions.php');
 
 // Librairie CSRF Magic
 if($mondegc_config['enable_csrf_protection'] === true) {

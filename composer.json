@@ -58,6 +58,7 @@
         "barryvdh/laravel-debugbar": "^3.6",
         "barryvdh/laravel-ide-helper": "2.9.1",
         "beyondcode/laravel-dump-server": "^1.0",
+        "brianium/paratest": "^6.4",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "kitloong/laravel-migrations-generator": "^4.4",

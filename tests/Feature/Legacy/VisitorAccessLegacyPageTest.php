@@ -2,49 +2,19 @@
 
 namespace Tests\Feature\Legacy;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-class VisitorAccessesIndexPageTest extends TestCase
+class VisitorAccessLegacyPageTest extends AccessLegacyPage
 {
-    use RefreshDatabase;
-
-    /**
-     * Indicates whether the default seeder should run before each test.
-     *
-     * @var bool
-     */
-    protected $seed = true;
-
-    /**
-     * Définit les variables globales.
-     */
     public function __construct()
     {
         parent::__construct();
-
-        // Set global variables.
-        $_SERVER['HTTPS'] = 'off';
-        $_SERVER['SERVER_PORT'] = '80';
-        $_SERVER['HTTP_HOST'] = 'localhost';
-        $_SERVER['IP_ADDRESS'] = '192.168.1.1';
     }
 
     /**
-     * @param string $page Page legacy à tester ({@see pages}).
-     * @param int $assertStatus
+     * @return void
      */
-    private function accessLegacyPage(string $page, int $assertStatus = 200): void
+    public function setUp(): void
     {
-        $uri = '/' . str_replace('.', '/', $page) . '.php';
-
-        $_GET['target'] = $page;
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_SERVER['QUERY_STRING'] = '';
-
-        $response = $this->get($uri);
-
-        $response->assertStatus($assertStatus);
+        parent::setUp();
     }
 
     /**
@@ -54,7 +24,7 @@ class VisitorAccessesIndexPageTest extends TestCase
      */
     public function testAccessIndexPage(): void
     {
-        $this->accessLegacyPage('index');
+        $this->assertAccessLegacyPage('index');
     }
 
     /**
@@ -64,7 +34,7 @@ class VisitorAccessesIndexPageTest extends TestCase
      */
     public function testAccessPageCartePage(): void
     {
-        $this->accessLegacyPage('Page-carte');
+        $this->assertAccessLegacyPage('Page-carte');
     }
 
     /**
@@ -74,7 +44,7 @@ class VisitorAccessesIndexPageTest extends TestCase
      */
     public function testAccessOcgcPage(): void
     {
-        $this->accessLegacyPage('OCGC');
+        $this->assertAccessLegacyPage('OCGC');
     }
 
     /**
@@ -84,7 +54,7 @@ class VisitorAccessesIndexPageTest extends TestCase
      */
     public function testAccessCommuniquesOcgcPage(): void
     {
-        $this->accessLegacyPage('communiques-ocgc');
+        $this->assertAccessLegacyPage('communiques-ocgc');
     }
 
     /**
@@ -94,7 +64,7 @@ class VisitorAccessesIndexPageTest extends TestCase
      */
     public function testAccessAssembleePage(): void
     {
-        $this->accessLegacyPage('assemblee');
+        $this->assertAccessLegacyPage('assemblee');
     }
 
     /**
@@ -104,7 +74,7 @@ class VisitorAccessesIndexPageTest extends TestCase
      */
     public function testAccessEconomiePage(): void
     {
-        $this->accessLegacyPage('economie');
+        $this->assertAccessLegacyPage('economie');
     }
 
     /**
@@ -114,7 +84,27 @@ class VisitorAccessesIndexPageTest extends TestCase
      */
     public function testAccessPolitiquePage(): void
     {
-        $this->accessLegacyPage('politique');
+        $this->assertAccessLegacyPage('politique');
+    }
+
+    /**
+     * Tester l'accès à la page du Comité Culture du site legacy.
+     *
+     * @return void
+     */
+    public function testAccessPatrimoinePage(): void
+    {
+        $this->assertAccessLegacyPage('patrimoine');
+    }
+
+    /**
+     * Tester l'accès à la page du Comité Histoire du site legacy.
+     *
+     * @return void
+     */
+    public function testAccessHistoirePage(): void
+    {
+        $this->assertAccessLegacyPage('histoire');
     }
 
     /**
@@ -124,6 +114,14 @@ class VisitorAccessesIndexPageTest extends TestCase
      */
     public function testAccessNonExistingPage(): void
     {
-        $this->accessLegacyPage('page-not-existing', 404);
+        $this->assertAccessLegacyPage('page-not-existing', 404);
+    }
+
+    /**
+     * @return void
+     */
+    public function tearDown(): void
+    {
+        parent::tearDown();
     }
 }
