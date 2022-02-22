@@ -37,6 +37,9 @@ if ($clefSession != null and $clefSession != "" and !isset($_SESSION['login_user
     if ($loginFoundUser) {
         $authService = new AuthenticatorService();
         $authService->loginUsingId($row_Session_user['ch_use_id']);
+
+        // Redirige pour "actualiser" le statut de connexion dans l'application Laravel.
+        redirect(url()->full());
     }
 }
 
