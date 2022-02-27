@@ -15,16 +15,13 @@ class SynchronizeAuthentication
      */
     public function handle($request, Closure $next)
     {
-
-        if(session()->has('userLegacyId') && auth()->guest()) {
+        if (session()->has('userLegacyId') && auth()->guest()) {
             $userLegacyId = session('userLegacyId');
             auth()->loginUsingId($userLegacyId);
-        }
-        else if(!session()->has('userLegacyId')) {
+        } elseif (!session()->has('userLegacyId')) {
             auth()->logout();
         }
 
         return $next($request);
-
     }
 }

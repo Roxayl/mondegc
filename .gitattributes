@@ -1,12 +1,14 @@
 * text=auto
 public/colorpicker/** linguist-vendored
 public/datepicker/** linguist-vendored
-public/js/*.js linguist-vendored
-assets/*.css linguist-vendored
-assets/*.js linguist-vendored
+public/js/** linguist-vendored
+public/SpryAssets/** linguist-vendored
+assets/**/*.css linguist-vendored
+assets/**/*.js linguist-vendored
 assets/css/GenerationCity.css linguist-detectable
 assets/js/application.js linguist-detectable
 assets/js/Editeur.js linguist-detectable
 CHANGELOG.md export-ignore
+docs/** linguist-documentation
 README.md linguist-documentation
 LICENSE.md linguist-documentation

@@ -50,13 +50,19 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['monthly'],
             'ignore_exceptions' => false,
         ],
 
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
+        'monthly' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/laravel-' . date('Y-m') . '.log'),
             'level' => env('LOG_LEVEL', 'debug'),
         ],
 
