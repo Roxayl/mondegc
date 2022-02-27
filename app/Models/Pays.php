@@ -91,6 +91,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property-read int|null $users_count
  * @property-read Collection|\App\Models\Ville[] $villes
  * @property-read int|null $villes_count
+ * @property-read array<string> $resources
  * @method static \Database\Factories\PaysFactory factory(...$parameters)
  * @method static Builder|Pays newModelQuery()
  * @method static Builder|Pays newQuery()

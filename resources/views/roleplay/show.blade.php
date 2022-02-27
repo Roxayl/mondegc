@@ -9,6 +9,26 @@
 
 @section('styles')
     <link href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" rel="stylesheet">
+
+    <style>
+        .corps-page, .bs-docs-sidebar {
+            position: relative;
+            z-index: 140;
+        }
+        .corps-page {
+            margin-top: -80px;
+        }
+        @if($roleplay->banner)
+        .jumbotron {
+            background-image: url('{{ $roleplay->banner }}');
+            background-position: 0 -240px;
+            background-attachment: fixed;
+            height: 360px;
+            z-index: 120;
+            position: relative;
+        }
+        @endif
+    </style>
 @endsection
 
 @section('scripts')
@@ -17,16 +37,14 @@
     <script type="text/javascript" src="../assets/js/Editeur.js"></script>
 @endsection
 
-@section('body_attributes') data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" @endsection
+@section('body_attributes') data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="200" @endsection
 
 @section('content')
 
     @parent
 
     <header class="jumbotron subhead anchor" id="header">
-        <div class="container">
-            <h1>{{ $roleplay->name }}</h1>
-        </div>
+        <div class="container"></div>
     </header>
 
     <div class="container">
@@ -67,8 +85,11 @@
 
             <div class="clearfix"></div>
 
+            {!! $helperService::displayAlert() !!}
+
             <div class="well">
-                {!! $helperService::displayAlert() !!}
+                <h1>{{ $roleplay->name }}</h1>
+                <p>{{ $roleplay->description }}</p>
             </div>
 
             <div class="clearfix"></div>

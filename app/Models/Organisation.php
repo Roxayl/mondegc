@@ -68,6 +68,12 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @method static OrganisationFactory factory(...$parameters)
  * @method static Builder|Organisation visible()
  * @mixin Model
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read array<string> $resources
+ * @method static \Illuminate\Database\Query\Builder|Organisation onlyTrashed()
+ * @method static Builder|Organisation whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Organisation withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Organisation withoutTrashed()
  */
 class Organisation extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
