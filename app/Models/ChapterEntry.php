@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Database\Factories\ChapterEntryFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
@@ -28,10 +30,13 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ChapterEntry whereMediaData($value)
  * @method static Builder|ChapterEntry whereMediaType($value)
  * @method static Builder|ChapterEntry whereUpdatedAt($value)
+ * @method static ChapterEntryFactory factory(...$parameters)
  * @mixin \Eloquent
  */
 class ChapterEntry extends Model
 {
+    use HasFactory;
+
     protected $table = 'chapter_entries';
 
     protected $casts = [

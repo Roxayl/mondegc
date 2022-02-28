@@ -37,6 +37,7 @@ use Illuminate\Support\Str;
  * @property CustomUser $userCreator
  * @property Collection|ChapterResourceable[] $resourceables
  * @property Collection|ChapterEntry[] $entries
+ * @property-write mixed $reason
  * @property-read int|null $resourceables_count
  * @property-read int|null $entries_count
  * @property-read Collection|Version[] $versions

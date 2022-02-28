@@ -30,7 +30,8 @@ class RoleplayFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->eventName(),
+            'description' => $this->faker->text(),
             'starting_date' => now(),
             'ending_date' => null,
         ];

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Chapter;
+use App\Models\ChapterEntry;
 use App\Models\ChapterResourceable;
 use App\Models\CustomUser;
 use App\Models\Organisation;
@@ -67,6 +68,25 @@ class RoleplaySeeder extends Seeder
                                         => Ville::inRandomOrder()->first(),
                                     ]),
                             'resourceables'
+                        )
+                        ->has(
+                            ChapterEntry::factory()
+                                ->state(function(array $attributes, Chapter $chapter) {
+                                    return ['chapter_id' => $chapter->id];
+                                })
+                                ->count(rand(0, 3))
+                                ->sequence(
+                                    [
+                                        'media_type' => null,
+                                        'media_data' => null,
+                                    ], [
+                                        'media_type' => 'squirrel.squit',
+                                        'media_data' => '25000'
+                                    ], [
+                                        'media_type' => 'forum.post',
+                                        'media_data' => '30000'
+                                    ]),
+                            'entries'
                         ),
                     'chapters')
                 ->create([
