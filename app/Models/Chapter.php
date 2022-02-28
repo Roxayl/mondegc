@@ -118,7 +118,7 @@ class Chapter extends Model
      */
     public function entries(): HasMany
     {
-        return $this->hasMany(ChapterEntry::class);
+        return $this->hasMany(ChapterEntry::class)->orderByDesc('created_at');
     }
 
     /**

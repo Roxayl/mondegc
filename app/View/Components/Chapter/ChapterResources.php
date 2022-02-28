@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Roleplay;
+namespace App\View\Components\Chapter;
 
 use App\Models\Chapter;
 use App\View\Components\BaseComponent;
@@ -20,6 +20,6 @@ class ChapterResources extends BaseComponent
      */
     public function render(): View
     {
-        return view('roleplay.components.chapter-resources');
+        return view('chapter.components.resources');
     }
 }

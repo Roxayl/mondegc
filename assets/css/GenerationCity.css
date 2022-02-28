@@ -3355,6 +3355,25 @@ Tablet COLLAPSE
 }
 
 
+/* Chapter entries */
+.chapter-entry {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border-bottom: 3px solid #00a2ff;
+    transition: border-width 0.2s linear, padding-bottom 0.2s linear, box-shadow 0.3s linear;
+}
+.chapter-entry blockquote {
+    margin-top: 12px;
+    margin-bottom: -5px;
+}
+.chapter-entry:hover {
+    border-width: 6px;
+    box-shadow: #989898 2px 2px 10px;
+    padding-bottom: 7px;
+}
+
+
 /* text/html diff */
 
 .Differences {

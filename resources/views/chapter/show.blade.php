@@ -46,7 +46,11 @@
     </div>
 
     <div class="well">
-        <x-roleplay.chapter-resources :chapter="$chapter" />
+        <x-chapter.chapter-entries :chapter="$chapter" />
+    </div>
+
+    <div class="well">
+        <x-chapter.chapter-resources :chapter="$chapter" />
     </div>
 
 </div>

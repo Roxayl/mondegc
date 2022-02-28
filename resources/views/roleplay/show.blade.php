@@ -105,7 +105,7 @@
             <x-roleplay.organizers :roleplay="$roleplay" />
 
             @foreach($chapters as $chapter)
-                <x-roleplay.chapter :chapter="$chapter"/>
+                <x-chapter.chapter :chapter="$chapter"/>
             @endforeach
 
             @can('createChapters', $roleplay)

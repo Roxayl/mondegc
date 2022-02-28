@@ -140,7 +140,7 @@ class RoleplayController extends Controller
     {
         $this->authorize('display', Roleplay::class);
 
-        $chapters = $roleplay->chapters()->orderBy('order')->get();
+        $chapters = $roleplay->chapters()->orderByDesc('order')->get();
 
         return view('roleplay.show', compact('roleplay', 'chapters'));
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Roleplay;
+namespace App\View\Components\Chapter;
 
 use App\Models\Chapter as ChapterModel;
 use App\View\Components\BaseComponent;
@@ -20,7 +20,7 @@ class Chapter extends BaseComponent
      */
     public function render(): View
     {
-        return view('roleplay.components.chapter', [
+        return view('chapter.show', [
             'chapter' => $this->chapter,
         ]);
     }

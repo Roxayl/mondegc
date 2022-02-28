@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\View\Components;
+use App\View\Components\ChapterEntry\BaseMediaEntry;
 use Database\Factories\ChapterEntryFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,17 +42,68 @@ class ChapterEntry extends Model
     protected $table = 'chapter_entries';
 
     protected $casts = [
-        'chapter_id' => 'int'
+        'chapter_id' => 'int',
+        'media_data' => 'array',
     ];
 
     protected $fillable = [
         'content',
         'media_type',
-        'media_data'
+        'media_data',
     ];
 
+    /**
+     * @var array<string, string>
+     */
+    protected array $componentMorphMap = [
+        'squirrel.squit' => Components\ChapterEntry\SquirrelSquit::class,
+        'forum.post' => Components\ChapterEntry\ForumPost::class,
+    ];
+
+    /**
+     * @return BelongsTo
+     */
     public function chapter(): BelongsTo
     {
         return $this->belongsTo(Chapter::class);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getComponentMorphMap(): array
+    {
+        return $this->componentMorphMap;
+    }
+
+    /**
+     * @return BaseMediaEntry|null
+     */
+    public function mediaViewComponent(): ?BaseMediaEntry
+    {
+        $mediaType = $this->media_type;
+
+        $componentMorphMap = $this->getComponentMorphMap();
+        if(! array_key_exists($mediaType, $componentMorphMap)) {
+            return null;
+        }
+
+        $className = $componentMorphMap[$mediaType];
+        return new $className($this);
+    }
+
+    /**
+     * @param array<string, array> $parameters
+     */
+    public function generateMediaData(array $parameters = []): void
+    {
+        $mediaComponent = $this->mediaViewComponent();
+
+        if($mediaComponent === null) {
+            $this->media_type = null;
+            $this->media_data = null;
+        } else {
+            $this->media_data = $mediaComponent->generateData($parameters);
+        }
     }
 }
