@@ -15,13 +15,14 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'Model\Model::class' => Policies\ModelPolicy::class,
+        Models\ChapterEntry::class => Policies\ChapterEntryPolicy::class,
+        Models\Chapter::class => Policies\ChapterPolicy::class,
         Models\Infrastructure::class => Policies\InfrastructurePolicy::class,
         Models\Organisation::class => Policies\OrganisationPolicy::class,
         Models\OrganisationMember::class => Policies\OrganisationMemberPolicy::class,
         Models\Patrimoine::class => Policies\PatrimoinePolicy::class,
         Models\Pays::class => Policies\PaysPolicy::class,
         Models\Roleplay::class => Policies\RoleplayPolicy::class,
-        Models\Chapter::class => Policies\ChapterPolicy::class,
         Models\Ville::class => Policies\VillePolicy::class,
     ];
 
@@ -33,7 +34,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
     }
 }

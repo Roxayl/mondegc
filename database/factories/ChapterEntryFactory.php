@@ -19,10 +19,20 @@ class ChapterEntryFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            'content' => $this->faker->text()
+            'content' => $this->faker->text(),
+            'media_type' => $this->faker->chapterEntryMediaType(),
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (ChapterEntry $entry) {
+            if($entry->media_type !== null) {
+                $entry->media_data = $this->faker->chapterEntryMediaData($entry->media_type);
+            }
+        });
     }
 }

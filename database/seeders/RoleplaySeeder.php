@@ -10,11 +10,19 @@ use App\Models\Organisation;
 use App\Models\Pays;
 use App\Models\Roleplay;
 use App\Models\Ville;
+use Faker\Generator;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class RoleplaySeeder extends Seeder
 {
+    private Generator $faker;
+
+    public function __construct(Generator $faker)
+    {
+        $this->faker = $faker;
+    }
+
     /**
      * Run the database seeds.
      *
@@ -81,10 +89,10 @@ class RoleplaySeeder extends Seeder
                                         'media_data' => null,
                                     ], [
                                         'media_type' => 'squirrel.squit',
-                                        'media_data' => '25000'
+                                        'media_data' => $this->faker->chapterEntryMediaData('squirrel.squit'),
                                     ], [
                                         'media_type' => 'forum.post',
-                                        'media_data' => '30000'
+                                        'media_data' => $this->faker->chapterEntryMediaData('forum.post'),
                                     ]),
                             'entries'
                         ),

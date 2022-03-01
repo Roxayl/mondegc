@@ -55,7 +55,7 @@ class ChapterEntry extends Model
     /**
      * @var array<string, string>
      */
-    protected array $componentMorphMap = [
+    protected static array $componentMorphMap = [
         'squirrel.squit' => Components\ChapterEntry\SquirrelSquit::class,
         'forum.post' => Components\ChapterEntry\ForumPost::class,
     ];
@@ -71,9 +71,9 @@ class ChapterEntry extends Model
     /**
      * @return array<string, string>
      */
-    public function getComponentMorphMap(): array
+    public static function getComponentMorphMap(): array
     {
-        return $this->componentMorphMap;
+        return self::$componentMorphMap;
     }
 
     /**
@@ -83,7 +83,7 @@ class ChapterEntry extends Model
     {
         $mediaType = $this->media_type;
 
-        $componentMorphMap = $this->getComponentMorphMap();
+        $componentMorphMap = self::getComponentMorphMap();
         if(! array_key_exists($mediaType, $componentMorphMap)) {
             return null;
         }

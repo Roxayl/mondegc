@@ -11,7 +11,7 @@ class ForumPost extends BaseMediaEntry
      */
     public function render(): View
     {
-        return view('chapter-entry.forum-post', ['entry' => $this->entry]);
+        return view('chapter-entry.media.forum-post', ['entry' => $this->entry]);
     }
 
     /**

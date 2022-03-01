@@ -11,7 +11,7 @@ class SquirrelSquit extends BaseMediaEntry
      */
     public function render(): View
     {
-        return view('chapter-entry.squirrel-squit', ['entry' => $this->entry]);
+        return view('chapter-entry.media.squirrel-squit', ['entry' => $this->entry]);
     }
 
     /**
