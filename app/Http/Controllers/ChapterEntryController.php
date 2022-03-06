@@ -21,7 +21,25 @@ class ChapterEntryController extends Controller
     {
         $this->authorize('create', ChapterEntry::class);
 
-        $blade = '<x-chapter-entry.create :chapter="$chapter" />';
+        $blade = '<x-chapter-entry.create-chapter-entry :chapter="$chapter" />';
+
+        $html = $stringBlade->render(
+            $blade, compact('chapter')
+        );
+
+        return response($html);
+    }
+
+    /**
+     * @param Chapter $chapter
+     * @param StringBladeService $stringBlade
+     * @return Response
+     */
+    public function createButton(Chapter $chapter, StringBladeService $stringBlade): Response
+    {
+        $this->authorize('create', ChapterEntry::class);
+
+        $blade = '<x-chapter-entry.create-button :chapter="$chapter" />';
 
         $html = $stringBlade->render(
             $blade, compact('chapter')

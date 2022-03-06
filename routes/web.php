@@ -170,9 +170,11 @@ Route::resource('chapter', 'ChapterController')->except(['create', 'store']);
 | ChapterEntry
 |--------------------------------------------------------------------------
 */
-Route::get('chapter-entry/create/{chapter}', [Controllers\ChapterController::class, 'create'])
+Route::get('chapter-entry/create/{chapter}', [Controllers\ChapterEntryController::class, 'create'])
     ->name('chapter-entry.create');
-Route::post('chapter-entry/{chapter}', [Controllers\ChapterController::class, 'store'])
+Route::get('chapter-entry/create-button/{chapter}', [Controllers\ChapterEntryController::class, 'createButton'])
+    ->name('chapter-entry.create-button');
+Route::post('chapter-entry/{chapter}', [Controllers\ChapterEntryController::class, 'store'])
     ->name('chapter-entry.store');
 Route::resource('chapter-entry', 'ChapterEntryController')->except(['create', 'store']);
 

@@ -35,6 +35,49 @@
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript" src="../assets/js/Editeur.js"></script>
+
+    <script type="text/javascript" >
+        /**** Roleplay ****/
+
+        (function($, document, window) {
+
+            let addContainerSelector = '.chapter-entry-media-container';
+
+            let parentSelector = '.chapter-entry-add-container';
+
+            let removeMedia = function($parent) {
+                $parent.find('input[type=text]').val('');
+                $parent.find('input[name=media_type][value="none"]').prop('checked', true);
+            };
+
+            $(document).on('click', '.chapter-entry-media-trigger', function(ev) {
+                ev.preventDefault();
+
+                let $parent = $(ev.target).closest(parentSelector);
+
+                let $container = $parent.find(addContainerSelector);
+
+                if($container.is(':visible')) {
+                    removeMedia($parent);
+                    $container.hide();
+                } else {
+                    $container.show();
+                }
+            });
+
+            $(document).on('change', 'input[name=media_type]', function(ev) {
+                let $parent = $(ev.target).closest(parentSelector);
+
+                let value = $parent.find('input[name=media_type]:checked').val();
+
+                console.log('selected value:', value);
+
+                $parent.find('.media-parameters-container').hide();
+                $parent.find('.media-parameters-container[data-media-type="' + value + '"]').show();
+            });
+
+        })(jQuery, document, window);
+    </script>
 @endsection
 
 @section('body_attributes') data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="200" @endsection
