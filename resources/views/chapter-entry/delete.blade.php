@@ -7,7 +7,7 @@
 
 @section('modal_body')
 
-    Voulez-vous vraiment supprimer cette entrée du chapitre publié par {{ $entry->roleplayable->getName() }} ?
+    Voulez-vous vraiment supprimer cette entrée du chapitre publiée par {{ $entry->roleplayable?->getName() }} ?
     <strong>Cette action est irréversible !</strong>
 
 @endsection

@@ -261,11 +261,15 @@ class CustomUser extends Authenticatable
 
     /**
      * Détermine si l'utilisateur possède un roleplayable donné.
-     * @param  Roleplayable  $roleplayable
+     * @param  Roleplayable|null  $roleplayable
      * @return bool
      */
-    public function hasRoleplayable(Roleplayable $roleplayable): bool
+    public function hasRoleplayable(?Roleplayable $roleplayable): bool
     {
+        if($roleplayable === null) {
+            return false;
+        }
+
         foreach($this->roleplayables() as $userRoleplayable) {
             if($userRoleplayable::class === $roleplayable::class
                && $userRoleplayable->getKey() === $roleplayable->getKey())

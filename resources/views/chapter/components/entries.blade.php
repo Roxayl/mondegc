@@ -25,7 +25,11 @@
                 @endcan
 
                 <small class="mx-0 mt-1 mb-3 p-0" style="display: block;">
-                    <a href="{{ $entry->roleplayable->accessorUrl() }}">{{ $entry->roleplayable->getName() }}</a>
+                    @if($entry->roleplayable !== null)
+                        <a href="{{ $entry->roleplayable->accessorUrl() }}">{{ $entry->roleplayable->getName() }}</a>
+                    @else
+                        <i>Auteur inconnu.</i>
+                    @endif
                 </small>
 
                 {!! $entry->content !!}

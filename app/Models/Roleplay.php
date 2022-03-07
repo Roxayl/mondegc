@@ -80,6 +80,17 @@ class Roleplay extends Model
     ];
 
     /**
+     * @var bool Détermine si {@see hasOrganizerAmong()} utilise le système de mémoïsation.
+     *           Si ce paramètre est mis à <code>false</code>, {@see $roleplayableHashes} reste <code>null</code>.
+     */
+    protected static bool $memoizeRoleplayables = true;
+
+    /**
+     * @var Support\Collection<string, bool>|null
+     */
+    protected static ?Support\Collection $roleplayableHashes = null;
+
+    /**
      * @return BelongsTo
      */
     public function owner(): BelongsTo
@@ -199,7 +210,22 @@ class Roleplay extends Model
                 }
             });
 
-        return $query->get()->isNotEmpty();
+        if(self::$memoizeRoleplayables) {
+            $hash = sha1($query->toSql());
+
+            if(self::$roleplayableHashes === null) {
+                self::$roleplayableHashes = collect();
+            }
+
+            if(! self::$roleplayableHashes->has($hash)) {
+                $hasOrganizer = $query->get()->isNotEmpty();
+                self::$roleplayableHashes->put($hash, $hasOrganizer);
+            }
+
+            return self::$roleplayableHashes->get($hash);
+        } else {
+            return $query->get()->isNotEmpty();
+        }
     }
 
     /**
