@@ -176,7 +176,12 @@ Route::get('chapter-entry/create-button/{chapter}', [Controllers\ChapterEntryCon
     ->name('chapter-entry.create-button');
 Route::post('chapter-entry/{chapter}', [Controllers\ChapterEntryController::class, 'store'])
     ->name('chapter-entry.store');
-Route::resource('chapter-entry', 'ChapterEntryController')->except(['create', 'store']);
+Route::get('chapter-entry/delete/{entry}', [Controllers\ChapterEntryController::class, 'delete'])
+    ->name('chapter-entry.delete');
+Route::delete('chapter-entry/{entry}', [Controllers\ChapterEntryController::class, 'destroy'])
+    ->name('chapter-entry.destroy');
+Route::resource('chapter-entry', 'ChapterEntryController')
+    ->except(['show', 'create', 'store', 'destroy']);
 
 /*
 |--------------------------------------------------------------------------

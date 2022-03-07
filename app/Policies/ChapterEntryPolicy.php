@@ -31,6 +31,8 @@ class ChapterEntryPolicy
      */
     public function manage(CustomUser $user, ChapterEntry $entry): bool
     {
-        return Gate::allows('manage', $entry->chapter);
+        return $user->hasMinPermission('ocgc')
+            || $user->hasRoleplayable($entry->roleplayable)
+            || Gate::allows('manage', $entry->chapter);
     }
 }

@@ -113,6 +113,11 @@ class CustomUser extends Authenticatable
     public const JUGE = 15;
     public const MEMBER = 10;
 
+    /**
+     * @var Collection|null Liste des roleplayables mis en cache.
+     */
+    private ?Collection $cachedRoleplayables = null;
+
     public function infrastructures(): HasMany
     {
         return $this->hasMany(Infrastructure::class, 'user_creator');
@@ -243,12 +248,32 @@ class CustomUser extends Authenticatable
     {
         $methods = ['getPays', 'organisations', 'villes'];
 
-        $roleplayables = collect();
-        foreach($methods as $method) {
-            $roleplayables = $roleplayables->merge($this->$method());
+        if($this->cachedRoleplayables === null) {
+            $roleplayables = collect();
+            foreach($methods as $method) {
+                $roleplayables = $roleplayables->merge($this->$method());
+            }
+            $this->cachedRoleplayables = $roleplayables;
         }
 
-        return $roleplayables;
+        return $this->cachedRoleplayables;
+    }
+
+    /**
+     * Détermine si l'utilisateur possède un roleplayable donné.
+     * @param  Roleplayable  $roleplayable
+     * @return bool
+     */
+    public function hasRoleplayable(Roleplayable $roleplayable): bool
+    {
+        foreach($this->roleplayables() as $userRoleplayable) {
+            if($userRoleplayable::class === $roleplayable::class
+               && $userRoleplayable->getKey() === $roleplayable->getKey())
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
