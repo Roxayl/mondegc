@@ -8,6 +8,7 @@ use App\Models\Traits\DeletesInfluences;
 use App\Models\Traits\Influencable as GeneratesInfluence;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -37,35 +38,35 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property CustomUser $user
  * @property int|null $infrastructurable_id
  * @property string|null $infrastructurable_type
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Influence[] $influences
+ * @property-read Collection|Influence[] $influences
  * @property-read int|null $influences_count
  * @property-read Model|\Eloquent $infrastructurable
- * @property-read \App\Models\InfrastructureOfficielle $infrastructure_officielle
- * @property-read \App\Models\CustomUser|null $judge
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure query()
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfCommentaire($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfCommentaireJuge($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfJuge($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfLabel($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfLienForum($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfLienImage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfLienImage2($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfLienImage3($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfLienImage4($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfLienImage5($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfOffId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfStatut($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereChInfVilleid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereInfrastructurableId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereInfrastructurableType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereJudgedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereLienWiki($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereNomInfra($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Infrastructure whereUserCreator($value)
+ * @property-read InfrastructureOfficielle $infrastructure_officielle
+ * @property-read CustomUser|null $judge
+ * @method static Builder|Infrastructure newModelQuery()
+ * @method static Builder|Infrastructure newQuery()
+ * @method static Builder|Infrastructure query()
+ * @method static Builder|Infrastructure whereChInfCommentaire($value)
+ * @method static Builder|Infrastructure whereChInfCommentaireJuge($value)
+ * @method static Builder|Infrastructure whereChInfDate($value)
+ * @method static Builder|Infrastructure whereChInfId($value)
+ * @method static Builder|Infrastructure whereChInfJuge($value)
+ * @method static Builder|Infrastructure whereChInfLabel($value)
+ * @method static Builder|Infrastructure whereChInfLienForum($value)
+ * @method static Builder|Infrastructure whereChInfLienImage($value)
+ * @method static Builder|Infrastructure whereChInfLienImage2($value)
+ * @method static Builder|Infrastructure whereChInfLienImage3($value)
+ * @method static Builder|Infrastructure whereChInfLienImage4($value)
+ * @method static Builder|Infrastructure whereChInfLienImage5($value)
+ * @method static Builder|Infrastructure whereChInfOffId($value)
+ * @method static Builder|Infrastructure whereChInfStatut($value)
+ * @method static Builder|Infrastructure whereChInfVilleid($value)
+ * @method static Builder|Infrastructure whereInfrastructurableId($value)
+ * @method static Builder|Infrastructure whereInfrastructurableType($value)
+ * @method static Builder|Infrastructure whereJudgedAt($value)
+ * @method static Builder|Infrastructure whereLienWiki($value)
+ * @method static Builder|Infrastructure whereNomInfra($value)
+ * @method static Builder|Infrastructure whereUserCreator($value)
  * @mixin Model
  */
 class Infrastructure extends Model implements Influencable
@@ -111,65 +112,91 @@ class Infrastructure extends Model implements Influencable
     public const JUGEMENT_ACCEPTED = 2;
     public const JUGEMENT_REJECTED = 3;
 
+    /**
+     * @return MorphTo
+     */
     public function infrastructurable(): MorphTo
     {
         return $this->morphTo();
     }
 
+    /**
+     * @return Builder
+     */
     public static function pending(): Builder
     {
         return self::where('ch_inf_statut', self::JUGEMENT_PENDING);
     }
 
+    /**
+     * @return Builder
+     */
     public static function accepted(): Builder
     {
         return self::where('ch_inf_statut', self::JUGEMENT_ACCEPTED);
     }
 
+    /**
+     * @return Builder
+     */
     public static function rejected(): Builder
     {
         return self::where('ch_inf_statut', self::JUGEMENT_REJECTED);
     }
 
-    public function infrastructure_officielle(): BelongsTo
+    /**
+     * @return BelongsTo
+     */
+    public function infrastructureOfficielle(): BelongsTo
     {
         return $this->belongsTo(InfrastructureOfficielle::class, 'ch_inf_off_id');
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class, 'user_creator');
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function judge(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class, 'ch_inf_juge');
     }
 
+    /**
+     * @param string $parameter
+     * @return string
+     */
     public static function getMorphFromUrlParameter(string $parameter): string
     {
-        switch($parameter) {
-            case 'ville':
-                $class = Ville::class;
-                break;
-            case 'pays':
-                $class = Pays::class;
-                break;
-            case 'organisation':
-                $class = Organisation::class;
-                break;
-            default:
-                throw new \InvalidArgumentException("Mauvais type de modèle.");
-        }
+        $class = match ($parameter) {
+            'ville' => Ville::class,
+            'pays' => Pays::class,
+            'organisation' => Organisation::class,
+            default => throw new \InvalidArgumentException("Mauvais type de modèle."),
+        };
+
         return self::getActualClassNameForMorph($class);
     }
 
+    /**
+     * @param string $morphType
+     * @return string
+     */
     public static function getUrlParameterFromMorph(string $morphType): string
     {
         $morph = explode("\\", $morphType);
         return strtolower(end($morph));
     }
 
+    /**
+     * @inheritDoc
+     */
     public function generateInfluence(): void
     {
         $notAccepted = fn() => $this->ch_inf_statut !== self::JUGEMENT_ACCEPTED;
@@ -179,7 +206,7 @@ class Infrastructure extends Model implements Influencable
             return;
         }
 
-        $totalResources = $this->infrastructure_officielle->mapResources();
+        $totalResources = $this->infrastructureOfficielle->mapResources();
 
         if(!empty($this->infrastructurable) && $this->infrastructurable->getType() === 'organisation') {
 

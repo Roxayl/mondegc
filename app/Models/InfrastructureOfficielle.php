@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -25,27 +27,27 @@ use Illuminate\Support\Str;
  * @property int|null $ch_inf_off_Recherche
  * @property int|null $ch_inf_off_Environnement
  * @property int|null $ch_inf_off_Education
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\InfrastructureGroupe[] $infrastructure_groupe
+ * @property-read Collection|InfrastructureGroupe[] $infrastructureGroupe
  * @property-read int|null $infrastructure_groupe_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Infrastructure[] $infrastructures
+ * @property-read Collection|Infrastructure[] $infrastructures
  * @property-read int|null $infrastructures_count
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle query()
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle whereChInfOffAgriculture($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle whereChInfOffBudget($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle whereChInfOffCommerce($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle whereChInfOffDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle whereChInfOffDesc($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle whereChInfOffEducation($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle whereChInfOffEnvironnement($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle whereChInfOffIcone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle whereChInfOffId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle whereChInfOffIndustrie($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle whereChInfOffLabel($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle whereChInfOffNom($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle whereChInfOffRecherche($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureOfficielle whereChInfOffTourisme($value)
+ * @method static Builder|InfrastructureOfficielle newModelQuery()
+ * @method static Builder|InfrastructureOfficielle newQuery()
+ * @method static Builder|InfrastructureOfficielle query()
+ * @method static Builder|InfrastructureOfficielle whereChInfOffAgriculture($value)
+ * @method static Builder|InfrastructureOfficielle whereChInfOffBudget($value)
+ * @method static Builder|InfrastructureOfficielle whereChInfOffCommerce($value)
+ * @method static Builder|InfrastructureOfficielle whereChInfOffDate($value)
+ * @method static Builder|InfrastructureOfficielle whereChInfOffDesc($value)
+ * @method static Builder|InfrastructureOfficielle whereChInfOffEducation($value)
+ * @method static Builder|InfrastructureOfficielle whereChInfOffEnvironnement($value)
+ * @method static Builder|InfrastructureOfficielle whereChInfOffIcone($value)
+ * @method static Builder|InfrastructureOfficielle whereChInfOffId($value)
+ * @method static Builder|InfrastructureOfficielle whereChInfOffIndustrie($value)
+ * @method static Builder|InfrastructureOfficielle whereChInfOffLabel($value)
+ * @method static Builder|InfrastructureOfficielle whereChInfOffNom($value)
+ * @method static Builder|InfrastructureOfficielle whereChInfOffRecherche($value)
+ * @method static Builder|InfrastructureOfficielle whereChInfOffTourisme($value)
  * @mixin Model
  */
 class InfrastructureOfficielle extends Model
@@ -85,12 +87,18 @@ class InfrastructureOfficielle extends Model
         'ch_inf_off_Education'
     ];
 
+    /**
+     * @return HasMany
+     */
     public function infrastructures(): HasMany
     {
         return $this->hasMany(Infrastructure::class, 'ch_inf_off_id');
     }
 
-    public function infrastructure_groupe(): BelongsToMany
+    /**
+     * @return BelongsToMany
+     */
+    public function infrastructureGroupe(): BelongsToMany
     {
         return $this->belongsToMany(
             InfrastructureGroupe::class,
@@ -100,6 +108,9 @@ class InfrastructureOfficielle extends Model
         );
     }
 
+    /**
+     * @return array
+     */
     public function mapResources(): array
     {
         $resources = [];

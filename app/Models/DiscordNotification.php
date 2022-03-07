@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Jobs\Contracts\NotifiesDiscord;
 use App\Services\DiscordWebhookService;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -20,18 +21,18 @@ use Illuminate\Support\Str;
  * @property boolean $is_sent
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification query()
- * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereChannel($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereIsSent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereModelIdentifier($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification wherePayload($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DiscordNotification whereUuid($value)
+ * @method static Builder|DiscordNotification newModelQuery()
+ * @method static Builder|DiscordNotification newQuery()
+ * @method static Builder|DiscordNotification query()
+ * @method static Builder|DiscordNotification whereChannel($value)
+ * @method static Builder|DiscordNotification whereCreatedAt($value)
+ * @method static Builder|DiscordNotification whereId($value)
+ * @method static Builder|DiscordNotification whereIsSent($value)
+ * @method static Builder|DiscordNotification whereModelIdentifier($value)
+ * @method static Builder|DiscordNotification wherePayload($value)
+ * @method static Builder|DiscordNotification whereType($value)
+ * @method static Builder|DiscordNotification whereUpdatedAt($value)
+ * @method static Builder|DiscordNotification whereUuid($value)
  * @mixin Model
  */
 class DiscordNotification extends Model
@@ -59,6 +60,11 @@ class DiscordNotification extends Model
 
     private ?DiscordWebhookService $webhook = null;
 
+    /**
+     * Récupère une instance de {@see DiscordNotification} à partir des informations du job.
+     * @param NotifiesDiscord $notification
+     * @return DiscordNotification
+     */
     public static function fetch(NotifiesDiscord $notification): DiscordNotification
     {
         $webhook = self::resolveWebhook($notification);
@@ -89,9 +95,10 @@ class DiscordNotification extends Model
 
     /**
      * Remplit les propriétés du modèle à partir des informations de l'objet {@see NotifiesDiscord}.
-     * @param NotifiesDiscord $notification
+     * @param NotifiesDiscord $notification Job lié à une notification Discord.
      * @param DiscordWebhookService|null $webhook Si le webhook n'est pas passé en paramètre, une instance du webhook
- *                                            sera résolue à partir des informations de l'objet {@see $notification}.
+     *                                            sera résolue à partir des informations de l'objet
+     *                                            {@see $notification}.
      */
     private function populate(NotifiesDiscord $notification, ?DiscordWebhookService $webhook = null): void
     {

@@ -3,13 +3,18 @@
 namespace App\Models;
 
 use App\Models\Contracts\Roleplayable;
+use Database\Factories\CustomUserFactory;
 use Illuminate\Database\Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 /**
@@ -17,8 +22,8 @@ use Illuminate\Support\Collection;
  *
  * @property int $ch_use_id
  * @property bool|null $ch_use_acces
- * @property \Illuminate\Support\Carbon|null $ch_use_date
- * @property \Illuminate\Support\Carbon|null $ch_use_last_log
+ * @property Carbon|null $ch_use_date
+ * @property Carbon|null $ch_use_last_log
  * @property string|null $last_activity
  * @property string|null $ch_use_login
  * @property string|null $ch_use_password
@@ -32,39 +37,39 @@ use Illuminate\Support\Collection;
  * @property string|null $ch_use_nom_dirigeant
  * @property string|null $ch_use_prenom_dirigeant
  * @property string|null $ch_use_biographie_dirigeant
- * @property-read Eloquent\Collection|\App\Models\Infrastructure[] $infrastructures
+ * @property-read Eloquent\Collection|Infrastructure[] $infrastructures
  * @property-read int|null $infrastructures_count
- * @property-read Eloquent\Collection|\App\Models\Log[] $logs
+ * @property-read Eloquent\Collection|Log[] $logs
  * @property-read int|null $logs_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read Eloquent\Collection|\App\Models\NotificationLegacy[] $notificationsLegacy
+ * @property-read Eloquent\Collection|NotificationLegacy[] $notificationsLegacy
  * @property-read int|null $notifications_legacy_count
- * @property-read Eloquent\Collection|\App\Models\Pays[] $pays
+ * @property-read Eloquent\Collection|Pays[] $pays
  * @property-read int|null $pays_count
- * @property-read Eloquent\Collection|\App\Models\Roleplay[] $ownedRoleplays
+ * @property-read Eloquent\Collection|Roleplay[] $ownedRoleplays
  * @property-read int|null $owned_roleplays_count
- * @method static \Database\Factories\CustomUserFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser query()
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseAcces($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseBiographieDirigeant($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseLastLog($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseLienImgpersonnage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseLogin($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseMail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseNomDirigeant($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUsePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereApiToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUsePaysID($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUsePredicatDirigeant($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUsePrenomDirigeant($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseStatut($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereChUseTitreDirigeant($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomUser whereLastActivity($value)
+ * @method static CustomUserFactory factory(...$parameters)
+ * @method static Builder|CustomUser newModelQuery()
+ * @method static Builder|CustomUser newQuery()
+ * @method static Builder|CustomUser query()
+ * @method static Builder|CustomUser whereChUseAcces($value)
+ * @method static Builder|CustomUser whereChUseBiographieDirigeant($value)
+ * @method static Builder|CustomUser whereChUseDate($value)
+ * @method static Builder|CustomUser whereChUseId($value)
+ * @method static Builder|CustomUser whereChUseLastLog($value)
+ * @method static Builder|CustomUser whereChUseLienImgpersonnage($value)
+ * @method static Builder|CustomUser whereChUseLogin($value)
+ * @method static Builder|CustomUser whereChUseMail($value)
+ * @method static Builder|CustomUser whereChUseNomDirigeant($value)
+ * @method static Builder|CustomUser whereChUsePassword($value)
+ * @method static Builder|CustomUser whereApiToken($value)
+ * @method static Builder|CustomUser whereChUsePaysID($value)
+ * @method static Builder|CustomUser whereChUsePredicatDirigeant($value)
+ * @method static Builder|CustomUser whereChUsePrenomDirigeant($value)
+ * @method static Builder|CustomUser whereChUseStatut($value)
+ * @method static Builder|CustomUser whereChUseTitreDirigeant($value)
+ * @method static Builder|CustomUser whereLastActivity($value)
  * @mixin Model
  */
 class CustomUser extends Authenticatable
@@ -118,21 +123,33 @@ class CustomUser extends Authenticatable
      */
     private ?Collection $cachedRoleplayables = null;
 
+    /**
+     * @return HasMany
+     */
     public function infrastructures(): HasMany
     {
         return $this->hasMany(Infrastructure::class, 'user_creator');
     }
 
+    /**
+     * @return HasMany
+     */
     public function logs(): HasMany
     {
         return $this->hasMany(Log::class);
     }
 
+    /**
+     * @return HasMany
+     */
     public function ownedRoleplays(): HasMany
     {
         return $this->hasMany(Roleplay::class, 'user_id');
     }
 
+    /**
+     * @return HasMany
+     */
     public function notificationsLegacy(): HasMany
     {
         return $this->hasMany(NotificationLegacy::class, 'recipient_id');

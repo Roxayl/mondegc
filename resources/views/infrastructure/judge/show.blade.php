@@ -7,7 +7,7 @@
     <h3 id="myModalLabel">
         Juger l'infrastructure {{ $infrastructure->nom_infra }}
         <small>
-            {{ $infrastructure->infrastructure_officielle->ch_inf_off_nom }}
+            {{ $infrastructure->infrastructureOfficielle->ch_inf_off_nom }}
         </small>
     </h3>
 @endsection
@@ -35,17 +35,17 @@
         <div class="span6">
             <div class="well">
                 <small>
-                    <img src="{{ $infrastructure->infrastructure_officielle->ch_inf_off_icone }}"
+                    <img src="{{ $infrastructure->infrastructureOfficielle->ch_inf_off_icone }}"
                          alt="Icône" style="height: 28px;">
-                    {{ $infrastructure->infrastructure_officielle->ch_inf_off_nom }}
+                    {{ $infrastructure->infrastructureOfficielle->ch_inf_off_nom }}
                 </small>
                 <br>
                 <em>
-                    {!! $infrastructure->infrastructure_officielle->ch_inf_off_desc !!}
+                    {!! $infrastructure->infrastructureOfficielle->ch_inf_off_desc !!}
                 </em>
                 <br>
                 {!! $helperService::renderLegacyElement('temperance/resources_small', [
-                    'resources' => $infrastructure->infrastructure_officielle->mapResources()
+                    'resources' => $infrastructure->infrastructureOfficielle->mapResources()
                 ]) !!}
             </div>
 

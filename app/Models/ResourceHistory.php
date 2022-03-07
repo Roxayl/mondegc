@@ -30,8 +30,8 @@ use Illuminate\Support\Collection;
  * @property-read array<string> $resources
  * @property-read Model|\Eloquent $resourceable
  * @method static Builder|ResourceHistory chartSelect()
- * @method static Builder|ResourceHistory forResourceable(\App\Models\Contracts\Resourceable $resourceable)
- * @method static Builder|ResourceHistory forResourceables(\Illuminate\Support\Collection $resourceables)
+ * @method static Builder|ResourceHistory forResourceable(Resourceable $resourceable)
+ * @method static Builder|ResourceHistory forResourceables(Collection $resourceables)
  * @method static Builder|ResourceHistory newModelQuery()
  * @method static Builder|ResourceHistory newQuery()
  * @method static Builder|ResourceHistory query()

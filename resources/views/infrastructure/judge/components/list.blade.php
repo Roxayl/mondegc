@@ -23,9 +23,9 @@
 
                     <h2>{{ $infrastructure->nom_infra }}</h2>
                     <small>
-                        <img src="{{ $infrastructure->infrastructure_officielle
+                        <img src="{{ $infrastructure->infrastructureOfficielle
                             ->ch_inf_off_icone }}" alt="Icône : " style="height: 26px;">
-                        {{ $infrastructure->infrastructure_officielle
+                        {{ $infrastructure->infrastructureOfficielle
                             ->ch_inf_off_nom }}
                     </small>
                     <br>

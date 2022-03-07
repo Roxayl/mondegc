@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Database\Factories\PersonnageFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,19 +19,19 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $biographie
  * @property string|null $titre_personnage
  * @property string|null $lien_img
- * @method static \Database\Factories\PersonnageFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Personnage newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Personnage newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Personnage query()
- * @method static \Illuminate\Database\Eloquent\Builder|Personnage whereBiographie($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Personnage whereEntity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Personnage whereEntityId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Personnage whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Personnage whereLienImg($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Personnage whereNomPersonnage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Personnage wherePredicat($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Personnage wherePrenomPersonnage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Personnage whereTitrePersonnage($value)
+ * @method static PersonnageFactory factory(...$parameters)
+ * @method static Builder|Personnage newModelQuery()
+ * @method static Builder|Personnage newQuery()
+ * @method static Builder|Personnage query()
+ * @method static Builder|Personnage whereBiographie($value)
+ * @method static Builder|Personnage whereEntity($value)
+ * @method static Builder|Personnage whereEntityId($value)
+ * @method static Builder|Personnage whereId($value)
+ * @method static Builder|Personnage whereLienImg($value)
+ * @method static Builder|Personnage whereNomPersonnage($value)
+ * @method static Builder|Personnage wherePredicat($value)
+ * @method static Builder|Personnage wherePrenomPersonnage($value)
+ * @method static Builder|Personnage whereTitrePersonnage($value)
  * @mixin Model
  */
 class Personnage extends Model
