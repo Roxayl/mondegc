@@ -99,7 +99,7 @@ class ChapterController extends Controller
     {
         $this->authorize('display', Chapter::class);
 
-        $blade = '<x-roleplay.chapter :chapter="$chapter"/>';
+        $blade = '<x-chapter.chapter :chapter="$chapter"/>';
 
         $html = $stringBlade->render(
             $blade, compact('chapter')

@@ -61,8 +61,9 @@ class ChapterEntry extends Model
      * @var array<string, string>
      */
     protected static array $componentMorphMap = [
-        'squirrel.squit' => Components\ChapterEntry\SquirrelSquit::class,
         'forum.post' => Components\ChapterEntry\ForumPost::class,
+        'monde.communique' => Components\ChapterEntry\MondeCommunique::class,
+        'squirrel.squit' => Components\ChapterEntry\SquirrelSquit::class,
     ];
 
     /**
