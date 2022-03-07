@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChapterEntry\ManageResource;
 use App\Models\Chapter;
 use App\Models\ChapterEntry;
+use App\Models\Pays;
 use App\Services\StringBladeService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -51,13 +54,30 @@ class ChapterEntryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  ManageResource  $request
      * @param  Chapter  $chapter
-     * @return Response
+     * @return RedirectResponse
      */
-    public function store(Request $request, Chapter $chapter)
+    public function store(ManageResource $request, Chapter $chapter): RedirectResponse
     {
-        return response()->noContent();
+        $entry = new ChapterEntry();
+
+        // Set relations.
+        $entry->chapter_id = $chapter->getKey();
+        // TODO. Récupérer le roleplayable avec la requête.
+        $entry->roleplayable_id = Pays::inRandomOrder()->first()->getKey();
+        $entry->roleplayable_type = ChapterEntry::getActualClassNameForMorph(Pays::class);
+
+        // Set content.
+        $entry->content = $request->input('content');
+
+        // Rules to define media.
+        $request->setMediaFromRequest($entry);
+
+        $entry->save();
+
+        return redirect()->route('roleplay.show', $chapter->roleplay)
+            ->with('message', 'success|Evénement ajouté avec succès.');
     }
 
     /**

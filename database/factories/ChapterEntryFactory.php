@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\ChapterEntry;
+use App\Models\Factories\RoleplayableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ChapterEntryFactory extends Factory
@@ -21,9 +22,13 @@ class ChapterEntryFactory extends Factory
      */
     public function definition(): array
     {
+        $model = $this->faker->randomElement(RoleplayableFactory::models);
+
         return [
             'content' => $this->faker->text(),
             'media_type' => $this->faker->chapterEntryMediaType(),
+            'roleplayable_type' => ChapterEntry::getActualClassNameForMorph($model),
+            'roleplayable_id' => $model::inRandomOrder()->first()->getKey(),
         ];
     }
 

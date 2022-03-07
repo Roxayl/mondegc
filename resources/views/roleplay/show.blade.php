@@ -36,9 +36,7 @@
     <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript" src="../assets/js/Editeur.js"></script>
 
-    <script type="text/javascript" >
-        /**** Roleplay ****/
-
+    <script type="text/javascript">
         (function($, document, window) {
 
             let addContainerSelector = '.chapter-entry-media-container';
@@ -48,6 +46,7 @@
             let removeMedia = function($parent) {
                 $parent.find('input[type=text]').val('');
                 $parent.find('input[name=media_type][value="none"]').prop('checked', true);
+                $parent.find('.media-parameters-container').hide();
             };
 
             $(document).on('click', '.chapter-entry-media-trigger', function(ev) {
