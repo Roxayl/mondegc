@@ -43,13 +43,15 @@
 
             let parentSelector = '.chapter-entry-add-container';
 
+            let triggerButtonSelector = '.chapter-entry-media-trigger';
+
             let removeMedia = function($parent) {
                 $parent.find('input[type=text]').val('');
                 $parent.find('input[name=media_type][value="none"]').prop('checked', true);
                 $parent.find('.media-parameters-container').hide();
             };
 
-            $(document).on('click', '.chapter-entry-media-trigger', function(ev) {
+            $(document).on('click', triggerButtonSelector, function(ev) {
                 ev.preventDefault();
 
                 let $parent = $(ev.target).closest(parentSelector);
@@ -59,8 +61,10 @@
                 if($container.is(':visible')) {
                     removeMedia($parent);
                     $container.hide();
+                    $parent.find(triggerButtonSelector).find('span').text('Ajouter un média');
                 } else {
                     $container.show();
+                    $parent.find(triggerButtonSelector).find('span').text('Retirer un média');
                 }
             });
 

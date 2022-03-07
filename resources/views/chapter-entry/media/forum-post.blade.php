@@ -1,6 +1,6 @@
 
 <blockquote>
-    {{ $entry->media_data['media']['text'] }}
+    {!! \App\Services\HelperService::purifyHtml($entry->media_data['media']['text']) !!}
     <br>
     <small>
         {{ $entry->media_data['media']['author'] }} -
