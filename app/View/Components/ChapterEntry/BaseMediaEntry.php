@@ -18,7 +18,7 @@ abstract class BaseMediaEntry extends BaseComponent
      * Génère les données d'un média.
      *
      * @param array<string, array> $parameters
-     * @return array
+     * @return array Données du média.
      */
     public abstract function generateData(array $parameters): array;
 }

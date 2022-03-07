@@ -32,6 +32,7 @@ class ManageResource extends FormRequest
 
         if(! $this->exists('media_type') || $mediaType === 'none') {
             $entry->media_type = null;
+            $entry->media_parameters = null;
             $entry->media_data = null;
             return;
         }

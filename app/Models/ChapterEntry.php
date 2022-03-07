@@ -103,6 +103,9 @@ class ChapterEntry extends Model
     }
 
     /**
+     * A partir de la valeur de {@see media_type}, définit la valeur de {@see media_data} à partir de ce qui est
+     * passé en paramètre (cf. {@see media_parameters}).
+     *
      * @param array<string, array> $parameters
      */
     public function generateMediaData(array $parameters = []): void
