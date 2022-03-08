@@ -3606,3 +3606,9 @@ ul.exception li:before {
     counter-increment: exception-section;
     content:counters(exception-section, ".") ".";
 }
+
+.ui-autocomplete {
+    position: absolute;
+    cursor: default;
+    z-index: 2000 !important;
+}

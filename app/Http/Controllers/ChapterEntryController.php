@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ChapterEntry\ManageResource;
 use App\Models\Chapter;
 use App\Models\ChapterEntry;
-use App\Models\Pays;
+use App\Models\CustomUser;
 use App\Services\StringBladeService;
+use App\View\Components\Blocks\RoleplayableSelector;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class ChapterEntryController extends Controller
@@ -65,9 +67,16 @@ class ChapterEntryController extends Controller
 
         // Set relations.
         $entry->chapter_id = $chapter->getKey();
-        // TODO. Récupérer le roleplayable avec la requête.
-        $entry->roleplayable_id = Pays::inRandomOrder()->first()->getKey();
-        $entry->roleplayable_type = ChapterEntry::getActualClassNameForMorph(Pays::class);
+
+        // Définir le roleplayable associé.
+        $roleplayable = RoleplayableSelector::createRoleplayableFromForm($request);
+        /** @var CustomUser $user */
+        $user = auth()->user();
+        if(! $user->hasRoleplayable($roleplayable)) {
+            throw ValidationException::withMessages(["Vous ne pouvez pas créer un post avec cette entité."]);
+        }
+        $entry->roleplayable_id = $roleplayable->getKey();
+        $entry->roleplayable_type = get_class($roleplayable);
 
         // Set content.
         $entry->content = $request->input('content');

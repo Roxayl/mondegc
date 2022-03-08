@@ -38,6 +38,8 @@ Route::post('logout', fn() => url('connexion.php?doLogout=true')) // FIXME: néc
 | CustomUser
 |--------------------------------------------------------------------------
 */
+Route::get('user/roleplayables', [Controllers\CustomUserController::class, 'roleplayables'])
+    ->name('user.roleplayables');
 Route::post('user/update-api-token/{user}', [Controllers\CustomUserController::class, 'updateToken'])
     ->name('user.update-api-token');
 

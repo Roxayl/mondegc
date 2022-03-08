@@ -9,6 +9,8 @@
         >annuler</a>)
     </h4>
 
+    <x-blocks.roleplayable-selector :endpoint-url="route('user.roleplayables')" />
+
     <div class="form-control">
         <label>
             Contenu
