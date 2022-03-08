@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -14,23 +16,23 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @property string|null $content
  * @property string|null $seo_description
  * @property string|null $seo_keywords
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $published_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $published_at
  * @property string|null $cover_image
- * @method static \Illuminate\Database\Eloquent\Builder|Page newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Page newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Page query()
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereContent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereCoverImage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page wherePublishedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereSeoDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereSeoKeywords($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereUrl($value)
+ * @method static Builder|Page newModelQuery()
+ * @method static Builder|Page newQuery()
+ * @method static Builder|Page query()
+ * @method static Builder|Page whereContent($value)
+ * @method static Builder|Page whereCoverImage($value)
+ * @method static Builder|Page whereCreatedAt($value)
+ * @method static Builder|Page whereId($value)
+ * @method static Builder|Page wherePublishedAt($value)
+ * @method static Builder|Page whereSeoDescription($value)
+ * @method static Builder|Page whereSeoKeywords($value)
+ * @method static Builder|Page whereTitle($value)
+ * @method static Builder|Page whereUpdatedAt($value)
+ * @method static Builder|Page whereUrl($value)
  * @mixin Model
  */
 class Page extends Model
@@ -53,6 +55,9 @@ class Page extends Model
 
     ];
 
+    /**
+     * @return $this
+     */
     public function getPageOrFail(): self
     {
         // Si la page n'est pas publiée.

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,14 +16,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read int|null $type_geometries_count
- * @property-read Collection|\App\Models\TypeGeometry[] $typeGeometries
- * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometriesGroup newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometriesGroup newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometriesGroup query()
- * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometriesGroup whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometriesGroup whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometriesGroup whereIntitule($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TypeGeometriesGroup whereUpdatedAt($value)
+ * @property-read Collection|TypeGeometry[] $typeGeometries
+ * @method static Builder|TypeGeometriesGroup newModelQuery()
+ * @method static Builder|TypeGeometriesGroup newQuery()
+ * @method static Builder|TypeGeometriesGroup query()
+ * @method static Builder|TypeGeometriesGroup whereCreatedAt($value)
+ * @method static Builder|TypeGeometriesGroup whereId($value)
+ * @method static Builder|TypeGeometriesGroup whereIntitule($value)
+ * @method static Builder|TypeGeometriesGroup whereUpdatedAt($value)
  * @mixin Model
  */
 class TypeGeometriesGroup extends Model
@@ -33,6 +34,9 @@ class TypeGeometriesGroup extends Model
         'intitule'
     ];
 
+    /**
+     * @return HasMany
+     */
     public function typeGeometries(): HasMany
     {
         return $this->hasMany(TypeGeometry::class, 'group_id');

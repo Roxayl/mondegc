@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -17,16 +18,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $data_changes
  * @property Carbon $created
  * @property CustomUser $user
- * @method static \Illuminate\Database\Eloquent\Builder|Log newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Log newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Log query()
- * @method static \Illuminate\Database\Eloquent\Builder|Log whereCreated($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Log whereDataChanges($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Log whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Log whereTarget($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Log whereTargetId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Log whereTypeAction($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Log whereUserId($value)
+ * @method static Builder|Log newModelQuery()
+ * @method static Builder|Log newQuery()
+ * @method static Builder|Log query()
+ * @method static Builder|Log whereCreated($value)
+ * @method static Builder|Log whereDataChanges($value)
+ * @method static Builder|Log whereId($value)
+ * @method static Builder|Log whereTarget($value)
+ * @method static Builder|Log whereTargetId($value)
+ * @method static Builder|Log whereTypeAction($value)
+ * @method static Builder|Log whereUserId($value)
  * @mixin Model
  */
 class Log extends Model
@@ -52,6 +53,9 @@ class Log extends Model
         'created'
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class);

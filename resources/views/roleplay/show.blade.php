@@ -9,24 +9,88 @@
 
 @section('styles')
     <link href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" rel="stylesheet">
+
+    <style>
+        .corps-page, .bs-docs-sidebar {
+            position: relative;
+            z-index: 140;
+        }
+        .corps-page {
+            margin-top: -80px;
+        }
+        @if($roleplay->banner)
+        .jumbotron {
+            background-image: url('{{ $roleplay->banner }}');
+            background-position: 0 -240px;
+            background-attachment: fixed;
+            height: 360px;
+            z-index: 120;
+            position: relative;
+        }
+        @endif
+    </style>
 @endsection
 
 @section('scripts')
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script type="text/javascript" src="../assets/js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript" src="../assets/js/Editeur.js"></script>
+
+    <script type="text/javascript">
+        (function($, document, window) {
+
+            let addContainerSelector = '.chapter-entry-media-container';
+
+            let parentSelector = '.chapter-entry-add-container';
+
+            let triggerButtonSelector = '.chapter-entry-media-trigger';
+
+            let removeMedia = function($parent) {
+                $parent.find('input[type=text]').val('');
+                $parent.find('input[name=media_type][value="none"]').prop('checked', true);
+                $parent.find('.media-parameters-container').hide();
+            };
+
+            $(document).on('click', triggerButtonSelector, function(ev) {
+                ev.preventDefault();
+
+                let $parent = $(ev.target).closest(parentSelector);
+
+                let $container = $parent.find(addContainerSelector);
+
+                if($container.is(':visible')) {
+                    removeMedia($parent);
+                    $container.hide();
+                    $parent.find(triggerButtonSelector).find('span').text('Ajouter un média');
+                } else {
+                    $container.show();
+                    $parent.find(triggerButtonSelector).find('span').text('Retirer un média');
+                }
+            });
+
+            $(document).on('change', 'input[name=media_type]', function(ev) {
+                let $parent = $(ev.target).closest(parentSelector);
+
+                let value = $parent.find('input[name=media_type]:checked').val();
+
+                console.log('selected value:', value);
+
+                $parent.find('.media-parameters-container').hide();
+                $parent.find('.media-parameters-container[data-media-type="' + value + '"]').show();
+            });
+
+        })(jQuery, document, window);
+    </script>
 @endsection
 
-@section('body_attributes') data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="140" @endsection
+@section('body_attributes') data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="200" @endsection
 
 @section('content')
 
     @parent
 
     <header class="jumbotron subhead anchor" id="header">
-        <div class="container">
-            <h1>{{ $roleplay->name }}</h1>
-        </div>
+        <div class="container"></div>
     </header>
 
     <div class="container">
@@ -40,7 +104,7 @@
                     <li><a href="#chapter-{{ $chapter->identifier }}">
                         {{ $chapter->title }}
                         @if($chapter->isCurrent())
-                            <span class="badge badge-info inline">En cours</span>
+                            <span class="badge badge-warning inline">En cours</span>
                         @endif
                     </a></li>
                 @endforeach
@@ -67,8 +131,11 @@
 
             <div class="clearfix"></div>
 
+            {!! $helperService::displayAlert() !!}
+
             <div class="well">
-                {!! $helperService::displayAlert() !!}
+                <h1>{{ $roleplay->name }}</h1>
+                <p>{{ $roleplay->description }}</p>
             </div>
 
             <div class="clearfix"></div>
@@ -83,21 +150,19 @@
 
             <x-roleplay.organizers :roleplay="$roleplay" />
 
-            @foreach($chapters as $chapter)
-                <x-roleplay.chapter :chapter="$chapter"/>
-            @endforeach
-
             @can('createChapters', $roleplay)
-                <div class="titre-bleu" id="roleplay-next">
-                    <h1>
-                        Écrire la suite
-                    </h1>
-                </div>
+                <h3 id="roleplay-next">
+                    Écrire la suite
+                </h3>
 
                 <div class="component-block" id="chapter-create">
                     <x-chapter.create-button :roleplay="$roleplay" />
                 </div>
             @endcan
+
+            @foreach($chapters as $chapter)
+                <x-chapter.chapter :chapter="$chapter"/>
+            @endforeach
 
         </div>
 

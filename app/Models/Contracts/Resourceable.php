@@ -19,6 +19,18 @@ interface Resourceable extends SimpleResourceable
     public function getName(): string;
 
     /**
+     * Donne le drapeau du modèle ressourçable.
+     * @return string URL vers l'image du drapeau.
+     */
+    public function getFlag(): string;
+
+    /**
+     * Donne le lien d'accès vers le modèle ressourçable.
+     * @return string URL vers la page du modèle.
+     */
+    public function accessorUrl(): string;
+
+    /**
      * Affiche uniquement les modèles non-supprimés.
      * @param  Builder  $query
      * @return Builder

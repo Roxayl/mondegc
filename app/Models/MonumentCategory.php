@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
@@ -30,30 +32,30 @@ use Illuminate\Support\Facades\DB;
  * @property int|null $ch_mon_cat_education
  * @property int|null $ch_mon_cat_budget
  * @property string|null $bg_image_url
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Patrimoine[] $patrimoine
+ * @property-read Collection|Patrimoine[] $patrimoine
  * @property-read int|null $patrimoine_count
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory query()
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereBgImageUrl($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatAgriculture($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatBudget($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatCommerce($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatCouleur($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatDesc($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatEducation($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatEnvironnement($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatID($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatIcon($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatIndustrie($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatLabel($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatMisJour($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatNbUpdate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatNom($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatRecherche($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatStatut($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MonumentCategory whereChMonCatTourisme($value)
+ * @method static Builder|MonumentCategory newModelQuery()
+ * @method static Builder|MonumentCategory newQuery()
+ * @method static Builder|MonumentCategory query()
+ * @method static Builder|MonumentCategory whereBgImageUrl($value)
+ * @method static Builder|MonumentCategory whereChMonCatAgriculture($value)
+ * @method static Builder|MonumentCategory whereChMonCatBudget($value)
+ * @method static Builder|MonumentCategory whereChMonCatCommerce($value)
+ * @method static Builder|MonumentCategory whereChMonCatCouleur($value)
+ * @method static Builder|MonumentCategory whereChMonCatDate($value)
+ * @method static Builder|MonumentCategory whereChMonCatDesc($value)
+ * @method static Builder|MonumentCategory whereChMonCatEducation($value)
+ * @method static Builder|MonumentCategory whereChMonCatEnvironnement($value)
+ * @method static Builder|MonumentCategory whereChMonCatID($value)
+ * @method static Builder|MonumentCategory whereChMonCatIcon($value)
+ * @method static Builder|MonumentCategory whereChMonCatIndustrie($value)
+ * @method static Builder|MonumentCategory whereChMonCatLabel($value)
+ * @method static Builder|MonumentCategory whereChMonCatMisJour($value)
+ * @method static Builder|MonumentCategory whereChMonCatNbUpdate($value)
+ * @method static Builder|MonumentCategory whereChMonCatNom($value)
+ * @method static Builder|MonumentCategory whereChMonCatRecherche($value)
+ * @method static Builder|MonumentCategory whereChMonCatStatut($value)
+ * @method static Builder|MonumentCategory whereChMonCatTourisme($value)
  * @mixin Model
  */
 class MonumentCategory extends Model
@@ -93,6 +95,9 @@ class MonumentCategory extends Model
         'ch_mon_cat_budget'
     ];
 
+    /**
+     * @return BelongsToMany
+     */
     public function patrimoine(): BelongsToMany
     {
         return $this->belongsToMany(

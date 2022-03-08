@@ -40,6 +40,18 @@ class ChapterPolicy implements VersionablePolicy
     }
 
     /**
+     * Détermine si l'utilisateur peut créer une entrée de chapitre.
+     *
+     * @param  CustomUser  $user
+     * @param  Chapter  $chapter
+     * @return bool
+     */
+    public function createEntries(CustomUser $user, Chapter $chapter): bool
+    {
+        return $chapter->isCurrent() && $user->roleplayables()->count() > 0;
+    }
+
+    /**
      * @inheritDoc
      */
     public function revert(CustomUser|Authenticatable $user, Chapter|Model $model): bool

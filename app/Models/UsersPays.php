@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\Pivot;
@@ -13,19 +15,19 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property int $ID_pays
  * @property int $ID_user
  * @property int $permissions
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OrganisationMember[] $organisation_members
+ * @property-read Collection|OrganisationMember[] $organisation_members
  * @property-read int|null $organisation_members_count
- * @property-read \App\Models\Pays $pays
- * @property-read \App\Models\CustomUser $users
- * @method static \Illuminate\Database\Eloquent\Builder|UsersPays newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|UsersPays newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|UsersPays query()
- * @method static \Illuminate\Database\Eloquent\Builder|UsersPays whereIDPays($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UsersPays whereIDUser($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UsersPays whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UsersPays wherePermissions($value)
+ * @property-read Pays $pays
+ * @property-read CustomUser $users
+ * @method static Builder|UsersPays newModelQuery()
+ * @method static Builder|UsersPays newQuery()
+ * @method static Builder|UsersPays query()
+ * @method static Builder|UsersPays whereIDPays($value)
+ * @method static Builder|UsersPays whereIDUser($value)
+ * @method static Builder|UsersPays whereId($value)
+ * @method static Builder|UsersPays wherePermissions($value)
  * @mixin Pivot
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OrganisationMember[] $organisationMembers
+ * @property-read Collection|OrganisationMember[] $organisationMembers
  */
 class UsersPays extends Pivot
 {
@@ -45,16 +47,25 @@ class UsersPays extends Pivot
         'permissions'
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function users(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class, 'ch_use_id', 'ID_user');
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function pays(): BelongsTo
     {
         return $this->belongsTo(Pays::class, 'ch_pay_id', 'ID_pays');
     }
 
+    /**
+     * @return HasManyThrough
+     */
     public function organisationMembers(): HasManyThrough
     {
         return $this->hasManyThrough(

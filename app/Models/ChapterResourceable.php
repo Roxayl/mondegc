@@ -8,6 +8,9 @@ use App\Models\Traits\DeletesInfluences;
 use App\Models\Traits\Influencable as GeneratesInfluence;
 use App\Services\EconomyService;
 use Carbon\Carbon;
+use Database\Factories\ChapterResourceableFactory;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -32,26 +35,26 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property Carbon|null $updated_at
  * @property Chapter $chapter
  * @property Resourceable $resourceable
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Influence[] $influences
+ * @property-read Collection|Influence[] $influences
  * @property-read int|null $influences_count
- * @method static \Database\Factories\ChapterResourceableFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable query()
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereAgriculture($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereBudget($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereChapterId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereCommerce($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereEducation($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereEnvironnement($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereIndustrie($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereRecherche($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereResourceableId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereResourceableType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereTourisme($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChapterResourceable whereUpdatedAt($value)
+ * @method static ChapterResourceableFactory factory(...$parameters)
+ * @method static Builder|ChapterResourceable newModelQuery()
+ * @method static Builder|ChapterResourceable newQuery()
+ * @method static Builder|ChapterResourceable query()
+ * @method static Builder|ChapterResourceable whereAgriculture($value)
+ * @method static Builder|ChapterResourceable whereBudget($value)
+ * @method static Builder|ChapterResourceable whereChapterId($value)
+ * @method static Builder|ChapterResourceable whereCommerce($value)
+ * @method static Builder|ChapterResourceable whereCreatedAt($value)
+ * @method static Builder|ChapterResourceable whereEducation($value)
+ * @method static Builder|ChapterResourceable whereEnvironnement($value)
+ * @method static Builder|ChapterResourceable whereId($value)
+ * @method static Builder|ChapterResourceable whereIndustrie($value)
+ * @method static Builder|ChapterResourceable whereRecherche($value)
+ * @method static Builder|ChapterResourceable whereResourceableId($value)
+ * @method static Builder|ChapterResourceable whereResourceableType($value)
+ * @method static Builder|ChapterResourceable whereTourisme($value)
+ * @method static Builder|ChapterResourceable whereUpdatedAt($value)
  * @mixin Model
  */
 class ChapterResourceable extends Model implements Influencable

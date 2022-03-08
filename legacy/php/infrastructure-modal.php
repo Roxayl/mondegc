@@ -11,7 +11,7 @@ if(isset ($_GET['ch_inf_id'])) {
     $ch_inf_id = $_GET['ch_inf_id'];
 }
 
-$eloquentInfrastructure = Infrastructure::with('infrastructure_officielle')
+$eloquentInfrastructure = Infrastructure::with('infrastructureOfficielle')
     ->findOrFail($_GET['ch_inf_id']);
 
 ?> 
@@ -20,13 +20,13 @@ $eloquentInfrastructure = Infrastructure::with('infrastructure_officielle')
 <div class="modal-header">
     <div class="pull-left">
         <img style="width:100px; margin-right: 10px; margin-top:-30px;"
-             src="<?= e($eloquentInfrastructure->infrastructure_officielle->ch_inf_off_icone) ?>"
+             src="<?= e($eloquentInfrastructure->infrastructureOfficielle->ch_inf_off_icone) ?>"
              alt="Icone infrastructure">
     </div>
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">
         <?= e($eloquentInfrastructure->nom_infra) ?>
-        <small><?= e($eloquentInfrastructure->infrastructure_officielle->ch_inf_off_nom)
+        <small><?= e($eloquentInfrastructure->infrastructureOfficielle->ch_inf_off_nom)
             ?></small><br>
         <?php
         echo view('infrastructure.judge.components.infrastructurable-snippet', [
@@ -133,7 +133,7 @@ $eloquentInfrastructure = Infrastructure::with('infrastructure_officielle')
     <h4>Critère de jugement</h4>
     <p>
         <small style="color: grey; padding-left: 0; margin-left: 0;">
-            <?= htmlPurify($eloquentInfrastructure->infrastructure_officielle->ch_inf_off_desc) ?>
+            <?= htmlPurify($eloquentInfrastructure->infrastructureOfficielle->ch_inf_off_desc) ?>
         </small>
     </p>
 

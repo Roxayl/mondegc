@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Mpociot\Versionable\Version as BaseVersion;
@@ -15,8 +16,8 @@ use Mpociot\Versionable\Version as BaseVersion;
  * @property string|null $user_id
  * @property string $model_data
  * @property string|null $reason
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read mixed|CustomUser $responsible_user
  * @property-read Model|\Eloquent $versionable
  * @method static Builder|Version forVersionable(string $type, string|int $id)

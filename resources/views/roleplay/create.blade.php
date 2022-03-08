@@ -14,7 +14,7 @@
 
     <div class="control-group">
         <label class="control-label">Organisateur</label>
-        @include('roleplay.components.add-organizer-form')
+        <x-blocks.roleplayable-selector />
     </div>
 
 @endsection

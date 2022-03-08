@@ -108,9 +108,9 @@
                     'id' => $infrastructure->ch_inf_id,
                     'type' => 'infra',
                     'overlay_image' => $infrastructure
-                        ->infrastructure_officielle->ch_inf_off_icone,
+                        ->infrastructureOfficielle->ch_inf_off_icone,
                     'overlay_text' => $infrastructure
-                        ->infrastructure_officielle->ch_inf_off_nom,
+                        ->infrastructureOfficielle->ch_inf_off_nom,
                     'image' => $infrastructure->ch_inf_lien_image,
                     'nom' => $infrastructure->nom_infra,
                     'description' => $infrastructure->wellDescription(),

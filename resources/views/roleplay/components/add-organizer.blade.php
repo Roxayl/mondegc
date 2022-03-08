@@ -2,7 +2,7 @@
 <form action="{{ route('roleplay.create-organizer', $roleplay) }}" method="POST">
     @csrf
 
-    @include('roleplay.components.add-organizer-form')
+    <x-blocks.roleplayable-selector />
 
     <button type="submit" class="btn btn-primary">
         Envoyer
