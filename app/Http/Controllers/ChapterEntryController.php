@@ -25,7 +25,9 @@ class ChapterEntryController extends Controller
      */
     public function create(Chapter $chapter, StringBladeService $stringBlade): Response
     {
-        $this->authorize('create', ChapterEntry::class);
+        $entry = new ChapterEntry();
+        $entry->setRelation('chapter', $chapter);
+        $this->authorize('create', $entry);
 
         $blade = '<x-chapter-entry.create-chapter-entry :chapter="$chapter" />';
 
@@ -43,7 +45,10 @@ class ChapterEntryController extends Controller
      */
     public function createButton(Chapter $chapter, StringBladeService $stringBlade): Response
     {
-        $this->authorize('create', ChapterEntry::class);
+        $entry = new ChapterEntry();
+        $entry->setRelation('chapter', $chapter);
+        $entry->chapter_id = $chapter->getKey();
+        $this->authorize('create', $entry);
 
         $blade = '<x-chapter-entry.create-button :chapter="$chapter" />';
 
@@ -65,8 +70,16 @@ class ChapterEntryController extends Controller
     {
         $entry = new ChapterEntry();
 
-        // Set relations.
+        // Définir la relation.
+        $entry->setRelation('chapter', $chapter);
         $entry->chapter_id = $chapter->getKey();
+
+        // Vérifier que le chapitre est actif.
+        if(! $entry->chapter->isCurrent()) {
+            throw ValidationException::withMessages(["Ce chapitre n'est plus actif."]);
+        }
+
+        $this->authorize('create', $entry);
 
         // Définir le roleplayable associé.
         $roleplayable = RoleplayableSelector::createRoleplayableFromForm($request);
@@ -78,15 +91,16 @@ class ChapterEntryController extends Controller
         $entry->roleplayable_id = $roleplayable->getKey();
         $entry->roleplayable_type = get_class($roleplayable);
 
-        // Set content.
+        // Définir le texte.
         $entry->content = $request->input('content');
 
-        // Rules to define media.
+        // Gérer l'intégration d'un média.
         $request->setMediaFromRequest($entry);
 
         $entry->save();
 
-        return redirect()->route('roleplay.show', $chapter->roleplay)
+        return redirect(route('roleplay.show', $entry->chapter->roleplay)
+                . '#chapter-' . $entry->chapter->identifier)
             ->with('message', 'success|Evénement ajouté avec succès.');
     }
 

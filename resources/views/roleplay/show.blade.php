@@ -104,7 +104,7 @@
                     <li><a href="#chapter-{{ $chapter->identifier }}">
                         {{ $chapter->title }}
                         @if($chapter->isCurrent())
-                            <span class="badge badge-info inline">En cours</span>
+                            <span class="badge badge-warning inline">En cours</span>
                         @endif
                     </a></li>
                 @endforeach
@@ -150,21 +150,19 @@
 
             <x-roleplay.organizers :roleplay="$roleplay" />
 
-            @foreach($chapters as $chapter)
-                <x-chapter.chapter :chapter="$chapter"/>
-            @endforeach
-
             @can('createChapters', $roleplay)
-                <div class="titre-bleu" id="roleplay-next">
-                    <h1>
-                        Écrire la suite
-                    </h1>
-                </div>
+                <h3 id="roleplay-next">
+                    Écrire la suite
+                </h3>
 
                 <div class="component-block" id="chapter-create">
                     <x-chapter.create-button :roleplay="$roleplay" />
                 </div>
             @endcan
+
+            @foreach($chapters as $chapter)
+                <x-chapter.chapter :chapter="$chapter"/>
+            @endforeach
 
         </div>
 

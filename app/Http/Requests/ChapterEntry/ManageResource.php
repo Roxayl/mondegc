@@ -14,9 +14,9 @@ class ManageResource extends FormRequest
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize(ChapterEntry $entry): bool
     {
-        return Gate::allows('create', ChapterEntry::class);
+        return true;
     }
 
     /**

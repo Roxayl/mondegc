@@ -32,7 +32,9 @@
         <h1>
             {{ $chapter->title }}
             @if($chapter->isCurrent())
-                <span class="badge badge-info inline">En cours</span>
+                <span class="badge badge-warning inline"
+                      style="position: absolute; margin-top: 17px; margin-left: 3px;">
+                    En cours</span>
             @endif
         </h1>
     </div>

@@ -12,14 +12,15 @@ class ChapterEntryPolicy
     use HandlesAuthorization;
 
     /**
-     * Détermine si l'utilisateur permet de créer une actualité dans un chapitre.
+     * Détermine si l'utilisateur peut créer une entrée de chapitre.
      *
      * @param  CustomUser  $user
+     * @param  ChapterEntry  $entry
      * @return bool
      */
-    public function create(CustomUser $user): bool
+    public function create(CustomUser $user, ChapterEntry $entry): bool
     {
-        return $user->roleplayables()->count() > 0;
+        return Gate::allows('createEntries', $entry->chapter);
     }
 
     /**

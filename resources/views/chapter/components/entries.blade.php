@@ -2,9 +2,11 @@
 <div class="row">
     <div class="span10 offset1">
 
-        <div id="chapter-entry-add-container-{{ $chapter->identifier }}" class="mb-4 chapter-entry-add-container">
-            <x-chapter-entry.create-button :chapter="$chapter" />
-        </div>
+        @can('createEntries', $chapter)
+            <div id="chapter-entry-add-container-{{ $chapter->identifier }}" class="mb-4 chapter-entry-add-container">
+                <x-chapter-entry.create-button :chapter="$chapter" />
+            </div>
+        @endcan
 
         @foreach($chapter->entries as $entry)
 
@@ -12,7 +14,7 @@
                 @can('manage', $entry)
                     <div class="dropdown pull-right">
                         <a href="#" class="dropdown-toggle p-2" data-toggle="dropdown">
-                            <i class="icon-circle-arrow-down"></i>
+                            &#8226; &#8226; &#8226;
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li>
