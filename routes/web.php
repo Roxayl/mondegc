@@ -128,9 +128,6 @@ Route::patch('economy/infrastructure-judge/{infrastructure}', 'InfrastructureJud
 Route::get('roleplay/roleplayables', [Controllers\RoleplayController::class, 'roleplayables'])
     ->name('roleplay.roleplayables');
 Route::resource('roleplay', 'RoleplayController');
-Route::get('roleplay-v2/show/{roleplay}', function (\App\Models\Roleplay $roleplay) {
-    return view('roleplay-v2.show')->with('roleplay', $roleplay);
-});
 Route::get('roleplay/confirm-close/{roleplay}', [Controllers\RoleplayController::class, 'confirmClose'])
     ->name('roleplay.confirm-close');
 Route::match(['put', 'patch'], 'roleplay/close/{roleplay}', [Controllers\RoleplayController::class, 'close'])
