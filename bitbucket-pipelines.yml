@@ -25,6 +25,7 @@ definitions:
           - set -e
           - ls
           - rm -f -r legacy
+          - rm -f -r .github
           - git add .
           - git config user.email "$COMMITTER_MAIL"
           - git config user.name "$COMMITTER_NAME"
