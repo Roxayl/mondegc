@@ -11,6 +11,8 @@ use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use App\Models\Traits\Resourceable as HasResources;
 use App\Services\EconomyService;
 use Carbon\Carbon;
+use Database\Factories\VilleFactory;
+use Illuminate\Database\Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -57,14 +59,15 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property string|null $ch_vil_administration
  * @property string|null $ch_vil_culture
  * @property-read Pays|null $pays
- * @property-read \Illuminate\Database\Eloquent\Collection|ChapterResourceable[] $chapterResources
+ * @property-read Eloquent\Collection|ChapterResourceable[] $chapterResources
  * @property-read int|null $chapter_resources_count
- * @property-read \Illuminate\Database\Eloquent\Collection|Infrastructure[] $infrastructures
+ * @property-read Eloquent\Collection|Infrastructure[] $infrastructures
  * @property-read int|null $infrastructures_count
- * @property-read \Illuminate\Database\Eloquent\Collection|Infrastructure[] $infrastructuresAll
+ * @property-read Eloquent\Collection|Infrastructure[] $infrastructuresAll
  * @property-read int|null $infrastructures_all_count
- * @property-read \Illuminate\Database\Eloquent\Collection|Patrimoine[] $patrimoines
+ * @property-read Eloquent\Collection|Patrimoine[] $patrimoines
  * @property-read int|null $patrimoines_count
+ * @property-read array<string> $resources
  * @method static Builder|Ville newModelQuery()
  * @method static Builder|Ville newQuery()
  * @method static Builder|Ville query()
@@ -98,8 +101,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @method static Builder|Ville whereChVilTransports($value)
  * @method static Builder|Ville whereChVilTypeJeu($value)
  * @method static Builder|Ville whereChVilUser($value)
- * @property-read \App\Models\array<string, $resources
- * @method static \Database\Factories\VilleFactory factory(...$parameters)
+ * @method static VilleFactory factory(...$parameters)
  * @method static Builder|Ville visible()
  * @mixin Model
  */
@@ -202,7 +204,9 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
         return $this->hasMany(Patrimoine::class, 'ch_pat_villeID');
     }
 
-
+    /**
+     * @return MorphMany
+     */
     public function chapterResources(): MorphMany
     {
         return $this->morphMany(ChapterResourceable::class, 'resourceable');

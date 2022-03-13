@@ -6,6 +6,8 @@ use App\Models\Contracts\Influencable;
 use App\Models\Traits\DeletesInfluences;
 use App\Models\Traits\Influencable as GeneratesInfluence;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -41,39 +43,39 @@ use Spatie\Searchable\SearchResult;
  * @property string|null $ch_pat_commentaire
  * @property int|null $ch_pat_juge
  * @property string|null $ch_pat_commentaire_juge
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Influence[] $influences
+ * @property-read Collection|Influence[] $influences
  * @property-read int|null $influences_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\MonumentCategory[] $monumentCategories
+ * @property-read Collection|MonumentCategory[] $monumentCategories
  * @property-read int|null $monument_categories_count
- * @property-read \App\Models\Ville $ville
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine query()
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatCommentaire($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatCommentaireJuge($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatCoordX($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatCoordY($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatJuge($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatLabel($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatLegendeImg1($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatLegendeImg2($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatLegendeImg3($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatLegendeImg4($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatLegendeImg5($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatLienImg1($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatLienImg2($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatLienImg3($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatLienImg4($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatLienImg5($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatMisJour($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatNbUpdate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatNom($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatPaysID($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatStatut($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Patrimoine whereChPatVilleID($value)
+ * @property-read Ville $ville
+ * @method static Builder|Patrimoine newModelQuery()
+ * @method static Builder|Patrimoine newQuery()
+ * @method static Builder|Patrimoine query()
+ * @method static Builder|Patrimoine whereChPatCommentaire($value)
+ * @method static Builder|Patrimoine whereChPatCommentaireJuge($value)
+ * @method static Builder|Patrimoine whereChPatCoordX($value)
+ * @method static Builder|Patrimoine whereChPatCoordY($value)
+ * @method static Builder|Patrimoine whereChPatDate($value)
+ * @method static Builder|Patrimoine whereChPatDescription($value)
+ * @method static Builder|Patrimoine whereChPatId($value)
+ * @method static Builder|Patrimoine whereChPatJuge($value)
+ * @method static Builder|Patrimoine whereChPatLabel($value)
+ * @method static Builder|Patrimoine whereChPatLegendeImg1($value)
+ * @method static Builder|Patrimoine whereChPatLegendeImg2($value)
+ * @method static Builder|Patrimoine whereChPatLegendeImg3($value)
+ * @method static Builder|Patrimoine whereChPatLegendeImg4($value)
+ * @method static Builder|Patrimoine whereChPatLegendeImg5($value)
+ * @method static Builder|Patrimoine whereChPatLienImg1($value)
+ * @method static Builder|Patrimoine whereChPatLienImg2($value)
+ * @method static Builder|Patrimoine whereChPatLienImg3($value)
+ * @method static Builder|Patrimoine whereChPatLienImg4($value)
+ * @method static Builder|Patrimoine whereChPatLienImg5($value)
+ * @method static Builder|Patrimoine whereChPatMisJour($value)
+ * @method static Builder|Patrimoine whereChPatNbUpdate($value)
+ * @method static Builder|Patrimoine whereChPatNom($value)
+ * @method static Builder|Patrimoine whereChPatPaysID($value)
+ * @method static Builder|Patrimoine whereChPatStatut($value)
+ * @method static Builder|Patrimoine whereChPatVilleID($value)
  * @mixin Model
  */
 class Patrimoine extends Model implements Influencable, Searchable
@@ -121,7 +123,7 @@ class Patrimoine extends Model implements Influencable, Searchable
         'ch_pat_commentaire',
     ];
 
-    public $searchableType = 'Quêtes';
+    public string $searchableType = 'Quêtes';
 
     public function getSearchResult(): SearchResult
     {
@@ -138,11 +140,17 @@ class Patrimoine extends Model implements Influencable, Searchable
         );
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function ville(): BelongsTo
     {
         return $this->belongsTo(Ville::class, 'ch_pat_villeID');
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function monumentCategories(): BelongsToMany
     {
         return $this->belongsToMany(

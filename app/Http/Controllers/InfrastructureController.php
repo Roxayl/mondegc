@@ -119,11 +119,11 @@ class InfrastructureController extends Controller
         $infrastructure = Infrastructure::findOrFail($id);
 
         $infrastructureOfficielle = InfrastructureOfficielle::findOrFail(
-            $infrastructure->infrastructure_officielle->first()->ch_inf_off_id);
+            $infrastructure->infrastructureOfficielle->first()->ch_inf_off_id);
 
         $infrastructureGroupe = InfrastructureGroupe::findOrFail(
-            $infrastructure->infrastructure_officielle
-                ->infrastructure_groupe->first()->id);
+            $infrastructure->infrastructureOfficielle
+                ->infrastructureGroupe->first()->id);
 
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
 

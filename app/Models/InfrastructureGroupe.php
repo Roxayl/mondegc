@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -14,16 +16,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $url_image
  * @property int $order
  * @property Carbon $created
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\InfrastructureOfficielle[] $infrastructures_officielles
+ * @property-read Collection|InfrastructureOfficielle[] $infrastructures_officielles
  * @property-read int|null $infrastructures_officielles_count
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureGroupe newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureGroupe newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureGroupe query()
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureGroupe whereCreated($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureGroupe whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureGroupe whereNomGroupe($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureGroupe whereOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InfrastructureGroupe whereUrlImage($value)
+ * @method static Builder|InfrastructureGroupe newModelQuery()
+ * @method static Builder|InfrastructureGroupe newQuery()
+ * @method static Builder|InfrastructureGroupe query()
+ * @method static Builder|InfrastructureGroupe whereCreated($value)
+ * @method static Builder|InfrastructureGroupe whereId($value)
+ * @method static Builder|InfrastructureGroupe whereNomGroupe($value)
+ * @method static Builder|InfrastructureGroupe whereOrder($value)
+ * @method static Builder|InfrastructureGroupe whereUrlImage($value)
  * @mixin Model
  */
 class InfrastructureGroupe extends Model
@@ -46,7 +48,10 @@ class InfrastructureGroupe extends Model
         'created'
     ];
 
-    public function infrastructures_officielles(): BelongsToMany
+    /**
+     * @return BelongsToMany
+     */
+    public function infrastructuresOfficielles(): BelongsToMany
     {
         return $this->belongsToMany(
             InfrastructureOfficielle::class,

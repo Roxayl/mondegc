@@ -32,11 +32,16 @@ use Illuminate\Support\Str;
  * @property Carbon|null $ending_date
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @property Roleplay $roleplay
- * @property CustomUser $user
+ * @property CustomUser $userCreator
  * @property Collection|ChapterResourceable[] $resourceables
+ * @property Collection|ChapterEntry[] $entries
+ * @property-write mixed $reason
  * @property-read int|null $resourceables_count
- * @property-read CustomUser $userCreator
+ * @property-read int|null $entries_count
+ * @property-read Collection|Version[] $versions
+ * @property-read int|null $versions_count
  * @method static ChapterFactory factory(...$parameters)
  * @method static Builder|Chapter newModelQuery()
  * @method static Builder|Chapter newQuery()
@@ -52,10 +57,6 @@ use Illuminate\Support\Str;
  * @method static Builder|Chapter whereSummary($value)
  * @method static Builder|Chapter whereUpdatedAt($value)
  * @method static Builder|Chapter whereUserId($value)
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-write mixed $reason
- * @property-read Collection|Version[] $versions
- * @property-read int|null $versions_count
  * @method static Query\Builder|Chapter onlyTrashed()
  * @method static Builder|Chapter whereDeletedAt($value)
  * @method static Query\Builder|Chapter withTrashed()
@@ -110,6 +111,14 @@ class Chapter extends Model
     public function userCreator(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class, 'user_id', 'ch_use_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function entries(): HasMany
+    {
+        return $this->hasMany(ChapterEntry::class)->orderByDesc('created_at');
     }
 
     /**

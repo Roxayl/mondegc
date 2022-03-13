@@ -30,8 +30,8 @@ $viewActionVerb = 'Modifier';
           <div class="span6 well">
 
           <h3 style="margin: 0;">
-              {{ $infrastructure->infrastructure_officielle
-                    ->infrastructure_groupe->first()->nom_groupe }}
+              {{ $infrastructure->infrastructureOfficielle
+                    ->infrastructureGroupe->first()->nom_groupe }}
           </h3>
 
           <br><br>
@@ -45,9 +45,9 @@ $viewActionVerb = 'Modifier';
               </div>
               <div class="controls">
                   <select name="infrastructure_officielle_id" id="infrastructure_officielle_id" placeholder="Rechercher une infrastructure..." disabled>
-                @foreach($infrastructureGroupe->infrastructures_officielles as $thisInfOff)
+                @foreach($infrastructureGroupe->infrastructuresOfficielles as $thisInfOff)
                 <option value="{{ $thisInfOff->ch_inf_off_id }}"
-                    @if($infrastructure->infrastructure_officielle->ch_inf_off_id === $thisInfOff->ch_inf_off_id) selected @endif>
+                    @if($infrastructure->infrastructureOfficielle->ch_inf_off_id === $thisInfOff->ch_inf_off_id) selected @endif>
                     {{ $thisInfOff->ch_inf_off_nom }}
                 </option>
                 @endforeach

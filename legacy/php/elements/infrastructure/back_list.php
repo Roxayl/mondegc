@@ -56,7 +56,7 @@ if(isset($data['infrastructurable'])) {
                      alt="Infrastructure : <?= e($infrastructure->nom_infra) ?>"
                      style="width: 120px;"></td>
             <td><?= e($infrastructure->nom_infra) ?><br>
-                <small><?= e($infrastructure->infrastructure_officielle
+                <small><?= e($infrastructure->infrastructureOfficielle
                         ->ch_inf_off_nom) ?></small></td>
             <td><?= date('d/m/Y', strtotime($infrastructure->ch_inf_date)) ?></td>
             <td>

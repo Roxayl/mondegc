@@ -1,5 +1,5 @@
 
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://generation-city.com/monde/assets/img/2019/logo-navbar.png" width="420" alt="Monde GC"></a></p>
+<p align="center"><a href="https://generation-city.com/monde/" target="_blank"><img src="https://generation-city.com/monde/assets/img/2019/logo-navbar.png" width="420" alt="Monde GC"></a></p>
 
 <p align="center">
 <a href="https://github.com/Roxayl/mondegc/actions"><img src="https://github.com/Roxayl/mondegc/actions/workflows/build.yml/badge.svg" alt="CI" /></a>
@@ -48,11 +48,11 @@ Son développement a été repris par [Sakuro](https://www.forum-gc.com/u615) et
 avec la contribution de [Myname](https://www.forum-gc.com/u2345) et de [vallamir](https://www.forum-gc.com/u319). 
 L'aspect graphique est réalisé par [Lesime](https://www.forum-gc.com/u23) et romu23.
 
-Le site du Monde GC, depuis la [version 2.5](https://bitbucket.org/Roxayl/mondegc/src/release-2.5/) (juillet 2020), 
-repose sur le framework [Laravel](https://laravel.com/), et les nouvelles fonctionnalités du site reposent sur ce 
-framework. La [documentation](https://laravel.com/docs/8.x) de Laravel est riche et n'hésitez pas à vous renseigner sur 
-son fonctionnement, intuitif et puissant, afin de pouvoir contribuer vous aussi au projet phare de la communauté 
-[Génération City](http://www.forum-gc.com/).
+Le site du Monde GC, depuis la [version 2.5](https://www.forum-gc.com/t6872p110-notes-de-mise-a-jour-monde-gc#287597) 
+(juillet 2020), repose sur le framework [Laravel](https://laravel.com/), et les nouvelles fonctionnalités du site 
+reposent sur ce framework. La [documentation](https://laravel.com/docs/8.x) de Laravel est riche et n'hésitez pas à 
+vous renseigner sur son fonctionnement, intuitif et puissant, afin de pouvoir contribuer vous aussi au projet phare de 
+la communauté [Génération City](http://www.forum-gc.com/).
 
 ## Structure des dépôts Git
 
@@ -91,7 +91,7 @@ Ce guide fournit les étapes pour démarrer l'application Web sur votre machine.
 
 - l'installation de Docker
     - sur Windows
-    - sur Ubuntu
+    - sur les systèmes Linux
 - l'installation et l'initialisation de l'application
 
 #### Installer Docker
@@ -116,35 +116,35 @@ conteneurisées.
 Une fois que tout est installé, vous êtes prêt pour déployer l'application Web via Docker.
 
 1. Clonez le dépôt Git dans un répertoire sur votre machine, en ligne de commande :
-   ```
+   ```bash
     > git clone https://bitbucket.org/Roxayl/mondegc.git
    ```
 
 2. Lancez les conteneurs Docker de l'application via la commande suivante, depuis le répertoire où est
    installé l'application :
-   ```
+   ```bash
     > docker-compose up -d
    ```
 
 3. Accédez au conteneur de l'application via la commande à saisir dans un terminal.
-   ```
+   ```bash
     > docker exec -ti mondegc_app sh
    ```
 
 4. Dans le conteneur de l'application, accédez au dossier comprenant les fichiers de l'application et exécutez la 
 commande permettant d'installer les dépendances et bibliothèques externes PHP (gérée par Composer).
-   ```
+   ```bash
     > composer install
    ```
 
 5. Toujours dans le conteneur de l'application, exécutez la commande d'initialisation. Cette commande va notamment 
 générer des clés et d'autres variables d'environnement.
-   ```
+   ```bash
     > php artisan monde:init-env
    ```
 
 6. Initialisez ensuite la base de données. Enfin, vous pouvez sortir du conteneur via la commande ``exit``.
-   ```
+   ```bash
     > php artisan monde:init-db
     > exit
    ```
@@ -250,11 +250,11 @@ de l'application, à partir des annotations [PHPDoc](https://fr.wikipedia.org/wi
 Pour cela, vous pouvez exécuter la commande suivante, à partir du répertoire racine :
 
 - sur un terminal PowerShell (Windows) :
-   ```
+   ```bash
     > docker run --rm -v ${pwd}:/data phpdoc/phpdoc:3 run
    ```
 - sur un terminal Bash (Linux) :
-   ```
+   ```bash
     > docker run --rm -v $(pwd):/data phpdoc/phpdoc:3 run
    ```
 
@@ -280,7 +280,7 @@ Vous pouvez accéder à une ressource en passant le jeton en tant que
 "[Bearer Token](https://swagger.io/docs/specification/authentication/bearer-authentication/)". Un exemple de requête en 
 ligne de commande avec [cURL](https://curl.se/) serait le suivant :
 
-```
+```bash
 curl -i http://localhost/api/resource/fetch/pays \
 -H "Authorization: Bearer Rn4u3IA3bqPqNSqhbGJkcpQFOAq2K30T5OI20wJ2D9Q55BpMco7tV1ppU0QT"
 ```

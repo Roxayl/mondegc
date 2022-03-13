@@ -21,7 +21,7 @@ class ChapterResourceableFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $resources = EconomyService::resourcesPrefilled();
 

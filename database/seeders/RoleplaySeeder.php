@@ -3,17 +3,26 @@
 namespace Database\Seeders;
 
 use App\Models\Chapter;
+use App\Models\ChapterEntry;
 use App\Models\ChapterResourceable;
 use App\Models\CustomUser;
 use App\Models\Organisation;
 use App\Models\Pays;
 use App\Models\Roleplay;
 use App\Models\Ville;
+use Faker\Generator;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class RoleplaySeeder extends Seeder
 {
+    private Generator $faker;
+
+    public function __construct(Generator $faker)
+    {
+        $this->faker = $faker;
+    }
+
     /**
      * Run the database seeds.
      *
@@ -67,6 +76,25 @@ class RoleplaySeeder extends Seeder
                                         => Ville::inRandomOrder()->first(),
                                     ]),
                             'resourceables'
+                        )
+                        ->has(
+                            ChapterEntry::factory()
+                                ->state(function(array $attributes, Chapter $chapter) {
+                                    return ['chapter_id' => $chapter->id];
+                                })
+                                ->count(rand(0, 3))
+                                ->sequence(
+                                    [
+                                        'media_type' => null,
+                                        'media_data' => null,
+                                    ], [
+                                        'media_type' => 'squirrel.squit',
+                                        'media_data' => $this->faker->chapterEntryMediaData('squirrel.squit'),
+                                    ], [
+                                        'media_type' => 'forum.post',
+                                        'media_data' => $this->faker->chapterEntryMediaData('forum.post'),
+                                    ]),
+                            'entries'
                         ),
                     'chapters')
                 ->create([

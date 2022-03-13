@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -16,15 +17,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property bool $unread
  * @property Carbon $created
  * @property CustomUser $user
- * @method static \Illuminate\Database\Eloquent\Builder|NotificationLegacy newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|NotificationLegacy newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|NotificationLegacy query()
- * @method static \Illuminate\Database\Eloquent\Builder|NotificationLegacy whereCreated($value)
- * @method static \Illuminate\Database\Eloquent\Builder|NotificationLegacy whereElement($value)
- * @method static \Illuminate\Database\Eloquent\Builder|NotificationLegacy whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|NotificationLegacy whereRecipientId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|NotificationLegacy whereTypeNotif($value)
- * @method static \Illuminate\Database\Eloquent\Builder|NotificationLegacy whereUnread($value)
+ * @method static Builder|NotificationLegacy newModelQuery()
+ * @method static Builder|NotificationLegacy newQuery()
+ * @method static Builder|NotificationLegacy query()
+ * @method static Builder|NotificationLegacy whereCreated($value)
+ * @method static Builder|NotificationLegacy whereElement($value)
+ * @method static Builder|NotificationLegacy whereId($value)
+ * @method static Builder|NotificationLegacy whereRecipientId($value)
+ * @method static Builder|NotificationLegacy whereTypeNotif($value)
+ * @method static Builder|NotificationLegacy whereUnread($value)
  * @mixin Model
  */
 class NotificationLegacy extends Model
@@ -50,6 +51,9 @@ class NotificationLegacy extends Model
         'created'
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class, 'recipient_id');

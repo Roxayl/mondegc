@@ -6,6 +6,7 @@ use App\Models\Contracts\Roleplayable;
 use App\Models\Factories\RoleplayableFactory;
 use App\Models\Roleplay;
 use App\Services\StringBladeService;
+use App\View\Components\Blocks\RoleplayableSelector;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -16,28 +17,6 @@ use Illuminate\Validation\ValidationException;
 
 class RoleplayController extends Controller
 {
-    /**
-     * Créé une instance d'un roleplayable à partir des paramètre passés dans la requête {@see Request}.
-     * Il est nécessaire que les champs "type" et "id" soient présents dans les paramètres de la requête.
-     *
-     * @param Request $request
-     * @return Roleplayable
-     * @throws ValidationException
-     */
-    private static function createRoleplayableFromForm(Request $request): Roleplayable
-    {
-        $form = $request->all();
-
-        /** @var Roleplayable|null $roleplayable */
-        $roleplayable = RoleplayableFactory::find($form['type'], $form['id']);
-
-        if($roleplayable === null) {
-            throw ValidationException::withMessages(["Ce roleplayable n'existe pas."]);
-        }
-
-        return $roleplayable;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -140,7 +119,7 @@ class RoleplayController extends Controller
     {
         $this->authorize('display', Roleplay::class);
 
-        $chapters = $roleplay->chapters()->orderBy('order')->get();
+        $chapters = $roleplay->chapters()->orderByDesc('order')->get();
 
         return view('roleplay.show', compact('roleplay', 'chapters'));
     }
@@ -299,7 +278,7 @@ class RoleplayController extends Controller
     {
         $this->authorize('manage', $roleplay);
 
-        $roleplayable = self::createRoleplayableFromForm($request);
+        $roleplayable = RoleplayableSelector::createRoleplayableFromForm($request);
 
         if($roleplay->hasOrganizer($roleplayable)) {
             throw ValidationException::withMessages(["C'est déjà un organisateur de ce roleplay."]);
@@ -322,7 +301,7 @@ class RoleplayController extends Controller
     {
         $this->authorize('manage', $roleplay);
 
-        $roleplayable = self::createRoleplayableFromForm($request);
+        $roleplayable = RoleplayableSelector::createRoleplayableFromForm($request);
 
         if(! $roleplay->hasOrganizer($roleplayable)) {
             throw ValidationException::withMessages(["Ce n'est pas un organisateur de ce roleplay."]);

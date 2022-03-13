@@ -19,7 +19,7 @@ class PersonnageFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'nom_personnage' => $this->faker->lastName(),

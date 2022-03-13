@@ -38,6 +38,8 @@ Route::post('logout', fn() => url('connexion.php?doLogout=true')) // FIXME: néc
 | CustomUser
 |--------------------------------------------------------------------------
 */
+Route::get('user/roleplayables', [Controllers\CustomUserController::class, 'roleplayables'])
+    ->name('user.roleplayables');
 Route::post('user/update-api-token/{user}', [Controllers\CustomUserController::class, 'updateToken'])
     ->name('user.update-api-token');
 
@@ -161,6 +163,24 @@ Route::get('chapter/history/{chapter}', [Controllers\ChapterController::class, '
 Route::get('chapter/delete/{chapter}', [Controllers\ChapterController::class, 'delete'])
     ->name('chapter.delete');
 Route::resource('chapter', 'ChapterController')->except(['create', 'store']);
+
+/*
+|--------------------------------------------------------------------------
+| ChapterEntry
+|--------------------------------------------------------------------------
+*/
+Route::get('chapter-entry/create/{chapter}', [Controllers\ChapterEntryController::class, 'create'])
+    ->name('chapter-entry.create');
+Route::get('chapter-entry/create-button/{chapter}', [Controllers\ChapterEntryController::class, 'createButton'])
+    ->name('chapter-entry.create-button');
+Route::post('chapter-entry/{chapter}', [Controllers\ChapterEntryController::class, 'store'])
+    ->name('chapter-entry.store');
+Route::get('chapter-entry/delete/{entry}', [Controllers\ChapterEntryController::class, 'delete'])
+    ->name('chapter-entry.delete');
+Route::delete('chapter-entry/{entry}', [Controllers\ChapterEntryController::class, 'destroy'])
+    ->name('chapter-entry.destroy');
+Route::resource('chapter-entry', 'ChapterEntryController')
+    ->except(['show', 'create', 'store', 'destroy']);
 
 /*
 |--------------------------------------------------------------------------

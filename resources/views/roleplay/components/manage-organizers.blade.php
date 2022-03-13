@@ -1,14 +1,12 @@
 
 <div class="component-block" id="organizers">
-    <div class="cta-title pull-right-cta" style="margin-top: 7px;">
+    <div class="cta-title pull-right-cta" style="margin-top: 0;">
         <a href="#" class="btn btn-primary btn-cta component-trigger"
            {!! $getTargetHtmlAttributes(route('roleplay.organizers', $roleplay), 'organizers') !!}>
             <i class="icon-white icon-pencil"></i> Retour</a>
     </div>
 
-    <div class="titre-bleu" id="roleplay-organizers">
-        <h1>Organisateurs</h1>
-    </div>
+    <h3 id="roleplay-organizers">Organisateurs</h3>
 
     <div class="clearfix"></div>
 

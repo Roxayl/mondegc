@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\Roleplayable;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -21,20 +23,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $ch_com_contenu
  * @property int|null $ch_com_pays_id
  * @property CustomUser $user
- * @method static \Illuminate\Database\Eloquent\Builder|Communique newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Communique newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Communique query()
- * @method static \Illuminate\Database\Eloquent\Builder|Communique whereChComCategorie($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Communique whereChComContenu($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Communique whereChComDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Communique whereChComDateMisJour($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Communique whereChComElementId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Communique whereChComID($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Communique whereChComLabel($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Communique whereChComPaysId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Communique whereChComStatut($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Communique whereChComTitre($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Communique whereChComUserId($value)
+ * @method static Builder|Communique newModelQuery()
+ * @method static Builder|Communique newQuery()
+ * @method static Builder|Communique query()
+ * @method static Builder|Communique whereChComCategorie($value)
+ * @method static Builder|Communique whereChComContenu($value)
+ * @method static Builder|Communique whereChComDate($value)
+ * @method static Builder|Communique whereChComDateMisJour($value)
+ * @method static Builder|Communique whereChComElementId($value)
+ * @method static Builder|Communique whereChComID($value)
+ * @method static Builder|Communique whereChComLabel($value)
+ * @method static Builder|Communique whereChComPaysId($value)
+ * @method static Builder|Communique whereChComStatut($value)
+ * @method static Builder|Communique whereChComTitre($value)
+ * @method static Builder|Communique whereChComUserId($value)
  * @mixin Model
  */
 class Communique extends Model
@@ -69,15 +71,39 @@ class Communique extends Model
     public const STATUS_PUBLISHED = 1;
     public const STATUS_DRAFT = 2;
 
+    private static array $publisherMorphMap = [
+        'com_communique' => Pays::class,
+        'com_pays' => Pays::class,
+        'com_ville' => Pays::class,
+        'com_monument' => Pays::class,
+        'com_fait_his' => Pays::class,
+        'institut' => null,
+        'organisation' => Organisation::class,
+        'pays' => Pays::class,
+        'ville' => Ville::class,
+    ];
+
+    /**
+     * @return BelongsTo
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class, 'ch_com_user_id');
     }
 
-    public function publisher()
+    /**
+     * Donne l'entité à l'origine du communiqué.
+     *
+     * @return Roleplayable
+     */
+    public function publisher(): Roleplayable
     {
-        // TODO: https://laravel.com/docs/5.8/eloquent-relationships#one-to-many-polymorphic-relations
-        // return $this->morphTo();
-        throw new \Exception("Pas encore implémenté.");
+        $class = self::$publisherMorphMap[$this->ch_com_categorie];
+
+        if($class === null) {
+            throw new \InvalidArgumentException("Pas de classe assignée pour {$this->ch_com_categorie}.");
+        }
+
+        return $class::find($this->ch_com_element_id);
     }
 }

@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query;
+use Illuminate\Support;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -68,6 +70,12 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @method static OrganisationFactory factory(...$parameters)
  * @method static Builder|Organisation visible()
  * @mixin Model
+ * @property Carbon|null $deleted_at
+ * @property-read array<string> $resources
+ * @method static Query\Builder|Organisation onlyTrashed()
+ * @method static Builder|Organisation whereDeletedAt($value)
+ * @method static Query\Builder|Organisation withTrashed()
+ * @method static Query\Builder|Organisation withoutTrashed()
  */
 class Organisation extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
@@ -135,11 +143,17 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
         self::TYPE_AGENCY, self::TYPE_ALLIANCE, self::TYPE_ORGANISATION
     ];
 
+    /**
+     * @inheritDoc
+     */
     public static function getNameColumn(): string
     {
         return 'name';
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getSearchResult(): SearchResult
     {
         $context = "{$this->members->count()} membres";
@@ -227,9 +241,9 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
 
     /**
      * @param ?scalar $permission
-     * @return \Illuminate\Support\Collection
+     * @return Support\Collection
      */
-    public function getUsers(float|bool|int|string $permission = null): \Illuminate\Support\Collection
+    public function getUsers(float|bool|int|string $permission = null): Support\Collection
     {
         if($permission === null) {
             $permission = self::$permissions['administrator'];

@@ -18,7 +18,9 @@ class VilleFactory extends Factory
     protected $model = Ville::class;
 
     /**
-     * @inheritDoc
+     * Define the model's default state.
+     *
+     * @return array
      */
     public function definition()
     {

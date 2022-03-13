@@ -7,6 +7,7 @@ use App\Notifications\OrganisationMemberJoined;
 use App\Notifications\OrganisationMemberPermissionChanged;
 use App\Notifications\OrganisationMemberQuit;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Notification;
@@ -22,15 +23,15 @@ use Illuminate\Support\Facades\Notification;
  * @property Carbon|null $updated_at
  * @property Organisation $organisation
  * @property Pays $pays
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember query()
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember whereOrganisationId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember wherePaysId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember wherePermissions($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationMember whereUpdatedAt($value)
+ * @method static Builder|OrganisationMember newModelQuery()
+ * @method static Builder|OrganisationMember newQuery()
+ * @method static Builder|OrganisationMember query()
+ * @method static Builder|OrganisationMember whereCreatedAt($value)
+ * @method static Builder|OrganisationMember whereId($value)
+ * @method static Builder|OrganisationMember whereOrganisationId($value)
+ * @method static Builder|OrganisationMember wherePaysId($value)
+ * @method static Builder|OrganisationMember wherePermissions($value)
+ * @method static Builder|OrganisationMember whereUpdatedAt($value)
  * @mixin Model
  */
 class OrganisationMember extends Model
@@ -49,40 +50,36 @@ class OrganisationMember extends Model
         'pays_id'
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function organisation(): BelongsTo
     {
         return $this->belongsTo(Organisation::class, 'organisation_id');
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function pays(): BelongsTo
     {
         return $this->belongsTo(Pays::class, 'pays_id', 'ch_pay_id');
     }
 
+    /**
+     * @return string
+     */
     public function getPermissionLabel(): string
     {
-        switch($this->permissions) {
-            case Organisation::$permissions['owner']:
-                $label = 'Propriétaire';
-                break;
-            case Organisation::$permissions['administrator']:
-                $label = 'Administrateur';
-                break;
-            case Organisation::$permissions['member']:
-                $label = 'Membre';
-                break;
-            case Organisation::$permissions['pending']:
-                $label = 'En attente de validation';
-                break;
-            case Organisation::$permissions['invited']:
-                $label = 'Invitation envoyée';
-                break;
-            default:
-                throw new \InvalidArgumentException(
-                    "Mauvais type de permission.");
-        }
-
-        return $label;
+        return match ($this->permissions) {
+            Organisation::$permissions['owner'] => 'Propriétaire',
+            Organisation::$permissions['administrator'] => 'Administrateur',
+            Organisation::$permissions['member'] => 'Membre',
+            Organisation::$permissions['pending'] => 'En attente de validation',
+            Organisation::$permissions['invited'] => 'Invitation envoyée',
+            default => throw new \InvalidArgumentException(
+                "Mauvais type de permission."),
+        };
     }
 
     /**

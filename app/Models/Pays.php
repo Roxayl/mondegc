@@ -13,6 +13,7 @@ use App\Models\Traits\Resourceable as HasResources;
 use App\Services\EconomyService;
 use Carbon\Carbon;
 use Closure;
+use Database\Factories\PaysFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
@@ -83,15 +85,16 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property-read int|null $organisation_members_count
  * @property-read Collection|ChapterResourceable[] $chapterResources
  * @property-read int|null $chapter_resources_count
- * @property-read Collection|\App\Models\Geometry[] $geometries
+ * @property-read Collection|Geometry[] $geometries
  * @property-read int|null $geometries_count
- * @property-read Collection|\App\Models\OcgcProposal[] $proposals
+ * @property-read Collection|OcgcProposal[] $proposals
  * @property-read int|null $proposals_count
- * @property-read Collection|\App\Models\CustomUser[] $users
+ * @property-read Collection|CustomUser[] $users
  * @property-read int|null $users_count
- * @property-read Collection|\App\Models\Ville[] $villes
+ * @property-read Collection|Ville[] $villes
  * @property-read int|null $villes_count
- * @method static \Database\Factories\PaysFactory factory(...$parameters)
+ * @property-read array<string> $resources
+ * @method static PaysFactory factory(...$parameters)
  * @method static Builder|Pays newModelQuery()
  * @method static Builder|Pays newQuery()
  * @method static Builder|Pays query()
@@ -224,6 +227,9 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
      */
     private static array $slotRange = [1, 59];
 
+    /**
+     * @var PaysMapManager|null Instance du gestionnaire de carte de pays.
+     */
     private ?PaysMapManager $mapManager = null;
 
     /**
@@ -237,6 +243,9 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         return $this->mapManager;
     }
 
+    /**
+     * @return string
+     */
     public static function getNameColumn(): string
     {
         return 'ch_pay_nom';
@@ -299,9 +308,9 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     }
 
     /**
-     * @return Collection<Organisation>
+     * @return Support\Collection<int, Organisation>
      */
-    public function otherOrganisations(): \Illuminate\Support\Collection
+    public function otherOrganisations(): Support\Collection
     {
         return $this->getOrganisationMembership(function ($query) {
             return $query->where('type', '!=', Organisation::TYPE_ALLIANCE)
@@ -313,9 +322,9 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     /**
      * Donne les organisations gérées par le pays (donc sur lesquelles le pays a un niveau de permission d'au
      * moins administrateur).
-     * @return \Illuminate\Support\Collection<int, Organisation>
+     * @return Support\Collection<int, Organisation>
      */
-    public function managedOrganisations(): \Illuminate\Support\Collection
+    public function managedOrganisations(): Support\Collection
     {
         return $this->getOrganisationMembership(
             fn ($query) => $query,

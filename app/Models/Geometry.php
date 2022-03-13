@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -21,23 +22,23 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property float $ch_geo_mesure
  * @property string|null $ch_geo_type
  * @property string|null $ch_geo_nom
- * @property-read \App\Models\TypeGeometry|null $typeGeometry
- * @property-read \App\Models\Pays $pays
- * @method static \Illuminate\Database\Eloquent\Builder|Geometry newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Geometry newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Geometry query()
- * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoGeometries($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoMajUser($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoMesure($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoMisJour($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoNom($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoPayId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoUser($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereChGeoWkt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Geometry whereTypeGeometrieId($value)
+ * @property-read TypeGeometry|null $typeGeometry
+ * @property-read Pays $pays
+ * @method static Builder|Geometry newModelQuery()
+ * @method static Builder|Geometry newQuery()
+ * @method static Builder|Geometry query()
+ * @method static Builder|Geometry whereChGeoDate($value)
+ * @method static Builder|Geometry whereChGeoGeometries($value)
+ * @method static Builder|Geometry whereChGeoId($value)
+ * @method static Builder|Geometry whereChGeoMajUser($value)
+ * @method static Builder|Geometry whereChGeoMesure($value)
+ * @method static Builder|Geometry whereChGeoMisJour($value)
+ * @method static Builder|Geometry whereChGeoNom($value)
+ * @method static Builder|Geometry whereChGeoPayId($value)
+ * @method static Builder|Geometry whereChGeoType($value)
+ * @method static Builder|Geometry whereChGeoUser($value)
+ * @method static Builder|Geometry whereChGeoWkt($value)
+ * @method static Builder|Geometry whereTypeGeometrieId($value)
  * @mixin Model
  */
 class Geometry extends Model
@@ -73,11 +74,17 @@ class Geometry extends Model
         'ch_geo_nom'
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function pays(): BelongsTo
     {
         return $this->belongsTo(Pays::class, 'ch_geo_pay_id');
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function typeGeometry(): BelongsTo
     {
         return $this->belongsTo(TypeGeometry::class, 'type_geometrie_id');

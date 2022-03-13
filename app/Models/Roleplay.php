@@ -23,12 +23,15 @@ use Illuminate\Support\Facades\DB;
  * @property int $id
  * @property string $name
  * @property int $user_id
+ * @property string|null $banner
+ * @property string $description
  * @property Carbon $starting_date
  * @property Carbon|null $ending_date
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property CustomUser $owner
  * @property Collection|Chapter[] $chapters
+ * @property Support\Carbon|null $deleted_at
  * @method static Builder|Roleplay current() Filtre sur la liste des roleplays actuels, en cours.
  * @property-read int|null $chapters_count
  * @method static RoleplayFactory factory(...$parameters)
@@ -42,7 +45,8 @@ use Illuminate\Support\Facades\DB;
  * @method static Builder|Roleplay whereStartingDate($value)
  * @method static Builder|Roleplay whereUpdatedAt($value)
  * @method static Builder|Roleplay whereUserId($value)
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static Builder|Roleplay whereBanner($value)
+ * @method static Builder|Roleplay whereDescription($value)
  * @method static Query\Builder|Roleplay onlyTrashed()
  * @method static Builder|Roleplay whereDeletedAt($value)
  * @method static Query\Builder|Roleplay withTrashed()
@@ -67,11 +71,24 @@ class Roleplay extends Model
 
     protected $fillable = [
         'name',
+        'banner',
+        'description',
     ];
 
     public const validationRules = [
         'name' => 'required|min:2|max:191',
     ];
+
+    /**
+     * @var bool Détermine si {@see hasOrganizerAmong()} utilise le système de mémoïsation.
+     *           Si ce paramètre est mis à <code>false</code>, {@see $roleplayableHashes} reste <code>null</code>.
+     */
+    protected static bool $memoizeRoleplayables = true;
+
+    /**
+     * @var Support\Collection<string, bool>|null
+     */
+    protected static ?Support\Collection $roleplayableHashes = null;
 
     /**
      * @return BelongsTo
@@ -193,7 +210,22 @@ class Roleplay extends Model
                 }
             });
 
-        return $query->get()->isNotEmpty();
+        if(self::$memoizeRoleplayables) {
+            $hash = sha1($query->toSql());
+
+            if(self::$roleplayableHashes === null) {
+                self::$roleplayableHashes = collect();
+            }
+
+            if(! self::$roleplayableHashes->has($hash)) {
+                $hasOrganizer = $query->get()->isNotEmpty();
+                self::$roleplayableHashes->put($hash, $hasOrganizer);
+            }
+
+            return self::$roleplayableHashes->get($hash);
+        } else {
+            return $query->get()->isNotEmpty();
+        }
     }
 
     /**
