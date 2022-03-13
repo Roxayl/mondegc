@@ -91,8 +91,8 @@ class ChapterEntryController extends Controller
         $entry->roleplayable_id = $roleplayable->getKey();
         $entry->roleplayable_type = get_class($roleplayable);
 
-        // Définir le texte.
-        $entry->content = $request->input('content');
+        // Récupérer le titre et le contenu.
+        $entry->fill($request->only($entry->getFillable()));
 
         // Gérer l'intégration d'un média.
         $request->setMediaFromRequest($entry);

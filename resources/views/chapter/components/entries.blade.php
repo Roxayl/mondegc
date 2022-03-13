@@ -26,17 +26,26 @@
                     </div>
                 @endcan
 
-                <small class="mx-0 mt-1 mb-3 p-0" style="display: block;">
+                <small class="mx-0 mt-1 mb-2 p-0" style="display: block;">
                     @if($entry->roleplayable !== null)
+                        @if(! empty($entry->roleplayable->getFlag()))
+                            <img src="{{ $entry->roleplayable->getFlag() }}" alt="" class="img-menu-drapeau" />
+                        @endif
                         <a href="{{ $entry->roleplayable->accessorUrl() }}">{{ $entry->roleplayable->getName() }}</a>
                     @else
                         <i>Auteur inconnu.</i>
                     @endif
                 </small>
 
-                {!! $entry->content !!}
+                <h4 class="mt-0">{{ $entry->title }}</h4>
+
+                {!! \App\Services\HelperService::purifyHtml($entry->content) !!}
 
                 {!! $entry->mediaViewComponent()?->render() !!}
+
+                <small class="mb-1 mt-3 mx-0 p-0" style="display: block;">
+                    {{ $entry->created_at->format('d/m/Y à H:i') }}
+                </small>
             </div>
 
         @endforeach

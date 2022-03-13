@@ -25,10 +25,11 @@ class ChapterEntryFactory extends Factory
         $model = $this->faker->randomElement(RoleplayableFactory::models);
 
         return [
-            'content' => $this->faker->text(),
-            'media_type' => $this->faker->chapterEntryMediaType(),
             'roleplayable_type' => ChapterEntry::getActualClassNameForMorph($model),
             'roleplayable_id' => $model::inRandomOrder()->first()->getKey(),
+            'title' => $this->faker->text(rand(40, 120)),
+            'content' => $this->faker->text(),
+            'media_type' => $this->faker->chapterEntryMediaType(),
         ];
     }
 

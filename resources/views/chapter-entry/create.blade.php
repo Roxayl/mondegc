@@ -11,10 +11,17 @@
 
     <x-blocks.roleplayable-selector :endpoint-url="route('user.roleplayables')" />
 
+    <div class="form-control mt-2">
+        <label>
+            Titre
+            <input type="text" name="title" class="form-control-lg span6" required />
+        </label>
+    </div>
+
     <div class="form-control">
         <label>
             Contenu
-            <textarea style="width: 100%;" rows="10" name="content"></textarea>
+            <textarea style="width: 100%;" rows="10" name="content" required></textarea>
         </label>
     </div>
 

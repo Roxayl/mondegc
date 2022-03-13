@@ -17,6 +17,7 @@ use Illuminate\Support\Carbon;
  *
  * @property int $id
  * @property int $chapter_id
+ * @property string $title
  * @property string $content
  * @property string $roleplayable_type
  * @property int $roleplayable_id
@@ -32,6 +33,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ChapterEntry whereChapterId($value)
  * @method static Builder|ChapterEntry whereRoleplayableId($value)
  * @method static Builder|ChapterEntry whereRoleplayableType($value)
+ * @method static Builder|ChapterEntry whereTitle($value)
  * @method static Builder|ChapterEntry whereContent($value)
  * @method static Builder|ChapterEntry whereCreatedAt($value)
  * @method static Builder|ChapterEntry whereId($value)
@@ -55,6 +57,7 @@ class ChapterEntry extends Model
     ];
 
     protected $fillable = [
+        'title',
         'content',
     ];
 

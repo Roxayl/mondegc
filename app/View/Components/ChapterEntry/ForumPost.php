@@ -34,10 +34,10 @@ class ForumPost extends BaseMediaEntry
             throw new HttpClientException("Impossible de charger le post du forum.");
         }
 
-        $html = new HtmlDocument($response->getBody());
-        $author = $html->find('div#profile' . $postId, 0)->find('.postprofile-name strong', 0)->innertext;
-        $text = $html->find('div#p' . $postId, 0)->find('.content', 0)->innertext;
-
+        $html = new HtmlDocument($response->getBody()->getContents());
+        $author = trim(strip_tags($html->find('div#profile' . $postId, 0)
+                                       ->find('.postprofile-name', 0)->innertext));
+        $text = trim($html->find('div#p' . $postId, 0)->find('.content', 0)->innertext);
         $text = str_replace('src="/', 'src="https://www.forum-gc.com/', $text);
 
         return [
