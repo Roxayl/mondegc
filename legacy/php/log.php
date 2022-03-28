@@ -60,7 +60,6 @@ if (isset($_POST['identifiant'])) {
 
 // *** Si utilisateur banni.
     if ($row_LoginRS['ch_use_acces'] == null) {
-        $loginFoundUser == null;
         unset($loginFoundUser);
     }
 
@@ -79,8 +78,7 @@ if (isset($_POST['identifiant'])) {
         $characts .= '1234567890';
         $code_aleatoire = '';
 
-        for ($i = 0; $i < 20; $i++)    //10 est le nombre de caractères
-        {
+        for ($i = 0; $i < 20; $i++) {    //10 est le nombre de caractères
             $code_aleatoire .= substr($characts, rand() % (strlen($characts)), 1);
         }
         $clef_session_kryptee = md5($code_aleatoire.$salt);
@@ -100,6 +98,10 @@ if (isset($_POST['identifiant'])) {
             GetSQLValueString($Id_Session, "int"));
 
         $Result2 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+
+        // *** Creation du cookie
+        $dureeCookieJours = 30;
+        setcookie('Session_mondeGC', $code_aleatoire, time() + $dureeCookieJours*24*3600, null, null, false, true);
 
         $authService = new AuthenticationService();
         $authService->loginUsingId($row_LoginRS['ch_use_id']);
