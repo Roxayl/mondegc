@@ -184,6 +184,20 @@ Route::resource('chapter-entry', 'ChapterEntryController')
 
 /*
 |--------------------------------------------------------------------------
+| ChapterResourceable
+|--------------------------------------------------------------------------
+*/
+Route::get('chapter-resourceable/show/{chapter}', [Controllers\ChapterResourceableController::class, 'show'])
+    ->name('chapter-resourceable.show');
+Route::get('chapter-resourceable/create/{chapter}', [Controllers\ChapterResourceableController::class, 'create'])
+    ->name('chapter-resourceable.create');
+Route::post('chapter-resourceable/{chapter}', [Controllers\ChapterResourceableController::class, 'store'])
+    ->name('chapter-resourceable.store');
+Route::resource('chapter-entry', 'ChapterEntryController')
+    ->only(['update', 'edit', 'destroy']);
+
+/*
+|--------------------------------------------------------------------------
 | Version
 |--------------------------------------------------------------------------
 */

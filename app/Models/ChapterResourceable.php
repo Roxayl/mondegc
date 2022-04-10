@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property int $chapter_id
  * @property string $resourceable_type
  * @property int $resourceable_id
+ * @property string $description
  * @property float $budget
  * @property float $commerce
  * @property float $industrie
@@ -53,6 +54,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @method static Builder|ChapterResourceable whereRecherche($value)
  * @method static Builder|ChapterResourceable whereResourceableId($value)
  * @method static Builder|ChapterResourceable whereResourceableType($value)
+ * @method static Builder|ChapterResourceable whereDescription($value)
  * @method static Builder|ChapterResourceable whereTourisme($value)
  * @method static Builder|ChapterResourceable whereUpdatedAt($value)
  * @mixin Model
@@ -73,13 +75,11 @@ class ChapterResourceable extends Model implements Influencable
         'tourisme' => 'float',
         'recherche' => 'float',
         'environnement' => 'float',
-        'education' => 'float'
+        'education' => 'float',
     ];
 
     protected $fillable = [
-        'chapter_id',
-        'resourceable_type',
-        'resourceable_id',
+        'description',
         'budget',
         'commerce',
         'industrie',
@@ -87,7 +87,7 @@ class ChapterResourceable extends Model implements Influencable
         'tourisme',
         'recherche',
         'environnement',
-        'education'
+        'education',
     ];
 
     /**
