@@ -194,7 +194,7 @@ Route::get('chapter-resourceable/create/{chapter}', [Controllers\ChapterResource
 Route::post('chapter-resourceable/{chapter}', [Controllers\ChapterResourceableController::class, 'store'])
     ->name('chapter-resourceable.store');
 Route::resource('chapter-entry', 'ChapterEntryController')
-    ->only(['update', 'edit', 'destroy']);
+    ->only(['destroy']);
 
 /*
 |--------------------------------------------------------------------------

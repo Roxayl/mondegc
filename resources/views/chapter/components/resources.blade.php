@@ -1,10 +1,12 @@
 
 <div class="pull-right-cta">
-    <a href="#" class="component-trigger btn btn-primary"
-            {!! $getTargetHtmlAttributes(route('chapter-resourceable.create', $chapter),
-                'chapter-resourceable-container-' . $chapter->identifier) !!}>
-        Générer des ressources
-    </a>
+    @can('createResourceables', $chapter)
+        <a href="#" class="component-trigger btn btn-primary"
+                {!! $getTargetHtmlAttributes(route('chapter-resourceable.create', $chapter),
+                    'chapter-resourceable-container-' . $chapter->identifier) !!}>
+            Générer des ressources
+        </a>
+    @endcan
 </div>
 
 @if($chapter->resourceables->isEmpty())

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Contracts\Influencable;
 use App\Models\Contracts\Resourceable;
+use App\Models\Contracts\Roleplayable;
 use App\Models\Traits\DeletesInfluences;
 use App\Models\Traits\Influencable as GeneratesInfluence;
 use App\Services\EconomyService;
@@ -117,6 +118,26 @@ class ChapterResourceable extends Model implements Influencable
         }
 
         return $sumResources;
+    }
+
+    /**
+     * @param Chapter $chapter
+     */
+    public function setChapter(Chapter $chapter): void
+    {
+        $this->setRelation('chapter', $chapter);
+        $this->chapter_id = $chapter->getKey();
+    }
+
+    /**
+     * @param Resourceable|Roleplayable $resourceable
+     * @todo Ségréger les interfaces Resourceable et Roleplayable, car pour le moment, ça n'a pas bcp de sens...
+     */
+    public function setResourceable(Resourceable|Roleplayable $resourceable): void
+    {
+        $this->setRelation('resourceable', $resourceable);
+        $this->resourceable_type = get_class($resourceable);
+        $this->resourceable_id = $resourceable->getKey();
     }
 
     /**

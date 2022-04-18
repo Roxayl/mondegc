@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Chapter;
 use App\Models\ChapterResourceable;
 use App\Services\StringBladeService;
+use App\View\Components\Blocks\RoleplayableSelector;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
@@ -45,44 +47,43 @@ class ChapterResourceableController extends Controller
      *
      * @param Chapter $chapter
      * @param Request $request
-     * @return Response
+     * @return RedirectResponse
      */
-    public function store(Chapter $chapter, Request $request)
+    public function store(Chapter $chapter, Request $request): RedirectResponse
     {
-        //
-    }
+        $chapterResourceable = new ChapterResourceable();
+        $chapterResourceable->setChapter($chapter);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param ChapterResourceable $chapterResourceable
-     * @return Response
-     */
-    public function edit(ChapterResourceable $chapterResourceable)
-    {
-        //
-    }
+        $this->authorize('create', $chapterResourceable);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param ChapterResourceable $chapterResourceable
-     * @return Response
-     */
-    public function update(Request $request, ChapterResourceable $chapterResourceable)
-    {
-        //
+        $resourceable = RoleplayableSelector::createRoleplayableFromForm($request);
+        $chapterResourceable->setResourceable($resourceable);
+
+        $chapterResourceable->fill($request->only($chapterResourceable->getFillable()));
+
+        $chapterResourceable->save();
+
+        return redirect(route('roleplay.show', $chapter->roleplay)
+                . '#chapter-' . $chapter->identifier)
+            ->with('message', 'success|Les ressources ont été assignées à '
+                . e($chapterResourceable->resourceable->getName()) . '.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param ChapterResourceable $chapterResourceable
-     * @return Response
+     * @return RedirectResponse
      */
-    public function destroy(ChapterResourceable $chapterResourceable)
+    public function destroy(ChapterResourceable $chapterResourceable): RedirectResponse
     {
-        //
+        $this->authorize('manage', $chapterResourceable);
+
+        $chapterResourceable->delete();
+
+        return redirect(route('roleplay.show', $chapterResourceable->chapter->roleplay)
+                . '#chapter-' . $chapterResourceable->chapter->identifier)
+            ->with('message', 'success|Les ressources assignées à '
+                . e($chapterResourceable->resourceable->getName()) . ' ont été supprimées.');
     }
 }
