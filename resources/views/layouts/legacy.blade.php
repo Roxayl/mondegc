@@ -66,12 +66,12 @@
         })
 
         /** Modal **/
-        $("a[data-toggle=modal]").click(function (e) {
+        $(document).on('click', "a[data-toggle=modal]", function (e) {
             var lv_target = $(this).attr('data-target');
             var lv_url = $(this).attr('href');
             $(lv_target).load(lv_url);
         });
-        $('#closemodal').click(function(ev) {
+        $(document).on('click', '#closemodal', function(ev) {
             $(ev.target).closest('.modal').modal('hide');
         });
     })(window, document, jQuery);

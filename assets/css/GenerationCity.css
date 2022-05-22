@@ -3633,3 +3633,7 @@ ul.exception li:before {
     cursor: default;
     z-index: 2000 !important;
 }
+
+.badge-beta {
+    background-color: #662f60;
+}

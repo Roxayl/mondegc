@@ -51,7 +51,7 @@
         <x-chapter.chapter-entries :chapter="$chapter" />
     </div>
 
-    <div class="well">
+    <div class="well" id="chapter-resourceable-container-{{ $chapter->identifier }}">
         <x-chapter.chapter-resources :chapter="$chapter" />
     </div>
 

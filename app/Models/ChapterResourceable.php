@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Contracts\Influencable;
 use App\Models\Contracts\Resourceable;
+use App\Models\Contracts\Roleplayable;
 use App\Models\Traits\DeletesInfluences;
 use App\Models\Traits\Influencable as GeneratesInfluence;
 use App\Services\EconomyService;
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property int $chapter_id
  * @property string $resourceable_type
  * @property int $resourceable_id
+ * @property string $description
  * @property float $budget
  * @property float $commerce
  * @property float $industrie
@@ -53,6 +55,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @method static Builder|ChapterResourceable whereRecherche($value)
  * @method static Builder|ChapterResourceable whereResourceableId($value)
  * @method static Builder|ChapterResourceable whereResourceableType($value)
+ * @method static Builder|ChapterResourceable whereDescription($value)
  * @method static Builder|ChapterResourceable whereTourisme($value)
  * @method static Builder|ChapterResourceable whereUpdatedAt($value)
  * @mixin Model
@@ -73,13 +76,11 @@ class ChapterResourceable extends Model implements Influencable
         'tourisme' => 'float',
         'recherche' => 'float',
         'environnement' => 'float',
-        'education' => 'float'
+        'education' => 'float',
     ];
 
     protected $fillable = [
-        'chapter_id',
-        'resourceable_type',
-        'resourceable_id',
+        'description',
         'budget',
         'commerce',
         'industrie',
@@ -87,7 +88,7 @@ class ChapterResourceable extends Model implements Influencable
         'tourisme',
         'recherche',
         'environnement',
-        'education'
+        'education',
     ];
 
     /**
@@ -107,6 +108,14 @@ class ChapterResourceable extends Model implements Influencable
     }
 
     /**
+     * @return Roleplay
+     */
+    public function roleplay(): Roleplay
+    {
+        return $this->chapter->roleplay;
+    }
+
+    /**
      * @return array<string, float>
      */
     public function resources(): array
@@ -117,6 +126,26 @@ class ChapterResourceable extends Model implements Influencable
         }
 
         return $sumResources;
+    }
+
+    /**
+     * @param Chapter $chapter
+     */
+    public function setChapter(Chapter $chapter): void
+    {
+        $this->setRelation('chapter', $chapter);
+        $this->chapter_id = $chapter->getKey();
+    }
+
+    /**
+     * @param Resourceable|Roleplayable $resourceable
+     * @todo Ségréger les interfaces Resourceable et Roleplayable, car pour le moment, ça n'a pas bcp de sens...
+     */
+    public function setResourceable(Resourceable|Roleplayable $resourceable): void
+    {
+        $this->setRelation('resourceable', $resourceable);
+        $this->resourceable_type = get_class($resourceable);
+        $this->resourceable_id = $resourceable->getKey();
     }
 
     /**

@@ -52,6 +52,18 @@ class ChapterPolicy implements VersionablePolicy
     }
 
     /**
+     * Détermine si l'utilisateur peut assigner des ressources à une entité ressourçeable dans le cadre d'un roleplay.
+     *
+     * @param CustomUser $user
+     * @param Chapter $chapter
+     * @return bool
+     */
+    public function createResourceables(CustomUser $user, Chapter $chapter): bool
+    {
+        return $chapter->roleplay->isValid() && Gate::allows('manage', $chapter->roleplay);
+    }
+
+    /**
      * @inheritDoc
      */
     public function revert(CustomUser|Authenticatable $user, Chapter|Model $model): bool

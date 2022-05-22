@@ -184,6 +184,32 @@ Route::resource('chapter-entry', 'ChapterEntryController')
 
 /*
 |--------------------------------------------------------------------------
+| ChapterResourceable
+|--------------------------------------------------------------------------
+*/
+Route::get('chapter-resourceable/show/{chapter}', [Controllers\ChapterResourceableController::class, 'show'])
+    ->name('chapter-resourceable.show');
+Route::get('chapter-resourceable/manage/{chapter}', [Controllers\ChapterResourceableController::class, 'manage'])
+    ->name('chapter-resourceable.manage');
+Route::get('chapter-resourceable/create/{chapter}', [Controllers\ChapterResourceableController::class, 'create'])
+    ->name('chapter-resourceable.create');
+Route::post('chapter-resourceable/{chapter}', [Controllers\ChapterResourceableController::class, 'store'])
+    ->name('chapter-resourceable.store');
+Route::get('chapter-resourceable/edit/{chapterResourceable}',
+    [Controllers\ChapterResourceableController::class, 'edit'])
+    ->name('chapter-resourceable.edit');
+Route::match(['put', 'patch'], 'chapter-resourceable/edit/{chapterResourceable}',
+    [Controllers\ChapterResourceableController::class, 'update'])
+    ->name('chapter-resourceable.update');
+Route::get('chapter-resourceable/delete/{chapterResourceable}',
+    [Controllers\ChapterResourceableController::class, 'delete'])
+    ->name('chapter-resourceable.delete');
+Route::delete('chapter-resourceable/{chapterResourceable}',
+    [Controllers\ChapterResourceableController::class, 'destroy'])
+    ->name('chapter-resourceable.destroy');
+
+/*
+|--------------------------------------------------------------------------
 | Version
 |--------------------------------------------------------------------------
 */

@@ -108,6 +108,11 @@ SELECT 'vote_ag_new' AS type_notification, id AS id, is_valid AS statut, 'propos
 FROM ocgc_proposals
 JOIN pays ON ID_pays = ch_pay_id
 WHERE is_valid = 2
+UNION
+SELECT 'rp_new_chapter' AS type_notification, chapters.id AS id, 1 AS statut, 'chapter' AS sous_categorie, chapters.id AS id_element, null AS id_auteur, chapters.created_at AS date, chapters.name collate utf8mb4_unicode_ci AS titre, null AS photo_auteur, null AS nom_auteur, chapters.user_id AS paysID_auteur, null AS prenom_auteur, null AS titre_auteur, roleplay_id AS id_institution, null AS institution, null AS img_institution, roleplay.name collate utf8mb4_unicode_ci AS pays_institution
+FROM chapters
+JOIN roleplay ON roleplay.id = chapters.roleplay_id
+WHERE chapters.deleted_at IS NULL AND roleplay.deleted_at IS NULL
 ORDER BY date DESC";
 $query_limit_LastCommunique = sprintf("%s LIMIT %d, %d", $query_LastCommunique, $startRow_LastCommunique, $maxRows_LastCommunique);
 $LastCommunique = mysql_query($query_limit_LastCommunique, $maconnexion) or die(mysql_error());
@@ -817,6 +822,41 @@ do {
     </li>
     <?php }
 
+    if ( $row_LastCommunique['type_notification'] == "rp_new_chapter") {
+
+        $chapter = \App\Models\Chapter::find($row_LastCommunique['id']);
+        if(! $chapter) continue;
+
+        ?>
+    <!-- Si c'est une proposition à l'AG nouvellement créée
+================================================== -->
+    <li class="item">
+      <div class="row-fluid">
+          <div class="titre-gris">
+            <h3>Nouveau chapitre de roleplay</h3>
+          </div>
+          <div class="row-fluid fond-notification">
+            <div class="span2">
+
+            </div>
+            <div class="span8"> <small>le
+              <?= date("d/m/Y à G:i", strtotime($row_LastCommunique['date'])); ?>
+              </small>
+                <p>
+                    Un nouveau chapitre a été ouvert dans le roleplay intitulé
+                    <a href="<?= e(urlFromLegacy('roleplay/' . $row_LastCommunique['id_institution'])) ?>">
+                        <?= e($row_LastCommunique['pays_institution']) ?>
+                    </a> :
+                </p>
+              <h4><a href="<?= e(urlFromLegacy('roleplay/' . $row_LastCommunique['id_institution'] . '#chapter-' . $chapter->identifier)) ?>">
+                      Chapitre <?= e($chapter->order) ?> :
+                      <?= e($row_LastCommunique['titre']) ?>
+                  </a></h4>
+            </div>
+        </div>
+      </div>
+    </li>
+    <?php }
 
 } while ($row_LastCommunique = mysql_fetch_assoc($LastCommunique));?>
 

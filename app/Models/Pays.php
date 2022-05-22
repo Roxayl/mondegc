@@ -10,6 +10,7 @@ use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\PaysPresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use App\Models\Traits\Resourceable as HasResources;
+use App\Models\Traits\Roleplayable as ParticipatesInRoleplay;
 use App\Services\EconomyService;
 use Carbon\Carbon;
 use Closure;
@@ -26,7 +27,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-use YlsIdeas\FeatureFlags\Facades\Features;
 
 /**
  * Class Pays
@@ -149,7 +149,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  */
 class Pays extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
-    use HasFactory, HasInfrastructures, HasResources;
+    use HasFactory, HasInfrastructures, HasResources, ParticipatesInRoleplay;
     use InfrastructurablePresenter, PaysPresenter;
 
     protected $table = 'pays';
@@ -498,27 +498,6 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
             foreach(config('enums.resources') as $resource) {
                 $generatedResources[$resource] = (int)($generatedResources[$resource] / $nbMembers);
                 $sumResources[$resource] += $generatedResources[$resource];
-            }
-        }
-
-        return $sumResources;
-    }
-
-    /**
-     * @return array<string, float>
-     */
-    public function roleplayResources(): array
-    {
-        $sumResources = EconomyService::resourcesPrefilled();
-
-        if(!Features::accessible('roleplay')) {
-            return $sumResources;
-        }
-
-        foreach($this->chapterResources as $chapterResource) {
-            $generatedResources = $chapterResource->getGeneratedResources();
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] = $generatedResources[$resource];
             }
         }
 
