@@ -16,7 +16,10 @@
         <div class="span12 corps-page">
 
             <div class="titre-bleu">
-                <h1>Historique du chapitre {{ $chapter->order }} : {{ $chapter->name }}</h1>
+                <h1>
+                    Historique du chapitre {{ $chapter->order }} : {{ $chapter->name }}
+                    <span class="badge badge-info badge-beta">Bêta</span>
+                </h1>
             </div>
 
             <ul class="breadcrumb">
