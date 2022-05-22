@@ -9,6 +9,7 @@ use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\OrganisationPresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use App\Models\Traits\Resourceable as HasResources;
+use App\Models\Traits\Roleplayable as ParticipatesInRoleplay;
 use App\Services\EconomyService;
 use Carbon\Carbon;
 use Database\Factories\OrganisationFactory;
@@ -17,14 +18,12 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query;
 use Illuminate\Support;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-use YlsIdeas\FeatureFlags\Facades\Features;
 
 /**
  * Class Organisation
@@ -80,7 +79,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
 class Organisation extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
     use SoftDeletes;
-    use HasFactory, HasInfrastructures, HasResources;
+    use HasFactory, HasInfrastructures, HasResources, ParticipatesInRoleplay;
     use InfrastructurablePresenter, OrganisationPresenter;
 
     protected $table = 'organisation';
@@ -224,14 +223,6 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     }
 
     /**
-     * @return MorphMany
-     */
-    public function chapterResources(): MorphMany
-    {
-        return $this->morphMany(ChapterResourceable::class, 'resourceable');
-    }
-
-    /**
      * @inheritDoc
      */
     public function scopeVisible(Builder $query): Builder
@@ -353,27 +344,6 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
                 foreach(config('enums.resources') as $resource) {
                     $sumResources[$resource] += $thisPaysResources[$resource];
                 }
-            }
-        }
-
-        return $sumResources;
-    }
-
-    /**
-     * @return array<string, float>
-     */
-    public function roleplayResources(): array
-    {
-        $sumResources = EconomyService::resourcesPrefilled();
-
-        if(! Features::accessible('roleplay')) {
-            return $sumResources;
-        }
-
-        foreach($this->chapterResources as $chapterResource) {
-            $generatedResources = $chapterResource->getGeneratedResources();
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] = $generatedResources[$resource];
             }
         }
 

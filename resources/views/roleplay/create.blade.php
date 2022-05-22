@@ -2,7 +2,10 @@
 @extends('layouts.popup')
 
 @section('modal_header')
-    <h3 id="myModalLabel">Créer un nouveau roleplay</h3>
+    <h3 id="myModalLabel">
+        Créer un nouveau roleplay
+        <span class="badge badge-info badge-beta">Bêta</span>
+    </h3>
 @endsection
 
 @section('modal_body')
@@ -14,7 +17,7 @@
 
     <div class="control-group">
         <label class="control-label">Organisateur</label>
-        <x-blocks.roleplayable-selector />
+        <x-blocks.roleplayable-selector :endpoint-url="route('user.roleplayables')" />
     </div>
 
 @endsection
