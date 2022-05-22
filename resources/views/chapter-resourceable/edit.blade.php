@@ -8,6 +8,8 @@
 
 <form action="{{ route('chapter-resourceable.update', $chapter) }}"
       method="POST">
+    @method('PUT')
+
     <h4>Modifier les ressources générées par cette entité</h4>
 
     @include('chapter-resourceable.partials.form')

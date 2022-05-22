@@ -84,6 +84,8 @@ class ChapterResourceableController extends Controller
      */
     public function edit(ChapterResourceable $chapterResourceable): View
     {
+        $this->authorize('manage', $chapterResourceable);
+
         $chapter = $chapterResourceable->chapter;
         $roleplayable = $chapterResourceable->resourceable;
         $oldValues = $chapterResourceable->resources();
@@ -93,12 +95,25 @@ class ChapterResourceableController extends Controller
     }
 
     /**
+     * @param Request $request
      * @param ChapterResourceable $chapterResourceable
      * @return RedirectResponse
      */
-    public function update(ChapterResourceable $chapterResourceable): RedirectResponse
+    public function update(Request $request, ChapterResourceable $chapterResourceable): RedirectResponse
     {
-        return redirect()->route('roleplay.show', $chapterResourceable->chapter->roleplay);
+        $this->authorize('manage', $chapterResourceable);
+
+        $resourceable = RoleplayableSelector::createRoleplayableFromForm($request);
+        $chapterResourceable->setResourceable($resourceable);
+
+        $chapterResourceable->fill($request->only($chapterResourceable->getFillable()));
+
+        $chapterResourceable->save();
+
+        return redirect(route('roleplay.show', $chapterResourceable->roleplay())
+                . '#chapter-' . $chapterResourceable->chapter->identifier)
+            ->with('message', 'success|Les ressources ont été modifiées et assignées à '
+                . e($chapterResourceable->resourceable->getName()) . '.');
     }
 
     /**
@@ -113,7 +128,7 @@ class ChapterResourceableController extends Controller
 
         $chapterResourceable->delete();
 
-        return redirect(route('roleplay.show', $chapterResourceable->chapter->roleplay)
+        return redirect(route('roleplay.show', $chapterResourceable->roleplay())
                 . '#chapter-' . $chapterResourceable->chapter->identifier)
             ->with('message', 'success|Les ressources assignées à '
                 . e($chapterResourceable->resourceable->getName()) . ' ont été supprimées.');
