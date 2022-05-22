@@ -201,8 +201,12 @@ Route::get('chapter-resourceable/edit/{chapterResourceable}',
 Route::match(['put', 'patch'], 'chapter-resourceable/edit/{chapterResourceable}',
     [Controllers\ChapterResourceableController::class, 'update'])
     ->name('chapter-resourceable.update');
-Route::resource('chapter-entry', 'ChapterEntryController')
-    ->only(['destroy']);
+Route::get('chapter-resourceable/delete/{chapterResourceable}',
+    [Controllers\ChapterResourceableController::class, 'delete'])
+    ->name('chapter-resourceable.delete');
+Route::delete('chapter-resourceable/{chapterResourceable}',
+    [Controllers\ChapterResourceableController::class, 'destroy'])
+    ->name('chapter-resourceable.destroy');
 
 /*
 |--------------------------------------------------------------------------

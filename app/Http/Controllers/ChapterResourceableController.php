@@ -117,6 +117,17 @@ class ChapterResourceableController extends Controller
     }
 
     /**
+     * @param ChapterResourceable $chapterResourceable
+     * @return View
+     */
+    public function delete(ChapterResourceable $chapterResourceable): View
+    {
+        $this->authorize('manage', $chapterResourceable);
+
+        return view('chapter-resourceable.delete', compact('chapterResourceable'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param ChapterResourceable $chapterResourceable

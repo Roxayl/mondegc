@@ -9,6 +9,7 @@ use App\Models\Presenters\InfrastructurablePresenter;
 use App\Models\Presenters\VillePresenter;
 use App\Models\Traits\Infrastructurable as HasInfrastructures;
 use App\Models\Traits\Resourceable as HasResources;
+use App\Models\Traits\Roleplayable as ParticipatesInRoleplay;
 use App\Services\EconomyService;
 use Carbon\Carbon;
 use Database\Factories\VilleFactory;
@@ -107,7 +108,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  */
 class Ville extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
-    use HasFactory, HasInfrastructures, HasResources;
+    use HasFactory, HasInfrastructures, HasResources, ParticipatesInRoleplay;
     use InfrastructurablePresenter, VillePresenter;
 
     protected $table = 'villes';
@@ -202,14 +203,6 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
     public function patrimoines(): HasMany
     {
         return $this->hasMany(Patrimoine::class, 'ch_pat_villeID');
-    }
-
-    /**
-     * @return MorphMany
-     */
-    public function chapterResources(): MorphMany
-    {
-        return $this->morphMany(ChapterResourceable::class, 'resourceable');
     }
 
     /**

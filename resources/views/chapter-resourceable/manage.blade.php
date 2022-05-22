@@ -24,6 +24,10 @@
                 'chapter-resourceable-container-' . $chapter->identifier) !!}>
             <i class="icon-edit"></i>
         </a>
+        <a href="{{ route('chapter-resourceable.delete', $chapterResourceable) }}"
+           data-toggle="modal" data-target="#modal-container-small">
+            <i class="icon-trash"></i>
+        </a>
     </div>
 
     <div>

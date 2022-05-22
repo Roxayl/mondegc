@@ -100,19 +100,19 @@ class ChapterResourceable extends Model implements Influencable
     }
 
     /**
-     * @return Roleplay
-     */
-    public function roleplay(): Roleplay
-    {
-        return $this->chapter->roleplay;
-    }
-
-    /**
      * @return MorphTo
      */
     public function resourceable(): MorphTo
     {
         return $this->morphTo('resourceable');
+    }
+
+    /**
+     * @return Roleplay
+     */
+    public function roleplay(): Roleplay
+    {
+        return $this->chapter->roleplay;
     }
 
     /**
