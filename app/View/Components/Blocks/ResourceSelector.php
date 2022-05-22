@@ -44,9 +44,4 @@ class ResourceSelector extends Component
     {
         return view('blocks.resource-selector');
     }
-
-    public function generateInput()
-    {
-
-    }
 }

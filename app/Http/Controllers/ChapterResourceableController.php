@@ -30,6 +30,17 @@ class ChapterResourceableController extends Controller
     }
 
     /**
+     * @param Chapter $chapter
+     * @return View
+     */
+    public function manage(Chapter $chapter): View
+    {
+        $resourceList = config('enums.resources');
+
+        return view('chapter-resourceable.manage', compact('resourceList', 'chapter'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @param Chapter $chapter
@@ -37,9 +48,7 @@ class ChapterResourceableController extends Controller
      */
     public function create(Chapter $chapter): View
     {
-        $resourceList = config('enums.resources');
-
-        return view('chapter-resourceable.create', compact('resourceList', 'chapter'));
+        return view('chapter-resourceable.create', compact('chapter'));
     }
 
     /**
@@ -67,6 +76,29 @@ class ChapterResourceableController extends Controller
                 . '#chapter-' . $chapter->identifier)
             ->with('message', 'success|Les ressources ont été assignées à '
                 . e($chapterResourceable->resourceable->getName()) . '.');
+    }
+
+    /**
+     * @param ChapterResourceable $chapterResourceable
+     * @return View
+     */
+    public function edit(ChapterResourceable $chapterResourceable): View
+    {
+        $chapter = $chapterResourceable->chapter;
+        $roleplayable = $chapterResourceable->resourceable;
+        $oldValues = $chapterResourceable->resources();
+
+        return view('chapter-resourceable.edit',
+            compact('chapter', 'oldValues', 'roleplayable'));
+    }
+
+    /**
+     * @param ChapterResourceable $chapterResourceable
+     * @return RedirectResponse
+     */
+    public function update(ChapterResourceable $chapterResourceable): RedirectResponse
+    {
+        return redirect()->route('roleplay.show', $chapterResourceable->chapter->roleplay);
     }
 
     /**

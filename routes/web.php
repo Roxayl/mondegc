@@ -189,10 +189,18 @@ Route::resource('chapter-entry', 'ChapterEntryController')
 */
 Route::get('chapter-resourceable/show/{chapter}', [Controllers\ChapterResourceableController::class, 'show'])
     ->name('chapter-resourceable.show');
+Route::get('chapter-resourceable/manage/{chapter}', [Controllers\ChapterResourceableController::class, 'manage'])
+    ->name('chapter-resourceable.manage');
 Route::get('chapter-resourceable/create/{chapter}', [Controllers\ChapterResourceableController::class, 'create'])
     ->name('chapter-resourceable.create');
 Route::post('chapter-resourceable/{chapter}', [Controllers\ChapterResourceableController::class, 'store'])
     ->name('chapter-resourceable.store');
+Route::get('chapter-resourceable/edit/{chapterResourceable}',
+    [Controllers\ChapterResourceableController::class, 'edit'])
+    ->name('chapter-resourceable.edit');
+Route::match(['put', 'patch'], 'chapter-resourceable/edit/{chapterResourceable}',
+    [Controllers\ChapterResourceableController::class, 'update'])
+    ->name('chapter-resourceable.update');
 Route::resource('chapter-entry', 'ChapterEntryController')
     ->only(['destroy']);
 

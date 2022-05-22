@@ -2,6 +2,11 @@
 <div class="pull-right-cta">
     @can('createResourceables', $chapter)
         <a href="#" class="component-trigger btn btn-primary"
+                {!! $getTargetHtmlAttributes(route('chapter-resourceable.manage', $chapter),
+                    'chapter-resourceable-container-' . $chapter->identifier) !!}>
+            Modifier
+        </a>
+        <a href="#" class="component-trigger btn btn-primary"
                 {!! $getTargetHtmlAttributes(route('chapter-resourceable.create', $chapter),
                     'chapter-resourceable-container-' . $chapter->identifier) !!}>
             Générer des ressources
@@ -32,6 +37,9 @@
             {!! \App\Services\HelperService::renderLegacyElement('temperance/resources_small', [
                 'resources' => $chapterResourceable->resources()
             ]) !!}
+            @if(! empty($chapterResourceable->description))
+                <br><em style="margin-left: 45px;">{{ $chapterResourceable->description }}</em>
+            @endif
         </div>
 
     @endforeach
