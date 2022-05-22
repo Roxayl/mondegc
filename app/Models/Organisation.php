@@ -18,14 +18,12 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query;
 use Illuminate\Support;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-use YlsIdeas\FeatureFlags\Facades\Features;
 
 /**
  * Class Organisation
@@ -346,27 +344,6 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
                 foreach(config('enums.resources') as $resource) {
                     $sumResources[$resource] += $thisPaysResources[$resource];
                 }
-            }
-        }
-
-        return $sumResources;
-    }
-
-    /**
-     * @return array<string, float>
-     */
-    public function roleplayResources(): array
-    {
-        $sumResources = EconomyService::resourcesPrefilled();
-
-        if(! Features::accessible('roleplay')) {
-            return $sumResources;
-        }
-
-        foreach($this->chapterResources as $chapterResource) {
-            $generatedResources = $chapterResource->getGeneratedResources();
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] = $generatedResources[$resource];
             }
         }
 

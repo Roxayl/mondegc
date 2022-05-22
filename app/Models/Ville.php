@@ -19,12 +19,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-use YlsIdeas\FeatureFlags\Facades\Features;
 
 /**
  * Class Ville
@@ -251,27 +249,6 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
             $generatedResources = $patrimoine->getGeneratedResources();
             foreach(config('enums.resources') as $resource) {
                 $sumResources[$resource] += $generatedResources[$resource];
-            }
-        }
-
-        return $sumResources;
-    }
-
-    /**
-     * @return array<string, float>
-     */
-    public function roleplayResources(): array
-    {
-        $sumResources = EconomyService::resourcesPrefilled();
-
-        if(!Features::accessible('roleplay')) {
-            return $sumResources;
-        }
-
-        foreach($this->chapterResources as $chapterResource) {
-            $generatedResources = $chapterResource->getGeneratedResources();
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] = $generatedResources[$resource];
             }
         }
 
