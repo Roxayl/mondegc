@@ -16,6 +16,7 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use JetBrains\PhpStorm\ExpectedValues;
 
 /**
  * App\Models\CustomUser
@@ -301,7 +302,9 @@ class CustomUser extends Authenticatable
      * @param string $level Prend les valeurs suivantes : "member", "juge", "ocgc", "admin".
      * @return bool
      */
-    public function hasMinPermission(string $level): bool
+    public function hasMinPermission(
+        #[ExpectedValues('member', 'juge', 'ocgc', 'admin')] string $level
+    ): bool
     {
         $permission = match ($level) {
             'member' => self::MEMBER,

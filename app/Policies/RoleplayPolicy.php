@@ -41,7 +41,7 @@ class RoleplayPolicy
     {
         return $this->display($user)
             && $user->hasMinPermission('member')
-            && $user->pays->count() > 0;
+            && $user->roleplayables()->count() > 0;
     }
 
     /**
@@ -67,7 +67,7 @@ class RoleplayPolicy
      */
     public function manage(CustomUser $user, Roleplay $roleplay): bool
     {
-        return $this->display($user)
-            && $roleplay->hasOrganizerAmong($user->roleplayables());
+        return $user->hasMinPermission('ocgc')
+            || ($this->display($user) && $roleplay->hasOrganizerAmong($user->roleplayables()));
     }
 }

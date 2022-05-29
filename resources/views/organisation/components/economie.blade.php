@@ -42,7 +42,7 @@
                    class="guide-link">Comment sont calculées les ressources ? GO!</a>
             </div>
 
-            <h4>Ressources issues des infrastructures de l'organisation</h4>
+            <h4>Ressources issues de l'organisation</h4>
             <div>
                 <img src="{{ $organisation->flag }}"
                      class="img-menu-drapeau"
@@ -66,7 +66,7 @@
             </div>
 
             @if($organisation->membersGenerateResources())
-                <h4>Ressources par pays membre</h4>
+                <h4>Ressources générées par les pays membres</h4>
 
                 @foreach($organisation->members as $thisMember)
                     @php $thisPays = $thisMember->pays; @endphp

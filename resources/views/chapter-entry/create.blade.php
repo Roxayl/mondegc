@@ -9,7 +9,19 @@
         >annuler</a>)
     </h4>
 
-    <x-blocks.roleplayable-selector :endpoint-url="route('user.roleplayables')" />
+    @can('manage', $chapter->roleplay)
+        <div class="alert alert-info">
+            <i class="icon-info-sign"></i>
+            En tant qu'organisateur, vous pouvez créer une actualité au nom de toutes les entités existantes.
+        </div>
+        <x-blocks.roleplayable-selector :endpoint-url="route('roleplay.roleplayables')" />
+    @else
+        <div class="alert alert-info">
+            <i class="icon-info-sign"></i>
+            Vous pouvez ajouter une actualité au nom de vos entités.
+        </div>
+        <x-blocks.roleplayable-selector :endpoint-url="route('user.roleplayables')" />
+    @endcan
 
     <div class="form-control mt-2">
         <label>

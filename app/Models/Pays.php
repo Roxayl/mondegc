@@ -367,14 +367,6 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     }
 
     /**
-     * @return MorphMany
-     */
-    public function chapterResources(): MorphMany
-    {
-        return $this->morphMany(ChapterResourceable::class, 'resourceable');
-    }
-
-    /**
      * @return Personnage|null
      */
     public function personnage(): ?Personnage

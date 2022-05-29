@@ -130,6 +130,7 @@ $eloquentVille = \App\Models\Ville::findOrFail($_GET['ch_ville_id']);
 $total_ressources = $eloquentVille->resources();
 $row_patrimoine_ressources = $eloquentVille->patrimoineResources();
 $row_infra_ressources = $eloquentVille->infrastructureResources();
+$resources_rp = $eloquentVille->roleplayResources();
 
 ?>
 <!DOCTYPE html>
@@ -542,6 +543,13 @@ echo $population_ville_francais; ?></p><?php } else { ?><?php }?>
                 <?php
                 renderElement('temperance/resources_small', array(
                     'resources' => $row_infra_ressources
+                ));
+                ?>
+                <p></p>
+              <h4><i class="icon-star"></i> Roleplay</h4>
+                <?php
+                renderElement('temperance/resources_small', array(
+                    'resources' => $resources_rp
                 ));
                 ?>
                 <p></p>

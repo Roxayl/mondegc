@@ -755,6 +755,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 
           <?php
           $ressources_total  = $eloquentPays->resources();
+          $ressources_rp     = $eloquentPays->roleplayResources();
           $ressources_villes = $eloquentPays->villeResources();
           $ressources_infras = $eloquentPays->infrastructureResources();
           $ressources_orgas  = $eloquentPays->organisationResources();
@@ -807,6 +808,13 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
                 <?php
                 renderElement('temperance/resources_small', array(
                     'resources' => $ressources_orgas
+                ));
+                ?>
+                <p></p>
+              <h4><i class="icon-heart"></i> Balance des ressources issues du roleplay</h4>
+                <?php
+                renderElement('temperance/resources_small', array(
+                    'resources' => $ressources_rp
                 ));
                 ?>
                 <p></p>
