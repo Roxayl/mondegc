@@ -11,6 +11,7 @@ use App\View\Components\Blocks\RoleplayableSelector;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
@@ -85,7 +86,7 @@ class ChapterEntryController extends Controller
         $roleplayable = RoleplayableSelector::createRoleplayableFromForm($request);
         /** @var CustomUser $user */
         $user = auth()->user();
-        if(! $user->hasRoleplayable($roleplayable)) {
+        if(Gate::denies('manage', $chapter->roleplay) && ! $user->hasRoleplayable($roleplayable)) {
             throw ValidationException::withMessages(["Vous ne pouvez pas créer un post avec cette entité."]);
         }
         $entry->roleplayable_id = $roleplayable->getKey();

@@ -329,6 +329,24 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     /**
      * @return array<string, float>
      */
+    public function organisationResources(): array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        $infrastructureResources = $this->infrastructureResources();
+        $roleplayResources = $this->roleplayResources();
+
+        foreach(config('enums.resources') as $resource) {
+            $sumResources[$resource] += $infrastructureResources[$resource]
+                + $roleplayResources[$resource];
+        }
+
+        return $sumResources;
+    }
+
+    /**
+     * @return array<string, float>
+     */
     public function paysResources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
@@ -361,14 +379,12 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
         // le cas échéant et on renvoie directement un tableau de ressources à zéro.
         if($this->type !== self::TYPE_GROUP) {
 
-            $infrastructureResources = $this->infrastructureResources();
+            $organisationResources = $this->organisationResources();
             $paysResources = $this->paysResources();
-            $roleplayResources = $this->roleplayResources();
 
             foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] += $infrastructureResources[$resource]
-                    + $paysResources[$resource]
-                    + $roleplayResources[$resource];
+                $sumResources[$resource] += $organisationResources[$resource]
+                    + $paysResources[$resource];
             }
         }
 

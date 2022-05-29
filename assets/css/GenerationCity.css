@@ -1367,7 +1367,12 @@ li.dropdown-li-force {
 }
 
 .token .infra-nbr-ressource {
-    font-size: 25px;
+    font-size: 23px;
+}
+@media(max-width: 1200px) {
+    .token .infra-nbr-ressource {
+        font-size: 18px;
+    }
 }
 
 .token-budget {
@@ -2241,19 +2246,6 @@ Desktop large
         width: 62px;
     }
 }
-
-@media (max-width: 1200px) and (min-width: 980px) {
-    .nav {
-        margin-left: 200px !important;
-        position: absolute !important;
-    }
-
-    .navbar .container {
-        width: 100%;
-        padding-bottom: 4px;
-    }
-}
-
 
 /* ----------------------------------------------------------------------------------------------------
 IPAD / TABLET
