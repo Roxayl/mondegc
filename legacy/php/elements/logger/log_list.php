@@ -7,7 +7,13 @@ foreach($logs as $log):
 
     $thisUser = new \GenCity\Monde\User($log->get('user_id'));
 
-    $label = __s($thisUser->get('ch_use_login'));
+    try {
+        $username = $thisUser->get('ch_use_login');
+    } catch(Exception $e) {
+        $username = 'Un utilisateur';
+    }
+
+    $label = __s($username);
 
     switch($log->get('type_action')) {
 
@@ -50,8 +56,8 @@ foreach($logs as $log):
             $label .= " un comité."; break;
 
         default:
-            $label = __s($thisUser->get('ch_use_login')) . " $label_action un élément (" . __s($log->get('target'))
-                    . ") du site.";
+            $label = __s($thisUser->get('ch_use_login')) . " a effectué une action sur un élément ("
+                . __s($log->get('target')) . ") du site.";
 
     }
 
@@ -71,7 +77,7 @@ foreach($logs as $log):
         <?php if(!empty($log->get('target_id'))): ?>
         <strong>ID de l'élément :</strong> <?= __s($log->get('target_id')) ?> /
         <?php endif; ?>
-        <strong>Utilisateur exécutant l'action :</strong> <?= __s($thisUser->get('ch_use_login')) ?>
+        <strong>Utilisateur exécutant l'action :</strong> <?= $username ?>
             (<?= __s($log->get('user_id')) ?>) /
         <strong>Horodateur :</strong> <?= __s(dateFormat($log->get('created'), true)) ?>
         </p>
