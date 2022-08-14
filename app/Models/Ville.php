@@ -224,17 +224,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
      */
     public function infrastructureResources(): array
     {
-        $sumResources = EconomyService::resourcesPrefilled();
-
-        $infrastructures = $this->infrastructures;
-        foreach($infrastructures as $infrastructure) {
-            $generatedResources = $infrastructure->getGeneratedResources();
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] += $generatedResources[$resource];
-            }
-        }
-
-        return $sumResources;
+        return EconomyService::sumGeneratedResourcesFromInfluencables($this->infrastructures);
     }
 
     /**
@@ -242,17 +232,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
      */
     public function patrimoineResources(): array
     {
-        $sumResources = EconomyService::resourcesPrefilled();
-
-        $patrimoines = $this->patrimoines;
-        foreach($patrimoines as $patrimoine) {
-            $generatedResources = $patrimoine->getGeneratedResources();
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] += $generatedResources[$resource];
-            }
-        }
-
-        return $sumResources;
+        return EconomyService::sumGeneratedResourcesFromInfluencables($this->patrimoines);
     }
 
     /**

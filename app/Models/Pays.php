@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -447,16 +446,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
      */
     public function villeResources(): array
     {
-        $sumResources = EconomyService::resourcesPrefilled();
-
-        foreach($this->villes as $ville) {
-            $generatedResources = $ville->resources();
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] += $generatedResources[$resource];
-            }
-        }
-
-        return $sumResources;
+        return EconomyService::sumGeneratedResourcesFromResourceables($this->villes);
     }
 
     /**
@@ -464,16 +454,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
      */
     public function infrastructureResources(): array
     {
-        $sumResources = EconomyService::resourcesPrefilled();
-
-        foreach($this->infrastructures as $infrastructure) {
-            $generatedResources = $infrastructure->getGeneratedResources();
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] += $generatedResources[$resource];
-            }
-        }
-
-        return $sumResources;
+        return EconomyService::sumGeneratedResourcesFromInfluencables($this->infrastructures);
     }
 
     /**

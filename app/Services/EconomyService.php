@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Pays;
+use App\Models\Traits\Influencable;
+use App\Models\Traits\Resourceable;
 use Illuminate\Database\Eloquent\Collection;
 
 class EconomyService
@@ -48,5 +50,47 @@ class EconomyService
         }
 
         return $paysResources;
+    }
+
+    /**
+     * Génère la somme des ressources générées par un ensemble d'influençables.
+     *
+     * @param Influencable[] $influencables
+     * @return float[] Un tableau de ressources contenant la somme  les ressources générées un
+     *                 ensemble d'influençables.
+     */
+    public static function sumGeneratedResourcesFromInfluencables(array|\ArrayAccess $influencables): array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        foreach($influencables as $chapterResource) {
+            $generatedResources = $chapterResource->getGeneratedResources();
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] += $generatedResources[$resource];
+            }
+        }
+
+        return $sumResources;
+    }
+
+    /**
+     * Génère la somme des ressources générées par un ensemble de ressourceables.
+     *
+     * @param Resourceable[] $resourceables
+     * @return float[] Un tableau de ressources contenant la somme des ressources générées par un ensemble
+     *                 de ressourceables.
+     */
+    public static function sumGeneratedResourcesFromResourceables(array|\ArrayAccess $resourceables): array
+    {
+        $sumResources = EconomyService::resourcesPrefilled();
+
+        foreach($resourceables as $chapterResource) {
+            $generatedResources = $chapterResource->resources();
+            foreach(config('enums.resources') as $resource) {
+                $sumResources[$resource] += $generatedResources[$resource];
+            }
+        }
+
+        return $sumResources;
     }
 }
