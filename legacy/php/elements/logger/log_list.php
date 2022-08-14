@@ -13,7 +13,7 @@ foreach($logs as $log):
         $username = 'Un utilisateur';
     }
 
-    $label = __s($username);
+    $label = e($username);
 
     switch($log->get('type_action')) {
 
@@ -56,8 +56,8 @@ foreach($logs as $log):
             $label .= " un comité."; break;
 
         default:
-            $label = __s($thisUser->get('ch_use_login')) . " a effectué une action sur un élément ("
-                . __s($log->get('target')) . ") du site.";
+            $label = e($thisUser->get('ch_use_login')) . " a effectué une action sur un élément ("
+                . e($log->get('target')) . ") du site.";
 
     }
 
@@ -72,19 +72,19 @@ foreach($logs as $log):
         <h4><?= $label ?></h4>
 
         <p><br>
-        <strong>Élément :</strong> <?= __s($log->get('target')) ?> /
-        <strong>Type d'action :</strong> <?= __s($log->get('type_action')) ?> /
+        <strong>Élément :</strong> <?= e($log->get('target')) ?> /
+        <strong>Type d'action :</strong> <?= e($log->get('type_action')) ?> /
         <?php if(!empty($log->get('target_id'))): ?>
-        <strong>ID de l'élément :</strong> <?= __s($log->get('target_id')) ?> /
+        <strong>ID de l'élément :</strong> <?= e($log->get('target_id')) ?> /
         <?php endif; ?>
-        <strong>Utilisateur exécutant l'action :</strong> <?= $username ?>
-            (<?= __s($log->get('user_id')) ?>) /
-        <strong>Horodateur :</strong> <?= __s(dateFormat($log->get('created'), true)) ?>
+        <strong>Utilisateur exécutant l'action :</strong> <?= e($username) ?>
+            (<?= e($log->get('user_id')) ?>) /
+        <strong>Horodateur :</strong> <?= e(dateFormat($log->get('created'), true)) ?>
         </p>
 
         <?php if(!is_null($log->get('data_changes')) && $log->get('data_changes') !== 'null'): ?>
             <p><strong>Données supplémentaires :</strong></p>
-            <pre style="width: 95%; max-height: 120px; overflow-y: auto;"><?= __s($thisData) ?></pre>
+            <pre style="width: 95%; max-height: 120px; overflow-y: auto;"><?= e($thisData) ?></pre>
         <?php endif; ?>
 
     </div>
