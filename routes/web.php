@@ -248,3 +248,14 @@ Route::post('user/notifications/mark-as-read', 'NotificationController@markAsRea
 */
 Route::get('data-export/temperance-pays', 'DataExporterController@temperancePays')
     ->name('data-export.temperance-pays');
+
+/*
+|--------------------------------------------------------------------------
+| Back-office
+|--------------------------------------------------------------------------
+*/
+
+Route::get('back-office/advanced-parameters', [Controllers\BackOfficeController::class, 'advancedParameters'])
+    ->name('back-office.advanced-parameters');
+Route::post('back-office/advanced-parameters/purge-cache', [Controllers\BackOfficeController::class, 'purgeCache'])
+    ->name('back-office.advanced-parameters.purge-cache');

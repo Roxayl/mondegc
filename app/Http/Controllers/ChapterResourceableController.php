@@ -91,7 +91,7 @@ class ChapterResourceableController extends Controller
         $oldValues = $chapterResourceable->resources();
 
         return view('chapter-resourceable.edit',
-            compact('chapter', 'oldValues', 'roleplayable'));
+            compact('chapterResourceable', 'chapter', 'oldValues', 'roleplayable'));
     }
 
     /**

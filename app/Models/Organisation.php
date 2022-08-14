@@ -314,16 +314,7 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
      */
     public function infrastructureResources(): array
     {
-        $sumResources = EconomyService::resourcesPrefilled();
-
-        foreach($this->infrastructures as $infrastructure) {
-            $generatedResources = $infrastructure->getGeneratedResources();
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] += $generatedResources[$resource];
-            }
-        }
-
-        return $sumResources;
+        return EconomyService::sumGeneratedResourcesFromInfluencables($this->infrastructures);
     }
 
     /**
@@ -354,7 +345,6 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
         // Les alliances bénéficient les ressources de leurs pays ; on les calcule
         // le cas échéant.
         if($this->type === self::TYPE_ALLIANCE) {
-
             $paysMembers = $this->members;
 
             foreach($paysMembers as $members) {

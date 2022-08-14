@@ -1208,7 +1208,7 @@ function dateFormat($date, $getTime = false)
 
 /**
  * Filtre un texte avant affichage.
- * @param string $text Chaîne à traiter.
+ * @param string|array $text Chaîne à traiter.
  * @return string Chaîne avec les caractères HTML échappés.
  */
 function __s($text)

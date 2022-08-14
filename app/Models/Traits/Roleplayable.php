@@ -22,19 +22,10 @@ trait Roleplayable
      */
     public function roleplayResources(): array
     {
-        $sumResources = EconomyService::resourcesPrefilled();
-
         if(! Features::accessible('roleplay')) {
-            return $sumResources;
+            return EconomyService::resourcesPrefilled();
         }
 
-        foreach($this->chapterResources as $chapterResource) {
-            $generatedResources = $chapterResource->getGeneratedResources();
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] = $generatedResources[$resource];
-            }
-        }
-
-        return $sumResources;
+        return EconomyService::sumGeneratedResourcesFromInfluencables($this->chapterResources);
     }
 }

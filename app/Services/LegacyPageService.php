@@ -67,4 +67,13 @@ class LegacyPageService
     {
         return self::callLegacyController('php/cartegenerale2.php');
     }
+
+    /**
+     * Contenu HTML du menu dédié au Conseil de l'OCGC.
+     * @return string
+     */
+    public static function menuHautConseil(): string
+    {
+        return self::callLegacyController('php/menu-haut-conseil.php');
+    }
 }
