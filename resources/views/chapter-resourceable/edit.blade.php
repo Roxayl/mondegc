@@ -6,7 +6,7 @@
     </a>
 </div>
 
-<form action="{{ route('chapter-resourceable.update', $chapter) }}"
+<form action="{{ route('chapter-resourceable.update', $chapterResourceable) }}"
       method="POST">
     @method('PUT')
 
