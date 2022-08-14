@@ -24,7 +24,8 @@
               <li><a href="../back/page_pays_ajouter.php">Nouveau pays</a></li>
               <li class="divider"></li>
               <li class="nav-header">Avancé</li>
+              <li><a href="<?= urlFromLegacy(route('back-office.advanced-parameters')) ?>">Paramètres avancés</a></li>
               <li><a href="../back/logger.php">Journalisation</a></li>
             </ul>
   </div>
-        </div>
+</div>

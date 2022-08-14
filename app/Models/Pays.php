@@ -483,6 +483,11 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
      */
     public function resources(bool $withOrganisation = true): array
     {
+        // Retrieve from cache.
+        if(cache()->has($this->resourceCacheKey())) {
+            return cache()->get($this->resourceCacheKey());
+        }
+
         $sumResources = EconomyService::resourcesPrefilled();
         $inactivityCoefficient = $this->inactivityCoefficient();
 
@@ -511,6 +516,9 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
                 $sumResources[$resource] = (int)($sumResources[$resource] * $inactivityCoefficient);
             }
         }
+
+        // Cache resources for 20 minutes.
+        cache()->put($this->resourceCacheKey(), $sumResources, now()->addMinutes(20));
 
         return $sumResources;
     }
