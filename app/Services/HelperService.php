@@ -67,4 +67,45 @@ class HelperService
         }
         return $purifier->purify($text);
     }
+
+    /**
+     * Calcule la taille d'un répertoire.
+     *
+     * @param string $directory
+     * @return float
+     */
+    public static function directorySize(string $directory): float
+    {
+        $size = 0;
+        foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory)) as $file) {
+            if($file->getFileName() !== '..') {
+                $size += $file->getSize();
+            }
+        }
+        return $size;
+    }
+
+    /**
+     * Format des bytes sous forme lisible.
+     *
+     * Récupéré depuis https://stackoverflow.com/a/2510459
+     *
+     * @param  float  $bytes
+     * @param  int  $precision
+     * @return string
+     */
+    public static function formatBytes(float $bytes, int $precision = 2): string
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+
+        $bytes = max($bytes, 0);
+        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min($pow, count($units) - 1);
+
+        // Décommenter l'un ou l'autre...
+        // $bytes /= pow(1024, $pow);
+        $bytes /= (1 << (10 * $pow));
+
+        return round($bytes, $precision) . ' ' . $units[$pow];
+    }
 }

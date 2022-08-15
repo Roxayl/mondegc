@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\HelperService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -21,7 +22,11 @@ class BackOfficeController extends Controller
     {
         $this->checkAuthorization();
 
-        return view('back-office.advanced-parameters');
+        $cacheSize = HelperService::formatBytes(HelperService::directorySize(
+            storage_path('framework/cache/data')
+        ));
+
+        return view('back-office.advanced-parameters', compact('cacheSize'));
     }
 
     /**
