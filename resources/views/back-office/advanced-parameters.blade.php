@@ -42,6 +42,16 @@
                     Purger le cache
                 </button>
             </form>
+
+            <h4>Régénérer les influences</h4>
+
+            <form action="{{ route('back-office.advanced-parameters.regenerate-influences') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-primary">
+                    Regénérer
+                </button>
+            </form>
+
         </div>
 
     </div>

@@ -44,6 +44,7 @@ trait ModelFactory
     {
         $result = collect();
 
+        // Filtre la variable 'type' pour n'y intégrer que les noms de classes complets (FQCN).
         $classes = [];
         if($types === null) {
             $classes = self::models;
@@ -68,8 +69,8 @@ trait ModelFactory
                 $query->where($class::getNameColumn(), 'like', "%$search%");
             }
 
-            $roleplayables = $query->get();
-            $result = $result->merge($roleplayables);
+            $models = $query->get();
+            $result = $result->merge($models);
         }
 
         return $result;
