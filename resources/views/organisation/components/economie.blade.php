@@ -51,7 +51,23 @@
                     {{ $organisation->name }}</a>
                 {!! $helperService::renderLegacyElement(
                     'temperance/resources_small', [
+                        'resources' => $organisation->organisationResources()
+                    ]) !!}
+            </div>
+
+            <div style="margin-top: 5px;">
+                <small>dont issues des infrastructures :</small>
+                {!! $helperService::renderLegacyElement(
+                    'temperance/resources_small', [
                         'resources' => $organisation->infrastructureResources()
+                    ]) !!}
+            </div>
+
+            <div style="margin-top: 5px;">
+                <small>dont issues du roleplay :</small>
+                {!! $helperService::renderLegacyElement(
+                    'temperance/resources_small', [
+                        'resources' => $organisation->roleplayResources()
                     ]) !!}
             </div>
 
