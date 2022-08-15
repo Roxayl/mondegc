@@ -32,6 +32,10 @@
 
             <p>Taille du cache : {{ $cacheSize }}</p>
 
+            @if(! $cacheEnabled)
+                <div class="alert alert-info">Le cache est désactivé.</div>
+            @endif
+
             <form action="{{ route('back-office.advanced-parameters.purge-cache') }}" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-primary">
