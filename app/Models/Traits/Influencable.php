@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Traits;
+namespace Roxayl\MondeGC\Models\Traits;
 
-use App\Models\Influence;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
+use Roxayl\MondeGC\Models\Influence;
 
 trait Influencable
 {

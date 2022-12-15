@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Policies;
+namespace Roxayl\MondeGC\Policies;
 
-use App\Models\Chapter;
-use App\Models\CustomUser;
-use App\Models\Roleplay;
-use App\Policies\Contracts\VersionablePolicy;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
+use Roxayl\MondeGC\Models\Chapter;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Models\Roleplay;
+use Roxayl\MondeGC\Policies\Contracts\VersionablePolicy;
 
 class ChapterPolicy implements VersionablePolicy
 {

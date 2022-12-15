@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Providers;
+namespace Roxayl\MondeGC\Providers;
 
-use App\Models;
-use App\Policies;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Roxayl\MondeGC\Models;
+use Roxayl\MondeGC\Policies;
 
 class AuthServiceProvider extends ServiceProvider
 {

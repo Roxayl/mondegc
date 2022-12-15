@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Presenters;
+namespace Roxayl\MondeGC\Models\Presenters;
 
 use Illuminate\Support\Str;
 

@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Infrastructure;
-use App\Models\Ville;
+use Roxayl\MondeGC\Models\Infrastructure;
+use Roxayl\MondeGC\Models\Ville;
 
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');

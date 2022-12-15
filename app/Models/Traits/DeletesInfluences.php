@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Traits;
+namespace Roxayl\MondeGC\Models\Traits;
 
-use App\Models\Influence;
+use Roxayl\MondeGC\Models\Influence;
 
 trait DeletesInfluences
 {

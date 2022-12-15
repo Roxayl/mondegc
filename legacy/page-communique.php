@@ -97,7 +97,7 @@ elseif ( $cat == "institut") {
 }
 
 elseif($cat == 'organisation') {
-    $organisation = \App\Models\Organisation::findOrFail($row_communique['ch_com_element_id']);
+    $organisation = \Roxayl\MondeGC\Models\Organisation::findOrFail($row_communique['ch_com_element_id']);
 
     $ch_com_categorie = $cat;
     $ch_com_element_id = $colname_elementid;
@@ -140,7 +140,7 @@ $totalRows_user = mysql_num_rows($user);
 
 $_SESSION['last_work'] = 'page-communique.php?com_id='.$row_communique['ch_com_ID'];
 
-$eloquentCommunique = \App\Models\Communique::findOrFail($colname_communique);
+$eloquentCommunique = \Roxayl\MondeGC\Models\Communique::findOrFail($colname_communique);
 
 ?><!DOCTYPE html>
 <html lang="fr">

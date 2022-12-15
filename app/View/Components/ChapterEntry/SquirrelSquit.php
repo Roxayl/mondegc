@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\ChapterEntry;
+namespace Roxayl\MondeGC\View\Components\ChapterEntry;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Client\HttpClientException;

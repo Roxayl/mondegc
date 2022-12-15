@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Presenters;
+namespace Roxayl\MondeGC\Models\Presenters;
 
-use App\Models\Infrastructure;
-use App\Models\InfrastructureGroupe;
-use App\Models\InfrastructureOfficielle;
+use Roxayl\MondeGC\Models\Infrastructure;
+use Roxayl\MondeGC\Models\InfrastructureGroupe;
+use Roxayl\MondeGC\Models\InfrastructureOfficielle;
 
 trait InfrastructurablePresenter
 {
@@ -20,7 +20,7 @@ trait InfrastructurablePresenter
 
     /**
      * Donne les paramètres dans l'URL pour la route 'infrastructure.select_group'
-     * pour un modèle {@see \App\Models\Contracts\Infrastructurable} donné.
+     * pour un modèle {@see \Roxayl\MondeGC\Models\Contracts\Infrastructurable} donné.
      * @return array Un array contenant les paramètres de la route.
      */
     public function selectGroupRouteParameter(): array
@@ -30,7 +30,7 @@ trait InfrastructurablePresenter
 
     /**
      * Donne les paramètres dans l'URL pour la route 'infrastructure.create'
-     * pour un modèle {@see \App\Models\Contracts\Infrastructurable} donné.
+     * pour un modèle {@see \Roxayl\MondeGC\Models\Contracts\Infrastructurable} donné.
      * Il est nécessaire de spécifier un groupe d'infrastructure {@see InfrastructureGroupe},
      * et il est possible de définir l'infrastructure officielle
      * {@see InfrastructureOfficielle} sélectionnée, le cas échéant.

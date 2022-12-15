@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\Contracts;
+namespace Roxayl\MondeGC\Jobs\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 

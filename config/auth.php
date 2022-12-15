@@ -70,7 +70,7 @@ return [
         // Provider par défaut
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\CustomUser::class,
+            'model' => Roxayl\MondeGC\Models\CustomUser::class,
         ],
     ],
 

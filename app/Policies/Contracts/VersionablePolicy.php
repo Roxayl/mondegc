@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Policies\Contracts;
+namespace Roxayl\MondeGC\Policies\Contracts;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;

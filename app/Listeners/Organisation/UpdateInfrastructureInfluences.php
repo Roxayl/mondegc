@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Listeners\Organisation;
+namespace Roxayl\MondeGC\Listeners\Organisation;
 
-use App\Events\Organisation\MembershipChanged;
-use App\Events\Organisation\TypeMigrated;
+use Roxayl\MondeGC\Events\Organisation\MembershipChanged;
+use Roxayl\MondeGC\Events\Organisation\TypeMigrated;
 
 class UpdateInfrastructureInfluences
 {

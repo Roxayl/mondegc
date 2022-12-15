@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Events\Infrastructure\InfrastructureJudged;
-use App\Models\Infrastructure;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Roxayl\MondeGC\Events\Infrastructure\InfrastructureJudged;
+use Roxayl\MondeGC\Models\Infrastructure;
 
 class InfrastructureJudgeController extends Controller
 {

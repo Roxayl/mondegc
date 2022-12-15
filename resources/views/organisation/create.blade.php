@@ -40,7 +40,7 @@
 
             <div class="well">
 
-                {!! App\Services\HelperService::displayAlert() !!}
+                {!! Roxayl\MondeGC\Services\HelperService::displayAlert() !!}
 
                 @if(is_null($type))
                     @include('organisation.components.select-type')

@@ -1,5 +1,5 @@
 
-@inject('helperService', 'App\Services\HelperService')
+@inject('helperService', 'Roxayl\MondeGC\Services\HelperService')
 
 @if($organisation->hasEconomy())
 
@@ -20,7 +20,7 @@
     @php
     $resources = $organisation->resources();
     @endphp
-    {!! \App\Services\HelperService::renderLegacyElement('temperance/resources', [
+    {!! \Roxayl\MondeGC\Services\HelperService::renderLegacyElement('temperance/resources', [
         'resources' => $resources
     ]) !!}
     <div class="clearfix"></div>

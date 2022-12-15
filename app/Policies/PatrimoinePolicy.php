@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Policies;
+namespace Roxayl\MondeGC\Policies;
 
-use App\Models\CustomUser;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Roxayl\MondeGC\Models\CustomUser;
 
 class PatrimoinePolicy
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Presenters;
+namespace Roxayl\MondeGC\Models\Presenters;
 
-use App\Models\Infrastructure;
-use App\Models\Organisation;
-use App\Models\OrganisationMember;
-use App\Models\Pays;
 use Illuminate\Notifications\DatabaseNotification;
+use Roxayl\MondeGC\Models\Infrastructure;
+use Roxayl\MondeGC\Models\Organisation;
+use Roxayl\MondeGC\Models\OrganisationMember;
+use Roxayl\MondeGC\Models\Pays;
 
 class NotificationPresenter
 {
@@ -29,7 +29,7 @@ class NotificationPresenter
             | Un pays s'est enregistré dans le Monde GC.
             |---------------------------------------------------------------------
             */
-            case 'App\Notifications\PaysRegistered':
+            case 'Roxayl\MondeGC\Notifications\PaysRegistered':
                 $element = Pays::find($notification->data['pays_id']);
 
                 if(empty($element)) {
@@ -50,7 +50,7 @@ class NotificationPresenter
             | Une infrastructure a été jugée.
             |---------------------------------------------------------------------
             */
-            case 'App\Notifications\InfrastructureJudged':
+            case 'Roxayl\MondeGC\Notifications\InfrastructureJudged':
                 $element = Infrastructure::find($notification->data['infrastructure_id']);
                 if(empty($element)) {
                     $continue = true; break;
@@ -82,7 +82,7 @@ class NotificationPresenter
             | Un pays a rejoint une organisation.
             |---------------------------------------------------------------------
             */
-            case 'App\Notifications\OrganisationMemberJoined':
+            case 'Roxayl\MondeGC\Notifications\OrganisationMemberJoined':
                 $element = OrganisationMember::with(['pays', 'organisation'])
                     ->find($notification->data['organisation_member_id']);
 
@@ -103,7 +103,7 @@ class NotificationPresenter
             | Un pays a été invité à rejoindre une organisation
             |---------------------------------------------------------------------
             */
-            case 'App\Notifications\OrganisationMemberInvited':
+            case 'Roxayl\MondeGC\Notifications\OrganisationMemberInvited':
                 $element = OrganisationMember::with(['pays', 'organisation'])
                     ->find($notification->data['organisation_member_id']);
 
@@ -124,7 +124,7 @@ class NotificationPresenter
             | Les permissions d'un pays dans une organisation ont été modifiées.
             |---------------------------------------------------------------------
             */
-            case 'App\Notifications\OrganisationMemberPermissionChanged':
+            case 'Roxayl\MondeGC\Notifications\OrganisationMemberPermissionChanged':
                 $element = OrganisationMember::with(['pays', 'organisation'])
                     ->find($notification->data['organisation_member_id']);
 
@@ -158,7 +158,7 @@ class NotificationPresenter
             | Un utilisateur a quitté une organisation.
             |---------------------------------------------------------------------
             */
-            case 'App\Notifications\OrganisationMemberQuit':
+            case 'Roxayl\MondeGC\Notifications\OrganisationMemberQuit':
                 $pays = Pays::find($notification->data['pays_id']);
                 $organisation = Organisation::find($notification->data['organisation_id']);
                 $header = "BYE.";
@@ -174,7 +174,7 @@ class NotificationPresenter
             | Une organisation a changé de type.
             |---------------------------------------------------------------------
             */
-            case 'App\Notifications\OrganisationTypeMigrated':
+            case 'Roxayl\MondeGC\Notifications\OrganisationTypeMigrated':
                 $organisation = Organisation::find($notification->data['organisation_id']);
                 $header = "VOTRE ORGANISATION CHANGE";
                 $text = "<strong>" . e($organisation->name) . "</strong> est devenue "

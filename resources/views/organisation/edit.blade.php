@@ -48,7 +48,7 @@
             </ul>
 
             <div class="well">
-                {!! App\Services\HelperService::displayAlert() !!}
+                {!! Roxayl\MondeGC\Services\HelperService::displayAlert() !!}
             </div>
 
             {{-- S'il faut afficher un en-tête sur le type d'orga ?
@@ -92,7 +92,7 @@
 
             @if($organisation->hasEconomy())
 
-                {!! \App\Services\HelperService::renderLegacyElement(
+                {!! \Roxayl\MondeGC\Services\HelperService::renderLegacyElement(
                     'infrastructure/back_list', ['infrastructurable' => $organisation]
                 ) !!}
                 <div class="modal container fade" id="Modal-Monument"></div>

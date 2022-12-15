@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Notifications;
+namespace Roxayl\MondeGC\Notifications;
 
-use App\Models\Infrastructure;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use Roxayl\MondeGC\Models\Infrastructure;
 
 class InfrastructureJudged extends Notification
 {

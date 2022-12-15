@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers;
+use Roxayl\MondeGC\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 /*

@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Pays as EloquentPays;
+use Roxayl\MondeGC\Models\Pays as EloquentPays;
 use GenCity\Monde\Pays;
  
 //deconnexion

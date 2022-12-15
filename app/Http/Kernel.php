@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http;
+namespace Roxayl\MondeGC\Http;
 
-use App\Http\Middleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Roxayl\MondeGC\Http\Middleware;
 
 class Kernel extends HttpKernel
 {

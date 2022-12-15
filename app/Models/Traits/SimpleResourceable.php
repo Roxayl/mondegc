@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Traits;
+namespace Roxayl\MondeGC\Models\Traits;
 
 trait SimpleResourceable
 {

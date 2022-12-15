@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace Roxayl\MondeGC\Services;
 
-use App\Models\Pays;
-use App\Models\Traits\Influencable;
-use App\Models\Traits\Resourceable;
 use Illuminate\Database\Eloquent\Collection;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Traits\Influencable;
+use Roxayl\MondeGC\Models\Traits\Resourceable;
 
 class EconomyService
 {

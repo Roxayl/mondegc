@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Policies;
+namespace Roxayl\MondeGC\Policies;
 
-use App\Models\CustomUser;
-use App\Policies\Traits\ManagesInfrastructures;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Policies\Traits\ManagesInfrastructures;
 
 class PaysPolicy
 {

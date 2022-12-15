@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\CustomUser;
-use App\Models\Organisation;
-use App\Models\Pays;
-use App\Models\Ville;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Models\Organisation;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Ville;
 
 class RoleplayableSeeder extends Seeder
 {

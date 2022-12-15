@@ -183,13 +183,13 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\FakerServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-        App\Providers\DiscordServiceProvider::class,
+        Roxayl\MondeGC\Providers\AppServiceProvider::class,
+        Roxayl\MondeGC\Providers\AuthServiceProvider::class,
+        // Roxayl\MondeGC\Providers\BroadcastServiceProvider::class,
+        Roxayl\MondeGC\Providers\EventServiceProvider::class,
+        Roxayl\MondeGC\Providers\FakerServiceProvider::class,
+        Roxayl\MondeGC\Providers\RouteServiceProvider::class,
+        Roxayl\MondeGC\Providers\DiscordServiceProvider::class,
 
     ],
 

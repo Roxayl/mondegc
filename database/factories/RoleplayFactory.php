@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\Contracts\Roleplayable;
-use App\Models\Organisation;
-use App\Models\Pays;
-use App\Models\Roleplay;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Organisation;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Roleplay;
 
 class RoleplayFactory extends Factory
 {

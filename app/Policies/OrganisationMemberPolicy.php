@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Policies;
+namespace Roxayl\MondeGC\Policies;
 
-use App\Models\CustomUser;
-use App\Models\Organisation;
-use App\Models\OrganisationMember;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Models\Organisation;
+use Roxayl\MondeGC\Models\OrganisationMember;
 
 class OrganisationMemberPolicy
 {

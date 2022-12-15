@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Events\Organisation;
+namespace Roxayl\MondeGC\Events\Organisation;
 
-use App\Models\Organisation;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Roxayl\MondeGC\Models\Organisation;
 
 class MembershipChanged
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Models\Page;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Roxayl\MondeGC\Models\Page;
 
 class PageController extends Controller
 {

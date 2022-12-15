@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Chapter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Roxayl\MondeGC\Models\Chapter;
 
 class ChapterFactory extends Factory
 {

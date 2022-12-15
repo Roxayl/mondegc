@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace Roxayl\MondeGC\Services;
 
 class DiscordWebhookService
 {

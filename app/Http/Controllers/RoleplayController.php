@@ -1,12 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Models\Contracts\Roleplayable;
-use App\Models\Factories\RoleplayableFactory;
-use App\Models\Roleplay;
-use App\Services\StringBladeService;
-use App\View\Components\Blocks\RoleplayableSelector;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -14,6 +9,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Factories\RoleplayableFactory;
+use Roxayl\MondeGC\Models\Roleplay;
+use Roxayl\MondeGC\Services\StringBladeService;
+use Roxayl\MondeGC\View\Components\Blocks\RoleplayableSelector;
 
 class RoleplayController extends Controller
 {

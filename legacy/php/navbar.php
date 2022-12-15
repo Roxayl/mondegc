@@ -43,7 +43,7 @@ if(auth()->check()) {
 }
 
 /** Organisations */
-$navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
+$navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->get();
 
 ?>
 
@@ -294,7 +294,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
                       if($org_type_actuel !== $thisOrganisation->type):
                           $org_type_actuel = $thisOrganisation->type;
 
-                          if($org_type_actuel === \App\Models\Organisation::TYPE_ORGANISATION): ?>
+                          if($org_type_actuel === \Roxayl\MondeGC\Models\Organisation::TYPE_ORGANISATION): ?>
                               </div>
                               <div class="drop-colonne-droite">
                           <?php endif; ?>
