@@ -20,14 +20,15 @@ class RoleplayController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
-    public function index(): Response
+    public function index(): View
     {
-        // TODO: Not yet implemented.
         $this->authorize('display', Roleplay::class);
 
-        return response()->noContent();
+        $roleplays = Roleplay::query()->orderByDesc('created_at')->get();
+
+        return view('roleplay.index', compact('roleplays'));
     }
 
     /**
