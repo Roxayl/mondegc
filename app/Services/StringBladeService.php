@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace Roxayl\MondeGC\Services;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;

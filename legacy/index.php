@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Roleplay;
-use App\View\Components\Roleplay as RoleplayComponent;
+use Roxayl\MondeGC\Models\Roleplay;
+use Roxayl\MondeGC\View\Components\Roleplay as RoleplayComponent;
 use Illuminate\Support\Facades\Gate;
 use TorMorten\Eventy\Facades\Eventy;
 

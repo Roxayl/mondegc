@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Policies;
+namespace Roxayl\MondeGC\Policies;
 
-use App\Models\ChapterEntry;
-use App\Models\CustomUser;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Gate;
+use Roxayl\MondeGC\Models\ChapterEntry;
+use Roxayl\MondeGC\Models\CustomUser;
 
 class ChapterEntryPolicy
 {

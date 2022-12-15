@@ -1,9 +1,9 @@
 <?php
 
-namespace App\View\Components\ChapterEntry;
+namespace Roxayl\MondeGC\View\Components\ChapterEntry;
 
-use App\Models\Communique;
 use Illuminate\View\View;
+use Roxayl\MondeGC\Models\Communique;
 
 class MondeCommunique extends BaseMediaEntry
 {

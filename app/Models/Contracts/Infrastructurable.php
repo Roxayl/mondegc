@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Contracts;
+namespace Roxayl\MondeGC\Models\Contracts;
 
-use App\Models\InfrastructureGroupe;
-use App\Models\InfrastructureOfficielle;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
+use Roxayl\MondeGC\Models\InfrastructureGroupe;
+use Roxayl\MondeGC\Models\InfrastructureOfficielle;
 
 interface Infrastructurable
 {

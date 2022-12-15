@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Models\Contracts\Resourceable;
-use App\Models\Contracts\SimpleResourceable;
-use App\Models\Traits;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Collection;
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
+use Roxayl\MondeGC\Models\Contracts\SimpleResourceable;
+use Roxayl\MondeGC\Models\Traits;
 
 /**
  * Class ResourceHistory
@@ -49,7 +49,7 @@ use Illuminate\Support\Collection;
  * @method static Builder|ResourceHistory whereTourisme($value)
  * @method static Builder|ResourceHistory whereUpdatedAt($value)
  * @mixin \Eloquent
- * @package App\Models
+ * @package Roxayl\MondeGC\Models
  */
 class ResourceHistory extends Model implements SimpleResourceable
 {

@@ -42,7 +42,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
         array('entity' => $newInfraOff->model->getInfo(), 'old_entity' => $oldInfraOff->model->getInfo()));
 
     // Recalculer les influences des infrastructures
-    $eloquentInfrastructures = \App\Models\Infrastructure
+    $eloquentInfrastructures = \Roxayl\MondeGC\Models\Infrastructure
         ::where('ch_inf_off_id', $newInfraOff->get('ch_inf_off_id'))->get();
     foreach($eloquentInfrastructures as $infrastructure) {
         $infrastructure->generateInfluence();

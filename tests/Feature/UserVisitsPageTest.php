@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\CustomUser;
+use Roxayl\MondeGC\Models\CustomUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

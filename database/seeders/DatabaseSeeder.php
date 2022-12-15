@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\CustomUser;
-use App\Models\Pays;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Models\Pays;
 
 class DatabaseSeeder extends Seeder
 {

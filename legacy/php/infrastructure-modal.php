@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Infrastructure;
+use Roxayl\MondeGC\Models\Infrastructure;
 use Carbon\Carbon;
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\View\Components\Roleplay;
+namespace Roxayl\MondeGC\View\Components\Roleplay;
 
-use App\Models\Roleplay;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
+use Roxayl\MondeGC\Models\Roleplay;
 
 class IndexList extends Component
 {

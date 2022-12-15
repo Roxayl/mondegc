@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components;
+namespace Roxayl\MondeGC\View\Components;
 
 use Illuminate\View\Component;
 

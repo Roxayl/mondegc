@@ -1,6 +1,6 @@
 <?php
 
-use App\Services\AuthenticationService;
+use Roxayl\MondeGC\Services\AuthenticationService;
 use Illuminate\Session\TokenMismatchException;
 
 $editFormAction = DEF_URI_PATH.$mondegc_config['front-controller']['uri'].'.php';

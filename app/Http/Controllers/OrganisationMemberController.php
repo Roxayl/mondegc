@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Events\Organisation\MembershipChanged;
-use App\Models\Organisation;
-use App\Models\OrganisationMember;
-use App\Models\Pays;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Roxayl\MondeGC\Events\Organisation\MembershipChanged;
+use Roxayl\MondeGC\Models\Organisation;
+use Roxayl\MondeGC\Models\OrganisationMember;
+use Roxayl\MondeGC\Models\Pays;
 
 class OrganisationMemberController extends Controller
 {

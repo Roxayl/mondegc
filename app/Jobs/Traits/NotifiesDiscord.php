@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Jobs\Traits;
+namespace Roxayl\MondeGC\Jobs\Traits;
 
-use App\Models\DiscordNotification;
+use Roxayl\MondeGC\Models\DiscordNotification;
 
 trait NotifiesDiscord
 {
@@ -25,7 +25,7 @@ trait NotifiesDiscord
 
     public function handle(): void
     {
-        /** @var \App\Jobs\Contracts\NotifiesDiscord $this */
+        /** @var \Roxayl\MondeGC\Jobs\Contracts\NotifiesDiscord $this */
         DiscordNotification::fetch($this)->send();
     }
 }

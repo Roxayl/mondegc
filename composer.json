@@ -94,10 +94,10 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "GenCity\\": "legacy/php/GenCity/",
+            "Roxayl\\MondeGC\\": "app/",
             "Squirrel\\": "lib/Squirrel/"
         }
     },

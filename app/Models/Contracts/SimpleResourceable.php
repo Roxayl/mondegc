@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Contracts;
+namespace Roxayl\MondeGC\Models\Contracts;
 
 interface SimpleResourceable
 {

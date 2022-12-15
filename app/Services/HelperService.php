@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace Roxayl\MondeGC\Services;
 
 use HTMLPurifier;
 use HTMLPurifier_Config;

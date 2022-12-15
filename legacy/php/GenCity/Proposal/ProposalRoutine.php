@@ -2,8 +2,8 @@
 
 namespace GenCity\Proposal;
 
-use App\Jobs\Discord;
-use App\Models\OcgcProposal;
+use Roxayl\MondeGC\Jobs\Discord;
+use Roxayl\MondeGC\Models\OcgcProposal;
 
 class ProposalRoutine
 {

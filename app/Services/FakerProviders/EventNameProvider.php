@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\FakerProviders;
+namespace Roxayl\MondeGC\Services\FakerProviders;
 
 use Faker\Provider\Base;
 

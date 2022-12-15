@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Policies\Traits;
+namespace Roxayl\MondeGC\Policies\Traits;
 
-use App\Models\Contracts\Infrastructurable;
-use App\Models\CustomUser;
-use App\Models\Infrastructure;
-use App\Models\Organisation;
-use App\Models\Pays;
-use App\Models\Ville;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Models\Contracts\Infrastructurable;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Models\Infrastructure;
+use Roxayl\MondeGC\Models\Organisation;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Ville;
 
 trait ManagesInfrastructures
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Factories;
+namespace Roxayl\MondeGC\Models\Factories;
 
-use App\Models\Contracts\Roleplayable;
-use App\Models\Organisation;
-use App\Models\Pays;
-use App\Models\Ville;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Organisation;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Ville;
 
 class RoleplayableFactory
 {

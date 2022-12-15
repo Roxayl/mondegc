@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Http\Requests\ChapterEntry\ManageResource;
-use App\Models\Chapter;
-use App\Models\ChapterEntry;
-use App\Models\CustomUser;
-use App\Services\StringBladeService;
-use App\View\Components\Blocks\RoleplayableSelector;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Roxayl\MondeGC\Http\Requests\ChapterEntry\ManageResource;
+use Roxayl\MondeGC\Models\Chapter;
+use Roxayl\MondeGC\Models\ChapterEntry;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Services\StringBladeService;
+use Roxayl\MondeGC\View\Components\Blocks\RoleplayableSelector;
 
 class ChapterEntryController extends Controller
 {

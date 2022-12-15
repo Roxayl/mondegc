@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Infrastructure as EloquentInfrastructure;
+use Roxayl\MondeGC\Models\Infrastructure as EloquentInfrastructure;
 
 //Connexion et deconnexion
 include('php/log.php');
@@ -124,7 +124,7 @@ $row_temperance = mysql_fetch_assoc($temperance);
 }
 
 $thisVille = new \GenCity\Monde\Ville($_GET['ch_ville_id']);
-$eloquentVille = \App\Models\Ville::findOrFail($_GET['ch_ville_id']);
+$eloquentVille = \Roxayl\MondeGC\Models\Ville::findOrFail($_GET['ch_ville_id']);
 
 // Ressources
 $total_ressources = $eloquentVille->resources();

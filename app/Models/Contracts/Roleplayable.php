@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Contracts;
+namespace Roxayl\MondeGC\Models\Contracts;
 
 use Illuminate\Support\Collection;
 

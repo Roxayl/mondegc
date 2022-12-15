@@ -3,7 +3,7 @@
 use Illuminate\Support\Str;
 
 if(isset($data['organisation']))
-    /** @var \App\Models\Organisation $organisation */
+    /** @var \Roxayl\MondeGC\Models\Organisation $organisation */
     $organisation = $data['organisation'];
 
 $memberCount = $organisation->members->count();

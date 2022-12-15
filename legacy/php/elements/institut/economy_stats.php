@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Pays;
-use App\View\Components\ResourceHistory\GraphPerResource;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\View\Components\ResourceHistory\GraphPerResource;
 use Illuminate\Support\Str;
 
 ?>

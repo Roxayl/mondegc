@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Infrastructure;
+use Roxayl\MondeGC\Models\Infrastructure;
 
 $maxRows_LastCommunique = 20;
 $pageNum_LastCommunique = 0;
@@ -824,7 +824,7 @@ do {
 
     if ( $row_LastCommunique['type_notification'] == "rp_new_chapter") {
 
-        $chapter = \App\Models\Chapter::find($row_LastCommunique['id']);
+        $chapter = \Roxayl\MondeGC\Models\Chapter::find($row_LastCommunique['id']);
         if(! $chapter) continue;
 
         ?>

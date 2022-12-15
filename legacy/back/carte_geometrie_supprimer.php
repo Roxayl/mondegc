@@ -1,7 +1,7 @@
 <?php
 
-use App\Events\Pays\MapUpdated;
-use App\Models\Geometry;
+use Roxayl\MondeGC\Events\Pays\MapUpdated;
+use Roxayl\MondeGC\Models\Geometry;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 //deconnexion

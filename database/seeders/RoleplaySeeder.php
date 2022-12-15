@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Chapter;
-use App\Models\ChapterEntry;
-use App\Models\ChapterResourceable;
-use App\Models\CustomUser;
-use App\Models\Organisation;
-use App\Models\Pays;
-use App\Models\Roleplay;
-use App\Models\Ville;
 use Faker\Generator;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Roxayl\MondeGC\Models\Chapter;
+use Roxayl\MondeGC\Models\ChapterEntry;
+use Roxayl\MondeGC\Models\ChapterResourceable;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Models\Organisation;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Roleplay;
+use Roxayl\MondeGC\Models\Ville;
 
 class RoleplaySeeder extends Seeder
 {

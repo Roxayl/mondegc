@@ -5,7 +5,7 @@
  *   Fonctions globales   *
  **************************/
 
-use App\Services\HelperService;
+use Roxayl\MondeGC\Services\HelperService;
 
 //Protection  données envoyées
 function GetSQLValueString($value, $type = "text", $definedValue = "", $notDefinedValue = "")

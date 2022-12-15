@@ -1,5 +1,5 @@
 
-@inject('helperService', '\App\Services\HelperService')
+@inject('helperService', '\Roxayl\MondeGC\Services\HelperService')
 
 <div id="chapter-container-{{ $chapter->identifier }}">
 

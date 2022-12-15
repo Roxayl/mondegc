@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Providers;
+namespace Roxayl\MondeGC\Providers;
 
-use App\Services\FakerProviders\ChapterEntryMediaProvider;
-use App\Services\FakerProviders\EventNameProvider;
 use Faker\Factory;
 use Faker\Generator;
 use Illuminate\Support\ServiceProvider;
+use Roxayl\MondeGC\Services\FakerProviders\ChapterEntryMediaProvider;
+use Roxayl\MondeGC\Services\FakerProviders\EventNameProvider;
 
 class FakerServiceProvider extends ServiceProvider
 {

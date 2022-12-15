@@ -19,7 +19,7 @@
     </a>
     <br>
 
-    {!! \App\Services\HelperService::renderLegacyElement('temperance/resources_small', [
+    {!! \Roxayl\MondeGC\Services\HelperService::renderLegacyElement('temperance/resources_small', [
         'resources' => $chapterResourceable->resources()
     ]) !!}
 

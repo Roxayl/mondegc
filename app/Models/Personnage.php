@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
 use Database\Factories\PersonnageFactory;
 use Illuminate\Database\Eloquent\Builder;

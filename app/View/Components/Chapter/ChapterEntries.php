@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\Chapter;
+namespace Roxayl\MondeGC\View\Components\Chapter;
 
-use App\Models\Chapter;
-use App\View\Components\BaseComponent;
 use Illuminate\Contracts\View\View;
+use Roxayl\MondeGC\Models\Chapter;
+use Roxayl\MondeGC\View\Components\BaseComponent;
 
 class ChapterEntries extends BaseComponent
 {

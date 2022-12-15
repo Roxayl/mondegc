@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Models\Contracts\Roleplayable;
 use Database\Factories\CustomUserFactory;
 use Illuminate\Database\Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,9 +16,10 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use JetBrains\PhpStorm\ExpectedValues;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
 
 /**
- * App\Models\CustomUser
+ * Roxayl\MondeGC\Models\CustomUser
  *
  * @property int $ch_use_id
  * @property bool|null $ch_use_acces

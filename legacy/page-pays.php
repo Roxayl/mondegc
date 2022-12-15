@@ -81,7 +81,7 @@ $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error())
 $row_geometries = mysql_fetch_assoc($geometries);
 
 // Obtention des organisations
-$eloquentPays = \App\Models\Pays::findOrFail($colname_Pays);
+$eloquentPays = \Roxayl\MondeGC\Models\Pays::findOrFail($colname_Pays);
 $organisations = $eloquentPays->otherOrganisations();
 $alliance = $eloquentPays->alliance();
 

@@ -39,7 +39,7 @@
 
                 <h4 class="mt-0">{{ $entry->title }}</h4>
 
-                {!! \App\Services\HelperService::purifyHtml($entry->content) !!}
+                {!! \Roxayl\MondeGC\Services\HelperService::purifyHtml($entry->content) !!}
 
                 {!! $entry->mediaViewComponent()?->render() !!}
 
