@@ -36,4 +36,12 @@ interface Resourceable extends SimpleResourceable
      * @return Builder
      */
     public function scopeVisible(Builder $query): Builder;
+
+    /**
+     * Donne le nom de la clé pour récupérer ou stocker les ressources générées dans le cache.
+     *
+     * @param null $parameters
+     * @return string
+     */
+    public function resourceCacheKey($parameters): string;
 }

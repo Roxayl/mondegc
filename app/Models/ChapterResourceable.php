@@ -176,6 +176,11 @@ class ChapterResourceable extends Model implements Influencable
             $chapterResourceable->generateInfluence();
         });
 
+        // Regénérer les influences à la modification du modèle.
+        static::updated(function(ChapterResourceable $chapterResourceable) {
+            $chapterResourceable->generateInfluence();
+        });
+
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
         static::deleting(function(ChapterResourceable $chapterResourceable) {
             $chapterResourceable->deleteInfluences();

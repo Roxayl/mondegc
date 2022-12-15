@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use YlsIdeas\FeatureFlags\Facades\Features;
 
 /**
  * Class Pays
@@ -484,8 +485,8 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     public function resources(bool $withOrganisation = true): array
     {
         // Retrieve from cache.
-        if(cache()->has($this->resourceCacheKey())) {
-            return cache()->get($this->resourceCacheKey());
+        if(Features::accessible('cache') && cache()->has($this->resourceCacheKey($withOrganisation))) {
+            return cache()->get($this->resourceCacheKey($withOrganisation));
         }
 
         $sumResources = EconomyService::resourcesPrefilled();
@@ -518,7 +519,9 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         }
 
         // Cache resources for 20 minutes.
-        cache()->put($this->resourceCacheKey(), $sumResources, now()->addMinutes(20));
+        if(Features::accessible('cache')) {
+            cache()->put($this->resourceCacheKey($withOrganisation), $sumResources, now()->addMinutes(20));
+        }
 
         return $sumResources;
     }

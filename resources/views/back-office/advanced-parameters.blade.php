@@ -27,8 +27,14 @@
 
             <h4>Purger le cache</h4>
 
-            <p>Le cache basé sur le système de fichiers peut être vidé via le bouton ci-dessous. Le cache est utilisé
-               pour enregistrer les ressources générées par les pays, afin d'améliorer les performances.</p>
+            <p>Le cache peut être vidé via le bouton ci-dessous. Le cache est utilisé pour enregistrer les ressources
+               générées par les entités, afin d'améliorer les performances.</p>
+
+            <p>Taille du cache : {{ $cacheSize }}</p>
+
+            @if(! $cacheEnabled)
+                <div class="alert alert-info">Le cache est désactivé.</div>
+            @endif
 
             <form action="{{ route('back-office.advanced-parameters.purge-cache') }}" method="POST">
                 @csrf

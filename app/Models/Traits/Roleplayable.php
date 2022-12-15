@@ -5,6 +5,7 @@ namespace App\Models\Traits;
 use App\Models\ChapterResourceable;
 use App\Services\EconomyService;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\DB;
 use YlsIdeas\FeatureFlags\Facades\Features;
 
 trait Roleplayable
@@ -14,7 +15,12 @@ trait Roleplayable
      */
     public function chapterResources(): MorphMany
     {
-        return $this->morphMany(ChapterResourceable::class, 'resourceable');
+        return $this->morphMany(ChapterResourceable::class, 'resourceable')
+            ->select(DB::raw('DISTINCT chapter_resourceable.id'))
+            ->join('chapters', 'chapters.id', '=', 'chapter_resourceable.chapter_id')
+            ->join('roleplay', 'roleplay.id', '=', 'chapters.roleplay_id')
+            ->where('roleplay.deleted_at', null)
+            ->where('chapters.deleted_at', null);
     }
 
     /**

@@ -16,6 +16,7 @@ RUN     apt-get update -qq && \
         zip \
         mariadb-client \
         sendmail \
+        libonig-dev \
         libpng-dev \
         nodejs \
         npm && \
