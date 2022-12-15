@@ -2,12 +2,6 @@
 
 namespace Roxayl\MondeGC\Models;
 
-use Roxayl\MondeGC\Models\Contracts\Influencable;
-use Roxayl\MondeGC\Models\Contracts\Resourceable;
-use Roxayl\MondeGC\Models\Contracts\Roleplayable;
-use Roxayl\MondeGC\Models\Traits\DeletesInfluences;
-use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
-use Roxayl\MondeGC\Services\EconomyService;
 use Carbon\Carbon;
 use Database\Factories\ChapterResourceableFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -16,6 +10,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Traits\DeletesInfluences;
+use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
+use Roxayl\MondeGC\Services\EconomyService;
 
 /**
  * Class ChapterResourceable

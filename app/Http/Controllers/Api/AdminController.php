@@ -2,11 +2,11 @@
 
 namespace Roxayl\MondeGC\Http\Controllers\Api;
 
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\JsonResponse;
 use Roxayl\MondeGC\Http\Controllers\Controller;
 use Roxayl\MondeGC\Jobs\StoreResourceHistory;
 use Roxayl\MondeGC\Models\CustomUser;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Http\JsonResponse;
 
 class AdminController extends Controller
 {

@@ -2,9 +2,9 @@
 
 namespace Roxayl\MondeGC\Listeners\Notification;
 
+use Illuminate\Support\Facades\Notification;
 use Roxayl\MondeGC\Events\Infrastructure\InfrastructureJudged;
 use Roxayl\MondeGC\Notifications\InfrastructureJudged as NotificationInfrastructureJudged;
-use Illuminate\Support\Facades\Notification;
 
 class SendInfraJudgementNotification
 {

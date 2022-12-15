@@ -2,13 +2,13 @@
 
 namespace Roxayl\MondeGC\Http\Controllers;
 
-use Roxayl\MondeGC\Models\Contracts\Roleplayable;
-use Roxayl\MondeGC\Models\CustomUser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\CustomUser;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class CustomUserController extends Controller

@@ -2,10 +2,10 @@
 
 namespace Roxayl\MondeGC\Services;
 
+use Illuminate\Database\Eloquent\Collection;
 use Roxayl\MondeGC\Models\Pays;
 use Roxayl\MondeGC\Models\Traits\Influencable;
 use Roxayl\MondeGC\Models\Traits\Resourceable;
-use Illuminate\Database\Eloquent\Collection;
 
 class EconomyService
 {

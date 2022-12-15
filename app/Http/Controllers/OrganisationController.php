@@ -2,17 +2,17 @@
 
 namespace Roxayl\MondeGC\Http\Controllers;
 
-use Roxayl\MondeGC\Events\Organisation\TypeMigrated;
-use Roxayl\MondeGC\Http\Requests\Organisation\MigrateType;
-use Roxayl\MondeGC\Models\Communique;
-use Roxayl\MondeGC\Models\Organisation;
-use Roxayl\MondeGC\Models\OrganisationMember;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Events\Organisation\TypeMigrated;
+use Roxayl\MondeGC\Http\Requests\Organisation\MigrateType;
+use Roxayl\MondeGC\Models\Communique;
+use Roxayl\MondeGC\Models\Organisation;
+use Roxayl\MondeGC\Models\OrganisationMember;
 
 class OrganisationController extends Controller
 {

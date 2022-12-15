@@ -2,9 +2,9 @@
 
 namespace Roxayl\MondeGC\View\Components\Chapter;
 
+use Illuminate\Contracts\View\View;
 use Roxayl\MondeGC\Models\Chapter;
 use Roxayl\MondeGC\View\Components\BaseComponent;
-use Illuminate\Contracts\View\View;
 
 class ChapterEntries extends BaseComponent
 {

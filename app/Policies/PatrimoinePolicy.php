@@ -2,8 +2,8 @@
 
 namespace Roxayl\MondeGC\Policies;
 
-use Roxayl\MondeGC\Models\CustomUser;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Roxayl\MondeGC\Models\CustomUser;
 
 class PatrimoinePolicy
 {

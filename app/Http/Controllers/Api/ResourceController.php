@@ -2,12 +2,10 @@
 
 namespace Roxayl\MondeGC\Http\Controllers\Api;
 
-use Roxayl\MondeGC\Http\Controllers\Controller;
-use Roxayl\MondeGC\Models\Repositories\BaseRepository;
-use Roxayl\MondeGC\Models\Repositories\Resource;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Roxayl\MondeGC\Http\Controllers\Controller;
+use Roxayl\MondeGC\Models\Repositories\Resource;
 
 class ResourceController extends Controller
 {

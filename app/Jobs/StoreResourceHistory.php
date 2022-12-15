@@ -2,10 +2,6 @@
 
 namespace Roxayl\MondeGC\Jobs;
 
-use Roxayl\MondeGC\Models\Contracts;
-use Roxayl\MondeGC\Models\Repositories\Resourceable;
-use Roxayl\MondeGC\Models\ResourceHistory;
-use Roxayl\MondeGC\Models\Traits\GeneratesResourceHistory;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -15,6 +11,10 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Roxayl\MondeGC\Models\Contracts;
+use Roxayl\MondeGC\Models\Repositories\Resourceable;
+use Roxayl\MondeGC\Models\ResourceHistory;
+use Roxayl\MondeGC\Models\Traits\GeneratesResourceHistory;
 
 class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
 {

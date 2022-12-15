@@ -2,9 +2,9 @@
 
 namespace Roxayl\MondeGC\Policies;
 
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Roxayl\MondeGC\Models\CustomUser;
 use Roxayl\MondeGC\Models\Roleplay;
-use Illuminate\Auth\Access\HandlesAuthorization;
 use YlsIdeas\FeatureFlags\Facades\Features;
 
 class RoleplayPolicy

@@ -2,9 +2,9 @@
 
 namespace Roxayl\MondeGC\Console;
 
-use Roxayl\MondeGC\Jobs\StoreResourceHistory;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Roxayl\MondeGC\Jobs\StoreResourceHistory;
 
 class Kernel extends ConsoleKernel
 {

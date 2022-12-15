@@ -2,8 +2,8 @@
 
 namespace Roxayl\MondeGC\View\Components\Blocks;
 
-use Roxayl\MondeGC\View\Components\BaseComponent;
 use Caxy\HtmlDiff\HtmlDiff;
+use Roxayl\MondeGC\View\Components\BaseComponent;
 
 class TextDiff extends BaseComponent
 {

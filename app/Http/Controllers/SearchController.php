@@ -2,12 +2,12 @@
 
 namespace Roxayl\MondeGC\Http\Controllers;
 
-use Roxayl\MondeGC\Models\Organisation;
-use Roxayl\MondeGC\Models\Pays;
-use Roxayl\MondeGC\Models\Ville;
-use Roxayl\MondeGC\Models\Patrimoine;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Roxayl\MondeGC\Models\Organisation;
+use Roxayl\MondeGC\Models\Patrimoine;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Ville;
 use Spatie\Searchable\Search;
 
 class SearchController extends Controller

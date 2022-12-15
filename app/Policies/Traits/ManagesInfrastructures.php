@@ -2,14 +2,14 @@
 
 namespace Roxayl\MondeGC\Policies\Traits;
 
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 use Roxayl\MondeGC\Models\Contracts\Infrastructurable;
 use Roxayl\MondeGC\Models\CustomUser;
 use Roxayl\MondeGC\Models\Infrastructure;
 use Roxayl\MondeGC\Models\Organisation;
 use Roxayl\MondeGC\Models\Pays;
 use Roxayl\MondeGC\Models\Ville;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
 
 trait ManagesInfrastructures
 {

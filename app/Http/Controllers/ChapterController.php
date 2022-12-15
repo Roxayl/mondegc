@@ -2,16 +2,16 @@
 
 namespace Roxayl\MondeGC\Http\Controllers;
 
-use Roxayl\MondeGC\Models\Chapter;
-use Roxayl\MondeGC\Models\Roleplay;
-use Roxayl\MondeGC\Services\StringBladeService;
-use Roxayl\MondeGC\View\Components\Blocks\TextDiff;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Mpociot\Versionable\Version;
+use Roxayl\MondeGC\Models\Chapter;
+use Roxayl\MondeGC\Models\Roleplay;
+use Roxayl\MondeGC\Services\StringBladeService;
+use Roxayl\MondeGC\View\Components\Blocks\TextDiff;
 
 class ChapterController extends Controller
 {

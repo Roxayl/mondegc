@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use Roxayl\MondeGC\Models\Organisation;
-use Roxayl\MondeGC\Models\Pays;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\DB;
+use Roxayl\MondeGC\Models\Organisation;
+use Roxayl\MondeGC\Models\Pays;
 
 class OrganisationFactory extends Factory
 {

@@ -2,11 +2,11 @@
 
 namespace Roxayl\MondeGC\View\Components\ResourceHistory;
 
-use Roxayl\MondeGC\Models\Contracts\Resourceable;
-use Roxayl\MondeGC\Models\ResourceHistory;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
+use Roxayl\MondeGC\Models\ResourceHistory;
 
 class GraphPerResource extends Graph
 {

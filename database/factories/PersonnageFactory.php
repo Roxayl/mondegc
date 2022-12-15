@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Roxayl\MondeGC\Models\Personnage;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Roxayl\MondeGC\Models\Personnage;
 
 class PersonnageFactory extends Factory
 {

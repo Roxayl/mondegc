@@ -2,7 +2,6 @@
 
 namespace Roxayl\MondeGC\Models;
 
-use Roxayl\MondeGC\Models\Contracts\Roleplayable;
 use Database\Factories\CustomUserFactory;
 use Illuminate\Database\Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,6 +16,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use JetBrains\PhpStorm\ExpectedValues;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
 
 /**
  * Roxayl\MondeGC\Models\CustomUser

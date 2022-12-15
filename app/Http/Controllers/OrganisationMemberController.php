@@ -2,13 +2,13 @@
 
 namespace Roxayl\MondeGC\Http\Controllers;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Roxayl\MondeGC\Events\Organisation\MembershipChanged;
 use Roxayl\MondeGC\Models\Organisation;
 use Roxayl\MondeGC\Models\OrganisationMember;
 use Roxayl\MondeGC\Models\Pays;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class OrganisationMemberController extends Controller
 {

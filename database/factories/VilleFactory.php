@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Roxayl\MondeGC\Models\CustomUser;
 use Roxayl\MondeGC\Models\Pays;
 use Roxayl\MondeGC\Models\Ville;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\Factory;
 
 class VilleFactory extends Factory
 {

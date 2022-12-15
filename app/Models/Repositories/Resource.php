@@ -2,9 +2,9 @@
 
 namespace Roxayl\MondeGC\Models\Repositories;
 
+use Illuminate\Support\Collection;
 use Roxayl\MondeGC\Models\Contracts\Resourceable as IResourceable;
 use Roxayl\MondeGC\Models\Factories\ResourceableFactory;
-use Illuminate\Support\Collection;
 
 /**
  * Cette classe permet de gérer des collections de modèles de ressources.

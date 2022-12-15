@@ -2,10 +2,10 @@
 
 namespace Roxayl\MondeGC\Models\Contracts;
 
-use Roxayl\MondeGC\Models\InfrastructureGroupe;
-use Roxayl\MondeGC\Models\InfrastructureOfficielle;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
+use Roxayl\MondeGC\Models\InfrastructureGroupe;
+use Roxayl\MondeGC\Models\InfrastructureOfficielle;
 
 interface Infrastructurable
 {

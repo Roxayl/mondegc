@@ -2,9 +2,9 @@
 
 namespace Roxayl\MondeGC\Models\Traits;
 
-use Roxayl\MondeGC\Models\Infrastructure;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Roxayl\MondeGC\Models\Infrastructure;
 
 /**
  * @property-read Collection|Infrastructure[] $infrastructures

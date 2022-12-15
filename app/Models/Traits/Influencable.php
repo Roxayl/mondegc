@@ -2,10 +2,10 @@
 
 namespace Roxayl\MondeGC\Models\Traits;
 
-use Roxayl\MondeGC\Models\Influence;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
+use Roxayl\MondeGC\Models\Influence;
 
 trait Influencable
 {

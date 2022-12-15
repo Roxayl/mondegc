@@ -2,9 +2,9 @@
 
 namespace Roxayl\MondeGC\Http\Controllers\Legacy;
 
-use Roxayl\MondeGC\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Roxayl\MondeGC\Http\Controllers\Controller;
 
 class LegacySiteController extends Controller
 {

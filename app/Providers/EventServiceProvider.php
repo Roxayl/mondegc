@@ -2,8 +2,8 @@
 
 namespace Roxayl\MondeGC\Providers;
 
-use Roxayl\MondeGC\View\Components\Blocks\ScriptConfiguration;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Roxayl\MondeGC\View\Components\Blocks\ScriptConfiguration;
 use TorMorten\Eventy\Facades\Eventy;
 
 class EventServiceProvider extends ServiceProvider

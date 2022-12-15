@@ -2,8 +2,6 @@
 
 namespace Roxayl\MondeGC\Models;
 
-use Roxayl\MondeGC\Models\Contracts\Roleplayable;
-use Roxayl\MondeGC\Models\Factories\RoleplayableFactory;
 use Carbon\Carbon;
 use Database\Factories\RoleplayFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -16,6 +14,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query;
 use Illuminate\Support;
 use Illuminate\Support\Facades\DB;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Factories\RoleplayableFactory;
 
 /**
  * Class Roleplay

@@ -2,9 +2,9 @@
 
 namespace Roxayl\MondeGC\Providers;
 
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Roxayl\MondeGC\Models;
 use Roxayl\MondeGC\Policies;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {

@@ -2,9 +2,9 @@
 
 namespace Roxayl\MondeGC\View\Components\ChapterEntry;
 
+use Illuminate\View\View;
 use Roxayl\MondeGC\Models\Chapter;
 use Roxayl\MondeGC\View\Components\BaseComponent;
-use Illuminate\View\View;
 
 class CreateButton extends BaseComponent
 {

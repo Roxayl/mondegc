@@ -2,15 +2,6 @@
 
 namespace Roxayl\MondeGC\Models;
 
-use Roxayl\MondeGC\Models\Contracts\Infrastructurable;
-use Roxayl\MondeGC\Models\Contracts\Resourceable;
-use Roxayl\MondeGC\Models\Contracts\Roleplayable;
-use Roxayl\MondeGC\Models\Presenters\InfrastructurablePresenter;
-use Roxayl\MondeGC\Models\Presenters\VillePresenter;
-use Roxayl\MondeGC\Models\Traits\Infrastructurable as HasInfrastructures;
-use Roxayl\MondeGC\Models\Traits\Resourceable as HasResources;
-use Roxayl\MondeGC\Models\Traits\Roleplayable as ParticipatesInRoleplay;
-use Roxayl\MondeGC\Services\EconomyService;
 use Carbon\Carbon;
 use Database\Factories\VilleFactory;
 use Illuminate\Database\Eloquent;
@@ -21,6 +12,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Models\Contracts\Infrastructurable;
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Presenters\InfrastructurablePresenter;
+use Roxayl\MondeGC\Models\Presenters\VillePresenter;
+use Roxayl\MondeGC\Models\Traits\Infrastructurable as HasInfrastructures;
+use Roxayl\MondeGC\Models\Traits\Resourceable as HasResources;
+use Roxayl\MondeGC\Models\Traits\Roleplayable as ParticipatesInRoleplay;
+use Roxayl\MondeGC\Services\EconomyService;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 

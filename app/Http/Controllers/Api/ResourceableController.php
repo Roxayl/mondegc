@@ -2,13 +2,13 @@
 
 namespace Roxayl\MondeGC\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Roxayl\MondeGC\Http\Controllers\Controller;
 use Roxayl\MondeGC\Models\Repositories\BaseRepository;
 use Roxayl\MondeGC\Models\Repositories\Resource;
 use Roxayl\MondeGC\Models\Repositories\Resourceable;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class ResourceableController extends Controller
 {

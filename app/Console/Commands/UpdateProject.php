@@ -4,7 +4,6 @@ namespace Roxayl\MondeGC\Console\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 
 class UpdateProject extends Command
 {

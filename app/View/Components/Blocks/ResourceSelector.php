@@ -2,9 +2,9 @@
 
 namespace Roxayl\MondeGC\View\Components\Blocks;
 
-use Roxayl\MondeGC\Services\EconomyService;
 use Illuminate\View\Component;
 use Illuminate\View\View;
+use Roxayl\MondeGC\Services\EconomyService;
 
 class ResourceSelector extends Component
 {

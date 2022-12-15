@@ -2,9 +2,9 @@
 
 namespace Roxayl\MondeGC\Listeners\Notification;
 
+use Illuminate\Support\Facades\Notification;
 use Roxayl\MondeGC\Events\Organisation\TypeMigrated;
 use Roxayl\MondeGC\Notifications\OrganisationTypeMigrated;
-use Illuminate\Support\Facades\Notification;
 
 class SendTypeMigratedNotification
 {

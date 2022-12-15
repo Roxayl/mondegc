@@ -2,11 +2,11 @@
 
 namespace Roxayl\MondeGC\Models\Presenters;
 
+use Illuminate\Notifications\DatabaseNotification;
 use Roxayl\MondeGC\Models\Infrastructure;
 use Roxayl\MondeGC\Models\Organisation;
 use Roxayl\MondeGC\Models\OrganisationMember;
 use Roxayl\MondeGC\Models\Pays;
-use Illuminate\Notifications\DatabaseNotification;
 
 class NotificationPresenter
 {

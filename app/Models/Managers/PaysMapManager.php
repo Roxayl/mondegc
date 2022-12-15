@@ -2,11 +2,11 @@
 
 namespace Roxayl\MondeGC\Models\Managers;
 
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Roxayl\MondeGC\Models\Contracts\Influencable;
 use Roxayl\MondeGC\Models\Influence;
 use Roxayl\MondeGC\Models\Pays;
 use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class PaysMapManager implements Influencable
 {

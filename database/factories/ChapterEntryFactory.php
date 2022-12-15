@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Roxayl\MondeGC\Models\ChapterEntry;
 use Roxayl\MondeGC\Models\Factories\RoleplayableFactory;
-use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ChapterEntryFactory extends Factory
 {

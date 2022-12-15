@@ -2,8 +2,8 @@
 
 namespace Roxayl\MondeGC\Providers;
 
-use Roxayl\MondeGC\Services\DiscordWebhookService;
 use Illuminate\Support\ServiceProvider;
+use Roxayl\MondeGC\Services\DiscordWebhookService;
 
 class DiscordServiceProvider extends ServiceProvider
 {

@@ -2,11 +2,11 @@
 
 namespace Roxayl\MondeGC\Events\Patrimoine;
 
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 use Roxayl\MondeGC\Events\Contracts\InfluencableEvent;
 use Roxayl\MondeGC\Models\Contracts\Influencable;
 use Roxayl\MondeGC\Models\Patrimoine;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
 
 class PatrimoineCategorized implements InfluencableEvent
 {

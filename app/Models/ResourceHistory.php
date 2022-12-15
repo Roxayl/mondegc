@@ -2,14 +2,14 @@
 
 namespace Roxayl\MondeGC\Models;
 
-use Roxayl\MondeGC\Models\Contracts\Resourceable;
-use Roxayl\MondeGC\Models\Contracts\SimpleResourceable;
-use Roxayl\MondeGC\Models\Traits;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Collection;
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
+use Roxayl\MondeGC\Models\Contracts\SimpleResourceable;
+use Roxayl\MondeGC\Models\Traits;
 
 /**
  * Class ResourceHistory

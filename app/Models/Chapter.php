@@ -2,7 +2,6 @@
 
 namespace Roxayl\MondeGC\Models;
 
-use Roxayl\MondeGC\Models\Traits\Versionable;
 use Carbon\Carbon;
 use Database\Factories\ChapterFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Models\Traits\Versionable;
 
 /**
  * Class Chapter

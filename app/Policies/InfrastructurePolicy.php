@@ -2,9 +2,8 @@
 
 namespace Roxayl\MondeGC\Policies;
 
-use Roxayl\MondeGC\Models\CustomUser;
-use Roxayl\MondeGC\Models\Infrastructure;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Roxayl\MondeGC\Models\CustomUser;
 
 class InfrastructurePolicy
 {

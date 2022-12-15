@@ -2,9 +2,9 @@
 
 namespace Roxayl\MondeGC\Services;
 
-use Roxayl\MondeGC\Models\CustomUser;
 use GenCity\Monde;
 use Illuminate\Auth\AuthenticationException;
+use Roxayl\MondeGC\Models\CustomUser;
 
 class AuthenticationService
 {

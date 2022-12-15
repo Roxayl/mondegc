@@ -2,9 +2,9 @@
 
 namespace Roxayl\MondeGC\Http\Controllers;
 
-use Roxayl\MondeGC\Services\HelperService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Roxayl\MondeGC\Services\HelperService;
 use YlsIdeas\FeatureFlags\Facades\Features;
 
 class BackOfficeController extends Controller

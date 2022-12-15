@@ -2,12 +2,12 @@
 
 namespace Roxayl\MondeGC\View\Components\Blocks;
 
-use Roxayl\MondeGC\Models\Contracts\Roleplayable;
-use Roxayl\MondeGC\Models\Factories\RoleplayableFactory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\Component;
 use Illuminate\View\View;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Factories\RoleplayableFactory;
 
 class RoleplayableSelector extends Component
 {

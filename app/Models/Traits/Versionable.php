@@ -2,8 +2,8 @@
 
 namespace Roxayl\MondeGC\Models\Traits;
 
-use Roxayl\MondeGC\Models\Version;
 use Mpociot\Versionable\VersionableTrait;
+use Roxayl\MondeGC\Models\Version;
 
 trait Versionable
 {

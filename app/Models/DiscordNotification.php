@@ -2,12 +2,12 @@
 
 namespace Roxayl\MondeGC\Models;
 
-use Roxayl\MondeGC\Jobs\Contracts\NotifiesDiscord;
-use Roxayl\MondeGC\Services\DiscordWebhookService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Jobs\Contracts\NotifiesDiscord;
+use Roxayl\MondeGC\Services\DiscordWebhookService;
 
 /**
  * Class DiscordNotification

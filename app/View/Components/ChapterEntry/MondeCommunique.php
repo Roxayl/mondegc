@@ -2,8 +2,8 @@
 
 namespace Roxayl\MondeGC\View\Components\ChapterEntry;
 
-use Roxayl\MondeGC\Models\Communique;
 use Illuminate\View\View;
+use Roxayl\MondeGC\Models\Communique;
 
 class MondeCommunique extends BaseMediaEntry
 {

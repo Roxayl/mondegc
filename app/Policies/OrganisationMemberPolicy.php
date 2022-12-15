@@ -2,10 +2,10 @@
 
 namespace Roxayl\MondeGC\Policies;
 
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Roxayl\MondeGC\Models\CustomUser;
 use Roxayl\MondeGC\Models\Organisation;
 use Roxayl\MondeGC\Models\OrganisationMember;
-use Illuminate\Auth\Access\HandlesAuthorization;
 
 class OrganisationMemberPolicy
 {

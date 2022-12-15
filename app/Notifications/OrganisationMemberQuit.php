@@ -2,11 +2,10 @@
 
 namespace Roxayl\MondeGC\Notifications;
 
+use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
 use Roxayl\MondeGC\Models\Organisation;
 use Roxayl\MondeGC\Models\Pays;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Notification;
 
 class OrganisationMemberQuit extends Notification
 {

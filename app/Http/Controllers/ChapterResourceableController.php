@@ -2,14 +2,14 @@
 
 namespace Roxayl\MondeGC\Http\Controllers;
 
-use Roxayl\MondeGC\Models\Chapter;
-use Roxayl\MondeGC\Models\ChapterResourceable;
-use Roxayl\MondeGC\Services\StringBladeService;
-use Roxayl\MondeGC\View\Components\Blocks\RoleplayableSelector;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Roxayl\MondeGC\Models\Chapter;
+use Roxayl\MondeGC\Models\ChapterResourceable;
+use Roxayl\MondeGC\Services\StringBladeService;
+use Roxayl\MondeGC\View\Components\Blocks\RoleplayableSelector;
 
 class ChapterResourceableController extends Controller
 {
