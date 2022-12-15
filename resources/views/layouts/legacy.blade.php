@@ -1,4 +1,4 @@
-@inject('navbarProvider', 'App\Services\LegacyPageService')
+@inject('navbarProvider', 'Roxayl\MondeGC\Services\LegacyPageService')
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">

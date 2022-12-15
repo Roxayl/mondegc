@@ -1,5 +1,5 @@
 @php
-$viewDirectory = \App\Models\Infrastructure
+$viewDirectory = \Roxayl\MondeGC\Models\Infrastructure
                 ::getUrlParameterFromMorph(get_class($infrastructure->infrastructurable));
 $viewActionVerb = 'Modifier';
 @endphp

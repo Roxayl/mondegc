@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\ChapterResourceable;
-use App\Models\Pays;
-use App\Services\EconomyService;
+use Roxayl\MondeGC\Models\ChapterResourceable;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Services\EconomyService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ChapterResourceableFactory extends Factory

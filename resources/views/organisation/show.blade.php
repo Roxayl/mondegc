@@ -1,5 +1,5 @@
 
-@inject('helperService', 'App\Services\HelperService')
+@inject('helperService', 'Roxayl\MondeGC\Services\HelperService')
 
 @extends('layouts.legacy')
 

@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\CustomUser;
-use App\Models\Pays;
-use App\Models\Ville;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Ville;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

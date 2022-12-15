@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Jobs;
+namespace Roxayl\MondeGC\Jobs;
 
-use App\Models\Contracts;
-use App\Models\Repositories\Resourceable;
-use App\Models\ResourceHistory;
-use App\Models\Traits\GeneratesResourceHistory;
+use Roxayl\MondeGC\Models\Contracts;
+use Roxayl\MondeGC\Models\Repositories\Resourceable;
+use Roxayl\MondeGC\Models\ResourceHistory;
+use Roxayl\MondeGC\Models\Traits\GeneratesResourceHistory;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace Roxayl\MondeGC\Services;
 
-use App\Models\CustomUser;
+use Roxayl\MondeGC\Models\CustomUser;
 use GenCity\Monde;
 use Illuminate\Auth\AuthenticationException;
 

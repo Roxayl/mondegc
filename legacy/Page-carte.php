@@ -129,7 +129,7 @@ if($_SERVER["REMOTE_ADDR"] === '127.0.0.1') {
 }
 
 // Ressources
-$paysResources = \App\Services\EconomyService::getPaysResources();
+$paysResources = \Roxayl\MondeGC\Services\EconomyService::getPaysResources();
 
 ?>
 <!DOCTYPE html>

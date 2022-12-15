@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Events\Organisation;
+namespace Roxayl\MondeGC\Events\Organisation;
 
-use App\Models\Organisation;
+use Roxayl\MondeGC\Models\Organisation;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 

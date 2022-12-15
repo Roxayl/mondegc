@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Models\Contracts\Influencable;
-use App\Models\Presenters\InfrastructurePresenter;
-use App\Models\Traits\DeletesInfluences;
-use App\Models\Traits\Influencable as GeneratesInfluence;
+use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Presenters\InfrastructurePresenter;
+use Roxayl\MondeGC\Models\Traits\DeletesInfluences;
+use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Models\Contracts\Influencable;
-use App\Models\Contracts\Resourceable;
-use App\Models\Contracts\Roleplayable;
-use App\Models\Traits\DeletesInfluences;
-use App\Models\Traits\Influencable as GeneratesInfluence;
-use App\Services\EconomyService;
+use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Traits\DeletesInfluences;
+use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
+use Roxayl\MondeGC\Services\EconomyService;
 use Carbon\Carbon;
 use Database\Factories\ChapterResourceableFactory;
 use Illuminate\Database\Eloquent\Builder;

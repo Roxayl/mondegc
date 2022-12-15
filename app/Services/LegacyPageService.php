@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace Roxayl\MondeGC\Services;
 
-use App\Http\Controllers\Legacy\LegacySiteController;
+use Roxayl\MondeGC\Http\Controllers\Legacy\LegacySiteController;
 
 class LegacyPageService
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Roxayl\MondeGC\Console\Commands;
 
 use Exception;
 use Illuminate\Console\Command;

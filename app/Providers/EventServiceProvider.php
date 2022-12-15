@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Providers;
+namespace Roxayl\MondeGC\Providers;
 
-use App\View\Components\Blocks\ScriptConfiguration;
+use Roxayl\MondeGC\View\Components\Blocks\ScriptConfiguration;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use TorMorten\Eventy\Facades\Eventy;
 
@@ -20,28 +20,28 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         // Infrastructure
-        'App\Events\Infrastructure\InfrastructureJudged' => [
-            'App\Listeners\Notification\SendInfraJudgementNotification',
-            'App\Listeners\Influence\GenerateInfluence',
+        'Roxayl\MondeGC\Events\Infrastructure\InfrastructureJudged' => [
+            'Roxayl\MondeGC\Listeners\Notification\SendInfraJudgementNotification',
+            'Roxayl\MondeGC\Listeners\Influence\GenerateInfluence',
         ],
 
         // Organisation
-        'App\Events\Organisation\TypeMigrated' => [
-            'App\Listeners\Notification\SendTypeMigratedNotification',
-            'App\Listeners\Organisation\UpdateInfrastructureInfluences',
+        'Roxayl\MondeGC\Events\Organisation\TypeMigrated' => [
+            'Roxayl\MondeGC\Listeners\Notification\SendTypeMigratedNotification',
+            'Roxayl\MondeGC\Listeners\Organisation\UpdateInfrastructureInfluences',
         ],
-        'App\Events\Organisation\MembershipChanged' => [
-            'App\Listeners\Organisation\UpdateInfrastructureInfluences',
+        'Roxayl\MondeGC\Events\Organisation\MembershipChanged' => [
+            'Roxayl\MondeGC\Listeners\Organisation\UpdateInfrastructureInfluences',
         ],
 
         // Patrimoine
-        'App\Events\Patrimoine\PatrimoineCategorized' => [
-            'App\Listeners\Influence\GenerateInfluence',
+        'Roxayl\MondeGC\Events\Patrimoine\PatrimoineCategorized' => [
+            'Roxayl\MondeGC\Listeners\Influence\GenerateInfluence',
         ],
 
         // Pays
-        'App\Events\Pays\MapUpdated' => [
-            'App\Listeners\Influence\GenerateInfluence',
+        'Roxayl\MondeGC\Events\Pays\MapUpdated' => [
+            'Roxayl\MondeGC\Listeners\Influence\GenerateInfluence',
         ],
     ];
 

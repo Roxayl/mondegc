@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Policies;
+namespace Roxayl\MondeGC\Policies;
 
-use App\Models\CustomUser;
-use App\Models\Roleplay;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Models\Roleplay;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use YlsIdeas\FeatureFlags\Facades\Features;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Notifications;
+namespace Roxayl\MondeGC\Notifications;
 
-use App\Models\Organisation;
+use Roxayl\MondeGC\Models\Organisation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;

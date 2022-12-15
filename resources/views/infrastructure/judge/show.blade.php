@@ -1,5 +1,5 @@
 
-@inject('helperService', 'App\Services\HelperService')
+@inject('helperService', 'Roxayl\MondeGC\Services\HelperService')
 
 @extends('layouts.popup')
 
@@ -90,7 +90,7 @@
 
     <label for="radio-accepted" style="display: inline-block;">
         <input type="radio" id="radio-accepted" name="ch_inf_statut"
-               value="{{ \App\Models\Infrastructure::JUGEMENT_ACCEPTED }}">
+               value="{{ \Roxayl\MondeGC\Models\Infrastructure::JUGEMENT_ACCEPTED }}">
         <span style="display: inline-block;" type="submit" class="btn btn-large btn-success">
             <i class="icon-jugement icon-white"></i> Accepter
         </span>
@@ -98,7 +98,7 @@
 
     <label for="radio-rejected" style="display: inline-block;">
         <input type="radio" id="radio-rejected" name="ch_inf_statut"
-               value="{{ \App\Models\Infrastructure::JUGEMENT_REJECTED }}">
+               value="{{ \Roxayl\MondeGC\Models\Infrastructure::JUGEMENT_REJECTED }}">
         <span style="display: inline-block;" type="submit" class="btn btn-large btn-danger">
             <i class="icon-jugement icon-white"></i> Rejeter
         </span>
@@ -106,7 +106,7 @@
 
     <label for="radio-pending" style="display: inline-block;">
         <input type="radio" id="radio-pending" name="ch_inf_statut"
-               value="{{ \App\Models\Infrastructure::JUGEMENT_PENDING }}">
+               value="{{ \Roxayl\MondeGC\Models\Infrastructure::JUGEMENT_PENDING }}">
         <span style="display: inline-block;" type="submit" class="btn btn-large btn-info">
             <i class="icon-time icon-white"></i> Définir en attente de jugement
         </span>
@@ -149,7 +149,7 @@
 
         var evaluateRadio = function() {
             selected = $('input[name=ch_inf_statut]:checked');
-            if(parseInt(selected.val()) === {{ \App\Models\Infrastructure::JUGEMENT_REJECTED }}) {
+            if(parseInt(selected.val()) === {{ \Roxayl\MondeGC\Models\Infrastructure::JUGEMENT_REJECTED }}) {
                 $('#textarea-reject-container').show();
             } else {
                 $('#textarea-reject-container').hide();

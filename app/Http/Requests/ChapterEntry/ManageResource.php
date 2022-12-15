@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Requests\ChapterEntry;
+namespace Roxayl\MondeGC\Http\Requests\ChapterEntry;
 
-use App\Models\ChapterEntry;
+use Roxayl\MondeGC\Models\ChapterEntry;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;

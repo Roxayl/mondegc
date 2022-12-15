@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Roxayl\MondeGC\Providers;
 
 use App;
 use Illuminate\Support\Facades\Route;
@@ -15,7 +15,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Http\Controllers';
+    protected $namespace = 'Roxayl\MondeGC\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.

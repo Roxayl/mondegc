@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Pays;
-use App\Models\Personnage;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Personnage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 

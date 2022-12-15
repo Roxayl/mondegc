@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Jobs\Discord;
+namespace Roxayl\MondeGC\Jobs\Discord;
 
-use App\Jobs\Contracts\NotifiesDiscord;
-use App\Jobs\Traits\NotifiesDiscord as NotifiesDiscordTrait;
-use App\Models\OcgcProposal;
+use Roxayl\MondeGC\Jobs\Contracts\NotifiesDiscord;
+use Roxayl\MondeGC\Jobs\Traits\NotifiesDiscord as NotifiesDiscordTrait;
+use Roxayl\MondeGC\Models\OcgcProposal;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;

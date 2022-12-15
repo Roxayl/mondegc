@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Factories;
+namespace Roxayl\MondeGC\Models\Factories;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +15,7 @@ trait ModelFactory
     /**
      * Cherche une instance d'un {@link Model}.
      * @param string $type Type du modèle. Peut prendre les valeurs spécifiées dans la constante
-     *                     {@link models}, ou le nom raccourci (e.g. "pays" pour "App\Models\Pays").
+     *                     {@link models}, ou le nom raccourci (e.g. "pays" pour "Roxayl\MondeGC\Models\Pays").
      * @param int    $id   Identifiant du modèle.
      * @return Model|M|null Renvoie null lorsque le modèle n'existe pas.
      */
@@ -81,7 +81,7 @@ trait ModelFactory
      */
     private static function getClassName(string $type): string
     {
-        $namespace = 'App\Models\\';
+        $namespace = 'Roxayl\MondeGC\Models\\';
 
         if(Str::contains($type, $namespace)) {
             $class = Str::startsWith($type, '\\') ? Str::substr($type, 1) : $type;

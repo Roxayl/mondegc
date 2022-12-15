@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\CustomUser;
+use Roxayl\MondeGC\Models\CustomUser;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;

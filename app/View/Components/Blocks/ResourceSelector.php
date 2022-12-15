@@ -1,8 +1,8 @@
 <?php
 
-namespace App\View\Components\Blocks;
+namespace Roxayl\MondeGC\View\Components\Blocks;
 
-use App\Services\EconomyService;
+use Roxayl\MondeGC\Services\EconomyService;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 

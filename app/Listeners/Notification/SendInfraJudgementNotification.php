@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Listeners\Notification;
+namespace Roxayl\MondeGC\Listeners\Notification;
 
-use App\Events\Infrastructure\InfrastructureJudged;
-use App\Notifications\InfrastructureJudged as NotificationInfrastructureJudged;
+use Roxayl\MondeGC\Events\Infrastructure\InfrastructureJudged;
+use Roxayl\MondeGC\Notifications\InfrastructureJudged as NotificationInfrastructureJudged;
 use Illuminate\Support\Facades\Notification;
 
 class SendInfraJudgementNotification

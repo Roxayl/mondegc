@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Services\HelperService;
+use Roxayl\MondeGC\Services\HelperService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use YlsIdeas\FeatureFlags\Facades\Features;

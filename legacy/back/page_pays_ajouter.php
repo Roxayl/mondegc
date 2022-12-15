@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\CustomUser;
-use App\Models\Pays;
-use App\Notifications\PaysRegistered;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Notifications\PaysRegistered;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 

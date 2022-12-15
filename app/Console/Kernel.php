@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Console;
+namespace Roxayl\MondeGC\Console;
 
-use App\Jobs\StoreResourceHistory;
+use Roxayl\MondeGC\Jobs\StoreResourceHistory;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 

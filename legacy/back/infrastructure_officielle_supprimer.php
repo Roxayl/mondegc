@@ -16,7 +16,7 @@ if((isset($_POST['ch_inf_off_id'])) && ($_POST['ch_inf_off_id'] != "")) {
 
     $thisInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($_POST['ch_inf_off_id']);
 
-    $eloquentInfraOff = \App\Models\InfrastructureOfficielle::findOrFail($_POST['ch_inf_off_id']);
+    $eloquentInfraOff = \Roxayl\MondeGC\Models\InfrastructureOfficielle::findOrFail($_POST['ch_inf_off_id']);
     $eloquentInfraOff->delete();
 
     \GenCity\Monde\Logger\Log::createItem('infrastructures_officielles', (int)$_POST['ch_inf_off_id'],

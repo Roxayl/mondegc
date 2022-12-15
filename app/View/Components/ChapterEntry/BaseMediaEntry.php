@@ -1,9 +1,9 @@
 <?php
 
-namespace App\View\Components\ChapterEntry;
+namespace Roxayl\MondeGC\View\Components\ChapterEntry;
 
-use App\Models\ChapterEntry;
-use App\View\Components\BaseComponent;
+use Roxayl\MondeGC\Models\ChapterEntry;
+use Roxayl\MondeGC\View\Components\BaseComponent;
 
 abstract class BaseMediaEntry extends BaseComponent
 {

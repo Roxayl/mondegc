@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Models\Contracts\Roleplayable;
-use App\Models\Factories\RoleplayableFactory;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Factories\RoleplayableFactory;
 use Carbon\Carbon;
 use Database\Factories\RoleplayFactory;
 use Illuminate\Database\Eloquent\Builder;

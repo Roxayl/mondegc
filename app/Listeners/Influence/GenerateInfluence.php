@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Listeners\Influence;
+namespace Roxayl\MondeGC\Listeners\Influence;
 
-use App\Events\Contracts\InfluencableEvent;
+use Roxayl\MondeGC\Events\Contracts\InfluencableEvent;
 
 class GenerateInfluence
 {

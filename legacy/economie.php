@@ -1,6 +1,6 @@
 <?php
 
-use App\Services\EconomyService;
+use Roxayl\MondeGC\Services\EconomyService;
 use Illuminate\Support\Facades\Gate;
 
 //Connexion et deconnexion
@@ -209,7 +209,7 @@ Eventy::action('display.beforeHeadClosingTag')
           <p>
             <a class="btn btn-primary" href="Projet-temperance.php">En savoir plus</a>
             <?php if(Gate::check('judgeInfrastructure',
-              \App\Models\Infrastructure::class)): ?>
+              \Roxayl\MondeGC\Models\Infrastructure::class)): ?>
             <a class="btn btn-primary" href="<?= route('infrastructure-judge.index') ?>"
                 >Salle de jugement des infrastructures</a>
             <?php endif; ?>

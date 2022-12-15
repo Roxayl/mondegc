@@ -1,9 +1,9 @@
 <?php
 
-namespace App\View\Components\Roleplay;
+namespace Roxayl\MondeGC\View\Components\Roleplay;
 
-use App\Models\Roleplay;
-use App\View\Components\BaseComponent;
+use Roxayl\MondeGC\Models\Roleplay;
+use Roxayl\MondeGC\View\Components\BaseComponent;
 use Illuminate\Contracts\View\View;
 
 class ManageOrganizers extends BaseComponent

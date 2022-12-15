@@ -1,7 +1,7 @@
 <?php
 
-use App\Events\Patrimoine\PatrimoineCategorized;
-use App\Models\Patrimoine;
+use Roxayl\MondeGC\Events\Patrimoine\PatrimoineCategorized;
+use Roxayl\MondeGC\Models\Patrimoine;
 
 header('Content-Type: text/html; charset=utf-8');
 

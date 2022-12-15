@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Traits;
+namespace Roxayl\MondeGC\Models\Traits;
 
-use App\Models\Version;
+use Roxayl\MondeGC\Models\Version;
 use Mpociot\Versionable\VersionableTrait;
 
 trait Versionable

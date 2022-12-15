@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Models\Infrastructure;
-use App\Models\InfrastructureGroupe;
-use App\Models\InfrastructureOfficielle;
+use Roxayl\MondeGC\Models\Infrastructure;
+use Roxayl\MondeGC\Models\InfrastructureGroupe;
+use Roxayl\MondeGC\Models\InfrastructureOfficielle;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;

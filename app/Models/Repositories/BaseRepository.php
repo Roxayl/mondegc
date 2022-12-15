@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Repositories;
+namespace Roxayl\MondeGC\Models\Repositories;
 
 use Illuminate\Support\Collection;
 

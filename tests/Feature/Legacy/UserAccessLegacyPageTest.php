@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Legacy;
 
-use App\Models\CustomUser;
-use App\Services\AuthenticationService;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Services\AuthenticationService;
 
 class UserAccessLegacyPageTest extends AccessLegacyPage
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Traits;
+namespace Roxayl\MondeGC\Models\Traits;
 
-use App\Models\Infrastructure;
+use Roxayl\MondeGC\Models\Infrastructure;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 

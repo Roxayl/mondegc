@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Models\Contracts\Roleplayable;
-use App\Models\CustomUser;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\CustomUser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -47,7 +47,7 @@ class CustomUserController extends Controller
         /** @var Collection<int, Roleplayable> $roleplayables */
         $roleplayables = $user->roleplayables()->filter(function(Roleplayable $roleplayable) use ($type, $term) {
             return Str::contains(Str::lower($roleplayable->getName()), $term)
-                && get_class($roleplayable) === 'App\Models\\' . Str::ucfirst($type);
+                && get_class($roleplayable) === 'Roxayl\MondeGC\Models\\' . Str::ucfirst($type);
         });
 
         $result = [];

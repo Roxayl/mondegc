@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\Chapter;
+namespace Roxayl\MondeGC\View\Components\Chapter;
 
-use App\Models\Chapter;
-use App\Models\Roleplay;
-use App\View\Components\BaseComponent;
+use Roxayl\MondeGC\Models\Chapter;
+use Roxayl\MondeGC\Models\Roleplay;
+use Roxayl\MondeGC\View\Components\BaseComponent;
 use Illuminate\View\View;
 
 class CreateChapter extends BaseComponent

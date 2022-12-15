@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Jobs\Contracts\NotifiesDiscord;
-use App\Services\DiscordWebhookService;
+use Roxayl\MondeGC\Jobs\Contracts\NotifiesDiscord;
+use Roxayl\MondeGC\Services\DiscordWebhookService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

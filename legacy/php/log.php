@@ -1,6 +1,6 @@
 <?php
 
-use App\Services\AuthenticationService;
+use Roxayl\MondeGC\Services\AuthenticationService;
 use Illuminate\Session\TokenMismatchException;
 
 // *** Recherche de sessions.
@@ -224,7 +224,7 @@ $row_pays = mysql_fetch_assoc($pays);
 /********
  * LARAVEL
  * Adaptation des sessions Laravel, pour synchroniser l'auth entre Laravel et Legacy.
- * La synchronisation est gérée par le middleware \App\Http\Middleware\SynchronizeAuthentication.
+ * La synchronisation est gérée par le middleware \Roxayl\MondeGC\Http\Middleware\SynchronizeAuthentication.
  ********/
 
 // Sessions Laravel

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Organisation;
+namespace Roxayl\MondeGC\Http\Requests\Organisation;
 
-use App\Models\Organisation;
+use Roxayl\MondeGC\Models\Organisation;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;

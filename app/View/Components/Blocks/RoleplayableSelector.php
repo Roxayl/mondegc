@@ -1,9 +1,9 @@
 <?php
 
-namespace App\View\Components\Blocks;
+namespace Roxayl\MondeGC\View\Components\Blocks;
 
-use App\Models\Contracts\Roleplayable;
-use App\Models\Factories\RoleplayableFactory;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Factories\RoleplayableFactory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\Component;

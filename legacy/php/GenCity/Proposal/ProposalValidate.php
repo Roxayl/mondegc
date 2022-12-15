@@ -2,8 +2,8 @@
 
 namespace GenCity\Proposal;
 
-use App\Models\OcgcProposal;
-use App\Jobs\Discord;
+use Roxayl\MondeGC\Models\OcgcProposal;
+use Roxayl\MondeGC\Jobs\Discord;
 
 class ProposalValidate {
 

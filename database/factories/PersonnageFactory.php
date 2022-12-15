@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Personnage;
+use Roxayl\MondeGC\Models\Personnage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PersonnageFactory extends Factory

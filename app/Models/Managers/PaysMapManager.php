@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Managers;
+namespace Roxayl\MondeGC\Models\Managers;
 
-use App\Models\Contracts\Influencable;
-use App\Models\Influence;
-use App\Models\Pays;
-use App\Models\Traits\Influencable as GeneratesInfluence;
+use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Influence;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class PaysMapManager implements Influencable

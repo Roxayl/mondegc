@@ -1,9 +1,9 @@
 <?php
 
-namespace App\View\Components\ResourceHistory;
+namespace Roxayl\MondeGC\View\Components\ResourceHistory;
 
-use App\Models\Contracts\Resourceable;
-use App\Models\ResourceHistory;
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
+use Roxayl\MondeGC\Models\ResourceHistory;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\View\View;

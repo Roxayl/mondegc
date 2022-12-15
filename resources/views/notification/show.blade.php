@@ -1,5 +1,5 @@
 
-@inject('notificationPresenter', 'App\Models\Presenters\NotificationPresenter')
+@inject('notificationPresenter', 'Roxayl\MondeGC\Models\Presenters\NotificationPresenter')
 
 @if($unread->count())
 <div class="pull-right" style="margin-right: 10px; margin-top: -3px;">

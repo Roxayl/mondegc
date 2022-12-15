@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Notifications\OrganisationMemberInvited;
-use App\Notifications\OrganisationMemberJoined;
-use App\Notifications\OrganisationMemberPermissionChanged;
-use App\Notifications\OrganisationMemberQuit;
+use Roxayl\MondeGC\Notifications\OrganisationMemberInvited;
+use Roxayl\MondeGC\Notifications\OrganisationMemberJoined;
+use Roxayl\MondeGC\Notifications\OrganisationMemberPermissionChanged;
+use Roxayl\MondeGC\Notifications\OrganisationMemberQuit;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

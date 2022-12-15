@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Repositories;
+namespace Roxayl\MondeGC\Models\Repositories;
 
-use App\Models\Contracts\Resourceable as IResourceable;
-use App\Models\Organisation;
-use App\Models\Pays;
-use App\Models\Ville;
+use Roxayl\MondeGC\Models\Contracts\Resourceable as IResourceable;
+use Roxayl\MondeGC\Models\Organisation;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Ville;
 use Illuminate\Database\Eloquent\Model;
 
 /**

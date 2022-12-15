@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Services\LegacyPageService;
+use Roxayl\MondeGC\Services\LegacyPageService;
 use Illuminate\Contracts\View\View;
 
 class MapController extends Controller

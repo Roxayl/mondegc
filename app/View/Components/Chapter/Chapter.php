@@ -1,9 +1,9 @@
 <?php
 
-namespace App\View\Components\Chapter;
+namespace Roxayl\MondeGC\View\Components\Chapter;
 
-use App\Models\Chapter as ChapterModel;
-use App\View\Components\BaseComponent;
+use Roxayl\MondeGC\Models\Chapter as ChapterModel;
+use Roxayl\MondeGC\View\Components\BaseComponent;
 use Illuminate\Contracts\View\View;
 
 class Chapter extends BaseComponent

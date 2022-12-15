@@ -12,7 +12,7 @@ $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
 
-$organisations = \App\Models\Organisation::allOrdered()->paginate();
+$organisations = \Roxayl\MondeGC\Models\Organisation::allOrdered()->paginate();
 
 //requete liste categories monuments pour pouvoir selectionner la categorie
 

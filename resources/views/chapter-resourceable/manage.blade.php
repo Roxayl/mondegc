@@ -2,12 +2,12 @@
 <div class="pull-right-cta">
     @can('createResourceables', $chapter)
         <a href="#" class="component-trigger btn btn-primary"
-            {!! \App\View\Components\BaseComponent::getTargetHtmlAttributes(route('chapter-resourceable.show', $chapter),
+            {!! \Roxayl\MondeGC\View\Components\BaseComponent::getTargetHtmlAttributes(route('chapter-resourceable.show', $chapter),
                 'chapter-resourceable-container-' . $chapter->identifier) !!}>
             Retour
         </a>
         <a href="#" class="component-trigger btn btn-primary"
-            {!! \App\View\Components\BaseComponent::getTargetHtmlAttributes(route('chapter-resourceable.create', $chapter),
+            {!! \Roxayl\MondeGC\View\Components\BaseComponent::getTargetHtmlAttributes(route('chapter-resourceable.create', $chapter),
                 'chapter-resourceable-container-' . $chapter->identifier) !!}>
             Générer des ressources
         </a>
@@ -20,7 +20,7 @@
 
     <div class="pull-right">
         <a href="#" class="component-trigger"
-            {!! \App\View\Components\BaseComponent::getTargetHtmlAttributes(route('chapter-resourceable.edit', $chapterResourceable),
+            {!! \Roxayl\MondeGC\View\Components\BaseComponent::getTargetHtmlAttributes(route('chapter-resourceable.edit', $chapterResourceable),
                 'chapter-resourceable-container-' . $chapter->identifier) !!}>
             <i class="icon-edit"></i>
         </a>
@@ -38,7 +38,7 @@
             {{ $chapterResourceable->resourceable->getName() }}
         </a>
 
-        {!! \App\Services\HelperService::renderLegacyElement('temperance/resources_small', [
+        {!! \Roxayl\MondeGC\Services\HelperService::renderLegacyElement('temperance/resources_small', [
             'resources' => $chapterResourceable->resources()
         ]) !!}
         @if(! empty($chapterResourceable->description))

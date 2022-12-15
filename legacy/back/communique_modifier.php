@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Organisation;
+use Roxayl\MondeGC\Models\Organisation;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\View\Components;
-use App\View\Components\ChapterEntry\BaseMediaEntry;
+use Roxayl\MondeGC\View\Components;
+use Roxayl\MondeGC\View\Components\ChapterEntry\BaseMediaEntry;
 use Database\Factories\ChapterEntryFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

@@ -79,7 +79,7 @@
                 'method' => 'PUT',
                 'action' => route('organisation-member.update', ['id' => $member->id]),
                 'data' => [
-                     'permissions' => \App\Models\Organisation::$permissions['member'],
+                     'permissions' => \Roxayl\MondeGC\Models\Organisation::$permissions['member'],
                  ],
                 'button' => "Accepter l'invitation",
             ],
@@ -123,7 +123,7 @@
                 'method' => 'PUT',
                 'action' => route('organisation-member.update', ['id' => $member->id]),
                 'data' => [
-                     'permissions' => \App\Models\Organisation::$permissions['member'],
+                     'permissions' => \Roxayl\MondeGC\Models\Organisation::$permissions['member'],
                  ],
                 'button' => 'Accepter',
             ],

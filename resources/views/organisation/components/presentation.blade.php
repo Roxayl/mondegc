@@ -3,6 +3,6 @@
     <h1>Présentation</h1>
 </div>
 <div class="well">
-    {!! \App\Services\HelperService::purifyHtml($organisation->text) !!}
+    {!! \Roxayl\MondeGC\Services\HelperService::purifyHtml($organisation->text) !!}
 </div>
 <div class="clearfix"></div>

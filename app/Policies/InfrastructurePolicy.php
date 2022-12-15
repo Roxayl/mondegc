@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Policies;
+namespace Roxayl\MondeGC\Policies;
 
-use App\Models\CustomUser;
-use App\Models\Infrastructure;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Models\Infrastructure;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class InfrastructurePolicy

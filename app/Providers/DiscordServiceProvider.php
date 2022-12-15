@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Providers;
+namespace Roxayl\MondeGC\Providers;
 
-use App\Services\DiscordWebhookService;
+use Roxayl\MondeGC\Services\DiscordWebhookService;
 use Illuminate\Support\ServiceProvider;
 
 class DiscordServiceProvider extends ServiceProvider

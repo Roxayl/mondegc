@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Models\Page;
+use Roxayl\MondeGC\Models\Page;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 

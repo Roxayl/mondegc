@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace Roxayl\MondeGC\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\Repositories\BaseRepository;
-use App\Models\Repositories\Resource;
-use App\Models\Repositories\Resourceable;
+use Roxayl\MondeGC\Http\Controllers\Controller;
+use Roxayl\MondeGC\Models\Repositories\BaseRepository;
+use Roxayl\MondeGC\Models\Repositories\Resource;
+use Roxayl\MondeGC\Models\Repositories\Resourceable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Pagination\LengthAwarePaginator;

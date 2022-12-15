@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Models\Pays;
-use App\Services\EconomyService;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Services\EconomyService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
 use LogicException;

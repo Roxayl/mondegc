@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Models\Traits\Versionable;
+use Roxayl\MondeGC\Models\Traits\Versionable;
 use Carbon\Carbon;
 use Database\Factories\ChapterFactory;
 use Illuminate\Database\Eloquent\Builder;

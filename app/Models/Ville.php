@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Models\Contracts\Infrastructurable;
-use App\Models\Contracts\Resourceable;
-use App\Models\Contracts\Roleplayable;
-use App\Models\Presenters\InfrastructurablePresenter;
-use App\Models\Presenters\VillePresenter;
-use App\Models\Traits\Infrastructurable as HasInfrastructures;
-use App\Models\Traits\Resourceable as HasResources;
-use App\Models\Traits\Roleplayable as ParticipatesInRoleplay;
-use App\Services\EconomyService;
+use Roxayl\MondeGC\Models\Contracts\Infrastructurable;
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Presenters\InfrastructurablePresenter;
+use Roxayl\MondeGC\Models\Presenters\VillePresenter;
+use Roxayl\MondeGC\Models\Traits\Infrastructurable as HasInfrastructures;
+use Roxayl\MondeGC\Models\Traits\Resourceable as HasResources;
+use Roxayl\MondeGC\Models\Traits\Roleplayable as ParticipatesInRoleplay;
+use Roxayl\MondeGC\Services\EconomyService;
 use Carbon\Carbon;
 use Database\Factories\VilleFactory;
 use Illuminate\Database\Eloquent;

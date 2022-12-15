@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\Repositories;
+namespace Roxayl\MondeGC\Models\Repositories;
 
-use App\Models\Contracts\Resourceable as IResourceable;
-use App\Models\Factories\ResourceableFactory;
+use Roxayl\MondeGC\Models\Contracts\Resourceable as IResourceable;
+use Roxayl\MondeGC\Models\Factories\ResourceableFactory;
 use Illuminate\Support\Collection;
 
 /**

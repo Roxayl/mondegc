@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Events\Patrimoine;
+namespace Roxayl\MondeGC\Events\Patrimoine;
 
-use App\Events\Contracts\InfluencableEvent;
-use App\Models\Contracts\Influencable;
-use App\Models\Patrimoine;
+use Roxayl\MondeGC\Events\Contracts\InfluencableEvent;
+use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Patrimoine;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 

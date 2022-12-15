@@ -34,7 +34,7 @@
                 {{ $chapterResourceable->resourceable->getName() }}
             </a>
 
-            {!! \App\Services\HelperService::renderLegacyElement('temperance/resources_small', [
+            {!! \Roxayl\MondeGC\Services\HelperService::renderLegacyElement('temperance/resources_small', [
                 'resources' => $chapterResourceable->resources()
             ]) !!}
             @if(! empty($chapterResourceable->description))

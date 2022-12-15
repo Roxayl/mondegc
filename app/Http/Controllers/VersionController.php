@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Models\Version;
-use App\View\Components\Blocks\TextDiff;
+use Roxayl\MondeGC\Models\Version;
+use Roxayl\MondeGC\View\Components\Blocks\TextDiff;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
