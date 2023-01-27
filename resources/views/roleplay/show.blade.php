@@ -100,6 +100,7 @@
             <ul class="nav nav-list bs-docs-sidenav">
                 <li><a href="#">{{ $roleplay->name }}</a></li>
                 <li><a href="#roleplay-organizers">Organisateurs</a></li>
+                <li><a href="#roleplay-next">Écrire la suite</a></li>
                 @foreach($chapters as $chapter)
                     <li><a href="#chapter-{{ $chapter->identifier }}">
                         {{ $chapter->title }}
@@ -108,14 +109,14 @@
                         @endif
                     </a></li>
                 @endforeach
-                <li><a href="#roleplay-next">Écrire la suite</a></li>
             </ul>
         </div>
 
         <div class="span9 corps-page">
 
             <ul class="breadcrumb pull-left">
-                <li>Roleplay <span class="badge badge-info badge-beta">Bêta</span>
+                <li><a href="{{ route('roleplay.index') }}">Evénements</a>
+                    <span class="badge badge-info badge-beta">Bêta</span>
                     <span class="divider">/</span></li>
                 <li class="active">{{ $roleplay->name }}</li>
             </ul>

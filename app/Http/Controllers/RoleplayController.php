@@ -26,7 +26,7 @@ class RoleplayController extends Controller
     {
         $this->authorize('display', Roleplay::class);
 
-        $roleplays = Roleplay::query()->orderByDesc('created_at')->get();
+        $roleplays = Roleplay::query()->orderByDesc('created_at')->paginate();
 
         return view('roleplay.index', compact('roleplays'));
     }
