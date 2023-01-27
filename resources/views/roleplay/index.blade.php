@@ -38,7 +38,7 @@
             </div>
 
             <ul class="breadcrumb">
-              <li class="active">Evénements <span class="badge badge-info badge-beta">Bêta</span></li>
+              <li class="active">Événements <span class="badge badge-info badge-beta">Bêta</span></li>
             </ul>
 
             <div class="well">

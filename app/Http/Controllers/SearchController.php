@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Roxayl\MondeGC\Models\Organisation;
 use Roxayl\MondeGC\Models\Patrimoine;
 use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Roleplay;
 use Roxayl\MondeGC\Models\Ville;
 use Spatie\Searchable\Search;
 
@@ -29,6 +30,7 @@ class SearchController extends Controller
             ->registerModel(Pays::class, ['ch_pay_nom'])
             ->registerModel(Organisation::class, ['name'])
             ->registerModel(Ville::class, ['ch_vil_nom'])
+            ->registerModel(Roleplay::class, ['name'])
             ->registerModel(Patrimoine::class, ['ch_pat_nom'])
             ->search($query);
 

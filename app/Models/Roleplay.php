@@ -14,8 +14,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query;
 use Illuminate\Support;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Roxayl\MondeGC\Models\Contracts\Roleplayable;
 use Roxayl\MondeGC\Models\Factories\RoleplayableFactory;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * Class Roleplay
@@ -53,7 +56,7 @@ use Roxayl\MondeGC\Models\Factories\RoleplayableFactory;
  * @method static Query\Builder|Roleplay withoutTrashed()
  * @mixin Model
  */
-class Roleplay extends Model
+class Roleplay extends Model implements Searchable
 {
     use HasFactory;
     use SoftDeletes;
@@ -78,6 +81,8 @@ class Roleplay extends Model
     public const validationRules = [
         'name' => 'required|min:2|max:191',
     ];
+
+    public string $searchableType = 'Événements';
 
     /**
      * @var bool Détermine si {@see hasOrganizerAmong()} utilise le système de mémoïsation.
@@ -104,6 +109,27 @@ class Roleplay extends Model
     public function chapters(): HasMany
     {
         return $this->hasMany(Chapter::class);
+    }
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        if($this->isValid()) {
+            $context = "Roleplay en cours commençant le {$this->starting_date->format('d/m/Y')}";
+        } else {
+            $context = "Roleplay du {$this->starting_date->format('d/m/Y')} "
+                . "au {$this->ending_date->format('d/m/Y')}";
+        }
+
+        return new SearchResult(
+            $this,
+            $this->name,
+            $context,
+            Str::limit($this->description, 150),
+            route('roleplay.index', $this)
+        );
     }
 
     /**

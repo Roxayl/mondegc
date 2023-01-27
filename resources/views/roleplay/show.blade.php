@@ -115,7 +115,7 @@
         <div class="span9 corps-page">
 
             <ul class="breadcrumb pull-left">
-                <li><a href="{{ route('roleplay.index') }}">Evénements</a>
+                <li><a href="{{ route('roleplay.index') }}">Événements</a>
                     <span class="badge badge-info badge-beta">Bêta</span>
                     <span class="divider">/</span></li>
                 <li class="active">{{ $roleplay->name }}</li>
