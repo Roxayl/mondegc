@@ -64,6 +64,10 @@
 
     @endforeach
 
+    <p style="margin: 10px;">
+        <a href="{{ urlFromLegacy(route('roleplay.index')) }}">Voir tous les événements</a>
+    </p>
+
 </div>
 
 <br>
