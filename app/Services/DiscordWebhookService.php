@@ -9,6 +9,9 @@ class DiscordWebhookService
      */
     private string $webhookUrl;
 
+    /**
+     * @param string $webhookUrl
+     */
     public function __construct(string $webhookUrl)
     {
         $this->webhookUrl = $webhookUrl;
@@ -16,6 +19,7 @@ class DiscordWebhookService
 
     /**
      * Envoie un message à travers le webhook.
+     *
      * @param array $payload
      */
     public function sendMessage(array $payload): void
@@ -51,6 +55,7 @@ class DiscordWebhookService
 
     /**
      * Génère l'ensemble des paramètres qui peuvent être passés au webhook à titre d'exemple.
+     *
      * @return array
      */
     public function getExamplePayload(): array

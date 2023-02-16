@@ -13,7 +13,7 @@ class EventNameProvider extends Base
     /**
      * @var string[] Noms d'événements qui seront générés aléatoirement via la méthode {@see eventName()}.
      */
-    protected static $names = [
+    protected static array $names = [
         'Jeux Olympiques de 2022',
         'Exposition universelle de Galax 2020',
         'Guerre de la Mer de Batchy',
@@ -23,6 +23,9 @@ class EventNameProvider extends Base
         'Attaque contre la Banque centrale du Polaro',
     ];
 
+    /**
+     * @return string
+     */
     public function eventName(): string
     {
         return static::randomElement(static::$names);

@@ -80,7 +80,7 @@ class EconomyService
      * @return float[] Un tableau de ressources contenant la somme des ressources générées par un ensemble
      *                 de ressourceables.
      */
-    public static function sumGeneratedResourcesFromResourceables(array|\ArrayAccess $resourceables): array
+    public static function sumGeneratedResourcesFromResourceables(iterable $resourceables): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
