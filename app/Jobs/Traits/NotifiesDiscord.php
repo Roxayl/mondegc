@@ -6,21 +6,19 @@ use Roxayl\MondeGC\Models\DiscordNotification;
 
 trait NotifiesDiscord
 {
-    /**
-     * @inheritDoc
-     */
     public function getWebhookName(): string
     {
-        if(property_exists($this, $this->webhookName)) {
-            return $this->webhookName;
+        if(property_exists($this, 'webhookName')) {
+            $webhookName = $this->webhookName;
         } else {
-            if($value = config('discord.webhookUrl.debug')) {
-                return $value;
+            if(config('discord.webhookUrl.debug')) {
+                $webhookName = 'debug';
             } else {
-                $key = array_key_first(config('discord.webhookUrl'));
-                return config("discord.webhookUrl.$key");
+                $webhookName = array_key_first(config('discord.webhookUrl'));
             }
         }
+
+        return $webhookName;
     }
 
     public function handle(): void

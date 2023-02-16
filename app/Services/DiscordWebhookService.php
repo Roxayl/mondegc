@@ -56,7 +56,7 @@ class DiscordWebhookService
     /**
      * Génère l'ensemble des paramètres qui peuvent être passés au webhook à titre d'exemple.
      *
-     * @return array
+     * @return array<string, string|array>
      */
     public function getExamplePayload(): array
     {
