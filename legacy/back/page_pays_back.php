@@ -277,7 +277,7 @@ if(!empty($paysPersonnages)) {
 }
 
 // Pays
-$eloquentPays = EloquentPays::findOrFail($row_InfoGenerale['ch_pay_id']);
+$eloquentPays = EloquentPays::query()->findOrFail($row_InfoGenerale['ch_pay_id']);
 
 ?>
 <!DOCTYPE html>

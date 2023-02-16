@@ -22,7 +22,7 @@ appendQueryString($editFormAction);
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_communique")) {
 
     if($_POST['ch_com_categorie'] == 'organisation') {
-        $organisation = Organisation::findOrFail($_POST['ch_com_element_id']);
+        $organisation = Organisation::query()->findOrFail($_POST['ch_com_element_id']);
         if(!auth()->user()->can('update', $organisation)) {
             throw new AccessDeniedHttpException();
         }
@@ -123,7 +123,7 @@ elseif($cat == "institut") {
 }
 
 if($cat == 'organisation') {
-    $organisation = Organisation::findOrFail($elementID);
+    $organisation = Organisation::query()->findOrFail($elementID);
     if(!auth()->user()->can('update', $organisation)) {
         throw new AccessDeniedHttpException();
     }

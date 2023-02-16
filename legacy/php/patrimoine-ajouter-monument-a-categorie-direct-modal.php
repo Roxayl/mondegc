@@ -14,7 +14,7 @@ $mon_ID = isset($_GET['mon_id']) ? (int)$_GET['mon_id'] : 0;
 // Traitement données POST
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie_direct")) {
 
-    $eloquentPatrimoine = Patrimoine::findOrFail($mon_ID);
+    $eloquentPatrimoine = Patrimoine::query()->findOrFail($mon_ID);
 
     if(!auth()->check() || !auth()->user()->can('manageCategories', Patrimoine::class)) {
         abort(403);

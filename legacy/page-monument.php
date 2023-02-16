@@ -136,7 +136,7 @@ $_SESSION['last_work'] = 'page-monument.php?ch_pat_id='.$row_monument['ch_pat_id
 
 $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
 
-$eloquentMonument = \Roxayl\MondeGC\Models\Patrimoine::findOrFail($colname_monument);
+$eloquentMonument = \Roxayl\MondeGC\Models\Patrimoine::query()->findOrFail($colname_monument);
 
 //calculs
 $nb_cat_ok = 0;

@@ -65,7 +65,7 @@ elseif ( $cat == "institut") {
 }
 
 elseif($cat == 'organisation') {
-    $organisation = \Roxayl\MondeGC\Models\Organisation::findOrFail($elementID);
+    $organisation = \Roxayl\MondeGC\Models\Organisation::query()->findOrFail($elementID);
     $ch_com_categorie = $cat;
     $ch_com_element_id = $colname_elementid;
     $nom_organisation = $organisation->name;
@@ -104,7 +104,7 @@ if($cat == 'organisation') {
     }
 }
 
-$eloquentCommunique = \Roxayl\MondeGC\Models\Communique::findOrFail($colname_communique);
+$eloquentCommunique = \Roxayl\MondeGC\Models\Communique::query()->findOrFail($colname_communique);
 
 ?>
 <!-- Modal Header-->

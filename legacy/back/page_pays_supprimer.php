@@ -18,7 +18,7 @@ if(isset($_POST['Pays_ID'])) {
     $colname_Pays_ID = $_POST['Pays_ID'];
 
     /** @var Pays $eloquentPays */
-    $eloquentPays = Pays::findOrFail($colname_Pays_ID);
+    $eloquentPays = Pays::query()->findOrFail($colname_Pays_ID);
 
     $query_ville = sprintf("SELECT ch_vil_ID FROM villes WHERE ch_vil_paysID = %s", GetSQLValueString($colname_Pays_ID, "int"));
     $ville = mysql_query($query_ville, $maconnexion) or die(mysql_error());

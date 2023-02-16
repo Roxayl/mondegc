@@ -9,11 +9,13 @@ use YlsIdeas\FeatureFlags\Facades\Features;
 
 class BackOfficeController extends Controller
 {
-    private function checkAuthorization(): void
+    public function __construct()
     {
-        if(! auth()->user()?->hasMinPermission('ocgc')) {
-            abort(403);
-        }
+        $this->middleware(function() {
+            if(! auth()->user()?->hasMinPermission('ocgc')) {
+                abort(403);
+            }
+        });
     }
 
     /**

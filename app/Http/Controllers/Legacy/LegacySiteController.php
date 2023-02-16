@@ -8,6 +8,11 @@ use Roxayl\MondeGC\Http\Controllers\Controller;
 
 class LegacySiteController extends Controller
 {
+    /**
+     * @param  Request  $request
+     * @param  string  $path
+     * @return Response
+     */
     public function __invoke(Request $request, string $path = ""): Response
     {
         // Appeler le front controller et retourner une réponse.

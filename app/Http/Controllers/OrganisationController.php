@@ -183,7 +183,7 @@ class OrganisationController extends Controller
      */
     public function migrate(int $id): View
     {
-        $organisation = Organisation::findOrFail($id);
+        $organisation = Organisation::query()->findOrFail($id);
         $this->authorize('update', $organisation);
 
         return view('organisation.migrate', compact(['organisation']));
@@ -198,7 +198,7 @@ class OrganisationController extends Controller
      */
     public function runMigration(MigrateType $request, int $id): RedirectResponse
     {
-        $organisation = Organisation::findOrFail($id);
+        $organisation = Organisation::query()->findOrFail($id);
         $this->authorize('update', $organisation);
 
         $organisation->type = $request->type;

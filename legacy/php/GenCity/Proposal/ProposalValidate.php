@@ -59,7 +59,7 @@ class ProposalValidate {
         $this->runQuery(Proposal::allValidationStatus('debatePending'));
 
         /** @var OcgcProposal $eloquentProposal */
-        $eloquentProposal = OcgcProposal::findOrFail($this->proposal->get('id'));
+        $eloquentProposal = OcgcProposal::query()->findOrFail($this->proposal->get('id'));
         Discord\NotifyCreatedProposal::dispatch($eloquentProposal);
 
         // Cette proposition est acceptée par l'OCGC après sa date de début de vote ;

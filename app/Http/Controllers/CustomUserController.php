@@ -64,17 +64,16 @@ class CustomUserController extends Controller
 
     /**
      * Met à jour le jeton d'authentification à l'API.
-     * @param  Request     $request
      * @param  CustomUser  $user
      * @return RedirectResponse
      */
-    public function updateToken(Request $request, CustomUser $user): RedirectResponse
+    public function updateToken(CustomUser $user): RedirectResponse
     {
         $this->checkCurrentUser($user);
 
         $user->api_token = Str::random(60);
         $user->save();
 
-        return redirect()->back()->with('success', "Jeton d'authentification à l'API généré avec succès.");
+        return redirect()->back()->with('message', "success|Jeton d'authentification à l'API généré avec succès.");
     }
 }

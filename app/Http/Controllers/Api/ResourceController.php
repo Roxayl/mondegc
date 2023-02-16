@@ -25,7 +25,7 @@ class ResourceController extends Controller
     {
         $shortModelName = Resource::getModels()[$type];
 
-        $page = $request->input('page') ?? 1;
+        /* $page = $request->input('page') ?? 1; */
         // FIXME: la pagination ne fonctionne pas pour une raison ou une autre...
         /* $perPage = BaseRepository::perPage; */
 

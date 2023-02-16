@@ -87,7 +87,7 @@ elseif($cat == "institut") {
 }
 
 elseif($cat == "organisation") {
-    $organisation = \Roxayl\MondeGC\Models\Organisation::findOrFail($_REQUEST['com_element_id']);
+    $organisation = \Roxayl\MondeGC\Models\Organisation::query()->findOrFail($_REQUEST['com_element_id']);
 
     if(!auth()->user()->can('administrate', $organisation)) {
         throw new AccessDeniedHttpException("Permissions insuffisantes.");
@@ -121,7 +121,7 @@ appendQueryString($editFormAction);
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique")) {
 
     if($_POST['ch_com_categorie'] == "organisation") {
-        $organisation = \Roxayl\MondeGC\Models\Organisation::findOrFail($_REQUEST['com_element_id']);
+        $organisation = \Roxayl\MondeGC\Models\Organisation::query()->findOrFail($_REQUEST['com_element_id']);
         if(!auth()->check() || !auth()->user()->can('administrate', $organisation)) {
             throw new AccessDeniedHttpException("Vous ne pouvez pas ajouter de communiqué.");
         }

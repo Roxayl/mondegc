@@ -15,7 +15,7 @@ class PageController extends Controller
      */
     public function index(int $page, string $url)
     {
-        $page = Page::findOrFail($page)->getPageOrFail();
+        $page = Page::query()->findOrFail($page)->getPageOrFail();
 
         if(trim($page->url) !== trim($url)) {
             return redirect("page/{$page->id}-{$page->url}");

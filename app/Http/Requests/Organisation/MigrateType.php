@@ -90,7 +90,7 @@ class MigrateType extends FormRequest
      */
     public function rules(): array
     {
-        $this->organisation = Organisation::findOrFail(
+        $this->organisation = Organisation::query()->findOrFail(
             request()->route('organisation'));
         $type = request()->input('type');
 

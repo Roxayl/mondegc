@@ -10,7 +10,7 @@ appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie")) {
 
-  $eloquentPatrimoine = Patrimoine::findOrFail($_POST['ch_disp_mon_id']);
+  $eloquentPatrimoine = Patrimoine::query()->findOrFail($_POST['ch_disp_mon_id']);
 
   if(!auth()->check() || !auth()->user()->can('manageCategories', Patrimoine::class)) {
         abort(403);
