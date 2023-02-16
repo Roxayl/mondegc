@@ -1,4 +1,4 @@
-name: build
+name: "🏗️ Build and deploy"
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 jobs:
 
   run-tests:
-    name: "Run PHPUnit tests"
+    name: "🧪 Run PHPUnit tests"
     runs-on: ubuntu-20.04
 
     services:
@@ -54,7 +54,7 @@ jobs:
         run: php artisan test
 
   deploy-ftp:
-    name: Deploy via FTP
+    name: "🚀 Deploy via FTP"
     runs-on: ubuntu-20.04
     needs: run-tests
     if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')

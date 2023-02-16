@@ -315,7 +315,7 @@ require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
     </div>
 
     <div class="span4">
-    <div style="height: 700px; background-size: cover; background-position: center; background-image: url('https://romukulot.fr/kaleera/images/fnMcE.png');"></div>
+    <div style="height: 700px; background-size: cover; background-position: center; background-image: url('https://roxayl.fr/kaleera/images/fnMcE.png');"></div>
 
     </div>
 

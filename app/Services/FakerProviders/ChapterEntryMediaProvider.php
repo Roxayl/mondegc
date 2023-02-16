@@ -6,7 +6,7 @@ use Faker\Provider\Base;
 
 class ChapterEntryMediaProvider extends Base
 {
-    protected static $mediaTypes = [
+    protected static array $mediaTypes = [
         'squirrel.squit' => [
             [
                 'meta' => [

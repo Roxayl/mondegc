@@ -7,8 +7,9 @@ use Roxayl\MondeGC\Http\Controllers\Legacy\LegacySiteController;
 class LegacyPageService
 {
     /**
-     * Renvoie le contenu de la réponse suite à l'appel au controller legacy.
-     * @param string $path Chemin d'accès (e.g. " /back/ocgc_proposal_create.php").
+     * Renvoie le contenu de la réponse suite à l'appel au controller legacy
+     *
+     * @param  string  $path Chemin d'accès (e.g. " /back/ocgc_proposal_create.php").
      * @return string Réponse sous forme de chaîne.
      */
     private static function callLegacyController(string $path): string
@@ -34,16 +35,18 @@ class LegacyPageService
 
     /**
      * Contenu HTML de la barre de navigation.
-     * @param string|null $navbarContext Elément du menu à lmarquer comme actif.
+     *
+     * @param  string|null  $navbarContext Elément du menu à lmarquer comme actif.
      * @return string
      */
     public static function navbar(?string $navbarContext = null): string
     {
         // On créé dynamiquement la variable permettant d'activer l'élément de menu spécifié.
-        if(! is_null($navbarContext) && in_array($navbarContext,
-                ['accueil', 'dashboard', 'carte', 'menupays', 'pays',
-                 'institut', 'participer', 'generation_city']))
-        {
+        if(in_array(
+            $navbarContext,
+            ['accueil', 'dashboard', 'carte', 'menupays', 'pays', 'institut', 'participer', 'generation_city'],
+        true)
+        ) {
             $$navbarContext = true;
         }
 
@@ -52,6 +55,7 @@ class LegacyPageService
 
     /**
      * Contenu HTML du footer.
+     *
      * @return string
      */
     public static function footer(): string
@@ -61,6 +65,7 @@ class LegacyPageService
 
     /**
      * Contenu HTML de la carte générale.
+     *
      * @return string
      */
     public static function carteGenerale(): string
@@ -70,6 +75,7 @@ class LegacyPageService
 
     /**
      * Contenu HTML du menu dédié au Conseil de l'OCGC.
+     *
      * @return string
      */
     public static function menuHautConseil(): string

@@ -15,7 +15,7 @@ if(!isset($_SESSION['userObject'])) {
 }
 
 // Vérifier permissions
-$geometry = Geometry::findOrFail($_GET['ch_geo_id']);
+$geometry = Geometry::query()->findOrFail($_GET['ch_geo_id']);
 if( !auth()->user()->hasMinPermission('ocgc') &&
     !auth()->user()->ownsPays($geometry->pays) )
 {

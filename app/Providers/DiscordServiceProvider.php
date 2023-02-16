@@ -2,6 +2,7 @@
 
 namespace Roxayl\MondeGC\Providers;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Roxayl\MondeGC\Services\DiscordWebhookService;
 
@@ -9,29 +10,30 @@ class DiscordServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        $this->app->bind(DiscordWebhookService::class,
+        $this->app->bind(
+            DiscordWebhookService::class,
             /**
-             * @param $app
-             * @param array $parameters [0]: L'identifiant du webhook à utiliser.
+             * @param  Application  $app
+             * @param  array  $parameters 'webhookName': L'identifiant du webhook à utiliser.
              * @return DiscordWebhookService
              */
-            function($app, array $parameters) {
-                if(
-                    (config('app.debug') && app()->environment() !== 'production') ||
-                    empty($parameters))
-                {
-                    $key = 'debug';
-                    $webhookUrl = config("discord.webhookUrl.$key");
+            function(Application $app, array $parameters) {
+                $useDebugChannel = (config('app.debug') && app()->environment() !== 'production')
+                    || ! array_key_exists('webhookName', $parameters);
+
+                if($useDebugChannel) {
+                    $webhookName = 'debug';
                 } else {
-                    $webhookUrl = array_values($parameters)[0];
+                    $webhookName = $parameters['webhookName'];
                 }
 
+                $webhookUrl = config("discord.webhookUrl.$webhookName");
+
                 return new DiscordWebhookService($webhookUrl);
-            });
+            }
+        );
     }
 }

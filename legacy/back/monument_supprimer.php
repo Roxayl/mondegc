@@ -22,7 +22,7 @@ $totalRows_ch_pat_confimation_suppression = mysql_num_rows($ch_pat_confimation_s
 // suppression des villes
 
 if((isset($_POST['monument_ID'])) && ($_POST['monument_ID'] != "")) {
-    $eloquentPatrimoine = \Roxayl\MondeGC\Models\Patrimoine::findOrFail($_POST['monument_ID']);
+    $eloquentPatrimoine = \Roxayl\MondeGC\Models\Patrimoine::query()->findOrFail($_POST['monument_ID']);
 
     $eloquentPatrimoine->deleteInfluences();
 

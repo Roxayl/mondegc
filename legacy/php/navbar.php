@@ -179,7 +179,7 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
           <ul class="dropdown-menu">            
               <li><a href="https://www.forum-gc.com">Le forum</a></li>
               <li><a href="http://vasel.yt/wiki/index.php?title=Accueil">Le Wiki</a></li>
-        <li><a href="https://squirrel.romukulot.fr/">Squirrel</a></li>
+        <li><a href="https://squirrel.roxayl.fr/">Squirrel</a></li>
             </ul></li>
         <?php endif; ?>
 
@@ -370,7 +370,7 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
             <ul class="dropdown-menu">            
               <li><a href="https://www.forum-gc.com">Le forum</a></li>
               <li><a href="http://vasel.yt/wiki/index.php?title=Accueil">Le Wiki</a></li>
-			  <li><a href="https://squirrel.romukulot.fr/">Squirrel</a></li>
+			  <li><a href="https://squirrel.roxayl.fr/">Squirrel</a></li>
             </ul>
           </li>
 

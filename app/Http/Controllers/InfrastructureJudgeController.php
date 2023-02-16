@@ -18,7 +18,7 @@ class InfrastructureJudgeController extends Controller
     public function index(Request $request): View
     {
         $type = $request->has('type') ? $request->get('type') : 'pending';
-        if(!in_array($type, ['pending', 'accepted', 'rejected'])) {
+        if(!in_array($type, ['pending', 'accepted', 'rejected'], true)) {
             throw new \InvalidArgumentException("Mauvais type de liste.");
         }
 
@@ -35,7 +35,7 @@ class InfrastructureJudgeController extends Controller
      */
     public function show(int $id): View
     {
-        $infrastructure = Infrastructure::findOrFail($id);
+        $infrastructure = Infrastructure::query()->findOrFail($id);
 
         $this->authorize('judgeInfrastructure', Infrastructure::class);
 
@@ -49,7 +49,7 @@ class InfrastructureJudgeController extends Controller
      */
     public function judge(Request $request, int $id): RedirectResponse
     {
-        $infrastructure = Infrastructure::findOrFail($id);
+        $infrastructure = Infrastructure::query()->findOrFail($id);
 
         $this->authorize('judgeInfrastructure', Infrastructure::class);
 
@@ -60,8 +60,7 @@ class InfrastructureJudgeController extends Controller
         $infrastructure->ch_inf_juge = auth()->user()->getAuthIdentifier();
         $infrastructure->judged_at = Carbon::now();
         if((int)$infrastructure->ch_inf_statut === Infrastructure::JUGEMENT_REJECTED) {
-            $infrastructure->ch_inf_commentaire_juge =
-                $request->input('ch_inf_commentaire_juge');
+            $infrastructure->ch_inf_commentaire_juge = $request->input('ch_inf_commentaire_juge');
         }
         else {
             $infrastructure->ch_inf_commentaire_juge = null;
@@ -71,7 +70,6 @@ class InfrastructureJudgeController extends Controller
 
         event(new InfrastructureJudged($infrastructure));
 
-        return redirect()->back()
-            ->with('message', 'success|Infrastructure jugée avec succès !');
+        return redirect()->back()->with('message', 'success|Infrastructure jugée avec succès !');
     }
 }

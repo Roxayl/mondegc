@@ -24,7 +24,7 @@ class InfrastructureJudged implements InfluencableEvent
         $this->infrastructure = $infrastructure;
     }
 
-    public function getInfluencable() : Influencable
+    public function getInfluencable(): Influencable
     {
         return $this->infrastructure;
     }

@@ -11,7 +11,7 @@ appendQueryString($editFormAction);
 
 if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) {
 
-    $eloquentCategory = MonumentCategory::findOrFail($_POST['ch_mon_cat_ID']);
+    $eloquentCategory = MonumentCategory::query()->findOrFail($_POST['ch_mon_cat_ID']);
 
     $updateSQL = sprintf("UPDATE monument_categories 
   SET ch_mon_cat_label=%s, 

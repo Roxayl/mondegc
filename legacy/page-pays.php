@@ -81,7 +81,7 @@ $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error())
 $row_geometries = mysql_fetch_assoc($geometries);
 
 // Obtention des organisations
-$eloquentPays = \Roxayl\MondeGC\Models\Pays::findOrFail($colname_Pays);
+$eloquentPays = \Roxayl\MondeGC\Models\Pays::query()->findOrFail($colname_Pays);
 $organisations = $eloquentPays->otherOrganisations();
 $alliance = $eloquentPays->alliance();
 
@@ -430,7 +430,7 @@ Eventy::action('display.beforeHeadClosingTag')
             <?php if(!empty($row_Pays['lien_wiki'])): ?>
                 <a href="<?= __s($row_Pays['lien_wiki']) ?>" style="display: inline-block;">
                   <span class="external-link-icon"
-                        style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></span>
+                        style="background-image:url('https://roxayl.fr/kaleera/images/h4FQp.png');"></span>
                   Article Wiki GC</a>
             <?php endif; ?>
             </div>

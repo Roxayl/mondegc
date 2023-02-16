@@ -13,7 +13,7 @@ exit();
 	}
 
 if((isset($_POST['ch_mon_cat_ID'])) && ($_POST['ch_mon_cat_ID'] != "")) {
-    $eloquentMonumentCategory = \Roxayl\MondeGC\Models\MonumentCategory::findOrFail($_POST['ch_mon_cat_ID']);
+    $eloquentMonumentCategory = \Roxayl\MondeGC\Models\MonumentCategory::query()->findOrFail($_POST['ch_mon_cat_ID']);
     $eloquentPatrimoines = $eloquentMonumentCategory->patrimoine();
 
     $eloquentMonumentCategory->delete();

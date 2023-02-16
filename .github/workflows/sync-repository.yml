@@ -1,11 +1,11 @@
-name: sync-repository
+name: "🔄 Sync with external repository"
 
 on: push
 
 jobs:
 
   sync-to-bitbucket:
-    name: "Sync repository with Bitbucket"
+    name: "🔄 Sync repository with Bitbucket"
     runs-on: ubuntu-20.04
 
     steps:

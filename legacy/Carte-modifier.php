@@ -17,12 +17,12 @@ if(!isset($_SESSION['userObject'])) {
 
 //Récupération variables
 if(isset($_POST['ch_geo_id'])) {
-    $eloquentGeometry = Geometry::findOrFail($_POST['ch_geo_id']);
+    $eloquentGeometry = Geometry::query()->findOrFail($_POST['ch_geo_id']);
     $eloquentPays = $eloquentGeometry->pays;
     $colname_paysID = $eloquentPays->ch_pay_id;
 } else {
     $colname_paysID = $_REQUEST['paysID'];
-    $eloquentPays = EloquentPays::findOrFail($colname_paysID);
+    $eloquentPays = EloquentPays::query()->findOrFail($colname_paysID);
 }
 
 //Requete Pays
@@ -122,7 +122,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
     $paysid = $_POST['ch_geo_pay_id'];
 
     // Obtenir l'ancienne version de l'élément.
-    $eloquentGeometry = Geometry::findOrFail($_POST['ch_geo_id']);
+    $eloquentGeometry = Geometry::query()->findOrFail($_POST['ch_geo_id']);
     $isSpecialZone = in_array($eloquentGeometry->ch_geo_type, $nonModifiableZones);
     if(!$user_has_perm && $isSpecialZone) {
         getErrorMessage('error', "Vous ne pouvez pas modifier de zone de type "

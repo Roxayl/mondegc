@@ -39,10 +39,8 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->checkShouldRun();
 
@@ -65,6 +63,7 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
 
     /**
      * Affiche du texte en sortie, lorsque la tâche est exécutée en CLI.
+     *
      * @param string $text
      */
     private function outputToConsole(string $text): void
@@ -89,6 +88,7 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
 
     /**
      * Vérifie que la tâche peut être exécutée.
+     *
      * @return bool
      */
     public function shouldRun(): bool

@@ -18,7 +18,7 @@ if(isset($_POST['ville_ID'])) {
     $colname_ville_ID = $_POST['ville_ID'];
 
     /** @var Ville $eloquentVille */
-    $eloquentVille = Ville::findOrFail($colname_ville_ID);
+    $eloquentVille = Ville::query()->findOrFail($colname_ville_ID);
 
     if(auth()->user()->cannot('delete', $eloquentVille)) {
         abort(403);

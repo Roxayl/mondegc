@@ -277,7 +277,7 @@ Eventy::action('display.beforeHeadClosingTag')
         <div id="sprytextfield9" class="control-group">
           <label class="control-label" for="ch_pat_legende_img1">Lien sur Squirrel  <a href="#" rel="clickover" title="Lien Forum GC" data-content="50 caract&egrave;res maximum. Ce champ est obligatoire"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input class="span6" type="text" style="width: 400px;" id="ch_pat_legende_img1" name="ch_pat_legende_img1" value="<?= e($row_monument['ch_pat_legende_img1']) ?>" placeholder="https://squirrel.romukulot.fr/"></div>
+            <input class="span6" type="text" style="width: 400px;" id="ch_pat_legende_img1" name="ch_pat_legende_img1" value="<?= e($row_monument['ch_pat_legende_img1']) ?>" placeholder="https://squirrel.roxayl.fr/"></div>
         </div>
 
         <!--Images d'illustration -->

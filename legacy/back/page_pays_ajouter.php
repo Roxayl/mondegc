@@ -208,7 +208,7 @@ Eventy::action('display.beforeHeadClosingTag')
       </div>
       <!-- choix emplacement -->
       <h3>Choisir un emplacement&nbsp;:</h3>
-        <p class="btn-margin-left"><a href="https://romukulot.fr/kaleera/view.php?id=TdrfA" target="_blank">Emplacements supplémentaires</a></p>
+        <p class="btn-margin-left"><a href="https://roxayl.fr/kaleera/view.php?id=TdrfA" target="_blank">Emplacements supplémentaires</a></p>
       <div id="spryradio2">
         <ul class="Icone-thumb">
           <?php for ($nb_emplacement = 1; $nb_emplacement <= 59; $nb_emplacement++) {?>

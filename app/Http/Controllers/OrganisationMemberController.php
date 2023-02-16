@@ -67,7 +67,7 @@ class OrganisationMemberController extends Controller
      */
     public function store(Request $request, int $organisation_id): RedirectResponse
     {
-        $organisation = Organisation::findOrFail($organisation_id);
+        $organisation = Organisation::query()->findOrFail($organisation_id);
 
         $this->checkMemberAlreadyExists($request, $organisation);
 
@@ -102,7 +102,7 @@ class OrganisationMemberController extends Controller
      */
     public function sendInvitation(Request $request, int $organisation_id): RedirectResponse
     {
-        $organisation = Organisation::findOrFail($organisation_id);
+        $organisation = Organisation::query()->findOrFail($organisation_id);
 
         $this->authorize('administrate', $organisation);
         $this->checkMemberAlreadyExists($request, $organisation);

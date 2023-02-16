@@ -20,6 +20,10 @@ class GraphPerResource extends Graph
      */
     public string $resourceName;
 
+    /**
+     * @param Collection $resourceables
+     * @param string $resourceName
+     */
     public function __construct(Collection $resourceables, string $resourceName)
     {
         $this->resourceables = $resourceables;

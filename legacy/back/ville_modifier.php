@@ -190,7 +190,7 @@ $totalRows_list_users = mysql_num_rows($list_users);
 $coord_X = $row_ville['ch_vil_coord_X'];
 $coord_Y = $row_ville['ch_vil_coord_Y'];
 
-$eloquentVille = \Roxayl\MondeGC\Models\Ville::findOrFail($thisVille->get('ch_vil_ID'));
+$eloquentVille = \Roxayl\MondeGC\Models\Ville::query()->findOrFail($thisVille->get('ch_vil_ID'));
 
 ?>
 <!DOCTYPE html>
