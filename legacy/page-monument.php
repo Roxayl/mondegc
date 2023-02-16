@@ -417,13 +417,13 @@ Eventy::action('display.beforeHeadClosingTag')
             <?php if($row_monument['ch_pat_lien_img5']) { ?>
         <a target="_blank" href="<?= __s($row_monument['ch_pat_lien_img5']) ?>" target="_blank">
             <div class="external-link-icon"
-                 style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></div>
+                 style="background-image:url('https://roxayl.fr/kaleera/images/h4FQp.png');"></div>
             Voir sa présentation complète sur le <bold>Wiki GC</bold></a>  •
         <?php } ?>
             <?php if($row_monument['ch_pat_legende_img1']) { ?>
         <a target="_blank" href="<?= __s($row_monument['ch_pat_legende_img1']) ?>" target="_blank">
             <div class="external-link-icon"
-                 style="background-image:url('http://squirrel.romukulot.fr/johk/profil/1-avatar-23864e8b7da23c4cd5b4.png');"></div>
+                 style="background-image:url('http://squirrel.roxayl.fr/johk/profil/1-avatar-23864e8b7da23c4cd5b4.png');"></div>
             Voir son profil sur <bold>Squirrel</bold></a>
         <?php } ?><br>
 

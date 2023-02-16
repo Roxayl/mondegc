@@ -79,7 +79,7 @@ $proposalsFinished = $proposalList->getFinished($limit, $offset);
 <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url('https://romukulot.fr/kaleera/images/fnMcE.png');
+	background-image: url('https://roxayl.fr/kaleera/images/fnMcE.png');
 }
 #map {
 	height: 500px;
@@ -150,7 +150,7 @@ Eventy::action('display.beforeHeadClosingTag')
     <div class="span3 bs-docs-sidebar">
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#info-institut">
-          <img src="https://romukulot.fr/kaleera/images/7YPwC.png">
+          <img src="https://roxayl.fr/kaleera/images/7YPwC.png">
           <p><strong>Assemblée générale</strong></p>
           <p><em>Organisation des Cités gécéennes</em></p>
           </a></li>

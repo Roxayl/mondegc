@@ -26,7 +26,7 @@
                 @if(!empty($infrastructure->lien_wiki))
                     &#183;
                     <div class="external-link-icon"
-                          style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');">
+                          style="background-image:url('https://roxayl.fr/kaleera/images/h4FQp.png');">
                     </div>
                     <a href="{{ $infrastructure->lien_wiki }}">Wiki GC</a>
                 @endif

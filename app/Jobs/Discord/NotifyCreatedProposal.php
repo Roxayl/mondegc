@@ -58,7 +58,7 @@ class NotifyCreatedProposal implements ShouldQueue, NotifiesDiscord
                     ],
                     'timestamp' => date("c", strtotime("now")),
                     'thumbnail' => [
-                        'url' => 'https://romukulot.fr/kaleera/images/7YPwC.png',
+                        'url' => 'https://roxayl.fr/kaleera/images/7YPwC.png',
                     ],
                     'color' => hexdec('234067'),
                     'footer' => [

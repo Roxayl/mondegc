@@ -57,7 +57,7 @@ class NotifyVotingProposal implements ShouldQueue, NotifiesDiscord
                     ],
                     'timestamp' => $this->proposal->created->format('c'),
                     'thumbnail' => [
-                        'url' => 'https://romukulot.fr/kaleera/images/7YPwC.png',
+                        'url' => 'https://roxayl.fr/kaleera/images/7YPwC.png',
                     ],
                     'color' => hexdec('234067'),
                     'footer' => [

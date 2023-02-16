@@ -430,7 +430,7 @@ Eventy::action('display.beforeHeadClosingTag')
             <?php if(!empty($row_Pays['lien_wiki'])): ?>
                 <a href="<?= __s($row_Pays['lien_wiki']) ?>" style="display: inline-block;">
                   <span class="external-link-icon"
-                        style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></span>
+                        style="background-image:url('https://roxayl.fr/kaleera/images/h4FQp.png');"></span>
                   Article Wiki GC</a>
             <?php endif; ?>
             </div>
