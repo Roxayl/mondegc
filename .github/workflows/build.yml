@@ -9,7 +9,7 @@ on:
 jobs:
 
   run-tests:
-    name: "🧪 Run PHPUnit tests"
+    name: "🧪 Run tests"
     runs-on: ubuntu-20.04
 
     services:
@@ -67,7 +67,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Deploy to Production
-        uses: SamKirkland/FTP-Deploy-Action@4.2.0
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
           protocol: ftp
           server: mgvx.ftp.infomaniak.com
@@ -81,4 +81,5 @@ jobs:
             **/.git*/**
             **/node_modules/**
             **/lib/**
+          # Désactive l'envoi de lib/ dû à des problèmes de permission côté serveur.
           log-level: standard

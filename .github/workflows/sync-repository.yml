@@ -5,7 +5,7 @@ on: push
 jobs:
 
   sync-to-bitbucket:
-    name: "🔄 Sync repository with Bitbucket"
+    name: "🔄 Sync with Bitbucket"
     runs-on: ubuntu-20.04
 
     steps:
