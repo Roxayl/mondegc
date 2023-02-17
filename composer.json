@@ -20,9 +20,9 @@
             "name": "Myname",
             "role": "Developer"
         }, {
-            "name": "Roxel Lay",
+            "name": "Roxayl",
             "role": "Main Developer",
-            "email": "contact@romukulot.fr",
+            "email": "contact@roxayl.fr",
             "homepage": "https://roxayl.fr"
         }, {
             "name": "Sakuro",
@@ -30,7 +30,7 @@
         }
     ],
     "support": {
-        "email": "contact@romukulot.fr",
+        "email": "contact@roxayl.fr",
         "forum": "https://www.forum-gc.com/",
         "source": "https://github.com/Roxayl/mondegc",
         "chat": "https://discord.gg/4P3HqVbbgR"
