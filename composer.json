@@ -36,7 +36,7 @@
         "chat": "https://discord.gg/4P3HqVbbgR"
     },
     "require": {
-        "php": "^8.0.2",
+        "php": "^8.1",
         "ext-curl": "*",
         "ext-gd": "*",
         "ext-json": "*",
@@ -75,7 +75,7 @@
     "config": {
         "optimize-autoloader": true,
         "platform": {
-            "php": "8.0.26"
+            "php": "8.1"
         },
         "preferred-install": "dist",
         "sort-packages": true,
