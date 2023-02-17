@@ -30,11 +30,13 @@
         }
     ],
     "support": {
+        "email": "contact@romukulot.fr",
         "forum": "https://www.forum-gc.com/",
-        "source": "https://bitbucket.org/Roxayl/mondegc"
+        "source": "https://github.com/Roxayl/mondegc",
+        "chat": "https://discord.gg/4P3HqVbbgR"
     },
     "require": {
-        "php": "^8.0",
+        "php": "^8.0.2",
         "ext-curl": "*",
         "ext-gd": "*",
         "ext-json": "*",
@@ -42,40 +44,38 @@
         "ext-mysqli": "*",
         "ext-pdo": "*",
         "caxy/php-htmldiff": "^0.1.14",
-        "doctrine/dbal": "^2.10",
-        "ezyang/htmlpurifier": "^4.13",
-        "fideloper/proxy": "^4.0",
-        "fruitcake/laravel-cors": "^2.0",
+        "doctrine/dbal": "^2.13",
+        "ezyang/htmlpurifier": "^4.16",
         "funkjedi/composer-include-files": "^1.1",
-        "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.0",
-        "laravel/tinker": "^2.0",
+        "guzzlehttp/guzzle": "^7.5",
+        "laravel/framework": "^9.2",
+        "laravel/tinker": "^2.8",
         "mpociot/versionable": "^4.3",
         "simplehtmldom/simplehtmldom": "^2.0@RC",
-        "spatie/laravel-searchable": "^1.6",
-        "tormjens/eventy": "^0.7.0",
-        "ylsideas/feature-flags": "^1.4"
+        "spatie/laravel-searchable": "^1.11",
+        "tormjens/eventy": "^0.8.0",
+        "ylsideas/feature-flags": "^1.5"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.6",
-        "barryvdh/laravel-ide-helper": "2.9.1",
-        "beyondcode/laravel-dump-server": "^1.0",
+        "barryvdh/laravel-debugbar": "^3.8",
+        "barryvdh/laravel-ide-helper": "^2.13",
+        "beyondcode/laravel-dump-server": "^1.9",
         "brianium/paratest": "^6.4",
-        "facade/ignition": "^2.5",
-        "fakerphp/faker": "^1.9.1",
-        "kitloong/laravel-migrations-generator": "^4.4",
-        "knuckleswtf/scribe": "^3.22",
-        "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^5.10",
-        "phpunit/phpunit": "^9.5.10",
-        "psalm/plugin-laravel": "^1.5",
+        "fakerphp/faker": "^1.21",
+        "kitloong/laravel-migrations-generator": "^6.8",
+        "knuckleswtf/scribe": "^4.16",
+        "mockery/mockery": "^1.5",
+        "nunomaduro/collision": "^6.4",
+        "phpunit/phpunit": "^9.6",
+        "psalm/plugin-laravel": "^2.7",
         "reliese/laravel": "^1.1",
-        "vimeo/psalm": "^4.11"
+        "spatie/laravel-ignition": "^1.6",
+        "vimeo/psalm": "^4.30"
     },
     "config": {
         "optimize-autoloader": true,
         "platform": {
-            "php": "8.0"
+            "php": "8.0.26"
         },
         "preferred-install": "dist",
         "sort-packages": true,
