@@ -10,11 +10,14 @@ class UserVisitsPageTest extends TestCase
 
     private ?CustomUser $user = null;
 
+    /**
+     * @inheritDoc
+     */
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->user = CustomUser::first();
+        $this->user = CustomUser::query()->first();
         $this->assertNotNull($this->user);
         $this->actingAs($this->user);
     }
@@ -27,6 +30,6 @@ class UserVisitsPageTest extends TestCase
         $this->assertAuthenticated();
         $this->markTestIncomplete("Ce test ne fonctionne pas pour le moment.");
 
-        $this->get(route('notification'))->assertStatus(200);
+        // $this->get(route('notification'))->assertStatus(200);
     }
 }
