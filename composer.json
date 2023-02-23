@@ -60,7 +60,7 @@
         "barryvdh/laravel-debugbar": "^3.8",
         "barryvdh/laravel-ide-helper": "^2.13",
         "beyondcode/laravel-dump-server": "^1.9",
-        "brianium/paratest": "^6.4",
+        "brianium/paratest": "^6.9",
         "fakerphp/faker": "^1.21",
         "kitloong/laravel-migrations-generator": "^6.8",
         "knuckleswtf/scribe": "^4.16",
