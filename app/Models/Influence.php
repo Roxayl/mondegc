@@ -42,7 +42,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @method static Builder|Influence whereRecherche($value)
  * @method static Builder|Influence whereTourisme($value)
  * @method static Builder|Influence whereUpdatedAt($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Influence extends Model
 {

@@ -48,7 +48,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static Builder|TypeGeometry whereLabel($value)
  * @method static Builder|TypeGeometry whereTypeGeometrie($value)
  * @method static Builder|TypeGeometry whereUpdatedAt($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class TypeGeometry extends Model
 {

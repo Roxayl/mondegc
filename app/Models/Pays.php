@@ -145,7 +145,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @method static Builder|Pays whereChPayTourismeCarte($value)
  * @method static Builder|Pays whereLienWiki($value)
  * @method static Builder|Pays visible()
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Pays extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {

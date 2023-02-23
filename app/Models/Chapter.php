@@ -61,7 +61,7 @@ use Roxayl\MondeGC\Models\Traits\Versionable;
  * @method static Builder|Chapter whereDeletedAt($value)
  * @method static Query\Builder|Chapter withTrashed()
  * @method static Query\Builder|Chapter withoutTrashed()
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Chapter extends Model
 {

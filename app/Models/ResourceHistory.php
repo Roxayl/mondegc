@@ -49,7 +49,6 @@ use Roxayl\MondeGC\Models\Traits;
  * @method static Builder|ResourceHistory whereTourisme($value)
  * @method static Builder|ResourceHistory whereUpdatedAt($value)
  * @mixin \Eloquent
- * @package Roxayl\MondeGC\Models
  */
 class ResourceHistory extends Model implements SimpleResourceable
 {
