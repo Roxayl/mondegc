@@ -71,7 +71,7 @@ use Roxayl\MondeGC\Models\Contracts\Roleplayable;
  * @method static Builder|CustomUser whereChUseStatut($value)
  * @method static Builder|CustomUser whereChUseTitreDirigeant($value)
  * @method static Builder|CustomUser whereLastActivity($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class CustomUser extends Authenticatable
 {

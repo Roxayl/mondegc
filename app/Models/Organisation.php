@@ -38,6 +38,7 @@ use Spatie\Searchable\SearchResult;
  * @property Carbon|null $type_migrated_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @property-read string $slug
  * @property-read Collection|Infrastructure[] $infrastructures
  * @property-read int|null $infrastructures_count
@@ -53,6 +54,7 @@ use Spatie\Searchable\SearchResult;
  * @property-read int|null $members_all_count
  * @property-read Collection|OrganisationMember[] $membersPending
  * @property-read int|null $members_pending_count
+ * @property-read array<string> $resources
  * @method static Builder|Organisation newModelQuery()
  * @method static Builder|Organisation newQuery()
  * @method static Builder|Organisation query()
@@ -68,13 +70,11 @@ use Spatie\Searchable\SearchResult;
  * @method static Builder|Organisation whereUpdatedAt($value)
  * @method static OrganisationFactory factory(...$parameters)
  * @method static Builder|Organisation visible()
- * @mixin Model
- * @property Carbon|null $deleted_at
- * @property-read array<string> $resources
  * @method static Query\Builder|Organisation onlyTrashed()
  * @method static Builder|Organisation whereDeletedAt($value)
  * @method static Query\Builder|Organisation withTrashed()
  * @method static Query\Builder|Organisation withoutTrashed()
+ * @mixin \Eloquent
  */
 class Organisation extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {

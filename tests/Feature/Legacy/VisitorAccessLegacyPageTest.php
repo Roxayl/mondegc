@@ -4,13 +4,16 @@ namespace Tests\Feature\Legacy;
 
 class VisitorAccessLegacyPageTest extends AccessLegacyPage
 {
-    public function __construct()
+    /**
+     * @inheritDoc
+     */
+    public static function setUpBeforeClass(): void
     {
-        parent::__construct();
+        parent::setUpBeforeClass();
     }
 
     /**
-     * @return void
+     * @inheritDoc
      */
     public function setUp(): void
     {
@@ -19,8 +22,6 @@ class VisitorAccessLegacyPageTest extends AccessLegacyPage
 
     /**
      * Tester l'accès à la page /index.php du site legacy.
-     *
-     * @return void
      */
     public function testAccessIndexPage(): void
     {
@@ -29,8 +30,6 @@ class VisitorAccessLegacyPageTest extends AccessLegacyPage
 
     /**
      * Tester l'accès à la page /Page-carte.php du site legacy.
-     *
-     * @return void
      */
     public function testAccessPageCartePage(): void
     {
@@ -39,8 +38,6 @@ class VisitorAccessLegacyPageTest extends AccessLegacyPage
 
     /**
      * Tester l'accès à la page de l'OCGC du site legacy.
-     *
-     * @return void
      */
     public function testAccessOcgcPage(): void
     {
@@ -49,8 +46,6 @@ class VisitorAccessLegacyPageTest extends AccessLegacyPage
 
     /**
      * Tester l'accès à la page des communiqués de l'OCGC du site legacy.
-     *
-     * @return void
      */
     public function testAccessCommuniquesOcgcPage(): void
     {
@@ -59,8 +54,6 @@ class VisitorAccessLegacyPageTest extends AccessLegacyPage
 
     /**
      * Tester l'accès à la page /assemblee.php du site legacy.
-     *
-     * @return void
      */
     public function testAccessAssembleePage(): void
     {
@@ -69,8 +62,6 @@ class VisitorAccessLegacyPageTest extends AccessLegacyPage
 
     /**
      * Tester l'accès à la page /economie.php du site legacy.
-     *
-     * @return void
      */
     public function testAccessEconomiePage(): void
     {
@@ -79,8 +70,6 @@ class VisitorAccessLegacyPageTest extends AccessLegacyPage
 
     /**
      * Tester l'accès à la page du Comité Politique du site legacy.
-     *
-     * @return void
      */
     public function testAccessPolitiquePage(): void
     {
@@ -89,8 +78,6 @@ class VisitorAccessLegacyPageTest extends AccessLegacyPage
 
     /**
      * Tester l'accès à la page du Comité Culture du site legacy.
-     *
-     * @return void
      */
     public function testAccessPatrimoinePage(): void
     {
@@ -99,8 +86,6 @@ class VisitorAccessLegacyPageTest extends AccessLegacyPage
 
     /**
      * Tester l'accès à la page du Comité Histoire du site legacy.
-     *
-     * @return void
      */
     public function testAccessHistoirePage(): void
     {
@@ -109,8 +94,6 @@ class VisitorAccessLegacyPageTest extends AccessLegacyPage
 
     /**
      * Tester l'accès à une page non-existante, dont la requête doit être traitée par le controller legacy.
-     *
-     * @return void
      */
     public function testAccessNonExistingPage(): void
     {
@@ -118,10 +101,18 @@ class VisitorAccessLegacyPageTest extends AccessLegacyPage
     }
 
     /**
-     * @return void
+     * @inheritDoc
      */
     public function tearDown(): void
     {
         parent::tearDown();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
     }
 }

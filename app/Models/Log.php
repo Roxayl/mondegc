@@ -28,7 +28,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|Log whereTargetId($value)
  * @method static Builder|Log whereTypeAction($value)
  * @method static Builder|Log whereUserId($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Log extends Model
 {

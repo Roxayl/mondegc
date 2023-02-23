@@ -76,7 +76,7 @@ use Spatie\Searchable\SearchResult;
  * @method static Builder|Patrimoine whereChPatPaysID($value)
  * @method static Builder|Patrimoine whereChPatStatut($value)
  * @method static Builder|Patrimoine whereChPatVilleID($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Patrimoine extends Model implements Influencable, Searchable
 {

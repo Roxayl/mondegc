@@ -58,7 +58,7 @@ use Roxayl\MondeGC\Services\EconomyService;
  * @method static Builder|ChapterResourceable whereDescription($value)
  * @method static Builder|ChapterResourceable whereTourisme($value)
  * @method static Builder|ChapterResourceable whereUpdatedAt($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class ChapterResourceable extends Model implements Influencable
 {

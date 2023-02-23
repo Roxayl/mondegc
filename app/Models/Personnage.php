@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|Personnage wherePredicat($value)
  * @method static Builder|Personnage wherePrenomPersonnage($value)
  * @method static Builder|Personnage whereTitrePersonnage($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Personnage extends Model
 {

@@ -48,7 +48,7 @@ use Illuminate\Support\Str;
  * @method static Builder|InfrastructureOfficielle whereChInfOffNom($value)
  * @method static Builder|InfrastructureOfficielle whereChInfOffRecherche($value)
  * @method static Builder|InfrastructureOfficielle whereChInfOffTourisme($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class InfrastructureOfficielle extends Model
 {

@@ -9,7 +9,7 @@ on:
 jobs:
 
   run-tests:
-    name: "🧪 Run PHPUnit tests"
+    name: "🧪 Run tests"
     runs-on: ubuntu-20.04
 
     services:
@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           extensions: gd, mbstring, mysqli, opcache, pdo, pdo_mysql
       - uses: actions/checkout@v2
 
@@ -62,12 +62,12 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           extensions: gd, mbstring, mysqli, opcache, pdo, pdo_mysql
       - uses: actions/checkout@v2
 
       - name: Deploy to Production
-        uses: SamKirkland/FTP-Deploy-Action@4.2.0
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
           protocol: ftp
           server: mgvx.ftp.infomaniak.com
@@ -81,4 +81,5 @@ jobs:
             **/.git*/**
             **/node_modules/**
             **/lib/**
+          # Désactive l'envoi de lib/ dû à des problèmes de permission côté serveur.
           log-level: standard

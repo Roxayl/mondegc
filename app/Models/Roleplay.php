@@ -54,7 +54,7 @@ use Spatie\Searchable\SearchResult;
  * @method static Builder|Roleplay whereDeletedAt($value)
  * @method static Query\Builder|Roleplay withTrashed()
  * @method static Query\Builder|Roleplay withoutTrashed()
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Roleplay extends Model implements Searchable
 {

@@ -102,7 +102,7 @@ use Spatie\Searchable\SearchResult;
  * @method static Builder|Ville whereChVilUser($value)
  * @method static VilleFactory factory(...$parameters)
  * @method static Builder|Ville visible()
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Ville extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {

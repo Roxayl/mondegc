@@ -33,7 +33,7 @@ use Roxayl\MondeGC\Services\DiscordWebhookService;
  * @method static Builder|DiscordNotification whereType($value)
  * @method static Builder|DiscordNotification whereUpdatedAt($value)
  * @method static Builder|DiscordNotification whereUuid($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class DiscordNotification extends Model
 {
