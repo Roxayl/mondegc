@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static Builder|TypeGeometriesGroup whereId($value)
  * @method static Builder|TypeGeometriesGroup whereIntitule($value)
  * @method static Builder|TypeGeometriesGroup whereUpdatedAt($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class TypeGeometriesGroup extends Model
 {

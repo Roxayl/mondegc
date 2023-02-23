@@ -32,7 +32,7 @@ use Roxayl\MondeGC\Notifications\OrganisationMemberQuit;
  * @method static Builder|OrganisationMember wherePaysId($value)
  * @method static Builder|OrganisationMember wherePermissions($value)
  * @method static Builder|OrganisationMember whereUpdatedAt($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class OrganisationMember extends Model
 {

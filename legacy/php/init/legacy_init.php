@@ -21,7 +21,7 @@ $mondegc_config['db'] = [
     'password' => config('database.connections.mysql.password'),
     'database' => config('database.connections.mysql.database'),
 ];
-$mondegc_config['path'] = !empty(config('app.directory_path'))
+$mondegc_config['path'] = ! empty(config('app.directory_path'))
                         ? config('app.directory_path') . '/'
                         : '';
 
@@ -31,7 +31,7 @@ defined("DEF_ROOTPATH") or define("DEF_ROOTPATH",
 defined("DEF_LEGACYROOTPATH") or define("DEF_LEGACYROOTPATH",
     DEF_ROOTPATH . 'legacy' . DIRECTORY_SEPARATOR);
 defined("DEF_URI_PATH") or define("DEF_URI_PATH",
-        ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443
+        ( (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443
             ? 'https' : 'http' )
         . '://' . $_SERVER['HTTP_HOST'] . '/'
         . $mondegc_config['path']
@@ -52,28 +52,26 @@ require_once(DEF_LEGACYROOTPATH . 'php/init/functions.php');
 
 // Librairie CSRF Magic
 if($mondegc_config['enable_csrf_protection'] === true) {
-    if(!function_exists('csrf_startup')) {
-        function csrf_startup() {
+    if(! function_exists('csrf_startup')) {
+        function csrf_startup(): void
+        {
             csrf_conf('rewrite-js', DEF_URI_PATH . 'lib/csrf-magic/csrf-magic.js');
             csrf_conf('rewrite', true);
             csrf_conf('frame-breaker', false);
         }
     }
-    require_once DEF_ROOTPATH . 'lib/csrf-magic/csrf-magic.php';
+    require_once(DEF_ROOTPATH . 'lib/csrf-magic/csrf-magic.php');
 }
 
-// wrapper mysql_ :
-// wrapper pour les fonctions MySQL obsolètes, pour PHP7
-if(version_compare(phpversion(), '7.0.0', '>=')) {
-    require_once(DEF_ROOTPATH . 'lib/mysql_wrapper/mysql_wrapper.php');
-}
+// Wrapper pour les fonctions MySQL obsolètes (mysql_*), pour PHP 7 ou supérieur.
+require_once(DEF_ROOTPATH . 'lib/mysql_wrapper/mysql_wrapper.php');
 
 
 /*************************
  *    Base de données    *
  *************************/
 
-$maconnexion = mysql_pconnect(
+$maconnexion = mysql_connect(
     $mondegc_config['db']['hostname'] . ':' . $mondegc_config['db']['port'],
     $mondegc_config['db']['username'],
     $mondegc_config['db']['password']
@@ -94,5 +92,6 @@ mysql_select_db($mondegc_config['db']['database']);
  *        Session        *
  *************************/
 
-if(!isset($_SESSION))
+if(!isset($_SESSION)) {
     session_start();
+}

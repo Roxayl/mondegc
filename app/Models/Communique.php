@@ -37,7 +37,7 @@ use Roxayl\MondeGC\Models\Contracts\Roleplayable;
  * @method static Builder|Communique whereChComStatut($value)
  * @method static Builder|Communique whereChComTitre($value)
  * @method static Builder|Communique whereChComUserId($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Communique extends Model
 {

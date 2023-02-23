@@ -41,7 +41,7 @@ use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
  * @property-read Collection|Influence[] $influences
  * @property-read int|null $influences_count
  * @property-read Model|\Eloquent $infrastructurable
- * @property-read InfrastructureOfficielle $infrastructure_officielle
+ * @property-read InfrastructureOfficielle|null $infrastructureOfficielle
  * @property-read CustomUser|null $judge
  * @method static Builder|Infrastructure newModelQuery()
  * @method static Builder|Infrastructure newQuery()
@@ -67,7 +67,7 @@ use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
  * @method static Builder|Infrastructure whereLienWiki($value)
  * @method static Builder|Infrastructure whereNomInfra($value)
  * @method static Builder|Infrastructure whereUserCreator($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Infrastructure extends Model implements Influencable
 {

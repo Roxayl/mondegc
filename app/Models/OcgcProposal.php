@@ -65,7 +65,7 @@ use Illuminate\Support\Str;
  * @method static Builder|OcgcProposal whereType($value)
  * @method static Builder|OcgcProposal whereTypeReponse($value)
  * @method static Builder|OcgcProposal whereUpdated($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class OcgcProposal extends Model
 {
