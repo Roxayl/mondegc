@@ -7,6 +7,7 @@
  * @version 0.2
  */
 
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Database\Connection;
 use Illuminate\Support\Str;
 
@@ -57,7 +58,10 @@ function getLinkIdentifier(): Connection
 function mysql_query(string $query, mixed $resource = null): PDOStatement|bool
 {
     global $__LEGACY_LAST_STMT;
-    $query = DB::raw($query);
+    $query = trim(DB::raw($query));
+    if(class_exists(Debugbar::class)) {
+        Debugbar::debug("Running legacy query: " . $query);
+    }
     $__LEGACY_LAST_STMT = getLinkIdentifier()->getPdo()->query($query);
     return $__LEGACY_LAST_STMT;
 }
