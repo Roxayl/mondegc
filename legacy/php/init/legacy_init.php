@@ -71,21 +71,7 @@ require_once(DEF_ROOTPATH . 'lib/mysql_wrapper/mysql_wrapper.php');
  *    Base de données    *
  *************************/
 
-$maconnexion = mysql_connect(
-    $mondegc_config['db']['hostname'] . ':' . $mondegc_config['db']['port'],
-    $mondegc_config['db']['username'],
-    $mondegc_config['db']['password']
-);
-
-if(! $maconnexion) {
-    throw new Exception(mysql_error());
-}
-
-mysql_set_charset('utf8mb4', $maconnexion);
-if(config('legacy.sql_mode_traditional')) {
-    mysql_query("SET SESSION sql_mode = 'TRADITIONAL'");
-}
-mysql_select_db($mondegc_config['db']['database']);
+$maconnexion = getLinkIdentifier();
 
 
 /*************************

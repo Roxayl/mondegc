@@ -7,8 +7,11 @@
  * @version 0.2
  */
 
+use Illuminate\Database\Connection;
+use Illuminate\Support\Str;
+
 // Make sure the MySQL extension is not loaded and there is no other drop in replacement active
-if(function_exists('mysql_connect') || extension_loaded('mysql')) {
+if(function_exists('mysql_query') || extension_loaded('mysql')) {
     return;
 }
 
@@ -22,90 +25,63 @@ if(function_exists('getLinkIdentifier')) {
     trigger_error('The function name "getLinkIdentifier" is already defined, please change the function name', E_USER_ERROR);
 }
 
-// Define MySQL constants
-define('MYSQL_CLIENT_COMPRESS', MYSQLI_CLIENT_COMPRESS);
-define('MYSQL_CLIENT_IGNORE_SPACE', MYSQLI_CLIENT_IGNORE_SPACE);
-define('MYSQL_CLIENT_INTERACTIVE', MYSQLI_CLIENT_INTERACTIVE);
-define('MYSQL_CLIENT_SSL', MYSQLI_CLIENT_SSL);
-
-define('MYSQL_ASSOC', MYSQLI_ASSOC);
-define('MYSQL_NUM', MYSQLI_NUM);
-define('MYSQL_BOTH', MYSQLI_BOTH);
-
 /**
  * Link identifier.
  *
- * @var mysqli|null $__MYSQLI_WRAPPER_LINK
+ * @var mixed $__MYSQLI_WRAPPER_LINK
  */
 $__MYSQLI_WRAPPER_LINK = null;
 
 /**
+ * Last executed statement.
+ *
+ * @var PDOStatement|null $__LEGACY_LAST_STMT
+ */
+$__LEGACY_LAST_STMT = null;
+
+/**
  * Get the link identifier
  *
- * @param mysqli|null $mysqli $mysqli
- * @return mysqli|null
+ * @return Connection
  */
-function getLinkIdentifier(mysqli $mysqli = null): ?mysqli
+function getLinkIdentifier(): Connection
 {
-    if(! ($mysqli instanceof mysqli)) {
-        global $__MYSQLI_WRAPPER_LINK;
-        $mysqli = $__MYSQLI_WRAPPER_LINK;
-    }
-
-    return $mysqli;
-}
-
-/**
- * Open a connection to a MySQL Server
- *
- * @param string $server
- * @param string $username
- * @param string $password
- * @param bool $new_link
- * @param int $client_flags
- * @return mysqli|null
- */
-function mysql_connect(string $server, string $username, string $password, bool $new_link = false, int $client_flags = 0): ?mysqli
-{
-    global $__MYSQLI_WRAPPER_LINK;
-
-    if($__MYSQLI_WRAPPER_LINK instanceof mysqli) {
-        mysql_close();
-    }
-
-    $__MYSQLI_WRAPPER_LINK = mysqli_connect($server, $username, $password);
-
-    return $__MYSQLI_WRAPPER_LINK;
-}
-
-/**
- * @param string $databaseName
- * @param mysqli|null $mysqli
- * @return bool
- */
-function mysql_select_db(string $databaseName, mysqli $mysqli = null): bool
-{
-    return getLinkIdentifier($mysqli)->select_db($databaseName);
+    return DB::connection('mysql_legacy');
 }
 
 /**
  * @param string $query
- * @param mysqli|null $mysqli $mysqli
- * @return bool|mysqli_result
+ * @param mixed $resource Unused and kept for compatibility purposes.
+ * @return bool|PDOStatement
  */
-function mysql_query(string $query, mysqli $mysqli = null): mysqli_result|bool
+function mysql_query(string $query, mixed $resource = null): PDOStatement|bool
 {
-    return getLinkIdentifier($mysqli)->query($query);
+    global $__LEGACY_LAST_STMT;
+    $query = DB::raw($query);
+    $__LEGACY_LAST_STMT = getLinkIdentifier()->getPdo()->query($query);
+    return $__LEGACY_LAST_STMT;
 }
 
 /**
  * @param string|null $string
- * @param mysqli|null $mysqli $mysqli
- * @return string
+ * @param mixed|null $resource Unused and kept for compatibility purposes.
+ * @return string|false|null
  */
-function mysql_real_escape_string(?string $string, mysqli $mysqli = null): string
+function mysql_real_escape_string(?string $string, mixed $resource = null): null|string|false
 {
-    return getLinkIdentifier($mysqli)->escape_string($string);
+    if($string === null) {
+        return null;
+    }
+
+    $string = getLinkIdentifier()->getPdo()->quote($string);
+    if(Str::startsWith($string, ["'", '"'])) {
+        $string = substr($string, 1);
+    }
+    if(Str::endsWith($string, ["'", '"'])) {
+        $string = substr($string, 0, -1);
+    }
+
+    return $string;
 }
 
 /**
@@ -118,135 +94,78 @@ function mysql_escape_string(?string $string): string
 }
 
 /**
- * @param mysqli_result $result
- * @return bool|array
+ * @param PDOStatement $result
+ * @return mixed
  */
-function mysql_fetch_assoc(mysqli_result $result): bool|array
+function mysql_fetch_assoc(PDOStatement $result): mixed
 {
-    $result = $result->fetch_assoc();
-    if($result === null) {
-        $result = false;
-    }
-
-    return $result;
+    return $result->fetch(PDO::FETCH_ASSOC);
 }
 
 /**
- * @param mysqli_result $result
- * @return object
- */
-function mysql_fetch_object(mysqli_result $result): object
-{
-    $result = $result->fetch_object();
-    if($result === null) {
-        $result = false;
-    }
-
-    return $result;
-}
-
-/**
- * @param mysqli_result $result
- * @return bool|int|string
- */
-function mysql_num_rows(mysqli_result $result): bool|int|string
-{
-    $result = $result->num_rows;
-    if($result === null) {
-        $result = false;
-    }
-
-    return $result;
-}
-
-/**
- * @param mysqli_result $result
- * @return bool|array
- */
-function mysql_fetch_row(mysqli_result $result): bool|array
-{
-    $result = $result->fetch_row();
-    if($result === null) {
-        $result = false;
-    }
-
-    return $result;
-}
-
-/**
- * @param mysqli|null $mysqli $mysqli
- * @return int|string
- */
-function mysql_affected_rows(mysqli $mysqli = null): int|string
-{
-    return mysqli_affected_rows(getLinkIdentifier($mysqli));
-}
-
-/**
- * @param mysqli|null $mysqli $mysqli
- * @return bool
- */
-function mysql_close(mysqli $mysqli = null): bool
-{
-    return mysqli_close(getLinkIdentifier($mysqli));
-}
-
-/**
- * @param mysqli|null $mysqli $mysqli
+ * @param PDOStatement $statement
  * @return int
  */
-function mysql_errno(mysqli $mysqli = null): int
+function mysql_num_rows(PDOStatement $statement): int
 {
-    return mysqli_errno(getLinkIdentifier($mysqli));
+    return $statement->rowCount();
 }
 
 /**
- * @param mysqli|bool $mysqli
+ * @param PDO $pdo
+ * @return bool
+ */
+function mysql_close(PDO $pdo): bool
+{
+    throw new Exception("Not implemented.");
+}
+
+/**
+ * @param mixed|null $resource Unused and kept for compatibility purposes.
  * @return string
  */
-function mysql_error(mysqli|bool $mysqli = null): string
+function mysql_error(mixed $resource = null): string
 {
-    return mysqli_error(getLinkIdentifier($mysqli));
+    throw new Exception("A database exception occurred.");
 }
 
-
 /**
- * @param mysqli_result $result
+ * @param PDOStatement $statement
  */
-function mysql_free_result(mysqli_result $result): void
+function mysql_free_result(PDOStatement $statement): void
 {
-    mysqli_free_result($result);
+    $statement->closeCursor();
 }
 
 /**
  * @param string $charset
- * @param mysqli|null $mysqli
+ * @param mixed|null $resource Unused and kept for compatibility purposes.
  * @return bool
  */
-function mysql_set_charset(string $charset, mysqli $mysqli = null): bool
+function mysql_set_charset(string $charset, mixed $resource = null): bool
 {
-    return mysqli_set_charset(getLinkIdentifier($mysqli), $charset);
+    return getLinkIdentifier()->getPdo()->exec('set names' . getLinkIdentifier()->getPdo()->quote($charset));
 }
 
 /**
- * Get the ID generated in the last query
+ * Get the ID generated in the last query.
  *
- * @param mysqli|null $mysqli
- * @return int|string
+ * @param mixed|null $resource Unused and kept for compatibility purposes.
+ * @return false|string
  */
-function mysql_insert_id(mysqli $mysqli = null): int|string
+function mysql_insert_id(mixed $resource = null): false|string
 {
-    return mysqli_insert_id(getLinkIdentifier($mysqli));
+    return getLinkIdentifier()->getPdo()->lastInsertId();
 }
 
 /**
  * Move internal result pointer
  *
- * @param mysqli_result $result
+ * @param PDOStatement $statement Unused and kept for compatibility purposes.
  * @param int $row_number
  * @return bool
  */
-function mysql_data_seek(mysqli_result $result, int $row_number = 0): bool
+function mysql_data_seek(PDOStatement $statement, int $row_number = 0): bool
 {
-    return mysqli_data_seek($result, $row_number);
+    return false; // TODO.
 }
