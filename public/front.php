@@ -1,13 +1,16 @@
 <?php
 
 use Barryvdh\Debugbar\Facades\Debugbar;
+use Illuminate\Support\Str;
 
 global $_DEBUGBAR_ENABLED;
 
 $_DEBUGBAR_ENABLED = class_exists(Debugbar::class);
 
 if($_DEBUGBAR_ENABLED) {
-    Debugbar::startMeasure('Booting legacy');
+    $_DEBUGBAR_PATHNAME = isset($path) ? Str::limit(' ' . $path, 20) : '';
+    Debugbar::startMeasure("Legacy application$_DEBUGBAR_PATHNAME");
+    Debugbar::startMeasure("Booting legacy$_DEBUGBAR_PATHNAME");
 }
 
 require_once(base_path('legacy/php/init/legacy_init.php'));
@@ -57,7 +60,7 @@ $mondegc_config['front-controller']['path'] = 'legacy/' . $mondegc_config['front
 $mondegc_config['front-controller']['require'] = DEF_ROOTPATH . $mondegc_config['front-controller']['path'] . '.php';
 
 if($_DEBUGBAR_ENABLED) {
-    Debugbar::stopMeasure('Booting legacy');
+    Debugbar::stopMeasure("Booting legacy$_DEBUGBAR_PATHNAME");
 }
 
 if(!file_exists($mondegc_config['front-controller']['require'])) {
@@ -76,7 +79,13 @@ try {
     }
 }
 
-catch(Exception $e) {
+catch(\Throwable $throwable) {
     ob_get_clean();
-    throw($e);
+    throw($throwable);
+}
+
+finally {
+    if($_DEBUGBAR_ENABLED) {
+        Debugbar::stopMeasure("Legacy application$_DEBUGBAR_PATHNAME");
+    }
 }
