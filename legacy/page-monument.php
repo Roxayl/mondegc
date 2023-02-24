@@ -163,8 +163,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajouter_actu")) {
     $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
     getErrorMessage('success', "L'actualité de l'entreprise a été modifiée avec succès !");
 }
-
-mysql_data_seek($ressource, 0);}
+}
 
 ?><!DOCTYPE html>
 <html lang="fr">

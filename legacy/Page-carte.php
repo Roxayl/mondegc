@@ -76,7 +76,6 @@ do {
             break;
     }
 } while($row_stat_pays = mysql_fetch_assoc($stat_pays));
-mysql_data_seek($stat_pays, 0);
 
 //Récupération des statistiques issues des villes
 do {
@@ -109,7 +108,6 @@ do {
             break;
     }
 } while($row_stat_ville = mysql_fetch_assoc($stat_ville));
-mysql_data_seek($stat_ville, 0);
 
 $nbpays_Aurinea = $nbpays_Aurinea + 1;
 $nbvilles_Aurinea = $nbvilles_Aurinea + $nbvilles_RFGC;

@@ -68,8 +68,7 @@ if ($row_monument['listcat'])
    {$nb_cat_ok = $nb_cat_ok + 1;}
    else {$nb_cat_ok = 1;}
 }
-
-mysql_data_seek($ressource, 0);}
+}
 
 // Coordonnées marqueur carte
 $coord_X = $row_monument['ch_pat_coord_X'];

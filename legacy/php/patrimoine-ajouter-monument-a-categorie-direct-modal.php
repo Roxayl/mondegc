@@ -120,25 +120,30 @@ $current_cat_list = array();
 while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)) {
     $current_cat_list[] = $row_monument_dispatch['ch_disp_cat_id'];
 
+    // Comptages
+    $nb_cat_a = 0;
+    $compte_a = mysql_query($query_mon_cat_a);
+    while($row = mysql_fetch_assoc($compte_a)) {
+        if($row_mon_cat_a['ch_mon_cat_statut'] == $this_mon_cat['ch_pat_statut']) {
+            $nb_cat_a = $nb_cat_a + 1;
+        }
+    }
 
-// Comptages
-$nb_cat_a = 0;
-$compte_a = mysql_query($query_mon_cat_a);
-while($row = mysql_fetch_assoc($compte_a)) {
-    if($row_mon_cat_a['ch_mon_cat_statut'] == $this_mon_cat['ch_pat_statut']) {
-        $nb_cat_a = $nb_cat_a + 1;}} mysql_data_seek($compte_a, 0);
+    $nb_cat_a_ok = 0;
+    $compte_a_ok = mysql_query($query_mon_cat_a);
+    while($row = mysql_fetch_assoc($compte_a_ok)) {
+        if($row_mon_cat_a['ch_mon_cat_ID'] == $current_cat_list['ch_disp_cat_id']) {
+            $nb_cat_a_ok = $nb_cat_a_ok + 1;
+        }
+    }
 
-$nb_cat_a_ok = 0;
-$compte_a_ok = mysql_query($query_mon_cat_a);
-while($row = mysql_fetch_assoc($compte_a_ok)) {
-    if($row_mon_cat_a['ch_mon_cat_ID'] == $current_cat_list['ch_disp_cat_id']) {
-        $nb_cat_a_ok = $nb_cat_a_ok + 1;}} mysql_data_seek($compte_a_ok, 0);
-
-$nb_cat_b = 0;
-$compte_b = mysql_query($query_mon_cat_b);
-while($row = mysql_fetch_assoc($compte_b)) {
-    if($row_mon_cat_b['ch_mon_cat_statut'] == $this_mon_cat['ch_pat_statut']) {
-        $nb_cat_b = $nb_cat_b + 1;}} mysql_data_seek($compte_b, 0);
+    $nb_cat_b = 0;
+    $compte_b = mysql_query($query_mon_cat_b);
+    while($row = mysql_fetch_assoc($compte_b)) {
+        if($row_mon_cat_b['ch_mon_cat_statut'] == $this_mon_cat['ch_pat_statut']) {
+            $nb_cat_b = $nb_cat_b + 1;
+        }
+    }
 }
 ?>
 
