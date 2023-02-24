@@ -1,8 +1,18 @@
 <?php
 
+use Barryvdh\Debugbar\Facades\Debugbar;
+
+global $_DEBUGBAR_ENABLED;
+
+$_DEBUGBAR_ENABLED = class_exists(Debugbar::class);
+
+if($_DEBUGBAR_ENABLED) {
+    Debugbar::startMeasure('Booting legacy');
+}
+
 require_once(base_path('legacy/php/init/legacy_init.php'));
 
-if($path === config('app.directory_path')) {
+if(isset($path) && $path === config('app.directory_path')) {
     $_GET['target'] = 'index';
 }
 
@@ -45,6 +55,10 @@ $mondegc_config['front-controller']['path'] = 'legacy/' . $mondegc_config['front
  * Type : Chemin du système de fichiers
  */
 $mondegc_config['front-controller']['require'] = DEF_ROOTPATH . $mondegc_config['front-controller']['path'] . '.php';
+
+if($_DEBUGBAR_ENABLED) {
+    Debugbar::stopMeasure('Booting legacy');
+}
 
 if(!file_exists($mondegc_config['front-controller']['require'])) {
     abort(404);

@@ -3,6 +3,8 @@
 /*************************
  *       Paramètres      *
  *************************/
+
+global $_DEBUGBAR_ENABLED;
  
 // Variables de configuration.
 $mondegc_config = [];
@@ -63,15 +65,15 @@ if($mondegc_config['enable_csrf_protection'] === true) {
     require_once(DEF_ROOTPATH . 'lib/csrf-magic/csrf-magic.php');
 }
 
-// Wrapper pour les fonctions MySQL obsolètes (mysql_*), pour PHP 7 ou supérieur.
-require_once(DEF_ROOTPATH . 'lib/mysql_wrapper/mysql_wrapper.php');
-
 
 /*************************
  *    Base de données    *
  *************************/
 
-$maconnexion = getLinkIdentifier();
+// Wrapper pour les fonctions MySQL obsolètes (mysql_*), pour PHP 7 ou supérieur.
+require_once(DEF_ROOTPATH . 'lib/mysql_wrapper/mysql_wrapper.php');
+
+$maconnexion = getDatabaseLegacyConnection();
 
 
 /*************************
