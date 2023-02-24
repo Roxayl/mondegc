@@ -109,15 +109,6 @@ function mysql_num_rows(PDOStatement $statement): int
 }
 
 /**
- * @param PDO $pdo
- * @return bool
- */
-function mysql_close(PDO $pdo): bool
-{
-    throw new Exception("Not implemented.");
-}
-
-/**
  * @param mixed|null $resource Unused and kept for compatibility purposes.
  * @return string
  */
@@ -135,17 +126,6 @@ function mysql_free_result(PDOStatement $statement): void
 }
 
 /**
- * @param string $charset
- * @param mixed|null $resource Unused and kept for compatibility purposes.
- * @return bool
- */
-function mysql_set_charset(string $charset, mixed $resource = null): bool
-{
-    return getDatabaseLegacyConnection()
-        ->getPdo()->exec('set names' . getDatabaseLegacyConnection()->getPdo()->quote($charset));
-}
-
-/**
  * Get the ID generated in the last query.
  *
  * @param mixed|null $resource Unused and kept for compatibility purposes.
@@ -154,16 +134,4 @@ function mysql_set_charset(string $charset, mixed $resource = null): bool
 function mysql_insert_id(mixed $resource = null): false|string
 {
     return getDatabaseLegacyConnection()->getPdo()->lastInsertId();
-}
-
-/**
- * Move internal result pointer
- *
- * @param PDOStatement $statement Unused and kept for compatibility purposes.
- * @param int $row_number
- * @return bool
- */
-function mysql_data_seek(PDOStatement $statement, int $row_number = 0): bool
-{
-    return false; // TODO.
 }

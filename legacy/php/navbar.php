@@ -15,11 +15,8 @@ $loginFormAction = DEF_URI_PATH . 'index.php';
 // Tri des pays par continent pour le menu deroulant
 
 $query_menu = "SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_pay_continent FROM pays WHERE ch_pay_publication = 1 ORDER BY ch_pay_nom ASC";
-$menu = mysql_query($query_menu, $maconnexion) or die(mysql_error());
-$totalRows_menu = mysql_num_rows($menu);
-
-$row_menu = mysql_fetch_assoc($menu);
-mysql_data_seek($menu, 0);
+$menu = collect(DB::select(DB::raw($query_menu)))->map(fn(object $row) => (array) $row)->toArray();
+$totalRows_menu = count($menu);
 
 $nav_userPays = array();
 if(isset($_SESSION['userObject'])) {
@@ -193,8 +190,8 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
                 <li class="nav-lien-carte"><a href="<?= DEF_URI_PATH ?>map"><div><h3>Explorer la carte</h3></div></a></li>
                 <li><a href="<?= DEF_URI_PATH ?>Page-carte.php"><i class="icon-list"></i> Voir la liste des pays</a></li>
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Aurinea.png" class="img-continent"> R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</li>
-                <?php 
-				do { 
+                <?php
+                foreach($menu as $row_menu) {
                 if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'RFGC') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
@@ -202,12 +199,12 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
 					} ?>
                 <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
-				} while ($row_menu = mysql_fetch_assoc($menu));
-				mysql_data_seek($menu,0); ?>
+				}
+                ?>
                 <li class="divider"></li>
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Aurinea.png" class="img-continent"> Continent Aurin&eacute;a</li>
                 <?php 
-				do { 
+                foreach($menu as $row_menu) {
                 if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'Aurinea') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
@@ -215,12 +212,11 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
 					} ?>
                 <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
-				} while ($row_menu = mysql_fetch_assoc($menu));
-				mysql_data_seek($menu,0); ?>
+				} ?>
                 <li class="divider"></li>
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Volcania.png" class="img-continent"> Continent Volcania</li>
                 <?php 
-				do { 
+                foreach($menu as $row_menu) {
                 if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'Volcania') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
@@ -228,13 +224,12 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
 					} ?>
                 <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
-				} while ($row_menu = mysql_fetch_assoc($menu));
-				mysql_data_seek($menu,0); ?>
+				} ?>
               </div>
               <div class="drop-colonne-droite">
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Aldesyl.png" class="img-continent"> Continent Aldesyl</li>
                 <?php 
-				do { 
+                foreach($menu as $row_menu) {
                 if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'Aldesyl') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
@@ -242,12 +237,11 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
 					} ?>
                 <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
-				} while ($row_menu = mysql_fetch_assoc($menu));
-				mysql_data_seek($menu,0); ?>
+				} ?>
                 <li class="divider"></li>
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Oceania.png" class="img-continent"> Continent Oc&eacute;ania</li>
                 <?php 
-				do { 
+                foreach($menu as $row_menu) {
                 if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'Oceania') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
@@ -255,12 +249,11 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
 					} ?>
                 <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
-				} while ($row_menu = mysql_fetch_assoc($menu));
-				mysql_data_seek($menu,0); ?>
+                } ?>
                 <li class="divider"></li>
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Philicie.png" class="img-continent"> Continent Philicie</li>
-                <?php 
-				do { 
+                <?php
+                foreach($menu as $row_menu) {
                 if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'Philicie') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
@@ -268,8 +261,7 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
 					} ?>
                 <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
-				} while ($row_menu = mysql_fetch_assoc($menu));
-				mysql_data_seek($menu,0); ?>
+                } ?>
               </div>
             </ul>
           </li>
@@ -379,6 +371,3 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
     </div>
   </div>
 </div>
-<?php
-mysql_free_result($menu);
-?>
