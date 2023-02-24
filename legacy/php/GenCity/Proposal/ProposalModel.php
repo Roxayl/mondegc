@@ -9,6 +9,8 @@ class ProposalModel implements ModelStructureInterface {
     static $tableName = 'ocgc_proposals';
     private $info = array();
 
+    private static $structure = [];
+
     public function __construct($data = null) {
 
         if(is_numeric($data)) {
@@ -35,12 +37,16 @@ class ProposalModel implements ModelStructureInterface {
 
     public function getStructure() {
 
-        $query = mysql_query('DESCRIBE ' . self::$tableName);
-        $finalTable = array();
-        while($row = mysql_fetch_assoc($query)) {
-            $finalTable[$row['Field']] = $row['Default'];
+        if(! array_key_exists(self::$tableName, self::$structure)) {
+            $query = mysql_query('DESCRIBE ' . self::$tableName);
+            $finalTable = [];
+            while($row = mysql_fetch_assoc($query)) {
+                $finalTable[$row['Field']] = $row['Default'];
+            }
+            self::$structure[self::$tableName] = $finalTable;
         }
-        return $finalTable;
+
+        return self::$structure[self::$tableName];
 
     }
 
