@@ -2,19 +2,24 @@
     <div class="span6">
         <h1 style="font-size: 26px; padding-left: 16px; margin-top: 16px;">
             Événements
+            <span class="badge badge-info badge-beta"
+                  style="position: absolute; margin-left: -14px; margin-top: -4px;">
+                Bêta
+            </span>
         </h1>
     </div>
 
     <div class="span6">
         <div class="pull-right">
-            <a class="btn btn-primary" style="margin-top: 18px; margin-right:10px;"
-               data-toggle="modal" data-target="#myModal"
-               href="{{ urlFromLegacy(route('roleplay.create')) }}">
-                <i class="icon-bell icon-white"></i>
-                Créer un roleplay
-                <span class="badge badge-info badge-beta"
-                      style="position: absolute; margin-left: -20px; margin-top: -8px;">Bêta</span>
-            </a></div>
+            @can('create', \Roxayl\MondeGC\Models\Roleplay::class)
+                <a class="btn btn-primary" style="margin-top: 18px; margin-right:10px;"
+                   data-toggle="modal" data-target="#myModal"
+                   href="{{ urlFromLegacy(route('roleplay.create')) }}">
+                    <i class="icon-bell icon-white"></i>
+                    Créer un roleplay
+                </a>
+            @endcan
+        </div>
     </div>
 </div>
 
