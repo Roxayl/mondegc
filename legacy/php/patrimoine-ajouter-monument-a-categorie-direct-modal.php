@@ -69,42 +69,42 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
 
 //requete monument
 $query_liste_mon_cat = sprintf("SELECT ch_pat_id, ch_pat_nom, ch_pat_statut FROM patrimoine WHERE ch_pat_id = %s", GetSQLValueString($mon_ID, ""));
-$liste_mon_cat = mysql_query($query_liste_mon_cat, $maconnexion) or die(mysql_error());
+$liste_mon_cat = mysql_query($query_liste_mon_cat, $maconnexion);
 $this_mon_cat = mysql_fetch_assoc($liste_mon_cat);
 
 //requete catégorie 0
 $query_mon_cat = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 0 AND 99 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
-$mon_cat = mysql_query($query_mon_cat, $maconnexion) or die(mysql_error());
+$mon_cat = mysql_query($query_mon_cat, $maconnexion);
 $row_mon_cat = mysql_fetch_assoc($mon_cat);
 $totalRows_mon_cat = mysql_num_rows($mon_cat);
 
 //requete catégorie 1
 $query_mon_cat_a = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 100 AND 199 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
-$mon_cat_a = mysql_query($query_mon_cat_a, $maconnexion) or die(mysql_error());
+$mon_cat_a = mysql_query($query_mon_cat_a, $maconnexion);
 $row_mon_cat_a = mysql_fetch_assoc($mon_cat_a);
 $totalRows_mon_cat_a = mysql_num_rows($mon_cat_a);
 
 //requete catégorie 2
 $query_mon_cat_b = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 200 AND 299 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
-$mon_cat_b = mysql_query($query_mon_cat_b, $maconnexion) or die(mysql_error());
+$mon_cat_b = mysql_query($query_mon_cat_b, $maconnexion);
 $row_mon_cat_b = mysql_fetch_assoc($mon_cat_b);
 $totalRows_mon_cat_b = mysql_num_rows($mon_cat_b);
 
 //requete catégorie 3
 $query_mon_cat_c = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 300 AND 399 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
-$mon_cat_c = mysql_query($query_mon_cat_c, $maconnexion) or die(mysql_error());
+$mon_cat_c = mysql_query($query_mon_cat_c, $maconnexion);
 $row_mon_cat_c = mysql_fetch_assoc($mon_cat_c);
 $totalRows_mon_cat_c = mysql_num_rows($mon_cat_c);
 
 //requete catégorie 4
 $query_mon_cat_d = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 400 AND 499 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
-$mon_cat_d = mysql_query($query_mon_cat_d, $maconnexion) or die(mysql_error());
+$mon_cat_d = mysql_query($query_mon_cat_d, $maconnexion);
 $row_mon_cat_d = mysql_fetch_assoc($mon_cat_d);
 $totalRows_mon_cat_d = mysql_num_rows($mon_cat_d);
 
 //requete catégorie 5
 $query_mon_cat_e = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur > 500 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
-$mon_cat_e = mysql_query($query_mon_cat_e, $maconnexion) or die(mysql_error());
+$mon_cat_e = mysql_query($query_mon_cat_e, $maconnexion);
 $row_mon_cat_e = mysql_fetch_assoc($mon_cat_e);
 $totalRows_mon_cat_e = mysql_num_rows($mon_cat_e);
 

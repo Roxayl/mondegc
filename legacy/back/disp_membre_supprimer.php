@@ -21,7 +21,7 @@ if ((isset($_POST['ch_disp_MG_id'])) && ($_POST['ch_disp_MG_id'] != "")) {
                        GetSQLValueString($_POST['ch_disp_MG_id'], "int"));
 
 
-  $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($deleteSQL, $maconnexion);
   $deleteGoTo = $_SESSION['last_work'];
   header(sprintf("Location: %s", $deleteGoTo));
  exit;

@@ -115,7 +115,7 @@ JOIN roleplay ON roleplay.id = chapters.roleplay_id
 WHERE chapters.deleted_at IS NULL AND roleplay.deleted_at IS NULL
 ORDER BY date DESC";
 $query_limit_LastCommunique = sprintf("%s LIMIT %d, %d", $query_LastCommunique, $startRow_LastCommunique, $maxRows_LastCommunique);
-$LastCommunique = mysql_query($query_limit_LastCommunique, $maconnexion) or die(mysql_error());
+$LastCommunique = mysql_query($query_limit_LastCommunique, $maconnexion);
 $row_LastCommunique = mysql_fetch_assoc($LastCommunique);
 
 if (isset($_GET['totalRows_LastCommunique'])) {

@@ -32,7 +32,7 @@ if (isset($_GET['tri'])) {
 
 $query_ListPays = "SELECT pays.ch_pay_id, pays.ch_pay_publication, pays.ch_pay_continent, pays.ch_pay_emplacement, pays.ch_pay_nom, pays.ch_pay_lien_imgdrapeau, pays.ch_pay_mis_jour FROM pays ORDER BY $order_by $tri";
 $query_limit_ListPays = sprintf("%s LIMIT %d, %d", $query_ListPays, $startRow_ListPays, $maxRows_ListPays);
-$ListPays = mysql_query($query_limit_ListPays, $maconnexion) or die(mysql_error());
+$ListPays = mysql_query($query_limit_ListPays, $maconnexion);
 $row_ListPays = mysql_fetch_assoc($ListPays);
 
 if (isset($_GET['totalRows_ListPays'])) {

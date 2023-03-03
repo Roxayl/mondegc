@@ -26,14 +26,14 @@ unset($_REQUEST['paysID']);
 //Requete Pays
 
 $query_InfoGenerale = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_paysID, "int"));
-$InfoGenerale = mysql_query($query_InfoGenerale, $maconnexion) or die(mysql_error());
+$InfoGenerale = mysql_query($query_InfoGenerale, $maconnexion);
 $row_InfoGenerale = mysql_fetch_assoc($InfoGenerale);
 $totalRows_InfoGenerale = mysql_num_rows($InfoGenerale);
 
 //Requete User
 
 $query_User = sprintf("SELECT ch_use_id, ch_use_login, ch_use_statut FROM users WHERE ch_use_paysID = %s AND ch_use_statut >= 10", GetSQLValueString($colname_paysID, "int"));
-$User = mysql_query($query_User, $maconnexion) or die(mysql_error());
+$User = mysql_query($query_User, $maconnexion);
 $row_User = mysql_fetch_assoc($User);
 
 //Mise à jour formulaire pays
@@ -95,7 +95,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
                            GetSQLValueString($_POST['ch_pay_id'], "int"));
 
 
-      $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+      $Result1 = mysql_query($updateSQL, $maconnexion);
       getErrorMessage('success', "Le pays a été modifié avec succès !");
     } else {
         getErrorMessage('error', "Vous n'avez pas accès à cette partie.");
@@ -118,7 +118,7 @@ $startRow_mesvilles = $pageNum_mesvilles * $maxRows_mesvilles;
 
 $query_mesvilles = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_use_paysID, ch_pay_lien_imgdrapeau, ch_pay_nom FROM villes INNER JOIN users ON ch_vil_user = ch_use_id INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_vil_user= %s AND ch_pay_id = %s ORDER BY ch_vil_date_enregistrement ASC", GetSQLValueString($_SESSION['user_ID'], "int"), GetSQLValueString($colname_paysID, 'int'));
 $query_limit_mesvilles = sprintf("%s LIMIT %d, %d", $query_mesvilles, $startRow_mesvilles, $maxRows_mesvilles);
-$mesvilles = mysql_query($query_limit_mesvilles, $maconnexion) or die(mysql_error());
+$mesvilles = mysql_query($query_limit_mesvilles, $maconnexion);
 $row_mesvilles = mysql_fetch_assoc($mesvilles);
 
 if (isset($_GET['totalRows_mesvilles'])) {
@@ -156,7 +156,7 @@ $startRow_autres_villes = $pageNum_autres_villes * $maxRows_autres_villes;
 
 $query_autres_villes = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_use_login FROM villes INNER JOIN users ON ch_vil_user = ch_use_id WHERE ch_vil_paysID = %s AND ch_vil_user != %s ORDER BY ch_vil_date_enregistrement ASC", GetSQLValueString($colname_paysID, "int"), GetSQLValueString($_SESSION['user_ID'], "int"));
 $query_limit_autres_villes = sprintf("%s LIMIT %d, %d", $query_autres_villes, $startRow_autres_villes, $maxRows_autres_villes);
-$autres_villes = mysql_query($query_limit_autres_villes, $maconnexion) or die(mysql_error());
+$autres_villes = mysql_query($query_limit_autres_villes, $maconnexion);
 $row_autres_villes = mysql_fetch_assoc($autres_villes);
 
 if (isset($_GET['totalRows_autres_villes'])) {
@@ -198,7 +198,7 @@ $startRow_communiquesPays = $pageNum_communiquesPays * $maxRows_communiquesPays;
 
 $query_communiquesPays = sprintf("SELECT * FROM communiques WHERE communiques.ch_com_categorie = 'pays'  AND communiques.ch_com_element_id = %s", GetSQLValueString($colname_paysID, "int"));
 $query_limit_communiquesPays = sprintf("%s LIMIT %d, %d", $query_communiquesPays, $startRow_communiquesPays, $maxRows_communiquesPays);
-$communiquesPays = mysql_query($query_limit_communiquesPays, $maconnexion) or die(mysql_error());
+$communiquesPays = mysql_query($query_limit_communiquesPays, $maconnexion);
 $row_communiquesPays = mysql_fetch_assoc($communiquesPays);
 
 if (isset($_GET['totalRows_communiquesPays'])) {
@@ -238,7 +238,7 @@ $startRow_fait_hist = $pageNum_fait_hist * $maxRows_fait_hist;
 
 $query_fait_hist = sprintf("SELECT ch_his_id, ch_his_statut, ch_his_personnage, ch_his_date_fait, ch_his_date_fait2, ch_his_nom FROM  histoire WHERE ch_his_paysID = %s ORDER BY ch_his_date_fait ASC", GetSQLValueString($colname_paysID, "int"));
 $query_limit_fait_hist = sprintf("%s LIMIT %d, %d", $query_fait_hist, $startRow_fait_hist, $maxRows_fait_hist);
-$fait_hist = mysql_query($query_limit_fait_hist, $maconnexion) or die(mysql_error());
+$fait_hist = mysql_query($query_limit_fait_hist, $maconnexion);
 $row_fait_hist = mysql_fetch_assoc($fait_hist);
 
 if (isset($_GET['totalRows_fait_hist'])) {

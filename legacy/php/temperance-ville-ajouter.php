@@ -14,7 +14,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-temperance"))
                        GetSQLValueString($_POST['ch_temp_note'], "int"),
 					   GetSQLValueString($_POST['ch_temp_tendance'], "text"));
   
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   $insertGoTo = DEF_URI_PATH . 'back/institut_economie.php';
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -23,7 +23,7 @@ $colname_ville = $_POST['ch_temp_element_id'];
 //requete ville
 
 $query_mail = sprintf("SELECT ch_vil_nom, ch_use_mail FROM villes INNER JOIN users ON ch_vil_user=ch_use_id WHERE ch_vil_ID=%s", GetSQLValueString($colname_ville, "int"));
-$mail = mysql_query($query_mail, $maconnexion) or die(mysql_error());
+$mail = mysql_query($query_mail, $maconnexion);
 $row_mail = mysql_fetch_assoc($mail);
 $totalRows_mail = mysql_num_rows($mail);
 
@@ -96,7 +96,7 @@ mail($mail,$sujet,$message,$header);
 //requete villes
 
 $query_villes = "SELECT ch_vil_ID, ch_vil_nom FROM villes INNER JOIN pays ON ch_vil_paysID=ch_pay_id WHERE ch_vil_capitale != 3 AND ch_pay_publication=1 ORDER BY ch_vil_nom";
-$villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
+$villes = mysql_query($query_villes, $maconnexion);
 $row_villes = mysql_fetch_assoc($villes);
 $totalRows_villes = mysql_num_rows($villes);
 ?>

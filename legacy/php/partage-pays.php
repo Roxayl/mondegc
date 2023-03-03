@@ -8,7 +8,7 @@ if (isset($_GET['ch_pay_id'])) {
 }
 
 $query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_pay_lien_forum, ch_use_id FROM pays INNER JOIN  users ON ch_use_paysID = ch_pay_id WHERE ch_pay_id = %s AND ch_pay_publication=1", GetSQLValueString($pays_ID, "int"));
-$pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
+$pays = mysql_query($query_pays, $maconnexion);
 $row_pays = mysql_fetch_assoc($pays);
 $totalRows_pays = mysql_num_rows($pays);
 
@@ -39,7 +39,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
                        GetSQLValueString($_POST['ch_pay_id'], "int"));
 
 
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
     $updateGoTo = DEF_URI_PATH . "page-ville.php";
   appendQueryString($updateGoTo);
   $adresse = $updateGoTo."?ch_pay_id=".$row_villes['ch_vil_paysID']."&ch_ville_id=".$row_villes['ch_vil_ID'];

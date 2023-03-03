@@ -8,7 +8,7 @@ if (isset($_GET['ch_his_id'])) {
 }
 
 $query_fait_hist = sprintf("SELECT ch_his_id, ch_his_nom, ch_his_lien_img1, ch_his_description, ch_his_paysID, ch_pay_lien_forum FROM histoire INNER JOIN pays ON ch_his_paysID = ch_pay_id WHERE ch_his_id = %s AND ch_his_statut=1", GetSQLValueString($Fait_hist_ID, "int"));
-$fait_hist = mysql_query($query_fait_hist, $maconnexion) or die(mysql_error());
+$fait_hist = mysql_query($query_fait_hist, $maconnexion);
 $row_fait_hist = mysql_fetch_assoc($fait_hist);
 $totalRows_fait_hist = mysql_num_rows($fait_hist);
 
@@ -39,7 +39,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
                        GetSQLValueString($_POST['ch_pay_id'], "int"));
 
   
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
     $updateGoTo = DEF_URI_PATH . "page-fait-historique.php";
   appendQueryString($updateGoTo);
   $adresse = $updateGoTo."?ch_his_id=".$row_fait_hist['ch_his_paysID'];

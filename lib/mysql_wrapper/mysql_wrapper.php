@@ -94,15 +94,6 @@ function mysql_num_rows(PDOStatement $statement): int
 }
 
 /**
- * @param mixed|null $resource Unused and kept for compatibility purposes.
- * @return string
- */
-function mysql_error(mixed $resource = null): string
-{
-    throw new Exception("A database exception occurred.");
-}
-
-/**
  * @param PDOStatement $statement
  */
 function mysql_free_result(PDOStatement $statement): void

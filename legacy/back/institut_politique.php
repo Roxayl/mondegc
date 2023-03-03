@@ -18,7 +18,7 @@ $_SESSION['last_work'] = DEF_URI_PATH . $mondegc_config['front-controller']['uri
 $institut_id = 6;
 
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
-$institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
+$institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 

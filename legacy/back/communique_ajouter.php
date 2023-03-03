@@ -31,7 +31,7 @@ if($cat == "pays") {
     $query_pays = sprintf("SELECT ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau
         FROM pays WHERE ch_pay_id = %s",
         GetSQLValueString($colname_elementid, "int"));
-    $pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
+    $pays = mysql_query($query_pays, $maconnexion);
     $row_pays = mysql_fetch_assoc($pays);
     $totalRows_pays = mysql_num_rows($pays);
 
@@ -52,7 +52,7 @@ elseif($cat == "ville") {
     }
 
     $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_nom FROM villes INNER JOIN pays ON villes.ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($colname_elementid, "int"));
-    $villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
+    $villes = mysql_query($query_villes, $maconnexion);
     $row_villes = mysql_fetch_assoc($villes);
     $totalRows_villes = mysql_num_rows($villes);
 
@@ -73,7 +73,7 @@ elseif($cat == "institut") {
     }
 
     $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($colname_elementid, "int"));
-    $institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
+    $institut = mysql_query($query_institut, $maconnexion);
     $row_institut = mysql_fetch_assoc($institut);
     $totalRows_institut = mysql_num_rows($institut);
 
@@ -110,7 +110,7 @@ if (isset($_REQUEST['userID'])) {
 }
 
 $query_user = sprintf("SELECT ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_user, "int"));
-$user = mysql_query($query_user, $maconnexion) or die(mysql_error());
+$user = mysql_query($query_user, $maconnexion);
 $row_user = mysql_fetch_assoc($user);
 $totalRows_user = mysql_num_rows($user);
 
@@ -141,7 +141,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
                        GetSQLValueString($_POST['ch_com_contenu'], "text"),
                        GetSQLValueString($_POST['ch_com_pays_id'], 'int'));
   
-    $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+    $Result1 = mysql_query($insertSQL, $maconnexion);
 
     $last_insert_id = mysql_insert_id();
     $banner_text = "Votre communiqué a été ajouté avec succès !<br />";

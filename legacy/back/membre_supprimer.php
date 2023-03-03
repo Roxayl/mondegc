@@ -17,7 +17,7 @@ if ((isset($_POST['ch_use_id'])) && ($_POST['ch_use_id'] != "")) {
                        GetSQLValueString($_POST['ch_use_id'], "int"));
 
   
-  $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($deleteSQL, $maconnexion);
 
   $deleteGoTo = DEF_URI_PATH . "back/liste-membres.php";
   appendQueryString($deleteGoTo);

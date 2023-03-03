@@ -20,7 +20,7 @@ if (isset($_POST['monument_ID'])) {
 }
 
 $query_monument = sprintf("SELECT ch_pat_id, ch_pat_label, ch_pat_statut, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nb_update, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_nom, ch_pat_lien_img1, ch_pat_lien_img2, ch_pat_lien_img3, ch_pat_lien_img4, ch_pat_lien_img5, ch_pat_legende_img1, ch_pat_legende_img2, ch_pat_legende_img3, ch_pat_legende_img4, ch_pat_legende_img5, ch_pat_description, ch_pay_id, ch_pay_nom, ch_vil_ID, ch_vil_nom, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID WHERE ch_pat_id = %s", GetSQLValueString($monument_ID, "int"));
-$monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
+$monument = mysql_query($query_monument, $maconnexion);
 $row_monument = mysql_fetch_assoc($monument);
 $totalRows_monument = mysql_num_rows($monument);
 $ville_id = $row_monument['ch_pat_villeID'];
@@ -29,7 +29,7 @@ $paysID = $row_monument['ch_pat_paysID'];
 // Connection infos dirigeant pays
 
 $query_users = sprintf("SELECT ch_vil_user, ch_use_id, ch_use_login FROM villes INNER JOIN users ON ch_vil_user=ch_use_id WHERE ch_vil_ID = %s", GetSQLValueString($ville_id, "int"));
-$users = mysql_query($query_users, $maconnexion) or die(mysql_error());
+$users = mysql_query($query_users, $maconnexion);
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
 
@@ -39,12 +39,12 @@ $listcategories = ($row_monument['listcat']);
           
 
 $query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories) ORDER BY ch_mon_cat_couleur";
-$liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
+$liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion);
 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
 
 $query_liste_mon_cat_nope = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur NOT BETWEEN 100 AND 199 ORDER BY ch_mon_cat_couleur";
-$liste_mon_cat_nope = mysql_query($query_liste_mon_cat_nope, $maconnexion) or die(mysql_error());
+$liste_mon_cat_nope = mysql_query($query_liste_mon_cat_nope, $maconnexion);
 $row_liste_mon_cat_nope = mysql_fetch_assoc($liste_mon_cat_nope);
 $totalRows_liste_mon_cat_nope = mysql_num_rows($liste_mon_cat_nope);
 }
@@ -54,7 +54,7 @@ $_SESSION['last_work'] = 'page-monument.php?ch_pat_id='.$row_monument['ch_pat_id
 
 //requete catégorie 1
 $query_mon_cat_a = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 0 AND 199 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
-$mon_cat_a = mysql_query($query_mon_cat_a, $maconnexion) or die(mysql_error());
+$mon_cat_a = mysql_query($query_mon_cat_a, $maconnexion);
 $row_mon_cat_a = mysql_fetch_assoc($mon_cat_a);
 $totalRows_mon_cat_a = mysql_num_rows($mon_cat_a);
 
@@ -105,7 +105,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_monument")
                        GetSQLValueString($_POST['ch_pat_id'], "int"));
 
   
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
 
   getErrorMessage('success', "Le monument a été modifié avec succès.");
 

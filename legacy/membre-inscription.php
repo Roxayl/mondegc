@@ -15,7 +15,7 @@ if (isset($_GET['clef'])) {
 
 
 $query_user_prov = sprintf("SELECT * FROM users_provisoire WHERE ch_use_prov_login = %s AND ch_use_prov_clef = %s", GetSQLValueString($login, "text"), GetSQLValueString($clef, "text"));
-$user_prov = mysql_query($query_user_prov, $maconnexion) or die(mysql_error());
+$user_prov = mysql_query($query_user_prov, $maconnexion);
 $row_user_prov = mysql_fetch_assoc($user_prov);
 $totalRows_user_prov = mysql_num_rows($user_prov);
 
@@ -37,7 +37,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
        GetSQLValueString($_POST['ch_use_statut'], "int"));
 
   
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   $last_user_id = mysql_insert_id();
 
@@ -49,7 +49,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
       GetSQLValueString($last_user_id, 'int'),
       10
   );
-  mysql_query($insert_users_pays) or die(mysql_error());
+  mysql_query($insert_users_pays);
 
   // On ajoute une entrée dans la table 'personnages' s'il n'y avait pas encore de perso.
   $thisPays = new \GenCity\Monde\Pays($_POST['ch_use_paysID']);
@@ -66,7 +66,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
             GetSQLValueString('pays', 'text'),
             GetSQLValueString($_POST['ch_use_paysID'], 'int')
       );
-      mysql_query($insert_personnage) or die(mysql_error());
+      mysql_query($insert_personnage);
   }
 
   
@@ -76,7 +76,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
                        GetSQLValueString($userprov, "int"));
 
   
-  $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($deleteSQL, $maconnexion);
   $insertGoTo = DEF_URI_PATH . 'index.php';
   appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));

@@ -36,7 +36,7 @@ class InfraGroup extends BaseModel {
             GetSQLValueString($this->get('order'))
         );
 
-        mysql_query($query) or die(mysql_error());
+        mysql_query($query);
 
         // On réinitialise le modèle
         $this->model = new InfraGroupModel(mysql_insert_id());
@@ -58,7 +58,7 @@ class InfraGroup extends BaseModel {
         }
 
         $query .= ' WHERE id = ' . GetSQLValueString($this->get('id'));
-        mysql_query($query) or die(mysql_error());
+        mysql_query($query);
 
     }
 

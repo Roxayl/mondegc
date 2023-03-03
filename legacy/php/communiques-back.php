@@ -12,7 +12,7 @@ $startRow_Liste_communiques = $pageNum_Liste_communiques * $maxRows_Liste_commun
 
 $query_Liste_communiques = sprintf("SELECT * FROM communiques WHERE communiques.ch_com_categorie = '$com_cat'  AND communiques.ch_com_element_id = %s ORDER BY ch_com_date_mis_jour DESC", GetSQLValueString($com_element_id, "int"));
 $query_limit_Liste_communiques = sprintf("%s LIMIT %d, %d", $query_Liste_communiques, $startRow_Liste_communiques, $maxRows_Liste_communiques);
-$Liste_communiques = mysql_query($query_limit_Liste_communiques, $maconnexion) or die(mysql_error());
+$Liste_communiques = mysql_query($query_limit_Liste_communiques, $maconnexion);
 $row_Liste_communiques = mysql_fetch_assoc($Liste_communiques);
 
 if (isset($_GET['totalRows_Liste_communiques'])) {

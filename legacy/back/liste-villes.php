@@ -30,7 +30,7 @@ if (isset($_GET['tri'])) {
 
 $query_listvilles = "SELECT villes.ch_vil_ID, villes.ch_vil_paysID, villes.ch_vil_mis_jour, villes.ch_vil_nom, villes.ch_vil_capitale, villes.ch_vil_population, pays.ch_pay_id, pays.ch_pay_nom, ch_use_login FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id INNER JOIN users ON ch_vil_user = ch_use_id ORDER BY $order_by $tri";
 $query_limit_listvilles = sprintf("%s LIMIT %d, %d", $query_listvilles, $startRow_listvilles, $maxRows_listvilles);
-$listvilles = mysql_query($query_limit_listvilles, $maconnexion) or die(mysql_error());
+$listvilles = mysql_query($query_limit_listvilles, $maconnexion);
 $row_listvilles = mysql_fetch_assoc($listvilles);
 
 if (isset($_GET['totalRows_listvilles'])) {

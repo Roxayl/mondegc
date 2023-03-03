@@ -8,7 +8,7 @@ if (isset($_GET['ch_pat_id'])) {
 }
 
 $query_monument = sprintf("SELECT ch_pat_id, ch_pat_nom, ch_pat_lien_img1, ch_pat_description, ch_pat_paysID, ch_pay_lien_forum, ch_vil_user, ch_use_id  FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID LEFT JOIN users ON ch_pat_paysID = ch_use_paysID WHERE ch_pat_id = %s AND ch_pat_statut=1", GetSQLValueString($monument_ID, "int"));
-$monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
+$monument = mysql_query($query_monument, $maconnexion);
 $row_monument = mysql_fetch_assoc($monument);
 $totalRows_monument = mysql_num_rows($monument);
 
@@ -39,7 +39,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
                        GetSQLValueString($_POST['ch_pay_id'], "int"));
 
   
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
     $updateGoTo = DEF_URI_PATH . "page-monument.php";
   appendQueryString($updateGoTo);
   $adresse = $updateGoTo."?ch_pat_id=".$row_monument['ch_pat_id'];

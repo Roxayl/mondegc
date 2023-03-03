@@ -33,7 +33,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "new_user")) {
                        GetSQLValueString($paysID, "int"),
                        GetSQLValueString($ch_use_prov_statut, "int"));
 
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   \GenCity\Monde\Logger\Log::createItem('users_provisoire', null, 'insert',
       $_SESSION['userObject']->get('ch_use_id'), array('data', array('ch_use_prov_login' => $login)));
@@ -103,7 +103,7 @@ mail('contact@roxayl.fr',$sujet,$message,$header);
 
 
 $query_pays = "SELECT ch_pay_id, ch_pay_nom FROM pays ORDER BY ch_pay_nom ASC";
-$pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
+$pays = mysql_query($query_pays, $maconnexion);
 $row_pays = mysql_fetch_assoc($pays);
 $totalRows_pays = mysql_num_rows($pays);
 

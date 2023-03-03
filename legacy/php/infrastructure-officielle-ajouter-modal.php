@@ -19,7 +19,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-inf_off")) {
                        GetSQLValueString($_POST['ch_inf_off_Environnement'], "int"),
                        GetSQLValueString($_POST['ch_inf_off_Education'], "int"));
   
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   $last_id = mysql_insert_id();
   $insert_group = mysql_query(sprintf('INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle) VALUES(%s, %s)',

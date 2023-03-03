@@ -16,7 +16,7 @@ exit();
 $institut_id = 2;
 
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
-$institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
+$institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
@@ -34,7 +34,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
                        GetSQLValueString($_POST['ch_geo_nom'], "text"));
 
 
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   $insertGoTo = DEF_URI_PATH . "back/institut_geographie.php?bounds=".$_POST['ch_geo_bounds'];
   header(sprintf("Location: %s", $insertGoTo));
@@ -57,7 +57,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature"))
 					   GetSQLValueString($_POST['ch_geo_id'], "int"));
 
 
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
   $updateGoTo = DEF_URI_PATH . "back/institut_geographie.php?bounds=".$_POST['ch_geo_bounds'];
   header(sprintf("Location: %s", $updateGoTo));
  exit;

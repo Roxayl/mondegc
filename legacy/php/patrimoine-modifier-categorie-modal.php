@@ -53,7 +53,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) {
         GetSQLValueString($_POST['ch_mon_cat_education'], "text"),
         GetSQLValueString($_POST['ch_mon_cat_ID'], "int"));
 
-    $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    $Result1 = mysql_query($updateSQL, $maconnexion);
 
     // Regénérer les influences des monuments de la catégorie modifiée.
     foreach($eloquentCategory->patrimoine as $eloquentPatrimoine) {
@@ -74,7 +74,7 @@ if (isset($_GET['mon_cat_id'])) {
 }
 
 $query_liste_mon_cat = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_ID = %s ORDER BY ch_mon_cat_mis_jour DESC", GetSQLValueString($colname_liste_mon_cat, "int"));
-$liste_mon_cat = mysql_query($query_liste_mon_cat, $maconnexion) or die(mysql_error());
+$liste_mon_cat = mysql_query($query_liste_mon_cat, $maconnexion);
 $row_liste_mon_cat = mysql_fetch_assoc($liste_mon_cat);
 $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 
