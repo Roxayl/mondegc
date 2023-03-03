@@ -25,7 +25,7 @@ RUN     apt-get update -qq && \
 # Cette dernière étape (apt-get clean && rm -rf ...) supprime les fichiers temporaire d'apt, pour alléger l'image.
 
 # Extensions PHP.
-RUN     docker-php-ext-install -j$(nproc) opcache pdo_mysql mysqli mbstring gd > /dev/null
+RUN     docker-php-ext-install -j$(nproc) opcache pdo_mysql mbstring gd > /dev/null
 COPY    docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
 
 # Apache et réécriture d'URL.
