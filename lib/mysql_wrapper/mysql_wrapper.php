@@ -1,19 +1,12 @@
 <?php
 
 use Barryvdh\Debugbar\Facades\Debugbar;
-use Illuminate\Database\Connection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 // Make sure the MySQL extension is not loaded and there is no other drop in replacement active.
 if(function_exists('mysql_query') || extension_loaded('mysql')) {
     return;
-}
-
-// The function name "getDatabaseLegacyConnection" will be used to return the database connection,
-// make sure it is available.
-if(function_exists('getDatabaseLegacyConnection')) {
-    trigger_error('The function name "getDatabaseLegacyConnection" is already defined, please change '
-        . 'the function name', E_USER_ERROR);
 }
 
 /**
@@ -22,16 +15,6 @@ if(function_exists('getDatabaseLegacyConnection')) {
  * @var PDOStatement|null $_DB_LEGACY_LAST_STMT
  */
 $_DB_LEGACY_LAST_STMT = null;
-
-/**
- * Get the database legacy connection.
- *
- * @return Connection
- */
-function getDatabaseLegacyConnection(): Connection
-{
-    return DB::connection('mysql_legacy');
-}
 
 /**
  * @param string $query
@@ -48,7 +31,7 @@ function mysql_query(string $query, mixed $resource = null): PDOStatement|bool
         $start = hrtime(true);
     }
 
-    $_DB_LEGACY_LAST_STMT = getDatabaseLegacyConnection()->getPdo()->query($query);
+    $_DB_LEGACY_LAST_STMT = DB::connection('mysql_legacy')->getPdo()->query($query);
 
     if($_DEBUGBAR_ENABLED) {
         $end = hrtime(true);
@@ -70,12 +53,14 @@ function mysql_real_escape_string(?string $string, mixed $resource = null): null
         return null;
     }
 
-    $string = getDatabaseLegacyConnection()->getPdo()->quote($string);
-    if(Str::startsWith($string, ["'", '"'])) {
-        $string = substr($string, 1);
-    }
-    if(Str::endsWith($string, ["'", '"'])) {
-        $string = substr($string, 0, -1);
+    $string = DB::connection('mysql_legacy')->getPdo()->quote($string);
+    if(is_string($string)) {
+        if(Str::startsWith($string, ["'", '"'])) {
+            $string = substr($string, 1);
+        }
+        if(Str::endsWith($string, ["'", '"'])) {
+            $string = substr($string, 0, -1);
+        }
     }
 
     return $string;
@@ -133,5 +118,5 @@ function mysql_free_result(PDOStatement $statement): void
  */
 function mysql_insert_id(mixed $resource = null): false|string
 {
-    return getDatabaseLegacyConnection()->getPdo()->lastInsertId();
+    return DB::connection('mysql_legacy')->getPdo()->lastInsertId();
 }
