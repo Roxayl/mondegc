@@ -115,6 +115,9 @@
         "post-update-cmd": [
             "@php artisan monde:override-vendor"
         ],
+        "pre-autoload-dump": [
+            "@php -r \"unlink('bootstrap/cache/packages.php') && unlink('bootstrap/cache/services.php');\""
+        ],
         "post-autoload-dump": [
             "@php artisan monde:override-vendor",
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump"

@@ -69,13 +69,13 @@ jobs:
       - name: Deploy to Production
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
-          protocol: ftp
+          protocol: ftps
           server: mgvx.ftp.infomaniak.com
           port: 21
           username: ${{ secrets.FTP_MONDEGC_USERNAME }}
           password: ${{ secrets.FTP_MONDEGC_PASSWORD }}
           local-dir: ./
-          server-dir: ./
+          server-dir: ./web/monde/
           exclude: |
             **/.git*
             **/.git*/**
