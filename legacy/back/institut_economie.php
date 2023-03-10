@@ -16,7 +16,7 @@ exit();
 $institut_id = 5;
 
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
-$institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
+$institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
@@ -39,7 +39,7 @@ UNION
 SELECT ch_temp_id as id, ch_vil_nom as nom, ch_temp_element as element, ch_temp_element_id as element_id, ch_temp_date as date, ch_temp_mis_jour as mis_jour, ch_temp_statut as statut, ch_temp_note as note, ch_temp_tendance as tendance FROM temperance LEFT JOIN villes ON ch_temp_element_id = ch_vil_ID WHERE ch_temp_element='ville'
 ORDER BY date asc");
 $query_limit_liste_temperance = sprintf("%s LIMIT %d, %d", $query_liste_temperance, $startRow_liste_temperance, $maxRows_liste_temperance);
-$liste_temperance = mysql_query($query_limit_liste_temperance, $maconnexion) or die(mysql_error());
+$liste_temperance = mysql_query($query_limit_liste_temperance, $maconnexion);
 $row_liste_temperance = mysql_fetch_assoc($liste_temperance);
 
 if (isset($_GET['totalRows_liste_temperance'])) {
@@ -84,7 +84,7 @@ $startRow_liste_infra_officielles = $pageNum_liste_infra_officielles * $maxRows_
 
 $query_liste_infra_officielles = sprintf("SELECT * FROM infrastructures_officielles ORDER BY $type_classement");
 $query_limit_liste_infra_officielles = sprintf("%s LIMIT %d, %d", $query_liste_infra_officielles, $startRow_liste_infra_officielles, $maxRows_liste_infra_officielles);
-$liste_infra_officielles = mysql_query($query_limit_liste_infra_officielles, $maconnexion) or die(mysql_error());
+$liste_infra_officielles = mysql_query($query_limit_liste_infra_officielles, $maconnexion);
 $row_liste_infra_officielles = mysql_fetch_assoc($liste_infra_officielles);
 
 if (isset($_GET['totalRows_liste_infra_officielles'])) {
@@ -268,7 +268,7 @@ Eventy::action('display.beforeHeadClosingTag')
 				// requete nb de juges votants
 
 $query_nb_juges = sprintf("SELECT COUNT(ch_not_temp_juge) as nbjuges FROM notation_temperance WHERE ch_not_temp_temperance_id =%s", GetSQLValueString( $idtemperance, "int"));
-$nb_juges = mysql_query($query_nb_juges, $maconnexion) or die(mysql_error());
+$nb_juges = mysql_query($query_nb_juges, $maconnexion);
 $row_nb_juges = mysql_fetch_assoc($nb_juges);
 $totalRows_nb_juges = mysql_num_rows($nb_juges);
 				 ?>

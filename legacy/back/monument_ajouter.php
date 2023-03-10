@@ -49,7 +49,7 @@ if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_monument")) {
         GetSQLValueString($_POST['ch_pat_legende_img5'], "text"),
         GetSQLValueString($_POST['ch_pat_description'], "text"));
 
-    $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+    $Result1 = mysql_query($insertSQL, $maconnexion);
 
     getErrorMessage('success', "Votre monument <strong>"
         . e($_POST['ch_pat_nom']) . "</strong> a été ajouté avec succès !");
@@ -62,7 +62,7 @@ if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_monument")) {
 
 
 $query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($paysID, "int"));
-$users = mysql_query($query_users, $maconnexion) or die(mysql_error());
+$users = mysql_query($query_users, $maconnexion);
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
 

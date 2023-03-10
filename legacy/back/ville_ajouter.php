@@ -48,7 +48,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_ville")) {
                        GetSQLValueString($_POST['ch_vil_contenu'], "text"));
 
   
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   $insertGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_vil_paysID'] . "#mes-villes";
   appendQueryString($insertGoTo);
@@ -59,14 +59,14 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_ville")) {
 $User = $_SESSION['user_ID'];
 
 $query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_id = %s", GetSQLValueString($User, "int"));
-$users = mysql_query($query_users, $maconnexion) or die(mysql_error());
+$users = mysql_query($query_users, $maconnexion);
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
 
 //Liste des joueurs pour choisir maire
 
 $query_list_users = sprintf("SELECT ch_use_id, ch_use_login FROM users ORDER BY ch_use_login");
-$list_users = mysql_query($query_list_users, $maconnexion) or die(mysql_error());
+$list_users = mysql_query($query_list_users, $maconnexion);
 $row_list_users = mysql_fetch_assoc($list_users);
 $totalRows_list_users = mysql_num_rows($list_users);
 ?>

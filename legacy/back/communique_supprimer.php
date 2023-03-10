@@ -16,7 +16,7 @@ if ((isset($_POST['communique-ID'])) && ($_POST['communique-ID'] != "")) {
                        GetSQLValueString($_POST['communique-ID'], "int"));
 
   
-  $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($deleteSQL, $maconnexion);
 
   getErrorMessage('success', "Communiqué supprimé ! Pouf.");
 

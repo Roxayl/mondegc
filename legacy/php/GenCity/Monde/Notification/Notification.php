@@ -24,7 +24,7 @@ class Notification extends BaseModel {
             GetSQLValueString($this->get('element'))
         );
 
-        mysql_query($query) or die(mysql_error());
+        mysql_query($query);
 
         // On réinitialise le modèle
         $this->model = new NotificationModel(mysql_insert_id());

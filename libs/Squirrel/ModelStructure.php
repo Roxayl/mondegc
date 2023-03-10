@@ -9,6 +9,8 @@ abstract class ModelStructure implements ModelStructureInterface {
     static $primary_key = null;
     public $info = array();
 
+    private static $structure = [];
+
     final public function __construct($data) {
 
         if(is_numeric($data)) {
@@ -26,7 +28,7 @@ abstract class ModelStructure implements ModelStructureInterface {
         $sql = sprintf('SELECT * FROM ' . $this::$tableName .
             ' WHERE ' . $this::$primary_key .' = %s',
             GetSQLValueString($id, 'int'));
-        $query = mysql_query($sql) or die(mysql_error());
+        $query = mysql_query($sql);
         $result = mysql_fetch_assoc($query);
         return $result;
 
@@ -34,12 +36,16 @@ abstract class ModelStructure implements ModelStructureInterface {
 
     public function getStructure() {
 
-        $query = mysql_query('DESCRIBE ' . $this::$tableName);
-        $finalTable = array();
-        while($row = mysql_fetch_assoc($query)) {
-            $finalTable[$row['Field']] = $row['Default'];
+        if(! array_key_exists(self::$tableName, self::$structure)) {
+            $query = mysql_query('DESCRIBE ' . self::$tableName);
+            $finalTable = [];
+            while($row = mysql_fetch_assoc($query)) {
+                $finalTable[$row['Field']] = $row['Default'];
+            }
+            self::$structure[self::$tableName] = $finalTable;
         }
-        return $finalTable;
+
+        return self::$structure[self::$tableName];
 
     }
 

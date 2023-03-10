@@ -22,7 +22,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
                        GetSQLValueString($_POST['ch_disp_mon_id'], "int"),
                        GetSQLValueString($_POST['ch_disp_date'], "date"));
   
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   event(new PatrimoineCategorized($eloquentPatrimoine));
 
@@ -44,7 +44,7 @@ if (isset($_GET['mon_cat_ID'])) {
 }
 
 $query_liste_mon_cat = sprintf("SELECT ch_pat_id, ch_pat_nom FROM patrimoine WHERE ch_pat_id NOT IN (SELECT ch_disp_mon_id FROM dispatch_mon_cat WHERE ch_disp_cat_id = %s)  ORDER BY ch_pat_mis_jour DESC", GetSQLValueString($colname_classer_mon, ""));
-$liste_mon_cat = mysql_query($query_liste_mon_cat, $maconnexion) or die(mysql_error());
+$liste_mon_cat = mysql_query($query_liste_mon_cat, $maconnexion);
 $row_liste_mon_cat = mysql_fetch_assoc($liste_mon_cat);
 $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 
@@ -52,7 +52,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 //requete info catégorie
 
 $query_mon_cat = sprintf("SELECT ch_mon_cat_ID, ch_mon_cat_nom FROM monument_categories WHERE ch_mon_cat_ID = %s", GetSQLValueString($colname_classer_mon, "int"));
-$mon_cat = mysql_query($query_mon_cat, $maconnexion) or die(mysql_error());
+$mon_cat = mysql_query($query_mon_cat, $maconnexion);
 $row_mon_cat = mysql_fetch_assoc($mon_cat);
 $totalRows_mon_cat = mysql_num_rows($mon_cat);
 ?>

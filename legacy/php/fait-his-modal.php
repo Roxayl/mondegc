@@ -9,7 +9,7 @@ if (isset($_GET['ch_his_id'])) {
 }
 
 $query_fait_his = sprintf("SELECT ch_his_id, ch_his_label, ch_his_statut, ch_his_paysID, ch_his_personnage, ch_his_date, ch_his_mis_jour, ch_his_nb_update, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_nom, ch_his_lien_img1, ch_his_legende_img1, ch_his_description, ch_his_contenu, ch_pay_nom, (SELECT GROUP_CONCAT(ch_disp_fait_hist_cat_id) FROM dispatch_fait_his_cat WHERE ch_his_ID = ch_disp_fait_hist_id) AS listcat FROM histoire INNER JOIN pays ON ch_his_paysID = ch_pay_id WHERE ch_his_id = %s", GetSQLValueString($colname_fait_his, "int"));
-$fait_his = mysql_query($query_fait_his, $maconnexion) or die(mysql_error());
+$fait_his = mysql_query($query_fait_his, $maconnexion);
 $row_fait_his = mysql_fetch_assoc($fait_his);
 $totalRows_fait_his = mysql_num_rows($fait_his);
 
@@ -19,7 +19,7 @@ $ch_com_element_id = $colname_fait_his;
 
 
 $query_commentaire = sprintf("SELECT ch_com_ID, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_use_paysID, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_categorie = 'com_fait_his' AND ch_com_element_id = %s ORDER BY ch_com_date DESC", GetSQLValueString($ch_com_element_id, "int"));
-$commentaire = mysql_query($query_commentaire, $maconnexion) or die(mysql_error());
+$commentaire = mysql_query($query_commentaire, $maconnexion);
 $row_commentaire = mysql_fetch_assoc($commentaire);
 $totalRows_commentaire = mysql_num_rows($commentaire);
 
@@ -30,7 +30,7 @@ $listcategories = ($row_fait_his['listcat']);
           
 
 $query_liste_fai_cat3 = "SELECT * FROM faithist_categories WHERE ch_fai_cat_ID In ($listcategories) AND ch_fai_cat_statut = 1";
-$liste_fai_cat3 = mysql_query($query_liste_fai_cat3, $maconnexion) or die(mysql_error());
+$liste_fai_cat3 = mysql_query($query_liste_fai_cat3, $maconnexion);
 $row_liste_fai_cat3 = mysql_fetch_assoc($liste_fai_cat3);
 $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 }

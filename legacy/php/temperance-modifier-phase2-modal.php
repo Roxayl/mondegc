@@ -20,7 +20,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance"))
 					   GetSQLValueString($_POST['ch_temp_id'], "int"));
 
   
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
 
   $updateGoTo = DEF_URI_PATH . "back/institut_economie.php";
   appendQueryString($updateGoTo);

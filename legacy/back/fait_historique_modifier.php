@@ -36,7 +36,7 @@ $_POST['ch_his_date_fait2'] = NULL;
                        GetSQLValueString($_POST['ch_his_id'], "int"));
 
 
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
 
   getErrorMessage('success', __s($_POST['ch_his_nom']) . " a été modifié avec succès.");
 
@@ -52,7 +52,7 @@ if (isset($_POST['ch_his_id'])) {
 }
 
 $query_Fait_his = sprintf("SELECT * FROM histoire WHERE ch_his_id = %s", GetSQLValueString($colname_Fait_his, "int"));
-$Fait_his = mysql_query($query_Fait_his, $maconnexion) or die(mysql_error());
+$Fait_his = mysql_query($query_Fait_his, $maconnexion);
 $row_Fait_his = mysql_fetch_assoc($Fait_his);
 $totalRows_Fait_his = mysql_num_rows($Fait_his);
 
@@ -60,7 +60,7 @@ $totalRows_Fait_his = mysql_num_rows($Fait_his);
 // Connection infos dirigeant pays
 
 $query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($row_Fait_his['ch_his_paysID'], "int"));
-$users = mysql_query($query_users, $maconnexion) or die(mysql_error());
+$users = mysql_query($query_users, $maconnexion);
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
 

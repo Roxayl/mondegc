@@ -5,7 +5,7 @@ include('php/log.php');
 
 $query_Last24H = "SELECT ch_use_login, ch_use_statut, last_activity FROM users
     WHERE last_activity > DATE_SUB(NOW(), INTERVAL 2 DAY) ORDER BY ch_use_login";
-$Last24H = mysql_query($query_Last24H, $maconnexion) or die(mysql_error());
+$Last24H = mysql_query($query_Last24H, $maconnexion);
 
 $pageParticiper = new \GenCity\Monde\Page('participer');
 $pageParticiperCadre = new \GenCity\Monde\Page('participer_cadre');

@@ -20,7 +20,7 @@ if(isset($_REQUEST['userID'])) {
 }
 
 $query_User = sprintf("SELECT * FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_User, "int"));
-$User = mysql_query($query_User, $maconnexion) or die(mysql_error());
+$User = mysql_query($query_User, $maconnexion);
 $row_User = mysql_fetch_assoc($User);
 $totalRows_User = mysql_num_rows($User);
 
@@ -52,7 +52,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
         GetSQLValueString($_POST['ch_use_mail'], "text"),
         GetSQLValueString($_POST['ch_use_id'], "int"));
 
-    $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    $Result1 = mysql_query($updateSQL, $maconnexion);
 
     $updateGoTo = DEF_URI_PATH . "back/membre-modifier_back.php";
     appendQueryString($updateGoTo);
@@ -78,7 +78,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
     $personnageData = mysql_fetch_assoc($selectSQL);
     $thisPays = new \GenCity\Monde\Pays($personnageData['entity_id']);
 
-    $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    $Result1 = mysql_query($updateSQL, $maconnexion);
 
     $updateGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID={$thisPays->ch_pay_id}";
     appendQueryString($updateGoTo);

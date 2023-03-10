@@ -10,7 +10,7 @@ $clefSession = isset($_COOKIE['Session_mondeGC']) ? $_COOKIE['Session_mondeGC'] 
 if ($clefSession != null and $clefSession != "" and !isset($_SESSION['login_user'])) {
     $Session_user_query = sprintf("SELECT ch_users_session_dispatch_sessionID, ch_use_session_id, ch_use_session_connect, ch_use_id, ch_use_login, ch_use_paysID, ch_use_statut, ch_use_acces, ch_use_last_log, last_activity, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users_dispatch_session INNER JOIN users_session ON ch_users_session_dispatch_sessionID = ch_use_session_id INNER JOIN users ON ch_use_session_user_ID = ch_use_id WHERE ch_users_session_dispatch_Key =%s",
         GetSQLValueString($clefSession, "text"));
-    $Session_user = mysql_query($Session_user_query, $maconnexion) or die(mysql_error());
+    $Session_user = mysql_query($Session_user_query, $maconnexion);
     $row_Session_user = mysql_fetch_assoc($Session_user);
     $loginFoundUser = mysql_num_rows($Session_user);
 
@@ -21,12 +21,12 @@ if ($clefSession != null and $clefSession != "" and !isset($_SESSION['login_user
             $deleteSQL = sprintf("DELETE FROM users_dispatch_session WHERE ch_users_session_dispatch_Key=%s",
                 GetSQLValueString($clefSession, "text"));
 
-            $Result4 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+            $Result4 = mysql_query($deleteSQL, $maconnexion);
 
             $deleteSQL = sprintf("DELETE FROM users_session WHERE ch_use_session_id=%s",
                 GetSQLValueString($row_Session_user['ch_use_session_id'], "int"));
 
-            $Result5 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+            $Result5 = mysql_query($deleteSQL, $maconnexion);
 
             $authService = new AuthenticationService();
             $authService->logout();
@@ -54,7 +54,7 @@ if (isset($_POST['identifiant'])) {
 
     $LoginRS__query = sprintf("SELECT ch_use_login, ch_use_password, ch_use_paysID, ch_use_id, ch_use_last_log, last_activity, ch_use_statut, ch_use_acces, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users WHERE ch_use_login=%s AND ch_use_password=%s",
         GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text"));
-    $LoginRS = mysql_query($LoginRS__query, $maconnexion) or die(mysql_error());
+    $LoginRS = mysql_query($LoginRS__query, $maconnexion);
     $loginFoundUser = mysql_num_rows($LoginRS);
     $row_LoginRS = mysql_fetch_assoc($LoginRS);
 
@@ -90,14 +90,14 @@ if (isset($_POST['identifiant'])) {
             GetSQLValueString($connect, "int"),
             GetSQLValueString($now, "date"));
 
-        $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+        $Result1 = mysql_query($insertSQL, $maconnexion);
 
         $Id_Session = mysql_insert_id();
         $insertSQL = sprintf("INSERT INTO users_dispatch_session (ch_users_session_dispatch_Key, ch_users_session_dispatch_sessionID) VALUES (%s, %s)",
             GetSQLValueString($code_aleatoire, "text"),
             GetSQLValueString($Id_Session, "int"));
 
-        $Result2 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+        $Result2 = mysql_query($insertSQL, $maconnexion);
 
         // *** Creation du cookie
         $dureeCookieJours = 30;
@@ -153,12 +153,12 @@ if (auth()->check() && isset($_GET['doLogout']) && ($_GET['doLogout'] === "true"
         $deleteSQL = sprintf("DELETE FROM users_dispatch_session WHERE ch_users_session_dispatch_Key=%s",
             GetSQLValueString($clefSession, "text"));
 
-        $Result4 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+        $Result4 = mysql_query($deleteSQL, $maconnexion);
 
         $deleteSQL = sprintf("DELETE FROM users_session WHERE ch_use_session_id=%s",
             GetSQLValueString($row_Session_user['ch_use_session_id'], "int"));
 
-        $Result5 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+        $Result5 = mysql_query($deleteSQL, $maconnexion);
     }
 
     $authService = new AuthenticationService();
@@ -189,7 +189,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
         GetSQLValueString($_POST['ch_com_contenu'], "text"),
         GetSQLValueString($_POST['ch_com_pays_id'], 'int'));
 
-    $Result3 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+    $Result3 = mysql_query($insertSQL, $maconnexion);
 
     $insertGoTo = $url_en_cours;
     $adresse = $insertGoTo.'#commentaires';
@@ -200,7 +200,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
 // *** Recherche et effacement des sessions de plus d'un mois .
 $date_expiration = time();
 $Session_expire_query = sprintf("SELECT ch_use_session_id FROM users_session WHERE ch_use_session_date < CURDATE()-30");
-$Session_expire = mysql_query($Session_expire_query, $maconnexion) or die(mysql_error());
+$Session_expire = mysql_query($Session_expire_query, $maconnexion);
 $row_Session_expire = mysql_fetch_assoc($Session_expire);
 
 if ($row_Session_expire != null and $row_Session_expire != "") {
@@ -208,16 +208,16 @@ if ($row_Session_expire != null and $row_Session_expire != "") {
     $deleteSQL = sprintf("DELETE FROM users_session WHERE ch_use_session_id=%s",
         GetSQLValueString($ID_session_expire, "int"));
 
-    $Result6 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+    $Result6 = mysql_query($deleteSQL, $maconnexion);
 
     $deleteSQL1 = sprintf("DELETE FROM users_dispatch_session WHERE ch_users_session_dispatch_sessionID=%s",
         GetSQLValueString($ID_session_expire, "int"));
 
-    $Result7 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+    $Result7 = mysql_query($deleteSQL, $maconnexion);
 }
 
 $query_pays = "SELECT ch_pay_id FROM pays";
-$pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
+$pays = mysql_query($query_pays, $maconnexion);
 $row_pays = mysql_fetch_assoc($pays);
 
 
@@ -248,7 +248,7 @@ do {
 
     $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries",
         GetSQLValueString($row_pays['ch_pay_id'], "int"));
-    $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
+    $geometries = mysql_query($query_geometries, $maconnexion);
 
 //Calcul total des ressources de la carte.
 
@@ -293,7 +293,7 @@ do {
         GetSQLValueString($tot_emploi, "int"),
         GetSQLValueString($row_pays['ch_pay_id'], "int"));
 
-    $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    $Result2 = mysql_query($updateSQL, $maconnexion);
     mysql_free_result($geometries);
 
     $surface = 0;

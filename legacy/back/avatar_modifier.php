@@ -98,7 +98,7 @@ if (isset($uploadconfirm)) {
                        GetSQLValueString($link, "text"),
                        GetSQLValueString($pays_ID, "int"));
 
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
 
   getErrorMessage('success', "L'avatar a été modifié avec succès !");
 

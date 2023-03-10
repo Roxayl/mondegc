@@ -87,12 +87,12 @@ if (isset($uploadconfirm)) {
                        GetSQLValueString($link, "text"),
                        GetSQLValueString($colname_pays, "int"));
   
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
 }
 
 
 $query_drapeau = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_pays, "int"));
-$drapeau = mysql_query($query_drapeau, $maconnexion) or die(mysql_error());
+$drapeau = mysql_query($query_drapeau, $maconnexion);
 $row_drapeau = mysql_fetch_assoc($drapeau);
 $totalRows_drapeau = mysql_num_rows($drapeau);
 ?>

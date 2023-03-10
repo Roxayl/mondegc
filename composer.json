@@ -39,9 +39,9 @@
         "php": "^8.1",
         "ext-curl": "*",
         "ext-gd": "*",
+        "ext-iconv": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "ext-mysqli": "*",
         "ext-pdo": "*",
         "caxy/php-htmldiff": "^0.1.14",
         "doctrine/dbal": "^2.13",
@@ -98,7 +98,7 @@
             "Database\\Seeders\\": "database/seeders/",
             "GenCity\\": "legacy/php/GenCity/",
             "Roxayl\\MondeGC\\": "app/",
-            "Squirrel\\": "lib/Squirrel/"
+            "Squirrel\\": "libs/Squirrel/"
         }
     },
     "autoload-dev": {
@@ -114,6 +114,9 @@
         ],
         "post-update-cmd": [
             "@php artisan monde:override-vendor"
+        ],
+        "pre-autoload-dump": [
+            "@php -r \"unlink('bootstrap/cache/packages.php') && unlink('bootstrap/cache/services.php');\""
         ],
         "post-autoload-dump": [
             "@php artisan monde:override-vendor",

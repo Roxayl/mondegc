@@ -18,7 +18,7 @@ if (isset($_POST['paysID'])) {
 }
 
 $query_Pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgheader FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_Pays, "int"));
-$Pays = mysql_query($query_Pays, $maconnexion) or die(mysql_error());
+$Pays = mysql_query($query_Pays, $maconnexion);
 $row_Pays = mysql_fetch_assoc($Pays);
 $totalRows_Pays = mysql_num_rows($Pays);
 

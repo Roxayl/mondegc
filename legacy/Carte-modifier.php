@@ -27,7 +27,7 @@ if(isset($_POST['ch_geo_id'])) {
 
 //Requete Pays
 $query_InfoGenerale = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_paysID, "int"));
-$InfoGenerale = mysql_query($query_InfoGenerale, $maconnexion) or die(mysql_error());
+$InfoGenerale = mysql_query($query_InfoGenerale, $maconnexion);
 $row_InfoGenerale = mysql_fetch_assoc($InfoGenerale);
 $totalRows_InfoGenerale = mysql_num_rows($InfoGenerale);
 
@@ -68,14 +68,14 @@ if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
             GetSQLValueString($_POST['ch_geo_type'], "text"),
             GetSQLValueString($_POST['ch_geo_nom'], "text"));
 
-        $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+        $Result1 = mysql_query($insertSQL, $maconnexion);
 
         getErrorMessage('success', "La zone " . __s($_POST['ch_geo_nom']) . ' a été ajoutée !');
     }
 
     //recherche des mesures des zones de la carte pour calcul ressources
     $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($colname_paysID, "int"));
-    $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
+    $geometries = mysql_query($query_geometries, $maconnexion);
 
     //Calcul total des ressources de la carte.
     while($row_geometries = mysql_fetch_assoc($geometries)) {
@@ -108,7 +108,7 @@ if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
         GetSQLValueString($tot_emploi, "int"),
         GetSQLValueString($colname_paysID, "int"));
 
-    $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    $Result2 = mysql_query($updateSQL, $maconnexion);
     mysql_free_result($geometries);
 
     event(new MapUpdated($eloquentPays));
@@ -144,7 +144,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
             GetSQLValueString($_POST['ch_geo_nom'], "text"),
             GetSQLValueString($_POST['ch_geo_id'], "int"));
 
-        $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+        $Result1 = mysql_query($updateSQL, $maconnexion);
 
         getErrorMessage('success', "La zone " . __s($_POST['ch_geo_nom'])
             . ' (' . $eloquentGeometry->type_geometry->label . ') a été modifiée !');
@@ -153,7 +153,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
     //recherche des mesures des zones de la carte pour calcul ressources
 
     $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($paysid, "int"));
-    $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
+    $geometries = mysql_query($query_geometries, $maconnexion);
 
     //Calcul total des ressources de la carte.
     while($row_geometries = mysql_fetch_assoc($geometries)) {
@@ -186,7 +186,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
         GetSQLValueString($tot_emploi, "int"),
         GetSQLValueString($paysid, "int"));
 
-    $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    $Result2 = mysql_query($updateSQL, $maconnexion);
     mysql_free_result($geometries);
 
     event(new MapUpdated($eloquentPays));

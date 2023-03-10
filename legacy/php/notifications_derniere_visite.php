@@ -14,7 +14,7 @@ $startRow_LastCommuniquePays = $pageNum_LastCommuniquePays * $maxRows_LastCommun
 
 $query_LastCommuniquePays = "SELECT ch_com_ID, ch_com_statut, ch_com_categorie, ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_titre, ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_use_lien_imgpersonnage, ch_use_nom_dirigeant, ch_use_paysID, ch_use_prenom_dirigeant, ch_use_titre_dirigeant FROM communiques INNER JOIN pays ON ch_com_element_id = ch_pay_id INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_statut = 1 AND ch_com_date >= '$dernierevisite' AND (ch_com_categorie='pays' OR ch_com_categorie='com_pays') ORDER BY ch_com_date DESC";
 $query_limit_LastCommuniquePays = sprintf("%s LIMIT %d, %d", $query_LastCommuniquePays, $startRow_LastCommuniquePays, $maxRows_LastCommuniquePays);
-$LastCommuniquePays = mysql_query($query_limit_LastCommuniquePays, $maconnexion) or die(mysql_error());
+$LastCommuniquePays = mysql_query($query_limit_LastCommuniquePays, $maconnexion);
 $row_LastCommuniquePays = mysql_fetch_assoc($LastCommuniquePays);
 
 if (isset($_GET['totalRows_LastCommuniquePays'])) {
@@ -37,7 +37,7 @@ $startRow_LastCommuniqueVilles = $pageNum_LastCommuniqueVilles * $maxRows_LastCo
 
 $query_LastCommuniqueVilles = "SELECT ch_com_ID, ch_com_statut, ch_com_categorie, ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_titre, ch_vil_ID, ch_vil_paysID, ch_vil_nom, ch_vil_armoiries, ch_use_lien_imgpersonnage, ch_use_nom_dirigeant, ch_use_paysID, ch_use_prenom_dirigeant, ch_use_titre_dirigeant FROM communiques INNER JOIN villes ON ch_com_element_id = ch_vil_ID INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_statut = 1 AND ch_com_date >= '$dernierevisite' AND (ch_com_categorie='ville' OR ch_com_categorie='com_ville') ORDER BY ch_com_date DESC";
 $query_limit_LastCommuniqueVilles = sprintf("%s LIMIT %d, %d", $query_LastCommuniqueVilles, $startRow_LastCommuniqueVilles, $maxRows_LastCommuniqueVilles);
-$LastCommuniqueVilles = mysql_query($query_limit_LastCommuniqueVilles, $maconnexion) or die(mysql_error());
+$LastCommuniqueVilles = mysql_query($query_limit_LastCommuniqueVilles, $maconnexion);
 $row_LastCommuniqueVilles = mysql_fetch_assoc($LastCommuniqueVilles);
 
 if (isset($_GET['totalRows_LastCommuniqueVilles'])) {
@@ -60,7 +60,7 @@ $startRow_LastCommuniqueReaction = $pageNum_LastCommuniqueReaction * $maxRows_La
 
 $query_LastCommuniqueReaction = sprintf("SELECT ch_com_ID, ch_com_statut, ch_com_categorie, ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_titre, ch_use_lien_imgpersonnage, ch_use_nom_dirigeant, ch_use_paysID, ch_use_prenom_dirigeant, ch_use_titre_dirigeant FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_statut = 1 AND ch_com_date >= %s AND ch_com_categorie ='com_communique' ORDER BY ch_com_date DESC", GetSQLValueString($dernierevisite, "date"));
 $query_limit_LastCommuniqueReaction = sprintf("%s LIMIT %d, %d", $query_LastCommuniqueReaction, $startRow_LastCommuniqueReaction, $maxRows_LastCommuniqueReaction);
-$LastCommuniqueReaction = mysql_query($query_limit_LastCommuniqueReaction, $maconnexion) or die(mysql_error());
+$LastCommuniqueReaction = mysql_query($query_limit_LastCommuniqueReaction, $maconnexion);
 $row_LastCommuniqueReaction = mysql_fetch_assoc($LastCommuniqueReaction);
 
 if (isset($_GET['totalRows_LastCommuniqueReaction'])) {
@@ -84,7 +84,7 @@ $startRow_MAJPays = $pageNum_MAJPays * $maxRows_MAJPays;
 
 $query_MAJPays = printf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_pay_mis_jour FROM pays WHERE ch_pay_publication = 1 AND ch_pay_mis_jour >= %s ORDER BY ch_pay_mis_jour DESC", GetSQLValueString($dernierevisite, "date"));
 $query_limit_MAJPays = sprintf("%s LIMIT %d, %d", $query_MAJPays, $startRow_MAJPays, $maxRows_MAJPays);
-$MAJPays = mysql_query($query_limit_MAJPays, $maconnexion) or die(mysql_error());
+$MAJPays = mysql_query($query_limit_MAJPays, $maconnexion);
 $row_MAJPays = mysql_fetch_assoc($MAJPays);
 
 if (isset($_GET['totalRows_MAJPays'])) {
@@ -107,7 +107,7 @@ $startRow_MAJVilles = $pageNum_MAJVilles * $maxRows_MAJVilles;
 
 $query_MAJVilles = "SELECT ch_vil_ID, ch_vil_paysID, ch_vil_mis_jour, ch_vil_nom, ch_vil_armoiries FROM villes WHERE ch_vil_ID <> 3 AND ch_vil_mis_jour >= '$dernierevisite' ORDER BY ch_vil_mis_jour DESC";
 $query_limit_MAJVilles = sprintf("%s LIMIT %d, %d", $query_MAJVilles, $startRow_MAJVilles, $maxRows_MAJVilles);
-$MAJVilles = mysql_query($query_limit_MAJVilles, $maconnexion) or die(mysql_error());
+$MAJVilles = mysql_query($query_limit_MAJVilles, $maconnexion);
 $row_MAJVilles = mysql_fetch_assoc($MAJVilles);
 
 if (isset($_GET['totalRows_MAJVilles'])) {

@@ -26,7 +26,7 @@ class UserNotifications {
             ORDER BY id DESC',
             GetSQLValueString($this->user->get('ch_use_id'), 'int')
         );
-        $query = mysql_query($sql) or die(mysql_error());
+        $query = mysql_query($sql);
 
         $return = array();
         while($row = mysql_fetch_assoc($query)) {
@@ -42,7 +42,7 @@ class UserNotifications {
         $sql = sprintf('UPDATE notifications_legacy SET unread = 0
             WHERE recipient_id = %s',
             GetSQLValueString($this->user->get('ch_use_id')));
-        $query = mysql_query($sql) or die(mysql_error());
+        $query = mysql_query($sql);
 
     }
 
@@ -57,7 +57,7 @@ class UserNotifications {
             ORDER BY id DESC',
             GetSQLValueString($this->user->get('ch_use_id'), 'int')
         );
-        $query = mysql_query($sql) or die(mysql_error());
+        $query = mysql_query($sql);
 
         return (int)mysql_fetch_assoc($query)['notifCount'];
 

@@ -17,7 +17,7 @@ if (isset($_GET['ch_temp_id'])) {
 //recherche des mesures des zones de la carte
 
 $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($colname_Pays, "int"));
-$geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
+$geometries = mysql_query($query_geometries, $maconnexion);
 $row_geometries = mysql_fetch_assoc($geometries);
 ?>
 

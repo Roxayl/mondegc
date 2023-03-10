@@ -5,6 +5,14 @@
     Liste des roleplays
 @endsection
 
+@section('styles')
+    <link href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" rel="stylesheet">
+@endsection
+
+@section('scripts')
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+@endsection
+
 @section('content')
 
     @parent
@@ -13,17 +21,16 @@
         <div class="row-fluid">
 
             <div class="cta-title pull-right-cta">
-            <a class="btn btn-cta btn-primary"
-               data-toggle="modal" data-target="#modal-container"
-               href="{{ route('roleplay.create') }}">
-                <i class="icon-bell icon-white"></i>
-                Créer un roleplay
-                <span class="badge badge-info badge-beta"
-                      style="position: absolute; margin-left: -20px; margin-top: -8px;">
-                    Bêta
-                </span>
-            </a>
-                </div>
+                @can('create', \Roxayl\MondeGC\Models\Roleplay::class)
+                    <a class="btn btn-cta btn-primary"
+                       data-toggle="modal" data-target="#modal-container"
+                       href="{{ route('roleplay.create') }}">
+                        <i class="icon-bell icon-white"></i>
+                        Créer un roleplay
+                    </a>
+                @endcan
+            </div>
+
             <div class="titre-bleu">
                 <h1>
                     Liste des événements

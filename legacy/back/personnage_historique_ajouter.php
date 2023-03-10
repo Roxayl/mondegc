@@ -43,7 +43,7 @@ $_POST['ch_his_date_fait2'] == NULL;
                        GetSQLValueString($_POST['ch_his_contenu'], "text"));
 
 
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   getErrorMessage('success', __s($_POST['ch_his_nom']) . "
     a été ajouté à vos personnages historiques.");
@@ -57,7 +57,7 @@ $_POST['ch_his_date_fait2'] == NULL;
 
 
 $query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($paysID, "int"));
-$users = mysql_query($query_users, $maconnexion) or die(mysql_error());
+$users = mysql_query($query_users, $maconnexion);
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
 ?>

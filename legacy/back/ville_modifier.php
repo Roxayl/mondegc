@@ -65,7 +65,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_ville")) {
 					   GetSQLValueString($_POST['ch_vil_ID'], "int"));
 
   
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
 
         getErrorMessage('success', "Ville modifiée avec succès.");
     }
@@ -84,7 +84,7 @@ if (isset($_REQUEST['ville-ID'])) {
 }
 
 $query_ville = sprintf("SELECT * FROM villes INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($_SESSION['ville_encours'], "int"));
-$ville = mysql_query($query_ville, $maconnexion) or die(mysql_error());
+$ville = mysql_query($query_ville, $maconnexion);
 $row_ville = mysql_fetch_assoc($ville);
 $totalRows_ville = mysql_num_rows($ville);
 
@@ -103,7 +103,7 @@ $startRow_infrastructure = $pageNum_infrastructure * $maxRows_infrastructure;
 
 $query_infrastructure = sprintf("SELECT * FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id=infrastructures_officielles.ch_inf_off_id WHERE ch_inf_villeid = %s ORDER BY ch_inf_date DESC", GetSQLValueString($_SESSION['ville_encours'], "int"));
 $query_limit_infrastructure = sprintf("%s LIMIT %d, %d", $query_infrastructure, $startRow_infrastructure, $maxRows_infrastructure);
-$infrastructure = mysql_query($query_limit_infrastructure, $maconnexion) or die(mysql_error());
+$infrastructure = mysql_query($query_limit_infrastructure, $maconnexion);
 $row_infrastructure = mysql_fetch_assoc($infrastructure);
 
 if (isset($_GET['totalRows_infrastructure'])) {
@@ -141,7 +141,7 @@ $startRow_monument = $pageNum_monument * $maxRows_monument;
 
 $query_monument = sprintf("SELECT * FROM patrimoine WHERE ch_pat_villeID = %s ORDER BY ch_pat_mis_jour DESC", GetSQLValueString($_SESSION['ville_encours'], "int"));
 $query_limit_monument = sprintf("%s LIMIT %d, %d", $query_monument, $startRow_monument, $maxRows_monument);
-$monument = mysql_query($query_limit_monument, $maconnexion) or die(mysql_error());
+$monument = mysql_query($query_limit_monument, $maconnexion);
 $row_monument = mysql_fetch_assoc($monument);
 
 
@@ -173,7 +173,7 @@ $queryString_monument = sprintf("&totalRows_monument=%d%s", $totalRows_monument,
 $UserID = $row_ville['ch_vil_user'];
 
 $query_User = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_id = %s", GetSQLValueString($UserID, "int"));
-$User = mysql_query($query_User, $maconnexion) or die(mysql_error());
+$User = mysql_query($query_User, $maconnexion);
 $row_User = mysql_fetch_assoc($User);
 $totalRows_User = mysql_num_rows($User);
 
@@ -182,7 +182,7 @@ $_SESSION['last_work'] = "ville_modifier.php";
 //Liste des joueurs pour choisir maire
 
 $query_list_users = sprintf("SELECT ch_use_id, ch_use_login FROM users ORDER BY ch_use_login");
-$list_users = mysql_query($query_list_users, $maconnexion) or die(mysql_error());
+$list_users = mysql_query($query_list_users, $maconnexion);
 $row_list_users = mysql_fetch_assoc($list_users);
 $totalRows_list_users = mysql_num_rows($list_users);
 

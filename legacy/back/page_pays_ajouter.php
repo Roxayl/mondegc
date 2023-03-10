@@ -84,7 +84,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
 					   GetSQLValueString($_POST['ch_pay_emploi_carte'], "int"));
 
 
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
   $this_pays_id = mysql_insert_id();
 
   getErrorMessage('success', "Nouveau pays ajouté !");

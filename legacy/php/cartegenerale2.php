@@ -4,33 +4,33 @@
 
 
 $query_MarkerPays = "SELECT DISTINCT ch_pay_id, ch_pay_continent, ch_pay_emplacement, ch_pay_nom, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_pay_header_presentation, ch_pay_mis_jour, ch_pay_population_carte, ch_use_lien_imgpersonnage, ch_use_login, (SELECT SUM(ch_vil_population) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS ch_pay_population, (SELECT COUNT(ch_vil_ID) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS ch_pay_nbvilles FROM pays LEFT JOIN users ON pays.ch_pay_id = users.ch_use_paysID WHERE ch_pay_publication = 1 GROUP BY ch_pay_id ORDER BY ch_pay_id ASC";
-$MarkerPays = mysql_query($query_MarkerPays, $maconnexion) or die(mysql_error());
+$MarkerPays = mysql_query($query_MarkerPays, $maconnexion);
 $row_MarkerPays = mysql_fetch_assoc($MarkerPays);
 $totalRows_MarkerPays = mysql_num_rows($MarkerPays);
 
 // Connexion BDD Villes pour afficher markers des villes
 
 $query_MarkerVilles = "SELECT ch_vil_ID, ch_vil_paysID, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_mis_jour, ch_vil_armoiries, ch_vil_nom, ch_vil_capitale, ch_vil_specialite, ch_vil_population, ch_vil_lien_img1, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE (ch_vil_capitale = 1 OR ch_vil_population >= 1500000) AND pays.ch_pay_publication = 1 ORDER BY ch_vil_paysID ASC";
-$MarkerVilles = mysql_query($query_MarkerVilles, $maconnexion) or die(mysql_error());
+$MarkerVilles = mysql_query($query_MarkerVilles, $maconnexion);
 $row_MarkerVilles = mysql_fetch_assoc($MarkerVilles);
 $totalRows_MarkerVilles = mysql_num_rows($MarkerVilles);
 
 $query_MarkerVillesPetites = "SELECT ch_vil_ID, ch_vil_paysID, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_mis_jour, ch_vil_armoiries, ch_vil_nom, ch_vil_capitale, ch_vil_specialite, ch_vil_population, ch_vil_lien_img1, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE (ch_vil_capitale = 2 AND ch_vil_population < 1500000) AND pays.ch_pay_publication = 1 ORDER BY ch_vil_paysID ASC";
-$MarkerVillesPetites = mysql_query($query_MarkerVillesPetites, $maconnexion) or die(mysql_error());
+$MarkerVillesPetites = mysql_query($query_MarkerVillesPetites, $maconnexion);
 $row_MarkerVillesPetites = mysql_fetch_assoc($MarkerVillesPetites);
 $totalRows_MarkerVillesPetites = mysql_num_rows($MarkerVillesPetites);
 
 // Connexion BDD Monument pour afficher markers des monuments
 
 $query_MarkerMonument = "SELECT ch_pat_id, ch_pat_paysID, ch_pat_villeID, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_mis_jour, ch_pat_nom, ch_pat_lien_img1, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_id = ch_disp_mon_id) AS listcat, ch_vil_armoiries, ch_vil_ID, ch_vil_nom, ch_vil_capitale, pays.ch_pay_id, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login FROM patrimoine INNER JOIN villes ON  ch_pat_villeID=villes.ch_vil_ID INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE ch_pat_statut=1 AND ch_vil_capitale <> 3 AND pays.ch_pay_publication = 1 ORDER BY ch_pat_id ASC";
-$MarkerMonument = mysql_query($query_MarkerMonument, $maconnexion) or die(mysql_error());
+$MarkerMonument = mysql_query($query_MarkerMonument, $maconnexion);
 $row_MarkerMonument = mysql_fetch_assoc($MarkerMonument);
 $totalRows_MarkerMonument = mysql_num_rows($MarkerMonument);
 
 // Connexion BDD gometries pour afficher terres
 
 $query_ZonesTerres = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_type, ch_geo_nom FROM geometries WHERE ch_geo_geometries = 'polygon' AND ch_geo_type= 'terre'";
-$ZonesTerres = mysql_query($query_ZonesTerres, $maconnexion) or die(mysql_error());
+$ZonesTerres = mysql_query($query_ZonesTerres, $maconnexion);
 $totalRows_ZonesTerres = mysql_num_rows($ZonesTerres);
 
 // Connexion BDD gometries pour afficher zones administratives
@@ -39,7 +39,7 @@ $query_ZonesAdministratives = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_g
     LEFT JOIN users ON ch_geo_user = ch_use_id
     LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id
     WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'polygon' AND ch_geo_type= 'region'";
-$ZonesAdministratives = mysql_query($query_ZonesAdministratives, $maconnexion) or die(mysql_error());
+$ZonesAdministratives = mysql_query($query_ZonesAdministratives, $maconnexion);
 $row_ZonesAdministratives = mysql_fetch_assoc($ZonesAdministratives);
 $totalRows_ZonesAdministratives = mysql_num_rows($ZonesAdministratives);
 
@@ -50,25 +50,25 @@ $query_ZonesPays =
     LEFT JOIN users ON ch_geo_user = ch_use_id
     LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id
     WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'polygon' AND ch_geo_type != 'region' AND ch_geo_type != 'terre'";
-$ZonesPays = mysql_query($query_ZonesPays, $maconnexion) or die(mysql_error());
+$ZonesPays = mysql_query($query_ZonesPays, $maconnexion);
 $row_ZonesPays = mysql_fetch_assoc($ZonesPays);
 $totalRows_ZonesPays = mysql_num_rows($ZonesPays);
 
 // Connexion BDD gometries pour afficher frontières
 $query_frontieres = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_use_login, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'line' AND ch_geo_type='frontiere' ";
-$frontieres = mysql_query($query_frontieres, $maconnexion) or die(mysql_error());
+$frontieres = mysql_query($query_frontieres, $maconnexion);
 $row_frontieres = mysql_fetch_assoc($frontieres);
 $totalRows_frontieres = mysql_num_rows($frontieres);
 
 // Connexion BDD gometries pour afficher voies des pays (grandes)
 $query_VoiesPaysGrandes = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_use_login, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'line' AND ch_geo_type!='frontiere' AND (ch_geo_type='autoroute' OR ch_geo_type='voieexpress')";
-$VoiesPaysGrandes = mysql_query($query_VoiesPaysGrandes, $maconnexion) or die(mysql_error());
+$VoiesPaysGrandes = mysql_query($query_VoiesPaysGrandes, $maconnexion);
 $row_VoiesPaysGrandesGrandes = mysql_fetch_assoc($VoiesPaysGrandes);
 $totalRows_VoiesPaysGrandes = mysql_num_rows($VoiesPaysGrandes);
 
 // Connexion BDD gometries pour afficher voies des pays (petites)
 $query_VoiesPaysPetites = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_use_login, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'line' AND ch_geo_type!='frontiere' AND ch_geo_type!='autoroute' AND ch_geo_type!='voieexpress'";
-$VoiesPaysPetites = mysql_query($query_VoiesPaysPetites, $maconnexion) or die(mysql_error());
+$VoiesPaysPetites = mysql_query($query_VoiesPaysPetites, $maconnexion);
 $row_VoiesPaysPetites = mysql_fetch_assoc($VoiesPaysPetites);
 $totalRows_VoiesPaysPetites = mysql_num_rows($VoiesPaysPetites);
 ?>
@@ -820,7 +820,7 @@ $totalRows_VoiesPaysPetites = mysql_num_rows($VoiesPaysPetites);
             if($row_MarkerMonument['listcat']) {
 
                 $query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
-                $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
+                $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion);
                 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
                 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
             }
