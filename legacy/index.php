@@ -168,7 +168,7 @@ FROM communiques communique_institut
 INNER JOIN instituts ON ch_com_element_id = ch_ins_ID 
 WHERE communique_institut.ch_com_statut = 1 AND communique_institut.ch_com_categorie ='institut' 
 ORDER BY date DESC LIMIT 0, 15";
-        $communiquesPays = mysql_query($query_communiquesPays, $maconnexion) or die(mysql_error());
+        $communiquesPays = mysql_query($query_communiquesPays, $maconnexion);
         $row_communiquesPays = mysql_fetch_assoc($communiquesPays);
         ?>
 

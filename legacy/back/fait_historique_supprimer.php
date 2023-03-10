@@ -21,13 +21,13 @@ if ((isset($_POST['ch_his_id'])) && ($_POST['ch_his_id'] != "")) {
   $deleteSQL = sprintf("DELETE FROM histoire WHERE ch_his_id=%s",
                        GetSQLValueString($_POST['ch_his_id'], "int"));
   
-  $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($deleteSQL, $maconnexion);
 
 
 $deleteSQL2 = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_id=%s",
                        GetSQLValueString($_POST['monument_ID'], "int"));
 
-  $Result2 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+  $Result2 = mysql_query($deleteSQL, $maconnexion);
   
   getErrorMessage('success', "Ce fait historique a été supprimé avec succès.");
 

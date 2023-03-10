@@ -14,7 +14,7 @@ if ((isset($_POST['ch_temp_id'])) && ($_POST['ch_temp_id'] != "")) {
                        GetSQLValueString($_POST['ch_temp_id'], "int"));
 
   
-  $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($deleteSQL, $maconnexion);
 
   $deleteGoTo = DEF_URI_PATH . "back/institut_economie.php";
 

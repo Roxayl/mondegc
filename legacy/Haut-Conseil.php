@@ -5,7 +5,7 @@ include('php/log.php');
 
 
 $query_HautConseil = "SELECT ch_use_login, ch_use_statut FROM users WHERE ch_use_statut >= 20 ORDER BY ch_use_login ASC";
-$HautConseil = mysql_query($query_HautConseil, $maconnexion) or die(mysql_error());
+$HautConseil = mysql_query($query_HautConseil, $maconnexion);
 $row_HautConseil = mysql_fetch_assoc($HautConseil);
 $totalRows_HautConseil = mysql_num_rows($HautConseil);
 

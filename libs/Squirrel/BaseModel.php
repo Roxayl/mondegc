@@ -47,7 +47,7 @@ class BaseModel {
         }
 
         $query .= ' WHERE id = ' . GetSQLValueString($this->get('id'));
-        mysql_query($query) or die(mysql_error());
+        mysql_query($query);
 
     }
 

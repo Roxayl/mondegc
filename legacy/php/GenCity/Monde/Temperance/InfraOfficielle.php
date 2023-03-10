@@ -38,7 +38,7 @@ class InfraOfficielle extends BaseModel {
               JOIN infrastructures_officielles_groupes iog ON  iog.ID_groupes = ig.id
               WHERE ID_infra_officielle = %s",
                 GetSQLValueString($this->get('ch_inf_off_id')));
-            $query = mysql_query($sql) or die(mysql_error());
+            $query = mysql_query($sql);
             $result = mysql_fetch_assoc($query);
             if($result)
                 $this->infraGroup = new InfraGroup($result);

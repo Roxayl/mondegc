@@ -30,7 +30,7 @@ if (isset($_GET['tri'])) {
 
 $query_listcommuniques = "SELECT ch_com_ID, ch_com_statut, ch_com_categorie,ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_use_login, ch_use_lien_imgpersonnage FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_categorie = 'pays' OR ch_com_categorie = 'ville' OR ch_com_categorie = 'institut' ORDER BY $order_by $tri";
 $query_limit_listcommuniques = sprintf("%s LIMIT %d, %d", $query_listcommuniques, $startRow_listcommuniques, $maxRows_listcommuniques);
-$listcommuniques = mysql_query($query_limit_listcommuniques, $maconnexion) or die(mysql_error());
+$listcommuniques = mysql_query($query_limit_listcommuniques, $maconnexion);
 $row_listcommuniques = mysql_fetch_assoc($listcommuniques);
 
 if (isset($_GET['totalRows_listcommuniques'])) {

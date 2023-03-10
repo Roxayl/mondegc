@@ -43,7 +43,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_institut")
                        GetSQLValueString($_POST['ch_ins_ID'], "int"));
 
   
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
 
   $newInstitut = new \GenCity\Monde\Institut\Institut($_POST['ch_ins_ID']);
 
@@ -76,7 +76,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_institut")
 
 
 $query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
-$institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
+$institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 

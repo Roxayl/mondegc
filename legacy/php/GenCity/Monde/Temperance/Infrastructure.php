@@ -44,7 +44,7 @@ class Infrastructure extends BaseModel {
         }
 
         $query .= ' WHERE ch_inf_id = ' . GetSQLValueString($this->get('ch_inf_id'));
-        mysql_query($query) or die(mysql_error());
+        mysql_query($query);
 
     }
 

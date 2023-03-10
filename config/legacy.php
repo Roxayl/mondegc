@@ -26,12 +26,4 @@ return [
      */
     'salt' => env('LEGACY_SALT', Str::random(32)),
 
-    /*
-     * Permet de spécifier s'il faut utilise le mode SQL 'traditionnel', qui permet notamment d'exécuter des requêtes
-     * dont la clause GROUP BY ne contient pas l'ensemble des champs de la clause SELECT, par exemple.
-     * Ce paramètre doit être mis à <code>true</code> dans l'environnement de développement, sinon, certaines requêtes
-     * du site legacy ne fonctionneront pas.
-     */
-    'sql_mode_traditional' => env('LEGACY_SQL_MODE_TRAD', false),
-
 ];

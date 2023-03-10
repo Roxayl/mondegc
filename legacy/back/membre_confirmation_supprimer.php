@@ -18,7 +18,7 @@ if (isset($_POST['ch_use_id'])) {
 }
 
 $query_membre = sprintf("SELECT ch_use_id, ch_use_login, ch_use_lien_imgpersonnage FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_membre, "int"));
-$membre = mysql_query($query_membre, $maconnexion) or die(mysql_error());
+$membre = mysql_query($query_membre, $maconnexion);
 $row_membre = mysql_fetch_assoc($membre);
 $totalRows_membre = mysql_num_rows($membre);
 

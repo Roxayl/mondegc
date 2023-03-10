@@ -15,7 +15,7 @@ if (isset($_GET['clef'])) {
 
 
 $query_user_prov = sprintf("SELECT * FROM users_provisoire WHERE ch_use_prov_login = %s AND ch_use_prov_clef = %s", GetSQLValueString($login, "text"), GetSQLValueString($clef, "text"));
-$user_prov = mysql_query($query_user_prov, $maconnexion) or die(mysql_error());
+$user_prov = mysql_query($query_user_prov, $maconnexion);
 $row_user_prov = mysql_fetch_assoc($user_prov);
 $totalRows_user_prov = mysql_num_rows($user_prov);
 
@@ -25,7 +25,7 @@ if (isset($row_user_prov['ch_use_prov_login'])) {
 }
 
 $query_UserID = sprintf("SELECT ch_use_id FROM users WHERE ch_use_login = %s", GetSQLValueString($colname_UserID, "text"));
-$UserID = mysql_query($query_UserID, $maconnexion) or die(mysql_error());
+$UserID = mysql_query($query_UserID, $maconnexion);
 $row_UserID = mysql_fetch_assoc($UserID);
 $totalRows_UserID = mysql_num_rows($UserID);
 
@@ -41,7 +41,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
                        GetSQLValueString($_POST['ch_use_id'], "int"));
 
   
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
   
   // Effacement de la clef sur User_provisoire
   $userprov = $row_user_prov['ch_use_prov_ID'];
@@ -49,7 +49,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
                        GetSQLValueString($userprov, "int"));
 
   
-  $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($deleteSQL, $maconnexion);
   $insertGoTo = DEF_URI_PATH . 'index.php';
   appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));

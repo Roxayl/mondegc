@@ -11,7 +11,7 @@ $startRow_commentaire = $pageNum_commentaire * $maxRows_commentaire;
 
 $query_commentaire = sprintf("SELECT ch_com_ID, ch_com_label, ch_com_user_id, ch_com_categorie,ch_com_element_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_com_pays_id AS ch_use_paysID, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_categorie = %s AND ch_com_element_id = %s ORDER BY ch_com_date DESC", GetSQLValueString($ch_com_categorie, "text"), GetSQLValueString($ch_com_element_id, "int"));
 $query_limit_commentaire = sprintf("%s LIMIT %d, %d", $query_commentaire, $startRow_commentaire, $maxRows_commentaire);
-$commentaire = mysql_query($query_limit_commentaire, $maconnexion) or die(mysql_error());
+$commentaire = mysql_query($query_limit_commentaire, $maconnexion);
 $row_commentaire = mysql_fetch_assoc($commentaire);
 
 if (isset($_GET['totalRows_commentaire'])) {

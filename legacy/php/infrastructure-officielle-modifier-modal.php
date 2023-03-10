@@ -26,7 +26,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
         GetSQLValueString($_POST['ch_inf_off_Education'], "int"),
         GetSQLValueString($_POST['ch_inf_off_id'], "int"));
 
-    $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    $Result1 = mysql_query($updateSQL, $maconnexion);
 
     $newInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($_POST['ch_inf_off_id']);
 
@@ -68,7 +68,7 @@ if (isset($_GET['infrastructure_off'])) {
 }
 
 $query_infra_officielles = sprintf("SELECT * FROM infrastructures_officielles WHERE ch_inf_off_id = %s", GetSQLValueString($colname_infra_officielles, "int"));
-$infra_officielles = mysql_query($query_infra_officielles, $maconnexion) or die(mysql_error());
+$infra_officielles = mysql_query($query_infra_officielles, $maconnexion);
 $row_infra_officielles = mysql_fetch_assoc($infra_officielles);
 $totalRows_infra_officielles = mysql_num_rows($infra_officielles);
 

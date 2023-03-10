@@ -21,7 +21,7 @@ switch($row_User['ch_use_statut']) {
 //Liste pays pour moderation
 
 $query_pays = "SELECT ch_pay_id, ch_pay_nom FROM pays ORDER BY ch_pay_nom ASC";
-$pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
+$pays = mysql_query($query_pays, $maconnexion);
 $row_pays = mysql_fetch_assoc($pays);
 $totalRows_pays = mysql_num_rows($pays);
 ?>

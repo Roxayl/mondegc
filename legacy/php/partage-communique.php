@@ -8,7 +8,7 @@ if (isset($_GET['com_id'])) {
 }
 
 $query_communique = sprintf("SELECT ch_com_ID, ch_com_titre, ch_com_contenu, ch_com_element_id, ch_com_categorie, ch_com_label, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM communiques INNER JOIN users ON ch_use_id = ch_com_user_id WHERE ch_com_ID = %s AND ch_com_statut=1", GetSQLValueString($ch_com_id, "int"));
-$communique = mysql_query($query_communique, $maconnexion) or die(mysql_error());
+$communique = mysql_query($query_communique, $maconnexion);
 $row_communique = mysql_fetch_assoc($communique);
 $totalRows_communique = mysql_num_rows($communique);
 $cat = $row_communique['ch_com_categorie'];
@@ -18,7 +18,7 @@ $elementID = $row_communique['ch_com_element_id'];
 if ( $cat == "pays") {
 
 $query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_forum FROM pays WHERE ch_pay_id = %s",GetSQLValueString($elementID, "int"));
-$pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
+$pays = mysql_query($query_pays, $maconnexion);
 $row_pays = mysql_fetch_assoc($pays);
 $totalRows_pays = mysql_num_rows($pays);
 
@@ -42,7 +42,7 @@ mysql_free_result($pays);
 if ( $cat == "ville") {
   
 $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_pay_id, ch_pay_lien_forum FROM villes INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($elementID, "int"));
-$villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
+$villes = mysql_query($query_villes, $maconnexion);
 $row_villes = mysql_fetch_assoc($villes);
 $totalRows_villes = mysql_num_rows($villes);
 
@@ -67,7 +67,7 @@ mysql_free_result($villes);
 if ( $cat == "institut") {
 
 $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_lien_forum, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($elementID, "int"));
-$institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
+$institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
@@ -100,7 +100,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
                        GetSQLValueString($_POST['ch_pay_id'], "int"));
 
   
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
     $updateGoTo = DEF_URI_PATH . "page-communique.php";
   appendQueryString($updateGoTo);
   $adresse = $updateGoTo."?ch_com_ID=".$row_communique['ch_com_ID'];
@@ -119,7 +119,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut
                        GetSQLValueString($_POST['ch_ins_ID'], "int"));
 
   
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
     $updateGoTo = DEF_URI_PATH . "page-communique.php";
   appendQueryString($updateGoTo);
   $adresse = $updateGoTo."?ch_com_ID=".$row_communique['ch_com_ID'];

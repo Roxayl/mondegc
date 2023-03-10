@@ -91,7 +91,7 @@ class VoteList {
                     GROUP BY reponse_choisie ',
                     $this->proposal->get('id'),
                    ($get_null ? '' : ' AND reponse_choisie IS NOT NULL '));
-        $mysql_query = mysql_query($query) or die(mysql_error());
+        $mysql_query = mysql_query($query);
 
         while($row = mysql_fetch_assoc($mysql_query)) {
             $results[] = $row;

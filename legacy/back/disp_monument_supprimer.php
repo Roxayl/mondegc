@@ -21,7 +21,7 @@ if ((isset($_POST['ch_disp_id'])) && ($_POST['ch_disp_id'] != "")) {
                        GetSQLValueString($_POST['ch_disp_id'], "int"));
 
   
-  $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($deleteSQL, $maconnexion);
   $deleteGoTo = DEF_URI_PATH . 'back/institut_patrimoine.php?mon_catID='. $cat .'';
   appendQueryString($deleteGoTo);
   $adresse = $deleteGoTo .'#classer-monument';

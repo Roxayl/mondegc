@@ -27,13 +27,13 @@ if ((isset($_GET['ch_geo_id'])) && ($_GET['ch_geo_id'] != "")) {
                        GetSQLValueString($_GET['ch_geo_id'], "int"));
 
   
-  $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($deleteSQL, $maconnexion);
 
   getErrorMessage('success', "La zone a été supprimée.");
 //recherche des mesures des zones de la carte pour calcul ressources
 
 $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($_GET['ch_geo_pay_id'], "int"));
-$geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
+$geometries = mysql_query($query_geometries, $maconnexion);
 $row_geometries = mysql_fetch_assoc($geometries);
 
 //Calcul total des ressources de la carte.
@@ -69,7 +69,7 @@ $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_c
 
   event(new MapUpdated($geometry->pays));
   
-  $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result2 = mysql_query($updateSQL, $maconnexion);
   mysql_free_result($geometries);
   if(isset($_GET['is_back'])) {
       $deleteGoTo = DEF_URI_PATH . "back/institut_geographie.php";

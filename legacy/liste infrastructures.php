@@ -40,7 +40,7 @@ if(is_null($thisGroup)) {
         mysql_real_escape_string($type_classement));
 }
 $query_limit_liste_infra_officielles = sprintf("%s LIMIT %d, %d", $query_liste_infra_officielles, $startRow_liste_infra_officielles, $maxRows_liste_infra_officielles);
-$liste_infra_officielles = mysql_query($query_limit_liste_infra_officielles, $maconnexion) or die(mysql_error());
+$liste_infra_officielles = mysql_query($query_limit_liste_infra_officielles, $maconnexion);
 $row_liste_infra_officielles = mysql_fetch_assoc($liste_infra_officielles);
 
 if (isset($_GET['totalRows_liste_infra_officielles'])) {

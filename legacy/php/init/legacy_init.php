@@ -3,6 +3,8 @@
 /*************************
  *       Paramètres      *
  *************************/
+
+global $_DEBUGBAR_ENABLED;
  
 // Variables de configuration.
 $mondegc_config = [];
@@ -14,13 +16,6 @@ $mondegc_config['env'] = strtolower(app()->environment());
 $mondegc_config['version'] = config('legacy.version');
 $mondegc_config['hide_errors'] = config('legacy.hide_errors');
 $mondegc_config['enable_csrf_protection'] = config('legacy.enable_csrf_protection');
-$mondegc_config['db'] = [
-    'hostname' => config('database.connections.mysql.host'),
-    'port'     => config('database.connections.mysql.port'),
-    'username' => config('database.connections.mysql.username'),
-    'password' => config('database.connections.mysql.password'),
-    'database' => config('database.connections.mysql.database'),
-];
 $mondegc_config['path'] = ! empty(config('app.directory_path'))
                         ? config('app.directory_path') . '/'
                         : '';
@@ -63,29 +58,15 @@ if($mondegc_config['enable_csrf_protection'] === true) {
     require_once(DEF_ROOTPATH . 'libs/csrf-magic/csrf-magic.php');
 }
 
-// Wrapper pour les fonctions MySQL obsolètes (mysql_*), pour PHP 7 ou supérieur.
-require_once(DEF_ROOTPATH . 'libs/mysql_wrapper/mysql_wrapper.php');
-
 
 /*************************
  *    Base de données    *
  *************************/
 
-$maconnexion = mysql_connect(
-    $mondegc_config['db']['hostname'] . ':' . $mondegc_config['db']['port'],
-    $mondegc_config['db']['username'],
-    $mondegc_config['db']['password']
-);
+// Wrapper pour les fonctions MySQL obsolètes (mysql_*), pour PHP 7 ou supérieur.
+require_once(DEF_ROOTPATH . 'libs/mysql_wrapper/mysql_wrapper.php');
 
-if(! $maconnexion) {
-    throw new Exception(mysql_error());
-}
-
-mysql_set_charset('utf8mb4', $maconnexion);
-if(config('legacy.sql_mode_traditional')) {
-    mysql_query("SET SESSION sql_mode = 'TRADITIONAL'");
-}
-mysql_select_db($mondegc_config['db']['database']);
+$maconnexion = \Illuminate\Support\Facades\DB::connection('mysql_legacy');
 
 
 /*************************

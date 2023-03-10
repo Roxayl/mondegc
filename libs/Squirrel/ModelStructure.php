@@ -28,7 +28,7 @@ abstract class ModelStructure implements ModelStructureInterface {
         $sql = sprintf('SELECT * FROM ' . $this::$tableName .
             ' WHERE ' . $this::$primary_key .' = %s',
             GetSQLValueString($id, 'int'));
-        $query = mysql_query($sql) or die(mysql_error());
+        $query = mysql_query($sql);
         $result = mysql_fetch_assoc($query);
         return $result;
 

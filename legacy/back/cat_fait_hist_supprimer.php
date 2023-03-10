@@ -17,13 +17,13 @@ if ((isset($_POST['ch_fai_cat_ID'])) && ($_POST['ch_fai_cat_ID'] != "")) {
                        GetSQLValueString($_POST['ch_fai_cat_ID'], "int"));
 
   
-  $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($deleteSQL, $maconnexion);
 
 $deleteSQL = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_cat_id=%s",
                        GetSQLValueString($_POST['ch_fai_cat_ID'], "int"));
 
   
-  $Result2 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+  $Result2 = mysql_query($deleteSQL, $maconnexion);
 
   $deleteGoTo = DEF_URI_PATH . "back/institut_histoire.php";
   appendQueryString($deleteGoTo);

@@ -15,7 +15,7 @@ $juge = $_SESSION['login_user'];
 //requete pays
 
 $query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom FROM temperance INNER JOIN pays ON ch_temp_element_id = ch_pay_id WHERE ch_temp_id=%s", GetSQLValueString( $colname_temperance, "int"));
-$pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
+$pays = mysql_query($query_pays, $maconnexion);
 $row_pays = mysql_fetch_assoc($pays);
 $totalRows_pays = mysql_num_rows($pays);
 
@@ -47,7 +47,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
                        GetSQLValueString($_POST['ch_not_temp_q10_com'], "text"));
 
   
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   $insertGoTo = DEF_URI_PATH . "back/Temperance_jugement.php";
   appendQueryString($insertGoTo);
