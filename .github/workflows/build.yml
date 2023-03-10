@@ -80,6 +80,4 @@ jobs:
             **/.git*
             **/.git*/**
             **/node_modules/**
-            **/lib/**
-          # Désactive l'envoi de lib/ dû à des problèmes de permission côté serveur.
           log-level: standard

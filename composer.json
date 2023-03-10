@@ -98,7 +98,7 @@
             "Database\\Seeders\\": "database/seeders/",
             "GenCity\\": "legacy/php/GenCity/",
             "Roxayl\\MondeGC\\": "app/",
-            "Squirrel\\": "lib/Squirrel/"
+            "Squirrel\\": "libs/Squirrel/"
         }
     },
     "autoload-dev": {

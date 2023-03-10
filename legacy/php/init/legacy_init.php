@@ -55,16 +55,16 @@ if($mondegc_config['enable_csrf_protection'] === true) {
     if(! function_exists('csrf_startup')) {
         function csrf_startup(): void
         {
-            csrf_conf('rewrite-js', DEF_URI_PATH . 'lib/csrf-magic/csrf-magic.js');
+            csrf_conf('rewrite-js', DEF_URI_PATH . 'libs/csrf-magic/csrf-magic.js');
             csrf_conf('rewrite', true);
             csrf_conf('frame-breaker', false);
         }
     }
-    require_once(DEF_ROOTPATH . 'lib/csrf-magic/csrf-magic.php');
+    require_once(DEF_ROOTPATH . 'libs/csrf-magic/csrf-magic.php');
 }
 
 // Wrapper pour les fonctions MySQL obsolètes (mysql_*), pour PHP 7 ou supérieur.
-require_once(DEF_ROOTPATH . 'lib/mysql_wrapper/mysql_wrapper.php');
+require_once(DEF_ROOTPATH . 'libs/mysql_wrapper/mysql_wrapper.php');
 
 
 /*************************
