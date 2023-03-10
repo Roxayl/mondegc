@@ -98,7 +98,7 @@
             "Database\\Seeders\\": "database/seeders/",
             "GenCity\\": "legacy/php/GenCity/",
             "Roxayl\\MondeGC\\": "app/",
-            "Squirrel\\": "lib/Squirrel/"
+            "Squirrel\\": "libs/Squirrel/"
         }
     },
     "autoload-dev": {
@@ -114,6 +114,9 @@
         ],
         "post-update-cmd": [
             "@php artisan monde:override-vendor"
+        ],
+        "pre-autoload-dump": [
+            "@php -r \"unlink('bootstrap/cache/packages.php') && unlink('bootstrap/cache/services.php');\""
         ],
         "post-autoload-dump": [
             "@php artisan monde:override-vendor",

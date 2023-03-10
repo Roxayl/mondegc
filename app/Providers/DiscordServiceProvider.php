@@ -2,11 +2,12 @@
 
 namespace Roxayl\MondeGC\Providers;
 
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Roxayl\MondeGC\Services\DiscordWebhookService;
 
-class DiscordServiceProvider extends ServiceProvider
+class DiscordServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     /**
      * Bootstrap services.
@@ -35,5 +36,13 @@ class DiscordServiceProvider extends ServiceProvider
                 return new DiscordWebhookService($webhookUrl);
             }
         );
+    }
+
+    /**
+     * @return class-string[]
+     */
+    public function provides(): array
+    {
+        return [DiscordWebhookService::class];
     }
 }
