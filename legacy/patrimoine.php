@@ -100,17 +100,6 @@ $totalRows_info_cat = mysql_num_rows($info_cat);
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">

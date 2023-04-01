@@ -94,14 +94,6 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
   \GenCity\Monde\Logger\Log::createItem('pays', $thisPays->get('ch_pay_id'), 'insert',
       null, array('entity' => $thisPays->model->getInfo()));
 
-  // Ancien système de notification.
-  $userList = new \GenCity\Monde\User\UserList();
-  $notification = new \GenCity\Monde\Notification\Notification(array(
-      'type_notif' => 'nv_pays_bienvenue',
-      'element' => $thisPays->get('ch_pay_id')
-  ));
-  $notification->emit($userList->getActive());
-
   // Nouveau système de notification basé sur Laravel.
   $eloquentPays = Pays::find($this_pays_id);
 
@@ -129,17 +121,6 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
 <link href="../SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
