@@ -4,6 +4,7 @@ namespace Roxayl\MondeGC\Models\Managers;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Enums\Resource;
 use Roxayl\MondeGC\Models\Influence;
 use Roxayl\MondeGC\Models\Pays;
 use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
@@ -32,11 +33,10 @@ class PaysMapManager implements Influencable
      */
     public function mapResources(): array
     {
-        $resources = config('enums.resources');
         $result = [];
-        foreach($resources as $key => $resource) {
-            $field = "ch_pay_{$resource}_carte";
-            $result[$resource] = $this->pays->$field;
+        foreach(Resource::cases() as $resource) {
+            $field = "ch_pay_{$resource->value}_carte";
+            $result[$resource->value] = $this->pays->$field;
         }
         return $result;
     }

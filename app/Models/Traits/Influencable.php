@@ -5,6 +5,7 @@ namespace Roxayl\MondeGC\Models\Traits;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
+use Roxayl\MondeGC\Models\Enums\Resource;
 use Roxayl\MondeGC\Models\Influence;
 
 trait Influencable
@@ -32,11 +33,11 @@ trait Influencable
     private function filterInfluences($influences): Collection
     {
         $select = '';
-        $resources = config('enums.resources');
+        $resources = Resource::cases();
 
         $arrayKeys = array_keys($resources);
         foreach($resources as $key => $resource) {
-            $select .= "COALESCE(SUM($resource), 0) AS $resource";
+            $select .= "COALESCE(SUM($resource->value), 0) AS $resource->value";
             if (end($arrayKeys) !== $key) $select .= ', ';
         }
 

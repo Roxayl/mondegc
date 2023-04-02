@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Roxayl\MondeGC\Models\Contracts\Influencable;
 use Roxayl\MondeGC\Models\Contracts\Resourceable;
 use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Enums\Resource;
 use Roxayl\MondeGC\Models\Traits\DeletesInfluences;
 use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
 use Roxayl\MondeGC\Services\EconomyService;
@@ -121,8 +122,8 @@ class ChapterResourceable extends Model implements Influencable
     public function resources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
-        foreach(config('enums.resources') as $resource) {
-            $sumResources[$resource] += $this->$resource;
+        foreach(Resource::cases() as $resource) {
+            $sumResources[$resource->value] += $this->{$resource->value};
         }
 
         return $sumResources;

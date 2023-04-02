@@ -3,6 +3,7 @@
 namespace Roxayl\MondeGC\Services;
 
 use Illuminate\Database\Eloquent\Collection;
+use Roxayl\MondeGC\Models\Enums\Resource;
 use Roxayl\MondeGC\Models\Pays;
 use Roxayl\MondeGC\Models\Traits\Influencable;
 use Roxayl\MondeGC\Models\Traits\Resourceable;
@@ -16,8 +17,8 @@ class EconomyService
     {
         $return = [];
 
-        foreach(config('enums.resources') as $resource) {
-            $return[$resource] = 0;
+        foreach(Resource::cases() as $resource) {
+            $return[$resource->value] = 0;
         }
 
         return $return;
@@ -65,8 +66,8 @@ class EconomyService
 
         foreach($influencables as $chapterResource) {
             $generatedResources = $chapterResource->getGeneratedResources();
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] += $generatedResources[$resource];
+            foreach(Resource::cases() as $resource) {
+                $sumResources[$resource->value] += $generatedResources[$resource->value];
             }
         }
 
@@ -86,8 +87,8 @@ class EconomyService
 
         foreach($resourceables as $chapterResource) {
             $generatedResources = $chapterResource->resources();
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] += $generatedResources[$resource];
+            foreach(Resource::cases() as $resource) {
+                $sumResources[$resource->value] += $generatedResources[$resource->value];
             }
         }
 

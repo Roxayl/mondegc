@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Enums\Resource;
 use Roxayl\MondeGC\Models\Traits\DeletesInfluences;
 use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
 use Spatie\Searchable\Searchable;
@@ -170,12 +171,12 @@ class Patrimoine extends Model implements Influencable, Searchable
             return;
         }
 
-        $resources = config('enums.resources');
+        $resources = Resource::cases();
 
-        $resources = $categories->pipe(function($categories) use($resources) {
+        $influenceResources = $categories->pipe(function($categories) use($resources) {
             $return = [];
             foreach($resources as $resource) {
-                $return[$resource] = $categories->sum("ch_mon_cat_$resource");
+                $return[$resource->value] = $categories->sum("ch_mon_cat_$resource->value");
             }
             return $return;
         });
@@ -185,7 +186,7 @@ class Patrimoine extends Model implements Influencable, Searchable
         $influence->influencable_id = $this->ch_pat_id;
         $influence->generates_influence_at = $this->ch_pat_date;
 
-        $influence->fill($resources);
+        $influence->fill($influenceResources);
 
         $influence->save();
     }

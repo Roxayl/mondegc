@@ -1,5 +1,6 @@
 <?php
 
+use Roxayl\MondeGC\Models\Enums\Resource;
 use Roxayl\MondeGC\Services\EconomyService;
 use Illuminate\Support\Facades\Gate;
 
@@ -15,7 +16,7 @@ $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
 $selectedResource = 'budget';
-if(isset($_GET['cat']) && in_array($_GET['cat'], config('enums.resources'), true)) {
+if(isset($_GET['cat']) && in_array($_GET['cat'], array_column(Resource::cases(), 'value'), true)) {
     $selectedResource = $_GET['cat'];
 }
 

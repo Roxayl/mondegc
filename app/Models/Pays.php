@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 use Roxayl\MondeGC\Models\Contracts\Infrastructurable;
 use Roxayl\MondeGC\Models\Contracts\Resourceable;
 use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Enums\Resource;
 use Roxayl\MondeGC\Models\Managers\PaysMapManager;
 use Roxayl\MondeGC\Models\Presenters\InfrastructurablePresenter;
 use Roxayl\MondeGC\Models\Presenters\PaysPresenter;
@@ -469,9 +470,9 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
             $generatedResources = $organisation->infrastructureResources();
             $nbMembers = $organisation->members->count();
 
-            foreach(config('enums.resources') as $resource) {
-                $generatedResources[$resource] = (int)($generatedResources[$resource] / $nbMembers);
-                $sumResources[$resource] += $generatedResources[$resource];
+            foreach(Resource::cases() as $resource) {
+                $generatedResources[$resource->value] = (int)($generatedResources[$resource->value] / $nbMembers);
+                $sumResources[$resource->value] += $generatedResources[$resource->value];
             }
         }
 
@@ -504,17 +505,17 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         $organisationResources = !$withOrganisation ?
             EconomyService::resourcesPrefilled() : $this->organisationResources();
 
-        foreach(config('enums.resources') as $resource) {
-            $sumResources[$resource] += $villeResources[$resource]
-                + $mapResources[$resource]
-                + $infrastructureResources[$resource]
-                + $organisationResources[$resource]
-                + $roleplayResources[$resource];
+        foreach(Resource::cases() as $resource) {
+            $sumResources[$resource->value] += $villeResources[$resource->value]
+                + $mapResources[$resource->value]
+                + $infrastructureResources[$resource->value]
+                + $organisationResources[$resource->value]
+                + $roleplayResources[$resource->value];
 
             // Pour toutes les ressources positives, on peut être amené à diminuer la quantité
             // de ressources données si le pays est inactif.
-            if($sumResources[$resource] > 0) {
-                $sumResources[$resource] = (int)($sumResources[$resource] * $inactivityCoefficient);
+            if($sumResources[$resource->value] > 0) {
+                $sumResources[$resource->value] = (int)($sumResources[$resource->value] * $inactivityCoefficient);
             }
         }
 

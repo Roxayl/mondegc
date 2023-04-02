@@ -1,6 +1,7 @@
 <?php
 
 use Roxayl\MondeGC\Events\Pays\MapUpdated;
+use Roxayl\MondeGC\Models\Enums\Resource;
 use Roxayl\MondeGC\Models\Geometry;
 use Roxayl\MondeGC\Models\Pays as EloquentPays;
 
@@ -347,9 +348,9 @@ Eventy::action('display.beforeHeadClosingTag')
       <div class="span8">
           <?php
           $resources = [];
-          foreach(config('enums.resources') as $resource)
+          foreach(Resource::cases() as $resource)
           {
-              $resources[$resource] = $row_InfoGenerale["ch_pay_{$resource}_carte"];
+              $resources[$resource->value] = $row_InfoGenerale["ch_pay_{$resource->value}_carte"];
           }
           renderElement('temperance/resources_small', [
                   'resources' => $resources

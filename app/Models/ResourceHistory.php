@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Collection;
 use Roxayl\MondeGC\Models\Contracts\Resourceable;
 use Roxayl\MondeGC\Models\Contracts\SimpleResourceable;
+use Roxayl\MondeGC\Models\Enums\Resource;
 use Roxayl\MondeGC\Models\Traits;
 
 /**
@@ -96,8 +97,8 @@ class ResourceHistory extends Model implements SimpleResourceable
     {
         $data = [];
 
-        foreach(config('enums.resources') as $resource) {
-            $data[] = $this->$resource;
+        foreach(Resource::cases() as $resource) {
+            $data[] = $this->{$resource->value};
         }
 
         return $data;

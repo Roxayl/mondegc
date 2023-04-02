@@ -1,5 +1,7 @@
 <?php
 
+use Roxayl\MondeGC\Models\Enums\Resource;
+
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
@@ -52,7 +54,7 @@ $row_geometries = mysql_fetch_assoc($geometries);
 <?php } ?>
     <?php
     renderElement('temperance/resources', [
-        'resources' => compact(config('enums.resources'))
+        'resources' => compact(array_column(Resource::cases(), 'value'))
     ]); ?>
   </div>
   <?php } while ($row_geometries = mysql_fetch_assoc($geometries)); ?>
