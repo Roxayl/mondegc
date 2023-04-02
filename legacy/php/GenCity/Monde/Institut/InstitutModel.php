@@ -1,12 +1,12 @@
 <?php
 
 namespace GenCity\Monde\Institut;
+
 use Squirrel\ModelStructure;
 
+class InstitutModel extends ModelStructure
+{
+    static string $tableName = 'instituts';
 
-class InstitutModel extends ModelStructure {
-
-    static $tableName = 'instituts';
-    static $primary_key = 'ch_ins_ID';
-
+    static string $primary_key = 'ch_ins_ID';
 }

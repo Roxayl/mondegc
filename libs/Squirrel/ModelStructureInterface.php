@@ -2,13 +2,11 @@
 
 namespace Squirrel;
 
+interface ModelStructureInterface
+{
+    public function __construct(int|string|array|null $data = null);
 
-interface ModelStructureInterface {
+    public function __get(string $prop): mixed;
 
-    // public function __construct();
-
-    public function __get($prop);
-
-    public function __set($prop, $value);
-
+    public function __set(string $prop, mixed $value): void;
 }
