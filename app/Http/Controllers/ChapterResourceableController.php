@@ -35,9 +35,7 @@ class ChapterResourceableController extends Controller
      */
     public function manage(Chapter $chapter): View
     {
-        $resourceList = config('enums.resources');
-
-        return view('chapter-resourceable.manage', compact('resourceList', 'chapter'));
+        return view('chapter-resourceable.manage', compact('chapter'));
     }
 
     /**

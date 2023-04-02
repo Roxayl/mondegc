@@ -3,7 +3,6 @@
 use Roxayl\MondeGC\Events\Pays\MapUpdated;
 use Roxayl\MondeGC\Models\Geometry;
 use Roxayl\MondeGC\Models\Pays as EloquentPays;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 //Connexion et deconnexionw
 include("php/log.php");
@@ -38,7 +37,7 @@ $nonModifiableZones = ['terre', 'frontiere'];
 if( !auth()->user()->hasMinPermission('ocgc') &&
     !auth()->user()->ownsPays($eloquentPays) )
 {
-    throw new AccessDeniedHttpException();
+    abort(403);
 }
 
 // Init variables.
