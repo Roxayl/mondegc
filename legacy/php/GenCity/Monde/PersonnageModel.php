@@ -1,18 +1,19 @@
 <?php
 
 namespace GenCity\Monde;
+
 use Squirrel\ModelStructureInterface;
 
+class PersonnageModel implements ModelStructureInterface
+{
+    static string $tableName = 'personnage';
 
-class PersonnageModel implements ModelStructureInterface {
+    private array $info;
 
-    static $tableName = 'personnage';
-    private $info = array();
+    private static array $structure = [];
 
-    private static $structure = [];
-
-    public function __construct($data = null) {
-
+    public function __construct(int|string|array|null $data = null)
+    {
         if(is_numeric($data)) {
             $this->info = $this->populate($data);
         } elseif(is_null($data)) {
@@ -20,43 +21,36 @@ class PersonnageModel implements ModelStructureInterface {
         } else {
             $this->info = $data;
         }
-
     }
 
-    private function populate($id) {
-
+    private function populate(int|string $id): mixed
+    {
         $query = mysql_query(sprintf('SELECT * FROM '. self::$tableName . ' WHERE id = %s',
             GetSQLValueString($id, 'int')));
-        $result = mysql_fetch_assoc($query);
-        return $result;
-
+        return mysql_fetch_assoc($query);
     }
 
-    public function getStructure() {
-
-        if(! array_key_exists(self::$tableName, self::$structure)) {
-            $query = mysql_query('DESCRIBE ' . self::$tableName);
+    public function getStructure(): array
+    {
+        if(! array_key_exists(static::$tableName, self::$structure)) {
+            $query = mysql_query('DESCRIBE ' . static::$tableName);
             $finalTable = [];
             while($row = mysql_fetch_assoc($query)) {
                 $finalTable[$row['Field']] = $row['Default'];
             }
-            self::$structure[self::$tableName] = $finalTable;
+            self::$structure[static::$tableName] = $finalTable;
         }
 
-        return self::$structure[self::$tableName];
-
+        return self::$structure[static::$tableName];
     }
 
-    public function __get($prop) {
-
+    public function __get(string $prop): mixed
+    {
         return $this->info[$prop];
-
     }
 
-    public function __set($prop, $value) {
-
+    public function __set(string $prop, mixed $value): void
+    {
         $this->info[$prop] = $value;
-
     }
-
 }

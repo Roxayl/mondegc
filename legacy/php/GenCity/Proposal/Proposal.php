@@ -91,7 +91,7 @@ class Proposal extends BaseModel {
     /**
      * Met à jour la proposition dans la base de données.
      */
-    public function update() {
+    public function update(): void {
 
         $structure = $this->model->getStructure();
 

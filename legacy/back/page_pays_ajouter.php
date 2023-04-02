@@ -2,6 +2,7 @@
 
 use Roxayl\MondeGC\Models\CustomUser;
 use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Personnage;
 use Roxayl\MondeGC\Notifications\PaysRegistered;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
@@ -83,9 +84,18 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
                        GetSQLValueString($_POST['ch_pay_population_carte'], "int"),
 					   GetSQLValueString($_POST['ch_pay_emploi_carte'], "int"));
 
-
   $Result1 = mysql_query($insertSQL, $maconnexion);
   $this_pays_id = mysql_insert_id();
+
+  // Creation du personnage après création pays.
+  $personnage = new Personnage();
+  $personnage->entity = 'pays';
+  $personnage->entity_id = $this_pays_id;
+  $personnage->nom_personnage = 'Dupont';
+  $personnage->prenom_personnage = 'Pierre';
+  $personnage->titre_personnage = 'Président';
+  $personnage->predicat = 'Monsieur';
+  $personnage->save();
 
   getErrorMessage('success', "Nouveau pays ajouté !");
 
@@ -94,9 +104,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
   \GenCity\Monde\Logger\Log::createItem('pays', $thisPays->get('ch_pay_id'), 'insert',
       null, array('entity' => $thisPays->model->getInfo()));
 
-  // Nouveau système de notification basé sur Laravel.
+  // Envoi des notifications après création du pays aux utilisateurs actifs.
   $eloquentPays = Pays::find($this_pays_id);
-
   $date_inactive = Carbon::today()->subMonths(4);
   $activeUsers = CustomUser::where('ch_use_last_log', '>', $date_inactive)->get();
   Notification::send($activeUsers, new PaysRegistered($eloquentPays));

@@ -1,11 +1,12 @@
 <?php
 
 namespace GenCity\Monde\MapEditor;
+
 use Squirrel\ModelStructure;
 
+class TypeGeometriesGroupModel extends ModelStructure
+{
+    static string $tableName = 'type_geometries_group';
 
-class TypeGeometriesGroupModel extends  ModelStructure {
-
-    static $tableName = 'type_geometries_group';
-    static $primary_key = 'id';
+    static string $primary_key = 'id';
 }

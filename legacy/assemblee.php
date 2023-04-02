@@ -1,5 +1,7 @@
 <?php
-        
+
+use Roxayl\MondeGC\Models\Pays;
+
 //Connexion et deconnexion
 include('php/log.php');
 
@@ -8,7 +10,7 @@ if(isset($_SESSION['userObject'])) {
     $userPaysAllowedToVote = $thisUser->getCountries(\GenCity\Monde\User::getUserPermission('Dirigeant'));
 }
 
-$paysRFGC = new \GenCity\Monde\Pays(29);
+$paysRFGC = Pays::query()->find(29);
 
 $proposalList = new \GenCity\Proposal\ProposalList();
 
@@ -144,8 +146,12 @@ Eventy::action('display.beforeHeadClosingTag')
     <div class="row-fluid">
         <div class="span8">
             <p>L'Assemblée générale de l'Organisation des Cités gécéennes (OCGC) est un organe de délibération et de prise de décisions composé de tous les pays officiellement reconnus par la communauté internationale. Son siège se trouve au même endroit que celui de l'OCGC, à Lutèce, la capitale de la
-                <a href="page-pays.php?ch_pay_id=<?= $paysRFGC->get('ch_pay_id') ?>">
-                  <img class="img-menu-drapeau" src="<?= $paysRFGC->get('ch_pay_lien_imgdrapeau') ?>">&nbsp;RFGC</a>.
+            <?php if($paysRFGC): ?>
+                <a href="page-pays.php?ch_pay_id=<?= $paysRFGC->ch_pay_id ?>">
+                  <img class="img-menu-drapeau" src="<?= $paysRFGC->ch_pay_lien_imgdrapeau ?>">&nbsp;RFGC</a>.
+            <?php else: ?>
+                RFGC.
+            <?php endif; ?>
             </p>
             <p><i>Articles détaillés :</i> <a href="http://www.forum-gc.com/f18-partie-privee"><i class="icon-globe"></i> Forum</a> &#183; <a href="http://vasel.yt/wiki/index.php?title=Assembl%C3%A9e_G%C3%A9n%C3%A9rale_de_l%27OCGC"><i class="icon-globe"></i> Wiki</a></p>
         <br>

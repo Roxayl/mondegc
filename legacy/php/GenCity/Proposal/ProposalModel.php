@@ -4,14 +4,15 @@ namespace GenCity\Proposal;
 use Squirrel\ModelStructureInterface;
 
 
-class ProposalModel implements ModelStructureInterface {
+class ProposalModel implements ModelStructureInterface
+{
+    static string $tableName = 'ocgc_proposals';
 
-    static $tableName = 'ocgc_proposals';
-    private $info = array();
+    private array $info;
 
-    private static $structure = [];
+    private static array $structure = [];
 
-    public function __construct($data = null) {
+    public function __construct(int|string|array|null $data = null) {
 
         if(is_numeric($data)) {
             $this->info = $this->populate($data);
@@ -26,17 +27,15 @@ class ProposalModel implements ModelStructureInterface {
 
     }
 
-    private function populate($id) {
-
+    private function populate(int|string $id): mixed
+    {
         $query = mysql_query(sprintf('SELECT * FROM '. self::$tableName . ' WHERE id = %s',
             GetSQLValueString($id, 'int')));
-        $result = mysql_fetch_assoc($query);
-        return $result;
-
+        return mysql_fetch_assoc($query);
     }
 
-    public function getStructure() {
-
+    public function getStructure(): array
+    {
         if(! array_key_exists(self::$tableName, self::$structure)) {
             $query = mysql_query('DESCRIBE ' . self::$tableName);
             $finalTable = [];
@@ -47,19 +46,15 @@ class ProposalModel implements ModelStructureInterface {
         }
 
         return self::$structure[self::$tableName];
-
     }
 
-    public function __get($prop) {
-
+    public function __get(string $prop): mixed
+    {
         return $this->info[$prop];
-
     }
 
-    public function __set($prop, $value) {
-
+    public function __set(string $prop, mixed $value): void
+    {
         $this->info[$prop] = $value;
-
     }
-
 }

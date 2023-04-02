@@ -2,17 +2,18 @@
 
 namespace Squirrel;
 
+abstract class ModelStructure implements ModelStructureInterface
+{
+    static string $tableName;
 
-abstract class ModelStructure implements ModelStructureInterface {
+    static string $primary_key;
 
-    static $tableName = null;
-    static $primary_key = null;
-    public $info = array();
+    public array $info = [];
 
-    private static $structure = [];
+    private static array $structure = [];
 
-    final public function __construct($data) {
-
+    public function __construct(int|string|array|null $data = null)
+    {
         if(is_numeric($data)) {
             $this->info = $this->populate($data);
         } elseif(is_null($data)) {
@@ -20,51 +21,43 @@ abstract class ModelStructure implements ModelStructureInterface {
         } else {
             $this->info = $data;
         }
-
     }
 
-    protected function populate($id) {
-
-        $sql = sprintf('SELECT * FROM ' . $this::$tableName .
+    protected function populate(int|string $id): mixed
+    {
+        $sql = sprintf('SELECT * FROM ' . static::$tableName .
             ' WHERE ' . $this::$primary_key .' = %s',
             GetSQLValueString($id, 'int'));
         $query = mysql_query($sql);
-        $result = mysql_fetch_assoc($query);
-        return $result;
-
+        return mysql_fetch_assoc($query);
     }
 
-    public function getStructure() {
-
-        if(! array_key_exists(self::$tableName, self::$structure)) {
-            $query = mysql_query('DESCRIBE ' . self::$tableName);
+    public function getStructure(): mixed
+    {
+        if(! array_key_exists(static::$tableName, self::$structure)) {
+            $query = mysql_query('DESCRIBE ' . static::$tableName);
             $finalTable = [];
             while($row = mysql_fetch_assoc($query)) {
                 $finalTable[$row['Field']] = $row['Default'];
             }
-            self::$structure[self::$tableName] = $finalTable;
+            self::$structure[static::$tableName] = $finalTable;
         }
 
-        return self::$structure[self::$tableName];
-
+        return self::$structure[static::$tableName];
     }
 
-    public function getInfo() {
-
+    public function getInfo(): array
+    {
         return $this->info;
-
     }
 
-    public function __get($prop) {
-
+    public function __get($prop): mixed
+    {
         return $this->info[$prop];
-
     }
 
-    public function __set($prop, $value) {
-
+    public function __set(string $prop, mixed $value): void
+    {
         $this->info[$prop] = $value;
-
     }
-
 }
