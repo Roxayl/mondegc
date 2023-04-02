@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Roxayl\MondeGC\Models\Pays;
 use Roxayl\MondeGC\View\Components\ResourceHistory\GraphPerResource;
 use Illuminate\Support\Str;
@@ -99,7 +100,7 @@ use Illuminate\Support\Str;
     <div class="chart-container" style="width: 100%; height:588px;">
         <?php
         $resourceables = Pays::visible()->get();
-        echo (new GraphPerResource($resourceables, $data['selectedResource']))
+        echo (new GraphPerResource($resourceables, $data['selectedResource'], Carbon::now()->subYear()))
             ->setGraphId('eco-line-chart')
             ->render();
         ?>

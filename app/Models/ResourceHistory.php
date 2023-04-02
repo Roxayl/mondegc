@@ -29,7 +29,7 @@ use Roxayl\MondeGC\Models\Traits;
  * @property Carbon|null $updated_at
  * @property-read array<string> $resources
  * @property-read Model|\Eloquent $resourceable
- * @method static Builder|ResourceHistory chartSelect()
+ * @method static Builder|ResourceHistory chartSelect(?Carbon $startDate = null, ?Carbon $endDate = null)
  * @method static Builder|ResourceHistory forResourceable(Resourceable $resourceable)
  * @method static Builder|ResourceHistory forResourceables(Collection $resourceables)
  * @method static Builder|ResourceHistory newModelQuery()
@@ -133,14 +133,25 @@ class ResourceHistory extends Model implements SimpleResourceable
 
     /**
      * @param Builder $query
+     * @param Carbon|null $startDate
+     * @param Carbon|null $endDate
      * @return Builder
      */
-    public function scopeChartSelect(Builder $query): Builder
+    public function scopeChartSelect(Builder $query, ?Carbon $startDate = null, ?Carbon $endDate = null): Builder
     {
-        return $query
+        $query
             ->select()
             ->selectRaw('UNIX_TIMESTAMP(DATE(created_at)) AS created_timestamp')
             ->selectRaw('DATE(created_at) AS created_date')
             ->orderBy('created_at');
+
+        if($startDate) {
+            $query->where('created_at', '>=', $startDate);
+        }
+        if($endDate) {
+            $query->where('created_at', '<=', $endDate);
+        }
+
+        return $query;
     }
 }
