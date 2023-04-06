@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Models\Enums\Resource;
 
 /**
  * Class InfrastructureOfficielle
@@ -114,10 +115,10 @@ class InfrastructureOfficielle extends Model
     public function mapResources(): array
     {
         $resources = [];
-        foreach(config('enums.resources') as $resource) {
-            $field = 'ch_inf_off_' . ($resource === 'budget'
-                    ? $resource : Str::ucfirst($resource));
-            $resources[$resource] = (int)$this->$field;
+        foreach(Resource::cases() as $resource) {
+            $field = 'ch_inf_off_' . ($resource === Resource::BUDGET
+                    ? $resource->value : Str::ucfirst($resource->value));
+            $resources[$resource->value] = (int)$this->$field;
         }
         return $resources;
     }

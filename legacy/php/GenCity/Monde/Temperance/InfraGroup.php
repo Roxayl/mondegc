@@ -43,7 +43,7 @@ class InfraGroup extends BaseModel {
 
     }
 
-    public function update() {
+    public function update(): void {
 
         $structure = $this->model->getStructure();
 

@@ -1,11 +1,12 @@
 <?php
 
 use Roxayl\MondeGC\Events\Pays\MapUpdated;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Models\Enums\Resource;
 use Roxayl\MondeGC\Models\Geometry;
 use Roxayl\MondeGC\Models\Pays as EloquentPays;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-//Connexion et deconnexionw
+//Connexion et deconnexion
 include("php/log.php");
 
 if(!isset($_SESSION['userObject'])) {
@@ -31,14 +32,14 @@ $InfoGenerale = mysql_query($query_InfoGenerale, $maconnexion);
 $row_InfoGenerale = mysql_fetch_assoc($InfoGenerale);
 $totalRows_InfoGenerale = mysql_num_rows($InfoGenerale);
 
-$user_has_perm = $_SESSION['userObject']->minStatus('OCGC');
+// Gérer les droits de modif des zones "spéciales".
+$user_has_admin_perm = $_SESSION['userObject']->minStatus('OCGC');
 $nonModifiableZones = ['terre', 'frontiere'];
 
-// Vérifier permissions
-if( !auth()->user()->hasMinPermission('ocgc') &&
-    !auth()->user()->ownsPays($eloquentPays) )
-{
-    throw new AccessDeniedHttpException();
+// Vérifier les permissions.
+$authUser = CustomUser::find($_SESSION['userObject']->get('ch_use_id'));
+if(! $authUser || (! $user_has_admin_perm && ! $authUser->ownsPays($eloquentPays))) {
+    abort(403);
 }
 
 // Init variables.
@@ -50,7 +51,7 @@ $surface = $tot_budget = $tot_industrie = $tot_commerce = $tot_agriculture = $to
 if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
 
     $isSpecialZone = in_array($_POST['ch_geo_type'], $nonModifiableZones);
-    if(!$user_has_perm && $isSpecialZone) {
+    if(!$user_has_admin_perm && $isSpecialZone) {
         getErrorMessage('error', "Vous ne pouvez pas créer de zone de type "
             . __s($_POST['ch_geo_type']) . ".");
     }
@@ -124,7 +125,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
     // Obtenir l'ancienne version de l'élément.
     $eloquentGeometry = Geometry::query()->findOrFail($_POST['ch_geo_id']);
     $isSpecialZone = in_array($eloquentGeometry->ch_geo_type, $nonModifiableZones);
-    if(!$user_has_perm && $isSpecialZone) {
+    if(!$user_has_admin_perm && $isSpecialZone) {
         getErrorMessage('error', "Vous ne pouvez pas modifier de zone de type "
             . __s($eloquentGeometry->ch_geo_type) . ". Vous ne disposez pas des permissions "
             . "nécessaires.");
@@ -348,9 +349,9 @@ Eventy::action('display.beforeHeadClosingTag')
       <div class="span8">
           <?php
           $resources = [];
-          foreach(config('enums.resources') as $resource)
+          foreach(Resource::cases() as $resource)
           {
-              $resources[$resource] = $row_InfoGenerale["ch_pay_{$resource}_carte"];
+              $resources[$resource->value] = $row_InfoGenerale["ch_pay_{$resource->value}_carte"];
           }
           renderElement('temperance/resources_small', [
                   'resources' => $resources

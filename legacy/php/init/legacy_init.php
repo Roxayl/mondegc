@@ -12,8 +12,8 @@ $mondegc_config = [];
 // Environnement.
 $mondegc_config['env'] = strtolower(app()->environment());
 
-// Définir la configuration depuis Laravel.
-$mondegc_config['version'] = config('legacy.version');
+// Définir la configuration legacy depuis Laravel.
+$mondegc_config['version'] = config('app.version');
 $mondegc_config['hide_errors'] = config('legacy.hide_errors');
 $mondegc_config['enable_csrf_protection'] = config('legacy.enable_csrf_protection');
 $mondegc_config['path'] = ! empty(config('app.directory_path'))

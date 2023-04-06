@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 use Roxayl\MondeGC\Models\Contracts\Infrastructurable;
 use Roxayl\MondeGC\Models\Contracts\Resourceable;
 use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Enums\Resource;
 use Roxayl\MondeGC\Models\Presenters\InfrastructurablePresenter;
 use Roxayl\MondeGC\Models\Presenters\VillePresenter;
 use Roxayl\MondeGC\Models\Traits\Infrastructurable as HasInfrastructures;
@@ -246,10 +247,10 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
         $patrimoineResources = $this->patrimoineResources();
         $roleplayResources = $this->roleplayResources();
 
-        foreach(config('enums.resources') as $resource) {
-            $sumResources[$resource] += $infrastructureResources[$resource]
-                + $patrimoineResources[$resource]
-                + $roleplayResources[$resource];
+        foreach(Resource::cases() as $resource) {
+            $sumResources[$resource->value] += $infrastructureResources[$resource->value]
+                + $patrimoineResources[$resource->value]
+                + $roleplayResources[$resource->value];
         }
 
         return $sumResources;

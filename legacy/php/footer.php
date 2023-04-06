@@ -21,8 +21,11 @@
                 <img src="<?= urlFromLegacy(url('assets/img/2019/logoGC-small.png')) ?>" alt="Logo GC">
             </a>
             <div class="copyright">
-                <p>Copyright &copy; G&eacute;n&eacute;ration-City - <?= date('Y') ?></p>
-                <p>Tous droits r&eacute;serv&eacute;s - Version 2</p>
+                <p>Copyright &copy; G&eacute;n&eacute;ration-City - 2013-<?= date('Y') ?></p>
+                <p>
+                    Tous droits r&eacute;serv&eacute;s -
+                    Version <?= config('app.version') ?> (build <?= config('app.build') ?>)
+                </p>
             </div>
         </div>
     </div>

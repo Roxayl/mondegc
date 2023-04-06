@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use Roxayl\MondeGC\Models\Contracts\Infrastructurable;
 use Roxayl\MondeGC\Models\Contracts\Resourceable;
 use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Enums\Resource;
 use Roxayl\MondeGC\Models\Presenters\InfrastructurablePresenter;
 use Roxayl\MondeGC\Models\Presenters\OrganisationPresenter;
 use Roxayl\MondeGC\Models\Traits\Infrastructurable as HasInfrastructures;
@@ -327,9 +328,9 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
         $infrastructureResources = $this->infrastructureResources();
         $roleplayResources = $this->roleplayResources();
 
-        foreach(config('enums.resources') as $resource) {
-            $sumResources[$resource] += $infrastructureResources[$resource]
-                + $roleplayResources[$resource];
+        foreach(Resource::cases() as $resource) {
+            $sumResources[$resource->value] += $infrastructureResources[$resource->value]
+                + $roleplayResources[$resource->value];
         }
 
         return $sumResources;
@@ -349,8 +350,8 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
 
             foreach($paysMembers as $members) {
                 $thisPaysResources = $members->pays->resources(false);
-                foreach(config('enums.resources') as $resource) {
-                    $sumResources[$resource] += $thisPaysResources[$resource];
+                foreach(Resource::cases() as $resource) {
+                    $sumResources[$resource->value] += $thisPaysResources[$resource->value];
                 }
             }
         }
@@ -372,9 +373,9 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
             $organisationResources = $this->organisationResources();
             $paysResources = $this->paysResources();
 
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] += $organisationResources[$resource]
-                    + $paysResources[$resource];
+            foreach(Resource::cases() as $resource) {
+                $sumResources[$resource->value] += $organisationResources[$resource->value]
+                    + $paysResources[$resource->value];
             }
         }
 
