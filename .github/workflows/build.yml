@@ -108,7 +108,7 @@ jobs:
             cd "${{ vars.PROD_FTP_DIR }}"
             composer install --no-dev --classmap-authoritative
             BUILD_NUMBER=${{ github.run_number }}
-            find ./env -type f -exec sed -i '' -e "/^APP_BUILD=/s/=.*/=\'$BUILD_NUMBER\'/" {} \;
+            find ./.env -type f -exec sed -i '' -e "/^APP_BUILD=/s/=.*/=\'$BUILD_NUMBER\'/" {} \;
             php artisan optimize:clear
-            php artisan migrate
+            php artisan migrate --force
             php artisan up
