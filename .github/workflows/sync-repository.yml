@@ -10,11 +10,13 @@ jobs:
 
     steps:
 
-      - uses: actions/checkout@v2
+      - name: Checkout full repository
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
-      - uses: pixta-dev/repository-mirroring-action@v1
+      - name: Mirror repository
+        uses: pixta-dev/repository-mirroring-action@v1
         with:
           target_repo_url:
             git@bitbucket.org:Roxayl/mondegc.git
