@@ -9,6 +9,7 @@
 .env
 .env.testing
 .phpunit.result.cache
+.secrets.baseline
 Homestead.json
 Homestead.yaml
 composer.phar

@@ -24,30 +24,39 @@ jobs:
 
     steps:
 
-      - uses: shivammathur/setup-php@v2
+      - name: Checkout full repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Detect secrets
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_NOTIFY_USER_LIST: '@Roxayl'
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
           extensions: opcache, mbstring, gd, iconv, pdo, pdo_mysql
 
-      - uses: actions/checkout@v2
-
-      - name: Install dependencies
+      - name: Install PHP dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Initialize environment
-        run: |
-          chmod -R 777 storage bootstrap/cache
-          php artisan monde:init-env && php artisan monde:init-testing
-
-      - name: Run migrations
+      - name: Initialize environment and database
         env:
           DB_HOST: 127.0.0.1
           DB_PASSWORD: root
           DB_DATABASE: mondegc_testing
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
-        run: php artisan migrate -v
+        run: |
+          chmod -R 777 storage bootstrap/cache
+          php artisan monde:init-env
+          php artisan monde:init-testing
+          php artisan migrate -v
 
-      - name: Execute tests (Unit and Feature tests) via PHPUnit
+      - name: Execute unit and feature tests via PHPUnit
         env:
           DB_HOST: 127.0.0.1
           DB_PASSWORD: root
@@ -63,14 +72,10 @@ jobs:
 
     steps:
 
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-          extensions: opcache, mbstring, gd, iconv, pdo, pdo_mysql
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - uses: actions/checkout@v2
-
-      - name: Prepare Deployment
+      - name: Prepare deployment
         uses: appleboy/ssh-action@v0.1.9
         with:
           host: ${{ secrets.PROD_SSH_HOST }}
@@ -97,7 +102,7 @@ jobs:
             **/node_modules/**
           log-level: standard
 
-      - name: Cleanup Deployment
+      - name: Cleanup deployment
         uses: appleboy/ssh-action@v0.1.9
         with:
           host: ${{ secrets.PROD_SSH_HOST }}
@@ -106,7 +111,7 @@ jobs:
           password: ${{ secrets.PROD_SSH_PASSWORD }}
           script: |
             cd "${{ vars.PROD_FULL_DIR }}"
-            composer install --no-dev --classmap-authoritative
+            composer install --no-dev --classmap-authoritative --no-ansi --no-interaction --no-progress
             BUILD_NUMBER=${{ github.run_number }}
             find ./.env -type f -exec sed -i '' -e "/^APP_BUILD=/s/=.*/=\'$BUILD_NUMBER\'/" {} \;
             php artisan optimize:clear
