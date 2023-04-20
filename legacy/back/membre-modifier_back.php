@@ -4,11 +4,12 @@
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if(!isset($_SESSION['userObject'])) {
-// Redirection vers page de connexion
+    // Redirection vers page de connexion
     header("Status: 301 Moved Permanently", false, 301);
     header('Location: ' . legacyPage('connexion'));
     exit();
 }
+
 $_SESSION['last_work'] = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php' . '?' . $_SERVER['QUERY_STRING'];
 
 //Recuperation variables

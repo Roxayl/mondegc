@@ -2,13 +2,14 @@
  
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
+
 if(!isset($_SESSION['userObject'])) {
     header("Status: 301 Moved Permanently", false, 301);
     header('Location: ' . legacyPage('connexion'));
     exit();
 }
 
-//R�cup�ration variables
+//Récupération variables
 $colname_pays = isset($_SESSION['paysID']) ? $_SESSION['paysID'] : 0;
 if (isset($_POST['paysID'])) {
   $colname_pays = (int)$_POST['paysID'];

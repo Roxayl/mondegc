@@ -3,7 +3,6 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-
 if(!isset($_SESSION['userObject'])) {
     header("Status: 301 Moved Permanently", false, 301);
     header('Location: ' . legacyPage('connexion'));

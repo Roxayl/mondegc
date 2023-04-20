@@ -3,14 +3,12 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-categorie")) {
   $insertSQL = sprintf("INSERT INTO faithist_categories (ch_fai_cat_label, ch_fai_cat_statut, ch_fai_cat_date, ch_fai_cat_mis_jour, ch_fai_cat_nb_update, ch_fai_cat_nom, ch_fai_cat_desc, ch_fai_cat_icon, ch_fai_cat_couleur) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",

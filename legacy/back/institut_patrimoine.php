@@ -3,14 +3,12 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	   }
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-categorie")) {
 $insertSQL = sprintf("INSERT INTO monument_categories (ch_mon_cat_label, ch_mon_cat_statut, ch_mon_cat_date, ch_mon_cat_mis_jour, ch_mon_cat_nb_update, ch_mon_cat_nom, ch_mon_cat_desc, ch_mon_cat_icon, ch_mon_cat_couleur) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
@@ -22,7 +20,7 @@ $insertSQL = sprintf("INSERT INTO monument_categories (ch_mon_cat_label, ch_mon_
                        escape_sql($_POST['ch_mon_cat_nom'], "text"),
                        escape_sql($_POST['ch_mon_cat_desc'], "text"),
                        escape_sql($_POST['ch_mon_cat_icon'], "text"),
-					             escape_sql($_POST['ch_mon_cat_couleur'], "text"),
+					   escape_sql($_POST['ch_mon_cat_couleur'], "text"),
                        escape_sql($_POST['ch_mon_cat_quete'], "text"));
 					   
 

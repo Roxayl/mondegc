@@ -6,13 +6,11 @@ use GenCity\Monde\Pays;
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'])
-{
-} else {
-// Redirection vers page de connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
+if (!$_SESSION['statut']) {
+    // Redirection vers page de connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
 }
 
 //Mise a jour parametres donnees personnelles
