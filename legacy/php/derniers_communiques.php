@@ -18,7 +18,7 @@ $LastCommuniquePays = mysql_query($query_limit_LastCommuniquePays, $maconnexion)
 $row_LastCommuniquePays = mysql_fetch_assoc($LastCommuniquePays);
 
 if (isset($_GET['totalRows_LastCommuniquePays'])) {
-  $totalRows_LastCommuniquePays = $_GET['totalRows_LastCommuniquePays'];
+  $totalRows_LastCommuniquePays = (int) $_GET['totalRows_LastCommuniquePays'];
 } else {
   $all_LastCommuniquePays = mysql_query($query_LastCommuniquePays);
   $totalRows_LastCommuniquePays = mysql_num_rows($all_LastCommuniquePays);
@@ -30,7 +30,7 @@ $totalPages_LastCommuniquePays = ceil($totalRows_LastCommuniquePays/$maxRows_Las
 $maxRows_LastCommuniqueVilles = 3;
 $pageNum_LastCommuniqueVilles = 0;
 if (isset($_GET['pageNum_LastCommuniqueVilles'])) {
-  $pageNum_LastCommuniqueVilles = $_GET['pageNum_LastCommuniqueVilles'];
+  $pageNum_LastCommuniqueVilles = (int) $_GET['pageNum_LastCommuniqueVilles'];
 }
 $startRow_LastCommuniqueVilles = $pageNum_LastCommuniqueVilles * $maxRows_LastCommuniqueVilles;
 
@@ -41,7 +41,7 @@ $LastCommuniqueVilles = mysql_query($query_limit_LastCommuniqueVilles, $maconnex
 $row_LastCommuniqueVilles = mysql_fetch_assoc($LastCommuniqueVilles);
 
 if (isset($_GET['totalRows_LastCommuniqueVilles'])) {
-  $totalRows_LastCommuniqueVilles = $_GET['totalRows_LastCommuniqueVilles'];
+  $totalRows_LastCommuniqueVilles = (int) $_GET['totalRows_LastCommuniqueVilles'];
 } else {
   $all_LastCommuniqueVilles = mysql_query($query_LastCommuniqueVilles);
   $totalRows_LastCommuniqueVilles = mysql_num_rows($all_LastCommuniqueVilles);
@@ -208,4 +208,3 @@ mysql_free_result($LastCommuniquePays);
 mysql_free_result($LastCommuniqueVilles);
 
 mysql_free_result($LastCommuniqueReaction);
-?>

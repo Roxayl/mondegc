@@ -317,7 +317,7 @@ $('#closemodal').click(function() {
     <a href="#ajouter-cat" role="button" class="btn btn-primary" title="Ajouter une cat&eacute;gorie" data-toggle="modal">Ajouter une cat&eacute;gorie</a> 
     <!-- Modal -->
     <div id="ajouter-cat" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-width="760">
-      <form action="<?php echo $editFormAction; ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
+      <form action="<?= e($editFormAction) ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h3 id="myModalLabel">Ajouter une nouvelle cat&eacute;gorie historique</h3>

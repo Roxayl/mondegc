@@ -149,7 +149,7 @@ while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)
 
 <!-- Modal Header-->
 
-<form action="<?php echo $editFormAction; ?>" name="ajout-mon_categorie" method="POST" class="form-horizontal" id="ajout-mon_categorie">
+<form action="<?= e($editFormAction) ?>" name="ajout-mon_categorie" method="POST" class="form-horizontal" id="ajout-mon_categorie">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Validez de nouveaux objectifs pour <strong><?= e($this_mon_cat['ch_pat_nom']) ?></strong></h3>

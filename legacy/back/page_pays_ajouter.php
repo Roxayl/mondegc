@@ -168,7 +168,7 @@ Eventy::action('display.beforeHeadClosingTag')
     <div id="info-generales" class="titre-bleu anchor">
       <h1>Cr&eacute;er un nouveau pays</h1>
     </div>
-    <form action="<?php echo $editFormAction; ?>" name="InfoHeader" method="POST" class="form-horizontal" id="InfoHeader">
+    <form action="<?= e($editFormAction) ?>" name="InfoHeader" method="POST" class="form-horizontal" id="InfoHeader">
       <!-- Boutons cachés -->
       <?php 
 				  $now= date("Y-m-d G:i:s");

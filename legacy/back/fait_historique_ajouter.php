@@ -139,7 +139,7 @@ Eventy::action('display.beforeHeadClosingTag')
 
       <div class="clearfix"></div>
       <!-- Debut formulaire -->
-      <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_fait_hist" Id="ajout_fait_his">
+      <form action="<?= e($editFormAction) ?>" method="POST" class="form-horizontal well" name="ajout_fait_hist" Id="ajout_fait_his">
         <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           Ce formulaire contient les informations qui seront affich&eacute;es sur la page consacr&eacute;e &agrave; un fait historique. Les faits historiques construisent l'histoire de votre pays. Veillez a ce qu'elle soit coh&eacute;rente avec les pays qui vous entourent. La gestion de l'histoire du Monde GC est confi&eacute;e au <a href="../histoire.php" title="lien vers la page consacr&eacute;e au Comité">Comité d'Histoire</a>.</div>

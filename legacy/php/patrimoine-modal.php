@@ -68,37 +68,37 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
     <section id="Carousel-monument" class="carousel slide">
       <div class="carousel-inner">
         <?php if ($row_monument['ch_pat_lien_img1']) { ?>
-        <div class="item active" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img1']; ?>)">
+        <div class="item active" style="background-image: url(<?= e($row_monument['ch_pat_lien_img1']) ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_monument['ch_pat_legende_img1']; ?></p>
+            <p><?= e($row_monument['ch_pat_legende_img1']) ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_monument['ch_pat_lien_img2']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img2']; ?>)">
+        <div class="item" style="background-image: url(<?= e($row_monument['ch_pat_lien_img2']) ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_monument['ch_pat_legende_img2']; ?></p>
+            <p><?= e($row_monument['ch_pat_legende_img2']) ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_monument['ch_pat_lien_img3']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img3']; ?>)">
+        <div class="item" style="background-image: url(<?= e($row_monument['ch_pat_lien_img3']) ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_monument['ch_pat_legende_img3']; ?></p>
+            <p><?= e($row_monument['ch_pat_legende_img3']) ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_monument['ch_pat_lien_img4']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img4']; ?>)">
+        <div class="item" style="background-image: url(<?= e($row_monument['ch_pat_lien_img4']) ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_monument['ch_pat_legende_img4']; ?></p>
+            <p><?= e($row_monument['ch_pat_legende_img4']) ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_monument['ch_pat_lien_img5']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img5']; ?>)">
+        <div class="item" style="background-image: url(<?= e($row_monument['ch_pat_lien_img5']) ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_monument['ch_pat_legende_img5']; ?></p>
+            <p><?= e($row_monument['ch_pat_legende_img5']) ?></p>
           </div>
         </div>
         <?php } ?>
@@ -122,9 +122,9 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
         <ul class="listes">
           <?php do { ?>
             <li class="row-fluid icone-categorie">
-              <div class="span1"><img src="<?php echo $row_liste_mon_cat3['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" style="background-color:<?php echo $row_liste_mon_cat3['ch_mon_cat_couleur']; ?>;"></div>
+              <div class="span1"><img src="<?= e($row_liste_mon_cat3['ch_mon_cat_icon']) ?>" alt="icone <?= e($row_liste_mon_cat3['ch_mon_cat_nom']) ?>" style="background-color:<?= e($row_liste_mon_cat3['ch_mon_cat_couleur']) ?>;"></div>
               <div class="span8">
-                <p><strong><a href="patrimoine.php?mon_catID=<?php echo $row_liste_mon_cat3['ch_mon_cat_ID']; ?>#monument"><?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?></a></strong></p>
+                <p><strong><a href="patrimoine.php?mon_catID=<?= e($row_liste_mon_cat3['ch_mon_cat_ID']) ?>#monument"><?= e($row_liste_mon_cat3['ch_mon_cat_nom']) ?></a></strong></p>
               </div>
             </li>
             <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); ?>

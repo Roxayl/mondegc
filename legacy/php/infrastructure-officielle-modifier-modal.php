@@ -90,7 +90,7 @@ if(!empty($row_infra_officielles_group)) {
 
 <!-- Modal Header-->
 
-<form action="<?php echo $editFormAction; ?>" name="ajout-inf_off" method="POST" class="form-horizontal" id="ajout-inf_off">
+<form action="<?= e($editFormAction) ?>" name="ajout-inf_off" method="POST" class="form-horizontal" id="ajout-inf_off">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Modifier une infrastructure officielle</h3>

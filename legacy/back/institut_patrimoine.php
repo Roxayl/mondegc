@@ -318,7 +318,7 @@ $('#closemodal').click(function() {
     <a href="#ajouter-cat" role="button" class="btn btn-primary" title="Ajouter une cat&eacute;gorie" data-toggle="modal">Ajouter une cat&eacute;gorie</a> 
     <!-- Modal -->
     <div id="ajouter-cat" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-width="760">
-      <form action="<?php echo $editFormAction; ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
+      <form action="<?= e($editFormAction) ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h3 id="myModalLabel">Ajouter une nouvelle cat&eacute;gorie de monuments</h3>
@@ -495,7 +495,7 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
         <?php if ($row_liste_mon_cat3) {?>
         <?php do { ?>
           <!-- Icone et popover de la categorie -->
-          <div class="span2 icone-categorie"><a href="#" rel="clickover" title="<?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" data-placement="left" data-content="<?php echo $row_liste_mon_cat3['ch_mon_cat_desc']; ?>"><img src="<?php echo $row_liste_mon_cat3['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>"></a></div>
+          <div class="span2 icone-categorie"><a href="#" rel="clickover" title="<?= e($row_liste_mon_cat3['ch_mon_cat_nom']) ?>" data-placement="left" data-content="<?= e($row_liste_mon_cat3['ch_mon_cat_desc']) ?>"><img src="<?= e($row_liste_mon_cat3['ch_mon_cat_icon']) ?>" alt="icone <?= e($row_liste_mon_cat3['ch_mon_cat_nom']) ?>"></a></div>
           <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); ?>
         <?php } ?>
       </div>

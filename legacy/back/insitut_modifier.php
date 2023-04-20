@@ -137,7 +137,7 @@ Eventy::action('display.beforeHeadClosingTag')
   <section>
     <div id="categories">
      <section>
-  <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="modifier_institut" Id="modifier_institut">
+  <form action="<?= e($editFormAction) ?>" method="POST" class="form-horizontal well" name="modifier_institut" Id="modifier_institut">
     <div class="alert alert-tips">
       <button type="button" class="close" data-dismiss="alert">×</button>
       Ce formulaire contient les informations qui seront affich&eacute;es sur la page consacr&eacute;e au Comité et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Mettez-le &agrave; jour.</div>

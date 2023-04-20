@@ -103,7 +103,7 @@ $totalRows_villes = mysql_num_rows($villes);
 
 <!-- Modal Header-->
 
-<form action="<?php echo $editFormAction; ?>" name="ajout-temperance" method="POST" class="form-horizontal" id="ajout-temperance">
+<form action="<?= e($editFormAction) ?>" name="ajout-temperance" method="POST" class="form-horizontal" id="ajout-temperance">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3 id="myModalLabel">Temp&eacute;rer une ville</h3>

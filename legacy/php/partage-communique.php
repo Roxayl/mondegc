@@ -200,7 +200,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut
   <!-- Si le lien du sujet sur le forum n'est pas trouv&eacute;-->
   <?php if ( $cat == "pays") { ?>
   <?php if (($row_pays['ch_pay_lien_forum']== NULL) OR ($row_pays['ch_pay_lien_forum']== "")){?>
-  <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_lien" Id="ajout_lien">
+  <form action="<?= e($editFormAction) ?>" method="POST" class="form-horizontal well" name="ajout_lien" Id="ajout_lien">
     <input type="hidden" name="ch_pay_id" id="ch_pay_id" value="<?= e($row_communique['ch_com_element_id']) ?>">
     <h4>Vous n'avez pas encore indiqu&eacute; le lien du sujet consacr&eacute; à votre pays sur le Forum de G&eacute;n&eacute;ration City </h4>
     <!-- Lien Forum -->
@@ -225,7 +225,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut
   <?php } ?>
   <?php } elseif ( $cat == "institut") { ?>
   <?php if (($row_institut['ch_ins_lien_forum']== NULL) OR ($row_institut['ch_ins_lien_forum']== "")){?>
-  <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_lien_institut" Id="ajout_lien_institut">
+  <form action="<?= e($editFormAction) ?>" method="POST" class="form-horizontal well" name="ajout_lien_institut" Id="ajout_lien_institut">
     <input type="hidden" name="ch_ins_ID" id="ch_ins_ID" value="<?= e($row_institut['ch_ins_ID']) ?>">
     <h4>Vous n'avez pas encore indiqu&eacute; le lien du sujet consacr&eacute; à cet institut sur le Forum de G&eacute;n&eacute;ration City </h4>
     <!-- Lien Forum -->

@@ -58,7 +58,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
 
 <!-- Modal Header-->
 
-<form action="<?php echo $editFormAction; ?>" name="notation" method="POST" class="form-horizontal" id="notation">
+<form action="<?= e($editFormAction) ?>" name="notation" method="POST" class="form-horizontal" id="notation">
   <!-- Boutons cach�s -->
   <?php $now= date("Y-m-d G:i:s");?>
   <input name="ch_not_temp_label" type="hidden" value="notation">

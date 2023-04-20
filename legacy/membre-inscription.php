@@ -140,7 +140,7 @@ Eventy::action('display.beforeHeadClosingTag')
         <button type="button" class="close" data-dismiss="alert">�</button>
         <p>Bienvenue dans le Monde GC <?= e($row_user_prov['ch_use_prov_login']) ?>. Compl&eacute;tez votre profil afin de finaliser votre inscription.</p>
       </div>
-      <form action="<?php echo $editFormAction; ?>" name="InfoUser" method="POST" class="form-horizontal" id="InfoHeader">
+      <form action="<?= e($editFormAction) ?>" name="InfoUser" method="POST" class="form-horizontal" id="InfoHeader">
         <!-- Boutons cach�s -->
         <?php 
 		$now= date("Y-m-d G:i:s");?>

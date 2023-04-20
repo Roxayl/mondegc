@@ -81,7 +81,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 ?>
 
 <!-- Modal Header-->
-<form action="<?php echo $editFormAction; ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
+<form action="<?= e($editFormAction) ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 <h3 id="myModalLabel">Modifier la cat&eacute;gorie <?= e($row_liste_mon_cat['ch_mon_cat_nom']) ?></h3>

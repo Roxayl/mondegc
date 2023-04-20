@@ -469,7 +469,7 @@ Eventy::action('display.beforeHeadClosingTag')
                   pays et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Compl&eacute;tez-le au fur et &agrave; mesure que
                   votre pays grandit. </p>
           </div>
-        <form action="<?php echo $editFormAction; ?>" name="InfoHeader" method="POST" class="form-horizontal" id="InfoHeader">
+        <form action="<?= e($editFormAction) ?>" name="InfoHeader" method="POST" class="form-horizontal" id="InfoHeader">
           <div class="accordion" id="accordion2"> 
             <!-- Boutons cachés -->
             <?php 

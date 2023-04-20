@@ -111,7 +111,7 @@ Eventy::action('display.beforeHeadClosingTag')
         <button type="button" class="close" data-dismiss="alert">�</button>
         <p>Cher <?= e($row_user_prov['ch_use_prov_login']) ?>, entrez un nouveau mot de passe afin d'acc&eacute;der &agrave; votre compte.</p>
       </div>
-      <form action="<?php echo $editFormAction; ?>" name="InfoUser" method="POST" class="form-horizontal" id="InfoHeader">
+      <form action="<?= e($editFormAction) ?>" name="InfoUser" method="POST" class="form-horizontal" id="InfoHeader">
         <input name="ch_use_id" type="hidden" value="<?= e($row_UserID['ch_use_id']) ?>">
         <!-- Informations G�n�rales
         ================================================== -->

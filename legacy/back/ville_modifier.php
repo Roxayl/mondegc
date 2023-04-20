@@ -375,7 +375,7 @@ Eventy::action('display.beforeHeadClosingTag')
       <div id="page_ville" class="titre-vert anchor">
         <h1>Page de <?= e($row_ville['ch_vil_nom']) ?></h1>
       </div>
-      <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_ville" Id="ajout_ville" onsubmit='return verif_champ(document.ajout_ville.form_coord_X.value);'>
+      <form action="<?= e($editFormAction) ?>" method="POST" class="form-horizontal well" name="ajout_ville" Id="ajout_ville" onsubmit='return verif_champ(document.ajout_ville.form_coord_X.value);'>
         <section>
           <div class="alert alert-tips">
             <button type="button" class="close" data-dismiss="alert">×</button>

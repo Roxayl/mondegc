@@ -46,7 +46,7 @@ $totalRows_fai_cat = mysql_num_rows($fai_cat);
 
 <!-- Modal Header-->
 
-<form action="<?php echo $editFormAction; ?>" name="ajout-fai_categorie" method="POST" class="form-horizontal" id="ajout-fai_categorie">
+<form action="<?= e($editFormAction) ?>" name="ajout-fai_categorie" method="POST" class="form-horizontal" id="ajout-fai_categorie">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Ajouter un monument dans la cat&eacute;gorie <?= e($row_fai_cat['ch_fai_cat_nom']) ?></h3>

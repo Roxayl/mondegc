@@ -41,7 +41,7 @@ $totalRows_liste_fait_cat = mysql_num_rows($liste_fait_cat);
 ?>
 
 <!-- Modal Header-->
-<form action="<?php echo $editFormAction; ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
+<form action="<?= e($editFormAction) ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 <h3 id="myModalLabel">Modifier la cat&eacute;gorie <?= e($row_liste_fait_cat['ch_fai_cat_nom']) ?></h3>
@@ -52,7 +52,7 @@ $totalRows_liste_fait_cat = mysql_num_rows($liste_fait_cat);
             <!-- Boutons cachés -->
             <?php 
 				  $now= date("Y-m-d G:i:s");
-                  $nb_update = $row_liste_fait_cat['ch_fai_cat_nb_update'] + 1; ?>
+                  $nb_update = (int) $row_liste_fait_cat['ch_fai_cat_nb_update'] + 1; ?>
             <input name="ch_fai_cat_ID" type="hidden" value="<?= e($row_liste_fait_cat['ch_fai_cat_ID']) ?>">
             <input name="ch_fai_cat_label" type="hidden" value="fai_cat">
             <input name="ch_fai_cat_date" type="hidden" value="<?= e($row_liste_fait_cat['ch_fai_cat_date']) ?>">

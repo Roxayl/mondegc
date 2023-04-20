@@ -160,7 +160,7 @@ Eventy::action('display.beforeHeadClosingTag')
       <!-- Debut formulaire membre
         ================================================== -->
       <section id="info-generales" class="well">
-        <form action="<?php echo $editFormAction; ?>" name="new_user" method="POST" class="form-horizontal" id="InfoHeader">
+        <form action="<?= e($editFormAction) ?>" name="new_user" method="POST" class="form-horizontal" id="InfoHeader">
           <!-- Definir statut du membre -->
           <h3>D&eacute;finir le statut du membre :</h3>
           <div id="spryradio1">

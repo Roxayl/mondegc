@@ -52,7 +52,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "pays_leader_delete"
 
 <!-- Modal Header-->
 
-<form action="<?php echo $editFormAction; ?>" name="pays_leader_edit" method="POST" class="form-horizontal" id="pays_leader_delete">
+<form action="<?= e($editFormAction) ?>" name="pays_leader_edit" method="POST" class="form-horizontal" id="pays_leader_delete">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Confirmer la suppression des accès de <?= $thisUser->ch_use_login ?></h3>

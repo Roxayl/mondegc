@@ -104,7 +104,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
   <!-- Si le lien du sujet sur le forum est trouv&eacute;-->
   <?php if (($row_fait_hist['ch_pay_lien_forum']==NULL) OR ($row_fait_hist['ch_pay_lien_forum']=="") OR ($id_trouve== false) ) {?>
   <!-- Si le lien du sujet sur le forum n'est pas trouv&eacute;-->
-  <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_lien" Id="ajout_lien">
+  <form action="<?= e($editFormAction) ?>" method="POST" class="form-horizontal well" name="ajout_lien" Id="ajout_lien">
     <input type="hidden" name="ch_pay_id" id="ch_pay_id" value="<?= e($row_fait_hist['ch_his_paysID']) ?>">
     <?php if (($row_fait_hist['ch_pay_lien_forum']== NULL) OR ($row_fait_hist['ch_pay_lien_forum']== "")){?>
     <h4>Vous n'avez pas encore indiqu&eacute; le lien du sujet consacr&eacute; à votre pays sur le Forum de G&eacute;n&eacute;ration City </h4>

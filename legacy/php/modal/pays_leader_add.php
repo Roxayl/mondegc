@@ -46,7 +46,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "pays_leader_add")) 
 
 <!-- Modal Header-->
 
-<form action="<?php echo $editFormAction; ?>" name="pays_leader_edit" method="POST" class="form-horizontal" id="ajout-mon_categorie">
+<form action="<?= e($editFormAction) ?>" name="pays_leader_edit" method="POST" class="form-horizontal" id="ajout-mon_categorie">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Ajouter des droits d'accès à un membre</h3>

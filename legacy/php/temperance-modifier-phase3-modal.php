@@ -82,7 +82,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance"))
 ?>
 
 <!-- Modal Header-->
-<form action="<?php echo $editFormAction; ?>" name="phase-temperance" method="POST" class="form-horizontal" id="phase-temperance">
+<form action="<?= e($editFormAction) ?>" name="phase-temperance" method="POST" class="form-horizontal" id="phase-temperance">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
     <h3 id="myModalLabel">Fermeture des votes</h3>

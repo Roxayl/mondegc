@@ -245,7 +245,7 @@ Eventy::action('display.beforeHeadClosingTag')
 
     <div class="well">
     <!-- Debut formulaire -->
-    <form action="<?php echo $editFormAction; ?>" method="POST" name="modifier_communique" Id="modifier_communique">
+    <form action="<?= e($editFormAction) ?>" method="POST" name="modifier_communique" Id="modifier_communique">
       <!-- Bouton cachés -->
       <?php $now= date("Y-m-d G:i:s");?>
       <input name="ch_com_ID" type="hidden" value="<?= e($row_communique['ch_com_ID']) ?>">

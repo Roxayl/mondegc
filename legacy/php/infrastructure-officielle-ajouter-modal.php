@@ -48,7 +48,7 @@ $infra_group = mysql_query($query_infra_group, $maconnexion);
 
 <!-- Modal Header-->
 
-<form action="<?php echo $editFormAction; ?>" name="ajout-inf_off" method="POST" class="form-horizontal" id="ajout-inf_off">
+<form action="<?= e($editFormAction) ?>" name="ajout-inf_off" method="POST" class="form-horizontal" id="ajout-inf_off">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
     <h3 id="myModalLabel">Ajouter une infrastructure dans la liste officielle</h3>
