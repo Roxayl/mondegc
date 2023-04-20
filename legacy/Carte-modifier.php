@@ -53,7 +53,7 @@ if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
     $isSpecialZone = in_array($_POST['ch_geo_type'], $nonModifiableZones);
     if(!$user_has_admin_perm && $isSpecialZone) {
         getErrorMessage('error', "Vous ne pouvez pas créer de zone de type "
-            . __s($_POST['ch_geo_type']) . ".");
+            . e($_POST['ch_geo_type']) . ".");
     }
 
     else {
@@ -71,7 +71,7 @@ if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
 
         $Result1 = mysql_query($insertSQL, $maconnexion);
 
-        getErrorMessage('success', "La zone " . __s($_POST['ch_geo_nom']) . ' a été ajoutée !');
+        getErrorMessage('success', "La zone " . e($_POST['ch_geo_nom']) . ' a été ajoutée !');
     }
 
     //recherche des mesures des zones de la carte pour calcul ressources
@@ -127,7 +127,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
     $isSpecialZone = in_array($eloquentGeometry->ch_geo_type, $nonModifiableZones);
     if(!$user_has_admin_perm && $isSpecialZone) {
         getErrorMessage('error', "Vous ne pouvez pas modifier de zone de type "
-            . __s($eloquentGeometry->ch_geo_type) . ". Vous ne disposez pas des permissions "
+            . e($eloquentGeometry->ch_geo_type) . ". Vous ne disposez pas des permissions "
             . "nécessaires.");
     }
 
@@ -147,7 +147,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
 
         $Result1 = mysql_query($updateSQL, $maconnexion);
 
-        getErrorMessage('success', "La zone " . __s($_POST['ch_geo_nom'])
+        getErrorMessage('success', "La zone " . e($_POST['ch_geo_nom'])
             . ' (' . $eloquentGeometry->type_geometry->label . ') a été modifiée !');
     }
 

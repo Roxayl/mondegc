@@ -129,26 +129,26 @@ $eloquentCommunique = \Roxayl\MondeGC\Models\Communique::query()->findOrFail($co
       <?php if ($insigne == NULL) {?>
       <img src="<?= DEF_URI_PATH ?>assets/img/imagesdefaut/blason.jpg" alt="armoirie">
       <?php } else { ?>
-      <img src="<?= __s($insigne) ?>" alt="armoirie">
+      <img src="<?= e($insigne) ?>" alt="armoirie">
       <?php } ?>
       <?php } elseif ( $cat == "pays") {?>
       <?php if ($insigne == NULL) {?>
       <img src="<?= DEF_URI_PATH ?>assets/img/imagesdefaut/drapeau.jpg" alt="drapeau">
       <?php } else { ?>
-      <img src="<?= __s($insigne) ?>" alt="drapeau">
+      <img src="<?= e($insigne) ?>" alt="drapeau">
       <?php } ?>
       <?php } elseif ( $cat == "institut" || $cat == 'organisation') {?>
       <?php if ($insigne == NULL) {?>
       <img src="<?= DEF_URI_PATH ?>assets/img/imagesdefaut/blason.jpg" alt="logo">
       <?php } else { ?>
-      <img src="<?= __s($insigne) ?>" alt="logo">
+      <img src="<?= e($insigne) ?>" alt="logo">
       <?php }
 		 } else {?>
-      <img src="<?= __s($insigne) ?>">
+      <img src="<?= e($insigne) ?>">
       <?php } ?>
       <div class="titre-gris">
-        <h3><?= __s($nom_organisation) ?></h3>
-        <small><?= __s($soustitre) ?></small> </div>
+        <h3><?= e($nom_organisation) ?></h3>
+        <small><?= e($soustitre) ?></small> </div>
     </div>
   </div>
 </div>
@@ -156,7 +156,7 @@ $eloquentCommunique = \Roxayl\MondeGC\Models\Communique::query()->findOrFail($co
 
 <div class="modal-body corps-page">
   <div class="titre-vert">
-    <h1><?= __s($row_communique['ch_com_titre']) ?></h1>
+    <h1><?= e($row_communique['ch_com_titre']) ?></h1>
   </div>
   <div class="pull-right">
       <small>Publié le <?= e($eloquentCommunique->ch_com_date->format('d/m/Y')) ?></small>
@@ -193,11 +193,11 @@ $eloquentCommunique = \Roxayl\MondeGC\Models\Communique::query()->findOrFail($co
         </div>
 
           <?php if(isset($persoReaction)): ?>
-          <h4><?= __s($persoReaction->get('predicat')) ?> <?= __s($persoReaction->get('prenom_personnage')) ?> <?= __s($persoReaction->get('nom_personnage')) ?></h4>
+          <h4><?= e($persoReaction->get('predicat')) ?> <?= e($persoReaction->get('prenom_personnage')) ?> <?= e($persoReaction->get('nom_personnage')) ?></h4>
           <h5>
-              <?= isset($paysReaction) ? '<img class="img-menu-drapeau" src="' . __s($paysReaction->get('ch_pay_lien_imgdrapeau')) . '">
-                ' . __s($paysReaction->get('ch_pay_nom')) . ' &#183; ' : '' ?>
-              <?= __s($persoReaction->get('titre_personnage')) ?></h5>
+              <?= isset($paysReaction) ? '<img class="img-menu-drapeau" src="' . e($paysReaction->get('ch_pay_lien_imgdrapeau')) . '">
+                ' . e($paysReaction->get('ch_pay_nom')) . ' &#183; ' : '' ?>
+              <?= e($persoReaction->get('titre_personnage')) ?></h5>
           <!-- AFFICHAGE DATE -->
           <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i", strtotime($row_commentaire['ch_com_date'])); ?></small>
           <p><?= htmlPurify($row_commentaire['ch_com_contenu']) ?></p>

@@ -1340,16 +1340,26 @@ function dateFormat($date, $getTime = false)
 /**
  * Filtre un texte avant affichage.
  *
- * @param string|array $text Chaîne à traiter.
- * @return string Chaîne avec les caractères HTML échappés.
+ * @param string|array|null $text Chaîne à traiter.
+ * @return string|array Chaîne avec les caractères HTML échappés.
+ * @deprecated Utiliser {@see e()} fourni par le framework à la place.
  */
-function __s($text)
+function __s(string|array|null $text): string|array
 {
     if(is_array($text)) {
-        return filter_var_array($text, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    } else {
-        return htmlspecialchars($text, ENT_QUOTES);
+        /** @var array|false|null $array */
+        $array = filter_var_array($text, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if(! is_array($array)) {
+            throw new RuntimeException("Le filtrage du tableau n'a pas pu être effectué.");
+        }
+        return $array;
     }
+
+    if(is_null($text)) {
+        return '';
+    }
+
+    return htmlspecialchars($text, ENT_QUOTES);
 }
 
 

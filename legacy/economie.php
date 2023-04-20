@@ -38,7 +38,7 @@ foreach($paysList as $thisPays) {
 <!-- head Html -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Monde GC - <?= __s($row_institut['ch_ins_nom']) ?></title>
+<title>Monde GC - <?= e($row_institut['ch_ins_nom']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -147,7 +147,7 @@ Eventy::action('display.beforeHeadClosingTag')
             <div class="span12">
               <?php if(!empty($row_institut['ch_ins_img'])): ?>
                 <img alt="Icône de l'institut" class="pull-right" style="width: 35%; margin-left: 15px;"
-                     src="<?= __s($row_institut['ch_ins_img']) ?>">
+                     src="<?= e($row_institut['ch_ins_img']) ?>">
               <?php endif; ?>
               <?php echo $row_institut['ch_ins_desc'] ?>
             </div>
