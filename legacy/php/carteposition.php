@@ -54,8 +54,8 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 			    var mapMinZoom = 0;
 			    var mapMaxZoom = 7;
 				var ll, popupClass, popupContentHTML;
-				var x = '<?php echo __s($_GET['x']); ?>' ;
-				var y = '<?php echo __s($_GET['y']); ?>' ;
+				var x = '<?php echo e($_GET['x']); ?>' ;
+				var y = '<?php echo e($_GET['y']); ?>' ;
 				var urlicon ='Carto/images/pin.png';
 		        // avoid pink tiles
 		OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
@@ -181,7 +181,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
     		'externalProjection': new OpenLayers.Projection("EPSG:4326")
 			});
 			<?php do {
-			$Nomzone = str_replace ( '-', ' ', $row_ZonesTerres['ch_geo_nom']);
+			$Nomzone = $row_ZonesTerres['ch_geo_nom'];
 			$typeZone = $row_ZonesTerres['ch_geo_type'];
 			styleZones($typeZone, $fillcolor, $fillOpacity, $strokeWidth, $strokeColor, $strokeOpacity, $Trait);
 			?>
@@ -193,7 +193,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				couleurTrait : "<?php echo $strokeColor; ?>",
 				opaciteTrait : "<?php echo $strokeOpacity; ?>",
 				Trait : "<?php echo $Trait; ?>",
-				name : "<?php echo $Nomzone; ?>"
+				name : "<?php echo e($Nomzone); ?>"
             }
 		vectorsTerres.addFeatures([polygonFeature]);
 		<?php } while ($row_ZonesTerres = mysql_fetch_assoc($ZonesTerres)); ?>
@@ -258,7 +258,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
     		'externalProjection': new OpenLayers.Projection("EPSG:4326")
 			});
 			<?php do { 
-			$Nomzone = str_replace ( '-', ' ', $row_ZonesPays['ch_geo_nom']);
+			$Nomzone = $row_ZonesPays['ch_geo_nom'];
 			$typeZone = $row_ZonesPays['ch_geo_type'];
 			$surface = $row_ZonesPays['ch_geo_mesure'];
 			styleZones($typeZone, $fillcolor, $fillOpacity, $strokeWidth, $strokeColor, $strokeOpacity, $Trait);
@@ -272,7 +272,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				couleurTrait : "<?php echo $strokeColor; ?>",
 				opaciteTrait : "<?php echo $strokeOpacity; ?>",
 				Trait : "<?php echo $Trait; ?>",
-				name : "<?php echo $Nomzone; ?>"
+				name : "<?php echo e($Nomzone); ?>"
             } 
 			
 			  // Ajout calque administration si zone administrative
@@ -315,7 +315,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 			
 			
 			<?php do {
-			$Nomvoie = str_replace ( '-', ' ', $row_VoiesPays['ch_geo_nom']);
+			$Nomvoie = $row_VoiesPays['ch_geo_nom'];
 			$typeVoie = $row_VoiesPays['ch_geo_type'];
 			$surface = $row_VoiesPays['ch_geo_mesure'];
 			styleVoies($typeVoie, $couleurTrait, $epaisseurTrait, $Trait);
@@ -531,12 +531,12 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
             var features = [];
 			
 			<?php do { 
-			$Nompays = str_replace ( '-', ' ', $row_MarkerPays['ch_pay_nom']);
+			$Nompays = $row_MarkerPays['ch_pay_nom'];
 $emplacement = $row_MarkerPays['ch_pay_emplacement'];
 coordEmplacement($emplacement, $x, $y);
 ?>
-		var x = '<?php echo $x; ?>' ;
-		var y = '<?php echo $y; ?>' ;  
+		var x = '<?php echo e($x); ?>' ;
+		var y = '<?php echo e($y); ?>' ;  
 		var urlicon ='<?= e($row_MarkerPays['ch_pay_lien_imgdrapeau']) ?>'
                 features.push(new OpenLayers.Feature.Vector(
                     new OpenLayers.Geometry.Point(x,y), features.attributes = {
@@ -555,7 +555,7 @@ coordEmplacement($emplacement, $x, $y);
             var features = [];
 			
 			<?php do { 
-			$Nomville = str_replace ( '-', ' ', $row_MarkerVilles['ch_vil_nom']);
+			$Nomville = $row_MarkerVilles['ch_vil_nom'];
 			?>
 		var x = '<?= e($row_MarkerVilles['ch_vil_coord_X']) ?>' ;
 		var y = '<?= e($row_MarkerVilles['ch_vil_coord_Y']) ?>' ;
@@ -568,7 +568,7 @@ coordEmplacement($emplacement, $x, $y);
 		tailleVilles($population, $sizeicon); ?>
                 features.push(new OpenLayers.Feature.Vector(
                     new OpenLayers.Geometry.Point(x,y), features.attributes = {
-                name: "<?php echo $Nomville; ?>",
+                name: "<?php echo e($Nomville); ?>",
 				size : <?php echo $sizeicon; ?>,
 				couleur : pointercolor
             }));
@@ -583,13 +583,13 @@ coordEmplacement($emplacement, $x, $y);
             var features = [];
 			
 			<?php do { 
-			$NomMonument = str_replace ( '-', ' ', $row_MarkerMonument['ch_pat_nom']);
+			$NomMonument = $row_MarkerMonument['ch_pat_nom'];
 			?>
 		var x = '<?= e($row_MarkerMonument['ch_pat_coord_X']) ?>' ;
 		var y = '<?= e($row_MarkerMonument['ch_pat_coord_Y']) ?>' ;
                 features.push(new OpenLayers.Feature.Vector(
                 new OpenLayers.Geometry.Point(x,y), features.attributes = {
-                	name: "Monument\n\n<?php echo addslashes($NomMonument); ?>"
+                	name: "Monument\n\n<?php echo e($NomMonument); ?>"
             		}
 				));
 		<?php } while ($row_MarkerMonument = mysql_fetch_assoc($MarkerMonument)); ?>
