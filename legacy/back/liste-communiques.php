@@ -15,21 +15,23 @@ exit();
 $maxRows_listcommuniques = 30;
 $pageNum_listcommuniques = 0;
 if (isset($_GET['pageNum_listcommuniques'])) {
-  $pageNum_listcommuniques = $_GET['pageNum_listcommuniques'];
+  $pageNum_listcommuniques = (int) $_GET['pageNum_listcommuniques'];
 }
 $startRow_listcommuniques = $pageNum_listcommuniques * $maxRows_listcommuniques;
 $order_by = "ch_com_date_mis_jour";
 $tri = "DESC";
 if (isset($_GET['order_by'])) {
-  $order_by = $_GET['order_by'];
-  $nom_colonne = $_GET['order_by'];
+  $order_by = escape_sql($_GET['order_by'], 'order_by_columns', [
+      'ch_com_titre', 'ch_com_statut', 'ch_com_categorie', 'ch_com_date_mis_jour', 'ch_use_login',
+  ]);
+  $nom_colonne = $order_by;
 }
 if (isset($_GET['tri'])) {
-  $tri = $_GET['tri'];
+  $tri = escape_sql($_GET['tri'], 'order_by_pos');
 }
 
 $query_listcommuniques = "SELECT ch_com_ID, ch_com_statut, ch_com_categorie,ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_use_login, ch_use_lien_imgpersonnage FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_categorie = 'pays' OR ch_com_categorie = 'ville' OR ch_com_categorie = 'institut' ORDER BY $order_by $tri";
-$query_limit_listcommuniques = sprintf("%s LIMIT %d, %d", $query_listcommuniques, $startRow_listcommuniques, $maxRows_listcommuniques);
+$query_limit_listcommuniques = sprintf("%s LIMIT %d, %d", $query_listcommuniques, escape_sql($startRow_listcommuniques, 'int'), escape_sql($maxRows_listcommuniques, 'int'));
 $listcommuniques = mysql_query($query_limit_listcommuniques, $maconnexion);
 $row_listcommuniques = mysql_fetch_assoc($listcommuniques);
 
