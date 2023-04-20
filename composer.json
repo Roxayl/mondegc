@@ -2,7 +2,7 @@
     "name": "roxayl/mondegc",
     "description": "Le site du Monde de Generation City",
     "type": "project",
-    "keywords": ["generation city", "laravel", "roleplay"],
+    "keywords": ["generation-city", "laravel", "roleplay", "city-builder"],
     "homepage": "https://generation-city.com/monde/",
     "license": "proprietary",
     "authors": [

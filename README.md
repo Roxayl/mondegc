@@ -3,7 +3,7 @@
 
 <p align="center">
 <a href="https://github.com/Roxayl/mondegc/actions"><img src="https://github.com/Roxayl/mondegc/actions/workflows/build.yml/badge.svg" alt="CI" /></a>
-<a href="https://discord.gg/qPSn8nsS2p"><img src="https://img.shields.io/discord/328496654514782209" alt="Discord" /></a>
+<a href="https://discord.gg/4P3HqVbbgR"><img src="https://img.shields.io/discord/328496654514782209" alt="Discord" /></a>
 </p>
 
 Le Monde GC constitue l'application Web de référence du [Monde de Génération City](https://generation-city.com/monde/), 
@@ -50,7 +50,7 @@ L'aspect graphique est réalisé par [Lesime](https://www.forum-gc.com/u23) et R
 
 Le site du Monde GC, depuis la [version 2.5](https://www.forum-gc.com/t6872p110-notes-de-mise-a-jour-monde-gc#287597) 
 (juillet 2020), repose sur le framework [Laravel](https://laravel.com/), et les nouvelles fonctionnalités du site 
-reposent sur ce framework. La [documentation](https://laravel.com/docs/8.x) de Laravel est riche et n'hésitez pas à 
+reposent sur ce framework. La [documentation](https://laravel.com/docs/9.x) de Laravel est riche et n'hésitez pas à 
 vous renseigner sur son fonctionnement, intuitif et puissant, afin de pouvoir contribuer vous aussi au projet phare de 
 la communauté [Génération City](http://www.forum-gc.com/).
 
