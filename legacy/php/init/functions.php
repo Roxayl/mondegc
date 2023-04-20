@@ -10,24 +10,49 @@ use Roxayl\MondeGC\Services\HelperService;
 // Protection données envoyées
 function escape_sql($value, $type = "text", $definedValue = "", $notDefinedValue = "")
 {
-    $value = mysql_real_escape_string($value);
-
     switch($type) {
         case "text":
         case "date":
+            $value = mysql_real_escape_string($value);
             $value = ($value != "") ? "'" . $value . "'" : "NULL";
             break;
+
         case "long":
         case "int":
+            $value = mysql_real_escape_string($value);
             $value = ($value != "") ? intval($value) : "NULL";
             break;
+
         case "double":
+            $value = mysql_real_escape_string($value);
             $value = ($value != "") ? doubleval($value) : "NULL";
             break;
+
         case "defined":
+            $value = mysql_real_escape_string($value);
             $value = ($value != "") ? $definedValue : $notDefinedValue;
             break;
+
+        case 'order_by_columns':
+            if(! is_array($definedValue)) {
+                throw new InvalidArgumentException(
+                    "Le paramètre doit être un tableau en utilisant 'order_by_columns'."
+                );
+            }
+            if(! in_array($value, $definedValue, true)) {
+                throw new InvalidArgumentException(
+                    "La colonne de tri dans la clause ORDER BY n'est pas valide."
+                );
+            }
+            break;
+
+        case 'order_by_pos':
+            if(! in_array(strtolower($value), ['asc', 'desc'], true)) {
+                throw new InvalidArgumentException("La position de la clause ORDER BY doit être ASC ou DESC.");
+            }
+            break;
     }
+
     return $value;
 }
 
