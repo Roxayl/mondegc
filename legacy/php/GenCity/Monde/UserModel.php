@@ -22,7 +22,7 @@ class UserModel implements ModelStructureInterface
     private function populate(int|string $id): mixed
     {
         $query = mysql_query(sprintf('SELECT * FROM users WHERE ch_use_id = %s',
-            GetSQLValueString($id, 'int')));
+            escape_sql($id, 'int')));
         return mysql_fetch_assoc($query);
     }
 

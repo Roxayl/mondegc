@@ -29,7 +29,7 @@ class VoteList {
         $this->allVotes = array();
 
         $query = sprintf('SELECT * FROM ocgc_votes WHERE ID_proposal = %s',
-            GetSQLValueString($this->proposal->get('id')));
+            escape_sql($this->proposal->get('id')));
         $mysql_query = mysql_query($query);
         while($thisVote = mysql_fetch_assoc($mysql_query)) {
             $this->allVotes[] = new Vote();
@@ -47,8 +47,8 @@ class VoteList {
             $query = sprintf('
               INSERT INTO ocgc_votes(ID_proposal, ID_pays, reponse_choisie, created)
               VALUES(%s, %s, NULL, NOW())',
-                GetSQLValueString($this->proposal->get('id')),
-                GetSQLValueString($pays->get('ch_pay_id'))
+                escape_sql($this->proposal->get('id')),
+                escape_sql($pays->get('ch_pay_id'))
             );
             mysql_query($query);
         }
@@ -73,7 +73,7 @@ class VoteList {
         $query = mysql_query(sprintf('SELECT COUNT(id) AS nbr_votes
                       FROM ocgc_votes
                       WHERE ID_proposal = %s AND reponse_choisie IS NULL',
-            GetSQLValueString($this->proposal->get('id'))));
+            escape_sql($this->proposal->get('id'))));
         $count = mysql_fetch_assoc($query)['nbr_votes'];
 
         return (int)$count;
@@ -159,7 +159,7 @@ class VoteList {
                   WHERE ID_proposal = %s
                   ORDER BY FIELD(ch_pay_continent,
                     "RFGC", "Aurinea", "Oceania", "Volcania", "Aldesyl", "Philicie"), ch_pay_nom ASC',
-                GetSQLValueString($this->proposal->get('id')));
+                escape_sql($this->proposal->get('id')));
         $mysql_query = mysql_query($query);
         while($row = mysql_fetch_assoc($mysql_query)) {
             $results[] = new Vote($row);
@@ -182,8 +182,8 @@ class VoteList {
                             WHERE ID_proposal = %s AND ID_user = %s
                               AND permissions >= %s
                             ORDER BY ocgc_votes.id',
-            GetSQLValueString($this->proposal->get('id')),
-            GetSQLValueString($user->get('ch_use_id')),
+            escape_sql($this->proposal->get('id')),
+            escape_sql($user->get('ch_use_id')),
             Pays::$permissions['dirigeant']);
         $mysql_query = mysql_query($query);
         while($row = mysql_fetch_assoc($mysql_query)) {

@@ -3,29 +3,29 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 $order_by = "ch_use_last_log";
 $tri = "DESC";
 if (isset($_GET['order_by'])) {
-  $order_by = $_GET['order_by'];
-  $nom_colonne = $_GET['order_by'];
+  $order_by = escape_sql($_GET['order_by'], 'order_by_columns', [
+      'ch_use_statut', 'ch_use_login', 'ch_use_last_log',
+  ]);
+  $nom_colonne = $order_by;
 }
 if (isset($_GET['tri'])) {
-  $tri = $_GET['tri'];
+  $tri = escape_sql($_GET['tri'], 'order_by_pos');
 }
 
 $maxRows_listemembres = 30;
 $pageNum_listemembres = 0;
 if (isset($_GET['pageNum_listemembres'])) {
-  $pageNum_listemembres = $_GET['pageNum_listemembres'];
+  $pageNum_listemembres = (int) $_GET['pageNum_listemembres'];
 }
 $startRow_listemembres = $pageNum_listemembres * $maxRows_listemembres;
 

@@ -11,7 +11,7 @@ if(!isset($_SESSION['userObject'])) {
 
 if ((isset($_POST['ch_temp_id'])) && ($_POST['ch_temp_id'] != "")) {
   $deleteSQL = sprintf("DELETE FROM temperance WHERE ch_temp_id=%s",
-                       GetSQLValueString($_POST['ch_temp_id'], "int"));
+                       escape_sql($_POST['ch_temp_id'], "int"));
 
   
   $Result1 = mysql_query($deleteSQL, $maconnexion);

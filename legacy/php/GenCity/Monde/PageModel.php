@@ -22,7 +22,7 @@ class PageModel implements ModelStructureInterface
     private function populate(int|string $id): mixed
     {
         $query = mysql_query(sprintf('SELECT * FROM legacy_pages WHERE this_id = %s',
-            GetSQLValueString($id, 'text')));
+            escape_sql($id, 'text')));
         return mysql_fetch_assoc($query);
     }
 

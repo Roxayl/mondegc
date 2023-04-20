@@ -15,7 +15,7 @@ $user_pays_ID = isset($_GET['user_pays_ID']) ? (int)$_GET['user_pays_ID'] : 0;
 
 $query_users_pays = mysql_query(sprintf(
     "SELECT id, ID_pays, ID_user, permissions FROM users_pays WHERE id = %s",
-        GetSQLValueString($user_pays_ID, 'int')));
+        escape_sql($user_pays_ID, 'int')));
 $result_users_pays = mysql_fetch_assoc($query_users_pays);
 if(empty($result_users_pays)) {
     echo 'Erreur';
@@ -44,8 +44,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "pays_leader_edit"))
     } else {
         $update_query = mysql_query(sprintf(
             'UPDATE users_pays SET permissions = %s WHERE id = %s',
-            GetSQLValueString($permissions, 'int'),
-            GetSQLValueString($user_pays_ID, 'int')
+            escape_sql($permissions, 'int'),
+            escape_sql($user_pays_ID, 'int')
         ));
         getErrorMessage('success', "{$thisUser->ch_use_login} a été défini comme " .
                         Pays::getPermissionName($permissions) . ' !');
@@ -60,7 +60,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "pays_leader_edit"))
 
 <!-- Modal Header-->
 
-<form action="<?php echo $editFormAction; ?>" name="pays_leader_edit" method="POST" class="form-horizontal" id="ajout-mon_categorie">
+<form action="<?= e($editFormAction) ?>" name="pays_leader_edit" method="POST" class="form-horizontal" id="ajout-mon_categorie">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Gérer l'accès de <?= $thisUser->ch_use_login ?></h3>

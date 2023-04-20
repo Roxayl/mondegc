@@ -3,15 +3,12 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
-
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
@@ -27,11 +24,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "new_user")) {
 
 
   $insertSQL = sprintf("INSERT INTO users_provisoire (ch_use_prov_login, ch_use_prov_clef, ch_use_prov_mail, ch_use_prov_paysID, ch_use_prov_statut) VALUES (%s, %s, %s, %s, %s)",
-                       GetSQLValueString($login, "text"),
-                       GetSQLValueString($clef, "text"),
-                       GetSQLValueString($mail, "text"),
-                       GetSQLValueString($paysID, "int"),
-                       GetSQLValueString($ch_use_prov_statut, "int"));
+                       escape_sql($login, "text"),
+                       escape_sql($clef, "text"),
+                       escape_sql($mail, "text"),
+                       escape_sql($paysID, "int"),
+                       escape_sql($ch_use_prov_statut, "int"));
 
   $Result1 = mysql_query($insertSQL, $maconnexion);
 
@@ -163,7 +160,7 @@ Eventy::action('display.beforeHeadClosingTag')
       <!-- Debut formulaire membre
         ================================================== -->
       <section id="info-generales" class="well">
-        <form action="<?php echo $editFormAction; ?>" name="new_user" method="POST" class="form-horizontal" id="InfoHeader">
+        <form action="<?= e($editFormAction) ?>" name="new_user" method="POST" class="form-horizontal" id="InfoHeader">
           <!-- Definir statut du membre -->
           <h3>D&eacute;finir le statut du membre :</h3>
           <div id="spryradio1">

@@ -5,8 +5,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut']) { }
-else {
+if (!$_SESSION['statut']) {
     // Redirection vers Haut Conseil
     header("Status: 301 Moved Permanently", false, 301);
     header('Location: ' . legacyPage('connexion'));
@@ -30,7 +29,7 @@ if($cat == "pays") {
 
     $query_pays = sprintf("SELECT ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau
         FROM pays WHERE ch_pay_id = %s",
-        GetSQLValueString($colname_elementid, "int"));
+        escape_sql($colname_elementid, "int"));
     $pays = mysql_query($query_pays, $maconnexion);
     $row_pays = mysql_fetch_assoc($pays);
     $totalRows_pays = mysql_num_rows($pays);
@@ -51,7 +50,7 @@ elseif($cat == "ville") {
         unset($_REQUEST['com_element_id']);
     }
 
-    $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_nom FROM villes INNER JOIN pays ON villes.ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($colname_elementid, "int"));
+    $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_nom FROM villes INNER JOIN pays ON villes.ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s", escape_sql($colname_elementid, "int"));
     $villes = mysql_query($query_villes, $maconnexion);
     $row_villes = mysql_fetch_assoc($villes);
     $totalRows_villes = mysql_num_rows($villes);
@@ -72,7 +71,7 @@ elseif($cat == "institut") {
         unset($_REQUEST['com_element_id']);
     }
 
-    $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($colname_elementid, "int"));
+    $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", escape_sql($colname_elementid, "int"));
     $institut = mysql_query($query_institut, $maconnexion);
     $row_institut = mysql_fetch_assoc($institut);
     $totalRows_institut = mysql_num_rows($institut);
@@ -109,7 +108,7 @@ if (isset($_REQUEST['userID'])) {
     unset($_REQUEST['userID']);
 }
 
-$query_user = sprintf("SELECT ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_user, "int"));
+$query_user = sprintf("SELECT ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users WHERE ch_use_id = %s", escape_sql($colname_user, "int"));
 $user = mysql_query($query_user, $maconnexion);
 $row_user = mysql_fetch_assoc($user);
 $totalRows_user = mysql_num_rows($user);
@@ -130,16 +129,16 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_communique"))
     }
 
     $insertSQL = sprintf("INSERT INTO communiques (ch_com_label, ch_com_statut, ch_com_categorie, ch_com_element_id, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_com_pays_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_com_label'], "text"),
-                       GetSQLValueString($_POST['ch_com_statut'], "int"),
-                       GetSQLValueString($_POST['ch_com_categorie'], "text"),
-                       GetSQLValueString($_POST['ch_com_element_id'], "int"),
-                       GetSQLValueString($_SESSION['userObject']->get('ch_use_id'), "int"),
-                       GetSQLValueString($_POST['ch_com_date'], "date"),
-                       GetSQLValueString($_POST['ch_com_date_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_com_titre'], "text"),
-                       GetSQLValueString($_POST['ch_com_contenu'], "text"),
-                       GetSQLValueString($_POST['ch_com_pays_id'], 'int'));
+                       escape_sql($_POST['ch_com_label'], "text"),
+                       escape_sql($_POST['ch_com_statut'], "int"),
+                       escape_sql($_POST['ch_com_categorie'], "text"),
+                       escape_sql($_POST['ch_com_element_id'], "int"),
+                       escape_sql($_SESSION['userObject']->get('ch_use_id'), "int"),
+                       escape_sql($_POST['ch_com_date'], "date"),
+                       escape_sql($_POST['ch_com_date_mis_jour'], "date"),
+                       escape_sql($_POST['ch_com_titre'], "text"),
+                       escape_sql($_POST['ch_com_contenu'], "text"),
+                       escape_sql($_POST['ch_com_pays_id'], 'int'));
   
     $Result1 = mysql_query($insertSQL, $maconnexion);
 

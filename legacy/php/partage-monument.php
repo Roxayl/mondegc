@@ -7,7 +7,7 @@ if (isset($_GET['ch_pat_id'])) {
   $monument_ID = $_GET['ch_pat_id'];
 }
 
-$query_monument = sprintf("SELECT ch_pat_id, ch_pat_nom, ch_pat_lien_img1, ch_pat_description, ch_pat_paysID, ch_pay_lien_forum, ch_vil_user, ch_use_id  FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID LEFT JOIN users ON ch_pat_paysID = ch_use_paysID WHERE ch_pat_id = %s AND ch_pat_statut=1", GetSQLValueString($monument_ID, "int"));
+$query_monument = sprintf("SELECT ch_pat_id, ch_pat_nom, ch_pat_lien_img1, ch_pat_description, ch_pat_paysID, ch_pay_lien_forum, ch_vil_user, ch_use_id  FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID LEFT JOIN users ON ch_pat_paysID = ch_use_paysID WHERE ch_pat_id = %s AND ch_pat_statut=1", escape_sql($monument_ID, "int"));
 $monument = mysql_query($query_monument, $maconnexion);
 $row_monument = mysql_fetch_assoc($monument);
 $totalRows_monument = mysql_num_rows($monument);
@@ -35,8 +35,8 @@ appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
   $updateSQL = sprintf("UPDATE pays SET ch_pay_lien_forum=%s WHERE ch_pay_id=%s",
-                       GetSQLValueString($_POST['ch_pay_lien_forum'], "text"),
-                       GetSQLValueString($_POST['ch_pay_id'], "int"));
+                       escape_sql($_POST['ch_pay_lien_forum'], "text"),
+                       escape_sql($_POST['ch_pay_id'], "int"));
 
   
   $Result1 = mysql_query($updateSQL, $maconnexion);
@@ -104,7 +104,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
 <!-- Si le lien du sujet sur le forum est trouv&eacute;-->
 <?php if ((($row_monument['ch_pay_lien_forum']==NULL) OR ($row_monument['ch_pay_lien_forum']=="") OR ($id_trouve== false)) AND ($row_monument['ch_vil_user']=== $row_monument['ch_use_id'])) {?>
 <!-- Si le lien du sujet sur le forum n'est pas trouv&eacute;-->
-<form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_lien" Id="ajout_lien">
+<form action="<?= e($editFormAction) ?>" method="POST" class="form-horizontal well" name="ajout_lien" Id="ajout_lien">
     <?php if (($row_monument['ch_pay_lien_forum']== NULL) OR ($row_monument['ch_pay_lien_forum']== "")){?>
     <h4>Vous n'avez pas encore indiqu&eacute; le lien du sujet consacr&eacute; à votre pays sur le Forum de G&eacute;n&eacute;ration City </h4>
     <?php } else { ?>

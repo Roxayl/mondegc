@@ -24,31 +24,31 @@ if(isset($_POST['ville_ID'])) {
         abort(403);
     }
 
-    $query_monument = sprintf("SELECT ch_pat_id FROM patrimoine WHERE ch_pat_villeID = %s", GetSQLValueString($colname_ville_ID, "int"));
+    $query_monument = sprintf("SELECT ch_pat_id FROM patrimoine WHERE ch_pat_villeID = %s", escape_sql($colname_ville_ID, "int"));
     $monument = mysql_query($query_monument, $maconnexion);
 
     $eloquentVille->delete();
 
     $deleteSQL = sprintf("DELETE FROM villes WHERE ch_vil_ID=%s",
-        GetSQLValueString($colname_ville_ID, "int"));
+        escape_sql($colname_ville_ID, "int"));
     $Result1 = mysql_query($deleteSQL, $maconnexion);
 
     $deleteSQL2 = sprintf("DELETE FROM patrimoine WHERE ch_pat_villeID=%s",
-        GetSQLValueString($colname_ville_ID, "int"));
+        escape_sql($colname_ville_ID, "int"));
     $Result2 = mysql_query($deleteSQL2, $maconnexion);
 
     $deleteSQL3 = sprintf("DELETE FROM communiques WHERE ch_com_element_id=%s AND ch_com_categorie='ville'",
-        GetSQLValueString($colname_ville_ID, "int"));
+        escape_sql($colname_ville_ID, "int"));
     $Result3 = mysql_query($deleteSQL3, $maconnexion);
 
     $deleteSQL4 = sprintf("DELETE FROM infrastructures WHERE infrastructurable_id = %s AND infrastructurable_type = %s",
-        GetSQLValueString($colname_ville_ID, "int"),
-        GetSQLValueString(Infrastructure::getMorphFromUrlParameter('ville')));
+        escape_sql($colname_ville_ID, "int"),
+        escape_sql(Infrastructure::getMorphFromUrlParameter('ville')));
     $Result4 = mysql_query($deleteSQL4, $maconnexion);
 
      while($row_monument = mysql_fetch_assoc($monument)) {
         $deleteSQL5 = sprintf("DELETE FROM dispatch_mon_cat WHERE ch_disp_mon_id=%s",
-            GetSQLValueString($row_monument['ch_pat_id'], "int"));
+            escape_sql($row_monument['ch_pat_id'], "int"));
         $Result5 = mysql_query($deleteSQL5, $maconnexion);
     }
 

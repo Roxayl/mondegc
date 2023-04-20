@@ -1,14 +1,14 @@
 <?php
 
-header('Content-Type: text/html; charset=uft-8');
+header('Content-Type: text/html; charset=utf-8');
 
-//Connexion BBD Communique
+//Connexion BDD Communique
 $colname_communique = "-1";
 if (isset($_GET['com_id'])) {
-    $colname_communique = $_GET['com_id'];
+    $colname_communique = (int) $_GET['com_id'];
 }
 
-$query_communique = sprintf("SELECT * FROM communiques WHERE ch_com_ID = %s", GetSQLValueString($colname_communique, "int"));
+$query_communique = sprintf("SELECT * FROM communiques WHERE ch_com_ID = %s", escape_sql($colname_communique, "int"));
 $communique = mysql_query($query_communique, $maconnexion);
 $row_communique = mysql_fetch_assoc($communique);
 $totalRows_communique = mysql_num_rows($communique);
@@ -17,7 +17,7 @@ $elementID = $row_communique['ch_com_element_id'];
 
 //Connexion BBD Pour info sur l'institution emmitrice
 if ( $cat == "pays") {
-    $query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau, ch_pay_lien_imgheader FROM pays WHERE ch_pay_id = %s", GetSQLValueString($elementID, "int"));
+    $query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau, ch_pay_lien_imgheader FROM pays WHERE ch_pay_id = %s", escape_sql($elementID, "int"));
     $pays = mysql_query($query_pays, $maconnexion);
     $row_pays = mysql_fetch_assoc($pays);
     $totalRows_pays = mysql_num_rows($pays);
@@ -35,7 +35,7 @@ if ( $cat == "pays") {
 }
 
 elseif ( $cat == "ville") {
-    $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_id, ch_pay_nom, ch_vil_lien_img1 FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($elementID, "int"));
+    $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_id, ch_pay_nom, ch_vil_lien_img1 FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id WHERE ch_vil_ID = %s", escape_sql($elementID, "int"));
     $villes = mysql_query($query_villes, $maconnexion);
     $row_villes = mysql_fetch_assoc($villes);
     $totalRows_villes = mysql_num_rows($villes);
@@ -50,7 +50,7 @@ elseif ( $cat == "ville") {
 }
 
 elseif ( $cat == "institut") {
-    $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($elementID, "int"));
+    $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", escape_sql($elementID, "int"));
     $institut = mysql_query($query_institut, $maconnexion);
     $row_institut = mysql_fetch_assoc($institut);
     $totalRows_institut = mysql_num_rows($institut);
@@ -80,7 +80,7 @@ if (isset($row_communique['ch_com_user_id'])) {
 }
 
 
-$query_user = sprintf("SELECT ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_login FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_user, "int"));
+$query_user = sprintf("SELECT ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_login FROM users WHERE ch_use_id = %s", escape_sql($colname_user, "int"));
 $user = mysql_query($query_user, $maconnexion);
 $row_user = mysql_fetch_assoc($user);
 $totalRows_user = mysql_num_rows($user);
@@ -90,7 +90,7 @@ $ch_com_categorie = "com_communique";
 $ch_com_element_id = $colname_communique;
 
 
-$query_commentaire = sprintf("SELECT ch_com_ID, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_com_pays_id AS ch_use_paysID, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_categorie = %s AND ch_com_element_id = %s ORDER BY ch_com_date DESC", GetSQLValueString($ch_com_categorie, "text"), GetSQLValueString($ch_com_element_id, "int"));
+$query_commentaire = sprintf("SELECT ch_com_ID, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_com_pays_id AS ch_use_paysID, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_categorie = %s AND ch_com_element_id = %s ORDER BY ch_com_date DESC", escape_sql($ch_com_categorie, "text"), escape_sql($ch_com_element_id, "int"));
 $commentaire = mysql_query($query_commentaire, $maconnexion);
 $row_commentaire = mysql_fetch_assoc($commentaire);
 $totalRows_commentaire = mysql_num_rows($commentaire);
@@ -129,26 +129,26 @@ $eloquentCommunique = \Roxayl\MondeGC\Models\Communique::query()->findOrFail($co
       <?php if ($insigne == NULL) {?>
       <img src="<?= DEF_URI_PATH ?>assets/img/imagesdefaut/blason.jpg" alt="armoirie">
       <?php } else { ?>
-      <img src="<?= __s($insigne) ?>" alt="armoirie">
+      <img src="<?= e($insigne) ?>" alt="armoirie">
       <?php } ?>
       <?php } elseif ( $cat == "pays") {?>
       <?php if ($insigne == NULL) {?>
       <img src="<?= DEF_URI_PATH ?>assets/img/imagesdefaut/drapeau.jpg" alt="drapeau">
       <?php } else { ?>
-      <img src="<?= __s($insigne) ?>" alt="drapeau">
+      <img src="<?= e($insigne) ?>" alt="drapeau">
       <?php } ?>
       <?php } elseif ( $cat == "institut" || $cat == 'organisation') {?>
       <?php if ($insigne == NULL) {?>
       <img src="<?= DEF_URI_PATH ?>assets/img/imagesdefaut/blason.jpg" alt="logo">
       <?php } else { ?>
-      <img src="<?= __s($insigne) ?>" alt="logo">
+      <img src="<?= e($insigne) ?>" alt="logo">
       <?php }
 		 } else {?>
-      <img src="<?= __s($insigne) ?>">
+      <img src="<?= e($insigne) ?>">
       <?php } ?>
       <div class="titre-gris">
-        <h3><?= __s($nom_organisation) ?></h3>
-        <small><?= __s($soustitre) ?></small> </div>
+        <h3><?= e($nom_organisation) ?></h3>
+        <small><?= e($soustitre) ?></small> </div>
     </div>
   </div>
 </div>
@@ -156,7 +156,7 @@ $eloquentCommunique = \Roxayl\MondeGC\Models\Communique::query()->findOrFail($co
 
 <div class="modal-body corps-page">
   <div class="titre-vert">
-    <h1><?= __s($row_communique['ch_com_titre']) ?></h1>
+    <h1><?= e($row_communique['ch_com_titre']) ?></h1>
   </div>
   <div class="pull-right">
       <small>Publié le <?= e($eloquentCommunique->ch_com_date->format('d/m/Y')) ?></small>
@@ -193,11 +193,11 @@ $eloquentCommunique = \Roxayl\MondeGC\Models\Communique::query()->findOrFail($co
         </div>
 
           <?php if(isset($persoReaction)): ?>
-          <h4><?= __s($persoReaction->get('predicat')) ?> <?= __s($persoReaction->get('prenom_personnage')) ?> <?= __s($persoReaction->get('nom_personnage')) ?></h4>
+          <h4><?= e($persoReaction->get('predicat')) ?> <?= e($persoReaction->get('prenom_personnage')) ?> <?= e($persoReaction->get('nom_personnage')) ?></h4>
           <h5>
-              <?= isset($paysReaction) ? '<img class="img-menu-drapeau" src="' . __s($paysReaction->get('ch_pay_lien_imgdrapeau')) . '">
-                ' . __s($paysReaction->get('ch_pay_nom')) . ' &#183; ' : '' ?>
-              <?= __s($persoReaction->get('titre_personnage')) ?></h5>
+              <?= isset($paysReaction) ? '<img class="img-menu-drapeau" src="' . e($paysReaction->get('ch_pay_lien_imgdrapeau')) . '">
+                ' . e($paysReaction->get('ch_pay_nom')) . ' &#183; ' : '' ?>
+              <?= e($persoReaction->get('titre_personnage')) ?></h5>
           <!-- AFFICHAGE DATE -->
           <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i", strtotime($row_commentaire['ch_com_date'])); ?></small>
           <p><?= htmlPurify($row_commentaire['ch_com_contenu']) ?></p>

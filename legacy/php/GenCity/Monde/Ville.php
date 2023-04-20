@@ -15,7 +15,7 @@ class Ville extends BaseModel {
 
         $query = mysql_query(sprintf(
             'SELECT * FROM villes WHERE ch_vil_paysID = %s',
-            GetSQLValueString($pays->get('ch_pay_id'))
+            escape_sql($pays->get('ch_pay_id'))
         ));
         $result = array();
         while($row = mysql_fetch_assoc($query)) {

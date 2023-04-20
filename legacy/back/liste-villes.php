@@ -3,29 +3,29 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 $maxRows_listvilles = 30;
 $pageNum_listvilles = 0;
 if (isset($_GET['pageNum_listvilles'])) {
-  $pageNum_listvilles = $_GET['pageNum_listvilles'];
+  $pageNum_listvilles = (int) $_GET['pageNum_listvilles'];
 }
 $startRow_listvilles = $pageNum_listvilles * $maxRows_listvilles;
 $order_by = "ch_vil_mis_jour";
 $tri = "DESC";
 if (isset($_GET['order_by'])) {
-  $order_by = $_GET['order_by'];
-  $nom_colonne = $_GET['order_by'];
+  $order_by = escape_sql($_GET['order_by'], 'order_by_columns', [
+      'ch_vil_capitale', 'ch_pay_nom', 'ch_vil_nom', 'ch_use_login', 'ch_vil_population', 'ch_vil_mis_jour',
+  ]);
+  $nom_colonne = $order_by;
 }
 if (isset($_GET['tri'])) {
-  $tri = $_GET['tri'];
+  $tri = escape_sql($_GET['tri'], 'order_by_pos');
 }
 
 $query_listvilles = "SELECT villes.ch_vil_ID, villes.ch_vil_paysID, villes.ch_vil_mis_jour, villes.ch_vil_nom, villes.ch_vil_capitale, villes.ch_vil_population, pays.ch_pay_id, pays.ch_pay_nom, ch_use_login FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id INNER JOIN users ON ch_vil_user = ch_use_id ORDER BY $order_by $tri";

@@ -3,21 +3,19 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=30))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 30))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 $colname_membre = "-1";
 if (isset($_POST['ch_use_id'])) {
   $colname_membre = $_POST['ch_use_id'];
 }
 
-$query_membre = sprintf("SELECT ch_use_id, ch_use_login, ch_use_lien_imgpersonnage FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_membre, "int"));
+$query_membre = sprintf("SELECT ch_use_id, ch_use_login, ch_use_lien_imgpersonnage FROM users WHERE ch_use_id = %s", escape_sql($colname_membre, "int"));
 $membre = mysql_query($query_membre, $maconnexion);
 $row_membre = mysql_fetch_assoc($membre);
 $totalRows_membre = mysql_num_rows($membre);

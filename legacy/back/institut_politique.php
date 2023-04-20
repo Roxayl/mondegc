@@ -3,21 +3,19 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 $_SESSION['last_work'] = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php'.'?'.$_SERVER['QUERY_STRING'];
 
 //requete instituts
 $institut_id = 6;
 
-$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
+$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", escape_sql($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);

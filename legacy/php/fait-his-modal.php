@@ -8,7 +8,7 @@ if (isset($_GET['ch_his_id'])) {
   $colname_fait_his = $_GET['ch_his_id'];
 }
 
-$query_fait_his = sprintf("SELECT ch_his_id, ch_his_label, ch_his_statut, ch_his_paysID, ch_his_personnage, ch_his_date, ch_his_mis_jour, ch_his_nb_update, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_nom, ch_his_lien_img1, ch_his_legende_img1, ch_his_description, ch_his_contenu, ch_pay_nom, (SELECT GROUP_CONCAT(ch_disp_fait_hist_cat_id) FROM dispatch_fait_his_cat WHERE ch_his_ID = ch_disp_fait_hist_id) AS listcat FROM histoire INNER JOIN pays ON ch_his_paysID = ch_pay_id WHERE ch_his_id = %s", GetSQLValueString($colname_fait_his, "int"));
+$query_fait_his = sprintf("SELECT ch_his_id, ch_his_label, ch_his_statut, ch_his_paysID, ch_his_personnage, ch_his_date, ch_his_mis_jour, ch_his_nb_update, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_nom, ch_his_lien_img1, ch_his_legende_img1, ch_his_description, ch_his_contenu, ch_pay_nom, (SELECT GROUP_CONCAT(ch_disp_fait_hist_cat_id) FROM dispatch_fait_his_cat WHERE ch_his_ID = ch_disp_fait_hist_id) AS listcat FROM histoire INNER JOIN pays ON ch_his_paysID = ch_pay_id WHERE ch_his_id = %s", escape_sql($colname_fait_his, "int"));
 $fait_his = mysql_query($query_fait_his, $maconnexion);
 $row_fait_his = mysql_fetch_assoc($fait_his);
 $totalRows_fait_his = mysql_num_rows($fait_his);
@@ -18,7 +18,7 @@ $ch_com_categorie = "com_fait_his";
 $ch_com_element_id = $colname_fait_his;
 
 
-$query_commentaire = sprintf("SELECT ch_com_ID, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_use_paysID, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_categorie = 'com_fait_his' AND ch_com_element_id = %s ORDER BY ch_com_date DESC", GetSQLValueString($ch_com_element_id, "int"));
+$query_commentaire = sprintf("SELECT ch_com_ID, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_use_paysID, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_categorie = 'com_fait_his' AND ch_com_element_id = %s ORDER BY ch_com_date DESC", escape_sql($ch_com_element_id, "int"));
 $commentaire = mysql_query($query_commentaire, $maconnexion);
 $row_commentaire = mysql_fetch_assoc($commentaire);
 $totalRows_commentaire = mysql_num_rows($commentaire);
@@ -97,7 +97,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
           <ul class="listes">
             <?php do { ?>
               <li class="row-fluid">
-                <div class="span1 icone-categorie"><img src="<?php echo $row_liste_fai_cat3['ch_fai_cat_icon']; ?>" alt="icone <?php echo $row_liste_fai_cat3['ch_fai_cat_nom']; ?>" style="background-color:<?php echo $row_liste_fai_cat3['ch_fai_cat_couleur']; ?>;"></div>
+                <div class="span1 icone-categorie"><img src="<?php echo e($row_liste_fai_cat3['ch_fai_cat_icon']); ?>" alt="icone <?php echo e($row_liste_fai_cat3['ch_fai_cat_nom']); ?>" style="background-color:<?php echo e($row_liste_fai_cat3['ch_fai_cat_couleur']); ?>;"></div>
                 <div class="span8">
                   <p><strong><a href="histoire.php?fai_catID=<?php echo $row_liste_fai_cat3['ch_fai_cat_ID']; ?>#fait_hist"><?php echo $row_liste_fai_cat3['ch_fai_cat_nom']; ?></a></strong></p>
                 </div>

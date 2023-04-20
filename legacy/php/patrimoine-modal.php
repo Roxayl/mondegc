@@ -9,7 +9,7 @@ if (isset($_GET['ch_pat_id'])) {
   $colname_monument = $_GET['ch_pat_id'];
 }
 
-$query_monument = sprintf("SELECT ch_pat_id, ch_pat_label, ch_pat_statut, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nb_update, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_nom, ch_pat_lien_img1, ch_pat_lien_img2, ch_pat_lien_img3, ch_pat_lien_img4, ch_pat_lien_img5, ch_pat_legende_img1, ch_pat_legende_img2, ch_pat_legende_img3, ch_pat_legende_img4, ch_pat_legende_img5, ch_pat_description, ch_pay_nom, ch_vil_nom, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID WHERE ch_pat_id = %s", GetSQLValueString($colname_monument, "int"));
+$query_monument = sprintf("SELECT ch_pat_id, ch_pat_label, ch_pat_statut, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nb_update, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_nom, ch_pat_lien_img1, ch_pat_lien_img2, ch_pat_lien_img3, ch_pat_lien_img4, ch_pat_lien_img5, ch_pat_legende_img1, ch_pat_legende_img2, ch_pat_legende_img3, ch_pat_legende_img4, ch_pat_legende_img5, ch_pat_description, ch_pay_nom, ch_vil_nom, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID WHERE ch_pat_id = %s", escape_sql($colname_monument, "int"));
 $monument = mysql_query($query_monument, $maconnexion);
 $row_monument = mysql_fetch_assoc($monument);
 $totalRows_monument = mysql_num_rows($monument);
@@ -17,7 +17,7 @@ $totalRows_monument = mysql_num_rows($monument);
 
 // *** Requête commentaires.
 $ch_com_categorie = "com_monument";
-$ch_com_element_id = GetSQLValueString($colname_monument, "int");
+$ch_com_element_id = escape_sql($colname_monument, "int");
 
 
 $query_commentaire = "SELECT ch_com_ID, ch_com_user_id, ch_com_date, ch_com_date_mis_jour, ch_com_titre, ch_com_contenu, ch_use_paysID, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM communiques INNER JOIN users ON ch_com_user_id = ch_use_id WHERE ch_com_categorie = 'com_monument' AND ch_com_element_id = '$ch_com_element_id' ORDER BY ch_com_date DESC";
@@ -28,7 +28,7 @@ $totalRows_commentaire = mysql_num_rows($commentaire);
 // *** Ressources patrimoine
 $query_monument_ressources = sprintf("SELECT SUM(ch_mon_cat_budget) AS budget,SUM(ch_mon_cat_industrie) AS industrie, SUM(ch_mon_cat_commerce) AS commerce, SUM(ch_mon_cat_agriculture) AS agriculture, SUM(ch_mon_cat_tourisme) AS tourisme, SUM(ch_mon_cat_recherche) AS recherche, SUM(ch_mon_cat_environnement) AS environnement, SUM(ch_mon_cat_education) AS education FROM monument_categories
   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-  INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_id = %s", GetSQLValueString($colname_monument, "int"));
+  INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_id = %s", escape_sql($colname_monument, "int"));
 $monument_ressources = mysql_query($query_monument_ressources, $maconnexion);
 $row_monument_ressources = mysql_fetch_assoc($monument_ressources);
 
@@ -68,37 +68,37 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
     <section id="Carousel-monument" class="carousel slide">
       <div class="carousel-inner">
         <?php if ($row_monument['ch_pat_lien_img1']) { ?>
-        <div class="item active" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img1']; ?>)">
+        <div class="item active" style="background-image: url(<?= e($row_monument['ch_pat_lien_img1']) ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_monument['ch_pat_legende_img1']; ?></p>
+            <p><?= e($row_monument['ch_pat_legende_img1']) ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_monument['ch_pat_lien_img2']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img2']; ?>)">
+        <div class="item" style="background-image: url(<?= e($row_monument['ch_pat_lien_img2']) ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_monument['ch_pat_legende_img2']; ?></p>
+            <p><?= e($row_monument['ch_pat_legende_img2']) ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_monument['ch_pat_lien_img3']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img3']; ?>)">
+        <div class="item" style="background-image: url(<?= e($row_monument['ch_pat_lien_img3']) ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_monument['ch_pat_legende_img3']; ?></p>
+            <p><?= e($row_monument['ch_pat_legende_img3']) ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_monument['ch_pat_lien_img4']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img4']; ?>)">
+        <div class="item" style="background-image: url(<?= e($row_monument['ch_pat_lien_img4']) ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_monument['ch_pat_legende_img4']; ?></p>
+            <p><?= e($row_monument['ch_pat_legende_img4']) ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_monument['ch_pat_lien_img5']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_monument['ch_pat_lien_img5']; ?>)">
+        <div class="item" style="background-image: url(<?= e($row_monument['ch_pat_lien_img5']) ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_monument['ch_pat_legende_img5']; ?></p>
+            <p><?= e($row_monument['ch_pat_legende_img5']) ?></p>
           </div>
         </div>
         <?php } ?>
@@ -122,9 +122,9 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
         <ul class="listes">
           <?php do { ?>
             <li class="row-fluid icone-categorie">
-              <div class="span1"><img src="<?php echo $row_liste_mon_cat3['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" style="background-color:<?php echo $row_liste_mon_cat3['ch_mon_cat_couleur']; ?>;"></div>
+              <div class="span1"><img src="<?= e($row_liste_mon_cat3['ch_mon_cat_icon']) ?>" alt="icone <?= e($row_liste_mon_cat3['ch_mon_cat_nom']) ?>" style="background-color:<?= e($row_liste_mon_cat3['ch_mon_cat_couleur']) ?>;"></div>
               <div class="span8">
-                <p><strong><a href="patrimoine.php?mon_catID=<?php echo $row_liste_mon_cat3['ch_mon_cat_ID']; ?>#monument"><?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?></a></strong></p>
+                <p><strong><a href="patrimoine.php?mon_catID=<?= e($row_liste_mon_cat3['ch_mon_cat_ID']) ?>#monument"><?= e($row_liste_mon_cat3['ch_mon_cat_nom']) ?></a></strong></p>
               </div>
             </li>
             <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); ?>

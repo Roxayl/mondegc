@@ -36,7 +36,7 @@ if(is_null($thisGroup)) {
         JOIN infrastructures_officielles_groupes iog ON iof.ch_inf_off_id = iog.ID_infra_officielle
         WHERE ID_groupes = %s
         ORDER BY %s",
-        GetSQLValueString($thisGroup->get('id')),
+        escape_sql($thisGroup->get('id')),
         mysql_real_escape_string($type_classement));
 }
 $query_limit_liste_infra_officielles = sprintf("%s LIMIT %d, %d", $query_liste_infra_officielles, $startRow_liste_infra_officielles, $maxRows_liste_infra_officielles);

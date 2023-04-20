@@ -3,14 +3,12 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
@@ -26,21 +24,21 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_institut")
   $oldInstitut = new \GenCity\Monde\Institut\Institut($_POST['ch_ins_ID']);
 
   $updateSQL = sprintf("UPDATE instituts SET ch_ins_label=%s, ch_ins_lien_forum=%s, ch_ins_date_enregistrement=%s, ch_ins_mis_jour=%s, ch_ins_nb_update=%s, ch_ins_user_ID=%s, ch_ins_sigle=%s, ch_ins_nom=%s, ch_ins_statut=%s, ch_ins_logo=%s, ch_ins_img=%s, ch_ins_desc=%s, ch_ins_coord_X=%s, ch_ins_coord_Y=%s WHERE ch_ins_ID=%s",
-                       GetSQLValueString($_POST['ch_ins_label'], "text"),
-                       GetSQLValueString($_POST['ch_ins_lien_forum'], "text"),
-                       GetSQLValueString($_POST['ch_ins_date_enregistrement'], "date"),
-                       GetSQLValueString($_POST['ch_ins_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_ins_nb_update'], "int"),
-                       GetSQLValueString($_POST['ch_ins_user_ID'], "int"),
-                       GetSQLValueString($_POST['ch_ins_sigle'], "text"),
-                       GetSQLValueString($_POST['ch_ins_nom'], "text"),
-                       GetSQLValueString($_POST['ch_ins_statut'], "int"),
-                       GetSQLValueString($_POST['ch_ins_logo'], "text"),
-                       GetSQLValueString($_POST['ch_ins_img'], "text"),
-                       GetSQLValueString($_POST['ch_ins_desc'], "text"),
-					   GetSQLValueString($_POST['form_coord_X'], "decimal"),
-                       GetSQLValueString($_POST['form_coord_Y'], "decimal"),
-                       GetSQLValueString($_POST['ch_ins_ID'], "int"));
+                       escape_sql($_POST['ch_ins_label'], "text"),
+                       escape_sql($_POST['ch_ins_lien_forum'], "text"),
+                       escape_sql($_POST['ch_ins_date_enregistrement'], "date"),
+                       escape_sql($_POST['ch_ins_mis_jour'], "date"),
+                       escape_sql($_POST['ch_ins_nb_update'], "int"),
+                       escape_sql($_POST['ch_ins_user_ID'], "int"),
+                       escape_sql($_POST['ch_ins_sigle'], "text"),
+                       escape_sql($_POST['ch_ins_nom'], "text"),
+                       escape_sql($_POST['ch_ins_statut'], "int"),
+                       escape_sql($_POST['ch_ins_logo'], "text"),
+                       escape_sql($_POST['ch_ins_img'], "text"),
+                       escape_sql($_POST['ch_ins_desc'], "text"),
+					   escape_sql($_POST['form_coord_X'], "decimal"),
+                       escape_sql($_POST['form_coord_Y'], "decimal"),
+                       escape_sql($_POST['ch_ins_ID'], "int"));
 
   
   $Result1 = mysql_query($updateSQL, $maconnexion);
@@ -75,7 +73,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_institut")
 }
 
 
-$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
+$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", escape_sql($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
@@ -139,7 +137,7 @@ Eventy::action('display.beforeHeadClosingTag')
   <section>
     <div id="categories">
      <section>
-  <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="modifier_institut" Id="modifier_institut">
+  <form action="<?= e($editFormAction) ?>" method="POST" class="form-horizontal well" name="modifier_institut" Id="modifier_institut">
     <div class="alert alert-tips">
       <button type="button" class="close" data-dismiss="alert">×</button>
       Ce formulaire contient les informations qui seront affich&eacute;es sur la page consacr&eacute;e au Comité et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Mettez-le &agrave; jour.</div>

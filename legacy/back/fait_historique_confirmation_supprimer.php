@@ -14,7 +14,7 @@ if (isset($_POST['ch_his_id'])) {
   $colname_ch_his_confimation_suppression = $_POST['ch_his_id'];
 }
 
-$query_ch_his_confimation_suppression = sprintf("SELECT ch_his_id, ch_his_paysID, ch_his_nom, ch_his_lien_img1 FROM histoire WHERE ch_his_id = %s", GetSQLValueString($colname_ch_his_confimation_suppression, "int"));
+$query_ch_his_confimation_suppression = sprintf("SELECT ch_his_id, ch_his_paysID, ch_his_nom, ch_his_lien_img1 FROM histoire WHERE ch_his_id = %s", escape_sql($colname_ch_his_confimation_suppression, "int"));
 $ch_his_confimation_suppression = mysql_query($query_ch_his_confimation_suppression, $maconnexion);
 $row_ch_his_confimation_suppression = mysql_fetch_assoc($ch_his_confimation_suppression);
 $totalRows_ch_his_confimation_suppression = mysql_num_rows($ch_his_confimation_suppression);
