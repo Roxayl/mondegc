@@ -27,7 +27,7 @@ if(isset($_POST['ch_geo_id'])) {
 }
 
 //Requete Pays
-$query_InfoGenerale = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_paysID, "int"));
+$query_InfoGenerale = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", escape_sql($colname_paysID, "int"));
 $InfoGenerale = mysql_query($query_InfoGenerale, $maconnexion);
 $row_InfoGenerale = mysql_fetch_assoc($InfoGenerale);
 $totalRows_InfoGenerale = mysql_num_rows($InfoGenerale);
@@ -58,16 +58,16 @@ if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
 
     else {
         $insertSQL = sprintf("INSERT INTO geometries (ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            GetSQLValueString($_POST['ch_geo_wkt'], "text"),
-            GetSQLValueString($colname_paysID, "int"),
-            GetSQLValueString($_POST['ch_geo_user'], "int"),
-            GetSQLValueString($_POST['ch_geo_maj_user'], "int"),
-            GetSQLValueString($_POST['ch_geo_date'], "date"),
-            GetSQLValueString($_POST['ch_geo_mis_jour'], "date"),
-            GetSQLValueString($_POST['ch_geo_geometries'], "text"),
-            GetSQLValueString($_POST['ch_geo_mesure'], "int"),
-            GetSQLValueString($_POST['ch_geo_type'], "text"),
-            GetSQLValueString($_POST['ch_geo_nom'], "text"));
+            escape_sql($_POST['ch_geo_wkt'], "text"),
+            escape_sql($colname_paysID, "int"),
+            escape_sql($_POST['ch_geo_user'], "int"),
+            escape_sql($_POST['ch_geo_maj_user'], "int"),
+            escape_sql($_POST['ch_geo_date'], "date"),
+            escape_sql($_POST['ch_geo_mis_jour'], "date"),
+            escape_sql($_POST['ch_geo_geometries'], "text"),
+            escape_sql($_POST['ch_geo_mesure'], "int"),
+            escape_sql($_POST['ch_geo_type'], "text"),
+            escape_sql($_POST['ch_geo_nom'], "text"));
 
         $Result1 = mysql_query($insertSQL, $maconnexion);
 
@@ -75,7 +75,7 @@ if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
     }
 
     //recherche des mesures des zones de la carte pour calcul ressources
-    $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($colname_paysID, "int"));
+    $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s GROUP BY ch_geo_type ORDER BY ch_geo_geometries", escape_sql($colname_paysID, "int"));
     $geometries = mysql_query($query_geometries, $maconnexion);
 
     //Calcul total des ressources de la carte.
@@ -97,17 +97,17 @@ if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
 
     //Enregistrement du total des ressources de la carte.
     $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_carte=%s, ch_pay_commerce_carte=%s, ch_pay_agriculture_carte=%s, ch_pay_tourisme_carte=%s, ch_pay_recherche_carte=%s, ch_pay_environnement_carte=%s, ch_pay_education_carte=%s, ch_pay_population_carte=%s, ch_pay_emploi_carte=%s WHERE ch_pay_id=%s",
-        GetSQLValueString($tot_budget, "int"),
-        GetSQLValueString($tot_industrie, "int"),
-        GetSQLValueString($tot_commerce, "int"),
-        GetSQLValueString($tot_agriculture, "int"),
-        GetSQLValueString($tot_tourisme, "int"),
-        GetSQLValueString($tot_recherche, "int"),
-        GetSQLValueString($tot_environnement, "int"),
-        GetSQLValueString($tot_education, "int"),
-        GetSQLValueString($tot_population, "int"),
-        GetSQLValueString($tot_emploi, "int"),
-        GetSQLValueString($colname_paysID, "int"));
+        escape_sql($tot_budget, "int"),
+        escape_sql($tot_industrie, "int"),
+        escape_sql($tot_commerce, "int"),
+        escape_sql($tot_agriculture, "int"),
+        escape_sql($tot_tourisme, "int"),
+        escape_sql($tot_recherche, "int"),
+        escape_sql($tot_environnement, "int"),
+        escape_sql($tot_education, "int"),
+        escape_sql($tot_population, "int"),
+        escape_sql($tot_emploi, "int"),
+        escape_sql($colname_paysID, "int"));
 
     $Result2 = mysql_query($updateSQL, $maconnexion);
     mysql_free_result($geometries);
@@ -133,17 +133,17 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
 
     else {
         $updateSQL = sprintf("UPDATE geometries SET ch_geo_wkt=%s, ch_geo_pay_id=%s, ch_geo_user=%s, ch_geo_maj_user=%s, ch_geo_date=%s, ch_geo_mis_jour=%s, ch_geo_geometries=%s, ch_geo_mesure=%s, ch_geo_type=%s, ch_geo_nom=%s WHERE ch_geo_id=%s",
-            GetSQLValueString($_POST['ch_geo_wkt'], "text"),
-            GetSQLValueString($_POST['ch_geo_pay_id'], "int"),
-            GetSQLValueString($_POST['ch_geo_user'], "int"),
-            GetSQLValueString($_POST['ch_geo_maj_user'], "int"),
-            GetSQLValueString($_POST['ch_geo_date'], "date"),
-            GetSQLValueString($_POST['ch_geo_mis_jour'], "date"),
-            GetSQLValueString($_POST['ch_geo_geometries'], "text"),
-            GetSQLValueString($_POST['ch_geo_mesure'], "decimal"),
-            GetSQLValueString($_POST['ch_geo_type'], "text"),
-            GetSQLValueString($_POST['ch_geo_nom'], "text"),
-            GetSQLValueString($_POST['ch_geo_id'], "int"));
+            escape_sql($_POST['ch_geo_wkt'], "text"),
+            escape_sql($_POST['ch_geo_pay_id'], "int"),
+            escape_sql($_POST['ch_geo_user'], "int"),
+            escape_sql($_POST['ch_geo_maj_user'], "int"),
+            escape_sql($_POST['ch_geo_date'], "date"),
+            escape_sql($_POST['ch_geo_mis_jour'], "date"),
+            escape_sql($_POST['ch_geo_geometries'], "text"),
+            escape_sql($_POST['ch_geo_mesure'], "decimal"),
+            escape_sql($_POST['ch_geo_type'], "text"),
+            escape_sql($_POST['ch_geo_nom'], "text"),
+            escape_sql($_POST['ch_geo_id'], "int"));
 
         $Result1 = mysql_query($updateSQL, $maconnexion);
 
@@ -153,7 +153,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
 
     //recherche des mesures des zones de la carte pour calcul ressources
 
-    $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($paysid, "int"));
+    $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", escape_sql($paysid, "int"));
     $geometries = mysql_query($query_geometries, $maconnexion);
 
     //Calcul total des ressources de la carte.
@@ -175,17 +175,17 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
 
     //Enregistrement du total des ressources de la carte.
     $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_carte=%s, ch_pay_commerce_carte=%s, ch_pay_agriculture_carte=%s, ch_pay_tourisme_carte=%s, ch_pay_recherche_carte=%s, ch_pay_environnement_carte=%s, ch_pay_education_carte=%s, ch_pay_population_carte=%s, ch_pay_emploi_carte=%s WHERE ch_pay_id=%s",
-        GetSQLValueString($tot_budget, "int"),
-        GetSQLValueString($tot_industrie, "int"),
-        GetSQLValueString($tot_commerce, "int"),
-        GetSQLValueString($tot_agriculture, "int"),
-        GetSQLValueString($tot_tourisme, "int"),
-        GetSQLValueString($tot_recherche, "int"),
-        GetSQLValueString($tot_environnement, "int"),
-        GetSQLValueString($tot_education, "int"),
-        GetSQLValueString($tot_population, "int"),
-        GetSQLValueString($tot_emploi, "int"),
-        GetSQLValueString($paysid, "int"));
+        escape_sql($tot_budget, "int"),
+        escape_sql($tot_industrie, "int"),
+        escape_sql($tot_commerce, "int"),
+        escape_sql($tot_agriculture, "int"),
+        escape_sql($tot_tourisme, "int"),
+        escape_sql($tot_recherche, "int"),
+        escape_sql($tot_environnement, "int"),
+        escape_sql($tot_education, "int"),
+        escape_sql($tot_population, "int"),
+        escape_sql($tot_emploi, "int"),
+        escape_sql($paysid, "int"));
 
     $Result2 = mysql_query($updateSQL, $maconnexion);
     mysql_free_result($geometries);

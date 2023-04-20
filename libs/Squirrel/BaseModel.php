@@ -39,14 +39,14 @@ class BaseModel
         $query = 'UPDATE ' . $this->{$this->model::$tableName} . ' SET ';
 
         foreach($structure as $field => $default) {
-            $query .= ' `' . $field . '` = ' . GetSQLValueString($this->get($field));
+            $query .= ' `' . $field . '` = ' . escape_sql($this->get($field));
             end($structure);
             if($field !== key($structure)) {
                 $query .= ', ';
             }
         }
 
-        $query .= ' WHERE id = ' . GetSQLValueString($this->get('id'));
+        $query .= ' WHERE id = ' . escape_sql($this->get('id'));
         mysql_query($query);
     }
 }

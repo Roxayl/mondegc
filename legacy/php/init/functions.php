@@ -7,11 +7,10 @@
 
 use Roxayl\MondeGC\Services\HelperService;
 
-//Protection  données envoyées
-function GetSQLValueString($value, $type = "text", $definedValue = "", $notDefinedValue = "")
+// Protection données envoyées
+function escape_sql($value, $type = "text", $definedValue = "", $notDefinedValue = "")
 {
-    $value = function_exists("mysql_real_escape_string") ?
-        mysql_real_escape_string($value) : mysql_escape_string($value);
+    $value = mysql_real_escape_string($value);
 
     switch($type) {
         case "text":

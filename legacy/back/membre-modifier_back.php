@@ -19,7 +19,7 @@ if(isset($_REQUEST['userID'])) {
     unset($_REQUEST['userID']);
 }
 
-$query_User = sprintf("SELECT * FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_User, "int"));
+$query_User = sprintf("SELECT * FROM users WHERE ch_use_id = %s", escape_sql($colname_User, "int"));
 $User = mysql_query($query_User, $maconnexion);
 $row_User = mysql_fetch_assoc($User);
 $totalRows_User = mysql_num_rows($User);
@@ -44,13 +44,13 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
     }
 
     $updateSQL = sprintf("UPDATE users SET ch_use_acces=%s, ch_use_statut=%s, ch_use_paysID=%s, ch_use_login=%s, ch_use_password=%s, ch_use_mail=%s WHERE ch_use_id=%s",
-        GetSQLValueString($banni, "int"),
-        GetSQLValueString($_POST['ch_use_statut'], "int"),
-        GetSQLValueString($_POST['ch_use_paysID'], "int"),
-        GetSQLValueString($_POST['ch_use_login'], "text"),
-        GetSQLValueString($hashed_password, "text"),
-        GetSQLValueString($_POST['ch_use_mail'], "text"),
-        GetSQLValueString($_POST['ch_use_id'], "int"));
+        escape_sql($banni, "int"),
+        escape_sql($_POST['ch_use_statut'], "int"),
+        escape_sql($_POST['ch_use_paysID'], "int"),
+        escape_sql($_POST['ch_use_login'], "text"),
+        escape_sql($hashed_password, "text"),
+        escape_sql($_POST['ch_use_mail'], "text"),
+        escape_sql($_POST['ch_use_id'], "int"));
 
     $Result1 = mysql_query($updateSQL, $maconnexion);
 
@@ -66,15 +66,15 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
     $updateSQL = sprintf("UPDATE personnage SET nom_personnage = %s, predicat = %s,
                       prenom_personnage = %s, biographie = %s, titre_personnage = %s
                       WHERE id = %s",
-        GetSQLValueString($_POST['ch_use_nom_dirigeant'], 'text'),
-        GetSQLValueString($_POST['ch_use_predicat_dirigeant'], 'text'),
-        GetSQLValueString($_POST['ch_use_prenom_dirigeant'], 'text'),
-        GetSQLValueString($_POST['ch_use_biographie_dirigeant'], "text"),
-        GetSQLValueString($_POST['ch_use_titre_dirigeant'], "text"),
-        GetSQLValueString($_POST['personnage_id'], "int"));
+        escape_sql($_POST['ch_use_nom_dirigeant'], 'text'),
+        escape_sql($_POST['ch_use_predicat_dirigeant'], 'text'),
+        escape_sql($_POST['ch_use_prenom_dirigeant'], 'text'),
+        escape_sql($_POST['ch_use_biographie_dirigeant'], "text"),
+        escape_sql($_POST['ch_use_titre_dirigeant'], "text"),
+        escape_sql($_POST['personnage_id'], "int"));
 
     $selectSQL = mysql_query(sprintf('SELECT entity_id FROM personnage WHERE id = %s',
-        GetSQLValueString($_POST['personnage_id'], 'int')));
+        escape_sql($_POST['personnage_id'], 'int')));
     $personnageData = mysql_fetch_assoc($selectSQL);
     $thisPays = new \GenCity\Monde\Pays($personnageData['entity_id']);
 

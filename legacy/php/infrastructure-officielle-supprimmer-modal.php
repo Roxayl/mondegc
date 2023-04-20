@@ -7,7 +7,7 @@ if (isset($_GET['infrastructure_off'])) {
   $colname_infra_officielles = $_GET['infrastructure_off'];
 }
 
-$query_infra_officielles = sprintf("SELECT * FROM infrastructures_officielles WHERE ch_inf_off_id = %s", GetSQLValueString($colname_infra_officielles, "int"));
+$query_infra_officielles = sprintf("SELECT * FROM infrastructures_officielles WHERE ch_inf_off_id = %s", escape_sql($colname_infra_officielles, "int"));
 $infra_officielles = mysql_query($query_infra_officielles, $maconnexion);
 $row_infra_officielles = mysql_fetch_assoc($infra_officielles);
 $totalRows_infra_officielles = mysql_num_rows($infra_officielles);

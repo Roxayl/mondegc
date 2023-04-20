@@ -8,7 +8,7 @@ if (isset($_GET['ch_vil_ID'])) {
   $ville_ID = $_GET['ch_vil_ID'];
 }
 
-$query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_lien_img1, ch_vil_user, ch_vil_paysID, ch_pay_lien_forum, ch_use_id FROM villes INNER JOIN pays ON ch_vil_paysID = ch_pay_id LEFT JOIN  users ON ch_use_paysID = ch_vil_paysID WHERE ch_vil_ID = %s AND ch_vil_capitale<>3", GetSQLValueString($ville_ID, "int"));
+$query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_lien_img1, ch_vil_user, ch_vil_paysID, ch_pay_lien_forum, ch_use_id FROM villes INNER JOIN pays ON ch_vil_paysID = ch_pay_id LEFT JOIN  users ON ch_use_paysID = ch_vil_paysID WHERE ch_vil_ID = %s AND ch_vil_capitale<>3", escape_sql($ville_ID, "int"));
 $villes = mysql_query($query_villes, $maconnexion);
 $row_villes = mysql_fetch_assoc($villes);
 $totalRows_villes = mysql_num_rows($villes);
@@ -36,8 +36,8 @@ appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
   $updateSQL = sprintf("UPDATE pays SET ch_pay_lien_forum=%s WHERE ch_pay_id=%s",
-                       GetSQLValueString($_POST['ch_pay_lien_forum'], "text"),
-                       GetSQLValueString($_POST['ch_pay_id'], "int"));
+                       escape_sql($_POST['ch_pay_lien_forum'], "text"),
+                       escape_sql($_POST['ch_pay_id'], "int"));
 
   
   $Result1 = mysql_query($updateSQL, $maconnexion);

@@ -13,19 +13,19 @@ if(!isset($_SESSION['userObject'])) {
 
 // obtenir infos sur le pays
 $getHistory = mysql_query(sprintf('SELECT ch_his_paysID FROM histoire WHERE ch_his_id = %s',
-    GetSQLValueString($_POST['ch_his_id'])));
+    escape_sql($_POST['ch_his_id'])));
 $getHistory = mysql_fetch_assoc($getHistory);
 $thisPays = new \GenCity\Monde\Pays($getHistory['ch_his_paysID']);
 
 if ((isset($_POST['ch_his_id'])) && ($_POST['ch_his_id'] != "")) {
   $deleteSQL = sprintf("DELETE FROM histoire WHERE ch_his_id=%s",
-                       GetSQLValueString($_POST['ch_his_id'], "int"));
+                       escape_sql($_POST['ch_his_id'], "int"));
   
   $Result1 = mysql_query($deleteSQL, $maconnexion);
 
 
 $deleteSQL2 = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_id=%s",
-                       GetSQLValueString($_POST['monument_ID'], "int"));
+                       escape_sql($_POST['monument_ID'], "int"));
 
   $Result2 = mysql_query($deleteSQL, $maconnexion);
   

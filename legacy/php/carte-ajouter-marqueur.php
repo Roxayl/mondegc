@@ -3,35 +3,35 @@
 // Connexion BDD Pays pour afficher markers des pays
 
 
-$query_MarkerPays = sprintf ("SELECT DISTINCT ch_pay_id, ch_pay_continent, ch_pay_emplacement, ch_pay_nom, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_pay_header_presentation, ch_pay_mis_jour, ch_pay_population_carte, ch_use_lien_imgpersonnage, ch_use_login, (SELECT SUM(ch_vil_population) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS ch_pay_population, (SELECT COUNT(ch_vil_ID) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS ch_pay_nbvilles FROM pays LEFT JOIN users ON pays.ch_pay_id = users.ch_use_paysID WHERE ch_pay_publication = 1 AND ch_pay_id=%s GROUP BY ch_pay_id ORDER BY ch_pay_nom ASC", GetSQLValueString($paysID, "int"));
+$query_MarkerPays = sprintf ("SELECT DISTINCT ch_pay_id, ch_pay_continent, ch_pay_emplacement, ch_pay_nom, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_pay_header_presentation, ch_pay_mis_jour, ch_pay_population_carte, ch_use_lien_imgpersonnage, ch_use_login, (SELECT SUM(ch_vil_population) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS ch_pay_population, (SELECT COUNT(ch_vil_ID) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS ch_pay_nbvilles FROM pays LEFT JOIN users ON pays.ch_pay_id = users.ch_use_paysID WHERE ch_pay_publication = 1 AND ch_pay_id=%s GROUP BY ch_pay_id ORDER BY ch_pay_nom ASC", escape_sql($paysID, "int"));
 $MarkerPays = mysql_query($query_MarkerPays, $maconnexion);
 $row_MarkerPays = mysql_fetch_assoc($MarkerPays);
 $totalRows_MarkerPays = mysql_num_rows($MarkerPays);
 
 // Connexion BDD Villes pour afficher markers des villes
 
-$query_MarkerVilles = sprintf ("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_mis_jour, ch_vil_armoiries, ch_vil_nom, ch_vil_capitale, ch_vil_specialite, ch_vil_population, ch_vil_lien_img1, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE ch_vil_capitale <> 3 AND pays.ch_pay_publication = 1 AND ch_vil_paysID=%s ORDER BY ch_vil_paysID ASC", GetSQLValueString($paysID, "int"));
+$query_MarkerVilles = sprintf ("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_mis_jour, ch_vil_armoiries, ch_vil_nom, ch_vil_capitale, ch_vil_specialite, ch_vil_population, ch_vil_lien_img1, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE ch_vil_capitale <> 3 AND pays.ch_pay_publication = 1 AND ch_vil_paysID=%s ORDER BY ch_vil_paysID ASC", escape_sql($paysID, "int"));
 $MarkerVilles = mysql_query($query_MarkerVilles, $maconnexion);
 $row_MarkerVilles = mysql_fetch_assoc($MarkerVilles);
 $totalRows_MarkerVilles = mysql_num_rows($MarkerVilles);
 
 // Connexion BDD Monument pour afficher markers des monuments
 
-$query_MarkerMonument = sprintf ("SELECT ch_pat_id, ch_pat_paysID, ch_pat_villeID, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_mis_jour, ch_pat_nom, ch_pat_lien_img1, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_id = ch_disp_mon_id) AS listcat, ch_vil_armoiries, ch_vil_ID, ch_vil_nom, ch_vil_capitale, pays.ch_pay_id, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login FROM patrimoine INNER JOIN villes ON  ch_pat_villeID=villes.ch_vil_ID INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE ch_pat_statut=1 AND ch_vil_capitale <> 3 AND pays.ch_pay_publication = 1 AND ch_pat_paysID=%s ORDER BY ch_pat_id ASC", GetSQLValueString($paysID, "int"));
+$query_MarkerMonument = sprintf ("SELECT ch_pat_id, ch_pat_paysID, ch_pat_villeID, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_mis_jour, ch_pat_nom, ch_pat_lien_img1, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_id = ch_disp_mon_id) AS listcat, ch_vil_armoiries, ch_vil_ID, ch_vil_nom, ch_vil_capitale, pays.ch_pay_id, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login FROM patrimoine INNER JOIN villes ON  ch_pat_villeID=villes.ch_vil_ID INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE ch_pat_statut=1 AND ch_vil_capitale <> 3 AND pays.ch_pay_publication = 1 AND ch_pat_paysID=%s ORDER BY ch_pat_id ASC", escape_sql($paysID, "int"));
 $MarkerMonument = mysql_query($query_MarkerMonument, $maconnexion);
 $row_MarkerMonument = mysql_fetch_assoc($MarkerMonument);
 $totalRows_MarkerMonument = mysql_num_rows($MarkerMonument);
 
 // Connexion BDD gometries pour afficher zones des pays
 
-$query_ZonesPays = sprintf ("SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE ((ch_pay_publication = 1 AND ch_geo_pay_id=%s)  OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'polygon'", GetSQLValueString($paysID, "int"));
+$query_ZonesPays = sprintf ("SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE ((ch_pay_publication = 1 AND ch_geo_pay_id=%s)  OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'polygon'", escape_sql($paysID, "int"));
 $ZonesPays = mysql_query($query_ZonesPays, $maconnexion);
 $row_ZonesPays = mysql_fetch_assoc($ZonesPays);
 $totalRows_ZonesPays = mysql_num_rows($ZonesPays);
 
 // Connexion BDD gometries pour afficher voies des pays
 
-$query_VoiesPays = sprintf ("SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id INNER JOIN users ON ch_geo_user = ch_use_id WHERE ((ch_pay_publication = 1 AND ch_geo_pay_id=%s) OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'line'", GetSQLValueString($paysID, "int"));
+$query_VoiesPays = sprintf ("SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id INNER JOIN users ON ch_geo_user = ch_use_id WHERE ((ch_pay_publication = 1 AND ch_geo_pay_id=%s) OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'line'", escape_sql($paysID, "int"));
 $VoiesPays = mysql_query($query_VoiesPays, $maconnexion);
 $row_VoiesPays = mysql_fetch_assoc($VoiesPays);
 $totalRows_VoiesPays = mysql_num_rows($VoiesPays);

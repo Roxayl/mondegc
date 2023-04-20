@@ -33,36 +33,36 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_ville")) {
 
     else {
   $updateSQL = sprintf("UPDATE villes SET ch_vil_paysID=%s, ch_vil_user=%s, ch_vil_label=%s, ch_vil_date_enregistrement=%s, ch_vil_mis_jour=%s, ch_vil_nb_update=%s, ch_vil_coord_X=%s, ch_vil_coord_Y=%s, ch_vil_type_jeu=%s, ch_vil_nom=%s, ch_vil_armoiries=%s, ch_vil_capitale=%s, ch_vil_population=%s, ch_vil_specialite=%s, ch_vil_lien_img1=%s, ch_vil_lien_img2=%s, ch_vil_lien_img3=%s, ch_vil_lien_img4=%s, ch_vil_lien_img5=%s, ch_vil_legende_img1=%s, ch_vil_legende_img2=%s, ch_vil_legende_img3=%s, ch_vil_legende_img4=%s, ch_vil_legende_img5=%s, ch_vil_header=%s, ch_vil_contenu=%s, ch_vil_transports=%s, ch_vil_administration=%s, ch_vil_culture=%s WHERE ch_vil_ID=%s",
-                       GetSQLValueString($_POST['ch_vil_paysID'], "int"),
-                       GetSQLValueString($_POST['ch_vil_user'], "int"),
-                       GetSQLValueString($_POST['ch_vil_label'], "text"),
-                       GetSQLValueString($_POST['ch_vil_date_enregistrement'], "date"),
-                       GetSQLValueString($_POST['ch_vil_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_vil_nb_update'], "int"),
-                       GetSQLValueString($_POST['form_coord_X'], "decimal"),
-                       GetSQLValueString($_POST['form_coord_Y'], "decimal"),
-					   GetSQLValueString($_POST['ch_vil_type_jeu'], "text"),
-                       GetSQLValueString($_POST['ch_vil_nom'], "text"),
-					   GetSQLValueString($_POST['ch_vil_armoiries'], "text"),
-                       GetSQLValueString($_POST['ch_vil_capitale'], "int"),
-                       GetSQLValueString($_POST['ch_vil_population'], "int"),
-                       GetSQLValueString($_POST['ch_vil_specialite'], "text"),
-                       GetSQLValueString($_POST['ch_vil_lien_img1'], "text"),
-                       GetSQLValueString($_POST['ch_vil_lien_img2'], "text"),
-                       GetSQLValueString($_POST['ch_vil_lien_img3'], "text"),
-                       GetSQLValueString($_POST['ch_vil_lien_img4'], "text"),
-                       GetSQLValueString($_POST['ch_vil_lien_img5'], "text"),
-                       GetSQLValueString($_POST['ch_vil_legende_img1'], "text"),
-                       GetSQLValueString($_POST['ch_vil_legende_img2'], "text"),
-                       GetSQLValueString($_POST['ch_vil_legende_img3'], "text"),
-                       GetSQLValueString($_POST['ch_vil_legende_img4'], "text"),
-                       GetSQLValueString($_POST['ch_vil_legende_img5'], "text"),
-                       GetSQLValueString($_POST['ch_vil_header'], "text"),
-                       GetSQLValueString($_POST['ch_vil_contenu'], "text"),
-                       GetSQLValueString($_POST['ch_vil_transports'], "text"),
-                       GetSQLValueString($_POST['ch_vil_administration'], "text"),
-                       GetSQLValueString($_POST['ch_vil_culture'], "text"),
-					   GetSQLValueString($_POST['ch_vil_ID'], "int"));
+                       escape_sql($_POST['ch_vil_paysID'], "int"),
+                       escape_sql($_POST['ch_vil_user'], "int"),
+                       escape_sql($_POST['ch_vil_label'], "text"),
+                       escape_sql($_POST['ch_vil_date_enregistrement'], "date"),
+                       escape_sql($_POST['ch_vil_mis_jour'], "date"),
+                       escape_sql($_POST['ch_vil_nb_update'], "int"),
+                       escape_sql($_POST['form_coord_X'], "decimal"),
+                       escape_sql($_POST['form_coord_Y'], "decimal"),
+					   escape_sql($_POST['ch_vil_type_jeu'], "text"),
+                       escape_sql($_POST['ch_vil_nom'], "text"),
+					   escape_sql($_POST['ch_vil_armoiries'], "text"),
+                       escape_sql($_POST['ch_vil_capitale'], "int"),
+                       escape_sql($_POST['ch_vil_population'], "int"),
+                       escape_sql($_POST['ch_vil_specialite'], "text"),
+                       escape_sql($_POST['ch_vil_lien_img1'], "text"),
+                       escape_sql($_POST['ch_vil_lien_img2'], "text"),
+                       escape_sql($_POST['ch_vil_lien_img3'], "text"),
+                       escape_sql($_POST['ch_vil_lien_img4'], "text"),
+                       escape_sql($_POST['ch_vil_lien_img5'], "text"),
+                       escape_sql($_POST['ch_vil_legende_img1'], "text"),
+                       escape_sql($_POST['ch_vil_legende_img2'], "text"),
+                       escape_sql($_POST['ch_vil_legende_img3'], "text"),
+                       escape_sql($_POST['ch_vil_legende_img4'], "text"),
+                       escape_sql($_POST['ch_vil_legende_img5'], "text"),
+                       escape_sql($_POST['ch_vil_header'], "text"),
+                       escape_sql($_POST['ch_vil_contenu'], "text"),
+                       escape_sql($_POST['ch_vil_transports'], "text"),
+                       escape_sql($_POST['ch_vil_administration'], "text"),
+                       escape_sql($_POST['ch_vil_culture'], "text"),
+					   escape_sql($_POST['ch_vil_ID'], "int"));
 
   
   $Result1 = mysql_query($updateSQL, $maconnexion);
@@ -83,7 +83,7 @@ if (isset($_REQUEST['ville-ID'])) {
 	unset($_REQUEST['ville-ID']);
 }
 
-$query_ville = sprintf("SELECT * FROM villes INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($_SESSION['ville_encours'], "int"));
+$query_ville = sprintf("SELECT * FROM villes INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s", escape_sql($_SESSION['ville_encours'], "int"));
 $ville = mysql_query($query_ville, $maconnexion);
 $row_ville = mysql_fetch_assoc($ville);
 $totalRows_ville = mysql_num_rows($ville);
@@ -101,7 +101,7 @@ if (isset($_GET['pageNum_infrastructure'])) {
 $startRow_infrastructure = $pageNum_infrastructure * $maxRows_infrastructure;
 
 
-$query_infrastructure = sprintf("SELECT * FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id=infrastructures_officielles.ch_inf_off_id WHERE ch_inf_villeid = %s ORDER BY ch_inf_date DESC", GetSQLValueString($_SESSION['ville_encours'], "int"));
+$query_infrastructure = sprintf("SELECT * FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id=infrastructures_officielles.ch_inf_off_id WHERE ch_inf_villeid = %s ORDER BY ch_inf_date DESC", escape_sql($_SESSION['ville_encours'], "int"));
 $query_limit_infrastructure = sprintf("%s LIMIT %d, %d", $query_infrastructure, $startRow_infrastructure, $maxRows_infrastructure);
 $infrastructure = mysql_query($query_limit_infrastructure, $maconnexion);
 $row_infrastructure = mysql_fetch_assoc($infrastructure);
@@ -139,7 +139,7 @@ if (isset($_GET['pageNum_monument'])) {
 $startRow_monument = $pageNum_monument * $maxRows_monument;
 
 
-$query_monument = sprintf("SELECT * FROM patrimoine WHERE ch_pat_villeID = %s ORDER BY ch_pat_mis_jour DESC", GetSQLValueString($_SESSION['ville_encours'], "int"));
+$query_monument = sprintf("SELECT * FROM patrimoine WHERE ch_pat_villeID = %s ORDER BY ch_pat_mis_jour DESC", escape_sql($_SESSION['ville_encours'], "int"));
 $query_limit_monument = sprintf("%s LIMIT %d, %d", $query_monument, $startRow_monument, $maxRows_monument);
 $monument = mysql_query($query_limit_monument, $maconnexion);
 $row_monument = mysql_fetch_assoc($monument);
@@ -172,7 +172,7 @@ $queryString_monument = sprintf("&totalRows_monument=%d%s", $totalRows_monument,
 //Requete User
 $UserID = $row_ville['ch_vil_user'];
 
-$query_User = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_id = %s", GetSQLValueString($UserID, "int"));
+$query_User = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_id = %s", escape_sql($UserID, "int"));
 $User = mysql_query($query_User, $maconnexion);
 $row_User = mysql_fetch_assoc($User);
 $totalRows_User = mysql_num_rows($User);

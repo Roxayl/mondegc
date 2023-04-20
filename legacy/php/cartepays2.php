@@ -5,14 +5,14 @@ if (isset($_GET['ch_pay_id'])) {
   $colname_MarkerVilles = $_GET['ch_pay_id'];
 }
 
-$query_MarkerVilles = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_mis_jour, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_armoiries, ch_vil_mis_jour, ch_vil_capitale, ch_use_lien_imgpersonnage, ch_use_login, ch_use_id, ch_vil_nom, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_pay_emplacement, ch_pay_nom, ch_pay_lien_imgdrapeau FROM villes INNER JOIN pays ON ch_pay_id = ch_vil_paysID INNER JOIN users on ch_vil_user=ch_use_id WHERE ch_vil_paysID = %s AND ch_vil_capitale<>3", GetSQLValueString($colname_MarkerVilles, "int"));
+$query_MarkerVilles = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_mis_jour, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_armoiries, ch_vil_mis_jour, ch_vil_capitale, ch_use_lien_imgpersonnage, ch_use_login, ch_use_id, ch_vil_nom, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_pay_emplacement, ch_pay_nom, ch_pay_lien_imgdrapeau FROM villes INNER JOIN pays ON ch_pay_id = ch_vil_paysID INNER JOIN users on ch_vil_user=ch_use_id WHERE ch_vil_paysID = %s AND ch_vil_capitale<>3", escape_sql($colname_MarkerVilles, "int"));
 $MarkerVilles = mysql_query($query_MarkerVilles, $maconnexion);
 $row_MarkerVilles = mysql_fetch_assoc($MarkerVilles);
 $totalRows_MarkerVilles = mysql_num_rows($MarkerVilles);
 
 // Connexion BDD Monument pour afficher markers des monuments
 
-$query_MarkerMonument = sprintf("SELECT ch_pat_id, ch_pat_paysID, ch_pat_villeID, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_mis_jour, ch_pat_nom, ch_pat_lien_img1, ch_vil_armoiries, ch_vil_ID, ch_vil_nom, ch_vil_capitale, pays.ch_pay_id, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_id = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN villes ON  ch_pat_villeID=villes.ch_vil_ID INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE ch_pat_statut=1 AND ch_vil_capitale <> 3 AND pays.ch_pay_publication = 1 AND ch_vil_paysID = %s ORDER BY ch_pat_id ASC", GetSQLValueString($colname_MarkerVilles, "int"));
+$query_MarkerMonument = sprintf("SELECT ch_pat_id, ch_pat_paysID, ch_pat_villeID, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_mis_jour, ch_pat_nom, ch_pat_lien_img1, ch_vil_armoiries, ch_vil_ID, ch_vil_nom, ch_vil_capitale, pays.ch_pay_id, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_id = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN villes ON  ch_pat_villeID=villes.ch_vil_ID INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE ch_pat_statut=1 AND ch_vil_capitale <> 3 AND pays.ch_pay_publication = 1 AND ch_vil_paysID = %s ORDER BY ch_pat_id ASC", escape_sql($colname_MarkerVilles, "int"));
 $MarkerMonument = mysql_query($query_MarkerMonument, $maconnexion);
 $row_MarkerMonument = mysql_fetch_assoc($MarkerMonument);
 $totalRows_MarkerMonument = mysql_num_rows($MarkerMonument);

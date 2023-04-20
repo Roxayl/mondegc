@@ -6,7 +6,7 @@ include('php/log.php');
 //requete instituts
 $institut_id = 4;
 
-$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
+$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", escape_sql($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
@@ -43,7 +43,7 @@ INNER JOIN histoire ON fait.ch_disp_fait_hist_id = ch_his_id
 INNER JOIN pays ON ch_pay_id = ch_his_paysID
 WHERE fait.ch_disp_fait_hist_cat_id = %s OR %s IS NULL AND ch_his_statut = 1 
 GROUP BY fait.ch_disp_fait_hist_id
-ORDER BY ch_his_date_fait ASC", GetSQLValueString($colname_classer_fait_hist, "int"), GetSQLValueString($colname_classer_fait_hist, "int"));
+ORDER BY ch_his_date_fait ASC", escape_sql($colname_classer_fait_hist, "int"), escape_sql($colname_classer_fait_hist, "int"));
 $query_limit_classer_fait_hist = sprintf("%s LIMIT %d, %d", $query_classer_fait_hist, $startRow_classer_fait_hist, $maxRows_classer_fait_hist);
 $classer_fait_hist = mysql_query($query_limit_classer_fait_hist, $maconnexion);
 $row_classer_fait_hist = mysql_fetch_assoc($classer_fait_hist);
@@ -76,7 +76,7 @@ $queryString_classer_fait_hist = sprintf("&totalRows_classer_fait_hist=%d%s", $t
 
 $query_info_cat = sprintf("SELECT ch_fai_cat_nom, ch_fai_cat_desc, ch_fai_cat_icon, ch_fai_cat_couleur
 FROM faithist_categories
-WHERE ch_fai_cat_ID = %s OR %s IS NULL AND ch_fai_cat_statut = 1", GetSQLValueString($colname_classer_fait_hist, "int"), GetSQLValueString($colname_classer_fait_hist, "int"));
+WHERE ch_fai_cat_ID = %s OR %s IS NULL AND ch_fai_cat_statut = 1", escape_sql($colname_classer_fait_hist, "int"), escape_sql($colname_classer_fait_hist, "int"));
 $info_cat = mysql_query($query_info_cat, $maconnexion);
 $row_info_cat = mysql_fetch_assoc($info_cat);
 $totalRows_info_cat = mysql_num_rows($info_cat);

@@ -26,21 +26,21 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_fait_his")) {
 $_POST['ch_his_date_fait2'] == NULL;
 }	
   $insertSQL = sprintf("INSERT INTO histoire (ch_his_paysID, ch_his_label, ch_his_date, ch_his_personnage, ch_his_mis_jour, ch_his_nb_update, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_nom, ch_his_statut, ch_his_lien_img1, ch_his_legende_img1, ch_his_description, ch_his_contenu) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_his_paysID'], "int"),
-                       GetSQLValueString($_POST['ch_his_label'], "text"),
-                       GetSQLValueString($_POST['ch_his_date'], "date"),
-                       GetSQLValueString($_POST['ch_his_personnage'], "int"),
-                       GetSQLValueString($_POST['ch_his_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_his_nb_update'], "int"),
-                       GetSQLValueString($_POST['ch_his_date_fait'], "date"),
-                       GetSQLValueString($_POST['ch_his_date_fait2'], "date"),
-                       GetSQLValueString($_POST['ch_his_profession'], "text"),
-                       GetSQLValueString($_POST['ch_his_nom'], "text"),
-                       GetSQLValueString($_POST['ch_his_statut'], "int"),
-                       GetSQLValueString($_POST['ch_his_lien_img1'], "text"),
-                       GetSQLValueString($_POST['ch_his_legende_img1'], "text"),
-                       GetSQLValueString($_POST['ch_his_description'], "text"),
-                       GetSQLValueString($_POST['ch_his_contenu'], "text"));
+                       escape_sql($_POST['ch_his_paysID'], "int"),
+                       escape_sql($_POST['ch_his_label'], "text"),
+                       escape_sql($_POST['ch_his_date'], "date"),
+                       escape_sql($_POST['ch_his_personnage'], "int"),
+                       escape_sql($_POST['ch_his_mis_jour'], "date"),
+                       escape_sql($_POST['ch_his_nb_update'], "int"),
+                       escape_sql($_POST['ch_his_date_fait'], "date"),
+                       escape_sql($_POST['ch_his_date_fait2'], "date"),
+                       escape_sql($_POST['ch_his_profession'], "text"),
+                       escape_sql($_POST['ch_his_nom'], "text"),
+                       escape_sql($_POST['ch_his_statut'], "int"),
+                       escape_sql($_POST['ch_his_lien_img1'], "text"),
+                       escape_sql($_POST['ch_his_legende_img1'], "text"),
+                       escape_sql($_POST['ch_his_description'], "text"),
+                       escape_sql($_POST['ch_his_contenu'], "text"));
 
 
   $Result1 = mysql_query($insertSQL, $maconnexion);
@@ -56,7 +56,7 @@ $_POST['ch_his_date_fait2'] == NULL;
 
 
 
-$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($paysID, "int"));
+$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", escape_sql($paysID, "int"));
 $users = mysql_query($query_users, $maconnexion);
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);

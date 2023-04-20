@@ -5,14 +5,14 @@ appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-temperance")) {
   $insertSQL = sprintf("INSERT INTO temperance (ch_temp_label, ch_temp_date, ch_temp_mis_jour, ch_temp_element, ch_temp_element_id, ch_temp_statut, ch_temp_note, ch_temp_tendance) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_temp_label'], "text"),
-                       GetSQLValueString($_POST['ch_temp_date'], "date"),
-                       GetSQLValueString($_POST['ch_temp_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_temp_element'], "text"),
-                       GetSQLValueString($_POST['ch_temp_element_id'], "int"),
-                       GetSQLValueString($_POST['ch_temp_statut'], "int"),
-                       GetSQLValueString($_POST['ch_temp_note'], "int"),
-					   GetSQLValueString($_POST['ch_temp_tendance'], "text"));
+                       escape_sql($_POST['ch_temp_label'], "text"),
+                       escape_sql($_POST['ch_temp_date'], "date"),
+                       escape_sql($_POST['ch_temp_mis_jour'], "date"),
+                       escape_sql($_POST['ch_temp_element'], "text"),
+                       escape_sql($_POST['ch_temp_element_id'], "int"),
+                       escape_sql($_POST['ch_temp_statut'], "int"),
+                       escape_sql($_POST['ch_temp_note'], "int"),
+					   escape_sql($_POST['ch_temp_tendance'], "text"));
 
   $Result1 = mysql_query($insertSQL, $maconnexion);
 
@@ -22,7 +22,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-temperance"))
 $colname_pays = $_POST['ch_temp_element_id'];
 //requete pays
 
-$query_mail = sprintf("SELECT ch_pay_nom, ch_use_mail FROM pays INNER JOIN users ON ch_pay_id=ch_use_paysID WHERE ch_pay_id=%s", GetSQLValueString($colname_pays, "int"));
+$query_mail = sprintf("SELECT ch_pay_nom, ch_use_mail FROM pays INNER JOIN users ON ch_pay_id=ch_use_paysID WHERE ch_pay_id=%s", escape_sql($colname_pays, "int"));
 $mail = mysql_query($query_mail, $maconnexion);
 $row_mail = mysql_fetch_assoc($mail);
 $totalRows_mail = mysql_num_rows($mail);

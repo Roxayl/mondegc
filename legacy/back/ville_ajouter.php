@@ -20,32 +20,32 @@ appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_ville")) {
   $insertSQL = sprintf("INSERT INTO villes (ch_vil_paysID, ch_vil_user, ch_vil_label, ch_vil_date_enregistrement, ch_vil_mis_jour, ch_vil_nb_update, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_type_jeu, ch_vil_nom, ch_vil_armoiries, ch_vil_capitale, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_vil_lien_img2, ch_vil_lien_img3, ch_vil_lien_img4, ch_vil_lien_img5, ch_vil_legende_img1, ch_vil_legende_img2, ch_vil_legende_img3, ch_vil_legende_img4, ch_vil_legende_img5, ch_vil_header, ch_vil_contenu) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_vil_paysID'], "int"),
-                       GetSQLValueString($_POST['ch_vil_user'], "int"),
-                       GetSQLValueString($_POST['ch_vil_label'], "text"),
-                       GetSQLValueString($_POST['ch_vil_date_enregistrement'], "date"),
-                       GetSQLValueString($_POST['ch_vil_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_vil_nb_update'], "int"),
-                       GetSQLValueString($_POST['form_coord_X'], "decimal"),
-                       GetSQLValueString($_POST['form_coord_Y'], "decimal"),
-					   GetSQLValueString($_POST['ch_vil_type_jeu'], "text"),
-                       GetSQLValueString($_POST['ch_vil_nom'], "text"),
-					   GetSQLValueString($_POST['ch_vil_armoiries'], "text"),
-                       GetSQLValueString($_POST['ch_vil_capitale'], "int"),
-                       GetSQLValueString($_POST['ch_vil_population'], "int"),
-                       GetSQLValueString($_POST['ch_vil_specialite'], "text"),
-                       GetSQLValueString($_POST['ch_vil_lien_img1'], "text"),
-                       GetSQLValueString($_POST['ch_vil_lien_img2'], "text"),
-                       GetSQLValueString($_POST['ch_vil_lien_img3'], "text"),
-                       GetSQLValueString($_POST['ch_vil_lien_img4'], "text"),
-                       GetSQLValueString($_POST['ch_vil_lien_img5'], "text"),
-                       GetSQLValueString($_POST['ch_vil_legende_img1'], "text"),
-                       GetSQLValueString($_POST['ch_vil_legende_img2'], "text"),
-                       GetSQLValueString($_POST['ch_vil_legende_img3'], "text"),
-                       GetSQLValueString($_POST['ch_vil_legende_img4'], "text"),
-                       GetSQLValueString($_POST['ch_vil_legende_img5'], "text"),
-                       GetSQLValueString($_POST['ch_vil_header'], "text"),
-                       GetSQLValueString($_POST['ch_vil_contenu'], "text"));
+                       escape_sql($_POST['ch_vil_paysID'], "int"),
+                       escape_sql($_POST['ch_vil_user'], "int"),
+                       escape_sql($_POST['ch_vil_label'], "text"),
+                       escape_sql($_POST['ch_vil_date_enregistrement'], "date"),
+                       escape_sql($_POST['ch_vil_mis_jour'], "date"),
+                       escape_sql($_POST['ch_vil_nb_update'], "int"),
+                       escape_sql($_POST['form_coord_X'], "decimal"),
+                       escape_sql($_POST['form_coord_Y'], "decimal"),
+					   escape_sql($_POST['ch_vil_type_jeu'], "text"),
+                       escape_sql($_POST['ch_vil_nom'], "text"),
+					   escape_sql($_POST['ch_vil_armoiries'], "text"),
+                       escape_sql($_POST['ch_vil_capitale'], "int"),
+                       escape_sql($_POST['ch_vil_population'], "int"),
+                       escape_sql($_POST['ch_vil_specialite'], "text"),
+                       escape_sql($_POST['ch_vil_lien_img1'], "text"),
+                       escape_sql($_POST['ch_vil_lien_img2'], "text"),
+                       escape_sql($_POST['ch_vil_lien_img3'], "text"),
+                       escape_sql($_POST['ch_vil_lien_img4'], "text"),
+                       escape_sql($_POST['ch_vil_lien_img5'], "text"),
+                       escape_sql($_POST['ch_vil_legende_img1'], "text"),
+                       escape_sql($_POST['ch_vil_legende_img2'], "text"),
+                       escape_sql($_POST['ch_vil_legende_img3'], "text"),
+                       escape_sql($_POST['ch_vil_legende_img4'], "text"),
+                       escape_sql($_POST['ch_vil_legende_img5'], "text"),
+                       escape_sql($_POST['ch_vil_header'], "text"),
+                       escape_sql($_POST['ch_vil_contenu'], "text"));
 
   
   $Result1 = mysql_query($insertSQL, $maconnexion);
@@ -58,7 +58,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_ville")) {
 
 $User = $_SESSION['user_ID'];
 
-$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_id = %s", GetSQLValueString($User, "int"));
+$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_id = %s", escape_sql($User, "int"));
 $users = mysql_query($query_users, $maconnexion);
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);

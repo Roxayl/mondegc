@@ -7,16 +7,16 @@ appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) {
   $updateSQL = sprintf("UPDATE faithist_categories SET ch_fai_cat_label=%s, ch_fai_cat_statut=%s, ch_fai_cat_date=%s, ch_fai_cat_mis_jour=%s, ch_fai_cat_nb_update=%s, ch_fai_cat_nom=%s, ch_fai_cat_desc=%s, ch_fai_cat_icon=%s, ch_fai_cat_couleur=%s WHERE ch_fai_cat_ID=%s",
-                       GetSQLValueString($_POST['ch_fai_cat_label'], "text"),
-                       GetSQLValueString($_POST['ch_fai_cat_statut'], "int"),
-                       GetSQLValueString($_POST['ch_fai_cat_date'], "date"),
-                       GetSQLValueString($_POST['ch_fai_cat_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_fai_cat_nb_update'], "int"),
-                       GetSQLValueString($_POST['ch_fai_cat_nom'], "text"),
-                       GetSQLValueString($_POST['ch_fai_cat_desc'], "text"),
-                       GetSQLValueString($_POST['ch_fai_cat_icon'], "text"),
-                       GetSQLValueString($_POST['ch_fai_cat_couleur'], "text"),
-                       GetSQLValueString($_POST['ch_fai_cat_ID'], "int"));
+                       escape_sql($_POST['ch_fai_cat_label'], "text"),
+                       escape_sql($_POST['ch_fai_cat_statut'], "int"),
+                       escape_sql($_POST['ch_fai_cat_date'], "date"),
+                       escape_sql($_POST['ch_fai_cat_mis_jour'], "date"),
+                       escape_sql($_POST['ch_fai_cat_nb_update'], "int"),
+                       escape_sql($_POST['ch_fai_cat_nom'], "text"),
+                       escape_sql($_POST['ch_fai_cat_desc'], "text"),
+                       escape_sql($_POST['ch_fai_cat_icon'], "text"),
+                       escape_sql($_POST['ch_fai_cat_couleur'], "text"),
+                       escape_sql($_POST['ch_fai_cat_ID'], "int"));
 
   
   $Result1 = mysql_query($updateSQL, $maconnexion);
@@ -33,7 +33,7 @@ if (isset($_GET['fai_cat_id'])) {
   $colname_liste_fait_cat = $_GET['fai_cat_id'];
 }
 
-$query_liste_fait_cat = sprintf("SELECT * FROM faithist_categories WHERE ch_fai_cat_ID = %s ORDER BY ch_fai_cat_mis_jour DESC", GetSQLValueString($colname_liste_fait_cat, "int"));
+$query_liste_fait_cat = sprintf("SELECT * FROM faithist_categories WHERE ch_fai_cat_ID = %s ORDER BY ch_fai_cat_mis_jour DESC", escape_sql($colname_liste_fait_cat, "int"));
 $liste_fait_cat = mysql_query($query_liste_fait_cat, $maconnexion);
 $row_liste_fait_cat = mysql_fetch_assoc($liste_fait_cat);
 $totalRows_liste_fait_cat = mysql_num_rows($liste_fait_cat);

@@ -73,14 +73,14 @@ Eventy::action('display.beforeHeadClosingTag')
       <?php require(DEF_LEGACYROOTPATH . 'php/upload.php');
 if (isset($uploadconfirm)) {
   $updateSQL = sprintf("UPDATE pays SET ch_pay_lien_imgdrapeau=%s WHERE ch_pay_id=%s",
-                       GetSQLValueString($link, "text"),
-                       GetSQLValueString($colname_pays, "int"));
+                       escape_sql($link, "text"),
+                       escape_sql($colname_pays, "int"));
   
   $Result1 = mysql_query($updateSQL, $maconnexion);
 }
 
 
-$query_drapeau = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_pays, "int"));
+$query_drapeau = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", escape_sql($colname_pays, "int"));
 $drapeau = mysql_query($query_drapeau, $maconnexion);
 $row_drapeau = mysql_fetch_assoc($drapeau);
 $totalRows_drapeau = mysql_num_rows($drapeau);

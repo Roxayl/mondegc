@@ -37,7 +37,7 @@ class Page extends BaseModel
     {
         $sql = 'UPDATE legacy_pages SET content = %s WHERE this_id = %s';
         mysql_query(sprintf($sql,
-            GetSQLValueString($this->model->content, 'text'),
-            GetSQLValueString($this->model->this_id, 'text')));
+            escape_sql($this->model->content, 'text'),
+            escape_sql($this->model->this_id, 'text')));
     }
 }

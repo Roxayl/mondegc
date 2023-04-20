@@ -14,13 +14,13 @@ exit();
 
 if ((isset($_POST['ch_fai_cat_ID'])) && ($_POST['ch_fai_cat_ID'] != "")) {
   $deleteSQL = sprintf("DELETE FROM faithist_categories WHERE ch_fai_cat_ID=%s",
-                       GetSQLValueString($_POST['ch_fai_cat_ID'], "int"));
+                       escape_sql($_POST['ch_fai_cat_ID'], "int"));
 
   
   $Result1 = mysql_query($deleteSQL, $maconnexion);
 
 $deleteSQL = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_cat_id=%s",
-                       GetSQLValueString($_POST['ch_fai_cat_ID'], "int"));
+                       escape_sql($_POST['ch_fai_cat_ID'], "int"));
 
   
   $Result2 = mysql_query($deleteSQL, $maconnexion);

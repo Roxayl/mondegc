@@ -14,15 +14,15 @@ exit();
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-categorie")) {
   $insertSQL = sprintf("INSERT INTO faithist_categories (ch_fai_cat_label, ch_fai_cat_statut, ch_fai_cat_date, ch_fai_cat_mis_jour, ch_fai_cat_nb_update, ch_fai_cat_nom, ch_fai_cat_desc, ch_fai_cat_icon, ch_fai_cat_couleur) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_fai_cat_label'], "text"),
-                       GetSQLValueString($_POST['ch_fai_cat_statut'], "int"),
-                       GetSQLValueString($_POST['ch_fai_cat_date'], "date"),
-                       GetSQLValueString($_POST['ch_fai_cat_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_fai_cat_nb_update'], "int"),
-                       GetSQLValueString($_POST['ch_fai_cat_nom'], "text"),
-                       GetSQLValueString($_POST['ch_fai_cat_desc'], "text"),
-                       GetSQLValueString($_POST['ch_fai_cat_icon'], "text"),
-					   GetSQLValueString($_POST['ch_fai_cat_couleur'], "text"));
+                       escape_sql($_POST['ch_fai_cat_label'], "text"),
+                       escape_sql($_POST['ch_fai_cat_statut'], "int"),
+                       escape_sql($_POST['ch_fai_cat_date'], "date"),
+                       escape_sql($_POST['ch_fai_cat_mis_jour'], "date"),
+                       escape_sql($_POST['ch_fai_cat_nb_update'], "int"),
+                       escape_sql($_POST['ch_fai_cat_nom'], "text"),
+                       escape_sql($_POST['ch_fai_cat_desc'], "text"),
+                       escape_sql($_POST['ch_fai_cat_icon'], "text"),
+					   escape_sql($_POST['ch_fai_cat_couleur'], "text"));
 
 
   $Result1 = mysql_query($insertSQL, $maconnexion);
@@ -36,7 +36,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-categorie")) 
 //requete instituts
 $institut_id = 4;
 
-$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
+$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", escape_sql($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
@@ -111,7 +111,7 @@ FROM dispatch_fait_his_cat as fait
 INNER JOIN histoire ON fait.ch_disp_fait_hist_id = ch_his_id 
 WHERE fait.ch_disp_fait_hist_cat_id = %s OR %s IS NULL AND ch_his_statut = 1 
 GROUP BY fait.ch_disp_fait_hist_id
-ORDER BY fait.ch_disp_FH_date DESC", GetSQLValueString($colname_classer_fait_his, "int"), GetSQLValueString($colname_classer_fait_his, "int"));
+ORDER BY fait.ch_disp_FH_date DESC", escape_sql($colname_classer_fait_his, "int"), escape_sql($colname_classer_fait_his, "int"));
 $query_limit_classer_fait_his = sprintf("%s LIMIT %d, %d", $query_classer_fait_his, $startRow_classer_fait_his, $maxRows_classer_fait_his);
 $classer_fait_his = mysql_query($query_limit_classer_fait_his, $maconnexion);
 $row_classer_fait_his = mysql_fetch_assoc($classer_fait_his);
@@ -143,7 +143,7 @@ $queryString_classer_fait_his = sprintf("&totalRows_classer_fait_his=%d%s", $tot
 
 //requete listes faits restants
 
-$query_liste_fait_restants = sprintf("SELECT ch_his_id AS nb_faits_restants FROM histoire WHERE ch_his_id NOT IN (SELECT ch_disp_fait_hist_id FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_cat_id = %s OR %s IS NULL)", GetSQLValueString($colname_classer_fait_his, "int"), GetSQLValueString($colname_classer_fait_his, "int"));
+$query_liste_fait_restants = sprintf("SELECT ch_his_id AS nb_faits_restants FROM histoire WHERE ch_his_id NOT IN (SELECT ch_disp_fait_hist_id FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_cat_id = %s OR %s IS NULL)", escape_sql($colname_classer_fait_his, "int"), escape_sql($colname_classer_fait_his, "int"));
 $liste_fait_restants = mysql_query($query_liste_fait_restants, $maconnexion);
 $row_liste_fait_restants = mysql_fetch_assoc($liste_fait_restants);
 $totalRows_liste_fait_restants = mysql_num_rows($liste_fait_restants);

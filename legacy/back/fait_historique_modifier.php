@@ -18,22 +18,22 @@ if ($_POST['ch_his_periode'] == false) {
 $_POST['ch_his_date_fait2'] = NULL;
 }	
   $updateSQL = sprintf("UPDATE histoire SET ch_his_label=%s, ch_his_paysID=%s, ch_his_personnage=%s, ch_his_statut=%s, ch_his_date=%s, ch_his_mis_jour=%s, ch_his_nb_update=%s, ch_his_date_fait=%s, ch_his_date_fait2=%s, ch_his_profession=%s, ch_his_nom=%s, ch_his_lien_img1=%s, ch_his_legende_img1=%s, ch_his_description=%s, ch_his_contenu=%s WHERE ch_his_id=%s",
-                       GetSQLValueString($_POST['ch_his_label'], "text"),
-                       GetSQLValueString($_POST['ch_his_paysID'], "int"),
-                       GetSQLValueString($_POST['ch_his_personnage'], "int"),
-                       GetSQLValueString($_POST['ch_his_statut'], "int"),
-                       GetSQLValueString($_POST['ch_his_date'], "date"),
-                       GetSQLValueString($_POST['ch_his_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_his_nb_update'], "int"),
-                       GetSQLValueString($_POST['ch_his_date_fait'], "date"),
-                       GetSQLValueString($_POST['ch_his_date_fait2'], "date"),
-                       GetSQLValueString($_POST['profession'], "text"),
-                       GetSQLValueString($_POST['ch_his_nom'], "text"),
-                       GetSQLValueString($_POST['ch_his_lien_img1'], "text"),
-                       GetSQLValueString($_POST['ch_his_legende_img1'], "text"),
-                       GetSQLValueString($_POST['ch_his_description'], "text"),
-                       GetSQLValueString($_POST['ch_his_contenu'], "text"),
-                       GetSQLValueString($_POST['ch_his_id'], "int"));
+                       escape_sql($_POST['ch_his_label'], "text"),
+                       escape_sql($_POST['ch_his_paysID'], "int"),
+                       escape_sql($_POST['ch_his_personnage'], "int"),
+                       escape_sql($_POST['ch_his_statut'], "int"),
+                       escape_sql($_POST['ch_his_date'], "date"),
+                       escape_sql($_POST['ch_his_mis_jour'], "date"),
+                       escape_sql($_POST['ch_his_nb_update'], "int"),
+                       escape_sql($_POST['ch_his_date_fait'], "date"),
+                       escape_sql($_POST['ch_his_date_fait2'], "date"),
+                       escape_sql($_POST['profession'], "text"),
+                       escape_sql($_POST['ch_his_nom'], "text"),
+                       escape_sql($_POST['ch_his_lien_img1'], "text"),
+                       escape_sql($_POST['ch_his_legende_img1'], "text"),
+                       escape_sql($_POST['ch_his_description'], "text"),
+                       escape_sql($_POST['ch_his_contenu'], "text"),
+                       escape_sql($_POST['ch_his_id'], "int"));
 
 
   $Result1 = mysql_query($updateSQL, $maconnexion);
@@ -51,7 +51,7 @@ if (isset($_POST['ch_his_id'])) {
   $colname_Fait_his = $_POST['ch_his_id'];
 }
 
-$query_Fait_his = sprintf("SELECT * FROM histoire WHERE ch_his_id = %s", GetSQLValueString($colname_Fait_his, "int"));
+$query_Fait_his = sprintf("SELECT * FROM histoire WHERE ch_his_id = %s", escape_sql($colname_Fait_his, "int"));
 $Fait_his = mysql_query($query_Fait_his, $maconnexion);
 $row_Fait_his = mysql_fetch_assoc($Fait_his);
 $totalRows_Fait_his = mysql_num_rows($Fait_his);
@@ -59,7 +59,7 @@ $totalRows_Fait_his = mysql_num_rows($Fait_his);
 
 // Connection infos dirigeant pays
 
-$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($row_Fait_his['ch_his_paysID'], "int"));
+$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", escape_sql($row_Fait_his['ch_his_paysID'], "int"));
 $users = mysql_query($query_users, $maconnexion);
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);

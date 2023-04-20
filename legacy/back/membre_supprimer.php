@@ -14,7 +14,7 @@ exit();
 
 if ((isset($_POST['ch_use_id'])) && ($_POST['ch_use_id'] != "")) {
   $deleteSQL = sprintf("DELETE FROM users WHERE ch_use_id=%s",
-                       GetSQLValueString($_POST['ch_use_id'], "int"));
+                       escape_sql($_POST['ch_use_id'], "int"));
 
   
   $Result1 = mysql_query($deleteSQL, $maconnexion);

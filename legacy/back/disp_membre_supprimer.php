@@ -18,7 +18,7 @@ if ((isset($_POST['ch_disp_group_id'])) && ($_POST['ch_disp_group_id'] != "")) {
 
 if ((isset($_POST['ch_disp_MG_id'])) && ($_POST['ch_disp_MG_id'] != "")) {
   $deleteSQL = sprintf("DELETE FROM dispatch_mem_group WHERE ch_disp_MG_id=%s",
-                       GetSQLValueString($_POST['ch_disp_MG_id'], "int"));
+                       escape_sql($_POST['ch_disp_MG_id'], "int"));
 
 
   $Result1 = mysql_query($deleteSQL, $maconnexion);

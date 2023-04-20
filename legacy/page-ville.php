@@ -11,12 +11,12 @@ if (isset($_GET['ch_ville_id'])) {
   $colname_infoVille = $_GET['ch_ville_id'];
 }
 
-$query_infoVille = sprintf("SELECT * FROM villes WHERE ch_vil_ID = %s", GetSQLValueString($colname_infoVille, "int"));
+$query_infoVille = sprintf("SELECT * FROM villes WHERE ch_vil_ID = %s", escape_sql($colname_infoVille, "int"));
 $infoVille = mysql_query($query_infoVille, $maconnexion);
 $row_infoVille = mysql_fetch_assoc($infoVille);
 $totalRows_infoVille = mysql_num_rows($infoVille);
 
-$query_Pays = sprintf("SELECT ch_pay_id, ch_pay_publication, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_use_id FROM pays INNER JOIN users ON ch_use_paysID=ch_pay_id AND ch_use_id >=10 WHERE ch_pay_id = %s", GetSQLValueString($row_infoVille['ch_vil_paysID'], "int"));
+$query_Pays = sprintf("SELECT ch_pay_id, ch_pay_publication, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_use_id FROM pays INNER JOIN users ON ch_use_paysID=ch_pay_id AND ch_use_id >=10 WHERE ch_pay_id = %s", escape_sql($row_infoVille['ch_vil_paysID'], "int"));
 $Pays = mysql_query($query_Pays, $maconnexion);
 $row_Pays = mysql_fetch_assoc($Pays);
 $totalRows_Pays = mysql_num_rows($Pays);
@@ -26,7 +26,7 @@ $colname_Pays = $row_infoVille['ch_vil_paysID'];
 
 // *** Connection BDD villes pour chercher les autres villes du meme pays
 
-$query_Autresvilles = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_nom, ch_vil_capitale, ch_vil_population FROM villes WHERE ch_vil_capitale <> 3 AND villes.ch_vil_paysID = %s ORDER BY ch_vil_date_enregistrement ASC", GetSQLValueString($colname_Pays, "int"));
+$query_Autresvilles = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_nom, ch_vil_capitale, ch_vil_population FROM villes WHERE ch_vil_capitale <> 3 AND villes.ch_vil_paysID = %s ORDER BY ch_vil_date_enregistrement ASC", escape_sql($colname_Pays, "int"));
 $Autresvilles = mysql_query($query_Autresvilles, $maconnexion);
 $row_Autresvilles = mysql_fetch_assoc($Autresvilles);
 $totalRows_Autresvilles = mysql_num_rows($Autresvilles);
@@ -41,7 +41,7 @@ if ($totalRows_Autresvilles == $row_Autresvilles['ch_vil_ID']) {
  //Connexion base de données utilisateur pour info personnage
 $UserID = $row_infoVille['ch_vil_user'];
 
-$query_User = sprintf("SELECT ch_use_id, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_biographie_dirigeant, ch_use_login, (SELECT GROUP_CONCAT(ch_disp_group_id) FROM dispatch_mem_group WHERE ch_use_id = ch_disp_mem_id AND ch_disp_mem_statut != 3) AS listgroup FROM users WHERE ch_use_id = %s", GetSQLValueString($UserID, "int"));
+$query_User = sprintf("SELECT ch_use_id, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_biographie_dirigeant, ch_use_login, (SELECT GROUP_CONCAT(ch_disp_group_id) FROM dispatch_mem_group WHERE ch_use_id = ch_disp_mem_id AND ch_disp_mem_statut != 3) AS listgroup FROM users WHERE ch_use_id = %s", escape_sql($UserID, "int"));
 $User = mysql_query($query_User, $maconnexion);
 $row_User = mysql_fetch_assoc($User);
 $totalRows_User = mysql_num_rows($User);
@@ -59,7 +59,7 @@ $totalRows_liste_group = mysql_num_rows($liste_group);
 }
 
 //Recherche des monuments de la ville
-$query_monument = sprintf("SELECT ch_pat_ID, ch_pat_paysID, ch_pat_date, ch_pat_mis_jour, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_description, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine WHERE ch_pat_villeID = %s ORDER BY ch_pat_mis_jour DESC", GetSQLValueString($colname_infoVille, "int"));
+$query_monument = sprintf("SELECT ch_pat_ID, ch_pat_paysID, ch_pat_date, ch_pat_mis_jour, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_description, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine WHERE ch_pat_villeID = %s ORDER BY ch_pat_mis_jour DESC", escape_sql($colname_infoVille, "int"));
 $monument = mysql_query($query_monument, $maconnexion);
 $row_monument = mysql_fetch_assoc($monument);
 $totalRows_monument = mysql_num_rows($monument);
@@ -81,8 +81,8 @@ $startRow_infrastructure = $pageNum_infrastructure * $maxRows_infrastructure;
 
 $query_infrastructure = sprintf(
     "SELECT * FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id=infrastructures_officielles.ch_inf_off_id WHERE ch_inf_villeid = %s AND infrastructurable_type = %s AND ch_inf_statut =2 ORDER BY ch_inf_date DESC",
-    GetSQLValueString($villeid, "int"),
-    GetSQLValueString(EloquentInfrastructure::getMorphFromUrlParameter('ville'), "text")
+    escape_sql($villeid, "int"),
+    escape_sql(EloquentInfrastructure::getMorphFromUrlParameter('ville'), "text")
 );
 $query_limit_infrastructure = sprintf("%s LIMIT %d, %d", $query_infrastructure, $startRow_infrastructure, $maxRows_infrastructure);
 $infrastructure = mysql_query($query_infrastructure, $maconnexion);
@@ -118,7 +118,7 @@ $_SESSION['last_work'] = 'page-ville.php?ch_pay_id='.$row_infoVille['ch_vil_pays
 //recherche de la note temperance
 if (isset($colname_Pays)) {
 
-$query_temperance = sprintf("SELECT * FROM temperance WHERE ch_temp_element_id = %s AND ch_temp_element = 'ville' AND ch_temp_statut='3'", GetSQLValueString($villeid, "int"));
+$query_temperance = sprintf("SELECT * FROM temperance WHERE ch_temp_element_id = %s AND ch_temp_element = 'ville' AND ch_temp_statut='3'", escape_sql($villeid, "int"));
 $temperance = mysql_query($query_temperance, $maconnexion);
 $row_temperance = mysql_fetch_assoc($temperance);
 }

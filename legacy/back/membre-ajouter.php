@@ -27,11 +27,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "new_user")) {
 
 
   $insertSQL = sprintf("INSERT INTO users_provisoire (ch_use_prov_login, ch_use_prov_clef, ch_use_prov_mail, ch_use_prov_paysID, ch_use_prov_statut) VALUES (%s, %s, %s, %s, %s)",
-                       GetSQLValueString($login, "text"),
-                       GetSQLValueString($clef, "text"),
-                       GetSQLValueString($mail, "text"),
-                       GetSQLValueString($paysID, "int"),
-                       GetSQLValueString($ch_use_prov_statut, "int"));
+                       escape_sql($login, "text"),
+                       escape_sql($clef, "text"),
+                       escape_sql($mail, "text"),
+                       escape_sql($paysID, "int"),
+                       escape_sql($ch_use_prov_statut, "int"));
 
   $Result1 = mysql_query($insertSQL, $maconnexion);
 

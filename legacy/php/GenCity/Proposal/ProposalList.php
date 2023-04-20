@@ -96,7 +96,7 @@ class ProposalList {
                            SELECT ID_pays FROM users_pays WHERE ID_user = %s)
             AND is_valid = 2
             AND reponse_choisie IS NULL',
-            GetSQLValueString($user->get('ch_use_id')));
+            escape_sql($user->get('ch_use_id')));
 
         return $this->setListFromQuery($query);
 

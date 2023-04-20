@@ -14,37 +14,37 @@ $juge = $_SESSION['login_user'];
 
 //requete pays
 
-$query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom FROM temperance INNER JOIN pays ON ch_temp_element_id = ch_pay_id WHERE ch_temp_id=%s", GetSQLValueString( $colname_temperance, "int"));
+$query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom FROM temperance INNER JOIN pays ON ch_temp_element_id = ch_pay_id WHERE ch_temp_id=%s", escape_sql( $colname_temperance, "int"));
 $pays = mysql_query($query_pays, $maconnexion);
 $row_pays = mysql_fetch_assoc($pays);
 $totalRows_pays = mysql_num_rows($pays);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "notation")) {
   $insertSQL = sprintf("INSERT INTO notation_temperance (ch_not_temp_label, ch_not_temp_date, ch_not_temp_juge, ch_not_temp_temperance_id, ch_not_temp_q1, ch_not_temp_q1_com, ch_not_temp_q2, ch_not_temp_q2_com, ch_not_temp_q3, ch_not_temp_q3_com, ch_not_temp_q4, ch_not_temp_q4_com, ch_not_temp_q5, ch_not_temp_q5_com, ch_not_temp_q6, ch_not_temp_q6_com, ch_not_temp_q7, ch_not_temp_q7_com, ch_not_temp_q8, ch_not_temp_q8_com, ch_not_temp_q9, ch_not_temp_q9_com, ch_not_temp_q10, ch_not_temp_q10_com) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_not_temp_label'], "text"),
-                       GetSQLValueString($_POST['ch_not_temp_date'], "date"),
-                       GetSQLValueString($_POST['ch_not_temp_juge'], "text"),
-                       GetSQLValueString($_POST['ch_not_temp_temperance_id'], "int"),
-                       GetSQLValueString($_POST['ch_not_temp_q1'], "int"),
-                       GetSQLValueString($_POST['ch_not_temp_q1_com'], "text"),
-                       GetSQLValueString($_POST['ch_not_temp_q2'], "int"),
-                       GetSQLValueString($_POST['ch_not_temp_q2_com'], "text"),
-                       GetSQLValueString($_POST['ch_not_temp_q3'], "int"),
-                       GetSQLValueString($_POST['ch_not_temp_q3_com'], "text"),
-                       GetSQLValueString($_POST['ch_not_temp_q4'], "int"),
-                       GetSQLValueString($_POST['ch_not_temp_q4_com'], "text"),
-                       GetSQLValueString($_POST['ch_not_temp_q5'], "int"),
-                       GetSQLValueString($_POST['ch_not_temp_q5_com'], "text"),
-                       GetSQLValueString($_POST['ch_not_temp_q6'], "int"),
-                       GetSQLValueString($_POST['ch_not_temp_q6_com'], "text"),
-                       GetSQLValueString($_POST['ch_not_temp_q7'], "int"),
-                       GetSQLValueString($_POST['ch_not_temp_q7_com'], "text"),
-                       GetSQLValueString($_POST['ch_not_temp_q8'], "int"),
-                       GetSQLValueString($_POST['ch_not_temp_q8_com'], "text"),
-                       GetSQLValueString($_POST['ch_not_temp_q9'], "int"),
-                       GetSQLValueString($_POST['ch_not_temp_q9_com'], "text"),
-                       GetSQLValueString($_POST['ch_not_temp_q10'], "int"),
-                       GetSQLValueString($_POST['ch_not_temp_q10_com'], "text"));
+                       escape_sql($_POST['ch_not_temp_label'], "text"),
+                       escape_sql($_POST['ch_not_temp_date'], "date"),
+                       escape_sql($_POST['ch_not_temp_juge'], "text"),
+                       escape_sql($_POST['ch_not_temp_temperance_id'], "int"),
+                       escape_sql($_POST['ch_not_temp_q1'], "int"),
+                       escape_sql($_POST['ch_not_temp_q1_com'], "text"),
+                       escape_sql($_POST['ch_not_temp_q2'], "int"),
+                       escape_sql($_POST['ch_not_temp_q2_com'], "text"),
+                       escape_sql($_POST['ch_not_temp_q3'], "int"),
+                       escape_sql($_POST['ch_not_temp_q3_com'], "text"),
+                       escape_sql($_POST['ch_not_temp_q4'], "int"),
+                       escape_sql($_POST['ch_not_temp_q4_com'], "text"),
+                       escape_sql($_POST['ch_not_temp_q5'], "int"),
+                       escape_sql($_POST['ch_not_temp_q5_com'], "text"),
+                       escape_sql($_POST['ch_not_temp_q6'], "int"),
+                       escape_sql($_POST['ch_not_temp_q6_com'], "text"),
+                       escape_sql($_POST['ch_not_temp_q7'], "int"),
+                       escape_sql($_POST['ch_not_temp_q7_com'], "text"),
+                       escape_sql($_POST['ch_not_temp_q8'], "int"),
+                       escape_sql($_POST['ch_not_temp_q8_com'], "text"),
+                       escape_sql($_POST['ch_not_temp_q9'], "int"),
+                       escape_sql($_POST['ch_not_temp_q9_com'], "text"),
+                       escape_sql($_POST['ch_not_temp_q10'], "int"),
+                       escape_sql($_POST['ch_not_temp_q10_com'], "text"));
 
   
   $Result1 = mysql_query($insertSQL, $maconnexion);

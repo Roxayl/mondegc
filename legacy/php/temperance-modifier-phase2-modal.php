@@ -15,9 +15,9 @@ if (isset($_GET['ch_temp_id'])) {
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance")) {
   $updateSQL = sprintf("UPDATE temperance SET ch_temp_statut=%s, ch_temp_mis_jour=%s WHERE ch_temp_id=%s",
-                       GetSQLValueString($_POST['ch_temp_statut'], "int"),
-                       GetSQLValueString($_POST['ch_temp_mis_jour'], "date"),
-					   GetSQLValueString($_POST['ch_temp_id'], "int"));
+                       escape_sql($_POST['ch_temp_statut'], "int"),
+                       escape_sql($_POST['ch_temp_mis_jour'], "date"),
+					   escape_sql($_POST['ch_temp_id'], "int"));
 
   
   $Result1 = mysql_query($updateSQL, $maconnexion);

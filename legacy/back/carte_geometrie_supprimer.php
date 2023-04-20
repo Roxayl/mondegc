@@ -24,7 +24,7 @@ if( !auth()->user()->hasMinPermission('ocgc') &&
 
 if ((isset($_GET['ch_geo_id'])) && ($_GET['ch_geo_id'] != "")) {
   $deleteSQL = sprintf("DELETE FROM geometries WHERE ch_geo_id=%s",
-                       GetSQLValueString($_GET['ch_geo_id'], "int"));
+                       escape_sql($_GET['ch_geo_id'], "int"));
 
   
   $Result1 = mysql_query($deleteSQL, $maconnexion);
@@ -32,7 +32,7 @@ if ((isset($_GET['ch_geo_id'])) && ($_GET['ch_geo_id'] != "")) {
   getErrorMessage('success', "La zone a été supprimée.");
 //recherche des mesures des zones de la carte pour calcul ressources
 
-$query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($_GET['ch_geo_pay_id'], "int"));
+$query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", escape_sql($_GET['ch_geo_pay_id'], "int"));
 $geometries = mysql_query($query_geometries, $maconnexion);
 $row_geometries = mysql_fetch_assoc($geometries);
 
@@ -55,17 +55,17 @@ $row_geometries = mysql_fetch_assoc($geometries);
 
 //Enregistrement du total des ressources de la carte.
 $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_carte=%s, ch_pay_commerce_carte=%s, ch_pay_agriculture_carte=%s, ch_pay_tourisme_carte=%s, ch_pay_recherche_carte=%s, ch_pay_environnement_carte=%s, ch_pay_education_carte=%s, ch_pay_population_carte=%s, ch_pay_emploi_carte=%s WHERE ch_pay_id=%s",
-                       GetSQLValueString($tot_budget, "int"),
-					   GetSQLValueString($tot_industrie, "int"),
-					   GetSQLValueString($tot_commerce, "int"),
-					   GetSQLValueString($tot_agriculture, "int"),
-                       GetSQLValueString($tot_tourisme, "int"),
-                       GetSQLValueString($tot_recherche, "int"),
-                       GetSQLValueString($tot_environnement, "int"),
-                       GetSQLValueString($tot_education, "int"),
-                       GetSQLValueString($tot_population, "int"),
-                       GetSQLValueString($tot_emploi, "int"),
-					   GetSQLValueString($_GET['ch_geo_pay_id'], "int"));
+                       escape_sql($tot_budget, "int"),
+					   escape_sql($tot_industrie, "int"),
+					   escape_sql($tot_commerce, "int"),
+					   escape_sql($tot_agriculture, "int"),
+                       escape_sql($tot_tourisme, "int"),
+                       escape_sql($tot_recherche, "int"),
+                       escape_sql($tot_environnement, "int"),
+                       escape_sql($tot_education, "int"),
+                       escape_sql($tot_population, "int"),
+                       escape_sql($tot_emploi, "int"),
+					   escape_sql($_GET['ch_geo_pay_id'], "int"));
 
   event(new MapUpdated($geometry->pays));
   

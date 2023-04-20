@@ -11,7 +11,7 @@ if (isset($_GET['ch_pat_id'])) {
   $colname_monument = $_GET['ch_pat_id'];
 }
 
-$query_monument = sprintf("SELECT ch_pat_id, ch_pat_label, ch_pat_statut, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nb_update, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_nom, ch_pat_lien_img1, ch_pat_lien_img2, ch_pat_lien_img3, ch_pat_lien_img4, ch_pat_lien_img5, ch_pat_legende_img1, ch_pat_legende_img2, ch_pat_legende_img3, ch_pat_legende_img4, ch_pat_legende_img5, ch_pat_description, ch_pat_commentaire, ch_pay_id, ch_pay_nom, ch_vil_ID, ch_vil_nom, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID WHERE ch_pat_id = %s", GetSQLValueString($colname_monument, "int"));
+$query_monument = sprintf("SELECT ch_pat_id, ch_pat_label, ch_pat_statut, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nb_update, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_nom, ch_pat_lien_img1, ch_pat_lien_img2, ch_pat_lien_img3, ch_pat_lien_img4, ch_pat_lien_img5, ch_pat_legende_img1, ch_pat_legende_img2, ch_pat_legende_img3, ch_pat_legende_img4, ch_pat_legende_img5, ch_pat_description, ch_pat_commentaire, ch_pay_id, ch_pay_nom, ch_vil_ID, ch_vil_nom, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID WHERE ch_pat_id = %s", escape_sql($colname_monument, "int"));
 $monument = mysql_query($query_monument, $maconnexion);
 $row_monument = mysql_fetch_assoc($monument);
 $totalRows_monument = mysql_num_rows($monument);
@@ -19,7 +19,7 @@ $totalRows_monument = mysql_num_rows($monument);
 // *** Ressources patrimoine
 $query_monument_ressources = sprintf("SELECT SUM(ch_mon_cat_budget) AS budget,SUM(ch_mon_cat_industrie) AS industrie, SUM(ch_mon_cat_commerce) AS commerce, SUM(ch_mon_cat_agriculture) AS agriculture, SUM(ch_mon_cat_tourisme) AS tourisme, SUM(ch_mon_cat_recherche) AS recherche, SUM(ch_mon_cat_environnement) AS environnement, SUM(ch_mon_cat_education) AS education FROM monument_categories
   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-  INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_id = %s", GetSQLValueString($colname_monument, "int"));
+  INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_id = %s", escape_sql($colname_monument, "int"));
 $monument_ressources = mysql_query($query_monument_ressources, $maconnexion);
 $row_monument_ressources_neutre = mysql_fetch_assoc($monument_ressources);
 
@@ -38,7 +38,7 @@ $row_monument_ressources_neutre['budget'] = $row_monument_ressources_neutre['bud
 $row_monument_ressources = $row_monument_ressources_neutre ;
 
 // Connection infos dirigeant pays
-$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($row_monument['ch_pat_paysID'], "int"));
+$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", escape_sql($row_monument['ch_pat_paysID'], "int"));
 $users = mysql_query($query_users, $maconnexion);
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
@@ -55,7 +55,7 @@ $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
 
 //requete TOUT
-$query_mon_cat = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur NOT BETWEEN 100 AND 199 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
+$query_mon_cat = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur NOT BETWEEN 100 AND 199 ORDER BY ch_mon_cat_couleur", escape_sql($mon_ID, "int"));
 $mon_cat = mysql_query($query_mon_cat, $maconnexion);
 $row_mon_cat = mysql_fetch_assoc($mon_cat);
 $totalRows_mon_cat = mysql_num_rows($mon_cat);
@@ -157,8 +157,8 @@ appendQueryString($editFormAction);
 
 if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajouter_actu")) {
     $updateSQL = sprintf("UPDATE patrimoine SET ch_pat_commentaire=%s WHERE ch_pat_id=%s",
-        GetSQLValueString($_POST['ch_pat_commentaire'], "text"),
-        GetSQLValueString($_POST['ch_pat_id'], "int"));
+        escape_sql($_POST['ch_pat_commentaire'], "text"),
+        escape_sql($_POST['ch_pat_id'], "int"));
 
     $Result1 = mysql_query($updateSQL, $maconnexion);
     getErrorMessage('success', "L'actualité de l'entreprise a été modifiée avec succès !");
