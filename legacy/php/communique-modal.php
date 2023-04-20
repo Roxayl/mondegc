@@ -1,11 +1,11 @@
 <?php
 
-header('Content-Type: text/html; charset=uft-8');
+header('Content-Type: text/html; charset=utf-8');
 
-//Connexion BBD Communique
+//Connexion BDD Communique
 $colname_communique = "-1";
 if (isset($_GET['com_id'])) {
-    $colname_communique = $_GET['com_id'];
+    $colname_communique = (int) $_GET['com_id'];
 }
 
 $query_communique = sprintf("SELECT * FROM communiques WHERE ch_com_ID = %s", escape_sql($colname_communique, "int"));

@@ -518,7 +518,7 @@ var vectors1 = new OpenLayers.Layer.Vector(" Pays", {
 	            map.addControl(new OpenLayers.Control.MousePosition());
 				// navigation avec le clavier
 	            map.addControl(new OpenLayers.Control.KeyboardDefaults());
-	       		map.setCenter(new OpenLayers.LonLat(<?php echo $bounds; ?>), 4);
+	       		map.setCenter(new OpenLayers.LonLat(<?php echo e($bounds); ?>), 4);
 
 
   // Fonction creation drapeaux-pays. 

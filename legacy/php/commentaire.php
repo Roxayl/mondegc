@@ -4,7 +4,7 @@
 $maxRows_commentaire = 10;
 $pageNum_commentaire = 0;
 if (isset($_GET['pageNum_commentaire'])) {
-  $pageNum_commentaire = $_GET['pageNum_commentaire'];
+  $pageNum_commentaire = (int) $_GET['pageNum_commentaire'];
 }
 $startRow_commentaire = $pageNum_commentaire * $maxRows_commentaire;
 
@@ -15,7 +15,7 @@ $commentaire = mysql_query($query_limit_commentaire, $maconnexion);
 $row_commentaire = mysql_fetch_assoc($commentaire);
 
 if (isset($_GET['totalRows_commentaire'])) {
-  $totalRows_commentaire = $_GET['totalRows_commentaire'];
+  $totalRows_commentaire = (int) $_GET['totalRows_commentaire'];
 } else {
   $all_commentaire = mysql_query($query_commentaire);
   $totalRows_commentaire = mysql_num_rows($all_commentaire);
