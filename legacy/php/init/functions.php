@@ -657,7 +657,7 @@ function coordEmplacement(?int $emplacement, mixed &$x, mixed &$y): void
 }
 
 /**
- * @param string $typeZone
+ * @param string|null $typeZone
  * @param string|null $fillcolor
  * @param string|null $fillOpacity
  * @param string|null $strokeWidth
@@ -667,7 +667,7 @@ function coordEmplacement(?int $emplacement, mixed &$x, mixed &$y): void
  * @return void
  */
 function styleZones(
-    string $typeZone,
+    ?string $typeZone,
     ?string &$fillcolor,
     ?string &$fillOpacity,
     ?string &$strokeWidth,
@@ -813,13 +813,13 @@ function styleZones(
 }
 
 /**
- * @param string $typeVoie
+ * @param string|null $typeVoie
  * @param string|null $couleurTrait
  * @param string|null $epaisseurTrait
  * @param string|null $Trait
  * @return void
  */
-function styleVoies(string $typeVoie, ?string &$couleurTrait, ?string &$epaisseurTrait, ?string &$Trait): void
+function styleVoies(?string $typeVoie, ?string &$couleurTrait, ?string &$epaisseurTrait, ?string &$Trait): void
 {
     if($typeVoie == "lgv") {
         $couleurTrait = "#8a5b9d";
