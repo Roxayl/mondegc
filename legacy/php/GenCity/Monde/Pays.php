@@ -24,10 +24,10 @@ class Pays extends BaseModel {
      */
     public function getLeaders($minPermission = 0, $setObject = false) {
 
-        $where_query = $minPermission > 0 ? ' AND permissions >= ' . GetSQLValueString($minPermission, 'int') : '';
+        $where_query = $minPermission > 0 ? ' AND permissions >= ' . escape_sql($minPermission, 'int') : '';
 
         $query = mysql_query(sprintf('SELECT users_pays.id AS users_pays_ID, ID_user, permissions, ch_use_login, ch_use_lien_imgpersonnage FROM users JOIN users_pays ON ch_use_id = ID_user AND ID_pays = %s ' . $where_query,
-            GetSQLValueString($this->model->ch_pay_id, 'int')));
+            escape_sql($this->model->ch_pay_id, 'int')));
         $result = array();
         while($row = mysql_fetch_assoc($query)) {
             if($setObject) {
@@ -46,7 +46,7 @@ class Pays extends BaseModel {
             "SELECT id, entity, entity_id, nom_personnage, predicat, prenom_personnage, biographie,
             titre_personnage, lien_img FROM personnage
             WHERE entity = 'pays' AND entity_id = %s",
-            GetSQLValueString($this->model->ch_pay_id, 'int')));
+            escape_sql($this->model->ch_pay_id, 'int')));
         $result = array();
         while($row = mysql_fetch_assoc($query)) {
             $result[] = $row;
@@ -60,9 +60,9 @@ class Pays extends BaseModel {
         mysql_query(sprintf(
             'INSERT INTO users_pays(ID_pays, ID_user, permissions) ' .
                         ' VALUES(%s, %s, %s)',
-            GetSQLValueString($this->ch_pay_id, 'int'),
-            GetSQLValueString($user->ch_use_id, 'int'),
-            GetSQLValueString($permission, 'int')
+            escape_sql($this->ch_pay_id, 'int'),
+            escape_sql($user->ch_use_id, 'int'),
+            escape_sql($permission, 'int')
         ));
 
     }
@@ -71,8 +71,8 @@ class Pays extends BaseModel {
 
         mysql_query(sprintf(
             'DELETE FROM users_pays WHERE ID_pays = %s AND ID_user = %s',
-            GetSQLValueString($this->ch_pay_id, 'int'),
-            GetSQLValueString($user->ch_use_id, 'int')
+            escape_sql($this->ch_pay_id, 'int'),
+            escape_sql($user->ch_use_id, 'int')
         ));
 
     }
@@ -88,8 +88,8 @@ class Pays extends BaseModel {
             $user = $_SESSION['userObject'];
 
         $query = mysql_query(sprintf('SELECT permissions FROM users_pays WHERE ID_pays = %s AND ID_user = %s',
-            GetSQLValueString($this->model->ch_pay_id, 'int'),
-            GetSQLValueString($user->ch_use_id, 'int')));
+            escape_sql($this->model->ch_pay_id, 'int'),
+            escape_sql($user->ch_use_id, 'int')));
         $result = mysql_fetch_assoc($query);
         if(empty($result)) {
             return 0;
@@ -106,7 +106,7 @@ class Pays extends BaseModel {
               WHERE ID_pays = %s
               GROUP BY ch_pay_id
               HAVING MAX(ch_use_last_log) > DATE_SUB(NOW(), INTERVAL 4 MONTH)',
-            GetSQLValueString($this->get('ch_pay_id'))
+            escape_sql($this->get('ch_pay_id'))
             ));
         $results = mysql_fetch_assoc($mysql_query);
         return !empty($results);

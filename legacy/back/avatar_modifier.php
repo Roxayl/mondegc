@@ -5,6 +5,7 @@ use GenCity\Monde\Pays;
  
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
+
 if(!isset($_SESSION['userObject'])) {
     header("Status: 301 Moved Permanently", false, 301);
     header('Location: ' . legacyPage('connexion'));
@@ -84,8 +85,8 @@ Eventy::action('display.beforeHeadClosingTag')
       <?php require(DEF_LEGACYROOTPATH . 'php/upload.php');
 if (isset($uploadconfirm)) {
   $updateSQL = sprintf("UPDATE personnage SET lien_img=%s WHERE entity='pays' AND entity_id=%s",
-                       GetSQLValueString($link, "text"),
-                       GetSQLValueString($pays_ID, "int"));
+                       escape_sql($link, "text"),
+                       escape_sql($pays_ID, "int"));
 
   $Result1 = mysql_query($updateSQL, $maconnexion);
 

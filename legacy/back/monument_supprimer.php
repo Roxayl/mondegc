@@ -14,7 +14,7 @@ if (isset($_POST['monument_ID'])) {
   $colname_ch_pat_confimation_suppression = $_POST['monument_ID'];
 }
 
-$query_ch_pat_confimation_suppression = sprintf("SELECT ch_pat_id, ch_pat_villeID FROM patrimoine WHERE ch_pat_id = %s", GetSQLValueString($colname_ch_pat_confimation_suppression, "int"));
+$query_ch_pat_confimation_suppression = sprintf("SELECT ch_pat_id, ch_pat_villeID FROM patrimoine WHERE ch_pat_id = %s", escape_sql($colname_ch_pat_confimation_suppression, "int"));
 $ch_pat_confimation_suppression = mysql_query($query_ch_pat_confimation_suppression, $maconnexion);
 $row_ch_pat_confimation_suppression = mysql_fetch_assoc($ch_pat_confimation_suppression);
 $totalRows_ch_pat_confimation_suppression = mysql_num_rows($ch_pat_confimation_suppression);
@@ -27,11 +27,11 @@ if((isset($_POST['monument_ID'])) && ($_POST['monument_ID'] != "")) {
     $eloquentPatrimoine->deleteInfluences();
 
     $deleteSQL = sprintf("DELETE FROM patrimoine WHERE ch_pat_id=%s",
-        GetSQLValueString($_POST['monument_ID'], "int"));
+        escape_sql($_POST['monument_ID'], "int"));
     $Result1 = mysql_query($deleteSQL, $maconnexion);
 
     $deleteSQL2 = sprintf("DELETE FROM dispatch_mon_cat WHERE ch_disp_mon_id=%s",
-        GetSQLValueString($_POST['monument_ID'], "int"));
+        escape_sql($_POST['monument_ID'], "int"));
     $Result2 = mysql_query($deleteSQL2, $maconnexion);
 
     getErrorMessage('success', "Le monument a été supprimé avec succès.");

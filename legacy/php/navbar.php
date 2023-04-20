@@ -58,7 +58,7 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
       </form>
       
       <!-- Menu gestion une fois connecté tablet -->
-      <div class="visible-tablet navbar-form menu-gestion menu-gestion-front <?php echo isset($_SESSION['menu_gestion']) ? $_SESSION['menu_gestion'] : '' ?>"><span class="Nav-pseudo"><?php echo isset($_SESSION['login_user']) ? $_SESSION['login_user'] : '' ?>&nbsp;</span>
+      <div class="visible-tablet navbar-form menu-gestion menu-gestion-front <?php echo isset($_SESSION['menu_gestion']) ? e($_SESSION['menu_gestion']) : '' ?>"><span class="Nav-pseudo"><?php echo isset($_SESSION['login_user']) ? e($_SESSION['login_user']) : '' ?>&nbsp;</span>
         <div class="dropdown">
           <a href="<?= DEF_URI_PATH ?>dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mes pays</a>
           <ul class="dropdown-menu dropdown-mes-pays" role="menu" aria-labelledby="dLabel">
@@ -67,7 +67,7 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
           <?php endforeach; ?>
           </ul>
         </div>
-        <a href="<?php echo $logoutAction ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a> </div>
+        <a href="<?= e($logoutAction) ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a> </div>
       <!-- Logo -->
       <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
       <a class="brand" href="<?= DEF_URI_PATH ?>index.php"><img src="<?= DEF_URI_PATH ?>assets/img/2019/logo-navbar.png" alt="Le Monde GC" /></a>
@@ -91,8 +91,8 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
         </form>
         
         <!-- Menu gestion une fois connecté desktop/phone -->
-        <div class="hidden-tablet navbar-form <?php echo isset($_SESSION['menu_gestion']) ? $_SESSION['menu_gestion'] : '' ?>">
-            <div><a href="<?= DEF_URI_PATH ?>back/membre-modifier_back.php?userID=<?= isset($_SESSION['user_ID']) ? $_SESSION['user_ID'] : '' ?>" class="btn btn-primary" type="submit" title="page de gestion du profil" style="visibility: hidden;"><i class="icon-user-white"></i> Mon profil</a></div>
+        <div class="hidden-tablet navbar-form <?php echo isset($_SESSION['menu_gestion']) ? e($_SESSION['menu_gestion']) : '' ?>">
+            <div><a href="<?= DEF_URI_PATH ?>back/membre-modifier_back.php?userID=<?= isset($_SESSION['user_ID']) ? e($_SESSION['user_ID']) : '' ?>" class="btn btn-primary" type="submit" title="page de gestion du profil" style="visibility: hidden;"><i class="icon-user-white"></i> Mon profil</a></div>
 
         <?php if(isset($_SESSION['userObject'])):
 
@@ -101,7 +101,7 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
             <div class="offset" style="margin-top: 38px;">
 
                 <div class="dropdown pull-right">
-                  <a href="<?= DEF_URI_PATH ?>dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="Gérer mes pays"><i class="icon-pays-small-white"></i> <?= $navbar_intitulePays ?></a>
+                  <a href="<?= DEF_URI_PATH ?>dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="Gérer mes pays"><i class="icon-pays-small-white"></i> <?= e($navbar_intitulePays) ?></a>
                   <ul class="dropdown-menu dropdown-mes-pays" role="menu" aria-labelledby="dLabel">
                       <li class="nav-header">Gérer <?= \Illuminate\Support\Str::lower($navbar_intitulePays) ?></li>
                       <?php foreach($nav_userPays as $nav_thisPays): ?>
@@ -111,9 +111,9 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
                       <?php endforeach; ?>
                       <li class="divider"></li>
                       <li class="nav-header">Mon compte</li>
-                      <li><div style="margin: 5px;"><small>Connecté en tant que <?= __s($_SESSION['userObject']->get('ch_use_login')) ?></small></div></li>
+                      <li><div style="margin: 5px;"><small>Connecté en tant que <?= e($_SESSION['userObject']->get('ch_use_login')) ?></small></div></li>
                       <li><a href="<?= DEF_URI_PATH ?>back/membre-modifier_back.php?userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>">Gérer mon compte</a></li>
-                      <li><a href="<?= $logoutAction ?>">Se déconnecter</a></li>
+                      <li><a href="<?= e($logoutAction) ?>">Se déconnecter</a></li>
                   </ul>
                 </div>
 
@@ -291,8 +291,8 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
                               <div class="drop-colonne-droite">
                           <?php endif; ?>
                           <li class="nav-header" style="text-transform: none;">
-                              <span class="badge org-<?= $thisOrganisation->type ?>">
-                              <?= __("organisation.types.{$thisOrganisation->type}") ?>
+                              <span class="badge org-<?= e($thisOrganisation->type) ?>">
+                              <?= e(__("organisation.types.{$thisOrganisation->type}")) ?>
                               </span>
                           </li>
                       <?php
@@ -330,7 +330,7 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
                       <span class="btn-small"><strong><img src="<?= DEF_URI_PATH ?>assets/img/2019/AGicon.png"> Session en cours</strong><br>
                           <?= count($navbar_pendingVotes) ?>
                           proposition<?= count($navbar_pendingVotes) > 1 ? 's' : '' ?>
-                          actuellement soumis<?= count($navbar_pendingVotes) > 1 ? 'es' : 'e' ?> au vote
+                          actuellement soumise<?= count($navbar_pendingVotes) > 1 ? 's' : '' ?> au vote
                           <?php if(count($navbar_userProposalPendingVotes)): ?>
                             <br><span style="color: #ff4e00;">
                               (dont <?= count($navbar_userProposalPendingVotes) ?> en attente de votre vote)
@@ -361,7 +361,7 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="les autres sites de G&eacute;n&eacute;ration City">G&eacute;n&eacute;ration City <b class="caret"></b></a>
             <ul class="dropdown-menu">            
               <li><a href="https://www.forum-gc.com">Le forum</a></li>
-              <li><a href="http://vasel.yt/wiki/index.php?title=Accueil">Le Wiki</a></li>
+              <li><a href="https://vasel.yt/wiki/index.php?title=Accueil">Le Wiki</a></li>
 			  <li><a href="https://squirrel.roxayl.fr/">Squirrel</a></li>
             </ul>
           </li>

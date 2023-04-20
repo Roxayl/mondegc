@@ -60,8 +60,8 @@ class Vote extends BaseModel {
 
         $query = sprintf(
             'UPDATE ocgc_votes SET reponse_choisie = %s WHERE id = %s',
-                GetSQLValueString($this->get('reponse_choisie')),
-                GetSQLValueString($this->get('id'))
+                escape_sql($this->get('reponse_choisie')),
+                escape_sql($this->get('id'))
         );
         mysql_query($query);
 

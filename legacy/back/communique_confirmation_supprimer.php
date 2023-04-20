@@ -15,7 +15,7 @@ if (isset($_POST['communique_ID'])) {
   $colname_ch_communique_confimation_suppression = $_POST['communique_ID'];
 }
 
-$query_ch_communique_confimation_suppression = sprintf("SELECT ch_com_ID, ch_com_titre, ch_com_categorie, ch_com_element_id FROM communiques WHERE ch_com_ID = %s", GetSQLValueString($colname_ch_communique_confimation_suppression, "int"));
+$query_ch_communique_confimation_suppression = sprintf("SELECT ch_com_ID, ch_com_titre, ch_com_categorie, ch_com_element_id FROM communiques WHERE ch_com_ID = %s", escape_sql($colname_ch_communique_confimation_suppression, "int"));
 $ch_communique_confimation_suppression = mysql_query($query_ch_communique_confimation_suppression, $maconnexion);
 $row_ch_communique_confimation_suppression = mysql_fetch_assoc($ch_communique_confimation_suppression);
 $totalRows_ch_communique_confimation_suppression = mysql_num_rows($ch_communique_confimation_suppression);

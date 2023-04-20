@@ -195,7 +195,7 @@ Eventy::action('display.beforeHeadClosingTag')
 $idtemperance = $row_liste_temperance ['id'];
 		// requete nb de juges votants
 
-$query_nb_juges = sprintf("SELECT COUNT(ch_not_temp_juge) as nbjuges FROM notation_temperance WHERE ch_not_temp_temperance_id =%s", GetSQLValueString( $idtemperance, "int"));
+$query_nb_juges = sprintf("SELECT COUNT(ch_not_temp_juge) as nbjuges FROM notation_temperance WHERE ch_not_temp_temperance_id =%s", escape_sql( $idtemperance, "int"));
 $nb_juges = mysql_query($query_nb_juges, $maconnexion);
 $row_nb_juges = mysql_fetch_assoc($nb_juges);
 $totalRows_nb_juges = mysql_num_rows($nb_juges);

@@ -11,7 +11,7 @@ if (isset($_GET['ch_temp_id'])) {
 
 //requete temperance
 
-$query_temperance = sprintf("SELECT * FROM notation_temperance WHERE ch_not_temp_temperance_id=%s", GetSQLValueString( $ch_temp_id, "int"));
+$query_temperance = sprintf("SELECT * FROM notation_temperance WHERE ch_not_temp_temperance_id=%s", escape_sql( $ch_temp_id, "int"));
 $temperance = mysql_query($query_temperance, $maconnexion);
 $row_temperance = mysql_fetch_assoc($temperance);
 $totalRows_temperance = mysql_num_rows($temperance);
@@ -57,7 +57,7 @@ ${'commentaireQ10auteurcom'.$i}= $row_temperance ['ch_not_temp_juge'];
 
 //requete pays
 
-$query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom FROM temperance INNER JOIN pays ON ch_temp_element_id = ch_pay_id WHERE ch_temp_id=%s", GetSQLValueString($ch_temp_id, "int"));
+$query_pays = sprintf("SELECT ch_pay_id, ch_pay_nom FROM temperance INNER JOIN pays ON ch_temp_element_id = ch_pay_id WHERE ch_temp_id=%s", escape_sql($ch_temp_id, "int"));
 $pays = mysql_query($query_pays, $maconnexion);
 $row_pays = mysql_fetch_assoc($pays);
 $totalRows_pays = mysql_num_rows($pays);

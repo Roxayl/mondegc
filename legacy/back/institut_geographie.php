@@ -3,35 +3,33 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 //requete instituts
 $institut_id = 2;
 
-$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
+$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", escape_sql($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
   $insertSQL = sprintf("INSERT INTO geometries (ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_geo_wkt'], "text"),
-					   GetSQLValueString($_POST['ch_geo_pay_id'], "int"),
-					   GetSQLValueString($_POST['ch_geo_user'], "int"),
-					   GetSQLValueString($_POST['ch_geo_maj_user'], "int"),
-                       GetSQLValueString($_POST['ch_geo_date'], "date"),
-                       GetSQLValueString($_POST['ch_geo_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_geo_geometries'], "text"),
-                       GetSQLValueString($_POST['ch_geo_mesure'], "int"),
-                       GetSQLValueString($_POST['ch_geo_type'], "text"),
-                       GetSQLValueString($_POST['ch_geo_nom'], "text"));
+                       escape_sql($_POST['ch_geo_wkt'], "text"),
+					   escape_sql($_POST['ch_geo_pay_id'], "int"),
+					   escape_sql($_POST['ch_geo_user'], "int"),
+					   escape_sql($_POST['ch_geo_maj_user'], "int"),
+                       escape_sql($_POST['ch_geo_date'], "date"),
+                       escape_sql($_POST['ch_geo_mis_jour'], "date"),
+                       escape_sql($_POST['ch_geo_geometries'], "text"),
+                       escape_sql($_POST['ch_geo_mesure'], "int"),
+                       escape_sql($_POST['ch_geo_type'], "text"),
+                       escape_sql($_POST['ch_geo_nom'], "text"));
 
 
   $Result1 = mysql_query($insertSQL, $maconnexion);
@@ -44,17 +42,17 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) {
   $updateSQL = sprintf("UPDATE geometries SET ch_geo_wkt=%s, ch_geo_pay_id=%s, ch_geo_user=%s, ch_geo_maj_user=%s, ch_geo_date=%s, ch_geo_mis_jour=%s, ch_geo_geometries=%s, ch_geo_mesure=%s, ch_geo_type=%s, ch_geo_nom=%s WHERE ch_geo_id=%s",
-                       GetSQLValueString($_POST['ch_geo_wkt'], "text"),
-					   GetSQLValueString($_POST['ch_geo_pay_id'], "int"),
-					   GetSQLValueString($_POST['ch_geo_user'], "int"),
-					   GetSQLValueString($_POST['ch_geo_maj_user'], "int"),
-                       GetSQLValueString($_POST['ch_geo_date'], "date"),
-                       GetSQLValueString($_POST['ch_geo_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_geo_geometries'], "text"),
-                       GetSQLValueString($_POST['ch_geo_mesure'], "decimal"),
-                       GetSQLValueString($_POST['ch_geo_type'], "text"),
-                       GetSQLValueString($_POST['ch_geo_nom'], "text"),
-					   GetSQLValueString($_POST['ch_geo_id'], "int"));
+                       escape_sql($_POST['ch_geo_wkt'], "text"),
+					   escape_sql($_POST['ch_geo_pay_id'], "int"),
+					   escape_sql($_POST['ch_geo_user'], "int"),
+					   escape_sql($_POST['ch_geo_maj_user'], "int"),
+                       escape_sql($_POST['ch_geo_date'], "date"),
+                       escape_sql($_POST['ch_geo_mis_jour'], "date"),
+                       escape_sql($_POST['ch_geo_geometries'], "text"),
+                       escape_sql($_POST['ch_geo_mesure'], "decimal"),
+                       escape_sql($_POST['ch_geo_type'], "text"),
+                       escape_sql($_POST['ch_geo_nom'], "text"),
+					   escape_sql($_POST['ch_geo_id'], "int"));
 
 
   $Result1 = mysql_query($updateSQL, $maconnexion);

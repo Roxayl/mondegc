@@ -48,8 +48,8 @@ class ProposalValidate {
 
         $query = sprintf('
             UPDATE ocgc_proposals SET is_valid = %s WHERE id = %s',
-            GetSQLValueString($is_valid_value, 'int'),
-            GetSQLValueString($this->proposal->get('id'), 'int'));
+            escape_sql($is_valid_value, 'int'),
+            escape_sql($this->proposal->get('id'), 'int'));
         mysql_query($query);
 
     }

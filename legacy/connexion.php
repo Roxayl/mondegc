@@ -15,7 +15,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "OubliIdentifiant"))
   $mailposte = $_POST['ch_use_mail']; // D�claration de l'adresse de destination.
 
 
-$query_Compare_mail = sprintf("SELECT ch_use_id, ch_use_login, ch_use_password, ch_use_mail, ch_use_paysID, ch_use_statut FROM users WHERE ch_use_mail=%s", GetSQLValueString($mailposte, "text"));
+$query_Compare_mail = sprintf("SELECT ch_use_id, ch_use_login, ch_use_password, ch_use_mail, ch_use_paysID, ch_use_statut FROM users WHERE ch_use_mail=%s", escape_sql($mailposte, "text"));
 $Compare_mail = mysql_query($query_Compare_mail, $maconnexion);
 $row_Compare_mail = mysql_fetch_assoc($Compare_mail);
 $totalRows_Compare_mail = mysql_num_rows($Compare_mail);
@@ -40,11 +40,11 @@ if ( $row_Compare_mail ) {
   $statut = $row_Compare_mail['ch_use_statut']; // D�claration de l'adresse de destination.
 
   $insertSQL = sprintf("INSERT INTO users_provisoire (ch_use_prov_login, ch_use_prov_clef, ch_use_prov_mail, ch_use_prov_paysID, ch_use_prov_statut) VALUES (%s, %s, %s, %s, %s)",
-                       GetSQLValueString($login, "text"),
-                       GetSQLValueString($clef, "text"),
-                       GetSQLValueString($mail, "text"),
-                       GetSQLValueString($paysID, "int"),
-                       GetSQLValueString($statut, "int"));
+                       escape_sql($login, "text"),
+                       escape_sql($clef, "text"),
+                       escape_sql($mail, "text"),
+                       escape_sql($paysID, "int"),
+                       escape_sql($statut, "int"));
 
   
   $Result1 = mysql_query($insertSQL, $maconnexion);

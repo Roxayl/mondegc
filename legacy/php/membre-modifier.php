@@ -50,7 +50,7 @@ $totalRows_pays = mysql_num_rows($pays);
     <h3 id="myModalLabel">Param&egrave;tres du compte</h3>
   </div>
   <div class="modal-body">
-  <form action="<?php echo $editFormAction; ?>" name="ProfilUser" method="POST" class="form-horizontal" id="ProfilUser">
+  <form action="<?= e($editFormAction) ?>" name="ProfilUser" method="POST" class="form-horizontal" id="ProfilUser">
     <!-- Boutons cachés -->
     <input name="ch_use_id" type="hidden" value="<?= e($row_User['ch_use_id']) ?>">
     <input name="userID" type="hidden" value="<?= e($row_User['ch_use_id']) ?>">

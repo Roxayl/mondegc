@@ -19,7 +19,7 @@ if (isset($_POST['monument_ID'])) {
   unset($_POST['monument_ID']);
 }
 
-$query_monument = sprintf("SELECT ch_pat_id, ch_pat_label, ch_pat_statut, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nb_update, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_nom, ch_pat_lien_img1, ch_pat_lien_img2, ch_pat_lien_img3, ch_pat_lien_img4, ch_pat_lien_img5, ch_pat_legende_img1, ch_pat_legende_img2, ch_pat_legende_img3, ch_pat_legende_img4, ch_pat_legende_img5, ch_pat_description, ch_pay_id, ch_pay_nom, ch_vil_ID, ch_vil_nom, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID WHERE ch_pat_id = %s", GetSQLValueString($monument_ID, "int"));
+$query_monument = sprintf("SELECT ch_pat_id, ch_pat_label, ch_pat_statut, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nb_update, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_nom, ch_pat_lien_img1, ch_pat_lien_img2, ch_pat_lien_img3, ch_pat_lien_img4, ch_pat_lien_img5, ch_pat_legende_img1, ch_pat_legende_img2, ch_pat_legende_img3, ch_pat_legende_img4, ch_pat_legende_img5, ch_pat_description, ch_pay_id, ch_pay_nom, ch_vil_ID, ch_vil_nom, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID WHERE ch_pat_id = %s", escape_sql($monument_ID, "int"));
 $monument = mysql_query($query_monument, $maconnexion);
 $row_monument = mysql_fetch_assoc($monument);
 $totalRows_monument = mysql_num_rows($monument);
@@ -28,7 +28,7 @@ $paysID = $row_monument['ch_pat_paysID'];
 
 // Connection infos dirigeant pays
 
-$query_users = sprintf("SELECT ch_vil_user, ch_use_id, ch_use_login FROM villes INNER JOIN users ON ch_vil_user=ch_use_id WHERE ch_vil_ID = %s", GetSQLValueString($ville_id, "int"));
+$query_users = sprintf("SELECT ch_vil_user, ch_use_id, ch_use_login FROM villes INNER JOIN users ON ch_vil_user=ch_use_id WHERE ch_vil_ID = %s", escape_sql($ville_id, "int"));
 $users = mysql_query($query_users, $maconnexion);
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
@@ -53,7 +53,7 @@ $totalRows_liste_mon_cat_nope = mysql_num_rows($liste_mon_cat_nope);
 $_SESSION['last_work'] = 'page-monument.php?ch_pat_id='.$row_monument['ch_pat_id'];
 
 //requete catégorie 1
-$query_mon_cat_a = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 0 AND 199 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
+$query_mon_cat_a = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 0 AND 199 ORDER BY ch_mon_cat_couleur", escape_sql($mon_ID, "int"));
 $mon_cat_a = mysql_query($query_mon_cat_a, $maconnexion);
 $row_mon_cat_a = mysql_fetch_assoc($mon_cat_a);
 $totalRows_mon_cat_a = mysql_num_rows($mon_cat_a);
@@ -81,28 +81,28 @@ appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_monument")) {
   $updateSQL = sprintf("UPDATE patrimoine SET ch_pat_label=%s, ch_pat_statut=%s, ch_pat_paysID=%s, ch_pat_villeID=%s, ch_pat_date=%s, ch_pat_mis_jour=%s, ch_pat_nb_update=%s, ch_pat_coord_X=%s, ch_pat_coord_Y=%s, ch_pat_nom=%s, ch_pat_lien_img1=%s, ch_pat_lien_img2=%s, ch_pat_lien_img3=%s, ch_pat_lien_img4=%s, ch_pat_lien_img5=%s, ch_pat_legende_img1=%s, ch_pat_legende_img2=%s, ch_pat_legende_img3=%s, ch_pat_legende_img4=%s, ch_pat_legende_img5=%s, ch_pat_description=%s WHERE ch_pat_id=%s",
-                       GetSQLValueString($_POST['ch_pat_label'], "text"),
-                       GetSQLValueString($_POST['ch_pat_statut'], "int"),
-                       GetSQLValueString($_POST['ch_pat_paysID'], "int"),
-                       GetSQLValueString($_POST['ch_pat_villeID'], "int"),
-                       GetSQLValueString($_POST['ch_pat_date'], "date"),
-                       GetSQLValueString($_POST['ch_pat_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_pat_nb_update'], "int"),
-                       GetSQLValueString($_POST['form_coord_X'], "text"),
-                       GetSQLValueString($_POST['form_coord_Y'], "text"),
-                       GetSQLValueString($_POST['ch_pat_nom'], "text"),
-                       GetSQLValueString($_POST['ch_pat_lien_img1'], "text"),
-                       GetSQLValueString($_POST['ch_pat_lien_img2'], "text"),
-                       GetSQLValueString($_POST['ch_pat_lien_img3'], "text"),
-                       GetSQLValueString($_POST['ch_pat_lien_img4'], "text"),
-                       GetSQLValueString($_POST['ch_pat_lien_img5'], "text"),
-                       GetSQLValueString($_POST['ch_pat_legende_img1'], "text"),
-                       GetSQLValueString($_POST['ch_pat_legende_img2'], "text"),
-                       GetSQLValueString($_POST['ch_pat_legende_img3'], "text"),
-                       GetSQLValueString($_POST['ch_pat_legende_img4'], "text"),
-                       GetSQLValueString($_POST['ch_pat_legende_img5'], "text"),
-                       GetSQLValueString($_POST['ch_pat_description'], "text"),
-                       GetSQLValueString($_POST['ch_pat_id'], "int"));
+                       escape_sql($_POST['ch_pat_label'], "text"),
+                       escape_sql($_POST['ch_pat_statut'], "int"),
+                       escape_sql($_POST['ch_pat_paysID'], "int"),
+                       escape_sql($_POST['ch_pat_villeID'], "int"),
+                       escape_sql($_POST['ch_pat_date'], "date"),
+                       escape_sql($_POST['ch_pat_mis_jour'], "date"),
+                       escape_sql($_POST['ch_pat_nb_update'], "int"),
+                       escape_sql($_POST['form_coord_X'], "text"),
+                       escape_sql($_POST['form_coord_Y'], "text"),
+                       escape_sql($_POST['ch_pat_nom'], "text"),
+                       escape_sql($_POST['ch_pat_lien_img1'], "text"),
+                       escape_sql($_POST['ch_pat_lien_img2'], "text"),
+                       escape_sql($_POST['ch_pat_lien_img3'], "text"),
+                       escape_sql($_POST['ch_pat_lien_img4'], "text"),
+                       escape_sql($_POST['ch_pat_lien_img5'], "text"),
+                       escape_sql($_POST['ch_pat_legende_img1'], "text"),
+                       escape_sql($_POST['ch_pat_legende_img2'], "text"),
+                       escape_sql($_POST['ch_pat_legende_img3'], "text"),
+                       escape_sql($_POST['ch_pat_legende_img4'], "text"),
+                       escape_sql($_POST['ch_pat_legende_img5'], "text"),
+                       escape_sql($_POST['ch_pat_description'], "text"),
+                       escape_sql($_POST['ch_pat_id'], "int"));
 
   
   $Result1 = mysql_query($updateSQL, $maconnexion);

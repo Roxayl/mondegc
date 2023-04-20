@@ -10,7 +10,7 @@ if (isset($_GET['pageNum_communiques'])) {
 $startRow_communiques = $pageNum_communiques * $maxRows_communiques;
 
 
-$query_communiques = sprintf("SELECT * FROM communiques WHERE communiques.ch_com_categorie = '$ch_com_categorie'  AND communiques.ch_com_element_id = %s AND communiques.ch_com_statut = '1' ORDER BY ch_com_date DESC", GetSQLValueString($ch_com_element_id, "int"));
+$query_communiques = sprintf("SELECT * FROM communiques WHERE communiques.ch_com_categorie = '$ch_com_categorie'  AND communiques.ch_com_element_id = %s AND communiques.ch_com_statut = '1' ORDER BY ch_com_date DESC", escape_sql($ch_com_element_id, "int"));
 $query_limit_communiques = sprintf("%s LIMIT %d, %d", $query_communiques, $startRow_communiques, $maxRows_communiques);
 $communiques = mysql_query($query_limit_communiques, $maconnexion);
 $row_communiques = mysql_fetch_assoc($communiques);

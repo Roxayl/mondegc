@@ -20,7 +20,7 @@ class InfraOfficielle extends BaseModel {
         $sql = sprintf('SELECT ch_inf_off_id FROM infrastructures_officielles iof
           JOIN infrastructures_officielles_groupes iog ON iog.ID_infra_officielle = iof.ch_inf_off_id
           WHERE ID_groupes = %s',
-            GetSQLValueString($infraGroup->get('id')));
+            escape_sql($infraGroup->get('id')));
 
         $query = mysql_query($sql);
         while($row = mysql_fetch_assoc($query)) {
@@ -37,7 +37,7 @@ class InfraOfficielle extends BaseModel {
             $sql = sprintf("SELECT ig.* FROM infrastructures_groupes ig
               JOIN infrastructures_officielles_groupes iog ON  iog.ID_groupes = ig.id
               WHERE ID_infra_officielle = %s",
-                GetSQLValueString($this->get('ch_inf_off_id')));
+                escape_sql($this->get('ch_inf_off_id')));
             $query = mysql_query($sql);
             $result = mysql_fetch_assoc($query);
             if($result)

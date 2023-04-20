@@ -3,18 +3,16 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=30))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 30))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 if ((isset($_POST['ch_use_id'])) && ($_POST['ch_use_id'] != "")) {
   $deleteSQL = sprintf("DELETE FROM users WHERE ch_use_id=%s",
-                       GetSQLValueString($_POST['ch_use_id'], "int"));
+                       escape_sql($_POST['ch_use_id'], "int"));
 
   
   $Result1 = mysql_query($deleteSQL, $maconnexion);

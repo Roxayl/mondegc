@@ -20,63 +20,63 @@ if(isset($_POST['Pays_ID'])) {
     /** @var Pays $eloquentPays */
     $eloquentPays = Pays::query()->findOrFail($colname_Pays_ID);
 
-    $query_ville = sprintf("SELECT ch_vil_ID FROM villes WHERE ch_vil_paysID = %s", GetSQLValueString($colname_Pays_ID, "int"));
+    $query_ville = sprintf("SELECT ch_vil_ID FROM villes WHERE ch_vil_paysID = %s", escape_sql($colname_Pays_ID, "int"));
     $ville = mysql_query($query_ville, $maconnexion);
 
-    $query_monument = sprintf("SELECT ch_pat_id FROM patrimoine WHERE ch_pat_paysID = %s", GetSQLValueString($colname_Pays_ID, "int"));
+    $query_monument = sprintf("SELECT ch_pat_id FROM patrimoine WHERE ch_pat_paysID = %s", escape_sql($colname_Pays_ID, "int"));
     $monument = mysql_query($query_monument, $maconnexion);
 
     $eloquentPays->delete();
 
     $deleteSQL1 = sprintf("DELETE FROM pays WHERE ch_pay_id=%s",
-        GetSQLValueString($_POST['Pays_ID'], "int"));
+        escape_sql($_POST['Pays_ID'], "int"));
     $Result1 = mysql_query($deleteSQL1, $maconnexion);
 
     $deleteSQL2 = sprintf("DELETE FROM villes WHERE ch_vil_paysID=%s",
-        GetSQLValueString($_POST['Pays_ID'], "int"));
+        escape_sql($_POST['Pays_ID'], "int"));
     $Result2 = mysql_query($deleteSQL2, $maconnexion);
 
     $deleteSQL3 = sprintf("DELETE FROM patrimoine WHERE ch_pat_paysID=%s",
-        GetSQLValueString($_POST['Pays_ID'], "int"));
+        escape_sql($_POST['Pays_ID'], "int"));
     $Result3 = mysql_query($deleteSQL3, $maconnexion);
 
     $deleteSQL4 = sprintf("DELETE FROM communiques WHERE ch_com_element_id=%s AND ch_com_categorie='pays'",
-        GetSQLValueString($_POST['Pays_ID'], "int"));
+        escape_sql($_POST['Pays_ID'], "int"));
     $Result4 = mysql_query($deleteSQL4, $maconnexion);
 
     $deleteSQL5 = sprintf("DELETE FROM histoire WHERE ch_his_paysID=%s",
-        GetSQLValueString($_POST['Pays_ID'], "int"));
+        escape_sql($_POST['Pays_ID'], "int"));
     $Result5 = mysql_query($deleteSQL5, $maconnexion);
 
     $deleteSQL9 = sprintf("DELETE FROM geometries WHERE ch_geo_pay_id=%s",
-        GetSQLValueString($_POST['Pays_ID'], "int"));
+        escape_sql($_POST['Pays_ID'], "int"));
     $Result9 = mysql_query($deleteSQL9, $maconnexion);
 
      while($row_ville = mysql_fetch_assoc($ville)) {
         $colname_villeID = $row_ville['ch_vil_ID'];
 
         $deleteSQL6 = sprintf("DELETE FROM communiques WHERE ch_com_element_id=%s AND ch_com_categorie='ville'",
-            GetSQLValueString($colname_villeID, "int"));
+            escape_sql($colname_villeID, "int"));
         $Result6 = mysql_query($deleteSQL6, $maconnexion);
 
         $deleteSQL7 = sprintf("DELETE FROM infrastructures WHERE infrastructurable_id = %s AND infrastructurable_type = %s",
-            GetSQLValueString($colname_villeID, "int"),
-            GetSQLValueString(Infrastructure::getMorphFromUrlParameter('ville')));
+            escape_sql($colname_villeID, "int"),
+            escape_sql(Infrastructure::getMorphFromUrlParameter('ville')));
         $Result7 = mysql_query($deleteSQL7, $maconnexion);
     }
 
     $deleteSQL7 = sprintf("DELETE FROM infrastructures WHERE infrastructurable_id = %s AND infrastructurable_type = %s",
-        GetSQLValueString($colname_Pays_ID, "int"),
-        GetSQLValueString(Infrastructure::getMorphFromUrlParameter('pays')));
+        escape_sql($colname_Pays_ID, "int"),
+        escape_sql(Infrastructure::getMorphFromUrlParameter('pays')));
     $Result7 = mysql_query($deleteSQL7, $maconnexion);
 
     $deleteSQL7 = sprintf("DELETE FROM organisation_members WHERE pays_id = %s",
-        GetSQLValueString($colname_Pays_ID, "int"));
+        escape_sql($colname_Pays_ID, "int"));
     $Result7 = mysql_query($deleteSQL7, $maconnexion);
 
     while($row_monument = mysql_fetch_assoc($monument)) {
         $deleteSQL8 = sprintf("DELETE FROM dispatch_mon_cat WHERE ch_disp_mon_id=%s",
-            GetSQLValueString($row_monument['ch_pat_id'], "int"));
+            escape_sql($row_monument['ch_pat_id'], "int"));
         $Result8 = mysql_query($deleteSQL8, $maconnexion);
     };
 

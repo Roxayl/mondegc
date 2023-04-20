@@ -17,7 +17,7 @@ class Personnage extends BaseModel {
         $data = self::getDataFromEntity($entity);
 
         $query = sprintf('SELECT id FROM personnage WHERE entity = %s AND entity_id = %s',
-            GetSQLValueString($data['entity']), GetSQLValueString($data['entity_id']));
+            escape_sql($data['entity']), escape_sql($data['entity_id']));
         $result = mysql_query($query);
         $result = mysql_fetch_assoc($result);
         if(!$result) {

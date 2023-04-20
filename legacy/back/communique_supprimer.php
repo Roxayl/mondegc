@@ -13,7 +13,7 @@ if(!isset($_SESSION['userObject'])) {
 
 if ((isset($_POST['communique-ID'])) && ($_POST['communique-ID'] != "")) {
   $deleteSQL = sprintf("DELETE FROM communiques WHERE ch_com_ID=%s",
-                       GetSQLValueString($_POST['communique-ID'], "int"));
+                       escape_sql($_POST['communique-ID'], "int"));
 
   
   $Result1 = mysql_query($deleteSQL, $maconnexion);

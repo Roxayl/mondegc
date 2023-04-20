@@ -8,8 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut']) { }
-else {
+if (!$_SESSION['statut']) {
     // Redirection vers Haut Conseil
     header("Status: 301 Moved Permanently", false, 301);
     header('Location: ' . legacyPage('connexion'));
@@ -29,16 +28,16 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_communique
     }
 
     $updateSQL = sprintf("UPDATE communiques SET ch_com_label=%s, ch_com_statut=%s, ch_com_categorie=%s, ch_com_element_id=%s, ch_com_user_id=%s, ch_com_date=%s, ch_com_date_mis_jour=%s, ch_com_titre=%s, ch_com_contenu=%s WHERE ch_com_ID=%s",
-           GetSQLValueString($_POST['ch_com_label'], "text"),
-           GetSQLValueString($_POST['ch_com_statut'], "int"),
-           GetSQLValueString($_POST['ch_com_categorie'], "text"),
-           GetSQLValueString($_POST['ch_com_element_id'], "int"),
-           GetSQLValueString($_POST['ch_com_user_id'], "int"),
-           GetSQLValueString($_POST['ch_com_date'], "date"),
-           GetSQLValueString($_POST['ch_com_date_mis_jour'], "date"),
-           GetSQLValueString($_POST['ch_com_titre'], "text"),
-           GetSQLValueString($_POST['ch_com_contenu'], "text"),
-           GetSQLValueString($_POST['ch_com_ID'], "int"));
+           escape_sql($_POST['ch_com_label'], "text"),
+           escape_sql($_POST['ch_com_statut'], "int"),
+           escape_sql($_POST['ch_com_categorie'], "text"),
+           escape_sql($_POST['ch_com_element_id'], "int"),
+           escape_sql($_POST['ch_com_user_id'], "int"),
+           escape_sql($_POST['ch_com_date'], "date"),
+           escape_sql($_POST['ch_com_date_mis_jour'], "date"),
+           escape_sql($_POST['ch_com_titre'], "text"),
+           escape_sql($_POST['ch_com_contenu'], "text"),
+           escape_sql($_POST['ch_com_ID'], "int"));
 
     $Result1 = mysql_query($updateSQL, $maconnexion);
 
@@ -61,7 +60,7 @@ if(isset($_POST['com_id'])) {
    $colname_communique = $_POST['com_id'];
 }
 
-$query_communique = sprintf("SELECT * FROM communiques WHERE ch_com_ID = %s", GetSQLValueString($colname_communique, "int"));
+$query_communique = sprintf("SELECT * FROM communiques WHERE ch_com_ID = %s", escape_sql($colname_communique, "int"));
 $communique = mysql_query($query_communique, $maconnexion);
 $row_communique = mysql_fetch_assoc($communique);
 $totalRows_communique = mysql_num_rows($communique);
@@ -73,7 +72,7 @@ $cat = $row_communique['ch_com_categorie'];
 $elementID = $row_communique['ch_com_element_id'];
 
 if($cat == "pays") {
-    $query_cat_pays = sprintf("SELECT ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", GetSQLValueString($elementID, "int"));
+    $query_cat_pays = sprintf("SELECT ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", escape_sql($elementID, "int"));
     $cat_pays = mysql_query($query_cat_pays, $maconnexion);
     $row_cat_pays = mysql_fetch_assoc($cat_pays);
     $totalRows_cat_pays = mysql_num_rows($cat_pays);
@@ -93,7 +92,7 @@ if($cat == "pays") {
 }
 
 elseif($cat == "ville") {
-    $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_nom FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id WHERE ch_vil_ID = %s", GetSQLValueString($elementID, "int"));
+    $query_villes = sprintf("SELECT ch_vil_ID, ch_vil_nom, ch_vil_specialite, ch_vil_armoiries, ch_pay_nom FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id WHERE ch_vil_ID = %s", escape_sql($elementID, "int"));
     $villes = mysql_query($query_villes, $maconnexion);
     $row_villes = mysql_fetch_assoc($villes);
     $totalRows_villes = mysql_num_rows($villes);
@@ -108,7 +107,7 @@ elseif($cat == "ville") {
 }
 
 elseif($cat == "institut") {
-    $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($elementID, "int"));
+    $query_institut = sprintf("SELECT ch_ins_ID, ch_ins_nom, ch_ins_sigle, ch_ins_logo FROM instituts WHERE ch_ins_ID = %s", escape_sql($elementID, "int"));
     $institut = mysql_query($query_institut, $maconnexion);
     $row_institut = mysql_fetch_assoc($institut);
     $totalRows_institut = mysql_num_rows($institut);
@@ -141,7 +140,7 @@ if(isset($row_communique['ch_com_user_id'])) {
 }
 
 
-$query_user = sprintf("SELECT ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_user, "int"));
+$query_user = sprintf("SELECT ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users WHERE ch_use_id = %s", escape_sql($colname_user, "int"));
 $user = mysql_query($query_user, $maconnexion);
 $row_user = mysql_fetch_assoc($user);
 $totalRows_user = mysql_num_rows($user);
@@ -246,7 +245,7 @@ Eventy::action('display.beforeHeadClosingTag')
 
     <div class="well">
     <!-- Debut formulaire -->
-    <form action="<?php echo $editFormAction; ?>" method="POST" name="modifier_communique" Id="modifier_communique">
+    <form action="<?= e($editFormAction) ?>" method="POST" name="modifier_communique" Id="modifier_communique">
       <!-- Bouton cachés -->
       <?php $now= date("Y-m-d G:i:s");?>
       <input name="ch_com_ID" type="hidden" value="<?= e($row_communique['ch_com_ID']) ?>">

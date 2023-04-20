@@ -3,14 +3,12 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 if ((isset($_POST['ch_disp_fait_hist_cat_id'])) && ($_POST['ch_disp_fait_hist_cat_id'] != "")) {
 	$cat= $_POST['ch_disp_fait_hist_cat_id'];
@@ -18,7 +16,7 @@ if ((isset($_POST['ch_disp_fait_hist_cat_id'])) && ($_POST['ch_disp_fait_hist_ca
 
 if ((isset($_POST['ch_disp_FH_id'])) && ($_POST['ch_disp_FH_id'] != "")) {
   $deleteSQL = sprintf("DELETE FROM dispatch_fait_his_cat WHERE ch_disp_FH_id=%s",
-                       GetSQLValueString($_POST['ch_disp_FH_id'], "int"));
+                       escape_sql($_POST['ch_disp_FH_id'], "int"));
 
   
   $Result1 = mysql_query($deleteSQL, $maconnexion);

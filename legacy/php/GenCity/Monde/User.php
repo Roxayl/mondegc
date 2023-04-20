@@ -32,7 +32,7 @@ class User extends BaseModel {
 
         $query = mysql_query(sprintf(
             'SELECT ch_use_id FROM users WHERE ch_use_login = %s',
-                GetSQLValueString($login, 'text')
+                escape_sql($login, 'text')
             ));
         $result = mysql_fetch_assoc($query);
         if(!isset($result)) {
@@ -49,7 +49,7 @@ class User extends BaseModel {
             $where_clause = ' AND permissions >= ' . $minPermission;
         }
 
-        $query = mysql_query(sprintf('SELECT ch_pay_id, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgdrapeau FROM pays JOIN users_pays ON ch_pay_id = ID_pays AND ID_user = %s' . $where_clause, GetSQLValueString($this->model->ch_use_id, 'int')));
+        $query = mysql_query(sprintf('SELECT ch_pay_id, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgdrapeau FROM pays JOIN users_pays ON ch_pay_id = ID_pays AND ID_user = %s' . $where_clause, escape_sql($this->model->ch_use_id, 'int')));
         $result = array();
         while($row = mysql_fetch_assoc($query)){
             if($asObject) {

@@ -7,56 +7,106 @@
 
 use Roxayl\MondeGC\Services\HelperService;
 
-//Protection  données envoyées
-function GetSQLValueString($value, $type = "text", $definedValue = "", $notDefinedValue = "")
+/**
+ * Echappe des chaînes à injecter dans une requête SQL.
+ *
+ * @param mixed $value
+ * @param string $type
+ * @param mixed $definedValue
+ * @param mixed $notDefinedValue
+ * @return mixed
+ */
+function escape_sql(mixed $value, string $type = "text", mixed $definedValue = "", mixed $notDefinedValue = ""): mixed
 {
-    $value = function_exists("mysql_real_escape_string") ?
-        mysql_real_escape_string($value) : mysql_escape_string($value);
-
     switch($type) {
         case "text":
         case "date":
+            $value = mysql_real_escape_string($value);
             $value = ($value != "") ? "'" . $value . "'" : "NULL";
             break;
+
         case "long":
         case "int":
+            $value = mysql_real_escape_string($value);
             $value = ($value != "") ? intval($value) : "NULL";
             break;
+
         case "double":
+            $value = mysql_real_escape_string($value);
             $value = ($value != "") ? doubleval($value) : "NULL";
             break;
+
         case "defined":
+            $value = mysql_real_escape_string($value);
             $value = ($value != "") ? $definedValue : $notDefinedValue;
             break;
+
+        case 'order_by_columns':
+            if(! is_array($definedValue)) {
+                throw new InvalidArgumentException(
+                    "Le paramètre doit être un tableau en utilisant 'order_by_columns'."
+                );
+            }
+            if(! in_array($value, $definedValue, true)) {
+                throw new InvalidArgumentException(
+                    "La colonne de tri dans la clause ORDER BY n'est pas valide."
+                );
+            }
+            break;
+
+        case 'order_by_pos':
+            if(! in_array(strtolower($value), ['asc', 'desc'], true)) {
+                throw new InvalidArgumentException("La position de la clause ORDER BY doit être ASC ou DESC.");
+            }
+            break;
     }
+
     return $value;
 }
 
-// *** Fonction calcul de periodes.
-function get_timespan_string($older, $newer)
+/**
+ * Met un mot au pluriel si nécessaire. Assez naïf car il se contente de mettre un 's' à la fin...
+ *
+ * @param int $count
+ * @param string $text
+ * @return string
+ */
+function pluralize(int $count, string $text): string
 {
-    $Y1 = $older->format('Y');
-    $Y2 = $newer->format('Y');
+    return $count . (($count == 1) ? (" $text") : (" ${text}s"));
+}
+
+/**
+ * Fonction calcul de périodes.
+ *
+ * @param DateTime $older
+ * @param DateTime $newer
+ * @return string
+ */
+function get_timespan_string(\DateTime $older, \DateTime $newer): string
+{
+    $Y1 = (int) $older->format('Y');
+    $Y2 = (int) $newer->format('Y');
     $Y = $Y2 - $Y1;
 
-    $m1 = $older->format('m');
-    $m2 = $newer->format('m');
+    $m1 = (int) $older->format('m');
+    $m2 = (int) $newer->format('m');
     $m = $m2 - $m1;
 
-    $d1 = $older->format('d');
-    $d2 = $newer->format('d');
+    $d1 = (int) $older->format('d');
+    $d2 = (int) $newer->format('d');
     $d = $d2 - $d1;
 
-    $H1 = $older->format('H');
-    $H2 = $newer->format('H');
+    $H1 = (int) $older->format('H');
+    $H2 = (int) $newer->format('H');
     $H = $H2 - $H1;
 
-    $i1 = $older->format('i');
-    $i2 = $newer->format('i');
+    $i1 = (int) $older->format('i');
+    $i2 = (int) $newer->format('i');
     $i = $i2 - $i1;
 
-    $s1 = $older->format('s');
-    $s2 = $newer->format('s');
+    $s1 = (int) $older->format('s');
+    $s2 = (int) $newer->format('s');
     $s = $s2 - $s1;
 
     if($s < 0) {
@@ -79,11 +129,15 @@ function get_timespan_string($older, $newer)
         $Y = $Y - 1;
         $m = $m + 12;
     }
-    $timespan_string = create_timespan_string($Y, $m, $d);
-    return $timespan_string;
+    return create_timespan_string($Y, $m, $d);
 }
 
-function get_days_for_previous_month($current_month, $current_year)
+/**
+ * @param int $current_month
+ * @param int $current_year
+ * @return int
+ */
+function get_days_for_previous_month(int $current_month, int $current_year): int
 {
     $previous_month = $current_month - 1;
     if($current_month == 1) {
@@ -103,7 +157,13 @@ function get_days_for_previous_month($current_month, $current_year)
     }
 }
 
-function create_timespan_string($Y, $m, $d)
+/**
+ * @param int $Y
+ * @param int $m
+ * @param int $d
+ * @return string
+ */
+function create_timespan_string(int $Y, int $m, int $d): string
 {
     $timespan_string = '';
     $found_first_diff = false;
@@ -116,41 +176,40 @@ function create_timespan_string($Y, $m, $d)
         $timespan_string .= $m . ' mois' . ' ';
     }
     if($d >= 1 || $found_first_diff) {
-        $found_first_diff = true;
         $timespan_string .= pluralize($d, 'jour') . ' ';
     }
     return $timespan_string;
 }
 
-function pluralize($count, $text)
+/**
+ * @param DateTime $older
+ * @param DateTime $newer
+ * @return string
+ */
+function get_timespan_string_hour(\DateTime $older, \DateTime $newer): string
 {
-    return $count . (($count == 1) ? (" $text") : (" ${text}s"));
-}
-
-function get_timespan_string_hour($older, $newer)
-{
-    $Y1 = $older->format('Y');
-    $Y2 = $newer->format('Y');
+    $Y1 = (int) $older->format('Y');
+    $Y2 = (int) $newer->format('Y');
     $Y = $Y2 - $Y1;
 
-    $m1 = $older->format('m');
-    $m2 = $newer->format('m');
+    $m1 = (int) $older->format('m');
+    $m2 = (int) $newer->format('m');
     $m = $m2 - $m1;
 
-    $d1 = $older->format('d');
-    $d2 = $newer->format('d');
+    $d1 = (int) $older->format('d');
+    $d2 = (int) $newer->format('d');
     $d = $d2 - $d1;
 
-    $H1 = $older->format('H');
-    $H2 = $newer->format('H');
+    $H1 = (int) $older->format('H');
+    $H2 = (int) $newer->format('H');
     $H = $H2 - $H1;
 
-    $i1 = $older->format('i');
-    $i2 = $newer->format('i');
+    $i1 = (int) $older->format('i');
+    $i2 = (int) $newer->format('i');
     $i = $i2 - $i1;
 
-    $s1 = $older->format('s');
-    $s2 = $newer->format('s');
+    $s1 = (int) $older->format('s');
+    $s2 = (int) $newer->format('s');
     $s = $s2 - $s1;
 
     if($s < 0) {
@@ -167,7 +226,7 @@ function get_timespan_string_hour($older, $newer)
     }
     if($d < 0) {
         $m = $m - 1;
-        $d = $d + get_days_for_previous_month_hour($m2, $Y2);
+        $d = $d + get_days_for_previous_month($m2, $Y2);
     }
     if($m < 0) {
         $Y = $Y - 1;
@@ -177,33 +236,22 @@ function get_timespan_string_hour($older, $newer)
     return rtrim($timespan_string, ', ');
 }
 
-function get_days_for_previous_month_hour($current_month, $current_year)
-{
-    $previous_month = $current_month - 1;
-    if($current_month == 1) {
-        $current_year = $current_year - 1; //going from January to previous December
-        $previous_month = 12;
-    }
-    if($previous_month == 11 || $previous_month == 9 || $previous_month == 6 || $previous_month == 4) {
-        return 30;
-    } else if($previous_month == 2) {
-        if(($current_year % 4) == 0) { //remainder 0 for leap years
-            return 29;
-        } else {
-            return 28;
-        }
-    } else {
-        return 31;
-    }
-}
-
-function create_timespan_string_hour($Y, $m, $d, $H, $i, $s)
+/**
+ * @param int $Y
+ * @param int $m
+ * @param int $d
+ * @param int $H
+ * @param int $i
+ * @param int $s
+ * @return string
+ */
+function create_timespan_string_hour(int $Y, int $m, int $d, int $H, int $i, int $s): string
 {
     $timespan_string = '';
     $found_first_diff = false;
     if($Y >= 1) {
         $found_first_diff = true;
-        $timespan_string .= pluralize_hour($Y, 'an') . ', ';
+        $timespan_string .= pluralize($Y, 'an') . ', ';
     }
     if($m >= 1 || $found_first_diff) {
         $found_first_diff = true;
@@ -211,26 +259,25 @@ function create_timespan_string_hour($Y, $m, $d, $H, $i, $s)
     }
     if($d >= 1 || $found_first_diff) {
         $found_first_diff = true;
-        $timespan_string .= pluralize_hour($d, 'jour') . ', ';
+        $timespan_string .= pluralize($d, 'jour') . ', ';
     }
     if(($H >= 1 || $found_first_diff) && ($d < 1 && $m < 1 && $Y < 1)) {
         $found_first_diff = true;
-        $timespan_string .= pluralize_hour($H, 'heure') . ', ';
+        $timespan_string .= pluralize($H, 'heure') . ', ';
     }
     if(($i >= 1 || $found_first_diff) && ($H < 1 && $d < 1 && $m < 1 && $Y < 1)) {
-        $found_first_diff = true;
-        $timespan_string .= pluralize_hour($i, 'minute') . ' ';
+        $timespan_string .= pluralize($i, 'minute') . ' ';
     }
     return $timespan_string;
 }
 
-function pluralize_hour($count, $text)
-{
-    return $count . (($count == 1) ? (" $text") : (" ${text}s"));
-}
-
-// *** Fonction calcul de notes.
-function get_note_finale($note)
+/**
+ * Fonction calcul de notes.
+ *
+ * @param int $note
+ * @return string
+ */
+function get_note_finale(int $note): string
 {
     if($note >= 56) {
         $note_finale = 'A<sup>+</sup>';
@@ -268,8 +315,13 @@ function get_note_finale($note)
     return $note_finale;
 }
 
-//Affichage date en français pour fait hist
-function affDate($date)
+/**
+ * Affichage date en français pour fait historique.
+ *
+ * @param string $date
+ * @return string
+ */
+function affDate(string $date): string
 {
     $year = substr($date, 0, 4);
     $month = substr($date, 5, 2);
@@ -293,7 +345,13 @@ function affDate($date)
     return $str;
 }
 
-function coordEmplacement($emplacement, &$x, &$y)
+/**
+ * @param int|null $emplacement
+ * @param mixed $x
+ * @param mixed $y
+ * @return void
+ */
+function coordEmplacement(?int $emplacement, mixed &$x, mixed &$y): void
 {
     switch($emplacement) // placement des markers selon la variable d'emplacement
     {
@@ -598,8 +656,25 @@ function coordEmplacement($emplacement, &$x, &$y)
     }
 }
 
-function styleZones($typeZone, &$fillcolor, &$fillOpacity, &$strokeWidth, &$strokeColor, &$strokeOpacity, &$Trait)
-{
+/**
+ * @param string|null $typeZone
+ * @param string|null $fillcolor
+ * @param string|null $fillOpacity
+ * @param string|null $strokeWidth
+ * @param string|null $strokeColor
+ * @param string|null $strokeOpacity
+ * @param string|null $Trait
+ * @return void
+ */
+function styleZones(
+    ?string $typeZone,
+    ?string &$fillcolor,
+    ?string &$fillOpacity,
+    ?string &$strokeWidth,
+    ?string &$strokeColor,
+    ?string &$strokeOpacity,
+    ?string &$Trait
+): void {
     if($typeZone == "urbaine") {
         $fillcolor = "#313131";
         $fillOpacity = "0.8";
@@ -737,7 +812,14 @@ function styleZones($typeZone, &$fillcolor, &$fillOpacity, &$strokeWidth, &$stro
     }
 }
 
-function styleVoies($typeVoie, &$couleurTrait, &$epaisseurTrait, &$Trait)
+/**
+ * @param string|null $typeVoie
+ * @param string|null $couleurTrait
+ * @param string|null $epaisseurTrait
+ * @param string|null $Trait
+ * @return void
+ */
+function styleVoies(?string $typeVoie, ?string &$couleurTrait, ?string &$epaisseurTrait, ?string &$Trait): void
 {
     if($typeVoie == "lgv") {
         $couleurTrait = "#8a5b9d";
@@ -782,8 +864,17 @@ function styleVoies($typeVoie, &$couleurTrait, &$epaisseurTrait, &$Trait)
     }
 }
 
-function tailleVilles($population, &$sizeicon)
+/**
+ * @param int|null $population
+ * @param int|null $sizeicon
+ * @return int
+ */
+function tailleVilles(?int $population, ?int &$sizeicon): int
 {
+    if(! $population) {
+        $population = 0;
+    }
+
     if($population <= 100000) {
         $sizeicon = 4;
     } elseif($population <= 250000) {
@@ -798,13 +889,30 @@ function tailleVilles($population, &$sizeicon)
         $sizeicon = 9;
     } elseif($population <= 10000000) {
         $sizeicon = 10;
-    } elseif($population > 10000000) {
+    } else {
         $sizeicon = 13;
     }
+
     return $sizeicon;
 }
 
-function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$commerce, &$agriculture, &$tourisme, &$recherche, &$environnement, &$education, &$label, &$population, &$emploi = 0)
+/**
+ * @param $surface
+ * @param $typeZone
+ * @param $budget
+ * @param $industrie
+ * @param $commerce
+ * @param $agriculture
+ * @param $tourisme
+ * @param $recherche
+ * @param $environnement
+ * @param $education
+ * @param $label
+ * @param $population
+ * @param $emploi
+ * @return void
+ */
+function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$commerce, &$agriculture, &$tourisme, &$recherche, &$environnement, &$education, &$label, &$population, &$emploi = 0): void
 {
     if($typeZone == "urbaine") {
         $label = "Zone urbaine";
@@ -1109,7 +1217,13 @@ function ressourcesGeometrie($surface, &$typeZone, &$budget, &$industrie, &$comm
     }
 }
 
-function getResourceColor($resource)
+/**
+ * Donne le code couleur associé à une ressource.
+ *
+ * @param string $resource Nom de ressource (cf. {@see \Roxayl\MondeGC\Models\Enums\Resource}).
+ * @return string Code couleur associé à la ressource.
+ */
+function getResourceColor(string $resource): string
 {
     $colors = array(
         'agriculture' => '#145d19',
@@ -1129,10 +1243,9 @@ function getResourceColor($resource)
  *
  * @param string $hexCode Supported formats: `#FFF`, `#FFFFFF`, `FFF`, `FFFFFF`
  * @param float $adjustPercent A number between -1 and 1. E.g. 0.3 = 30% lighter; -0.4 = 40% darker.
- *
- * @return  string
+ * @return string
  */
-function adjustBrightness($hexCode, $adjustPercent)
+function adjustBrightness(string $hexCode, float $adjustPercent): string
 {
     $hexCode = ltrim($hexCode, '#');
 
@@ -1152,14 +1265,27 @@ function adjustBrightness($hexCode, $adjustPercent)
     return '#' . implode($hexCode);
 }
 
-function renderElement($element, $data = null)
+/**
+ * @param string $element
+ * @param mixed|null $data
+ * @return void
+ */
+function renderElement(string $element, mixed $data = null): void
 {
-    if(!is_array($data))
+    if(!is_array($data)) {
         $data = array($data);
+    }
     require(DEF_LEGACYROOTPATH . 'php/elements/' . $element . '.php');
 }
 
-function formatNum($number, $decimals = 0)
+/**
+ * Met en forme un nombre avec un séparateur de milliers et de décimales adapté.
+ *
+ * @param float|int|string|null $number Nombre à mettre en forme.
+ * @param int $decimals Nombre de décimales à conserver.
+ * @return string Nombre mis en forme.
+ */
+function formatNum(float|int|string|null $number, int $decimals = 0): string
 {
     return number_format($number, $decimals, '.', '&#8239;');
 }
@@ -1168,9 +1294,9 @@ function formatNum($number, $decimals = 0)
  * @param string $errorType Type d'erreur.
  * @param string|array $errorInfo Corps du message.
  * @param bool $put_on_session Détermine s'il faut stocker le message dans la session.
-     Si ce paramètre est mis à <code>false</code>, le message est directement affiché.
+ * Si ce paramètre est mis à <code>false</code>, le message est directement affiché.
  */
-function getErrorMessage($errorType, $errorInfo, $put_on_session = true)
+function getErrorMessage(string $errorType, string|array $errorInfo, bool $put_on_session = true): void
 {
     if(is_array($errorInfo)) $errorInfo = @implode($errorInfo);
 
@@ -1183,7 +1309,12 @@ function getErrorMessage($errorType, $errorInfo, $put_on_session = true)
     }
 }
 
-function showErrorMessage($errorType, $errorInfo)
+/**
+ * @param string $errorType
+ * @param string $errorInfo
+ * @return void
+ */
+function showErrorMessage(string $errorType, string $errorInfo): void
 {
     if($errorType === null) {
         echo $errorInfo;
@@ -1208,31 +1339,46 @@ function dateFormat($date, $getTime = false)
 
 /**
  * Filtre un texte avant affichage.
- * @param string|array $text Chaîne à traiter.
- * @return string Chaîne avec les caractères HTML échappés.
+ *
+ * @param string|array|null $text Chaîne à traiter.
+ * @return string|array Chaîne avec les caractères HTML échappés.
+ * @deprecated Utiliser {@see e()} fourni par le framework à la place.
  */
-function __s($text)
+function __s(string|array|null $text): string|array
 {
     if(is_array($text)) {
-        return filter_var_array($text, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    } else {
-        return htmlspecialchars($text, ENT_QUOTES);
+        /** @var array|false|null $array */
+        $array = filter_var_array($text, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if(! is_array($array)) {
+            throw new RuntimeException("Le filtrage du tableau n'a pas pu être effectué.");
+        }
+        return $array;
     }
+
+    if(is_null($text)) {
+        return '';
+    }
+
+    return htmlspecialchars($text, ENT_QUOTES);
 }
 
 
 /**
  * Purifie un rendu HTML, en supprimant le code HTML potentiellement dangereux.
- * @param string $text Texte à purifier.
+ *
+ * @param string|null $text Texte à purifier.
  * @return string $text Rendu purifié.
  */
-function htmlPurify($text)
+function htmlPurify(?string $text): string
 {
     return HelperService::purifyHtml($text);
 }
 
-
-function filter_filename($name)
+/**
+ * @param string $name
+ * @return string
+ */
+function filter_filename(string $name): string
 {
     // remove illegal file system characters https://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words
     $name = str_replace(array_merge(
@@ -1254,7 +1400,7 @@ function filter_filename($name)
  * @param array $params Liste de paramètres, qui seront ajoutés à l'URL.
  * @return string L'URL vers la page legacy demandée.
  */
-function legacyPage($path = '', $params = array())
+function legacyPage(string $path = '', array $params = []): string
 {
     if($path === '') {
         $path = 'index';
@@ -1270,10 +1416,10 @@ function legacyPage($path = '', $params = array())
 /**
  * Cette fonction répare les URLs générés via le helper route() de Laravel, qui sont erronés
  * lorsqu'ils sont appelés depuis le site legacy.
- * @param $url L'URL à réparer
- * @return string|string[] L'URL réparé.
+ * @param string $url L'URL à réparer
+ * @return string L'URL réparé.
  */
-function urlFromLegacy($url)
+function urlFromLegacy(string $url): string
 {
     $directory_path = config('app.directory_path');
     if(!empty($directory_path)) {
@@ -1283,7 +1429,11 @@ function urlFromLegacy($url)
 }
 
 
-function appendQueryString(&$url)
+/**
+ * @param string $url
+ * @return void
+ */
+function appendQueryString(string &$url): void
 {
     if(isset($_SERVER['QUERY_STRING'])) {
         $url .= (strpos($url, '?')) ? "&" : "?";

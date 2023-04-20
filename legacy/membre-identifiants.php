@@ -14,7 +14,7 @@ if (isset($_GET['clef'])) {
 }
 
 
-$query_user_prov = sprintf("SELECT * FROM users_provisoire WHERE ch_use_prov_login = %s AND ch_use_prov_clef = %s", GetSQLValueString($login, "text"), GetSQLValueString($clef, "text"));
+$query_user_prov = sprintf("SELECT * FROM users_provisoire WHERE ch_use_prov_login = %s AND ch_use_prov_clef = %s", escape_sql($login, "text"), escape_sql($clef, "text"));
 $user_prov = mysql_query($query_user_prov, $maconnexion);
 $row_user_prov = mysql_fetch_assoc($user_prov);
 $totalRows_user_prov = mysql_num_rows($user_prov);
@@ -24,7 +24,7 @@ if (isset($row_user_prov['ch_use_prov_login'])) {
   $colname_UserID = $row_user_prov['ch_use_prov_login'];
 }
 
-$query_UserID = sprintf("SELECT ch_use_id FROM users WHERE ch_use_login = %s", GetSQLValueString($colname_UserID, "text"));
+$query_UserID = sprintf("SELECT ch_use_id FROM users WHERE ch_use_login = %s", escape_sql($colname_UserID, "text"));
 $UserID = mysql_query($query_UserID, $maconnexion);
 $row_UserID = mysql_fetch_assoc($UserID);
 $totalRows_UserID = mysql_num_rows($UserID);
@@ -36,9 +36,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
   $salt = config('legacy.salt');
   $password = md5($_POST['ch-use_password'].$salt);
   $updateSQL = sprintf("UPDATE users SET ch_use_login=%s, ch_use_password=%s WHERE ch_use_id=%s",
-                       GetSQLValueString($_POST['ch_use_login'], "text"),
-                       GetSQLValueString($password, "text"),
-                       GetSQLValueString($_POST['ch_use_id'], "int"));
+                       escape_sql($_POST['ch_use_login'], "text"),
+                       escape_sql($password, "text"),
+                       escape_sql($_POST['ch_use_id'], "int"));
 
   
   $Result1 = mysql_query($updateSQL, $maconnexion);
@@ -46,7 +46,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
   // Effacement de la clef sur User_provisoire
   $userprov = $row_user_prov['ch_use_prov_ID'];
    $deleteSQL = sprintf("DELETE FROM users_provisoire WHERE ch_use_prov_ID=%s",
-                       GetSQLValueString($userprov, "int"));
+                       escape_sql($userprov, "int"));
 
   
   $Result1 = mysql_query($deleteSQL, $maconnexion);
@@ -111,7 +111,7 @@ Eventy::action('display.beforeHeadClosingTag')
         <button type="button" class="close" data-dismiss="alert">�</button>
         <p>Cher <?= e($row_user_prov['ch_use_prov_login']) ?>, entrez un nouveau mot de passe afin d'acc&eacute;der &agrave; votre compte.</p>
       </div>
-      <form action="<?php echo $editFormAction; ?>" name="InfoUser" method="POST" class="form-horizontal" id="InfoHeader">
+      <form action="<?= e($editFormAction) ?>" name="InfoUser" method="POST" class="form-horizontal" id="InfoHeader">
         <input name="ch_use_id" type="hidden" value="<?= e($row_UserID['ch_use_id']) ?>">
         <!-- Informations G�n�rales
         ================================================== -->

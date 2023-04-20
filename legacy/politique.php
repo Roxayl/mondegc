@@ -6,7 +6,7 @@ include('php/log.php');
 //requete instituts
 $institut_id = 6;
 
-$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
+$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", escape_sql($institut_id, "int"));
 $institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
@@ -47,7 +47,7 @@ INNER JOIN villes ON ch_pat_villeID = ch_vil_ID
 INNER JOIN pays ON ch_pat_paysID = ch_pay_id 
 WHERE monument.ch_disp_cat_id = %s OR %s IS NULL AND ch_pat_statut = 0
 GROUP BY monument.ch_disp_mon_id
-ORDER BY monument.ch_disp_date DESC", GetSQLValueString($colname_classer_mon, "int"), GetSQLValueString($colname_classer_mon, "int"));
+ORDER BY monument.ch_disp_date DESC", escape_sql($colname_classer_mon, "int"), escape_sql($colname_classer_mon, "int"));
 $query_limit_classer_mon = sprintf("%s LIMIT %d, %d", $query_classer_mon, $startRow_classer_mon, $maxRows_classer_mon);
 $classer_mon = mysql_query($query_limit_classer_mon, $maconnexion);
 $row_classer_mon = mysql_fetch_assoc($classer_mon);
@@ -82,7 +82,7 @@ $queryString_classer_mon = sprintf("&totalRows_classer_mon=%d%s", $totalRows_cla
 
 $query_info_cat = sprintf("SELECT ch_mon_cat_ID, ch_mon_cat_nom, ch_mon_cat_desc, ch_mon_cat_icon, ch_mon_cat_couleur, bg_image_url
 FROM monument_categories
-WHERE ch_mon_cat_ID = %s OR %s IS NULL AND ch_mon_cat_statut = 1", GetSQLValueString($colname_classer_mon, "int"), GetSQLValueString($colname_classer_mon, "int"));
+WHERE ch_mon_cat_ID = %s OR %s IS NULL AND ch_mon_cat_statut = 1", escape_sql($colname_classer_mon, "int"), escape_sql($colname_classer_mon, "int"));
 $info_cat = mysql_query($query_info_cat, $maconnexion);
 $row_info_cat = mysql_fetch_assoc($info_cat);
 $totalRows_info_cat = mysql_num_rows($info_cat);
@@ -230,7 +230,7 @@ Eventy::action('display.beforeHeadClosingTag')
           <?php
           // *** Ressources patrimoine
         $query_monument_ressources = sprintf("SELECT SUM(ch_mon_cat_budget) AS budget,SUM(ch_mon_cat_industrie) AS industrie, SUM(ch_mon_cat_commerce) AS commerce, SUM(ch_mon_cat_agriculture) AS agriculture, SUM(ch_mon_cat_tourisme) AS tourisme, SUM(ch_mon_cat_recherche) AS recherche, SUM(ch_mon_cat_environnement) AS environnement, SUM(ch_mon_cat_education) AS education FROM monument_categories
-        WHERE ch_mon_cat_ID = %s", GetSQLValueString($row_info_cat['ch_mon_cat_ID'], "int"));
+        WHERE ch_mon_cat_ID = %s", escape_sql($row_info_cat['ch_mon_cat_ID'], "int"));
         $monument_ressources = mysql_query($query_monument_ressources, $maconnexion);
         $row_monument_ressources = mysql_fetch_assoc($monument_ressources);
           ?>

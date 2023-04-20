@@ -27,27 +27,27 @@ appendQueryString($editFormAction);
 
 if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_monument")) {
     $insertSQL = sprintf("INSERT INTO patrimoine (ch_pat_paysID, ch_pat_villeID, ch_pat_label, ch_pat_date, ch_pat_mis_jour, ch_pat_nb_update, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_lien_img2, ch_pat_lien_img3, ch_pat_lien_img4, ch_pat_lien_img5, ch_pat_legende_img1, ch_pat_legende_img2, ch_pat_legende_img3, ch_pat_legende_img4, ch_pat_legende_img5, ch_pat_description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-        GetSQLValueString($_POST['ch_pat_paysID'], "int"),
-        GetSQLValueString($_POST['ch_pat_villeID'], "int"),
-        GetSQLValueString($_POST['ch_pat_label'], "text"),
-        GetSQLValueString($_POST['ch_pat_date'], "date"),
-        GetSQLValueString($_POST['ch_pat_mis_jour'], "date"),
-        GetSQLValueString($_POST['ch_pat_nb_update'], "int"),
-        GetSQLValueString($_POST['form_coord_X'], "decimal"),
-        GetSQLValueString($_POST['form_coord_Y'], "decimal"),
-        GetSQLValueString($_POST['ch_pat_nom'], "text"),
-        GetSQLValueString($_POST['ch_pat_statut'], "int"),
-        GetSQLValueString($_POST['ch_pat_lien_img1'], "text"),
-        GetSQLValueString($_POST['ch_pat_lien_img2'], "text"),
-        GetSQLValueString($_POST['ch_pat_lien_img3'], "text"),
-        GetSQLValueString($_POST['ch_pat_lien_img4'], "text"),
-        GetSQLValueString($_POST['ch_pat_lien_img5'], "text"),
-        GetSQLValueString($_POST['ch_pat_legende_img1'], "text"),
-        GetSQLValueString($_POST['ch_pat_legende_img2'], "text"),
-        GetSQLValueString($_POST['ch_pat_legende_img3'], "text"),
-        GetSQLValueString($_POST['ch_pat_legende_img4'], "text"),
-        GetSQLValueString($_POST['ch_pat_legende_img5'], "text"),
-        GetSQLValueString($_POST['ch_pat_description'], "text"));
+        escape_sql($_POST['ch_pat_paysID'], "int"),
+        escape_sql($_POST['ch_pat_villeID'], "int"),
+        escape_sql($_POST['ch_pat_label'], "text"),
+        escape_sql($_POST['ch_pat_date'], "date"),
+        escape_sql($_POST['ch_pat_mis_jour'], "date"),
+        escape_sql($_POST['ch_pat_nb_update'], "int"),
+        escape_sql($_POST['form_coord_X'], "decimal"),
+        escape_sql($_POST['form_coord_Y'], "decimal"),
+        escape_sql($_POST['ch_pat_nom'], "text"),
+        escape_sql($_POST['ch_pat_statut'], "int"),
+        escape_sql($_POST['ch_pat_lien_img1'], "text"),
+        escape_sql($_POST['ch_pat_lien_img2'], "text"),
+        escape_sql($_POST['ch_pat_lien_img3'], "text"),
+        escape_sql($_POST['ch_pat_lien_img4'], "text"),
+        escape_sql($_POST['ch_pat_lien_img5'], "text"),
+        escape_sql($_POST['ch_pat_legende_img1'], "text"),
+        escape_sql($_POST['ch_pat_legende_img2'], "text"),
+        escape_sql($_POST['ch_pat_legende_img3'], "text"),
+        escape_sql($_POST['ch_pat_legende_img4'], "text"),
+        escape_sql($_POST['ch_pat_legende_img5'], "text"),
+        escape_sql($_POST['ch_pat_description'], "text"));
 
     $Result1 = mysql_query($insertSQL, $maconnexion);
 
@@ -61,7 +61,7 @@ if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_monument")) {
 }
 
 
-$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($paysID, "int"));
+$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", escape_sql($paysID, "int"));
 $users = mysql_query($query_users, $maconnexion);
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);

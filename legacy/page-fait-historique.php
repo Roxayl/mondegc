@@ -9,7 +9,7 @@ if (isset($_GET['ch_his_id'])) {
   $colname_fait_his = $_GET['ch_his_id'];
 }
 
-$query_fait_his = sprintf("SELECT ch_his_id, ch_his_label, ch_his_statut, ch_his_profession, ch_his_personnage, ch_his_paysID, ch_his_date, ch_his_mis_jour, ch_his_nb_update, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_nom, ch_his_lien_img1, ch_his_legende_img1, ch_his_description, ch_his_contenu, ch_pay_id, ch_pay_nom, ch_use_id, (SELECT GROUP_CONCAT(ch_disp_fait_hist_cat_id) FROM dispatch_fait_his_cat WHERE ch_his_ID = ch_disp_fait_hist_id) AS listcat FROM histoire INNER JOIN pays ON ch_his_paysID = ch_pay_id INNER JOIN users ON ch_pay_id = ch_use_paysID WHERE ch_his_id = %s", GetSQLValueString($colname_fait_his, "int"));
+$query_fait_his = sprintf("SELECT ch_his_id, ch_his_label, ch_his_statut, ch_his_profession, ch_his_personnage, ch_his_paysID, ch_his_date, ch_his_mis_jour, ch_his_nb_update, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_nom, ch_his_lien_img1, ch_his_legende_img1, ch_his_description, ch_his_contenu, ch_pay_id, ch_pay_nom, ch_use_id, (SELECT GROUP_CONCAT(ch_disp_fait_hist_cat_id) FROM dispatch_fait_his_cat WHERE ch_his_ID = ch_disp_fait_hist_id) AS listcat FROM histoire INNER JOIN pays ON ch_his_paysID = ch_pay_id INNER JOIN users ON ch_pay_id = ch_use_paysID WHERE ch_his_id = %s", escape_sql($colname_fait_his, "int"));
 $fait_his = mysql_query($query_fait_his, $maconnexion);
 $row_fait_his = mysql_fetch_assoc($fait_his);
 $totalRows_fait_his = mysql_num_rows($fait_his);
