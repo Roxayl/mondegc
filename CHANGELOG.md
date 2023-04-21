@@ -1,6 +1,8 @@
 # Notes de mise à jour
 
-## [master](https://github.com/Roxayl/mondegc/compare/release-2.15...master)
+## [master](https://github.com/Roxayl/mondegc/compare/release-2.16...master)
+
+## [v2.16](https://github.com/Roxayl/mondegc/compare/release-2.15...release-2.16) - 2023-04-21
 
 ## [v2.15](https://github.com/Roxayl/mondegc/compare/release-2.14...release-2.15) - 2023-04-06
 
