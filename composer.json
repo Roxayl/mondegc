@@ -43,6 +43,8 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "ext-zip": "*",
         "caxy/php-htmldiff": "^0.1.14",
         "doctrine/dbal": "^2.13",
         "ezyang/htmlpurifier": "^4.16",
@@ -52,6 +54,7 @@
         "laravel/tinker": "^2.8",
         "mpociot/versionable": "^4.3",
         "simplehtmldom/simplehtmldom": "^2.0@RC",
+        "spatie/laravel-backup": "^8.1",
         "spatie/laravel-searchable": "^1.11",
         "tormjens/eventy": "^0.8.0",
         "ylsideas/feature-flags": "^1.5"
