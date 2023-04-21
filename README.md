@@ -59,13 +59,9 @@ la communauté [Génération City](http://www.forum-gc.com/).
 Les sources du site sont gérées par Git, hébergées sur un certain nombre de plateformes.
 
 | Plateforme | Dépôt                                                               | Complet ? | Visibilité | Commentaires                             |
-| ---------- | ------------------------------------------------------------------- | --------- | ---------- | ---------------------------------------- |
-| GitHub     | [Roxayl/mondegc](https://github.com/Roxayl/mondegc)                 | Oui       | Privé      | Dépôt principal                          |
-| Bitbucket  | [Roxayl/mondegc](https://bitbucket.org/Roxayl/mondegc/)             | Oui       | Privé      | Miroir du dépôt principal, lecture seule |
-| GitHub     | [Roxayl/mondegc-laravel](https://github.com/Roxayl/mondegc-laravel) | **Non**   | Public     | Copie limitée du dépôt principal         |
-
-Notez que les sources du dépôt [Roxayl/mondegc-laravel](https://github.com/Roxayl/mondegc-laravel) sont incomplètes
-et vous ne pourrez pas installer et exécuter l'application à partir de celui-ci.
+| ---------- | ------------------------------------------------------------------- | --------- |------------| ---------------------------------------- |
+| GitHub     | [Roxayl/mondegc](https://github.com/Roxayl/mondegc)                 | Oui       | Public     | Dépôt principal                          |
+| Bitbucket  | [Roxayl/mondegc](https://bitbucket.org/Roxayl/mondegc/)             | Oui       | Privée     | Miroir du dépôt principal, lecture seule |
 
 ## Installation
 
@@ -77,7 +73,7 @@ Le Monde GC s'exécute sur un environnement de développement comprenant les log
 * Un moteur de base de données : **[MySQL](https://www.mysql.com/fr/)** (5.7 ou supérieur) ou **[MariaDB](https://mariadb.org/)** (10.3 ou supérieur)
 * Un serveur Web : **[Apache](https://httpd.apache.org/)** (2.4, fortement conseillé) ou **[nginx](https://www.nginx.com/)**
 (nécessite d'adapter les règles de réécriture d'URL)
-* **[Composer](https://getcomposer.org/)**, le gestionnaire de dépendances pour PHP
+* **[Composer](https://getcomposer.org/)** 2, le gestionnaire de dépendances pour PHP
 * **[Node.js et npm](https://www.npmjs.com/get-npm)**, un moteur JavaScript et un gestionnaire de dépendances pour des 
 environnements JavaScript
 
