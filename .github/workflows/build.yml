@@ -64,10 +64,30 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
         run: php artisan test
 
+  run-backups:
+    name: "💾 Run backups"
+    runs-on: ubuntu-20.04
+    needs: run-tests
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')
+
+    steps:
+
+      - name: Backup user files and database
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: ${{ secrets.PROD_SSH_HOST }}
+          port: ${{ secrets.PROD_SSH_PORT }}
+          username: ${{ secrets.PROD_SSH_USERNAME }}
+          password: ${{ secrets.PROD_SSH_PASSWORD }}
+          script_stop: true
+          script: |
+            cd "${{ vars.PROD_FULL_DIR }}"
+            php artisan backup:run
+
   deploy-to-prod:
     name: "🚀 Deploy to production"
     runs-on: ubuntu-20.04
-    needs: run-tests
+    needs: run-backups
     if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')
 
     steps:
