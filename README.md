@@ -74,7 +74,7 @@ Le Monde GC s'exécute sur un environnement de développement comprenant les log
 * Un serveur Web : **[Apache](https://httpd.apache.org/)** (2.4, fortement conseillé) ou **[nginx](https://www.nginx.com/)**
 (nécessite d'adapter les règles de réécriture d'URL)
 * **[Composer](https://getcomposer.org/)** 2, le gestionnaire de dépendances pour PHP
-* **[Node.js et npm](https://www.npmjs.com/get-npm)**, un moteur JavaScript et un gestionnaire de dépendances pour des 
+* **[Node.js](https://nodejs.org) 16** et **[npm](https://www.npmjs.com/)**, un moteur JavaScript et un gestionnaire de dépendances pour des 
 environnements JavaScript
 
 ### Installation via Docker
