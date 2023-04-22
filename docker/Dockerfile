@@ -8,28 +8,42 @@ ENV     COMPOSER_ALLOW_SUPERUSER=1
 EXPOSE  80
 WORKDIR /var/www/html
 
-# Installe git, zip, mariadb, sendmail, les librairies requises pour les dépendances PHP, et Node/npm.
-# Composer est également installé en global.
-RUN     apt-get update -qq && \
-        apt-get install -qy \
-        git \
-        gnupg \
-        unzip \
-        zip \
-        mariadb-client \
-        sendmail \
-        libonig-dev \
-        libpng-dev \
-        libzip-dev \
-        nodejs \
-        npm && \
+# Met à jour les listes du gestionnaire de paquets.
+RUN     apt-get update -qq
+
+# Configure Node.js.
+# Cette étape supprime l'ancienne installation de Node 12 et installe Node 16. De même, npm passe de la v8 à la v9.
+RUN     apt-get remove nodejs && \
+        rm -rf /usr/local/bin/node* && \
+        rm -rf /usr/local/bin/npm* &&  \
+        rm -rf /etc/apt/sources.list.d/nodesource.list && \
+        curl -s https://deb.nodesource.com/setup_16.x | bash && \
+        apt-get install -qy nodejs && \
+        npm install -g npm@9
+
+# Installe divers dépendances depuis le gestionnaire de paquets :
+# - git, zip, un client MariaDB, et sendmail pour la gestion des mails ;
+# - les librairies requises pour les dépendances PHP ;
+# - Composer installé en global pour la gestion des assets.
+RUN     apt-get install -qy \
+            git \
+            gnupg \
+            nodejs \
+            unzip \
+            zip \
+            mariadb-client \
+            sendmail \
+            libonig-dev \
+            libpng-dev \
+            libzip-dev && \
         curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
         apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-# Cette dernière étape (apt-get clean && rm -rf ...) supprime les fichiers temporaire d'apt, pour alléger l'image.
+        # Cette dernière étape (apt-get clean && rm -rf ...) supprime les fichiers temporaires du gestionnaire de paquets,
+        #  pour alléger l'image.
 
 # Configure et installe les extensions PHP requises.
-RUN     docker-php-ext-configure zip > /dev/null && \
-        docker-php-ext-install -j$(nproc) gd iconv mbstring opcache pdo pdo_mysql zip > /dev/null
+RUN     docker-php-ext-configure zip > /dev/null 2>&1 && \
+        docker-php-ext-install -j$(nproc) gd iconv mbstring opcache pdo pdo_mysql zip > /dev/null 2>&1
 
 # Importe la configuration PHP.
 COPY    docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
