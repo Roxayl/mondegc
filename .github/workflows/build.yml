@@ -25,7 +25,7 @@ jobs:
     steps:
 
       - name: Checkout full repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -93,7 +93,7 @@ jobs:
     steps:
 
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Prepare deployment
         uses: appleboy/ssh-action@v0.1.9
