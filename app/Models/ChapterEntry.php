@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
 use Roxayl\MondeGC\View\Components;
 use Roxayl\MondeGC\View\Components\ChapterEntry\BaseMediaEntry;
 
@@ -27,7 +28,7 @@ use Roxayl\MondeGC\View\Components\ChapterEntry\BaseMediaEntry;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Chapter $chapter
- * @property-read Model|\Eloquent $roleplayable
+ * @property-read (Model|\Eloquent)&Roleplayable $roleplayable
  * @method static Builder|ChapterEntry newModelQuery()
  * @method static Builder|ChapterEntry newQuery()
  * @method static Builder|ChapterEntry query()
