@@ -18,7 +18,7 @@ RUN     apt-get remove nodejs && \
         rm -rf /usr/local/bin/npm* &&  \
         rm -rf /etc/apt/sources.list.d/nodesource.list && \
         curl -s https://deb.nodesource.com/setup_16.x | bash && \
-        apt-get install -qy nodejs && \
+        apt-get install -qy nodejs npm && \
         npm install -g npm@9
 
 # Installe divers dépendances depuis le gestionnaire de paquets :
