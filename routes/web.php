@@ -25,12 +25,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('laravel', fn() => view('welcome'));
-
 // Laravel UI authentication routes (deprecated)...
-Route::get('login', fn() => url('connexion.php'))->name('login');
-Route::post('login', fn() => url('connexion.php'));
-Route::post('logout', fn() => url('connexion.php?doLogout=true')) // FIXME: nécessite de passer le jeton CSRF
+Route::get('login', fn() => redirect(url('connexion.php')))->name('login');
+Route::post('login', fn() => redirect(url('connexion.php')));
+Route::post('logout', fn() => redirect(url('connexion.php?doLogout=true'))) // FIXME: nécessite de passer le jeton CSRF
     ->name('logout');
 
 /*
