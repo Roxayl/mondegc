@@ -27,7 +27,7 @@
 
 @section('popup_start')
     <form method="POST" action="{{route('organisation-member.send-invitation',
-                                    ['organisation_id' => $organisation->id])}}">
+                                    ['organisationId' => $organisation->id])}}">
     @csrf
 @endsection
 

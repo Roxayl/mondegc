@@ -85,6 +85,7 @@ class OrganisationController extends Controller
      */
     public function show(int $id, string $slug = null): View|RedirectResponse
     {
+        /** @var Organisation $organisation */
         $organisation = Organisation::with(['members', 'membersPending'])
             ->findOrFail($id);
 
@@ -136,6 +137,7 @@ class OrganisationController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
+        /** @var Organisation $organisation */
         $organisation = Organisation::with('members')->findOrFail($id);
         $this->authorize('update', $organisation);
 

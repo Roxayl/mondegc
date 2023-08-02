@@ -48,12 +48,12 @@ class OrganisationMemberController extends Controller
     /**
      * Formulaire pour rejoindre une organisation.
      *
-     * @param int $organisation_id
+     * @param int $organisationId
      * @return View
      */
-    public function joinOrganisation(int $organisation_id): View
+    public function join(int $organisationId): View
     {
-        $organisation = Organisation::with('members')->findOrFail($organisation_id);
+        $organisation = Organisation::with('members')->findOrFail($organisationId);
         $pays = auth()->user()->pays;
         return view('organisation.member.join', compact(['organisation', 'pays']));
     }
@@ -62,17 +62,17 @@ class OrganisationMemberController extends Controller
      * Ajouter un nouveau membre.
      *
      * @param Request $request
-     * @param int $organisation_id
+     * @param int $organisationId
      * @return RedirectResponse
      */
-    public function store(Request $request, int $organisation_id): RedirectResponse
+    public function store(Request $request, int $organisationId): RedirectResponse
     {
-        $organisation = Organisation::query()->findOrFail($organisation_id);
+        $organisation = Organisation::query()->findOrFail($organisationId);
 
         $this->checkMemberAlreadyExists($request, $organisation);
 
         $data = [
-            'organisation_id' => $organisation_id,
+            'organisation_id' => $organisationId,
             'pays_id' => $request->get('pays_id'),
             'permissions' => Organisation::$permissions['pending'],
         ];
@@ -85,30 +85,30 @@ class OrganisationMemberController extends Controller
     }
 
     /**
-     * @param int $organisation_id
+     * @param int $organisationId
      * @return View
      */
-    public function invite(int $organisation_id): View
+    public function invite(int $organisationId): View
     {
-        $organisation = Organisation::with('members')->findOrFail($organisation_id);
+        $organisation = Organisation::with('members')->findOrFail($organisationId);
         $pays = Pays::where('ch_pay_publication', '=', Pays::$statut['active'])->get();
         return view('organisation.member.invite', compact(['organisation', 'pays']));
     }
 
     /**
      * @param Request $request
-     * @param int $organisation_id
+     * @param int $organisationId
      * @return RedirectResponse
      */
-    public function sendInvitation(Request $request, int $organisation_id): RedirectResponse
+    public function sendInvitation(Request $request, int $organisationId): RedirectResponse
     {
-        $organisation = Organisation::query()->findOrFail($organisation_id);
+        $organisation = Organisation::query()->findOrFail($organisationId);
 
         $this->authorize('administrate', $organisation);
         $this->checkMemberAlreadyExists($request, $organisation);
 
         $data = [
-            'organisation_id' => $organisation_id,
+            'organisation_id' => $organisationId,
             'pays_id' => $request->get('pays_id'),
             'permissions' => Organisation::$permissions['invited'],
         ];
@@ -124,11 +124,10 @@ class OrganisationMemberController extends Controller
     /**
      * Formulaire de modif des permissions d'un membre.
      *
-     * @param Request $request
      * @param int $id
      * @return View
      */
-    public function edit(Request $request, int $id): View
+    public function edit(int $id): View
     {
         $orgMember = OrganisationMember::with(['pays', 'organisation'])->findOrFail($id);
 
@@ -146,6 +145,7 @@ class OrganisationMemberController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
+        /** @var OrganisationMember $orgMember */
         $orgMember = OrganisationMember::with(['pays', 'organisation'])->findOrFail($id);
 
         $this->authorize('update', $orgMember);
@@ -166,11 +166,11 @@ class OrganisationMemberController extends Controller
 
     /**
      * Afficher la popup de confirmation pour quitter une organisation.
-     * @param Request $request
+     *
      * @param int $id
      * @return View
      */
-    public function delete(Request $request, int $id): View
+    public function delete(int $id): View
     {
         $orgMember = OrganisationMember::with(['pays', 'organisation'])->findOrFail($id);
 
@@ -181,12 +181,13 @@ class OrganisationMemberController extends Controller
 
     /**
      * Supprimer un membre d'une organisation ou sa demande d'adhésion.
-     * @param Request $request
+     *
      * @param int $id
      * @return RedirectResponse
      */
-    public function destroy(Request $request, int $id): RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
+        /** @var OrganisationMember $orgMember */
         $orgMember = OrganisationMember::with(['pays', 'organisation'])->findOrFail($id);
 
         $this->authorize('quit', $orgMember);
