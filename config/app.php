@@ -196,7 +196,6 @@ return [
          */
         Roxayl\MondeGC\Providers\AppServiceProvider::class,
         Roxayl\MondeGC\Providers\AuthServiceProvider::class,
-        // Roxayl\MondeGC\Providers\BroadcastServiceProvider::class,
         Roxayl\MondeGC\Providers\EventServiceProvider::class,
         Roxayl\MondeGC\Providers\FakerServiceProvider::class,
         Roxayl\MondeGC\Providers\RouteServiceProvider::class,
