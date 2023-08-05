@@ -9,17 +9,21 @@ use Roxayl\MondeGC\Models\InfrastructureOfficielle;
 
 interface Infrastructurable
 {
-    /* Défini dans le trait Infrastructurable. */
+    /* ===================================
+     *  Méthodes définies dans le trait Infrastructurable.
+     * =================================== */
 
     /**
      * Relation donnant les infrastructures acceptées pour l'infrastructurable.
+     *
      * @return MorphMany
      */
     public function infrastructures(): MorphMany;
 
     /**
-     * Relation donnant toutes les infrastructures, y compris refusées ou en attente de validation, pour
-     * l'infrastructurable.
+     * Relation donnant toutes les infrastructures, y compris refusées ou en attente de
+     * validation, pour l'infrastructurable.
+     *
      * @return MorphMany
      */
     public function infrastructuresAll(): MorphMany;
@@ -30,18 +34,42 @@ interface Infrastructurable
     public function deleteAllInfrastructures(): void;
 
 
-    /* Défini dans le trait InfrastructurablePresenter. */
+    /* ===================================
+     *  Méthodes définies dans le trait InfrastructurablePresenter.
+     * =================================== */
 
-    public function selectGroupRouteParameter();
+    /**
+     * Donne les paramètres dans l'URL pour la route 'infrastructure.select_group'
+     * pour un modèle {@see Infrastructurable} donné.
+     *
+     * @return array Un array contenant les paramètres de la route.
+     */
+    public function selectGroupRouteParameter(): array;
 
+    /**
+     * Donne les paramètres dans l'URL pour la route 'infrastructure.create' pour un modèle
+     * {@see Infrastructurable} donné.
+     * Il est nécessaire de spécifier un groupe d'infrastructure {@see InfrastructureGroupe},
+     * et il est possible de définir l'infrastructure officielle
+     *
+     * {@see InfrastructureOfficielle} sélectionnée, le cas échéant.
+     * @param InfrastructureGroupe $infrastructureGroupe Groupe d'infrastructure choisi.
+     * @param InfrastructureOfficielle|null $infrastructureOfficielle Infrastructure
+     *        officielle sélectionnée. Facultatif si l'utilisateur n'a pas choisi d'infra
+     *        officielle.
+     * @return array Un array contenant les paramètres de la route.
+     */
     public function createRouteParameter(
         InfrastructureGroupe $infrastructureGroupe,
-        ?InfrastructureOfficielle $infrastructureOfficielle);
+        ?InfrastructureOfficielle $infrastructureOfficielle
+    ): array;
 
     public function getType(): string;
 
 
-    /* Défini dans les presenters des modèles. */
+    /* ===================================
+     *  Méthodes définies dans les presenters des modèles.
+     * =================================== */
 
     /**
      * Donne le lien d'accès vers l'infrastructurable désigné.
@@ -56,7 +84,9 @@ interface Infrastructurable
     public function getName(): string;
 
 
-    /* Défini dans les modèles. */
+    /* ===================================
+     *  Méthodes définies dans les modèles.
+     * =================================== */
 
     public function getUsers(): Collection;
 }

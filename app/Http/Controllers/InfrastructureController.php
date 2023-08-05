@@ -25,17 +25,16 @@ class InfrastructureController extends Controller
     }
 
     /**
-     * @param string $infrastructurable_type
-     * @param int $infrastructurable_id
+     * @param string $infrastructurableType
+     * @param int $infrastructurableId
      * @return View
      */
-    public function selectGroup(string $infrastructurable_type, int $infrastructurable_id): View
+    public function selectGroup(string $infrastructurableType, int $infrastructurableId): View
     {
         $infrastructure = new Infrastructure();
         $infrastructure->fill([
-            'infrastructurable_type' =>
-                $infrastructure::getMorphFromUrlParameter($infrastructurable_type),
-            'infrastructurable_id' => $infrastructurable_id,
+            'infrastructurable_type' => $infrastructure::getMorphFromUrlParameter($infrastructurableType),
+            'infrastructurable_id' => $infrastructurableId,
         ]);
 
         $infrastructure_groupes = InfrastructureGroupe::query()->orderBy('order')->get();
@@ -51,16 +50,16 @@ class InfrastructureController extends Controller
      * Show the form for creating a new resource.
      *
      * @param Request $request
-     * @param string $infrastructurable_type
-     * @param int $infrastructurable_id
+     * @param string $infrastructurableType
+     * @param int $infrastructurableId
      * @return View
      */
-    public function create(Request $request, string $infrastructurable_type, int $infrastructurable_id): View
+    public function create(Request $request, string $infrastructurableType, int $infrastructurableId): View
     {
         $infrastructure = new Infrastructure();
         $infrastructure->fill([
-            'infrastructurable_type' => $infrastructure::getMorphFromUrlParameter($infrastructurable_type),
-            'infrastructurable_id' => $infrastructurable_id,
+            'infrastructurable_type' => $infrastructure::getMorphFromUrlParameter($infrastructurableType),
+            'infrastructurable_id' => $infrastructurableId,
         ]);
 
         $infrastructureGroupe = InfrastructureGroupe::query()->findOrFail(
@@ -69,7 +68,8 @@ class InfrastructureController extends Controller
         $infrastructureOfficielle = null;
         if($request->has('infrastructure_officielle_id')) {
             $infrastructureOfficielle = InfrastructureOfficielle::query()->findOrFail(
-                $request->input('infrastructure_officielle_id'));
+                $request->input('infrastructure_officielle_id')
+            );
         }
 
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
@@ -96,8 +96,8 @@ class InfrastructureController extends Controller
         $infrastructure->user_creator = auth()->user()->getAuthIdentifier();
         $infrastructure->ch_inf_juge = null;
         $infrastructure->ch_inf_commentaire_juge = null;
-        $infrastructure->infrastructurable_type = Infrastructure
-            ::getMorphFromUrlParameter($request->input('infrastructurable_type'));
+        $infrastructure->infrastructurable_type = Infrastructure::getMorphFromUrlParameter(
+            $request->input('infrastructurable_type'));
 
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
 
@@ -118,11 +118,10 @@ class InfrastructureController extends Controller
         $infrastructure = Infrastructure::query()->findOrFail($id);
 
         $infrastructureOfficielle = InfrastructureOfficielle::query()->findOrFail(
-            $infrastructure->infrastructureOfficielle->first()->ch_inf_off_id);
+            $infrastructure->infrastructureOfficielle?->ch_inf_off_id);
 
         $infrastructureGroupe = InfrastructureGroupe::query()->findOrFail(
-            $infrastructure->infrastructureOfficielle
-                ->infrastructureGroupe->first()->id);
+            $infrastructure->infrastructureOfficielle?->infrastructureGroupe->first()?->id);
 
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
 

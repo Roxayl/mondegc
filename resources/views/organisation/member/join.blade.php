@@ -27,7 +27,7 @@
 @endsection
 
 @section('popup_start')
-    <form method="POST" action="{{route('organisation-member.store', ['organisation_id' => $organisation->id])}}">
+    <form method="POST" action="{{route('organisation-member.store', ['organisationId' => $organisation->id])}}">
     @csrf
 @endsection
 

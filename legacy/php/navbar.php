@@ -359,10 +359,14 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
               <a title="les autres sites de G&eacute;n&eacute;ration City"><i class="icon icon-generation_city"></i></a>
             </center>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="les autres sites de G&eacute;n&eacute;ration City">G&eacute;n&eacute;ration City <b class="caret"></b></a>
-            <ul class="dropdown-menu">            
+            <ul class="dropdown-menu">
+              <li class="nav-header">L'univers GC</li>
               <li><a href="https://www.forum-gc.com">Le forum</a></li>
+              <li><a href="https://discord.com/invite/4P3HqVbbgR">Discord</a></li>
               <li><a href="https://vasel.yt/wiki/index.php?title=Accueil">Le Wiki</a></li>
-			  <li><a href="https://squirrel.roxayl.fr/">Squirrel</a></li>
+              <li><a href="https://squirrel.roxayl.fr/">Squirrel</a></li>
+              <li class="nav-header">Contribuer</li>
+              <li><a href="https://github.com/Roxayl/mondegc">GitHub</a></li>
             </ul>
           </li>
 

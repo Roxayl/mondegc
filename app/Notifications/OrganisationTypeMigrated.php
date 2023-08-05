@@ -10,12 +10,15 @@ class OrganisationTypeMigrated extends Notification
 {
     use Queueable;
 
-    private ?Organisation $organisation;
+    /**
+     * @var Organisation
+     */
+    private Organisation $organisation;
 
     /**
      * Create a new notification instance.
      *
-     * @param Organisation $organisation
+     * @param  Organisation  $organisation
      */
     public function __construct(Organisation $organisation)
     {
@@ -25,10 +28,10 @@ class OrganisationTypeMigrated extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param  object  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via(object $notifiable): array
     {
         return ['database'];
     }
@@ -36,10 +39,10 @@ class OrganisationTypeMigrated extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param  object  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray(object $notifiable): array
     {
         return [
             'organisation_id' => $this->organisation->id,

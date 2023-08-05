@@ -4,7 +4,7 @@
 echo '<div class="well">';
 
 echo '<noscript>';
-showErrorMessage('ban_error', 'Il semble que JavaScript n\'est pas activé... Z\'êtes méchants :(<br />Si le site déconne c\'est pas ma faute hein *siffle*');
+showErrorMessage('ban_error', 'Il semblerait que JavaScript n\'est pas activé. Certains éléments sont susceptibles de ne pas fonctionner correctement.');
 echo '</noscript>';
 
 if(isset($_SESSION['errmsgs']) && count($_SESSION['errmsgs']) > 0) {

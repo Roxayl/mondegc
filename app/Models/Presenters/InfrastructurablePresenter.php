@@ -2,12 +2,16 @@
 
 namespace Roxayl\MondeGC\Models\Presenters;
 
+use Illuminate\Support\Str;
 use Roxayl\MondeGC\Models\Infrastructure;
 use Roxayl\MondeGC\Models\InfrastructureGroupe;
 use Roxayl\MondeGC\Models\InfrastructureOfficielle;
 
 trait InfrastructurablePresenter
 {
+    /**
+     * @return array
+     */
     protected function getInfrastructurableData(): array
     {
         $fieldPrimaryKey = $this->primaryKey;
@@ -19,40 +23,38 @@ trait InfrastructurablePresenter
     }
 
     /**
-     * Donne les paramètres dans l'URL pour la route 'infrastructure.select_group'
-     * pour un modèle {@see \Roxayl\MondeGC\Models\Contracts\Infrastructurable} donné.
-     * @return array Un array contenant les paramètres de la route.
+     * @inheritDoc
      */
     public function selectGroupRouteParameter(): array
     {
-        return $this->getInfrastructurableData();
+        $data = $this->getInfrastructurableData();
+        $routeParameters = [];
+
+        foreach($data as $key => $value) {
+            $routeParameters[Str::camel($key)] = $value;
+        }
+
+        return $routeParameters;
     }
 
     /**
-     * Donne les paramètres dans l'URL pour la route 'infrastructure.create'
-     * pour un modèle {@see \Roxayl\MondeGC\Models\Contracts\Infrastructurable} donné.
-     * Il est nécessaire de spécifier un groupe d'infrastructure {@see InfrastructureGroupe},
-     * et il est possible de définir l'infrastructure officielle
-     * {@see InfrastructureOfficielle} sélectionnée, le cas échéant.
-     * @param InfrastructureGroupe $infrastructureGroupe Groupe d'infrastructure choisi.
-     * @param InfrastructureOfficielle|null $infrastructureOfficielle Infrastructure
-     *        officielle sélectionnée. Facultatif si l'utilisateur n'a pas choisi d'infra
-     *        officielle.
-     * @return array Un array contenant les paramètres de la route.
+     * @inheritDoc
      */
     public function createRouteParameter(
         InfrastructureGroupe $infrastructureGroupe,
         ?InfrastructureOfficielle $infrastructureOfficielle): array
     {
-        $fieldPrimaryKey = $this->primaryKey;
-        $params = $this->getInfrastructurableData();
+        $params = $this->selectGroupRouteParameter();
         $params['infrastructure_groupe_id'] = $infrastructureGroupe->id;
-        if(!is_null($infrastructureOfficielle)) {
+        if(! is_null($infrastructureOfficielle)) {
             $params['infrastructure_officielle_id'] = $infrastructureOfficielle->id;
         }
         return $params;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getType(): string
     {
         return Infrastructure::getUrlParameterFromMorph(self::class);

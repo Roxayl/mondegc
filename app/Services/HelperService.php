@@ -43,7 +43,7 @@ class HelperService
     public static function renderLegacyElement(string $element, float|array|bool|int|string $data): string
     {
         if(!is_array($data)) {
-            $data = array($data);
+            $data = [$data];
         }
 
         ob_start();
