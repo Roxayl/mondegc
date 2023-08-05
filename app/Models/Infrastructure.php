@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Contracts\Infrastructurable;
 use Roxayl\MondeGC\Models\Presenters\InfrastructurePresenter;
 use Roxayl\MondeGC\Models\Traits\DeletesInfluences;
 use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
@@ -40,7 +41,7 @@ use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
  * @property string|null $infrastructurable_type
  * @property-read Collection|Influence[] $influences
  * @property-read int|null $influences_count
- * @property-read Model|\Eloquent $infrastructurable
+ * @property-read (Model|\Eloquent)&Infrastructurable $infrastructurable
  * @property-read InfrastructureOfficielle|null $infrastructureOfficielle
  * @property-read CustomUser|null $judge
  * @method static Builder|Infrastructure newModelQuery()

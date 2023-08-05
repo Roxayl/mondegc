@@ -91,9 +91,9 @@ Route::delete('organisation-member/{id}', [Controllers\OrganisationMemberControl
 |--------------------------------------------------------------------------
 */
 Route::get('infrastructure/{id}', [Controllers\InfrastructureController::class, 'show'])->name('infrastructure.show');
-Route::get('infrastructure/select-group/type:{infrastructurable_type}/id:{infrastructurable_id}',
+Route::get('infrastructure/select-group/type:{infrastructurableType}/id:{infrastructurableId}',
     [Controllers\InfrastructureController::class, 'selectGroup'])->name('infrastructure.select-group');
-Route::get('infrastructure/create/type:{infrastructurable_type}/id:{infrastructurable_id}',
+Route::get('infrastructure/create/type:{infrastructurableType}/id:{infrastructurableId}',
     [Controllers\InfrastructureController::class, 'create'])->name('infrastructure.create');
 Route::post('infrastructure/create', [Controllers\InfrastructureController::class, 'store'])
     ->name('infrastructure.store');

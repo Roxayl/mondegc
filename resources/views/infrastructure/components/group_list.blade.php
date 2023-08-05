@@ -9,8 +9,8 @@
             <img src="{{ $group->url_image }}" alt="Illustration {{ $group->nom_groupe }}">
             <h3>{{ $group->nom_groupe }}</h3>
             <form action=" {{ route('infrastructure.create', [
-                    'infrastructurable_type' => $infrastructure::getUrlParameterFromMorph($infrastructure->infrastructurable_type),
-                    'infrastructurable_id' => $infrastructure->infrastructurable_id,
+                    'infrastructurableType' => $infrastructure::getUrlParameterFromMorph($infrastructure->infrastructurable_type),
+                    'infrastructurableId' => $infrastructure->infrastructurable_id,
                 ]) }}" method="GET">
                 <input name="infrastructure_groupe_id" type="hidden"
                    value="{{ $group->id }}">

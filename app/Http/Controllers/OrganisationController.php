@@ -58,17 +58,18 @@ class OrganisationController extends Controller
         $organisation->fill($request->except(['_method', '_token']));
 
         $type = $request->input('type');
-        if(!in_array($type, Organisation::$typesCreatable))
+        if(! in_array($type, Organisation::$typesCreatable)) {
             throw new \InvalidArgumentException("Mauvais type d'organisation.");
+        }
         $organisation->type = $type;
 
         $organisation->save();
 
-        $memberData = array(
+        $memberData = [
             'organisation_id' => $organisation->id,
             'permissions' => Organisation::$permissions['owner'],
-            'pays_id' => $request->pays_id
-        );
+            'pays_id' => $request->input('pays_id')
+        ];
         OrganisationMember::create($memberData);
 
         return redirect()->route('organisation.showslug',
@@ -203,7 +204,7 @@ class OrganisationController extends Controller
         $organisation = Organisation::query()->findOrFail($id);
         $this->authorize('update', $organisation);
 
-        $organisation->type = $request->type;
+        $organisation->type = $request->input('type');
         $organisation->type_migrated_at = Carbon::now();
 
         $organisation->save();
@@ -212,6 +213,6 @@ class OrganisationController extends Controller
 
         return redirect()->back()
             ->with('message', 'success|Votre organisation est devenue une '
-                . __("organisation.types.$request->type"));
+                . __("organisation.types.$organisation->type"));
     }
 }
