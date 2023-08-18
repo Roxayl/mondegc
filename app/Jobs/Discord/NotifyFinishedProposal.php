@@ -21,11 +21,6 @@ class NotifyFinishedProposal implements ShouldQueue, NotifiesDiscord
 
     private string $webhookName = 'ocgc';
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
     public function __construct(OcgcProposal $proposal)
     {
         $this->proposal = $proposal;

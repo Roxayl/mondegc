@@ -21,11 +21,6 @@ class NotifyVotingProposal implements ShouldQueue, NotifiesDiscord
 
     private string $webhookName = 'ocgc';
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
     public function __construct(OcgcProposal $proposal)
     {
         $this->proposal = $proposal;
@@ -43,9 +38,15 @@ class NotifyVotingProposal implements ShouldQueue, NotifiesDiscord
 
     public function generatePayload(): array
     {
+        $content = "**VOTE EN COURS !**\r\n"
+            . "Une proposition est en cours de vote à l'Assemblée générale !";
+
+        if(! empty($roleId = config('discord.role.players'))) {
+            $content .= "\r\n<@&$roleId>";
+        }
+
         return [
-            'content' => "**VOTE EN COURS !**\r\n"
-                . "Une proposition est en cours de vote à l'Assemblée générale !",
+            'content' => $content,
             'embeds' => [
                 [
                     'title' => trim(Str::limit($this->proposal->question, 120)),
