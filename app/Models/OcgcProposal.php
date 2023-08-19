@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 /**
@@ -191,6 +192,42 @@ class OcgcProposal extends Model
         }
 
         return collect($responses);
+    }
+
+    /**
+     * Renvoie la liste des pays votants à la proposition.
+     *
+     * @return Collection<Pays>
+     */
+    public function votingCountries(): Collection
+    {
+        $votes = DB::query()
+            ->select('*')
+            ->from('ocgc_votes')
+            ->where('ID_proposal', $this->id);
+
+        return Pays::query()->whereIn('ch_pay_id', $votes->pluck('ID_pays'))->get();
+    }
+
+    /**
+     * Ajoute de nouveaux pays votants à la proposition.
+     *
+     * @param iterable<int> $paysIds Liste de pays décrits par leur identifiant.
+     */
+    public function addVoters(iterable $paysIds): void
+    {
+        $votingCountries = $this->votingCountries()->pluck('ch_pay_id');
+        foreach($paysIds as $paysId) {
+            if($paysId === null || $votingCountries->contains($paysId)) {
+                continue;
+            }
+            DB::table('ocgc_votes')->insert([
+                'ID_proposal' => $this->id,
+                'ID_pays' => $paysId,
+                'reponse_choisie' => null,
+                'created' => Carbon::now(),
+            ]);
+        }
     }
 
     /**

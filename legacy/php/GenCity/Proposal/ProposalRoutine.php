@@ -4,6 +4,7 @@ namespace GenCity\Proposal;
 
 use Roxayl\MondeGC\Jobs\Discord;
 use Roxayl\MondeGC\Models\OcgcProposal;
+use Roxayl\MondeGC\Models\Pays;
 
 class ProposalRoutine
 {
@@ -38,6 +39,7 @@ class ProposalRoutine
     {
         try {
             $this->checkValidPending();
+            $this->updateVotingCountries();
             $this->sendPendingNotifications();
             $this->sendFinishedNotifications();
         } catch(\Exception $ex) {
@@ -58,6 +60,21 @@ class ProposalRoutine
         foreach($validationPeriodExpired as $thisProposal) {
             $proposalValidate = new ProposalValidate($thisProposal);
             $proposalValidate->accept();
+        }
+    }
+
+    /**
+     * Ajoute de nouveaux pays votants à une proposition au fur et à mesure de leur réactivation,
+     * pendant la phase précédant le vote.
+     */
+    public function updateVotingCountries(): void
+    {
+        $pendingDebate = $this->proposalList->getUnfinished();
+
+        foreach($pendingDebate as $proposal) {
+            $eloquentProposal = OcgcProposal::find($proposal->get('id'));
+            $activeCountries = Pays::query()->active()->get();
+            $eloquentProposal->addVoters($activeCountries->pluck('ch_pay_id'));
         }
     }
 

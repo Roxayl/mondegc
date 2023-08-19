@@ -64,6 +64,13 @@ class ProposalList {
 
     }
 
+    public function getUnfinished() {
+
+        $query = 'SELECT id FROM ocgc_proposals WHERE is_valid = 2 AND debate_end > NOW()';
+        return $this->setListFromQuery($query);
+
+    }
+
     public function getFinished($limit = 8, $offset = 0) {
 
         $query = 'SELECT id FROM ocgc_proposals
