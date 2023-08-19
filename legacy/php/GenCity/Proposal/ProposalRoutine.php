@@ -9,21 +9,23 @@ class ProposalRoutine
 {
     private ProposalList $proposalList;
 
-    public function __construct()
+    /**
+     * @param ProposalList $proposalList
+     */
+    public function __construct(ProposalList $proposalList)
     {
-        $this->proposalList = new ProposalList;
-
-        $this->runRoutine();
+        $this->proposalList = $proposalList;
     }
 
     /**
      * Permet de limiter l'exécution d'une routine, en fonction de la génération d'un nombre aléatoire.
      * Sur les environnements de développement, cette méthode est inopérante et renvoie toujours <code>false</code>.
+     *
      * @param int $probability Probabilté d'exécution (e.g. mettre "4" pour 1 fois sur 4).
      * @return bool Si cette méthode renvoie <code>true</code>, la routine ne devrait pas être exécutée.
      *              Dans le cas contraire, il faudra l'exécuter.
      */
-    private function shouldThrottle(int $probability = 4): bool
+    private function shouldThrottle(int $probability = 3): bool
     {
         // Pour des raisons de performance, exécuter une fois sur quatre en moyenne.
         return (app()->environment() === 'production' && rand(1, $probability) !== 1);
@@ -38,13 +40,16 @@ class ProposalRoutine
             $this->checkValidPending();
             $this->sendPendingNotifications();
             $this->sendFinishedNotifications();
-        } catch(\Exception $ignored) { }
+        } catch(\Exception $ex) {
+            if(app()->environment() !== 'production') {
+                throw $ex;
+            }
+        }
     }
 
     /**
-     * Cette fonction met à jour toutes les propositions en attente de validation par l'OCGC
-     * et créés il y a plus d'une semaine et les définit comme validés par l'OCGC (principe
-     * d'accord sans réponse).
+     * Met à jour toutes les propositions en attente de validation par l'OCGC et crées il y a plus
+     * d'une semaine et les définit comme validés par l'OCGC (principe d'accord sans réponse).
      */
     private function checkValidPending(): void
     {

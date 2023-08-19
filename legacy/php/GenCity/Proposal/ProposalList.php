@@ -8,10 +8,6 @@ class ProposalList {
 
     private $list = array();
 
-    public function __construct() {
-
-    }
-
     private function setListFromQuery($query) {
 
         $this->list = array();

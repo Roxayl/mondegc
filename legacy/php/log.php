@@ -312,4 +312,4 @@ do {
 
 
 /* Vérification des propositions */
-$proposalRoutine = new \GenCity\Proposal\ProposalRoutine();
+(new \GenCity\Proposal\ProposalRoutine(new \GenCity\Proposal\ProposalList()))->runRoutine();

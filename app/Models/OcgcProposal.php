@@ -119,6 +119,9 @@ class OcgcProposal extends Model
         'RP'  => "Résolution",
     ];
 
+    /**
+     * @inheritDoc
+     */
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -128,6 +131,7 @@ class OcgcProposal extends Model
 
     /**
      * Pays à l'origine de la proposition.
+     *
      * @return BelongsTo
      */
     public function pays(): BelongsTo
@@ -160,6 +164,7 @@ class OcgcProposal extends Model
 
     /**
      * Nombre total de réponses possibles pour une proposition.
+     *
      * @return int
      */
     public function getMaxResponses(): int
@@ -170,6 +175,7 @@ class OcgcProposal extends Model
 
     /**
      * Donne la collection des réponses à une proposition, y compris le vote blanc.
+     *
      * @return Collection
      */
     public function responses(): Collection
@@ -189,6 +195,7 @@ class OcgcProposal extends Model
 
     /**
      * Renvoie le choix à l'issue du vote.
+     *
      * @return Collection Collection de réponses.
      */
     public function results(): Collection
@@ -200,6 +207,7 @@ class OcgcProposal extends Model
 
     /**
      * Donne le détail du type de la proposition.
+     *
      * @return string "Sondage" ou "Résolution", en fonction du type de la proposition.
      */
     public function typeDetail(): string
@@ -209,6 +217,7 @@ class OcgcProposal extends Model
 
     /**
      * Renvoie l'identifiant complet d'une proposition (e.g. "Résolution 21-072").
+     *
      * @return string
      */
     public function fullIdentifier(): string
