@@ -2,6 +2,7 @@
 
 namespace GenCity\Proposal;
 
+use Illuminate\Support\Facades\DB;
 use Roxayl\MondeGC\Jobs\Discord;
 use Roxayl\MondeGC\Models\OcgcProposal;
 use Roxayl\MondeGC\Models\Pays;
@@ -37,12 +38,15 @@ class ProposalRoutine
      */
     public function runRoutine(): void
     {
+        DB::beginTransaction();
         try {
             $this->checkValidPending();
             $this->updateVotingCountries();
             $this->sendPendingNotifications();
             $this->sendFinishedNotifications();
+            DB::commit();
         } catch(\Exception $ex) {
+            DB::rollBack();
             if(app()->environment() !== 'production') {
                 throw $ex;
             }
