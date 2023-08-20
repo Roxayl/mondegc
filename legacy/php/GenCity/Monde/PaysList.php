@@ -32,14 +32,14 @@ class PaysList {
     }
 
     public function getActive() {
-
+        $inactivityMonths = config('gameplay.country_inactivity_months');
         $query = '
           SELECT ID_pays AS ch_pay_id, MAX(ch_use_last_log) FROM users_pays
           JOIN users ON ch_use_id = ID_user
           JOIN pays ON ID_pays = ch_pay_id
           WHERE ch_pay_publication != 2
           GROUP BY ch_pay_id
-          HAVING MAX(ch_use_last_log) > DATE_SUB(NOW(), INTERVAL 4 MONTH)';
+          HAVING MAX(ch_use_last_log) > DATE_SUB(NOW(), INTERVAL ' . $inactivityMonths . ' MONTH)';
         return $this->setListFromQuery($query);
 
     }

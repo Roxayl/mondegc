@@ -3,10 +3,14 @@
 //Connexion et deconnexion
 include('php/log.php');
 
-if(isset($_SESSION['login_user'])) {
-    $thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
-    $listePays = $thisUser->getCountries();
+$listePays = [];
+if(!isset($_SESSION['login_user'])) {
+    header(sprintf("Location: %s", urlFromLegacy(url('connexion.php'))));
+    exit;
 }
+
+$thisUser = new GenCity\Monde\User($_SESSION['user_ID']);
+$listePays = $thisUser->getCountries();
 
 $listeInstituts = \GenCity\Monde\Institut\Institut::getAll();
 
@@ -136,9 +140,9 @@ Eventy::action('display.beforeHeadClosingTag')
         <?php foreach($listeInstituts as $thisInstitut): ?>
             <div class="span2 thumbnail">
 
-                <img src="<?= __s($thisInstitut->get('ch_ins_logo')) ?>" style="max-height: 60px;"
-                     alt="Logo <?= __s($thisInstitut->get('ch_ins_nom')) ?>">
-                <h4><?= __s($thisInstitut->get('ch_ins_nom')) ?></h4>
+                <img src="<?= e($thisInstitut->get('ch_ins_logo')) ?>" style="max-height: 60px;"
+                     alt="Logo <?= e($thisInstitut->get('ch_ins_nom')) ?>">
+                <h4><?= e($thisInstitut->get('ch_ins_nom')) ?></h4>
 
                 <div class="btn-group">
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -183,8 +187,8 @@ Eventy::action('display.beforeHeadClosingTag')
                                     <i class="icon-file"></i> Publier un communiqué</a></li>
                             <li class="dropdown-li-force">
                                 <a tabindex="0" href="<?= route('infrastructure.select-group',
-                                    ['infrastructurable_type' => 'pays',
-                                     'infrastructurable_id' => $pays['ch_pay_id']]) ?>">
+                                    ['infrastructurableType' => 'pays',
+                                     'infrastructurableId' => $pays['ch_pay_id']]) ?>">
                                     <i class="icon-home"></i> Ajouter une infrastructure</a></li>
                         </ul>
                     </div>

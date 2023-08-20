@@ -33,8 +33,9 @@ class UserList {
 
     public function getActive() {
 
+        $inactivityMonths = config('gameplay.country_inactivity_months');
         $query = 'SELECT ch_use_id FROM users
-                  WHERE ch_use_last_log > DATE_SUB(NOW(), INTERVAL 4 MONTH)';
+                  WHERE ch_use_last_log > DATE_SUB(NOW(), INTERVAL ' . $inactivityMonths . ' MONTH)';
         return $this->setListFromQuery($query, true);
 
     }

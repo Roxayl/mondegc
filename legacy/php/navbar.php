@@ -23,9 +23,6 @@ if(isset($_SESSION['userObject'])) {
     $nav_userPays = $_SESSION['userObject']->getCountries();
 }
 
-if(!isset($loginFormAction))
-    $loginFormAction = '';
-
 /** Notifications navbar Assemblée générale */
 $navbar_proposalList = new \GenCity\Proposal\ProposalList();
 $navbar_pendingVotes = $navbar_proposalList->getPendingVotes();
@@ -173,11 +170,7 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
               <a href="<?= DEF_URI_PATH ?>dashboard.php" title="informations pratiques"><i class="icon icon-evenement"></i></a>
             </center>
             <a href="<?= DEF_URI_PATH ?>dashboard.php" title="informations pratiques">Tableau de bord</a>
-          <ul class="dropdown-menu">            
-              <li><a href="https://www.forum-gc.com">Le forum</a></li>
-              <li><a href="http://vasel.yt/wiki/index.php?title=Accueil">Le Wiki</a></li>
-        <li><a href="https://squirrel.roxayl.fr/">Squirrel</a></li>
-            </ul></li>
+          </li>
         <?php endif; ?>
 
           <li class="dropdown <?php if ($carte || $menupays) { echo('active');}  ?>">

@@ -145,6 +145,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @method static Builder|Pays whereChPayTextTransport($value)
  * @method static Builder|Pays whereChPayTourismeCarte($value)
  * @method static Builder|Pays whereLienWiki($value)
+ * @method static Builder|Pays active()
  * @method static Builder|Pays visible()
  * @mixin \Eloquent
  */
@@ -389,6 +390,26 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     public function scopeVisible(Builder $query): Builder
     {
         return $query->where('ch_pay_publication', Pays::STATUS_ACTIVE);
+    }
+
+    /**
+     * Récupère les pays actifs.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeActive(Builder $query): Builder
+    {
+        $inactivityMonths = config('gameplay.country_inactivity_months');
+        $columns = array_merge([$this->getKeyName()], $this->getFillable(), $this->getDates());
+        
+        return $query->visible()
+            ->select($columns)
+            ->join('users_pays', 'users_pays.ID_pays', '=', 'ch_pay_id')
+            ->join('users', 'users_pays.ID_user', '=', 'users.ch_use_id')
+            ->groupBy($columns)
+            ->havingRaw('MAX(COALESCE(ch_use_last_log, ch_use_date)) '
+                . '> DATE_SUB(NOW(), INTERVAL ' . $inactivityMonths . ' MONTH)');
     }
 
     /**

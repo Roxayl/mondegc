@@ -8,10 +8,6 @@ class ProposalList {
 
     private $list = array();
 
-    public function __construct() {
-
-    }
-
     private function setListFromQuery($query) {
 
         $this->list = array();
@@ -64,6 +60,13 @@ class ProposalList {
         $query = 'SELECT id FROM ocgc_proposals
                   WHERE NOW() > DATE_ADD(created, INTERVAL 1 WEEK)
                   AND is_valid = 1';
+        return $this->setListFromQuery($query);
+
+    }
+
+    public function getUnfinished() {
+
+        $query = 'SELECT id FROM ocgc_proposals WHERE is_valid = 2 AND debate_end > NOW()';
         return $this->setListFromQuery($query);
 
     }
