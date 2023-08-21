@@ -349,7 +349,7 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
             $paysMembers = $this->members;
 
             foreach($paysMembers as $members) {
-                $thisPaysResources = $members->pays->resources(false);
+                $thisPaysResources = $members->pays->withoutOrganisationResources();
                 foreach(Resource::cases() as $resource) {
                     $sumResources[$resource->value] += $thisPaysResources[$resource->value];
                 }

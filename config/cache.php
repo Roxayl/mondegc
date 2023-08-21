@@ -91,4 +91,18 @@ return [
 
     'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Paramètres de cache
+    |--------------------------------------------------------------------------
+    |
+    | Il est possible de spécifier certains paramètres comme la borne de durée
+    | de mise en cache de certaines données.
+    |
+    */
+
+    'ttl_lower_bound' => 12,
+
+    'ttl_higher_bound' => 30,
+
 ];
