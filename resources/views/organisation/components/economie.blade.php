@@ -1,15 +1,22 @@
 
 @inject('helperService', 'Roxayl\MondeGC\Services\HelperService')
 
+@section('scripts')
+    @parent
+
+    @if($organisation->membersGenerateResources())
+    <script type="text/javascript">
+        (function($) {
+            let $resourceTooltip = $('#org-country-resource-tooltip');
+            if($resourceTooltip.length) {
+                $resourceTooltip.tooltip();
+            }
+        })(jQuery);
+    </script>
+    @endif
+@endsection
+
 @if($organisation->hasEconomy())
-
-    @section('scripts')
-        @parent
-
-        <script type="text/javascript">
-            $('#org-country-resource-tooltip').tooltip();
-        </script>
-    @endsection
 
     @can('manageInfrastructure', $organisation)
     <div class="cta-title pull-right-cta">
