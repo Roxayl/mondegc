@@ -345,11 +345,11 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
 
         // Les alliances bénéficient les ressources de leurs pays ; on les calcule
         // le cas échéant.
-        if($this->type === self::TYPE_ALLIANCE) {
+        if($this->membersGenerateResources()) {
             $paysMembers = $this->members;
 
             foreach($paysMembers as $members) {
-                $thisPaysResources = $members->pays->resources(false);
+                $thisPaysResources = $members->pays->withoutAllianceResources();
                 foreach(Resource::cases() as $resource) {
                     $sumResources[$resource->value] += $thisPaysResources[$resource->value];
                 }
@@ -357,6 +357,16 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
         }
 
         return $sumResources;
+    }
+
+    /**
+     * @return array<string, float>
+     */
+    public function perCountryResources(): array
+    {
+        $memberCount = $this->members->count();
+
+        return array_map(fn(float $value) => (int) ($value / $memberCount), $this->organisationResources());
     }
 
     /**
