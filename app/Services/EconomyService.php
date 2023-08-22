@@ -5,8 +5,8 @@ namespace Roxayl\MondeGC\Services;
 use Illuminate\Database\Eloquent\Collection;
 use Roxayl\MondeGC\Models\Enums\Resource;
 use Roxayl\MondeGC\Models\Pays;
-use Roxayl\MondeGC\Models\Traits\Influencable;
-use Roxayl\MondeGC\Models\Traits\Resourceable;
+use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
 
 class EconomyService
 {
@@ -60,7 +60,7 @@ class EconomyService
      * @return float[] Un tableau de ressources contenant la somme  les ressources générées un
      *                 ensemble d'influençables.
      */
-    public static function sumGeneratedResourcesFromInfluencables(array|\ArrayAccess $influencables): array
+    public static function sumGeneratedResourcesFromInfluencables(iterable $influencables): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 

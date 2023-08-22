@@ -3,6 +3,14 @@
 
 @if($organisation->hasEconomy())
 
+    @section('scripts')
+        @parent
+
+        <script type="text/javascript">
+            $('#org-country-resource-tooltip').tooltip();
+        </script>
+    @endsection
+
     @can('manageInfrastructure', $organisation)
     <div class="cta-title pull-right-cta">
         <a href="{{ route('organisation.edit',
@@ -75,14 +83,29 @@
                 <small>Ressources octroyées à chaque pays membre :</small>
                 {!! $helperService::renderLegacyElement(
                     'temperance/resources_small', [
-                        'resources' => array_map(
-                            fn($val) => ($val / $organisation->members->count()),
-                            $organisation->infrastructureResources())
+                        'resources' => $organisation->perCountryResources()
                     ]) !!}
             </div>
 
             @if($organisation->membersGenerateResources())
-                <h4>Ressources générées par les pays membres</h4>
+                <h4>
+                    Ressources générées par les pays membres
+                    <small>
+                        <i class="icon-info-sign" rel="tooltip" id="org-country-resource-tooltip"
+                           data-original-title="Ces données totalisent les ressources générées directement par les pays
+                            sans l'influence générée par les organisations dont elles sont membres. Elles sont
+                            additionnées pour obtenir les ressources de l'organisation."
+                        ></i>
+                    </small>
+                </h4>
+
+                <div style="margin-bottom: 7px;">
+                    <small>Total pays membres :</small>
+                    {!! $helperService::renderLegacyElement(
+                        'temperance/resources_small', [
+                            'resources' => $organisation->paysResources()
+                        ]) !!}
+                </div>
 
                 @foreach($organisation->members as $thisMember)
                     @php $thisPays = $thisMember->pays; @endphp
@@ -94,7 +117,7 @@
                             {{ $thisPays->ch_pay_nom }}</a>
                         {!! $helperService::renderLegacyElement(
                             'temperance/resources_small', [
-                                'resources' => $thisPays->resources(false)
+                                'resources' => $thisPays->withoutAllianceResources()
                             ]) !!}
                     </div>
                 @endforeach

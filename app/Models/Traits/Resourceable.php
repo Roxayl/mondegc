@@ -2,6 +2,8 @@
 
 namespace Roxayl\MondeGC\Models\Traits;
 
+use Illuminate\Support\Str;
+
 trait Resourceable
 {
     use SimpleResourceable, GeneratesResourceHistory;
@@ -16,7 +18,7 @@ trait Resourceable
     {
         $stringParameters = null;
         if($parameters !== null) {
-            $stringParameters = json_encode($parameters);
+            $stringParameters = Str::slug(json_encode($parameters), '-', 'en', [':' => '_']);
         }
 
         $key = str_replace('\\', '.', $this::class) . '.' . $this->getKey();
