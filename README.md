@@ -20,9 +20,7 @@ Liens : [Site du Monde GC](https://generation-city.com/monde/) -
 
 ## Table des matières
 
-- [Table des matières](#table-des-matières)
 - [À propos](#à-propos)
-- [Structure des dépôts Git](#structure-des-dépôts-git)
 - [Installation](#installation)
   - [Environnement](#environnement)
   - [Installation via Docker](#installation-via-docker)
@@ -30,6 +28,7 @@ Liens : [Site du Monde GC](https://generation-city.com/monde/) -
     - [Installer l'application](#installer-lapplication)
   - [Lancement et arrêt de l'application](#lancement-et-arrêt-de-lapplication)
 - [Développement et tests](#développement-et-tests)
+  - [Structure des dépôts Git](#structure-des-dépôts-git)
   - [Gestion des bibliothèques externes](#gestion-des-bibliothèques-externes)
     - [Gérer des dépendances Composer](#gérer-des-dépendances-composer)
     - [Gérer les assets CSS et JavaScript](#gérer-les-assets-css-et-javascript)
@@ -51,17 +50,8 @@ L'aspect graphique est réalisé par [Lesime](https://www.forum-gc.com/u23) et R
 Le site du Monde GC, depuis la [version 2.5](https://www.forum-gc.com/t6872p110-notes-de-mise-a-jour-monde-gc#287597) 
 (juillet 2020), repose sur le framework [Laravel](https://laravel.com/), et les nouvelles fonctionnalités du site 
 reposent sur ce framework. La [documentation](https://laravel.com/docs/9.x) de Laravel est riche et n'hésitez pas à 
-vous renseigner sur son fonctionnement, intuitif et puissant, afin de pouvoir contribuer vous aussi au projet phare de 
+vous renseigner sur son fonctionnement, intuitif et puissant. Les sources sont [accessibles à tous](https://www.forum-gc.com/t7372-contribuez-au-site-du-monde-gc) depuis avril 2023 : venez vous aussi contribuer au projet phare de 
 la communauté [Génération City](http://www.forum-gc.com/).
-
-## Structure des dépôts Git
-
-Les sources du site sont gérées par Git, hébergées sur un certain nombre de plateformes.
-
-| Plateforme | Dépôt                                                               | Complet ? | Visibilité | Commentaires                             |
-| ---------- | ------------------------------------------------------------------- | --------- |------------| ---------------------------------------- |
-| GitHub     | [Roxayl/mondegc](https://github.com/Roxayl/mondegc)                 | Oui       | Public     | Dépôt principal                          |
-| Bitbucket  | [Roxayl/mondegc](https://bitbucket.org/Roxayl/mondegc/)             | Oui       | Privée     | Miroir du dépôt principal, lecture seule |
 
 ## Installation
 
@@ -159,6 +149,15 @@ tout moment avec ``docker-compose up -d``.
 Le processus de développement suit les règles décrites par **Git Flow**. Pour plus d'informations,
 [cet article](https://les-enovateurs.com/gitflow-workflow-git-incontournableprojets-de-qualite/) donne des détails sur 
 le cadre posé par ce *workflow*.
+
+### Structure des dépôts Git
+
+Les sources du site sont gérées par Git, hébergées sur un certain nombre de plateformes.
+
+| Plateforme | Dépôt                                                   | Complet ? | Visibilité | Commentaires                             |
+| ---------- | ------------------------------------------------------- | --------- |------------| ---------------------------------------- |
+| GitHub     | [Roxayl/mondegc](https://github.com/Roxayl/mondegc)     | Oui       | Public     | Dépôt principal                          |
+| Bitbucket  | [Roxayl/mondegc](https://bitbucket.org/Roxayl/mondegc/) | Oui       | Privée     | Miroir du dépôt principal, lecture seule |
 
 ### Gestion des bibliothèques externes
 
