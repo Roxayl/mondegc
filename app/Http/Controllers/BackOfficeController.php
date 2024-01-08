@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Roxayl\MondeGC\Models\Contracts\Influencable;
 use Roxayl\MondeGC\Models\Factories\InfluencableFactory;
+use Roxayl\MondeGC\Models\Influence;
 use Roxayl\MondeGC\Services\HelperService;
 use YlsIdeas\FeatureFlags\Facades\Features;
 
@@ -35,7 +36,11 @@ class BackOfficeController extends Controller
 
         $cacheEnabled = Features::accessible('cache');
 
-        return view('back-office.advanced-parameters', compact('cacheSize', 'cacheEnabled'));
+        $influenceTableSize = Influence::count();
+
+        return view('back-office.advanced-parameters', compact(
+            'cacheSize', 'cacheEnabled', 'influenceTableSize'
+        ));
     }
 
     /**
