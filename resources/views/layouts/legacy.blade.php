@@ -1,4 +1,4 @@
-@inject('navbarProvider', 'App\Services\LegacyPageService')
+@inject('navbarProvider', 'Roxayl\MondeGC\Services\LegacyPageService')
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -19,23 +19,12 @@
     <link href="{{url('assets/css/bootstrap-modal.css')}}" rel="stylesheet" type="text/css">
     <link href="{{url('assets/css/GenerationCity.css')}}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-    <!--[if gte IE 9]>
-        <style>
-            .gradient {
-               filter: none;
-            }
-        </style>
-    <![endif]-->
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="{{url('assets/ico/favicon.ico')}}">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ url('assets/ico/apple-touch-icon-144-precomposed.png') }}">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ url('assets/ico/apple-touch-icon-114-precomposed.png') }}">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ url('assets/ico/apple-touch-icon-72-precomposed.png') }}">
     <link rel="apple-touch-icon-precomposed" href="{{ url('assets/ico/apple-touch-icon-57-precomposed.png') }}">
-
-    <!--[if lt IE 9]>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <![endif]-->
 
     @yield('styles')
 

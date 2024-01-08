@@ -21,7 +21,7 @@ switch($row_User['ch_use_statut']) {
 //Liste pays pour moderation
 
 $query_pays = "SELECT ch_pay_id, ch_pay_nom FROM pays ORDER BY ch_pay_nom ASC";
-$pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
+$pays = mysql_query($query_pays, $maconnexion);
 $row_pays = mysql_fetch_assoc($pays);
 $totalRows_pays = mysql_num_rows($pays);
 ?>
@@ -50,7 +50,7 @@ $totalRows_pays = mysql_num_rows($pays);
     <h3 id="myModalLabel">Param&egrave;tres du compte</h3>
   </div>
   <div class="modal-body">
-  <form action="<?php echo $editFormAction; ?>" name="ProfilUser" method="POST" class="form-horizontal" id="ProfilUser">
+  <form action="<?= e($editFormAction) ?>" name="ProfilUser" method="POST" class="form-horizontal" id="ProfilUser">
     <!-- Boutons cachés -->
     <input name="ch_use_id" type="hidden" value="<?= e($row_User['ch_use_id']) ?>">
     <input name="userID" type="hidden" value="<?= e($row_User['ch_use_id']) ?>">

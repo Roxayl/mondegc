@@ -3,14 +3,12 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
@@ -26,24 +24,24 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_institut")
   $oldInstitut = new \GenCity\Monde\Institut\Institut($_POST['ch_ins_ID']);
 
   $updateSQL = sprintf("UPDATE instituts SET ch_ins_label=%s, ch_ins_lien_forum=%s, ch_ins_date_enregistrement=%s, ch_ins_mis_jour=%s, ch_ins_nb_update=%s, ch_ins_user_ID=%s, ch_ins_sigle=%s, ch_ins_nom=%s, ch_ins_statut=%s, ch_ins_logo=%s, ch_ins_img=%s, ch_ins_desc=%s, ch_ins_coord_X=%s, ch_ins_coord_Y=%s WHERE ch_ins_ID=%s",
-                       GetSQLValueString($_POST['ch_ins_label'], "text"),
-                       GetSQLValueString($_POST['ch_ins_lien_forum'], "text"),
-                       GetSQLValueString($_POST['ch_ins_date_enregistrement'], "date"),
-                       GetSQLValueString($_POST['ch_ins_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_ins_nb_update'], "int"),
-                       GetSQLValueString($_POST['ch_ins_user_ID'], "int"),
-                       GetSQLValueString($_POST['ch_ins_sigle'], "text"),
-                       GetSQLValueString($_POST['ch_ins_nom'], "text"),
-                       GetSQLValueString($_POST['ch_ins_statut'], "int"),
-                       GetSQLValueString($_POST['ch_ins_logo'], "text"),
-                       GetSQLValueString($_POST['ch_ins_img'], "text"),
-                       GetSQLValueString($_POST['ch_ins_desc'], "text"),
-					   GetSQLValueString($_POST['form_coord_X'], "decimal"),
-                       GetSQLValueString($_POST['form_coord_Y'], "decimal"),
-                       GetSQLValueString($_POST['ch_ins_ID'], "int"));
+                       escape_sql($_POST['ch_ins_label'], "text"),
+                       escape_sql($_POST['ch_ins_lien_forum'], "text"),
+                       escape_sql($_POST['ch_ins_date_enregistrement'], "date"),
+                       escape_sql($_POST['ch_ins_mis_jour'], "date"),
+                       escape_sql($_POST['ch_ins_nb_update'], "int"),
+                       escape_sql($_POST['ch_ins_user_ID'], "int"),
+                       escape_sql($_POST['ch_ins_sigle'], "text"),
+                       escape_sql($_POST['ch_ins_nom'], "text"),
+                       escape_sql($_POST['ch_ins_statut'], "int"),
+                       escape_sql($_POST['ch_ins_logo'], "text"),
+                       escape_sql($_POST['ch_ins_img'], "text"),
+                       escape_sql($_POST['ch_ins_desc'], "text"),
+					   escape_sql($_POST['form_coord_X'], "decimal"),
+                       escape_sql($_POST['form_coord_Y'], "decimal"),
+                       escape_sql($_POST['ch_ins_ID'], "int"));
 
   
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
 
   $newInstitut = new \GenCity\Monde\Institut\Institut($_POST['ch_ins_ID']);
 
@@ -75,8 +73,8 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_institut")
 }
 
 
-$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
-$institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
+$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", escape_sql($institut_id, "int"));
+$institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
@@ -99,17 +97,6 @@ $coord_Y = $row_institut['ch_ins_coord_Y'];
 <link href="../SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -150,7 +137,7 @@ Eventy::action('display.beforeHeadClosingTag')
   <section>
     <div id="categories">
      <section>
-  <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="modifier_institut" Id="modifier_institut">
+  <form action="<?= e($editFormAction) ?>" method="POST" class="form-horizontal well" name="modifier_institut" Id="modifier_institut">
     <div class="alert alert-tips">
       <button type="button" class="close" data-dismiss="alert">×</button>
       Ce formulaire contient les informations qui seront affich&eacute;es sur la page consacr&eacute;e au Comité et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Mettez-le &agrave; jour.</div>

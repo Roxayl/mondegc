@@ -1,13 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Legacy;
+namespace Roxayl\MondeGC\Http\Controllers\Legacy;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Roxayl\MondeGC\Http\Controllers\Controller;
 
 class LegacySiteController extends Controller
 {
+    /**
+     * @param  Request  $request
+     * @param  string  $path
+     * @return Response
+     */
     public function __invoke(Request $request, string $path = ""): Response
     {
         // Appeler le front controller et retourner une réponse.

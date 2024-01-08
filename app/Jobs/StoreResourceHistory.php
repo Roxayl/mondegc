@@ -1,11 +1,7 @@
 <?php
 
-namespace App\Jobs;
+namespace Roxayl\MondeGC\Jobs;
 
-use App\Models\Contracts;
-use App\Models\Repositories\Resourceable;
-use App\Models\ResourceHistory;
-use App\Models\Traits\GeneratesResourceHistory;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -15,6 +11,10 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Roxayl\MondeGC\Models\Contracts;
+use Roxayl\MondeGC\Models\Repositories\Resourceable;
+use Roxayl\MondeGC\Models\ResourceHistory;
+use Roxayl\MondeGC\Models\Traits\GeneratesResourceHistory;
 
 class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
 {
@@ -39,10 +39,8 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->checkShouldRun();
 
@@ -65,6 +63,7 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
 
     /**
      * Affiche du texte en sortie, lorsque la tâche est exécutée en CLI.
+     *
      * @param string $text
      */
     private function outputToConsole(string $text): void
@@ -89,6 +88,7 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
 
     /**
      * Vérifie que la tâche peut être exécutée.
+     *
      * @return bool
      */
     public function shouldRun(): bool

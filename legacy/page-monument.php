@@ -11,16 +11,16 @@ if (isset($_GET['ch_pat_id'])) {
   $colname_monument = $_GET['ch_pat_id'];
 }
 
-$query_monument = sprintf("SELECT ch_pat_id, ch_pat_label, ch_pat_statut, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nb_update, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_nom, ch_pat_lien_img1, ch_pat_lien_img2, ch_pat_lien_img3, ch_pat_lien_img4, ch_pat_lien_img5, ch_pat_legende_img1, ch_pat_legende_img2, ch_pat_legende_img3, ch_pat_legende_img4, ch_pat_legende_img5, ch_pat_description, ch_pat_commentaire, ch_pay_id, ch_pay_nom, ch_vil_ID, ch_vil_nom, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID WHERE ch_pat_id = %s", GetSQLValueString($colname_monument, "int"));
-$monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
+$query_monument = sprintf("SELECT ch_pat_id, ch_pat_label, ch_pat_statut, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nb_update, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_nom, ch_pat_lien_img1, ch_pat_lien_img2, ch_pat_lien_img3, ch_pat_lien_img4, ch_pat_lien_img5, ch_pat_legende_img1, ch_pat_legende_img2, ch_pat_legende_img3, ch_pat_legende_img4, ch_pat_legende_img5, ch_pat_description, ch_pat_commentaire, ch_pay_id, ch_pay_nom, ch_vil_ID, ch_vil_nom, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id INNER JOIN villes ON ch_pat_villeID = ch_vil_ID WHERE ch_pat_id = %s", escape_sql($colname_monument, "int"));
+$monument = mysql_query($query_monument, $maconnexion);
 $row_monument = mysql_fetch_assoc($monument);
 $totalRows_monument = mysql_num_rows($monument);
 
 // *** Ressources patrimoine
 $query_monument_ressources = sprintf("SELECT SUM(ch_mon_cat_budget) AS budget,SUM(ch_mon_cat_industrie) AS industrie, SUM(ch_mon_cat_commerce) AS commerce, SUM(ch_mon_cat_agriculture) AS agriculture, SUM(ch_mon_cat_tourisme) AS tourisme, SUM(ch_mon_cat_recherche) AS recherche, SUM(ch_mon_cat_environnement) AS environnement, SUM(ch_mon_cat_education) AS education FROM monument_categories
   INNER JOIN dispatch_mon_cat ON dispatch_mon_cat.ch_disp_cat_id = monument_categories.ch_mon_cat_ID
-  INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_id = %s", GetSQLValueString($colname_monument, "int"));
-$monument_ressources = mysql_query($query_monument_ressources, $maconnexion) or die(mysql_error());
+  INNER JOIN patrimoine ON ch_pat_id = ch_disp_mon_id WHERE ch_pat_id = %s", escape_sql($colname_monument, "int"));
+$monument_ressources = mysql_query($query_monument_ressources, $maconnexion);
 $row_monument_ressources_neutre = mysql_fetch_assoc($monument_ressources);
 
 
@@ -38,8 +38,8 @@ $row_monument_ressources_neutre['budget'] = $row_monument_ressources_neutre['bud
 $row_monument_ressources = $row_monument_ressources_neutre ;
 
 // Connection infos dirigeant pays
-$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($row_monument['ch_pat_paysID'], "int"));
-$users = mysql_query($query_users, $maconnexion) or die(mysql_error());
+$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", escape_sql($row_monument['ch_pat_paysID'], "int"));
+$users = mysql_query($query_users, $maconnexion);
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
 
@@ -50,25 +50,25 @@ if ($row_monument['listcat']) {
 
 
 $query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories) ORDER BY ch_mon_cat_couleur";
-$liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
+$liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion);
 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
 
 //requete TOUT
-$query_mon_cat = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur NOT BETWEEN 100 AND 199 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
-$mon_cat = mysql_query($query_mon_cat, $maconnexion) or die(mysql_error());
+$query_mon_cat = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur NOT BETWEEN 100 AND 199 ORDER BY ch_mon_cat_couleur", escape_sql($mon_ID, "int"));
+$mon_cat = mysql_query($query_mon_cat, $maconnexion);
 $row_mon_cat = mysql_fetch_assoc($mon_cat);
 $totalRows_mon_cat = mysql_num_rows($mon_cat);
 
 //requete 0
 $query_mon_cat_GO_0 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur BETWEEN 0 AND 299 AND ch_mon_cat_couleur NOT BETWEEN 100 AND 199 ORDER BY ch_mon_cat_couleur";
-$mon_cat_GO_0 = mysql_query($query_mon_cat_GO_0, $maconnexion) or die(mysql_error());
+$mon_cat_GO_0 = mysql_query($query_mon_cat_GO_0, $maconnexion);
 $row_mon_cat_GO_0 = mysql_fetch_assoc($mon_cat_GO_0);
 $totalRows_mon_cat_GO_0 = mysql_num_rows($mon_cat_GO_0);
 
 //requete 310
 $query_mon_cat_GO_310 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur = 310 ORDER BY ch_mon_cat_couleur";
-$mon_cat_GO_310 = mysql_query($query_mon_cat_GO_310, $maconnexion) or die(mysql_error());
+$mon_cat_GO_310 = mysql_query($query_mon_cat_GO_310, $maconnexion);
 $row_mon_cat_GO_310 = mysql_fetch_assoc($mon_cat_GO_310);
 $totalRows_mon_cat_GO_310 = mysql_num_rows($mon_cat_GO_310);
 $nb_mon_cat_GO_310 = 0;
@@ -81,7 +81,7 @@ if ($row_monument['listcat'])
 
 //requete 320
 $query_mon_cat_GO_320 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur = 320 ORDER BY ch_mon_cat_couleur";
-$mon_cat_GO_320 = mysql_query($query_mon_cat_GO_320, $maconnexion) or die(mysql_error());
+$mon_cat_GO_320 = mysql_query($query_mon_cat_GO_320, $maconnexion);
 $row_mon_cat_GO_320 = mysql_fetch_assoc($mon_cat_GO_320);
 $totalRows_mon_cat_GO_320 = mysql_num_rows($mon_cat_GO_320);
 $nb_mon_cat_GO_320 = 0;
@@ -94,7 +94,7 @@ if ($row_monument['listcat'])
 
 //requete 330
 $query_mon_cat_GO_330 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur = 330 ORDER BY ch_mon_cat_couleur";
-$mon_cat_GO_330 = mysql_query($query_mon_cat_GO_330, $maconnexion) or die(mysql_error());
+$mon_cat_GO_330 = mysql_query($query_mon_cat_GO_330, $maconnexion);
 $row_mon_cat_GO_330 = mysql_fetch_assoc($mon_cat_GO_330);
 $totalRows_mon_cat_GO_330 = mysql_num_rows($mon_cat_GO_330);
 $nb_mon_cat_GO_330 = 0;
@@ -107,7 +107,7 @@ if ($row_monument['listcat'])
 
 //requete 340
 $query_mon_cat_GO_340 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur = 340 ORDER BY ch_mon_cat_couleur";
-$mon_cat_GO_340 = mysql_query($query_mon_cat_GO_340, $maconnexion) or die(mysql_error());
+$mon_cat_GO_340 = mysql_query($query_mon_cat_GO_340, $maconnexion);
 $row_mon_cat_GO_340 = mysql_fetch_assoc($mon_cat_GO_340);
 $totalRows_mon_cat_GO_340 = mysql_num_rows($mon_cat_GO_340);
 $nb_mon_cat_GO_340 = 0;
@@ -120,13 +120,13 @@ if ($row_monument['listcat'])
 
 //requete 400
 $query_mon_cat_GO_400 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur BETWEEN 400 AND 480 ORDER BY ch_mon_cat_couleur";
-$mon_cat_GO_400 = mysql_query($query_mon_cat_GO_400, $maconnexion) or die(mysql_error());
+$mon_cat_GO_400 = mysql_query($query_mon_cat_GO_400, $maconnexion);
 $row_mon_cat_GO_400 = mysql_fetch_assoc($mon_cat_GO_400);
 $totalRows_mon_cat_GO_400 = mysql_num_rows($mon_cat_GO_400);
 
 //requete 999
 $query_mon_cat_GO_999 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur = 999 ORDER BY ch_mon_cat_couleur";
-$mon_cat_GO_999 = mysql_query($query_mon_cat_GO_999, $maconnexion) or die(mysql_error());
+$mon_cat_GO_999 = mysql_query($query_mon_cat_GO_999, $maconnexion);
 $row_mon_cat_GO_999 = mysql_fetch_assoc($mon_cat_GO_999);
 $totalRows_mon_cat_GO_999 = mysql_num_rows($mon_cat_GO_999);
 }
@@ -136,7 +136,7 @@ $_SESSION['last_work'] = 'page-monument.php?ch_pat_id='.$row_monument['ch_pat_id
 
 $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
 
-$eloquentMonument = \App\Models\Patrimoine::findOrFail($colname_monument);
+$eloquentMonument = \Roxayl\MondeGC\Models\Patrimoine::query()->findOrFail($colname_monument);
 
 //calculs
 $nb_cat_ok = 0;
@@ -157,14 +157,13 @@ appendQueryString($editFormAction);
 
 if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajouter_actu")) {
     $updateSQL = sprintf("UPDATE patrimoine SET ch_pat_commentaire=%s WHERE ch_pat_id=%s",
-        GetSQLValueString($_POST['ch_pat_commentaire'], "text"),
-        GetSQLValueString($_POST['ch_pat_id'], "int"));
+        escape_sql($_POST['ch_pat_commentaire'], "text"),
+        escape_sql($_POST['ch_pat_id'], "int"));
 
-    $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    $Result1 = mysql_query($updateSQL, $maconnexion);
     getErrorMessage('success', "L'actualité de l'entreprise a été modifiée avec succès !");
 }
-
-mysql_data_seek($ressource, 0);}
+}
 
 ?><!DOCTYPE html>
 <html lang="fr">
@@ -183,17 +182,6 @@ mysql_data_seek($ressource, 0);}
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
@@ -372,7 +360,7 @@ Eventy::action('display.beforeHeadClosingTag')
             <li class="row-fluid" style="background-image: url('<?= __s($row_liste_mon_cat3['bg_image_url']) ?>'); background-attachment: fixed; background-position: center; background-size: 110%;">
               <div class="span1 icone-categorie"><img src="<?= __s($row_liste_mon_cat3['ch_mon_cat_icon']) ?>" alt="icone <?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?>"></div>
               <div class="span7" style="width: 90%; margin-left: 0em;">
-                <p><strong><a href="politique.php?mon_cat_ID=<?php echo $row_liste_mon_cat3['ch_mon_cat_ID']; ?>#entreprises"><?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?></a></strong> <br><?= __s($row_liste_mon_cat3['ch_mon_cat_desc']) ?> <br>
+                <p><strong><a href="politique.php?mon_cat_ID=<?= e($row_liste_mon_cat3['ch_mon_cat_ID']) ?>#entreprises"><?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?></a></strong> <br><?= __s($row_liste_mon_cat3['ch_mon_cat_desc']) ?> <br>
                     <div style="vertical-align: baseline; scale: 75%; margin-left: -2em; display: inline flow-root list-item; margin-top: -0.5em;"><img src="assets/img/ressources/budget.png" style="max-width: 15px" alt="icone Budget"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_budget']) ?></strong>  <img src="assets/img/ressources/industrie.png" style="max-width: 15px" alt="icone Industrie"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_industrie']) ?></strong>  <img src="assets/img/ressources/bureau.png" style="max-width: 15px" alt="icone Commerce"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_commerce']) ?></strong>  <img src="assets/img/ressources/agriculture.png" style="max-width: 15px" alt="icone Agriculture"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_agriculture']) ?></strong>  <img src="assets/img/ressources/tourisme.png" style="max-width: 15px" alt="icone Tourisme"><strong> <?= e($row_liste_mon_cat3['ch_mon_cat_tourisme']) ?></strong>  <img src="assets/img/ressources/recherche.png" style="max-width: 15px" alt="icone Recherche"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_recherche']) ?></strong>  <img src="assets/img/ressources/environnement.png" style="max-width: 15px" alt="icone Evironnement"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_environnement']) ?></strong>  <img src="assets/img/ressources/education.png" style="max-width: 15px" alt="icone Education"> <strong><?= e($row_liste_mon_cat3['ch_mon_cat_education']) ?></strong>
                   </div>
             </li>
@@ -417,13 +405,13 @@ Eventy::action('display.beforeHeadClosingTag')
             <?php if($row_monument['ch_pat_lien_img5']) { ?>
         <a target="_blank" href="<?= __s($row_monument['ch_pat_lien_img5']) ?>" target="_blank">
             <div class="external-link-icon"
-                 style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></div>
+                 style="background-image:url('https://roxayl.fr/kaleera/images/h4FQp.png');"></div>
             Voir sa présentation complète sur le <bold>Wiki GC</bold></a>  •
         <?php } ?>
             <?php if($row_monument['ch_pat_legende_img1']) { ?>
         <a target="_blank" href="<?= __s($row_monument['ch_pat_legende_img1']) ?>" target="_blank">
             <div class="external-link-icon"
-                 style="background-image:url('http://squirrel.romukulot.fr/johk/profil/1-avatar-23864e8b7da23c4cd5b4.png');"></div>
+                 style="background-image:url('http://squirrel.roxayl.fr/johk/profil/1-avatar-23864e8b7da23c4cd5b4.png');"></div>
             Voir son profil sur <bold>Squirrel</bold></a>
         <?php } ?><br>
 
@@ -465,7 +453,7 @@ Eventy::action('display.beforeHeadClosingTag')
                     <div style="scale: 85%; margin-left: -4em;  margin-bottom: -0.5em; margin-top: -0.5em; position: initial; text-align: initial;"><img src="assets/img/ressources/budget.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Budget"> <strong><?= e($row_mon_cat_GO_0['ch_mon_cat_budget']) ?></strong>  <img src="assets/img/ressources/industrie.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Industrie"> <strong><?= e($row_mon_cat_GO_0['ch_mon_cat_industrie']) ?></strong>  <img src="assets/img/ressources/bureau.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Commerce"> <strong><?= e($row_mon_cat_GO_0['ch_mon_cat_commerce']) ?></strong>  <img src="assets/img/ressources/agriculture.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Agriculture"> <strong><?= e($row_mon_cat_GO_0['ch_mon_cat_agriculture']) ?></strong>  <img src="assets/img/ressources/tourisme.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Tourisme"><strong> <?= e($row_mon_cat_GO_0['ch_mon_cat_tourisme']) ?></strong>  <img src="assets/img/ressources/recherche.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Recherche"> <strong><?= e($row_mon_cat_GO_0['ch_mon_cat_recherche']) ?></strong>  <img src="assets/img/ressources/environnement.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Evironnement"> <strong><?= e($row_mon_cat_GO_0['ch_mon_cat_environnement']) ?></strong>  <img src="assets/img/ressources/education.png" style="max-width: 15px; position: inherit; margin: auto;" alt="icone Education"> <strong><?= e($row_mon_cat_GO_0['ch_mon_cat_education']) ?></strong>
                   </div></p></div>
             </li><?php } else { ?><?php }?>
-      <?php } while ($row_mon_cat_GO_0 = mysqli_fetch_assoc($mon_cat_GO_0)); ?>
+      <?php } while ($row_mon_cat_GO_0 = mysql_fetch_assoc($mon_cat_GO_0)); ?>
       </div>
     </div>
     <div class="slider__contents"><i class="slider__image fa fa-codepen"></i>

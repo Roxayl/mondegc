@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Blocks;
+namespace Roxayl\MondeGC\View\Components\Blocks;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;

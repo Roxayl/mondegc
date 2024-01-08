@@ -9,9 +9,9 @@ if (isset ($_GET['ch_temp_id'])){
 	}
 
 
-$query_temperance = sprintf("SELECT * FROM temperance WHERE ch_temp_id = %s", GetSQLValueString($ch_temp_id, "int"));
+$query_temperance = sprintf("SELECT * FROM temperance WHERE ch_temp_id = %s", escape_sql($ch_temp_id, "int"));
 $query_limit_temperance = sprintf("%s LIMIT %d, %d", $query_temperance, $startRow_temperance, $maxRows_temperance);
-$temperance = mysql_query($query_temperance, $maconnexion) or die(mysql_error());
+$temperance = mysql_query($query_temperance, $maconnexion);
 $row_temperance = mysql_fetch_assoc($temperance);
 ?>
 

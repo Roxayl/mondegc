@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Models\Chapter;
-use App\Models\ChapterResourceable;
-use App\Services\StringBladeService;
-use App\View\Components\Blocks\RoleplayableSelector;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Roxayl\MondeGC\Models\Chapter;
+use Roxayl\MondeGC\Models\ChapterResourceable;
+use Roxayl\MondeGC\Services\StringBladeService;
+use Roxayl\MondeGC\View\Components\Blocks\RoleplayableSelector;
 
 class ChapterResourceableController extends Controller
 {
@@ -35,9 +35,7 @@ class ChapterResourceableController extends Controller
      */
     public function manage(Chapter $chapter): View
     {
-        $resourceList = config('enums.resources');
-
-        return view('chapter-resourceable.manage', compact('resourceList', 'chapter'));
+        return view('chapter-resourceable.manage', compact('chapter'));
     }
 
     /**

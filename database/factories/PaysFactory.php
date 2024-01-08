@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Pays;
-use App\Models\Personnage;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Personnage;
 
 class PaysFactory extends Factory
 {

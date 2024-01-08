@@ -1,8 +1,9 @@
 <?php
 
-use App\Models\CustomUser;
-use App\Models\Pays;
-use App\Notifications\PaysRegistered;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Personnage;
+use Roxayl\MondeGC\Notifications\PaysRegistered;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 
@@ -10,14 +11,12 @@ use Illuminate\Support\Facades\Notification;
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
@@ -36,56 +35,65 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
 	if ($_POST['ch_pay_emplacement'] >= 59){ $ch_pay_continent = "Volcania";}
 
   $insertSQL = sprintf("INSERT INTO pays (ch_pay_id, ch_pay_label, ch_pay_publication, ch_pay_emplacement, ch_pay_lien_forum, lien_wiki, ch_pay_continent, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_pay_date, ch_pay_mis_jour, ch_pay_nb_update, ch_pay_forme_etat, ch_pay_capitale, ch_pay_langue_officielle, ch_pay_monnaie, ch_pay_header_presentation, ch_pay_text_presentation, ch_pay_header_geographie, ch_pay_text_geographie, ch_pay_header_politique, ch_pay_text_politique, ch_pay_header_histoire, ch_pay_text_histoire, ch_pay_header_economie, ch_pay_text_economie, ch_pay_header_transport, ch_pay_text_transport, ch_pay_header_sport, ch_pay_text_sport, ch_pay_header_culture, ch_pay_text_culture, ch_pay_header_patrimoine, ch_pay_text_patrimoine, ch_pay_budget_carte, ch_pay_industrie_carte, ch_pay_commerce_carte, ch_pay_agriculture_carte, ch_pay_tourisme_carte, ch_pay_recherche_carte, ch_pay_environnement_carte, ch_pay_education_carte, ch_pay_population_carte, ch_pay_emploi_carte ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_pay_id'], "int"),
-                       GetSQLValueString($_POST['ch_pay_label'], "text"),
-                       GetSQLValueString($_POST['ch_pay_publication'], "int"),
-                       GetSQLValueString($_POST['ch_pay_emplacement'], "int"),
-                       GetSQLValueString($_POST['ch_pay_lien_forum'], "text"),
-                       GetSQLValueString($_POST['lien_wiki'], "text"),
-					   GetSQLValueString($ch_pay_continent, "text"),
-                       GetSQLValueString($_POST['ch_pay_nom'], "text"),
-                       GetSQLValueString($_POST['ch_pay_devise'], "text"),
-                       GetSQLValueString($_POST['ch_pay_lien_imgheader'], "text"),
-                       GetSQLValueString($_POST['ch_pay_lien_imgdrapeau'], "text"),
-                       GetSQLValueString($_POST['ch_pay_date'], "date"),
-                       GetSQLValueString($_POST['ch_pay_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_pay_nb_update'], "int"),
-                       GetSQLValueString($_POST['ch_pay_forme_etat'], "text"),
-                       GetSQLValueString($_POST['ch_pay_capitale'], "text"),
-                       GetSQLValueString($_POST['ch_pay_langue_officielle'], "text"),
-                       GetSQLValueString($_POST['ch_pay_monnaie'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_presentation'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_presentation'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_geographie'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_geographie'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_politique'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_politique'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_histoire'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_histoire'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_economie'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_economie'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_transport'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_transport'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_sport'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_sport'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_culture'], "text"),
-                       GetSQLValueString($_POST['ch_pay_text_culture'], "text"),
-                       GetSQLValueString($_POST['ch_pay_header_patrimoine'], "text"),
-					   GetSQLValueString($_POST['ch_pay_text_patrimoine'], "text"),
-					   GetSQLValueString($_POST['ch_pay_budget_carte'], "int"),
-					   GetSQLValueString($_POST['ch_pay_industrie_carte'], "int"),
-					   GetSQLValueString($_POST['ch_pay_commerce_carte'], "int"),
-					   GetSQLValueString($_POST['ch_pay_agriculture_carte'], "int"),
-					   GetSQLValueString($_POST['ch_pay_tourisme_carte'], "int"),
-					   GetSQLValueString($_POST['ch_pay_recherche_carte'], "int"),
-					   GetSQLValueString($_POST['ch_pay_environnement_carte'], "int"),
-					   GetSQLValueString($_POST['ch_pay_education_carte'], "int"),
-                       GetSQLValueString($_POST['ch_pay_population_carte'], "int"),
-					   GetSQLValueString($_POST['ch_pay_emploi_carte'], "int"));
+                       escape_sql($_POST['ch_pay_id'], "int"),
+                       escape_sql($_POST['ch_pay_label'], "text"),
+                       escape_sql($_POST['ch_pay_publication'], "int"),
+                       escape_sql($_POST['ch_pay_emplacement'], "int"),
+                       escape_sql($_POST['ch_pay_lien_forum'], "text"),
+                       escape_sql($_POST['lien_wiki'], "text"),
+					   escape_sql($ch_pay_continent, "text"),
+                       escape_sql($_POST['ch_pay_nom'], "text"),
+                       escape_sql($_POST['ch_pay_devise'], "text"),
+                       escape_sql($_POST['ch_pay_lien_imgheader'], "text"),
+                       escape_sql($_POST['ch_pay_lien_imgdrapeau'], "text"),
+                       escape_sql($_POST['ch_pay_date'], "date"),
+                       escape_sql($_POST['ch_pay_mis_jour'], "date"),
+                       escape_sql($_POST['ch_pay_nb_update'], "int"),
+                       escape_sql($_POST['ch_pay_forme_etat'], "text"),
+                       escape_sql($_POST['ch_pay_capitale'], "text"),
+                       escape_sql($_POST['ch_pay_langue_officielle'], "text"),
+                       escape_sql($_POST['ch_pay_monnaie'], "text"),
+                       escape_sql($_POST['ch_pay_header_presentation'], "text"),
+                       escape_sql($_POST['ch_pay_text_presentation'], "text"),
+                       escape_sql($_POST['ch_pay_header_geographie'], "text"),
+                       escape_sql($_POST['ch_pay_text_geographie'], "text"),
+                       escape_sql($_POST['ch_pay_header_politique'], "text"),
+                       escape_sql($_POST['ch_pay_text_politique'], "text"),
+                       escape_sql($_POST['ch_pay_header_histoire'], "text"),
+                       escape_sql($_POST['ch_pay_text_histoire'], "text"),
+                       escape_sql($_POST['ch_pay_header_economie'], "text"),
+                       escape_sql($_POST['ch_pay_text_economie'], "text"),
+                       escape_sql($_POST['ch_pay_header_transport'], "text"),
+                       escape_sql($_POST['ch_pay_text_transport'], "text"),
+                       escape_sql($_POST['ch_pay_header_sport'], "text"),
+                       escape_sql($_POST['ch_pay_text_sport'], "text"),
+                       escape_sql($_POST['ch_pay_header_culture'], "text"),
+                       escape_sql($_POST['ch_pay_text_culture'], "text"),
+                       escape_sql($_POST['ch_pay_header_patrimoine'], "text"),
+					   escape_sql($_POST['ch_pay_text_patrimoine'], "text"),
+					   escape_sql($_POST['ch_pay_budget_carte'], "int"),
+					   escape_sql($_POST['ch_pay_industrie_carte'], "int"),
+					   escape_sql($_POST['ch_pay_commerce_carte'], "int"),
+					   escape_sql($_POST['ch_pay_agriculture_carte'], "int"),
+					   escape_sql($_POST['ch_pay_tourisme_carte'], "int"),
+					   escape_sql($_POST['ch_pay_recherche_carte'], "int"),
+					   escape_sql($_POST['ch_pay_environnement_carte'], "int"),
+					   escape_sql($_POST['ch_pay_education_carte'], "int"),
+                       escape_sql($_POST['ch_pay_population_carte'], "int"),
+					   escape_sql($_POST['ch_pay_emploi_carte'], "int"));
 
-
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
   $this_pays_id = mysql_insert_id();
+
+  // Creation du personnage après création pays.
+  $personnage = new Personnage();
+  $personnage->entity = 'pays';
+  $personnage->entity_id = $this_pays_id;
+  $personnage->nom_personnage = 'Dupont';
+  $personnage->prenom_personnage = 'Pierre';
+  $personnage->titre_personnage = 'Président';
+  $personnage->predicat = 'Monsieur';
+  $personnage->save();
 
   getErrorMessage('success', "Nouveau pays ajouté !");
 
@@ -94,17 +102,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
   \GenCity\Monde\Logger\Log::createItem('pays', $thisPays->get('ch_pay_id'), 'insert',
       null, array('entity' => $thisPays->model->getInfo()));
 
-  // Ancien système de notification.
-  $userList = new \GenCity\Monde\User\UserList();
-  $notification = new \GenCity\Monde\Notification\Notification(array(
-      'type_notif' => 'nv_pays_bienvenue',
-      'element' => $thisPays->get('ch_pay_id')
-  ));
-  $notification->emit($userList->getActive());
-
-  // Nouveau système de notification basé sur Laravel.
+  // Envoi des notifications après création du pays aux utilisateurs actifs.
   $eloquentPays = Pays::find($this_pays_id);
-
   $date_inactive = Carbon::today()->subMonths(4);
   $activeUsers = CustomUser::where('ch_use_last_log', '>', $date_inactive)->get();
   Notification::send($activeUsers, new PaysRegistered($eloquentPays));
@@ -129,17 +128,6 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
 <link href="../SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -180,7 +168,7 @@ Eventy::action('display.beforeHeadClosingTag')
     <div id="info-generales" class="titre-bleu anchor">
       <h1>Cr&eacute;er un nouveau pays</h1>
     </div>
-    <form action="<?php echo $editFormAction; ?>" name="InfoHeader" method="POST" class="form-horizontal" id="InfoHeader">
+    <form action="<?= e($editFormAction) ?>" name="InfoHeader" method="POST" class="form-horizontal" id="InfoHeader">
       <!-- Boutons cachés -->
       <?php 
 				  $now= date("Y-m-d G:i:s");
@@ -208,7 +196,7 @@ Eventy::action('display.beforeHeadClosingTag')
       </div>
       <!-- choix emplacement -->
       <h3>Choisir un emplacement&nbsp;:</h3>
-        <p class="btn-margin-left"><a href="https://romukulot.fr/kaleera/view.php?id=TdrfA" target="_blank">Emplacements supplémentaires</a></p>
+        <p class="btn-margin-left"><a href="https://roxayl.fr/kaleera/view.php?id=TdrfA" target="_blank">Emplacements supplémentaires</a></p>
       <div id="spryradio2">
         <ul class="Icone-thumb">
           <?php for ($nb_emplacement = 1; $nb_emplacement <= 59; $nb_emplacement++) {?>

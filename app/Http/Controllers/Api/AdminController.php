@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace Roxayl\MondeGC\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Jobs\StoreResourceHistory;
-use App\Models\CustomUser;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
+use Roxayl\MondeGC\Http\Controllers\Controller;
+use Roxayl\MondeGC\Jobs\StoreResourceHistory;
+use Roxayl\MondeGC\Models\CustomUser;
 
 class AdminController extends Controller
 {

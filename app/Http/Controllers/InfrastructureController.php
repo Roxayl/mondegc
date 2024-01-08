@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Models\Infrastructure;
-use App\Models\InfrastructureGroupe;
-use App\Models\InfrastructureOfficielle;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Roxayl\MondeGC\Models\Infrastructure;
+use Roxayl\MondeGC\Models\InfrastructureGroupe;
+use Roxayl\MondeGC\Models\InfrastructureOfficielle;
 
 class InfrastructureController extends Controller
 {
@@ -25,58 +25,58 @@ class InfrastructureController extends Controller
     }
 
     /**
-     * @param string $infrastructurable_type
-     * @param int $infrastructurable_id
+     * @param string $infrastructurableType
+     * @param int $infrastructurableId
      * @return View
      */
-    public function selectGroup(string $infrastructurable_type, int $infrastructurable_id): View
+    public function selectGroup(string $infrastructurableType, int $infrastructurableId): View
     {
         $infrastructure = new Infrastructure();
         $infrastructure->fill([
-            'infrastructurable_type' =>
-                $infrastructure::getMorphFromUrlParameter($infrastructurable_type),
-            'infrastructurable_id' => $infrastructurable_id,
+            'infrastructurable_type' => $infrastructure::getMorphFromUrlParameter($infrastructurableType),
+            'infrastructurable_id' => $infrastructurableId,
         ]);
 
-        $infrastructure_groupes = InfrastructureGroupe::orderBy('order')->get();
+        $infrastructure_groupes = InfrastructureGroupe::query()->orderBy('order')->get();
 
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
 
-        return view('infrastructure.select_group',
-            compact(['infrastructure', 'infrastructure_groupes']));
+        return view('infrastructure.select_group', compact([
+            'infrastructure', 'infrastructure_groupes'
+        ]));
     }
 
     /**
      * Show the form for creating a new resource.
      *
      * @param Request $request
-     * @param string $infrastructurable_type
-     * @param int $infrastructurable_id
+     * @param string $infrastructurableType
+     * @param int $infrastructurableId
      * @return View
      */
-    public function create(Request $request, string $infrastructurable_type, int $infrastructurable_id): View
+    public function create(Request $request, string $infrastructurableType, int $infrastructurableId): View
     {
         $infrastructure = new Infrastructure();
         $infrastructure->fill([
-            'infrastructurable_type' =>
-                $infrastructure::getMorphFromUrlParameter($infrastructurable_type),
-            'infrastructurable_id' => $infrastructurable_id,
+            'infrastructurable_type' => $infrastructure::getMorphFromUrlParameter($infrastructurableType),
+            'infrastructurable_id' => $infrastructurableId,
         ]);
 
-        $infrastructureGroupe = InfrastructureGroupe::findOrFail(
+        $infrastructureGroupe = InfrastructureGroupe::query()->findOrFail(
             $request->input('infrastructure_groupe_id'));
 
         $infrastructureOfficielle = null;
         if($request->has('infrastructure_officielle_id')) {
-            $infrastructureOfficielle = InfrastructureOfficielle::findOrFail(
-                $request->input('infrastructure_officielle_id'));
+            $infrastructureOfficielle = InfrastructureOfficielle::query()->findOrFail(
+                $request->input('infrastructure_officielle_id')
+            );
         }
 
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
 
-        return view('infrastructure.create',
-            compact(['infrastructure', 'infrastructureGroupe',
-                     'infrastructureOfficielle']));
+        return view('infrastructure.create', compact([
+            'infrastructure', 'infrastructureGroupe', 'infrastructureOfficielle'
+        ]));
     }
 
     /**
@@ -88,7 +88,7 @@ class InfrastructureController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $infrastructure = new Infrastructure();
-        $infrastructure->fill($request->except(['_method', '_token']));
+        $infrastructure->fill($request->all());
 
         $infrastructure->ch_inf_label = 'infrastructure';
         $infrastructure->ch_inf_villeid = $infrastructure->infrastructurable_id;
@@ -96,16 +96,15 @@ class InfrastructureController extends Controller
         $infrastructure->user_creator = auth()->user()->getAuthIdentifier();
         $infrastructure->ch_inf_juge = null;
         $infrastructure->ch_inf_commentaire_juge = null;
-        $infrastructure->infrastructurable_type = Infrastructure
-            ::getMorphFromUrlParameter($request->input('infrastructurable_type'));
+        $infrastructure->infrastructurable_type = Infrastructure::getMorphFromUrlParameter(
+            $request->input('infrastructurable_type'));
 
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
 
         $infrastructure->save();
 
-        return redirect($infrastructure->infrastructurable->backAccessorUrl()
-            . '#infrastructures')
-            ->with(['message' => 'success|Infrastructure créée avec succès !']);
+        return redirect($infrastructure->infrastructurable->backAccessorUrl() . '#infrastructures')
+            ->with('message', 'success|Infrastructure créée avec succès !');
     }
 
     /**
@@ -116,19 +115,19 @@ class InfrastructureController extends Controller
      */
     public function edit(int $id): View
     {
-        $infrastructure = Infrastructure::findOrFail($id);
+        $infrastructure = Infrastructure::query()->findOrFail($id);
 
-        $infrastructureOfficielle = InfrastructureOfficielle::findOrFail(
-            $infrastructure->infrastructureOfficielle->first()->ch_inf_off_id);
+        $infrastructureOfficielle = InfrastructureOfficielle::query()->findOrFail(
+            $infrastructure->infrastructureOfficielle?->ch_inf_off_id);
 
-        $infrastructureGroupe = InfrastructureGroupe::findOrFail(
-            $infrastructure->infrastructureOfficielle
-                ->infrastructureGroupe->first()->id);
+        $infrastructureGroupe = InfrastructureGroupe::query()->findOrFail(
+            $infrastructure->infrastructureOfficielle?->infrastructureGroupe->first()?->id);
 
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
 
         return view('infrastructure.edit',compact([
-            'infrastructure', 'infrastructureOfficielle', 'infrastructureGroupe']));
+            'infrastructure', 'infrastructureOfficielle', 'infrastructureGroupe'
+        ]));
     }
 
     /**
@@ -140,27 +139,26 @@ class InfrastructureController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $infrastructure = Infrastructure::findOrFail($id);
-        $infrastructure->fill($request->except(['_method', '_token']));
+        $infrastructure = Infrastructure::query()->findOrFail($id);
+        $infrastructure->fill($request->all());
 
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
 
         $infrastructure->update();
 
-        return redirect($infrastructure->infrastructurable->backAccessorUrl()
-            . '#infrastructures')
-            ->with(['message' => 'success|Infrastructure modifiée avec succès !']);
+        return redirect($infrastructure->infrastructurable->backAccessorUrl() . '#infrastructures')
+            ->with('message', 'success|Infrastructure modifiée avec succès !');
     }
 
     /**
-     * Affiche le formulaire de confirmation pour supprimer une infra.
+     * Affiche le formulaire de confirmation pour supprimer une infrastructure.
      *
      * @param int $id
      * @return View
      */
     public function delete(int $id): View
     {
-        $infrastructure = Infrastructure::findOrFail($id);
+        $infrastructure = Infrastructure::query()->findOrFail($id);
 
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
 
@@ -175,14 +173,13 @@ class InfrastructureController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $infrastructure = Infrastructure::findOrFail($id);
+        $infrastructure = Infrastructure::query()->findOrFail($id);
 
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
 
         $infrastructure->delete();
 
-        return redirect($infrastructure->infrastructurable->backAccessorUrl()
-            . '#infrastructures')
-            ->with(['message' => "success|L'infrastructure a été supprimée."]);
+        return redirect($infrastructure->infrastructurable->backAccessorUrl() . '#infrastructures')
+            ->with('message', "success|L'infrastructure a été supprimée.");
     }
 }

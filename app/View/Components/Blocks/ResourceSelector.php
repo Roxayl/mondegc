@@ -1,10 +1,11 @@
 <?php
 
-namespace App\View\Components\Blocks;
+namespace Roxayl\MondeGC\View\Components\Blocks;
 
-use App\Services\EconomyService;
 use Illuminate\View\Component;
 use Illuminate\View\View;
+use Roxayl\MondeGC\Models\Enums\Resource;
+use Roxayl\MondeGC\Services\EconomyService;
 
 class ResourceSelector extends Component
 {
@@ -20,7 +21,7 @@ class ResourceSelector extends Component
 
     public function __construct(?array $oldValues = null)
     {
-        $this->resourceList = config('enums.resources');
+        $this->resourceList = array_column(Resource::cases(), 'value');
 
         $nbResources = count($this->resourceList);
         $this->leftColumnCount = $this->rightColumnCount = $nbResources / 2;

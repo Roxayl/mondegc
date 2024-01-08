@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Models\Enums\Resource;
 
 /**
  * Class InfrastructureOfficielle
@@ -48,7 +49,7 @@ use Illuminate\Support\Str;
  * @method static Builder|InfrastructureOfficielle whereChInfOffNom($value)
  * @method static Builder|InfrastructureOfficielle whereChInfOffRecherche($value)
  * @method static Builder|InfrastructureOfficielle whereChInfOffTourisme($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class InfrastructureOfficielle extends Model
 {
@@ -114,10 +115,10 @@ class InfrastructureOfficielle extends Model
     public function mapResources(): array
     {
         $resources = [];
-        foreach(config('enums.resources') as $resource) {
-            $field = 'ch_inf_off_' . ($resource === 'budget'
-                    ? $resource : Str::ucfirst($resource));
-            $resources[$resource] = (int)$this->$field;
+        foreach(Resource::cases() as $resource) {
+            $field = 'ch_inf_off_' . ($resource === Resource::BUDGET
+                    ? $resource->value : Str::ucfirst($resource->value));
+            $resources[$resource->value] = (int)$this->$field;
         }
         return $resources;
     }

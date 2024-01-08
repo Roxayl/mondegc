@@ -1,7 +1,7 @@
 <?php
 
-use App\Events\Patrimoine\PatrimoineCategorized;
-use App\Models\Patrimoine;
+use Roxayl\MondeGC\Events\Patrimoine\PatrimoineCategorized;
+use Roxayl\MondeGC\Models\Patrimoine;
 
 header('Content-Type: text/html; charset=utf-8');
 
@@ -14,7 +14,7 @@ $mon_ID = isset($_GET['mon_id']) ? (int)$_GET['mon_id'] : 0;
 // Traitement données POST
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie_direct")) {
 
-    $eloquentPatrimoine = Patrimoine::findOrFail($mon_ID);
+    $eloquentPatrimoine = Patrimoine::query()->findOrFail($mon_ID);
 
     if(!auth()->check() || !auth()->user()->can('manageCategories', Patrimoine::class)) {
         abort(403);
@@ -26,7 +26,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
     $query_current_monument_dispatch = sprintf("
         SELECT ch_disp_id, ch_disp_cat_id, ch_disp_mon_id FROM dispatch_mon_cat
         WHERE ch_disp_mon_id = %s
-    ", GetSQLValueString($mon_ID, 'int'));
+    ", escape_sql($mon_ID, 'int'));
     $sql_current_monument_dispatch = mysql_query($query_current_monument_dispatch);
 
     $current_cat_list = array();
@@ -41,8 +41,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
         if(!in_array($current_cat, $new_cat_list)) {
             $sqlQuery = sprintf("
                 DELETE FROM dispatch_mon_cat WHERE ch_disp_cat_id = %s AND ch_disp_mon_id = %s",
-                GetSQLValueString($current_cat, 'int'),
-                GetSQLValueString($mon_ID, 'int'));
+                escape_sql($current_cat, 'int'),
+                escape_sql($mon_ID, 'int'));
             mysql_query($sqlQuery);
         }
     }
@@ -53,8 +53,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
             $sqlQuery = sprintf("
                 INSERT INTO dispatch_mon_cat(ch_disp_mon_label, ch_disp_cat_id, ch_disp_mon_id, ch_disp_date)
                 VALUES('disp_mon', %s, %s, NOW())",
-                GetSQLValueString($new_cat, 'int'),
-                GetSQLValueString($mon_ID, 'int'));
+                escape_sql($new_cat, 'int'),
+                escape_sql($mon_ID, 'int'));
             mysql_query($sqlQuery);
         }
     }
@@ -68,43 +68,43 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-mon_categorie
 }
 
 //requete monument
-$query_liste_mon_cat = sprintf("SELECT ch_pat_id, ch_pat_nom, ch_pat_statut FROM patrimoine WHERE ch_pat_id = %s", GetSQLValueString($mon_ID, ""));
-$liste_mon_cat = mysql_query($query_liste_mon_cat, $maconnexion) or die(mysql_error());
+$query_liste_mon_cat = sprintf("SELECT ch_pat_id, ch_pat_nom, ch_pat_statut FROM patrimoine WHERE ch_pat_id = %s", escape_sql($mon_ID, ""));
+$liste_mon_cat = mysql_query($query_liste_mon_cat, $maconnexion);
 $this_mon_cat = mysql_fetch_assoc($liste_mon_cat);
 
 //requete catégorie 0
-$query_mon_cat = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 0 AND 99 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
-$mon_cat = mysql_query($query_mon_cat, $maconnexion) or die(mysql_error());
+$query_mon_cat = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 0 AND 99 ORDER BY ch_mon_cat_couleur", escape_sql($mon_ID, "int"));
+$mon_cat = mysql_query($query_mon_cat, $maconnexion);
 $row_mon_cat = mysql_fetch_assoc($mon_cat);
 $totalRows_mon_cat = mysql_num_rows($mon_cat);
 
 //requete catégorie 1
-$query_mon_cat_a = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 100 AND 199 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
-$mon_cat_a = mysql_query($query_mon_cat_a, $maconnexion) or die(mysql_error());
+$query_mon_cat_a = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 100 AND 199 ORDER BY ch_mon_cat_couleur", escape_sql($mon_ID, "int"));
+$mon_cat_a = mysql_query($query_mon_cat_a, $maconnexion);
 $row_mon_cat_a = mysql_fetch_assoc($mon_cat_a);
 $totalRows_mon_cat_a = mysql_num_rows($mon_cat_a);
 
 //requete catégorie 2
-$query_mon_cat_b = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 200 AND 299 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
-$mon_cat_b = mysql_query($query_mon_cat_b, $maconnexion) or die(mysql_error());
+$query_mon_cat_b = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 200 AND 299 ORDER BY ch_mon_cat_couleur", escape_sql($mon_ID, "int"));
+$mon_cat_b = mysql_query($query_mon_cat_b, $maconnexion);
 $row_mon_cat_b = mysql_fetch_assoc($mon_cat_b);
 $totalRows_mon_cat_b = mysql_num_rows($mon_cat_b);
 
 //requete catégorie 3
-$query_mon_cat_c = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 300 AND 399 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
-$mon_cat_c = mysql_query($query_mon_cat_c, $maconnexion) or die(mysql_error());
+$query_mon_cat_c = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 300 AND 399 ORDER BY ch_mon_cat_couleur", escape_sql($mon_ID, "int"));
+$mon_cat_c = mysql_query($query_mon_cat_c, $maconnexion);
 $row_mon_cat_c = mysql_fetch_assoc($mon_cat_c);
 $totalRows_mon_cat_c = mysql_num_rows($mon_cat_c);
 
 //requete catégorie 4
-$query_mon_cat_d = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 400 AND 499 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
-$mon_cat_d = mysql_query($query_mon_cat_d, $maconnexion) or die(mysql_error());
+$query_mon_cat_d = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur BETWEEN 400 AND 499 ORDER BY ch_mon_cat_couleur", escape_sql($mon_ID, "int"));
+$mon_cat_d = mysql_query($query_mon_cat_d, $maconnexion);
 $row_mon_cat_d = mysql_fetch_assoc($mon_cat_d);
 $totalRows_mon_cat_d = mysql_num_rows($mon_cat_d);
 
 //requete catégorie 5
-$query_mon_cat_e = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur > 500 ORDER BY ch_mon_cat_couleur", GetSQLValueString($mon_ID, "int"));
-$mon_cat_e = mysql_query($query_mon_cat_e, $maconnexion) or die(mysql_error());
+$query_mon_cat_e = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_couleur > 500 ORDER BY ch_mon_cat_couleur", escape_sql($mon_ID, "int"));
+$mon_cat_e = mysql_query($query_mon_cat_e, $maconnexion);
 $row_mon_cat_e = mysql_fetch_assoc($mon_cat_e);
 $totalRows_mon_cat_e = mysql_num_rows($mon_cat_e);
 
@@ -113,38 +113,43 @@ $totalRows_mon_cat_e = mysql_num_rows($mon_cat_e);
 $query_current_monument_dispatch = sprintf("
     SELECT ch_disp_id, ch_disp_cat_id, ch_disp_mon_id FROM dispatch_mon_cat
     WHERE ch_disp_mon_id = %s
-", GetSQLValueString($mon_ID, 'int'));
+", escape_sql($mon_ID, 'int'));
 $sql_current_monument_dispatch = mysql_query($query_current_monument_dispatch);
 
 $current_cat_list = array();
 while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)) {
     $current_cat_list[] = $row_monument_dispatch['ch_disp_cat_id'];
 
+    // Comptages
+    $nb_cat_a = 0;
+    $compte_a = mysql_query($query_mon_cat_a);
+    while($row = mysql_fetch_assoc($compte_a)) {
+        if($row_mon_cat_a['ch_mon_cat_statut'] == $this_mon_cat['ch_pat_statut']) {
+            $nb_cat_a = $nb_cat_a + 1;
+        }
+    }
 
-// Comptages
-$nb_cat_a = 0;
-$compte_a = mysql_query($query_mon_cat_a);
-while($row = mysql_fetch_assoc($compte_a)) {
-    if($row_mon_cat_a['ch_mon_cat_statut'] == $this_mon_cat['ch_pat_statut']) {
-        $nb_cat_a = $nb_cat_a + 1;}} mysql_data_seek($compte_a, 0);
+    $nb_cat_a_ok = 0;
+    $compte_a_ok = mysql_query($query_mon_cat_a);
+    while($row = mysql_fetch_assoc($compte_a_ok)) {
+        if($row_mon_cat_a['ch_mon_cat_ID'] == $current_cat_list['ch_disp_cat_id']) {
+            $nb_cat_a_ok = $nb_cat_a_ok + 1;
+        }
+    }
 
-$nb_cat_a_ok = 0;
-$compte_a_ok = mysql_query($query_mon_cat_a);
-while($row = mysql_fetch_assoc($compte_a_ok)) {
-    if($row_mon_cat_a['ch_mon_cat_ID'] == $current_cat_list['ch_disp_cat_id']) {
-        $nb_cat_a_ok = $nb_cat_a_ok + 1;}} mysql_data_seek($compte_a_ok, 0);
-
-$nb_cat_b = 0;
-$compte_b = mysql_query($query_mon_cat_b);
-while($row = mysql_fetch_assoc($compte_b)) {
-    if($row_mon_cat_b['ch_mon_cat_statut'] == $this_mon_cat['ch_pat_statut']) {
-        $nb_cat_b = $nb_cat_b + 1;}} mysql_data_seek($compte_b, 0);
+    $nb_cat_b = 0;
+    $compte_b = mysql_query($query_mon_cat_b);
+    while($row = mysql_fetch_assoc($compte_b)) {
+        if($row_mon_cat_b['ch_mon_cat_statut'] == $this_mon_cat['ch_pat_statut']) {
+            $nb_cat_b = $nb_cat_b + 1;
+        }
+    }
 }
 ?>
 
 <!-- Modal Header-->
 
-<form action="<?php echo $editFormAction; ?>" name="ajout-mon_categorie" method="POST" class="form-horizontal" id="ajout-mon_categorie">
+<form action="<?= e($editFormAction) ?>" name="ajout-mon_categorie" method="POST" class="form-horizontal" id="ajout-mon_categorie">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Validez de nouveaux objectifs pour <strong><?= e($this_mon_cat['ch_pat_nom']) ?></strong></h3>

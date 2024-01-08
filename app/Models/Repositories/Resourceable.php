@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Repositories;
+namespace Roxayl\MondeGC\Models\Repositories;
 
-use App\Models\Contracts\Resourceable as IResourceable;
-use App\Models\Organisation;
-use App\Models\Pays;
-use App\Models\Ville;
 use Illuminate\Database\Eloquent\Model;
+use Roxayl\MondeGC\Models\Contracts\Resourceable as IResourceable;
+use Roxayl\MondeGC\Models\Organisation;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Ville;
 
 /**
  * Cette classe permet de gérer des collections de modèles implémentant {@see IResourceable}.

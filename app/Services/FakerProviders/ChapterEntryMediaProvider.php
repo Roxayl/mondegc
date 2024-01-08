@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\FakerProviders;
+namespace Roxayl\MondeGC\Services\FakerProviders;
 
 use Faker\Provider\Base;
 
 class ChapterEntryMediaProvider extends Base
 {
-    protected static $mediaTypes = [
+    protected static array $mediaTypes = [
         'squirrel.squit' => [
             [
                 'meta' => [

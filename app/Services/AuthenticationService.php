@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace Roxayl\MondeGC\Services;
 
-use App\Models\CustomUser;
 use GenCity\Monde;
 use Illuminate\Auth\AuthenticationException;
+use Roxayl\MondeGC\Models\CustomUser;
 
 class AuthenticationService
 {
@@ -15,8 +15,6 @@ class AuthenticationService
 
     /**
      * Démarre la session PHP (via {@see session_start()}, si la session n'a pas déjà démarré.
-     *
-     * @return void
      */
     private function startSession(): void
     {
@@ -29,7 +27,6 @@ class AuthenticationService
      * Connecte l'utilisateur sur le site legacy et l'application Laravel.
      *
      * @param  CustomUser  $user
-     * @return void
      */
     public function login(CustomUser $user): void
     {
@@ -54,9 +51,6 @@ class AuthenticationService
         $_SESSION['derniere_visite'] = $user->last_activity;
         $_SESSION['errormsgs'] = [];
 
-        /**
-         * @var Monde\User
-         */
         $_SESSION['userObject'] = new Monde\User($user->ch_use_id);
 
         // Se connecter à l'application Laravel.
@@ -66,12 +60,11 @@ class AuthenticationService
     }
 
     /**
-     * @param  int|string  $id
-     * @return void
+     * @param  int  $id
      */
-    public function loginUsingId(int|string $id)
+    public function loginUsingId(int $id): void
     {
-        $user = CustomUser::find($id);
+        $user = CustomUser::query()->find($id);
 
         if(! $user) {
             throw new AuthenticationException();
@@ -82,8 +75,6 @@ class AuthenticationService
 
     /**
      * Déconnecte l'utilisateur de l'application legacy et du site Laravel.
-     *
-     * @return void
      */
     public function logout(): void
     {

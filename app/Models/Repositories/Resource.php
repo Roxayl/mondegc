@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Repositories;
+namespace Roxayl\MondeGC\Models\Repositories;
 
-use App\Models\Contracts\Resourceable as IResourceable;
-use App\Models\Factories\ResourceableFactory;
 use Illuminate\Support\Collection;
+use Roxayl\MondeGC\Models\Contracts\Resourceable as IResourceable;
+use Roxayl\MondeGC\Models\Factories\ResourceableFactory;
 
 /**
  * Cette classe permet de gérer des collections de modèles de ressources.

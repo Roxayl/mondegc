@@ -1,16 +1,7 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Models\Contracts\Infrastructurable;
-use App\Models\Contracts\Resourceable;
-use App\Models\Contracts\Roleplayable;
-use App\Models\Presenters\InfrastructurablePresenter;
-use App\Models\Presenters\OrganisationPresenter;
-use App\Models\Traits\Infrastructurable as HasInfrastructures;
-use App\Models\Traits\Resourceable as HasResources;
-use App\Models\Traits\Roleplayable as ParticipatesInRoleplay;
-use App\Services\EconomyService;
 use Carbon\Carbon;
 use Database\Factories\OrganisationFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,6 +13,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query;
 use Illuminate\Support;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Models\Contracts\Infrastructurable;
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Enums\Resource;
+use Roxayl\MondeGC\Models\Presenters\InfrastructurablePresenter;
+use Roxayl\MondeGC\Models\Presenters\OrganisationPresenter;
+use Roxayl\MondeGC\Models\Traits\Infrastructurable as HasInfrastructures;
+use Roxayl\MondeGC\Models\Traits\Resourceable as HasResources;
+use Roxayl\MondeGC\Models\Traits\Roleplayable as ParticipatesInRoleplay;
+use Roxayl\MondeGC\Services\EconomyService;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -38,6 +39,7 @@ use Spatie\Searchable\SearchResult;
  * @property Carbon|null $type_migrated_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @property-read string $slug
  * @property-read Collection|Infrastructure[] $infrastructures
  * @property-read int|null $infrastructures_count
@@ -53,6 +55,7 @@ use Spatie\Searchable\SearchResult;
  * @property-read int|null $members_all_count
  * @property-read Collection|OrganisationMember[] $membersPending
  * @property-read int|null $members_pending_count
+ * @property-read array<string> $resources
  * @method static Builder|Organisation newModelQuery()
  * @method static Builder|Organisation newQuery()
  * @method static Builder|Organisation query()
@@ -68,13 +71,11 @@ use Spatie\Searchable\SearchResult;
  * @method static Builder|Organisation whereUpdatedAt($value)
  * @method static OrganisationFactory factory(...$parameters)
  * @method static Builder|Organisation visible()
- * @mixin Model
- * @property Carbon|null $deleted_at
- * @property-read array<string> $resources
  * @method static Query\Builder|Organisation onlyTrashed()
  * @method static Builder|Organisation whereDeletedAt($value)
  * @method static Query\Builder|Organisation withTrashed()
  * @method static Query\Builder|Organisation withoutTrashed()
+ * @mixin \Eloquent
  */
 class Organisation extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
@@ -327,9 +328,9 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
         $infrastructureResources = $this->infrastructureResources();
         $roleplayResources = $this->roleplayResources();
 
-        foreach(config('enums.resources') as $resource) {
-            $sumResources[$resource] += $infrastructureResources[$resource]
-                + $roleplayResources[$resource];
+        foreach(Resource::cases() as $resource) {
+            $sumResources[$resource->value] += $infrastructureResources[$resource->value]
+                + $roleplayResources[$resource->value];
         }
 
         return $sumResources;
@@ -344,18 +345,28 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
 
         // Les alliances bénéficient les ressources de leurs pays ; on les calcule
         // le cas échéant.
-        if($this->type === self::TYPE_ALLIANCE) {
+        if($this->membersGenerateResources()) {
             $paysMembers = $this->members;
 
             foreach($paysMembers as $members) {
-                $thisPaysResources = $members->pays->resources(false);
-                foreach(config('enums.resources') as $resource) {
-                    $sumResources[$resource] += $thisPaysResources[$resource];
+                $thisPaysResources = $members->pays->withoutAllianceResources();
+                foreach(Resource::cases() as $resource) {
+                    $sumResources[$resource->value] += $thisPaysResources[$resource->value];
                 }
             }
         }
 
         return $sumResources;
+    }
+
+    /**
+     * @return array<string, float>
+     */
+    public function perCountryResources(): array
+    {
+        $memberCount = $this->members->count();
+
+        return array_map(fn(float $value) => (int) ($value / $memberCount), $this->organisationResources());
     }
 
     /**
@@ -372,9 +383,9 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
             $organisationResources = $this->organisationResources();
             $paysResources = $this->paysResources();
 
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] += $organisationResources[$resource]
-                    + $paysResources[$resource];
+            foreach(Resource::cases() as $resource) {
+                $sumResources[$resource->value] += $organisationResources[$resource->value]
+                    + $paysResources[$resource->value];
             }
         }
 

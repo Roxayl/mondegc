@@ -1,35 +1,37 @@
 <?php
 
-namespace App\Notifications;
+namespace Roxayl\MondeGC\Notifications;
 
-use App\Models\OrganisationMember;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use Roxayl\MondeGC\Models\OrganisationMember;
 
 class OrganisationMemberInvited extends Notification
 {
     use Queueable;
 
-    private ?OrganisationMember $organisation_member;
+    /**
+     * @var OrganisationMember
+     */
+    private OrganisationMember $organisationMember;
 
     /**
      * Create a new notification instance.
      *
-     * @param OrganisationMember $organisation_member
+     * @param  OrganisationMember  $organisationMember
      */
-    public function __construct(OrganisationMember $organisation_member)
+    public function __construct(OrganisationMember $organisationMember)
     {
-        $this->organisation_member = $organisation_member;
+        $this->organisationMember = $organisationMember;
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param  object  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via(object $notifiable): array
     {
         return ['database'];
     }
@@ -37,13 +39,13 @@ class OrganisationMemberInvited extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param  object  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray(object $notifiable): array
     {
         return [
-            'organisation_member_id' => $this->organisation_member->id
+            'organisation_member_id' => $this->organisationMember->id
         ];
     }
 }

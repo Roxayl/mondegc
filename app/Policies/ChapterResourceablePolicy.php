@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Policies;
+namespace Roxayl\MondeGC\Policies;
 
-use App\Models\ChapterResourceable;
-use App\Models\CustomUser;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Gate;
+use Roxayl\MondeGC\Models\ChapterResourceable;
+use Roxayl\MondeGC\Models\CustomUser;
 
 class ChapterResourceablePolicy
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Events\Infrastructure;
+namespace Roxayl\MondeGC\Events\Infrastructure;
 
-use App\Events\Contracts\InfluencableEvent;
-use App\Models\Contracts\Influencable;
-use App\Models\Infrastructure;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Roxayl\MondeGC\Events\Contracts\InfluencableEvent;
+use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Infrastructure;
 
 class InfrastructureJudged implements InfluencableEvent
 {
@@ -24,7 +24,7 @@ class InfrastructureJudged implements InfluencableEvent
         $this->infrastructure = $infrastructure;
     }
 
-    public function getInfluencable() : Influencable
+    public function getInfluencable(): Influencable
     {
         return $this->infrastructure;
     }

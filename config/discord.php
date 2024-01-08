@@ -30,6 +30,22 @@ return [
         'debug' => env('DISCORD_WEBHOOKURL_DEBUG'),
         'mondegc' => env('DISCORD_WEBHOOKURL_MONDEGC'),
         'ocgc' => env('DISCORD_WEBHOOKURL_OCGC'),
+        'private' => env('DISCORD_WEBHOOKURL_PRIVATE'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Identifiants.
+    |--------------------------------------------------------------------------
+    |
+    | Ici, il est possible de définir des identifiants spécifiques
+    | (utilisateurs, rôles, salons, etc.)
+    |
+    */
+
+    'role' => [
+        // Spécifie l'identifiant du rôle "Dirigeant Monde GC", à des fins de mentions.
+        'players' => env('DISCORD_ROLE_PLAYERS_ID'),
     ],
 
 ];

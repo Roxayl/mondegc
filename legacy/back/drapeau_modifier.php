@@ -2,13 +2,14 @@
  
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
+
 if(!isset($_SESSION['userObject'])) {
     header("Status: 301 Moved Permanently", false, 301);
     header('Location: ' . legacyPage('connexion'));
     exit();
 }
 
-//R�cup�ration variables
+//Récupération variables
 $colname_pays = isset($_SESSION['paysID']) ? $_SESSION['paysID'] : 0;
 if (isset($_POST['paysID'])) {
   $colname_pays = (int)$_POST['paysID'];
@@ -35,17 +36,6 @@ $thisPays = new \GenCity\Monde\Pays($colname_pays);
 <link href="../SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -84,15 +74,15 @@ Eventy::action('display.beforeHeadClosingTag')
       <?php require(DEF_LEGACYROOTPATH . 'php/upload.php');
 if (isset($uploadconfirm)) {
   $updateSQL = sprintf("UPDATE pays SET ch_pay_lien_imgdrapeau=%s WHERE ch_pay_id=%s",
-                       GetSQLValueString($link, "text"),
-                       GetSQLValueString($colname_pays, "int"));
+                       escape_sql($link, "text"),
+                       escape_sql($colname_pays, "int"));
   
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
 }
 
 
-$query_drapeau = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_pays, "int"));
-$drapeau = mysql_query($query_drapeau, $maconnexion) or die(mysql_error());
+$query_drapeau = sprintf("SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", escape_sql($colname_pays, "int"));
+$drapeau = mysql_query($query_drapeau, $maconnexion);
 $row_drapeau = mysql_fetch_assoc($drapeau);
 $totalRows_drapeau = mysql_num_rows($drapeau);
 ?>

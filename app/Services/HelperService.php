@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace Roxayl\MondeGC\Services;
 
 use HTMLPurifier;
 use HTMLPurifier_Config;
@@ -37,13 +37,13 @@ class HelperService
 
     /**
      * @param string $element
-     * @param scalar|array $data
+     * @param array|scalar $data
      * @return string
      */
-    public static function renderLegacyElement(string $element, $data): string
+    public static function renderLegacyElement(string $element, float|array|bool|int|string $data): string
     {
         if(!is_array($data)) {
-            $data = array($data);
+            $data = [$data];
         }
 
         ob_start();

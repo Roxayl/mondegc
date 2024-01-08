@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Models\Contracts\Resourceable;
-use App\Models\Contracts\SimpleResourceable;
-use App\Models\Traits;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Collection;
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
+use Roxayl\MondeGC\Models\Contracts\SimpleResourceable;
+use Roxayl\MondeGC\Models\Enums\Resource;
+use Roxayl\MondeGC\Models\Traits;
 
 /**
  * Class ResourceHistory
@@ -29,7 +30,7 @@ use Illuminate\Support\Collection;
  * @property Carbon|null $updated_at
  * @property-read array<string> $resources
  * @property-read Model|\Eloquent $resourceable
- * @method static Builder|ResourceHistory chartSelect()
+ * @method static Builder|ResourceHistory chartSelect(?Carbon $startDate = null, ?Carbon $endDate = null)
  * @method static Builder|ResourceHistory forResourceable(Resourceable $resourceable)
  * @method static Builder|ResourceHistory forResourceables(Collection $resourceables)
  * @method static Builder|ResourceHistory newModelQuery()
@@ -49,7 +50,6 @@ use Illuminate\Support\Collection;
  * @method static Builder|ResourceHistory whereTourisme($value)
  * @method static Builder|ResourceHistory whereUpdatedAt($value)
  * @mixin \Eloquent
- * @package App\Models
  */
 class ResourceHistory extends Model implements SimpleResourceable
 {
@@ -97,8 +97,8 @@ class ResourceHistory extends Model implements SimpleResourceable
     {
         $data = [];
 
-        foreach(config('enums.resources') as $resource) {
-            $data[] = $this->$resource;
+        foreach(Resource::cases() as $resource) {
+            $data[] = $this->{$resource->value};
         }
 
         return $data;
@@ -134,14 +134,25 @@ class ResourceHistory extends Model implements SimpleResourceable
 
     /**
      * @param Builder $query
+     * @param Carbon|null $startDate
+     * @param Carbon|null $endDate
      * @return Builder
      */
-    public function scopeChartSelect(Builder $query): Builder
+    public function scopeChartSelect(Builder $query, ?Carbon $startDate = null, ?Carbon $endDate = null): Builder
     {
-        return $query
+        $query
             ->select()
             ->selectRaw('UNIX_TIMESTAMP(DATE(created_at)) AS created_timestamp')
             ->selectRaw('DATE(created_at) AS created_date')
             ->orderBy('created_at');
+
+        if($startDate) {
+            $query->where('created_at', '>=', $startDate);
+        }
+        if($endDate) {
+            $query->where('created_at', '<=', $endDate);
+        }
+
+        return $query;
     }
 }

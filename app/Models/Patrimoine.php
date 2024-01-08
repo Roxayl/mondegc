@@ -1,10 +1,7 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Models\Contracts\Influencable;
-use App\Models\Traits\DeletesInfluences;
-use App\Models\Traits\Influencable as GeneratesInfluence;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -12,6 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Enums\Resource;
+use Roxayl\MondeGC\Models\Traits\DeletesInfluences;
+use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -76,7 +77,7 @@ use Spatie\Searchable\SearchResult;
  * @method static Builder|Patrimoine whereChPatPaysID($value)
  * @method static Builder|Patrimoine whereChPatStatut($value)
  * @method static Builder|Patrimoine whereChPatVilleID($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Patrimoine extends Model implements Influencable, Searchable
 {
@@ -170,12 +171,12 @@ class Patrimoine extends Model implements Influencable, Searchable
             return;
         }
 
-        $resources = config('enums.resources');
+        $resources = Resource::cases();
 
-        $resources = $categories->pipe(function($categories) use($resources) {
+        $influenceResources = $categories->pipe(function($categories) use($resources) {
             $return = [];
             foreach($resources as $resource) {
-                $return[$resource] = $categories->sum("ch_mon_cat_$resource");
+                $return[$resource->value] = $categories->sum("ch_mon_cat_$resource->value");
             }
             return $return;
         });
@@ -185,7 +186,7 @@ class Patrimoine extends Model implements Influencable, Searchable
         $influence->influencable_id = $this->ch_pat_id;
         $influence->generates_influence_at = $this->ch_pat_date;
 
-        $influence->fill($resources);
+        $influence->fill($influenceResources);
 
         $influence->save();
     }

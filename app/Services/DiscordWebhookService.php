@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace Roxayl\MondeGC\Services;
 
 class DiscordWebhookService
 {
@@ -9,6 +9,9 @@ class DiscordWebhookService
      */
     private string $webhookUrl;
 
+    /**
+     * @param string $webhookUrl
+     */
     public function __construct(string $webhookUrl)
     {
         $this->webhookUrl = $webhookUrl;
@@ -16,6 +19,7 @@ class DiscordWebhookService
 
     /**
      * Envoie un message à travers le webhook.
+     *
      * @param array $payload
      */
     public function sendMessage(array $payload): void
@@ -27,7 +31,7 @@ class DiscordWebhookService
         $jsonData = json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
         $ch = curl_init($webhookurl);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-type: application/json']);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -51,7 +55,8 @@ class DiscordWebhookService
 
     /**
      * Génère l'ensemble des paramètres qui peuvent être passés au webhook à titre d'exemple.
-     * @return array
+     *
+     * @return array<string, string|array>
      */
     public function getExamplePayload(): array
     {

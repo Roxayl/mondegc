@@ -1,12 +1,12 @@
 <?php
 
 namespace GenCity\Monde\Logger;
+
 use Squirrel\ModelStructure;
 
+class LogModel extends ModelStructure
+{
+    static string $tableName = 'log';
 
-class LogModel extends ModelStructure {
-
-    static $tableName = 'log';
-    static $primary_key = 'id';
-
+    static string $primary_key = 'id';
 }

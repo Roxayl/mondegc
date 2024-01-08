@@ -3,36 +3,36 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 $order_by = "ch_use_last_log";
 $tri = "DESC";
 if (isset($_GET['order_by'])) {
-  $order_by = $_GET['order_by'];
-  $nom_colonne = $_GET['order_by'];
+  $order_by = escape_sql($_GET['order_by'], 'order_by_columns', [
+      'ch_use_statut', 'ch_use_login', 'ch_use_last_log',
+  ]);
+  $nom_colonne = $order_by;
 }
 if (isset($_GET['tri'])) {
-  $tri = $_GET['tri'];
+  $tri = escape_sql($_GET['tri'], 'order_by_pos');
 }
 
 $maxRows_listemembres = 30;
 $pageNum_listemembres = 0;
 if (isset($_GET['pageNum_listemembres'])) {
-  $pageNum_listemembres = $_GET['pageNum_listemembres'];
+  $pageNum_listemembres = (int) $_GET['pageNum_listemembres'];
 }
 $startRow_listemembres = $pageNum_listemembres * $maxRows_listemembres;
 
 
 $query_listemembres = "SELECT ch_use_id, ch_use_date, ch_use_last_log, ch_use_login, ch_use_password, ch_use_mail, ch_use_paysID, ch_use_statut, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_biographie_dirigeant FROM users ORDER BY $order_by $tri";
 $query_limit_listemembres = sprintf("%s LIMIT %d, %d", $query_listemembres, $startRow_listemembres, $maxRows_listemembres);
-$listemembres = mysql_query($query_limit_listemembres, $maconnexion) or die(mysql_error());
+$listemembres = mysql_query($query_limit_listemembres, $maconnexion);
 $row_listemembres = mysql_fetch_assoc($listemembres);
 
 if (isset($_GET['totalRows_listemembres'])) {
@@ -54,17 +54,6 @@ $totalPages_listemembres = ceil($totalRows_listemembres/$maxRows_listemembres)-1
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
 <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">

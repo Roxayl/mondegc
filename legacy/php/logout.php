@@ -1,6 +1,6 @@
 <?php
 
-use App\Services\AuthenticationService;
+use Roxayl\MondeGC\Services\AuthenticationService;
 use Illuminate\Session\TokenMismatchException;
 
 $editFormAction = DEF_URI_PATH.$mondegc_config['front-controller']['uri'].'.php';
@@ -11,8 +11,8 @@ $clefSession = isset($_COOKIE['Session_mondeGC']) ? $_COOKIE['Session_mondeGC'] 
 
 if ($clefSession != null and $clefSession != "") {
     $Session_user_query = sprintf("SELECT ch_users_session_dispatch_sessionID, ch_use_acces, ch_use_session_id, ch_use_session_connect, ch_use_id, ch_use_login, ch_use_paysID, ch_use_statut, ch_use_last_log, last_activity, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users_dispatch_session INNER JOIN users_session ON ch_users_session_dispatch_sessionID = ch_use_session_id INNER JOIN users ON ch_use_session_user_ID = ch_use_id WHERE ch_users_session_dispatch_Key =%s",
-        GetSQLValueString($clefSession, "text"));
-    $Session_user = mysql_query($Session_user_query, $maconnexion) or die(mysql_error());
+        escape_sql($clefSession, "text"));
+    $Session_user = mysql_query($Session_user_query, $maconnexion);
     $row_Session_user = mysql_fetch_assoc($Session_user);
     $loginFoundUser = mysql_num_rows($Session_user);
 
@@ -21,14 +21,14 @@ if ($clefSession != null and $clefSession != "") {
 // ** Effacement des session sur serveur. **
         if ($clefSession != null and $clefSession != "") {
             $deleteSQL = sprintf("DELETE FROM users_dispatch_session WHERE ch_users_session_dispatch_Key=%s",
-                GetSQLValueString($clefSession, "text"));
+                escape_sql($clefSession, "text"));
 
-            $Result4 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+            $Result4 = mysql_query($deleteSQL, $maconnexion);
 
             $deleteSQL = sprintf("DELETE FROM users_session WHERE ch_use_session_id=%s",
-                GetSQLValueString($row_Session_user['ch_use_session_id'], "int"));
+                escape_sql($row_Session_user['ch_use_session_id'], "int"));
 
-            $Result5 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+            $Result5 = mysql_query($deleteSQL, $maconnexion);
         }
 
         $authService = new AuthenticationService();
@@ -63,20 +63,20 @@ if (auth()->check() && isset($_GET['doLogout']) && ($_GET['doLogout'] === "true"
 
 
     $Session_user_query = sprintf("SELECT ch_use_session_id FROM users_dispatch_session INNER JOIN users_session ON ch_users_session_dispatch_sessionID = ch_use_session_id INNER JOIN users ON ch_use_session_user_ID = ch_use_id WHERE ch_users_session_dispatch_Key =%s",
-        GetSQLValueString($clefSession, "text"));
-    $Session_user = mysql_query($Session_user_query, $maconnexion) or die(mysql_error());
+        escape_sql($clefSession, "text"));
+    $Session_user = mysql_query($Session_user_query, $maconnexion);
     $row_Session_user = mysql_fetch_assoc($Session_user);
 
 // ** Effacement des session sur serveur. **
     $deleteSQL = sprintf("DELETE FROM users_dispatch_session WHERE ch_users_session_dispatch_Key=%s",
-        GetSQLValueString($clefSession, "text"));
+        escape_sql($clefSession, "text"));
 
-    $Result4 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+    $Result4 = mysql_query($deleteSQL, $maconnexion);
 
     $deleteSQL = sprintf("DELETE FROM users_session WHERE ch_use_session_id=%s",
-        GetSQLValueString($row_Session_user['ch_use_session_id'], "int"));
+        escape_sql($row_Session_user['ch_use_session_id'], "int"));
 
-    $Result5 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+    $Result5 = mysql_query($deleteSQL, $maconnexion);
 
     $authService = new AuthenticationService();
     $authService->logout();

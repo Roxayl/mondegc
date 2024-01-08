@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property int $ID_pays
  * @property int $ID_user
  * @property int $permissions
- * @property-read Collection|OrganisationMember[] $organisation_members
+ * @property-read Collection|OrganisationMember[] $organisationMembers
  * @property-read int|null $organisation_members_count
  * @property-read Pays $pays
  * @property-read CustomUser $users
@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @method static Builder|UsersPays whereId($value)
  * @method static Builder|UsersPays wherePermissions($value)
  * @mixin Pivot
- * @property-read Collection|OrganisationMember[] $organisationMembers
+ * @mixin \Eloquent
  */
 class UsersPays extends Pivot
 {

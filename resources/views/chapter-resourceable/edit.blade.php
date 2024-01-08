@@ -1,6 +1,6 @@
 <div class="pull-right-cta">
     <a href="#" class="component-trigger btn btn-primary"
-        {!! \App\View\Components\BaseComponent::getTargetHtmlAttributes(route('chapter-resourceable.manage', $chapter),
+        {!! \Roxayl\MondeGC\View\Components\BaseComponent::getTargetHtmlAttributes(route('chapter-resourceable.manage', $chapter),
             'chapter-resourceable-container-' . $chapter->identifier) !!}>
         Retour
     </a>

@@ -11,33 +11,33 @@ if (isset($_GET['ch_pay_id'])) {
   $colname_Pays = $_GET['ch_pay_id'];
 }
 
-$query_Pays = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_Pays, "int"));
-$Pays = mysql_query($query_Pays, $maconnexion) or die(mysql_error());
+$query_Pays = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", escape_sql($colname_Pays, "int"));
+$Pays = mysql_query($query_Pays, $maconnexion);
 $row_Pays = mysql_fetch_assoc($Pays);
 
 //Recherche des villes du pays
-$query_villes = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_user, ch_vil_date_enregistrement, ch_vil_mis_jour, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_use_login FROM villes INNER JOIN users ON ch_vil_user = ch_use_id WHERE ch_vil_capitale < 3 AND villes.ch_vil_paysID = %s ORDER BY ch_vil_mis_jour DESC", GetSQLValueString($colname_Pays, "int"));
-$villes = mysql_query($query_villes, $maconnexion) or die(mysql_error());
+$query_villes = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_user, ch_vil_date_enregistrement, ch_vil_mis_jour, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_use_login FROM villes INNER JOIN users ON ch_vil_user = ch_use_id WHERE ch_vil_capitale < 3 AND villes.ch_vil_paysID = %s ORDER BY ch_vil_mis_jour DESC", escape_sql($colname_Pays, "int"));
+$villes = mysql_query($query_villes, $maconnexion);
 $row_villes = mysql_fetch_assoc($villes);
 $totalRows_villes = mysql_num_rows($villes);
 
 //Recherche des villes extraterritoriales
-$query_villes_extratrtr = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_user, ch_vil_date_enregistrement, ch_vil_mis_jour, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_use_login FROM villes INNER JOIN users ON ch_vil_user = ch_use_id WHERE ch_vil_capitale > 3  AND villes.ch_vil_paysID = %s ORDER BY ch_vil_mis_jour DESC", GetSQLValueString($colname_Pays, "int"));
-$villes_extratrtr = mysql_query($query_villes_extratrtr, $maconnexion) or die(mysql_error());
+$query_villes_extratrtr = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_user, ch_vil_date_enregistrement, ch_vil_mis_jour, ch_vil_nom, ch_vil_capitale, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_use_login FROM villes INNER JOIN users ON ch_vil_user = ch_use_id WHERE ch_vil_capitale > 3  AND villes.ch_vil_paysID = %s ORDER BY ch_vil_mis_jour DESC", escape_sql($colname_Pays, "int"));
+$villes_extratrtr = mysql_query($query_villes_extratrtr, $maconnexion);
 $row_villes_extratrtr = mysql_fetch_assoc($villes_extratrtr);
 $totalRows_villes_extratrtr = mysql_num_rows($villes_extratrtr);
 
 
 //Addition des populations des villes
-$query_population = sprintf("SELECT Sum(ch_vil_population) AS population_pays FROM villes WHERE villes.ch_vil_capitale != 3 AND villes.ch_vil_paysID = %s", GetSQLValueString($colname_Pays, "int"));
-$population = mysql_query($query_population, $maconnexion) or die(mysql_error());
+$query_population = sprintf("SELECT Sum(ch_vil_population) AS population_pays FROM villes WHERE villes.ch_vil_capitale != 3 AND villes.ch_vil_paysID = %s", escape_sql($colname_Pays, "int"));
+$population = mysql_query($query_population, $maconnexion);
 $row_population = mysql_fetch_assoc($population);
 $totalRows_population = mysql_num_rows($population);
 $population_pays = $row_population['population_pays'];
 
 //Connexion base de données utilisateur pour info personnage
-$query_User = sprintf("SELECT ch_use_id, ch_use_login, (SELECT GROUP_CONCAT(ch_disp_group_id) FROM dispatch_mem_group WHERE ch_use_id = ch_disp_mem_id AND ch_disp_mem_statut != 3) AS listgroup FROM users WHERE ch_use_paysID = %s AND ch_use_statut >= 10", GetSQLValueString($colname_Pays, "int"));
-$User = mysql_query($query_User, $maconnexion) or die(mysql_error());
+$query_User = sprintf("SELECT ch_use_id, ch_use_login, (SELECT GROUP_CONCAT(ch_disp_group_id) FROM dispatch_mem_group WHERE ch_use_id = ch_disp_mem_id AND ch_disp_mem_statut != 3) AS listgroup FROM users WHERE ch_use_paysID = %s AND ch_use_statut >= 10", escape_sql($colname_Pays, "int"));
+$User = mysql_query($query_User, $maconnexion);
 $row_User = mysql_fetch_assoc($User);
 $totalRows_User = mysql_num_rows($User);
 
@@ -46,42 +46,42 @@ $thisPays = new \GenCity\Monde\Pays($colname_Pays);
 $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
 
  //Recherche des monuments du pays
-//$query_monument = sprintf("SELECT ch_pat_ID, ch_pat_paysID, ch_pat_date, ch_pat_mis_jour, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_description, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine WHERE ch_pat_statut = 1 AND ch_pat_paysID = %s ORDER BY ch_pat_mis_jour DESC", GetSQLValueString($colname_Pays, "int"));
-//$monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
+//$query_monument = sprintf("SELECT ch_pat_ID, ch_pat_paysID, ch_pat_date, ch_pat_mis_jour, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_description, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine WHERE ch_pat_statut = 1 AND ch_pat_paysID = %s ORDER BY ch_pat_mis_jour DESC", escape_sql($colname_Pays, "int"));
+//$monument = mysql_query($query_monument, $maconnexion);
 //$row_monument = mysql_fetch_assoc($monument);
 //$totalRows_monument = mysql_num_rows($monument);
 
 //Recherche des quêtes de CHAQUE ville
-$query_monument = sprintf("SELECT ch_pat_ID, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_description, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine WHERE ch_pat_villeID = %s ORDER BY ch_pat_mis_jour DESC", GetSQLValueString($colname_infoVille, "int"));
-$monument = mysql_query($query_monument, $maconnexion) or die(mysql_error());
+$query_monument = sprintf("SELECT ch_pat_ID, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_description, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine WHERE ch_pat_villeID = %s ORDER BY ch_pat_mis_jour DESC", escape_sql($colname_infoVille, "int"));
+$monument = mysql_query($query_monument, $maconnexion);
 $row_monument = mysql_fetch_assoc($monument);
 $totalRows_monument = mysql_num_rows($monument);
 
 //Recherche des faits historiques du pays
-$query_fait_his = sprintf("SELECT ch_his_id, ch_his_paysID, ch_his_date, ch_his_mis_jour, ch_his_nom, ch_his_statut, ch_his_personnage, ch_his_lien_img1, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_description, (SELECT GROUP_CONCAT(ch_disp_fait_hist_cat_id) FROM dispatch_fait_his_cat WHERE ch_his_ID = ch_disp_fait_hist_id) AS listcat FROM histoire WHERE ch_his_statut = 1 AND ch_his_paysID = %s ORDER BY ch_his_date_fait ASC", GetSQLValueString($colname_Pays, "int"));
-$fait_his = mysql_query($query_fait_his, $maconnexion) or die(mysql_error());
+$query_fait_his = sprintf("SELECT ch_his_id, ch_his_paysID, ch_his_date, ch_his_mis_jour, ch_his_nom, ch_his_statut, ch_his_personnage, ch_his_lien_img1, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_description, (SELECT GROUP_CONCAT(ch_disp_fait_hist_cat_id) FROM dispatch_fait_his_cat WHERE ch_his_ID = ch_disp_fait_hist_id) AS listcat FROM histoire WHERE ch_his_statut = 1 AND ch_his_paysID = %s ORDER BY ch_his_date_fait ASC", escape_sql($colname_Pays, "int"));
+$fait_his = mysql_query($query_fait_his, $maconnexion);
 $row_fait_his = mysql_fetch_assoc($fait_his);
 $totalRows_fait_his = mysql_num_rows($fait_his);
 
 //recherche de la liste des jeux
-$query_liste_jeux = sprintf("SELECT ch_vil_type_jeu FROM villes WHERE ch_vil_paysID = %s GROUP BY ch_vil_type_jeu ", GetSQLValueString($colname_Pays, "int"));
-$liste_jeux = mysql_query($query_liste_jeux, $maconnexion) or die(mysql_error());
+$query_liste_jeux = sprintf("SELECT ch_vil_type_jeu FROM villes WHERE ch_vil_paysID = %s GROUP BY ch_vil_type_jeu ", escape_sql($colname_Pays, "int"));
+$liste_jeux = mysql_query($query_liste_jeux, $maconnexion);
 $row_liste_jeux = mysql_fetch_assoc($liste_jeux);
 $totalRows_liste_jeux = mysql_num_rows($liste_jeux);
 
 
 //recherche de la note temperance
-$query_temperance = sprintf("SELECT * FROM temperance WHERE ch_temp_element_id = %s AND ch_temp_element = 'pays' AND ch_temp_statut='3' ORDER BY ch_temp_date DESC", GetSQLValueString($colname_Pays, "int"));
-$temperance = mysql_query($query_temperance, $maconnexion) or die(mysql_error());
+$query_temperance = sprintf("SELECT * FROM temperance WHERE ch_temp_element_id = %s AND ch_temp_element = 'pays' AND ch_temp_statut='3' ORDER BY ch_temp_date DESC", escape_sql($colname_Pays, "int"));
+$temperance = mysql_query($query_temperance, $maconnexion);
 $row_temperance = mysql_fetch_assoc($temperance);
 
 //recherche des mesures des zones de la carte pour calcul ressources
-$query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($colname_Pays, "int"));
-$geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
+$query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", escape_sql($colname_Pays, "int"));
+$geometries = mysql_query($query_geometries, $maconnexion);
 $row_geometries = mysql_fetch_assoc($geometries);
 
 // Obtention des organisations
-$eloquentPays = \App\Models\Pays::findOrFail($colname_Pays);
+$eloquentPays = \Roxayl\MondeGC\Models\Pays::query()->findOrFail($colname_Pays);
 $organisations = $eloquentPays->otherOrganisations();
 $alliance = $eloquentPays->alliance();
 
@@ -92,45 +92,45 @@ $_SESSION['last_work'] = 'page-pays.php?ch_pay_id='.$row_Pays['ch_pay_id'];
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
 
       $updateSQL = sprintf("UPDATE pays SET ch_pay_label=%s, ch_pay_publication=%s, ch_pay_continent=%s, ch_pay_emplacement=%s, ch_pay_lien_forum=%s, lien_wiki = %s, ch_pay_nom=%s, ch_pay_devise=%s, ch_pay_lien_imgheader=%s, ch_pay_lien_imgdrapeau=%s, ch_pay_date=%s, ch_pay_mis_jour=%s, ch_pay_nb_update=%s, ch_pay_forme_etat=%s, ch_pay_capitale=%s, ch_pay_langue_officielle=%s, ch_pay_monnaie=%s, ch_pay_header_presentation=%s, ch_pay_text_presentation=%s, ch_pay_header_geographie=%s, ch_pay_text_geographie=%s, ch_pay_header_politique=%s, ch_pay_text_politique=%s, ch_pay_header_histoire=%s, ch_pay_text_histoire=%s, ch_pay_header_economie=%s, ch_pay_text_economie=%s, ch_pay_header_transport=%s, ch_pay_text_transport=%s, ch_pay_header_sport=%s, ch_pay_text_sport=%s, ch_pay_header_culture=%s, ch_pay_text_culture=%s, ch_pay_header_patrimoine=%s, ch_pay_text_patrimoine=%s WHERE ch_pay_id=%s",
-                           GetSQLValueString($_POST['ch_pay_label'], "text"),
-                           GetSQLValueString($_POST['ch_pay_publication'], "int"),
-                           GetSQLValueString($ch_pay_continent, "text"),
-                           GetSQLValueString($_POST['ch_pay_emplacement'], "int"),
-                           GetSQLValueString($_POST['ch_pay_lien_forum'], "text"),
-                           GetSQLValueString($_POST['lien_wiki'], "text"),
-                           GetSQLValueString($_POST['ch_pay_nom'], "text"),
-                           GetSQLValueString($_POST['ch_pay_devise'], "text"),
-                           GetSQLValueString($_POST['ch_pay_lien_imgheader'], "text"),
-                           GetSQLValueString($_POST['ch_pay_lien_imgdrapeau'], "text"),
-                           GetSQLValueString($_POST['ch_pay_date'], "date"),
-                           GetSQLValueString($_POST['ch_pay_mis_jour'], "date"),
-                           GetSQLValueString($_POST['ch_pay_nb_update'], "int"),
-                           GetSQLValueString($_POST['ch_pay_forme_etat'], "text"),
-                           GetSQLValueString($_POST['ch_pay_capitale'], "text"),
-                           GetSQLValueString($_POST['ch_pay_langue_officielle'], "text"),
-                           GetSQLValueString($_POST['ch_pay_monnaie'], "text"),
-                           GetSQLValueString($_POST['ch_pay_header_presentation'], "text"),
-                           GetSQLValueString($_POST['ch_pay_text_presentation'], "text"),
-                           GetSQLValueString($_POST['ch_pay_header_geographie'], "text"),
-                           GetSQLValueString($_POST['ch_pay_text_geographie'], "text"),
-                           GetSQLValueString($_POST['ch_pay_header_politique'], "text"),
-                           GetSQLValueString($_POST['ch_pay_text_politique'], "text"),
-                           GetSQLValueString($_POST['ch_pay_header_histoire'], "text"),
-                           GetSQLValueString($_POST['ch_pay_text_histoire'], "text"),
-                           GetSQLValueString($_POST['ch_pay_header_economie'], "text"),
-                           GetSQLValueString($_POST['ch_pay_text_economie'], "text"),
-                           GetSQLValueString($_POST['ch_pay_header_transport'], "text"),
-                           GetSQLValueString($_POST['ch_pay_text_transport'], "text"),
-                           GetSQLValueString($_POST['ch_pay_header_sport'], "text"),
-                           GetSQLValueString($_POST['ch_pay_text_sport'], "text"),
-                           GetSQLValueString($_POST['ch_pay_header_culture'], "text"),
-                           GetSQLValueString($_POST['ch_pay_text_culture'], "text"),
-                           GetSQLValueString($_POST['ch_pay_header_patrimoine'], "text"),
-                           GetSQLValueString($_POST['ch_pay_text_patrimoine'], "text"),
-                           GetSQLValueString($_POST['ch_pay_id'], "int"));
+                           escape_sql($_POST['ch_pay_label'], "text"),
+                           escape_sql($_POST['ch_pay_publication'], "int"),
+                           escape_sql($ch_pay_continent, "text"),
+                           escape_sql($_POST['ch_pay_emplacement'], "int"),
+                           escape_sql($_POST['ch_pay_lien_forum'], "text"),
+                           escape_sql($_POST['lien_wiki'], "text"),
+                           escape_sql($_POST['ch_pay_nom'], "text"),
+                           escape_sql($_POST['ch_pay_devise'], "text"),
+                           escape_sql($_POST['ch_pay_lien_imgheader'], "text"),
+                           escape_sql($_POST['ch_pay_lien_imgdrapeau'], "text"),
+                           escape_sql($_POST['ch_pay_date'], "date"),
+                           escape_sql($_POST['ch_pay_mis_jour'], "date"),
+                           escape_sql($_POST['ch_pay_nb_update'], "int"),
+                           escape_sql($_POST['ch_pay_forme_etat'], "text"),
+                           escape_sql($_POST['ch_pay_capitale'], "text"),
+                           escape_sql($_POST['ch_pay_langue_officielle'], "text"),
+                           escape_sql($_POST['ch_pay_monnaie'], "text"),
+                           escape_sql($_POST['ch_pay_header_presentation'], "text"),
+                           escape_sql($_POST['ch_pay_text_presentation'], "text"),
+                           escape_sql($_POST['ch_pay_header_geographie'], "text"),
+                           escape_sql($_POST['ch_pay_text_geographie'], "text"),
+                           escape_sql($_POST['ch_pay_header_politique'], "text"),
+                           escape_sql($_POST['ch_pay_text_politique'], "text"),
+                           escape_sql($_POST['ch_pay_header_histoire'], "text"),
+                           escape_sql($_POST['ch_pay_text_histoire'], "text"),
+                           escape_sql($_POST['ch_pay_header_economie'], "text"),
+                           escape_sql($_POST['ch_pay_text_economie'], "text"),
+                           escape_sql($_POST['ch_pay_header_transport'], "text"),
+                           escape_sql($_POST['ch_pay_text_transport'], "text"),
+                           escape_sql($_POST['ch_pay_header_sport'], "text"),
+                           escape_sql($_POST['ch_pay_text_sport'], "text"),
+                           escape_sql($_POST['ch_pay_header_culture'], "text"),
+                           escape_sql($_POST['ch_pay_text_culture'], "text"),
+                           escape_sql($_POST['ch_pay_header_patrimoine'], "text"),
+                           escape_sql($_POST['ch_pay_text_patrimoine'], "text"),
+                           escape_sql($_POST['ch_pay_id'], "int"));
 
 
-      $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+      $Result1 = mysql_query($updateSQL, $maconnexion);
       getErrorMessage('success', "Le pays a été modifié avec succès !");
 
   $updateGoTo = DEF_URI_PATH . "page-pays.php?ch_pay_id=" . (int)$_POST['ch_pay_id'];
@@ -159,17 +159,6 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
@@ -430,7 +419,7 @@ Eventy::action('display.beforeHeadClosingTag')
             <?php if(!empty($row_Pays['lien_wiki'])): ?>
                 <a href="<?= __s($row_Pays['lien_wiki']) ?>" style="display: inline-block;">
                   <span class="external-link-icon"
-                        style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></span>
+                        style="background-image:url('https://roxayl.fr/kaleera/images/h4FQp.png');"></span>
                   Article Wiki GC</a>
             <?php endif; ?>
             </div>
@@ -658,7 +647,7 @@ Eventy::action('display.beforeHeadClosingTag')
 
 
 $query_liste_fai_cat3 = "SELECT * FROM faithist_categories WHERE ch_fai_cat_ID In ($listcategories) AND ch_fai_cat_statut = 1";
-$liste_fai_cat3 = mysql_query($query_liste_fai_cat3, $maconnexion) or die(mysql_error());
+$liste_fai_cat3 = mysql_query($query_liste_fai_cat3, $maconnexion);
 $row_liste_fai_cat3 = mysql_fetch_assoc($liste_fai_cat3);
 $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 			 } ?>
@@ -953,7 +942,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 
                 $query_liste_mon_cat3 = "SELECT * FROM monument_categories
                     WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =0";
-                $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
+                $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion);
                 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
                 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
 			}

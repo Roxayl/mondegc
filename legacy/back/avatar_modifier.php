@@ -5,6 +5,7 @@ use GenCity\Monde\Pays;
  
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
+
 if(!isset($_SESSION['userObject'])) {
     header("Status: 301 Moved Permanently", false, 301);
     header('Location: ' . legacyPage('connexion'));
@@ -46,17 +47,6 @@ if($thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
 <link href="../SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -95,10 +85,10 @@ Eventy::action('display.beforeHeadClosingTag')
       <?php require(DEF_LEGACYROOTPATH . 'php/upload.php');
 if (isset($uploadconfirm)) {
   $updateSQL = sprintf("UPDATE personnage SET lien_img=%s WHERE entity='pays' AND entity_id=%s",
-                       GetSQLValueString($link, "text"),
-                       GetSQLValueString($pays_ID, "int"));
+                       escape_sql($link, "text"),
+                       escape_sql($pays_ID, "int"));
 
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
 
   getErrorMessage('success', "L'avatar a été modifié avec succès !");
 

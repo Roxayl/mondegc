@@ -1,17 +1,7 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Models\Contracts\Infrastructurable;
-use App\Models\Contracts\Resourceable;
-use App\Models\Contracts\Roleplayable;
-use App\Models\Managers\PaysMapManager;
-use App\Models\Presenters\InfrastructurablePresenter;
-use App\Models\Presenters\PaysPresenter;
-use App\Models\Traits\Infrastructurable as HasInfrastructures;
-use App\Models\Traits\Resourceable as HasResources;
-use App\Models\Traits\Roleplayable as ParticipatesInRoleplay;
-use App\Services\EconomyService;
 use Carbon\Carbon;
 use Closure;
 use Database\Factories\PaysFactory;
@@ -24,6 +14,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Models\Contracts\Infrastructurable;
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Enums\Resource;
+use Roxayl\MondeGC\Models\Managers\PaysMapManager;
+use Roxayl\MondeGC\Models\Presenters\InfrastructurablePresenter;
+use Roxayl\MondeGC\Models\Presenters\PaysPresenter;
+use Roxayl\MondeGC\Models\Traits\Infrastructurable as HasInfrastructures;
+use Roxayl\MondeGC\Models\Traits\Resourceable as HasResources;
+use Roxayl\MondeGC\Models\Traits\Roleplayable as ParticipatesInRoleplay;
+use Roxayl\MondeGC\Services\EconomyService;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use YlsIdeas\FeatureFlags\Facades\Features;
@@ -144,8 +145,9 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @method static Builder|Pays whereChPayTextTransport($value)
  * @method static Builder|Pays whereChPayTourismeCarte($value)
  * @method static Builder|Pays whereLienWiki($value)
+ * @method static Builder|Pays active()
  * @method static Builder|Pays visible()
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Pays extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
@@ -391,6 +393,26 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     }
 
     /**
+     * Récupère les pays actifs.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeActive(Builder $query): Builder
+    {
+        $inactivityMonths = config('gameplay.country_inactivity_months');
+        $columns = array_merge([$this->getKeyName()], $this->getFillable(), $this->getDates());
+        
+        return $query->visible()
+            ->select($columns)
+            ->join('users_pays', 'users_pays.ID_pays', '=', 'ch_pay_id')
+            ->join('users', 'users_pays.ID_user', '=', 'users.ch_use_id')
+            ->groupBy($columns)
+            ->havingRaw('MAX(COALESCE(ch_use_last_log, ch_use_date)) '
+                . '> DATE_SUB(NOW(), INTERVAL ' . $inactivityMonths . ' MONTH)');
+    }
+
+    /**
      * @return array|int[]
      */
     public static function getSlotRange(): array
@@ -443,6 +465,8 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     }
 
     /**
+     * Donne les ressources générées par les villes au pays.
+     *
      * @return array<string, float>
      */
     public function villeResources(): array
@@ -451,6 +475,8 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     }
 
     /**
+     * Donne les ressources générées par les infrastructures affectées au pays.
+     *
      * @return array<string, float>
      */
     public function infrastructureResources(): array
@@ -459,34 +485,99 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     }
 
     /**
+     * Donne les ressources générées par les organisations du pays.
+     *
+     * @param bool $includeAlliance Inclut les statistiques générées par l'alliance.
      * @return array<string, float>
      */
-    public function organisationResources(): array
+    public function organisationResources(bool $includeAlliance = true): array
     {
+        $resourceCacheParameters = ['includeAlliance' => $includeAlliance];
+
+        // Récupérer les données depuis le cache, si disponible.
+        if(Features::accessible('cache') && cache()->has($this->resourceCacheKey($resourceCacheParameters))) {
+            return cache()->get($this->resourceCacheKey($resourceCacheParameters));
+        }
+
         $sumResources = EconomyService::resourcesPrefilled();
 
         foreach($this->organisationsAll() as $organisation) {
-            $generatedResources = $organisation->infrastructureResources();
+            if(! $includeAlliance && $organisation->membersGenerateResources()) {
+                continue;
+            }
+            $generatedResources = $organisation->organisationResources();
             $nbMembers = $organisation->members->count();
 
-            foreach(config('enums.resources') as $resource) {
-                $generatedResources[$resource] = (int)($generatedResources[$resource] / $nbMembers);
-                $sumResources[$resource] += $generatedResources[$resource];
+            foreach(Resource::cases() as $resource) {
+                $generatedResources[$resource->value] = (int)($generatedResources[$resource->value] / $nbMembers);
+                $sumResources[$resource->value] += $generatedResources[$resource->value];
             }
+        }
+
+        // Mettre en cache les ressources durant une durée aléatoire.
+        if(Features::accessible('cache')) {
+            $cacheTtl = random_int(config('cache.ttl_lower_bound'), config('cache.ttl_higher_bound'));
+            cache()->put($this->resourceCacheKey($resourceCacheParameters), $sumResources, now()->addMinutes($cacheTtl));
         }
 
         return $sumResources;
     }
 
     /**
-     * @param bool $withOrganisation Intègre les ressources de l'organisation dans le calcul des ressources du pays.
+     * Donne toutes les ressources du pays, sans les ressources générées par leur alliance.
+     *
+     * Ceci peut être utile pour obtenir les ressources générées par les alliances, qui bénéficient des ressources
+     * générées par leurs pays membres, afin d'éviter une récursion infinie.
+     *
      * @return array<string, float>
      */
-    public function resources(bool $withOrganisation = true): array
+    public function withoutAllianceResources(): array
     {
-        // Retrieve from cache.
-        if(Features::accessible('cache') && cache()->has($this->resourceCacheKey($withOrganisation))) {
-            return cache()->get($this->resourceCacheKey($withOrganisation));
+        $resourceCacheParameters = ['withOrganisations' => 'withoutAlliance'];
+
+        // Récupérer les données depuis le cache, si disponible.
+        if(Features::accessible('cache') && cache()->has($this->resourceCacheKey($resourceCacheParameters))) {
+            return cache()->get($this->resourceCacheKey($resourceCacheParameters));
+        }
+
+        $sumResources = EconomyService::resourcesPrefilled();
+        $inactivityCoefficient = $this->inactivityCoefficient();
+
+        $baseResources = $this->baseResources();
+        $withoutAllianceResources =  $this->organisationResources(false);
+
+        foreach(Resource::cases() as $resource) {
+            // Pour toutes les ressources positives, on peut être amené à diminuer la quantité
+            // de ressources données si le pays est inactif.
+            if($withoutAllianceResources[$resource->value] > 0) {
+                $withoutAllianceResources[$resource->value] =
+                    (int)($withoutAllianceResources[$resource->value] * $inactivityCoefficient);
+            }
+            $sumResources[$resource->value] += $baseResources[$resource->value]
+                + $withoutAllianceResources[$resource->value];
+        }
+
+        // Mettre en cache les ressources durant une durée aléatoire.
+        if(Features::accessible('cache')) {
+            $cacheTtl = random_int(config('cache.ttl_lower_bound'), config('cache.ttl_higher_bound'));
+            cache()->put($this->resourceCacheKey($resourceCacheParameters), $sumResources, now()->addMinutes($cacheTtl));
+        }
+
+        return $sumResources;
+    }
+
+    /**
+     * Donne toutes les ressources "de base" générées directement par le pays : elle exclut donc les organisations.
+     *
+     * @return array<string, float>
+     */
+    public function baseResources(): array
+    {
+        $resourceCacheParameters = ['withOrganisations' => false];
+
+        // Récupérer les données depuis le cache, si disponible.
+        if(Features::accessible('cache') && cache()->has($this->resourceCacheKey($resourceCacheParameters))) {
+            return cache()->get($this->resourceCacheKey($resourceCacheParameters));
         }
 
         $sumResources = EconomyService::resourcesPrefilled();
@@ -497,30 +588,66 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         $infrastructureResources = $this->infrastructureResources();
         $roleplayResources = $this->roleplayResources();
 
-        // Si 'withOrganisation' est mis à false, on n'appelle pas organisationResources().
-        // Ce paramètre existe et est mis à true parce que, lorsqu'on veut calculer les
-        // statistiques d'une organisation, on veut éviter une référence circulaire entre
-        // l'appel à Pays->resources() et Organisation->resources().
-        $organisationResources = !$withOrganisation ?
-            EconomyService::resourcesPrefilled() : $this->organisationResources();
-
-        foreach(config('enums.resources') as $resource) {
-            $sumResources[$resource] += $villeResources[$resource]
-                + $mapResources[$resource]
-                + $infrastructureResources[$resource]
-                + $organisationResources[$resource]
-                + $roleplayResources[$resource];
+        foreach(Resource::cases() as $resource) {
+            $sumResources[$resource->value] += $villeResources[$resource->value]
+                + $mapResources[$resource->value]
+                + $infrastructureResources[$resource->value]
+                + $roleplayResources[$resource->value];
 
             // Pour toutes les ressources positives, on peut être amené à diminuer la quantité
             // de ressources données si le pays est inactif.
-            if($sumResources[$resource] > 0) {
-                $sumResources[$resource] = (int)($sumResources[$resource] * $inactivityCoefficient);
+            if($sumResources[$resource->value] > 0) {
+                $sumResources[$resource->value] = (int)($sumResources[$resource->value] * $inactivityCoefficient);
             }
         }
 
-        // Cache resources for 20 minutes.
+        // Mettre en cache les ressources durant une durée aléatoire.
         if(Features::accessible('cache')) {
-            cache()->put($this->resourceCacheKey($withOrganisation), $sumResources, now()->addMinutes(20));
+            $cacheTtl = random_int(config('cache.ttl_lower_bound'), config('cache.ttl_higher_bound'));
+            cache()->put($this->resourceCacheKey($resourceCacheParameters), $sumResources, now()->addMinutes($cacheTtl));
+        }
+
+        return $sumResources;
+    }
+
+    /**
+     * Donne les ressources du pays, avec les statistiques générées des organisations.
+     *
+     * Le calcul prend en compte les ressources de base ({@see self::baseResources()}), auquel sont ajoutées les
+     * ressources des organisations ({@see self::organisationResources()}).
+     *
+     * @return array<string, float>
+     */
+    public function resources(): array
+    {
+        $resourceCacheParameters = ['withOrganisations' => true];
+
+        // Récupérer les données depuis le cache, si disponible.
+        if(Features::accessible('cache') && cache()->has($this->resourceCacheKey($resourceCacheParameters))) {
+            return cache()->get($this->resourceCacheKey($resourceCacheParameters));
+        }
+
+        $sumResources = EconomyService::resourcesPrefilled();
+        $inactivityCoefficient = $this->inactivityCoefficient();
+
+        $withoutOrganisationResources = $this->baseResources();
+        $organisationResources =  $this->organisationResources();
+
+        foreach(Resource::cases() as $resource) {
+            // Pour toutes les ressources positives, on peut être amené à diminuer la quantité
+            // de ressources données si le pays est inactif.
+            if($organisationResources[$resource->value] > 0) {
+                $organisationResources[$resource->value] = (int)($organisationResources[$resource->value] * $inactivityCoefficient);
+            }
+
+            $sumResources[$resource->value] += $withoutOrganisationResources[$resource->value]
+                + $organisationResources[$resource->value];
+        }
+
+        // Mettre en cache les ressources durant une durée aléatoire.
+        if(Features::accessible('cache')) {
+            $cacheTtl = random_int(config('cache.ttl_lower_bound'), config('cache.ttl_higher_bound'));
+            cache()->put($this->resourceCacheKey($resourceCacheParameters), $sumResources, now()->addMinutes($cacheTtl));
         }
 
         return $sumResources;

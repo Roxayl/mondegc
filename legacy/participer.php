@@ -5,7 +5,7 @@ include('php/log.php');
 
 $query_Last24H = "SELECT ch_use_login, ch_use_statut, last_activity FROM users
     WHERE last_activity > DATE_SUB(NOW(), INTERVAL 2 DAY) ORDER BY ch_use_login";
-$Last24H = mysql_query($query_Last24H, $maconnexion) or die(mysql_error());
+$Last24H = mysql_query($query_Last24H, $maconnexion);
 
 $pageParticiper = new \GenCity\Monde\Page('participer');
 $pageParticiperCadre = new \GenCity\Monde\Page('participer_cadre');
@@ -25,17 +25,6 @@ $pageParticiperCadre = new \GenCity\Monde\Page('participer_cadre');
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- TemplateEndEditable -->
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">

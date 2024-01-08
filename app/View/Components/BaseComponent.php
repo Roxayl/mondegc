@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components;
+namespace Roxayl\MondeGC\View\Components;
 
 use Illuminate\View\Component;
 
@@ -8,6 +8,7 @@ abstract class BaseComponent extends Component
 {
     /**
      * Obtient les attributes HTML sur un élément déclencheur.
+     *
      * @param string $url
      * @param string $target
      * @return string Contenu HTML donnant les attributs pour un élément HTML déclencheur.

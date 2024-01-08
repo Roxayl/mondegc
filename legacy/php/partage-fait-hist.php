@@ -7,8 +7,8 @@ if (isset($_GET['ch_his_id'])) {
   $Fait_hist_ID = $_GET['ch_his_id'];
 }
 
-$query_fait_hist = sprintf("SELECT ch_his_id, ch_his_nom, ch_his_lien_img1, ch_his_description, ch_his_paysID, ch_pay_lien_forum FROM histoire INNER JOIN pays ON ch_his_paysID = ch_pay_id WHERE ch_his_id = %s AND ch_his_statut=1", GetSQLValueString($Fait_hist_ID, "int"));
-$fait_hist = mysql_query($query_fait_hist, $maconnexion) or die(mysql_error());
+$query_fait_hist = sprintf("SELECT ch_his_id, ch_his_nom, ch_his_lien_img1, ch_his_description, ch_his_paysID, ch_pay_lien_forum FROM histoire INNER JOIN pays ON ch_his_paysID = ch_pay_id WHERE ch_his_id = %s AND ch_his_statut=1", escape_sql($Fait_hist_ID, "int"));
+$fait_hist = mysql_query($query_fait_hist, $maconnexion);
 $row_fait_hist = mysql_fetch_assoc($fait_hist);
 $totalRows_fait_hist = mysql_num_rows($fait_hist);
 
@@ -35,11 +35,11 @@ appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
   $updateSQL = sprintf("UPDATE pays SET ch_pay_lien_forum=%s WHERE ch_pay_id=%s",
-                       GetSQLValueString($_POST['ch_pay_lien_forum'], "text"),
-                       GetSQLValueString($_POST['ch_pay_id'], "int"));
+                       escape_sql($_POST['ch_pay_lien_forum'], "text"),
+                       escape_sql($_POST['ch_pay_id'], "int"));
 
   
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
     $updateGoTo = DEF_URI_PATH . "page-fait-historique.php";
   appendQueryString($updateGoTo);
   $adresse = $updateGoTo."?ch_his_id=".$row_fait_hist['ch_his_paysID'];
@@ -104,7 +104,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
   <!-- Si le lien du sujet sur le forum est trouv&eacute;-->
   <?php if (($row_fait_hist['ch_pay_lien_forum']==NULL) OR ($row_fait_hist['ch_pay_lien_forum']=="") OR ($id_trouve== false) ) {?>
   <!-- Si le lien du sujet sur le forum n'est pas trouv&eacute;-->
-  <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_lien" Id="ajout_lien">
+  <form action="<?= e($editFormAction) ?>" method="POST" class="form-horizontal well" name="ajout_lien" Id="ajout_lien">
     <input type="hidden" name="ch_pay_id" id="ch_pay_id" value="<?= e($row_fait_hist['ch_his_paysID']) ?>">
     <?php if (($row_fait_hist['ch_pay_lien_forum']== NULL) OR ($row_fait_hist['ch_pay_lien_forum']== "")){?>
     <h4>Vous n'avez pas encore indiqu&eacute; le lien du sujet consacr&eacute; à votre pays sur le Forum de G&eacute;n&eacute;ration City </h4>

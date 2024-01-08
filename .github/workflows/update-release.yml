@@ -1,0 +1,38 @@
+name: "⬆️ Update release"
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  bump-release:
+    name: "⬆️ Bump production release"
+    runs-on: ubuntu-20.04
+
+    steps:
+
+      - name: Run SSH commands
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: ${{ secrets.PROD_SSH_HOST }}
+          port: ${{ secrets.PROD_SSH_PORT }}
+          username: ${{ secrets.PROD_SSH_USERNAME }}
+          password: ${{ secrets.PROD_SSH_PASSWORD }}
+          script: |
+            cd "${{ vars.PROD_FULL_DIR }}"
+            VERSION_NUMBER="${{ github.event.release.name }}"
+            find ./.env -type f -exec sed -i '' -e "/^APP_VERSION=/s/=.*/=\'$VERSION_NUMBER\'/" {} \;
+
+  notify-release:
+    name: "📣 Notify release"
+    runs-on: ubuntu-20.04
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Notify on Discord
+        uses: SethCohen/github-releases-to-discord@v1.13.0
+        with:
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}

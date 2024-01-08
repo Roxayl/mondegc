@@ -18,25 +18,25 @@ if ($_POST['ch_his_periode'] == false) {
 $_POST['ch_his_date_fait2'] = NULL;
 }	
   $updateSQL = sprintf("UPDATE histoire SET ch_his_label=%s, ch_his_paysID=%s, ch_his_personnage=%s, ch_his_statut=%s, ch_his_date=%s, ch_his_mis_jour=%s, ch_his_nb_update=%s, ch_his_date_fait=%s, ch_his_date_fait2=%s, ch_his_profession=%s, ch_his_nom=%s, ch_his_lien_img1=%s, ch_his_legende_img1=%s, ch_his_description=%s, ch_his_contenu=%s WHERE ch_his_id=%s",
-                       GetSQLValueString($_POST['ch_his_label'], "text"),
-                       GetSQLValueString($_POST['ch_his_paysID'], "int"),
-                       GetSQLValueString($_POST['ch_his_personnage'], "int"),
-                       GetSQLValueString($_POST['ch_his_statut'], "int"),
-                       GetSQLValueString($_POST['ch_his_date'], "date"),
-                       GetSQLValueString($_POST['ch_his_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_his_nb_update'], "int"),
-                       GetSQLValueString($_POST['ch_his_date_fait'], "date"),
-                       GetSQLValueString($_POST['ch_his_date_fait2'], "date"),
-                       GetSQLValueString($_POST['profession'], "text"),
-                       GetSQLValueString($_POST['ch_his_nom'], "text"),
-                       GetSQLValueString($_POST['ch_his_lien_img1'], "text"),
-                       GetSQLValueString($_POST['ch_his_legende_img1'], "text"),
-                       GetSQLValueString($_POST['ch_his_description'], "text"),
-                       GetSQLValueString($_POST['ch_his_contenu'], "text"),
-                       GetSQLValueString($_POST['ch_his_id'], "int"));
+                       escape_sql($_POST['ch_his_label'], "text"),
+                       escape_sql($_POST['ch_his_paysID'], "int"),
+                       escape_sql($_POST['ch_his_personnage'], "int"),
+                       escape_sql($_POST['ch_his_statut'], "int"),
+                       escape_sql($_POST['ch_his_date'], "date"),
+                       escape_sql($_POST['ch_his_mis_jour'], "date"),
+                       escape_sql($_POST['ch_his_nb_update'], "int"),
+                       escape_sql($_POST['ch_his_date_fait'], "date"),
+                       escape_sql($_POST['ch_his_date_fait2'], "date"),
+                       escape_sql($_POST['profession'], "text"),
+                       escape_sql($_POST['ch_his_nom'], "text"),
+                       escape_sql($_POST['ch_his_lien_img1'], "text"),
+                       escape_sql($_POST['ch_his_legende_img1'], "text"),
+                       escape_sql($_POST['ch_his_description'], "text"),
+                       escape_sql($_POST['ch_his_contenu'], "text"),
+                       escape_sql($_POST['ch_his_id'], "int"));
 
 
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
 
   getErrorMessage('success', __s($_POST['ch_his_nom']) . " a été modifié avec succès.");
 
@@ -51,16 +51,16 @@ if (isset($_POST['ch_his_id'])) {
   $colname_Fait_his = $_POST['ch_his_id'];
 }
 
-$query_Fait_his = sprintf("SELECT * FROM histoire WHERE ch_his_id = %s", GetSQLValueString($colname_Fait_his, "int"));
-$Fait_his = mysql_query($query_Fait_his, $maconnexion) or die(mysql_error());
+$query_Fait_his = sprintf("SELECT * FROM histoire WHERE ch_his_id = %s", escape_sql($colname_Fait_his, "int"));
+$Fait_his = mysql_query($query_Fait_his, $maconnexion);
 $row_Fait_his = mysql_fetch_assoc($Fait_his);
 $totalRows_Fait_his = mysql_num_rows($Fait_his);
 
 
 // Connection infos dirigeant pays
 
-$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($row_Fait_his['ch_his_paysID'], "int"));
-$users = mysql_query($query_users, $maconnexion) or die(mysql_error());
+$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", escape_sql($row_Fait_his['ch_his_paysID'], "int"));
+$users = mysql_query($query_users, $maconnexion);
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
 
@@ -88,17 +88,6 @@ $thisPays = new \GenCity\Monde\Pays($row_Fait_his['ch_his_paysID']);
 <link href="../SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -166,7 +155,7 @@ Eventy::action('display.beforeHeadClosingTag')
 
       <div class="clearfix"></div>
       <!-- Debut formulaire -->
-      <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_fait_hist" Id="ajout_fait_his">
+      <form action="<?= e($editFormAction) ?>" method="POST" class="form-horizontal well" name="ajout_fait_hist" Id="ajout_fait_his">
         <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           Ce formulaire contient les informations qui seront affich&eacute;es sur la page consacr&eacute;e &agrave; un fait historique. Les faits historiques construisent l'histoire de votre pays. Veillez a ce qu'elle soit coh&eacute;rente avec les pays qui vous entourent. La gestion de l'histoire du Monde GC est confi&eacute;e au <a href="../histoire.php" title="lien vers la page consacr&eacute;e au Comité">Comité d'Histoire</a>.</div>

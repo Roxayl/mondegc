@@ -22,7 +22,7 @@ UNION
 SELECT ch_temp_id as id, ch_vil_nom as nom, ch_temp_element as element, ch_temp_element_id as element_id, ch_pay_id as pays_id, ch_temp_date as date, ch_temp_mis_jour as mis_jour, ch_vil_armoiries as image, ch_temp_note as note, ch_temp_tendance as tendance FROM temperance LEFT JOIN villes ON ch_temp_element_id = ch_vil_ID LEFT JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_temp_element='ville' AND ch_temp_statut='3'
 ORDER BY date asc");
 $query_limit_liste_temperance = sprintf("%s LIMIT %d, %d", $query_liste_temperance, $startRow_liste_temperance, $maxRows_liste_temperance);
-$liste_temperance = mysql_query($query_limit_liste_temperance, $maconnexion) or die(mysql_error());
+$liste_temperance = mysql_query($query_limit_liste_temperance, $maconnexion);
 $row_liste_temperance = mysql_fetch_assoc($liste_temperance);
 
 if (isset($_GET['totalRows_liste_temperance'])) {
@@ -67,17 +67,6 @@ $queryString_liste_temperance = sprintf("&totalRows_liste_temperance=%d%s", $tot
 <link href="SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
@@ -206,8 +195,8 @@ Eventy::action('display.beforeHeadClosingTag')
 $idtemperance = $row_liste_temperance ['id'];
 		// requete nb de juges votants
 
-$query_nb_juges = sprintf("SELECT COUNT(ch_not_temp_juge) as nbjuges FROM notation_temperance WHERE ch_not_temp_temperance_id =%s", GetSQLValueString( $idtemperance, "int"));
-$nb_juges = mysql_query($query_nb_juges, $maconnexion) or die(mysql_error());
+$query_nb_juges = sprintf("SELECT COUNT(ch_not_temp_juge) as nbjuges FROM notation_temperance WHERE ch_not_temp_temperance_id =%s", escape_sql( $idtemperance, "int"));
+$nb_juges = mysql_query($query_nb_juges, $maconnexion);
 $row_nb_juges = mysql_fetch_assoc($nb_juges);
 $totalRows_nb_juges = mysql_num_rows($nb_juges);
 ?>

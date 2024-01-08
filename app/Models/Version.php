@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Mpociot\Versionable\Version as BaseVersion;
 
 /**
- * App\Models\Version
+ * Roxayl\MondeGC\Models\Version
  *
  * @property int $version_id
  * @property string $versionable_id

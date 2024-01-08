@@ -1,37 +1,43 @@
 <?php
 
-namespace App\Notifications;
+namespace Roxayl\MondeGC\Notifications;
 
-use App\Models\Infrastructure;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use Roxayl\MondeGC\Models\Infrastructure;
 
 class InfrastructureJudged extends Notification
 {
     use Queueable;
 
-    private ?Infrastructure $infrastructure;
+    /**
+     * @var Infrastructure
+     */
+    private Infrastructure $infrastructure;
+
+    /**
+     * @var bool
+     */
     private bool $accepted;
 
     /**
      * Create a new notification instance.
      *
-     * @param Infrastructure $infrastructure
+     * @param  Infrastructure  $infrastructure
      */
     public function __construct(Infrastructure $infrastructure)
     {
         $this->infrastructure = $infrastructure;
-        $this->accepted = $this->infrastructure->ch_inf_statut == 2;
+        $this->accepted = $this->infrastructure->ch_inf_statut === Infrastructure::JUGEMENT_ACCEPTED;
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param  object  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via(object $notifiable): array
     {
         return ['database'];
     }
@@ -42,7 +48,7 @@ class InfrastructureJudged extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray(object $notifiable): array
     {
         return [
             'infrastructure_id' => $this->infrastructure->ch_inf_id,

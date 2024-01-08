@@ -15,8 +15,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "OubliIdentifiant"))
   $mailposte = $_POST['ch_use_mail']; // D�claration de l'adresse de destination.
 
 
-$query_Compare_mail = sprintf("SELECT ch_use_id, ch_use_login, ch_use_password, ch_use_mail, ch_use_paysID, ch_use_statut FROM users WHERE ch_use_mail=%s", GetSQLValueString($mailposte, "text"));
-$Compare_mail = mysql_query($query_Compare_mail, $maconnexion) or die(mysql_error());
+$query_Compare_mail = sprintf("SELECT ch_use_id, ch_use_login, ch_use_password, ch_use_mail, ch_use_paysID, ch_use_statut FROM users WHERE ch_use_mail=%s", escape_sql($mailposte, "text"));
+$Compare_mail = mysql_query($query_Compare_mail, $maconnexion);
 $row_Compare_mail = mysql_fetch_assoc($Compare_mail);
 $totalRows_Compare_mail = mysql_num_rows($Compare_mail);
 
@@ -40,14 +40,14 @@ if ( $row_Compare_mail ) {
   $statut = $row_Compare_mail['ch_use_statut']; // D�claration de l'adresse de destination.
 
   $insertSQL = sprintf("INSERT INTO users_provisoire (ch_use_prov_login, ch_use_prov_clef, ch_use_prov_mail, ch_use_prov_paysID, ch_use_prov_statut) VALUES (%s, %s, %s, %s, %s)",
-                       GetSQLValueString($login, "text"),
-                       GetSQLValueString($clef, "text"),
-                       GetSQLValueString($mail, "text"),
-                       GetSQLValueString($paysID, "int"),
-                       GetSQLValueString($statut, "int"));
+                       escape_sql($login, "text"),
+                       escape_sql($clef, "text"),
+                       escape_sql($mail, "text"),
+                       escape_sql($paysID, "int"),
+                       escape_sql($statut, "int"));
 
   
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
   $insertGoTo = 'liste-membres.php';
   appendQueryString($insertGoTo);
 
@@ -130,17 +130,6 @@ $mailSuccess = true;
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">

@@ -1,11 +1,12 @@
 <?php
 
-use App\Events\Pays\MapUpdated;
-use App\Models\Geometry;
-use App\Models\Pays as EloquentPays;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Roxayl\MondeGC\Events\Pays\MapUpdated;
+use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Models\Enums\Resource;
+use Roxayl\MondeGC\Models\Geometry;
+use Roxayl\MondeGC\Models\Pays as EloquentPays;
 
-//Connexion et deconnexionw
+//Connexion et deconnexion
 include("php/log.php");
 
 if(!isset($_SESSION['userObject'])) {
@@ -17,28 +18,28 @@ if(!isset($_SESSION['userObject'])) {
 
 //Récupération variables
 if(isset($_POST['ch_geo_id'])) {
-    $eloquentGeometry = Geometry::findOrFail($_POST['ch_geo_id']);
+    $eloquentGeometry = Geometry::query()->findOrFail($_POST['ch_geo_id']);
     $eloquentPays = $eloquentGeometry->pays;
     $colname_paysID = $eloquentPays->ch_pay_id;
 } else {
     $colname_paysID = $_REQUEST['paysID'];
-    $eloquentPays = EloquentPays::findOrFail($colname_paysID);
+    $eloquentPays = EloquentPays::query()->findOrFail($colname_paysID);
 }
 
 //Requete Pays
-$query_InfoGenerale = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", GetSQLValueString($colname_paysID, "int"));
-$InfoGenerale = mysql_query($query_InfoGenerale, $maconnexion) or die(mysql_error());
+$query_InfoGenerale = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", escape_sql($colname_paysID, "int"));
+$InfoGenerale = mysql_query($query_InfoGenerale, $maconnexion);
 $row_InfoGenerale = mysql_fetch_assoc($InfoGenerale);
 $totalRows_InfoGenerale = mysql_num_rows($InfoGenerale);
 
-$user_has_perm = $_SESSION['userObject']->minStatus('OCGC');
+// Gérer les droits de modif des zones "spéciales".
+$user_has_admin_perm = $_SESSION['userObject']->minStatus('OCGC');
 $nonModifiableZones = ['terre', 'frontiere'];
 
-// Vérifier permissions
-if( !auth()->user()->hasMinPermission('ocgc') &&
-    !auth()->user()->ownsPays($eloquentPays) )
-{
-    throw new AccessDeniedHttpException();
+// Vérifier les permissions.
+$authUser = CustomUser::find($_SESSION['userObject']->get('ch_use_id'));
+if(! $authUser || (! $user_has_admin_perm && ! $authUser->ownsPays($eloquentPays))) {
+    abort(403);
 }
 
 // Init variables.
@@ -50,32 +51,32 @@ $surface = $tot_budget = $tot_industrie = $tot_commerce = $tot_agriculture = $to
 if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
 
     $isSpecialZone = in_array($_POST['ch_geo_type'], $nonModifiableZones);
-    if(!$user_has_perm && $isSpecialZone) {
+    if(!$user_has_admin_perm && $isSpecialZone) {
         getErrorMessage('error', "Vous ne pouvez pas créer de zone de type "
-            . __s($_POST['ch_geo_type']) . ".");
+            . e($_POST['ch_geo_type']) . ".");
     }
 
     else {
         $insertSQL = sprintf("INSERT INTO geometries (ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            GetSQLValueString($_POST['ch_geo_wkt'], "text"),
-            GetSQLValueString($colname_paysID, "int"),
-            GetSQLValueString($_POST['ch_geo_user'], "int"),
-            GetSQLValueString($_POST['ch_geo_maj_user'], "int"),
-            GetSQLValueString($_POST['ch_geo_date'], "date"),
-            GetSQLValueString($_POST['ch_geo_mis_jour'], "date"),
-            GetSQLValueString($_POST['ch_geo_geometries'], "text"),
-            GetSQLValueString($_POST['ch_geo_mesure'], "int"),
-            GetSQLValueString($_POST['ch_geo_type'], "text"),
-            GetSQLValueString($_POST['ch_geo_nom'], "text"));
+            escape_sql($_POST['ch_geo_wkt'], "text"),
+            escape_sql($colname_paysID, "int"),
+            escape_sql($_POST['ch_geo_user'], "int"),
+            escape_sql($_POST['ch_geo_maj_user'], "int"),
+            escape_sql($_POST['ch_geo_date'], "date"),
+            escape_sql($_POST['ch_geo_mis_jour'], "date"),
+            escape_sql($_POST['ch_geo_geometries'], "text"),
+            escape_sql($_POST['ch_geo_mesure'], "int"),
+            escape_sql($_POST['ch_geo_type'], "text"),
+            escape_sql($_POST['ch_geo_nom'], "text"));
 
-        $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+        $Result1 = mysql_query($insertSQL, $maconnexion);
 
-        getErrorMessage('success', "La zone " . __s($_POST['ch_geo_nom']) . ' a été ajoutée !');
+        getErrorMessage('success', "La zone " . e($_POST['ch_geo_nom']) . ' a été ajoutée !');
     }
 
     //recherche des mesures des zones de la carte pour calcul ressources
-    $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($colname_paysID, "int"));
-    $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
+    $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s GROUP BY ch_geo_type ORDER BY ch_geo_geometries", escape_sql($colname_paysID, "int"));
+    $geometries = mysql_query($query_geometries, $maconnexion);
 
     //Calcul total des ressources de la carte.
     while($row_geometries = mysql_fetch_assoc($geometries)) {
@@ -96,19 +97,19 @@ if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_feature")) {
 
     //Enregistrement du total des ressources de la carte.
     $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_carte=%s, ch_pay_commerce_carte=%s, ch_pay_agriculture_carte=%s, ch_pay_tourisme_carte=%s, ch_pay_recherche_carte=%s, ch_pay_environnement_carte=%s, ch_pay_education_carte=%s, ch_pay_population_carte=%s, ch_pay_emploi_carte=%s WHERE ch_pay_id=%s",
-        GetSQLValueString($tot_budget, "int"),
-        GetSQLValueString($tot_industrie, "int"),
-        GetSQLValueString($tot_commerce, "int"),
-        GetSQLValueString($tot_agriculture, "int"),
-        GetSQLValueString($tot_tourisme, "int"),
-        GetSQLValueString($tot_recherche, "int"),
-        GetSQLValueString($tot_environnement, "int"),
-        GetSQLValueString($tot_education, "int"),
-        GetSQLValueString($tot_population, "int"),
-        GetSQLValueString($tot_emploi, "int"),
-        GetSQLValueString($colname_paysID, "int"));
+        escape_sql($tot_budget, "int"),
+        escape_sql($tot_industrie, "int"),
+        escape_sql($tot_commerce, "int"),
+        escape_sql($tot_agriculture, "int"),
+        escape_sql($tot_tourisme, "int"),
+        escape_sql($tot_recherche, "int"),
+        escape_sql($tot_environnement, "int"),
+        escape_sql($tot_education, "int"),
+        escape_sql($tot_population, "int"),
+        escape_sql($tot_emploi, "int"),
+        escape_sql($colname_paysID, "int"));
 
-    $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    $Result2 = mysql_query($updateSQL, $maconnexion);
     mysql_free_result($geometries);
 
     event(new MapUpdated($eloquentPays));
@@ -122,38 +123,38 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
     $paysid = $_POST['ch_geo_pay_id'];
 
     // Obtenir l'ancienne version de l'élément.
-    $eloquentGeometry = Geometry::findOrFail($_POST['ch_geo_id']);
+    $eloquentGeometry = Geometry::query()->findOrFail($_POST['ch_geo_id']);
     $isSpecialZone = in_array($eloquentGeometry->ch_geo_type, $nonModifiableZones);
-    if(!$user_has_perm && $isSpecialZone) {
+    if(!$user_has_admin_perm && $isSpecialZone) {
         getErrorMessage('error', "Vous ne pouvez pas modifier de zone de type "
-            . __s($eloquentGeometry->ch_geo_type) . ". Vous ne disposez pas des permissions "
+            . e($eloquentGeometry->ch_geo_type) . ". Vous ne disposez pas des permissions "
             . "nécessaires.");
     }
 
     else {
         $updateSQL = sprintf("UPDATE geometries SET ch_geo_wkt=%s, ch_geo_pay_id=%s, ch_geo_user=%s, ch_geo_maj_user=%s, ch_geo_date=%s, ch_geo_mis_jour=%s, ch_geo_geometries=%s, ch_geo_mesure=%s, ch_geo_type=%s, ch_geo_nom=%s WHERE ch_geo_id=%s",
-            GetSQLValueString($_POST['ch_geo_wkt'], "text"),
-            GetSQLValueString($_POST['ch_geo_pay_id'], "int"),
-            GetSQLValueString($_POST['ch_geo_user'], "int"),
-            GetSQLValueString($_POST['ch_geo_maj_user'], "int"),
-            GetSQLValueString($_POST['ch_geo_date'], "date"),
-            GetSQLValueString($_POST['ch_geo_mis_jour'], "date"),
-            GetSQLValueString($_POST['ch_geo_geometries'], "text"),
-            GetSQLValueString($_POST['ch_geo_mesure'], "decimal"),
-            GetSQLValueString($_POST['ch_geo_type'], "text"),
-            GetSQLValueString($_POST['ch_geo_nom'], "text"),
-            GetSQLValueString($_POST['ch_geo_id'], "int"));
+            escape_sql($_POST['ch_geo_wkt'], "text"),
+            escape_sql($_POST['ch_geo_pay_id'], "int"),
+            escape_sql($_POST['ch_geo_user'], "int"),
+            escape_sql($_POST['ch_geo_maj_user'], "int"),
+            escape_sql($_POST['ch_geo_date'], "date"),
+            escape_sql($_POST['ch_geo_mis_jour'], "date"),
+            escape_sql($_POST['ch_geo_geometries'], "text"),
+            escape_sql($_POST['ch_geo_mesure'], "decimal"),
+            escape_sql($_POST['ch_geo_type'], "text"),
+            escape_sql($_POST['ch_geo_nom'], "text"),
+            escape_sql($_POST['ch_geo_id'], "int"));
 
-        $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+        $Result1 = mysql_query($updateSQL, $maconnexion);
 
-        getErrorMessage('success', "La zone " . __s($_POST['ch_geo_nom'])
+        getErrorMessage('success', "La zone " . e($_POST['ch_geo_nom'])
             . ' (' . $eloquentGeometry->type_geometry->label . ') a été modifiée !');
     }
 
     //recherche des mesures des zones de la carte pour calcul ressources
 
-    $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($paysid, "int"));
-    $geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
+    $query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", escape_sql($paysid, "int"));
+    $geometries = mysql_query($query_geometries, $maconnexion);
 
     //Calcul total des ressources de la carte.
     while($row_geometries = mysql_fetch_assoc($geometries)) {
@@ -174,19 +175,19 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
 
     //Enregistrement du total des ressources de la carte.
     $updateSQL = sprintf("UPDATE pays SET ch_pay_budget_carte=%s, ch_pay_industrie_carte=%s, ch_pay_commerce_carte=%s, ch_pay_agriculture_carte=%s, ch_pay_tourisme_carte=%s, ch_pay_recherche_carte=%s, ch_pay_environnement_carte=%s, ch_pay_education_carte=%s, ch_pay_population_carte=%s, ch_pay_emploi_carte=%s WHERE ch_pay_id=%s",
-        GetSQLValueString($tot_budget, "int"),
-        GetSQLValueString($tot_industrie, "int"),
-        GetSQLValueString($tot_commerce, "int"),
-        GetSQLValueString($tot_agriculture, "int"),
-        GetSQLValueString($tot_tourisme, "int"),
-        GetSQLValueString($tot_recherche, "int"),
-        GetSQLValueString($tot_environnement, "int"),
-        GetSQLValueString($tot_education, "int"),
-        GetSQLValueString($tot_population, "int"),
-        GetSQLValueString($tot_emploi, "int"),
-        GetSQLValueString($paysid, "int"));
+        escape_sql($tot_budget, "int"),
+        escape_sql($tot_industrie, "int"),
+        escape_sql($tot_commerce, "int"),
+        escape_sql($tot_agriculture, "int"),
+        escape_sql($tot_tourisme, "int"),
+        escape_sql($tot_recherche, "int"),
+        escape_sql($tot_environnement, "int"),
+        escape_sql($tot_education, "int"),
+        escape_sql($tot_population, "int"),
+        escape_sql($tot_emploi, "int"),
+        escape_sql($paysid, "int"));
 
-    $Result2 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    $Result2 = mysql_query($updateSQL, $maconnexion);
     mysql_free_result($geometries);
 
     event(new MapUpdated($eloquentPays));
@@ -208,17 +209,6 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Merriweather+Sans:400,700|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- TemplateEndEditable -->
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
@@ -359,9 +349,9 @@ Eventy::action('display.beforeHeadClosingTag')
       <div class="span8">
           <?php
           $resources = [];
-          foreach(config('enums.resources') as $resource)
+          foreach(Resource::cases() as $resource)
           {
-              $resources[$resource] = $row_InfoGenerale["ch_pay_{$resource}_carte"];
+              $resources[$resource->value] = $row_InfoGenerale["ch_pay_{$resource->value}_carte"];
           }
           renderElement('temperance/resources_small', [
                   'resources' => $resources

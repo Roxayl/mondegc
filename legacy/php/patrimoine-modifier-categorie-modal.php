@@ -1,7 +1,7 @@
 <?php
 
-use App\Events\Patrimoine\PatrimoineCategorized;
-use App\Models\MonumentCategory;
+use Roxayl\MondeGC\Events\Patrimoine\PatrimoineCategorized;
+use Roxayl\MondeGC\Models\MonumentCategory;
 
 header('Content-Type: text/html; charset=utf-8');
 
@@ -11,7 +11,7 @@ appendQueryString($editFormAction);
 
 if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) {
 
-    $eloquentCategory = MonumentCategory::findOrFail($_POST['ch_mon_cat_ID']);
+    $eloquentCategory = MonumentCategory::query()->findOrFail($_POST['ch_mon_cat_ID']);
 
     $updateSQL = sprintf("UPDATE monument_categories 
   SET ch_mon_cat_label=%s, 
@@ -33,27 +33,27 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-categorie")) {
   ch_mon_cat_environnement=%s, 
   ch_mon_cat_education=%s 
   WHERE ch_mon_cat_ID=%s",
-        GetSQLValueString($_POST['ch_mon_cat_label'], "text"),
-        GetSQLValueString($_POST['ch_mon_cat_statut'], "int"),
-        GetSQLValueString($_POST['ch_mon_cat_date'], "date"),
-        GetSQLValueString($_POST['ch_mon_cat_mis_jour'], "date"),
-        GetSQLValueString($_POST['ch_mon_cat_nb_update'], "int"),
-        GetSQLValueString($_POST['ch_mon_cat_nom'], "text"),
-        GetSQLValueString($_POST['ch_mon_cat_desc'], "text"),
-        GetSQLValueString($_POST['ch_mon_cat_icon'], "text"),
-        GetSQLValueString($_POST['ch_mon_cat_couleur'], "text"),
-        GetSQLValueString($_POST['bg_image_url'], "text"),
-        GetSQLValueString($_POST['ch_mon_cat_budget'], "text"),
-        GetSQLValueString($_POST['ch_mon_cat_industrie'], "text"),
-        GetSQLValueString($_POST['ch_mon_cat_commerce'], "text"),
-        GetSQLValueString($_POST['ch_mon_cat_agriculture'], "text"),
-        GetSQLValueString($_POST['ch_mon_cat_tourisme'], "text"),
-        GetSQLValueString($_POST['ch_mon_cat_recherche'], "text"),
-        GetSQLValueString($_POST['ch_mon_cat_environnement'], "text"),
-        GetSQLValueString($_POST['ch_mon_cat_education'], "text"),
-        GetSQLValueString($_POST['ch_mon_cat_ID'], "int"));
+        escape_sql($_POST['ch_mon_cat_label'], "text"),
+        escape_sql($_POST['ch_mon_cat_statut'], "int"),
+        escape_sql($_POST['ch_mon_cat_date'], "date"),
+        escape_sql($_POST['ch_mon_cat_mis_jour'], "date"),
+        escape_sql($_POST['ch_mon_cat_nb_update'], "int"),
+        escape_sql($_POST['ch_mon_cat_nom'], "text"),
+        escape_sql($_POST['ch_mon_cat_desc'], "text"),
+        escape_sql($_POST['ch_mon_cat_icon'], "text"),
+        escape_sql($_POST['ch_mon_cat_couleur'], "text"),
+        escape_sql($_POST['bg_image_url'], "text"),
+        escape_sql($_POST['ch_mon_cat_budget'], "text"),
+        escape_sql($_POST['ch_mon_cat_industrie'], "text"),
+        escape_sql($_POST['ch_mon_cat_commerce'], "text"),
+        escape_sql($_POST['ch_mon_cat_agriculture'], "text"),
+        escape_sql($_POST['ch_mon_cat_tourisme'], "text"),
+        escape_sql($_POST['ch_mon_cat_recherche'], "text"),
+        escape_sql($_POST['ch_mon_cat_environnement'], "text"),
+        escape_sql($_POST['ch_mon_cat_education'], "text"),
+        escape_sql($_POST['ch_mon_cat_ID'], "int"));
 
-    $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    $Result1 = mysql_query($updateSQL, $maconnexion);
 
     // Regénérer les influences des monuments de la catégorie modifiée.
     foreach($eloquentCategory->patrimoine as $eloquentPatrimoine) {
@@ -73,15 +73,15 @@ if (isset($_GET['mon_cat_id'])) {
   $colname_liste_mon_cat = $_GET['mon_cat_id'];
 }
 
-$query_liste_mon_cat = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_ID = %s ORDER BY ch_mon_cat_mis_jour DESC", GetSQLValueString($colname_liste_mon_cat, "int"));
-$liste_mon_cat = mysql_query($query_liste_mon_cat, $maconnexion) or die(mysql_error());
+$query_liste_mon_cat = sprintf("SELECT * FROM monument_categories WHERE ch_mon_cat_ID = %s ORDER BY ch_mon_cat_mis_jour DESC", escape_sql($colname_liste_mon_cat, "int"));
+$liste_mon_cat = mysql_query($query_liste_mon_cat, $maconnexion);
 $row_liste_mon_cat = mysql_fetch_assoc($liste_mon_cat);
 $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
 
 ?>
 
 <!-- Modal Header-->
-<form action="<?php echo $editFormAction; ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
+<form action="<?= e($editFormAction) ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 <h3 id="myModalLabel">Modifier la cat&eacute;gorie <?= e($row_liste_mon_cat['ch_mon_cat_nom']) ?></h3>

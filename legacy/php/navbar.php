@@ -15,19 +15,13 @@ $loginFormAction = DEF_URI_PATH . 'index.php';
 // Tri des pays par continent pour le menu deroulant
 
 $query_menu = "SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_pay_continent FROM pays WHERE ch_pay_publication = 1 ORDER BY ch_pay_nom ASC";
-$menu = mysql_query($query_menu, $maconnexion) or die(mysql_error());
-$totalRows_menu = mysql_num_rows($menu);
-
-$row_menu = mysql_fetch_assoc($menu);
-mysql_data_seek($menu, 0);
+$menu = collect(DB::select(DB::raw($query_menu)))->map(fn(object $row) => (array) $row)->toArray();
+$totalRows_menu = count($menu);
 
 $nav_userPays = array();
 if(isset($_SESSION['userObject'])) {
     $nav_userPays = $_SESSION['userObject']->getCountries();
 }
-
-if(!isset($loginFormAction))
-    $loginFormAction = '';
 
 /** Notifications navbar Assemblée générale */
 $navbar_proposalList = new \GenCity\Proposal\ProposalList();
@@ -43,7 +37,7 @@ if(auth()->check()) {
 }
 
 /** Organisations */
-$navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
+$navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->get();
 
 ?>
 
@@ -61,7 +55,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
       </form>
       
       <!-- Menu gestion une fois connecté tablet -->
-      <div class="visible-tablet navbar-form menu-gestion menu-gestion-front <?php echo isset($_SESSION['menu_gestion']) ? $_SESSION['menu_gestion'] : '' ?>"><span class="Nav-pseudo"><?php echo isset($_SESSION['login_user']) ? $_SESSION['login_user'] : '' ?>&nbsp;</span>
+      <div class="visible-tablet navbar-form menu-gestion menu-gestion-front <?php echo isset($_SESSION['menu_gestion']) ? e($_SESSION['menu_gestion']) : '' ?>"><span class="Nav-pseudo"><?php echo isset($_SESSION['login_user']) ? e($_SESSION['login_user']) : '' ?>&nbsp;</span>
         <div class="dropdown">
           <a href="<?= DEF_URI_PATH ?>dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="page de gestion du profil"><i class="icon-pays-small-white"></i> Mes pays</a>
           <ul class="dropdown-menu dropdown-mes-pays" role="menu" aria-labelledby="dLabel">
@@ -70,7 +64,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
           <?php endforeach; ?>
           </ul>
         </div>
-        <a href="<?php echo $logoutAction ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a> </div>
+        <a href="<?= e($logoutAction) ?>" title="d&eacute;connexion" class="btn btn-small btn-danger">X</a> </div>
       <!-- Logo -->
       <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
       <a class="brand" href="<?= DEF_URI_PATH ?>index.php"><img src="<?= DEF_URI_PATH ?>assets/img/2019/logo-navbar.png" alt="Le Monde GC" /></a>
@@ -94,8 +88,8 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
         </form>
         
         <!-- Menu gestion une fois connecté desktop/phone -->
-        <div class="hidden-tablet navbar-form <?php echo isset($_SESSION['menu_gestion']) ? $_SESSION['menu_gestion'] : '' ?>">
-            <div><a href="<?= DEF_URI_PATH ?>back/membre-modifier_back.php?userID=<?= isset($_SESSION['user_ID']) ? $_SESSION['user_ID'] : '' ?>" class="btn btn-primary" type="submit" title="page de gestion du profil" style="visibility: hidden;"><i class="icon-user-white"></i> Mon profil</a></div>
+        <div class="hidden-tablet navbar-form <?php echo isset($_SESSION['menu_gestion']) ? e($_SESSION['menu_gestion']) : '' ?>">
+            <div><a href="<?= DEF_URI_PATH ?>back/membre-modifier_back.php?userID=<?= isset($_SESSION['user_ID']) ? e($_SESSION['user_ID']) : '' ?>" class="btn btn-primary" type="submit" title="page de gestion du profil" style="visibility: hidden;"><i class="icon-user-white"></i> Mon profil</a></div>
 
         <?php if(isset($_SESSION['userObject'])):
 
@@ -104,7 +98,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
             <div class="offset" style="margin-top: 38px;">
 
                 <div class="dropdown pull-right">
-                  <a href="<?= DEF_URI_PATH ?>dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="Gérer mes pays"><i class="icon-pays-small-white"></i> <?= $navbar_intitulePays ?></a>
+                  <a href="<?= DEF_URI_PATH ?>dashboard.php" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="submit" title="Gérer mes pays"><i class="icon-pays-small-white"></i> <?= e($navbar_intitulePays) ?></a>
                   <ul class="dropdown-menu dropdown-mes-pays" role="menu" aria-labelledby="dLabel">
                       <li class="nav-header">Gérer <?= \Illuminate\Support\Str::lower($navbar_intitulePays) ?></li>
                       <?php foreach($nav_userPays as $nav_thisPays): ?>
@@ -114,9 +108,9 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
                       <?php endforeach; ?>
                       <li class="divider"></li>
                       <li class="nav-header">Mon compte</li>
-                      <li><div style="margin: 5px;"><small>Connecté en tant que <?= __s($_SESSION['userObject']->get('ch_use_login')) ?></small></div></li>
+                      <li><div style="margin: 5px;"><small>Connecté en tant que <?= e($_SESSION['userObject']->get('ch_use_login')) ?></small></div></li>
                       <li><a href="<?= DEF_URI_PATH ?>back/membre-modifier_back.php?userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>">Gérer mon compte</a></li>
-                      <li><a href="<?= $logoutAction ?>">Se déconnecter</a></li>
+                      <li><a href="<?= e($logoutAction) ?>">Se déconnecter</a></li>
                   </ul>
                 </div>
 
@@ -176,11 +170,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
               <a href="<?= DEF_URI_PATH ?>dashboard.php" title="informations pratiques"><i class="icon icon-evenement"></i></a>
             </center>
             <a href="<?= DEF_URI_PATH ?>dashboard.php" title="informations pratiques">Tableau de bord</a>
-          <ul class="dropdown-menu">            
-              <li><a href="https://www.forum-gc.com">Le forum</a></li>
-              <li><a href="http://vasel.yt/wiki/index.php?title=Accueil">Le Wiki</a></li>
-        <li><a href="https://squirrel.romukulot.fr/">Squirrel</a></li>
-            </ul></li>
+          </li>
         <?php endif; ?>
 
           <li class="dropdown <?php if ($carte || $menupays) { echo('active');}  ?>">
@@ -193,8 +183,8 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
                 <li class="nav-lien-carte"><a href="<?= DEF_URI_PATH ?>map"><div><h3>Explorer la carte</h3></div></a></li>
                 <li><a href="<?= DEF_URI_PATH ?>Page-carte.php"><i class="icon-list"></i> Voir la liste des pays</a></li>
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Aurinea.png" class="img-continent"> R&eacute;publique F&eacute;d&eacute;rale de G&eacute;n&eacute;ration City</li>
-                <?php 
-				do { 
+                <?php
+                foreach($menu as $row_menu) {
                 if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'RFGC') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
@@ -202,12 +192,12 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
 					} ?>
                 <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
-				} while ($row_menu = mysql_fetch_assoc($menu));
-				mysql_data_seek($menu,0); ?>
+				}
+                ?>
                 <li class="divider"></li>
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Aurinea.png" class="img-continent"> Continent Aurin&eacute;a</li>
                 <?php 
-				do { 
+                foreach($menu as $row_menu) {
                 if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'Aurinea') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
@@ -215,12 +205,11 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
 					} ?>
                 <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
-				} while ($row_menu = mysql_fetch_assoc($menu));
-				mysql_data_seek($menu,0); ?>
+				} ?>
                 <li class="divider"></li>
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Volcania.png" class="img-continent"> Continent Volcania</li>
                 <?php 
-				do { 
+                foreach($menu as $row_menu) {
                 if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'Volcania') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
@@ -228,13 +217,12 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
 					} ?>
                 <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
-				} while ($row_menu = mysql_fetch_assoc($menu));
-				mysql_data_seek($menu,0); ?>
+				} ?>
               </div>
               <div class="drop-colonne-droite">
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Aldesyl.png" class="img-continent"> Continent Aldesyl</li>
                 <?php 
-				do { 
+                foreach($menu as $row_menu) {
                 if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'Aldesyl') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
@@ -242,12 +230,11 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
 					} ?>
                 <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
-				} while ($row_menu = mysql_fetch_assoc($menu));
-				mysql_data_seek($menu,0); ?>
+				} ?>
                 <li class="divider"></li>
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Oceania.png" class="img-continent"> Continent Oc&eacute;ania</li>
                 <?php 
-				do { 
+                foreach($menu as $row_menu) {
                 if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'Oceania') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
@@ -255,12 +242,11 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
 					} ?>
                 <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
-				} while ($row_menu = mysql_fetch_assoc($menu));
-				mysql_data_seek($menu,0); ?>
+                } ?>
                 <li class="divider"></li>
                 <li class="nav-header"><img src="<?= DEF_URI_PATH ?>assets/img/Philicie.png" class="img-continent"> Continent Philicie</li>
-                <?php 
-				do { 
+                <?php
+                foreach($menu as $row_menu) {
                 if (is_array($row_menu) && $row_menu['ch_pay_continent'] == 'Philicie') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_menu['ch_pay_lien_imgdrapeau']))
 					{
@@ -268,8 +254,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
 					} ?>
                 <li><a href="<?= DEF_URI_PATH ?>page-pays.php?ch_pay_id=<?= e($row_menu['ch_pay_id']) ?>"><img src="<?= e($row_menu['ch_pay_lien_imgdrapeau']) ?>" class="img-menu-drapeau"> <?= e($row_menu['ch_pay_nom']) ?></a></li>
                 <?php }
-				} while ($row_menu = mysql_fetch_assoc($menu));
-				mysql_data_seek($menu,0); ?>
+                } ?>
               </div>
             </ul>
           </li>
@@ -294,13 +279,13 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
                       if($org_type_actuel !== $thisOrganisation->type):
                           $org_type_actuel = $thisOrganisation->type;
 
-                          if($org_type_actuel === \App\Models\Organisation::TYPE_ORGANISATION): ?>
+                          if($org_type_actuel === \Roxayl\MondeGC\Models\Organisation::TYPE_ORGANISATION): ?>
                               </div>
                               <div class="drop-colonne-droite">
                           <?php endif; ?>
                           <li class="nav-header" style="text-transform: none;">
-                              <span class="badge org-<?= $thisOrganisation->type ?>">
-                              <?= __("organisation.types.{$thisOrganisation->type}") ?>
+                              <span class="badge org-<?= e($thisOrganisation->type) ?>">
+                              <?= e(__("organisation.types.{$thisOrganisation->type}")) ?>
                               </span>
                           </li>
                       <?php
@@ -338,7 +323,7 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
                       <span class="btn-small"><strong><img src="<?= DEF_URI_PATH ?>assets/img/2019/AGicon.png"> Session en cours</strong><br>
                           <?= count($navbar_pendingVotes) ?>
                           proposition<?= count($navbar_pendingVotes) > 1 ? 's' : '' ?>
-                          actuellement soumis<?= count($navbar_pendingVotes) > 1 ? 'es' : 'e' ?> au vote
+                          actuellement soumise<?= count($navbar_pendingVotes) > 1 ? 's' : '' ?> au vote
                           <?php if(count($navbar_userProposalPendingVotes)): ?>
                             <br><span style="color: #ff4e00;">
                               (dont <?= count($navbar_userProposalPendingVotes) ?> en attente de votre vote)
@@ -367,10 +352,14 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
               <a title="les autres sites de G&eacute;n&eacute;ration City"><i class="icon icon-generation_city"></i></a>
             </center>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="les autres sites de G&eacute;n&eacute;ration City">G&eacute;n&eacute;ration City <b class="caret"></b></a>
-            <ul class="dropdown-menu">            
+            <ul class="dropdown-menu">
+              <li class="nav-header">L'univers GC</li>
               <li><a href="https://www.forum-gc.com">Le forum</a></li>
-              <li><a href="http://vasel.yt/wiki/index.php?title=Accueil">Le Wiki</a></li>
-			  <li><a href="https://squirrel.romukulot.fr/">Squirrel</a></li>
+              <li><a href="https://discord.com/invite/4P3HqVbbgR">Discord</a></li>
+              <li><a href="https://vasel.yt/wiki/index.php?title=Accueil">Le Wiki</a></li>
+              <li><a href="https://squirrel.roxayl.fr/">Squirrel</a></li>
+              <li class="nav-header">Contribuer</li>
+              <li><a href="https://github.com/Roxayl/mondegc">GitHub</a></li>
             </ul>
           </li>
 
@@ -379,6 +368,3 @@ $navbar_organisationList = \App\Models\Organisation::allOrdered()->get();
     </div>
   </div>
 </div>
-<?php
-mysql_free_result($menu);
-?>

@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Providers;
+namespace Roxayl\MondeGC\Providers;
 
-use App\Services\FakerProviders\ChapterEntryMediaProvider;
-use App\Services\FakerProviders\EventNameProvider;
 use Faker\Factory;
 use Faker\Generator;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
+use Roxayl\MondeGC\Services\FakerProviders\ChapterEntryMediaProvider;
+use Roxayl\MondeGC\Services\FakerProviders\EventNameProvider;
 
-class FakerServiceProvider extends ServiceProvider
+class FakerServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -23,5 +22,13 @@ class FakerServiceProvider extends ServiceProvider
             $faker->addProvider(new EventNameProvider($faker));
             return $faker;
         });
+    }
+
+    /**
+     * @return class-string[]
+     */
+    public function provides(): array
+    {
+        return [Generator::class];
     }
 }

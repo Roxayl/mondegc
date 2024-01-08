@@ -3,14 +3,12 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'])
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
+if (!$_SESSION['statut']) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 if ((isset($_POST['ch_disp_group_id'])) && ($_POST['ch_disp_group_id'] != "")) {
 	$cat= $_POST['ch_disp_group_id'];
@@ -18,10 +16,10 @@ if ((isset($_POST['ch_disp_group_id'])) && ($_POST['ch_disp_group_id'] != "")) {
 
 if ((isset($_POST['ch_disp_MG_id'])) && ($_POST['ch_disp_MG_id'] != "")) {
   $deleteSQL = sprintf("DELETE FROM dispatch_mem_group WHERE ch_disp_MG_id=%s",
-                       GetSQLValueString($_POST['ch_disp_MG_id'], "int"));
+                       escape_sql($_POST['ch_disp_MG_id'], "int"));
 
 
-  $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($deleteSQL, $maconnexion);
   $deleteGoTo = $_SESSION['last_work'];
   header(sprintf("Location: %s", $deleteGoTo));
  exit;
@@ -38,17 +36,6 @@ if ((isset($_POST['ch_disp_MG_id'])) && ($_POST['ch_disp_MG_id'] != "")) {
     <link href="../assets/css/bootstrap.css" rel="stylesheet">
     <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="../assets/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">

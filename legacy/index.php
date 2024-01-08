@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Roleplay;
-use App\View\Components\Roleplay as RoleplayComponent;
+use Roxayl\MondeGC\Models\Roleplay;
+use Roxayl\MondeGC\View\Components\Roleplay as RoleplayComponent;
 use Illuminate\Support\Facades\Gate;
 use TorMorten\Eventy\Facades\Eventy;
 
@@ -35,17 +35,6 @@ $_SESSION['an']=true;
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <link href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" rel="stylesheet">
 <!-- TemplateEndEditable -->
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
@@ -168,7 +157,7 @@ FROM communiques communique_institut
 INNER JOIN instituts ON ch_com_element_id = ch_ins_ID 
 WHERE communique_institut.ch_com_statut = 1 AND communique_institut.ch_com_categorie ='institut' 
 ORDER BY date DESC LIMIT 0, 15";
-        $communiquesPays = mysql_query($query_communiquesPays, $maconnexion) or die(mysql_error());
+        $communiquesPays = mysql_query($query_communiquesPays, $maconnexion);
         $row_communiquesPays = mysql_fetch_assoc($communiquesPays);
         ?>
 

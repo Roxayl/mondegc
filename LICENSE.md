@@ -1,10 +1,10 @@
 All Rights Reserved
 
-Copyright (c) 2021 Génération City
+Copyright (c) since 2013 Génération City
 
 Created by Génération City
 
-Developed by AlfredVallamir, Calimero, Lesime, Myname, Roxel Lay
+Developed by AlfredVallamir, Calimero, Lesime, Myname, Roxayl, Sakuro
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

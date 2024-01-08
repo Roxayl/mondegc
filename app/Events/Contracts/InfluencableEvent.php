@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Events\Contracts;
+namespace Roxayl\MondeGC\Events\Contracts;
 
-use App\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Contracts\Influencable;
 
 interface InfluencableEvent
 {

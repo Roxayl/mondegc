@@ -1,13 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * @return View
      */
@@ -22,10 +26,9 @@ class NotificationController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return JsonResponse
      */
-    public function markAsRead(Request $request): JsonResponse
+    public function markAsRead(): JsonResponse
     {
         auth()->user()->unreadNotifications->markAsRead();
 

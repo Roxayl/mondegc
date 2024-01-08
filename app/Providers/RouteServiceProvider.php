@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Providers;
+namespace Roxayl\MondeGC\Providers;
 
-use App;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -15,26 +14,20 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Http\Controllers';
+    protected $namespace = 'Roxayl\MondeGC\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        //
-
         parent::boot();
     }
 
     /**
      * Define the routes for the application.
-     *
-     * @return void
      */
-    public function map()
+    public function map(): void
     {
         $this->mapApiRoutes();
 
@@ -63,10 +56,8 @@ class RouteServiceProvider extends ServiceProvider
      * Define the "web" routes for the application.
      *
      * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
      */
-    protected function mapWebRoutes()
+    protected function mapWebRoutes(): void
     {
         $prefix = $this->getPrefix();
 
@@ -77,28 +68,28 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define the "legacy" routes for the application.
+     * Définit les routes "legacy" de l'application.
      *
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
+     * Cette route "par défaut" est utilisée lorsque l'application ne parvient pas à résoudre une route vers un
+     * controller de l'app Laravel. Cette route "attrape-tout" permet de faire gérer la requête par le controller
+     * dédié au site "legacy".
      */
-    protected function mapLegacyRoutes()
+    protected function mapLegacyRoutes(): void
     {
         // On ne préfixe pas les URLs vers le site legacy.
         Route::middleware('legacy')
              ->namespace($this->namespace . '\Legacy')
-             ->group(base_path('routes/legacy.php'));
+             ->group(function() {
+                Route::any('/{path?}', 'LegacySiteController')->where('path', '.*');
+             });
     }
 
     /**
      * Define the "api" routes for the application.
      *
      * These routes are typically stateless.
-     *
-     * @return void
      */
-    protected function mapApiRoutes()
+    protected function mapApiRoutes(): void
     {
         $prefix = $this->getPrefix();
         if($prefix) {

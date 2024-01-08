@@ -1,4 +1,4 @@
-name: build
+name: "🏗️ Build and deploy"
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 jobs:
 
   run-tests:
-    name: "Run PHPUnit tests"
+    name: "🧪 Run tests"
     runs-on: ubuntu-20.04
 
     services:
@@ -23,29 +23,40 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.0'
-          extensions: gd, mbstring, mysqli, opcache, pdo, pdo_mysql
-      - uses: actions/checkout@v2
 
-      - name: Install dependencies
+      - name: Checkout full repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Detect secrets
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_NOTIFY_USER_LIST: '@Roxayl'
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: curl, gd, iconv, json, mbstring, pdo, pdo_mysql, zip
+
+      - name: Install PHP dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Initialize environment
-        run: |
-          chmod -R 777 storage bootstrap/cache
-          php artisan monde:init-env && php artisan monde:init-testing
-
-      - name: Run migrations
+      - name: Initialize environment and database
         env:
           DB_HOST: 127.0.0.1
           DB_PASSWORD: root
           DB_DATABASE: mondegc_testing
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
-        run: php artisan migrate -v
+        run: |
+          chmod -R 777 storage bootstrap/cache
+          php artisan monde:init-env
+          php artisan monde:init-testing
+          php artisan migrate -v
 
-      - name: Execute tests (Unit and Feature tests) via PHPUnit
+      - name: Execute unit and feature tests via PHPUnit
         env:
           DB_HOST: 127.0.0.1
           DB_PASSWORD: root
@@ -53,32 +64,76 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
         run: php artisan test
 
-  deploy-ftp:
-    name: Deploy via FTP
+  run-backups:
+    name: "💾 Run backups"
     runs-on: ubuntu-20.04
     needs: run-tests
     if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')
 
     steps:
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.0'
-          extensions: gd, mbstring, mysqli, opcache, pdo, pdo_mysql
-      - uses: actions/checkout@v2
 
-      - name: Deploy to Production
-        uses: SamKirkland/FTP-Deploy-Action@4.2.0
+      - name: Backup user files and database
+        uses: appleboy/ssh-action@v0.1.9
         with:
-          protocol: ftp
-          server: mgvx.ftp.infomaniak.com
-          port: 21
-          username: ${{ secrets.FTP_MONDEGC_USERNAME }}
-          password: ${{ secrets.FTP_MONDEGC_PASSWORD }}
+          host: ${{ secrets.PROD_SSH_HOST }}
+          port: ${{ secrets.PROD_SSH_PORT }}
+          username: ${{ secrets.PROD_SSH_USERNAME }}
+          password: ${{ secrets.PROD_SSH_PASSWORD }}
+          script_stop: true
+          script: |
+            cd "${{ vars.PROD_FULL_DIR }}"
+            php artisan backup:run
+
+  deploy-to-prod:
+    name: "🚀 Deploy to production"
+    runs-on: ubuntu-20.04
+    needs: run-backups
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Prepare deployment
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: ${{ secrets.PROD_SSH_HOST }}
+          port: ${{ secrets.PROD_SSH_PORT }}
+          username: ${{ secrets.PROD_SSH_USERNAME }}
+          password: ${{ secrets.PROD_SSH_PASSWORD }}
+          script: |
+            cd "${{ vars.PROD_FULL_DIR }}"
+            php artisan down --refresh=60 --retry=60
+
+      - name: Deploy sources
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          protocol: ftps
+          server: ${{ secrets.PROD_SSH_HOST }}
+          port: ${{ secrets.PROD_FTP_PORT }}
+          username: ${{ secrets.PROD_SSH_USERNAME }}
+          password: ${{ secrets.PROD_SSH_PASSWORD }}
           local-dir: ./
-          server-dir: ./
+          server-dir: ${{ vars.PROD_FTP_DIR }}
           exclude: |
             **/.git*
             **/.git*/**
             **/node_modules/**
-            **/lib/**
           log-level: standard
+
+      - name: Cleanup deployment
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: ${{ secrets.PROD_SSH_HOST }}
+          port: ${{ secrets.PROD_SSH_PORT }}
+          username: ${{ secrets.PROD_SSH_USERNAME }}
+          password: ${{ secrets.PROD_SSH_PASSWORD }}
+          script: |
+            cd "${{ vars.PROD_FULL_DIR }}"
+            composer install --no-dev --classmap-authoritative --no-ansi --no-interaction --no-progress
+            BUILD_NUMBER=${{ github.run_number }}
+            find ./.env -type f -exec sed -i '' -e "/^APP_BUILD=/s/=.*/=\'$BUILD_NUMBER\'/" {} \;
+            php artisan optimize:clear
+            php artisan migrate --force
+            php artisan up

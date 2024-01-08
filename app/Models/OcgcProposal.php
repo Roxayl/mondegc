@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
 use Carbon\Carbon;
 use GenCity\Proposal\Proposal;
@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 /**
@@ -65,7 +66,7 @@ use Illuminate\Support\Str;
  * @method static Builder|OcgcProposal whereType($value)
  * @method static Builder|OcgcProposal whereTypeReponse($value)
  * @method static Builder|OcgcProposal whereUpdated($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class OcgcProposal extends Model
 {
@@ -119,6 +120,9 @@ class OcgcProposal extends Model
         'RP'  => "Résolution",
     ];
 
+    /**
+     * @inheritDoc
+     */
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -128,6 +132,7 @@ class OcgcProposal extends Model
 
     /**
      * Pays à l'origine de la proposition.
+     *
      * @return BelongsTo
      */
     public function pays(): BelongsTo
@@ -160,6 +165,7 @@ class OcgcProposal extends Model
 
     /**
      * Nombre total de réponses possibles pour une proposition.
+     *
      * @return int
      */
     public function getMaxResponses(): int
@@ -170,6 +176,7 @@ class OcgcProposal extends Model
 
     /**
      * Donne la collection des réponses à une proposition, y compris le vote blanc.
+     *
      * @return Collection
      */
     public function responses(): Collection
@@ -188,7 +195,44 @@ class OcgcProposal extends Model
     }
 
     /**
+     * Renvoie la liste des pays votants à la proposition.
+     *
+     * @return Collection<Pays>
+     */
+    public function votingCountries(): Collection
+    {
+        $votes = DB::query()
+            ->select('*')
+            ->from('ocgc_votes')
+            ->where('ID_proposal', $this->id);
+
+        return Pays::query()->whereIn('ch_pay_id', $votes->pluck('ID_pays'))->get();
+    }
+
+    /**
+     * Ajoute de nouveaux pays votants à la proposition.
+     *
+     * @param iterable<int> $paysIds Liste de pays décrits par leur identifiant.
+     */
+    public function addVoters(iterable $paysIds): void
+    {
+        $votingCountries = $this->votingCountries()->pluck('ch_pay_id');
+        foreach($paysIds as $paysId) {
+            if($paysId === null || $votingCountries->contains($paysId)) {
+                continue;
+            }
+            DB::table('ocgc_votes')->insert([
+                'ID_proposal' => $this->id,
+                'ID_pays' => $paysId,
+                'reponse_choisie' => null,
+                'created' => Carbon::now(),
+            ]);
+        }
+    }
+
+    /**
      * Renvoie le choix à l'issue du vote.
+     *
      * @return Collection Collection de réponses.
      */
     public function results(): Collection
@@ -200,6 +244,7 @@ class OcgcProposal extends Model
 
     /**
      * Donne le détail du type de la proposition.
+     *
      * @return string "Sondage" ou "Résolution", en fonction du type de la proposition.
      */
     public function typeDetail(): string
@@ -209,6 +254,7 @@ class OcgcProposal extends Model
 
     /**
      * Renvoie l'identifiant complet d'une proposition (e.g. "Résolution 21-072").
+     *
      * @return string
      */
     public function fullIdentifier(): string

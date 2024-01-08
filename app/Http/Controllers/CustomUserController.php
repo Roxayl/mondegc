@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Models\Contracts\Roleplayable;
-use App\Models\CustomUser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\CustomUser;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class CustomUserController extends Controller
@@ -47,7 +47,7 @@ class CustomUserController extends Controller
         /** @var Collection<int, Roleplayable> $roleplayables */
         $roleplayables = $user->roleplayables()->filter(function(Roleplayable $roleplayable) use ($type, $term) {
             return Str::contains(Str::lower($roleplayable->getName()), $term)
-                && get_class($roleplayable) === 'App\Models\\' . Str::ucfirst($type);
+                && get_class($roleplayable) === 'Roxayl\MondeGC\Models\\' . Str::ucfirst($type);
         });
 
         $result = [];
@@ -64,17 +64,16 @@ class CustomUserController extends Controller
 
     /**
      * Met à jour le jeton d'authentification à l'API.
-     * @param  Request     $request
      * @param  CustomUser  $user
      * @return RedirectResponse
      */
-    public function updateToken(Request $request, CustomUser $user): RedirectResponse
+    public function updateToken(CustomUser $user): RedirectResponse
     {
         $this->checkCurrentUser($user);
 
         $user->api_token = Str::random(60);
         $user->save();
 
-        return redirect()->back()->with('success', "Jeton d'authentification à l'API généré avec succès.");
+        return redirect()->back()->with('message', "success|Jeton d'authentification à l'API généré avec succès.");
     }
 }

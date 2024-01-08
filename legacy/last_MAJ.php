@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Infrastructure;
+use Roxayl\MondeGC\Models\Infrastructure;
 
 $maxRows_LastCommunique = 20;
 $pageNum_LastCommunique = 0;
@@ -115,7 +115,7 @@ JOIN roleplay ON roleplay.id = chapters.roleplay_id
 WHERE chapters.deleted_at IS NULL AND roleplay.deleted_at IS NULL
 ORDER BY date DESC";
 $query_limit_LastCommunique = sprintf("%s LIMIT %d, %d", $query_LastCommunique, $startRow_LastCommunique, $maxRows_LastCommunique);
-$LastCommunique = mysql_query($query_limit_LastCommunique, $maconnexion) or die(mysql_error());
+$LastCommunique = mysql_query($query_limit_LastCommunique, $maconnexion);
 $row_LastCommunique = mysql_fetch_assoc($LastCommunique);
 
 if (isset($_GET['totalRows_LastCommunique'])) {
@@ -824,7 +824,7 @@ do {
 
     if ( $row_LastCommunique['type_notification'] == "rp_new_chapter") {
 
-        $chapter = \App\Models\Chapter::find($row_LastCommunique['id']);
+        $chapter = \Roxayl\MondeGC\Models\Chapter::find($row_LastCommunique['id']);
         if(! $chapter) continue;
 
         ?>

@@ -1,10 +1,7 @@
 <?php
 
-namespace App\Jobs\Discord;
+namespace Roxayl\MondeGC\Jobs\Discord;
 
-use App\Jobs\Contracts\NotifiesDiscord;
-use App\Jobs\Traits\NotifiesDiscord as NotifiesDiscordTrait;
-use App\Models\OcgcProposal;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +9,9 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Jobs\Contracts\NotifiesDiscord;
+use Roxayl\MondeGC\Jobs\Traits\NotifiesDiscord as NotifiesDiscordTrait;
+use Roxayl\MondeGC\Models\OcgcProposal;
 
 class NotifyFinishedProposal implements ShouldQueue, NotifiesDiscord
 {
@@ -21,11 +21,6 @@ class NotifyFinishedProposal implements ShouldQueue, NotifiesDiscord
 
     private string $webhookName = 'ocgc';
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
     public function __construct(OcgcProposal $proposal)
     {
         $this->proposal = $proposal;
@@ -57,7 +52,7 @@ class NotifyFinishedProposal implements ShouldQueue, NotifiesDiscord
                     ],
                     'timestamp' => $this->proposal->created->format('c'),
                     'thumbnail' => [
-                        'url' => 'https://romukulot.fr/kaleera/images/7YPwC.png',
+                        'url' => 'https://roxayl.fr/kaleera/images/7YPwC.png',
                     ],
                     'color' => hexdec('234067'),
                     'footer' => [

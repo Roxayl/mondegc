@@ -7,8 +7,8 @@ if (isset($_GET['fai_cat_id'])) {
   $colname_liste_fait_cat = $_GET['fai_cat_id'];
 }
 
-$query_liste_fait_cat = sprintf("SELECT * FROM faithist_categories WHERE ch_fai_cat_ID = %s ORDER BY ch_fai_cat_mis_jour DESC", GetSQLValueString($colname_liste_fait_cat, "int"));
-$liste_fait_cat = mysql_query($query_liste_fait_cat, $maconnexion) or die(mysql_error());
+$query_liste_fait_cat = sprintf("SELECT * FROM faithist_categories WHERE ch_fai_cat_ID = %s ORDER BY ch_fai_cat_mis_jour DESC", escape_sql($colname_liste_fait_cat, "int"));
+$liste_fait_cat = mysql_query($query_liste_fait_cat, $maconnexion);
 $row_liste_fait_cat = mysql_fetch_assoc($liste_fait_cat);
 $totalRows_liste_fait_cat = mysql_num_rows($liste_fait_cat);
 

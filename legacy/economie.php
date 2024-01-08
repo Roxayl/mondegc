@@ -1,6 +1,7 @@
 <?php
 
-use App\Services\EconomyService;
+use Roxayl\MondeGC\Models\Enums\Resource;
+use Roxayl\MondeGC\Services\EconomyService;
 use Illuminate\Support\Facades\Gate;
 
 //Connexion et deconnexion
@@ -9,13 +10,13 @@ include('php/log.php');
 //requete instituts
 $institut_id = 5;
 
-$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
-$institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
+$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", escape_sql($institut_id, "int"));
+$institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
 $selectedResource = 'budget';
-if(isset($_GET['cat']) && in_array($_GET['cat'], config('enums.resources'), true)) {
+if(isset($_GET['cat']) && in_array($_GET['cat'], array_column(Resource::cases(), 'value'), true)) {
     $selectedResource = $_GET['cat'];
 }
 
@@ -37,7 +38,7 @@ foreach($paysList as $thisPays) {
 <!-- head Html -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Monde GC - <?= __s($row_institut['ch_ins_nom']) ?></title>
+<title>Monde GC - <?= e($row_institut['ch_ins_nom']) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -50,17 +51,6 @@ foreach($paysList as $thisPays) {
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
@@ -157,7 +147,7 @@ Eventy::action('display.beforeHeadClosingTag')
             <div class="span12">
               <?php if(!empty($row_institut['ch_ins_img'])): ?>
                 <img alt="Icône de l'institut" class="pull-right" style="width: 35%; margin-left: 15px;"
-                     src="<?= __s($row_institut['ch_ins_img']) ?>">
+                     src="<?= e($row_institut['ch_ins_img']) ?>">
               <?php endif; ?>
               <?php echo $row_institut['ch_ins_desc'] ?>
             </div>
@@ -209,7 +199,7 @@ Eventy::action('display.beforeHeadClosingTag')
           <p>
             <a class="btn btn-primary" href="Projet-temperance.php">En savoir plus</a>
             <?php if(Gate::check('judgeInfrastructure',
-              \App\Models\Infrastructure::class)): ?>
+              \Roxayl\MondeGC\Models\Infrastructure::class)): ?>
             <a class="btn btn-primary" href="<?= route('infrastructure-judge.index') ?>"
                 >Salle de jugement des infrastructures</a>
             <?php endif; ?>

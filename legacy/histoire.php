@@ -6,15 +6,15 @@ include('php/log.php');
 //requete instituts
 $institut_id = 4;
 
-$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
-$institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
+$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", escape_sql($institut_id, "int"));
+$institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
 //requete liste categories fait_hists pour pouvoir selectionner la categorie 
 
 $query_liste_fai_cat2 = "SELECT * FROM faithist_categories WHERE ch_fai_cat_statut = 1 ORDER BY ch_fai_cat_mis_jour DESC";
-$liste_fai_cat2 = mysql_query($query_liste_fai_cat2, $maconnexion) or die(mysql_error());
+$liste_fai_cat2 = mysql_query($query_liste_fai_cat2, $maconnexion);
 $row_liste_fai_cat2 = mysql_fetch_assoc($liste_fai_cat2);
 $totalRows_liste_fai_cat2 = mysql_num_rows($liste_fai_cat2);
 
@@ -43,9 +43,9 @@ INNER JOIN histoire ON fait.ch_disp_fait_hist_id = ch_his_id
 INNER JOIN pays ON ch_pay_id = ch_his_paysID
 WHERE fait.ch_disp_fait_hist_cat_id = %s OR %s IS NULL AND ch_his_statut = 1 
 GROUP BY fait.ch_disp_fait_hist_id
-ORDER BY ch_his_date_fait ASC", GetSQLValueString($colname_classer_fait_hist, "int"), GetSQLValueString($colname_classer_fait_hist, "int"));
+ORDER BY ch_his_date_fait ASC", escape_sql($colname_classer_fait_hist, "int"), escape_sql($colname_classer_fait_hist, "int"));
 $query_limit_classer_fait_hist = sprintf("%s LIMIT %d, %d", $query_classer_fait_hist, $startRow_classer_fait_hist, $maxRows_classer_fait_hist);
-$classer_fait_hist = mysql_query($query_limit_classer_fait_hist, $maconnexion) or die(mysql_error());
+$classer_fait_hist = mysql_query($query_limit_classer_fait_hist, $maconnexion);
 $row_classer_fait_hist = mysql_fetch_assoc($classer_fait_hist);
 
 if (isset($_GET['totalRows_classer_fait_hist'])) {
@@ -76,8 +76,8 @@ $queryString_classer_fait_hist = sprintf("&totalRows_classer_fait_hist=%d%s", $t
 
 $query_info_cat = sprintf("SELECT ch_fai_cat_nom, ch_fai_cat_desc, ch_fai_cat_icon, ch_fai_cat_couleur
 FROM faithist_categories
-WHERE ch_fai_cat_ID = %s OR %s IS NULL AND ch_fai_cat_statut = 1", GetSQLValueString($colname_classer_fait_hist, "int"), GetSQLValueString($colname_classer_fait_hist, "int"));
-$info_cat = mysql_query($query_info_cat, $maconnexion) or die(mysql_error());
+WHERE ch_fai_cat_ID = %s OR %s IS NULL AND ch_fai_cat_statut = 1", escape_sql($colname_classer_fait_hist, "int"), escape_sql($colname_classer_fait_hist, "int"));
+$info_cat = mysql_query($query_info_cat, $maconnexion);
 $row_info_cat = mysql_fetch_assoc($info_cat);
 $totalRows_info_cat = mysql_num_rows($info_cat);
 
@@ -94,7 +94,7 @@ $startRow_pays_arch = $pageNum_pays_arch * $maxRows_pays_arch;
 $query_pays_arch = "SELECT ch_pay_id, ch_pay_mis_jour, ch_pay_nom, ch_pay_devise, ch_pay_lien_imgdrapeau, ch_use_prenom_dirigeant, ch_use_nom_dirigeant, Sum(villes.ch_vil_population) AS ch_pay_population 
 FROM pays LEFT OUTER JOIN villes ON ch_pay_id = ch_vil_paysID AND ch_vil_capitale != 3 LEFT OUTER JOIN users ON ch_use_paysID = ch_pay_id WHERE ch_pay_publication = 2 GROUP BY ch_pay_id ORDER BY ch_pay_mis_jour DESC";
 $query_limit_pays_arch = sprintf("%s LIMIT %d, %d", $query_pays_arch, $startRow_pays_arch, $maxRows_pays_arch);
-$pays_arch = mysql_query($query_limit_pays_arch, $maconnexion) or die(mysql_error());
+$pays_arch = mysql_query($query_limit_pays_arch, $maconnexion);
 $row_pays_arch = mysql_fetch_assoc($pays_arch);
 
 if (isset($_GET['totalRows_pays_arch'])) {
@@ -137,17 +137,6 @@ $queryString_pays_arch = sprintf("&totalRows_pays_arch=%d%s", $totalRows_pays_ar
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
@@ -288,7 +277,7 @@ Eventy::action('display.beforeHeadClosingTag')
           
 
 $query_liste_fai_cat3 = "SELECT * FROM faithist_categories WHERE ch_fai_cat_ID In ($listcategories) AND ch_fai_cat_statut=1";
-$liste_fai_cat3 = mysql_query($query_liste_fai_cat3, $maconnexion) or die(mysql_error());
+$liste_fai_cat3 = mysql_query($query_liste_fai_cat3, $maconnexion);
 $row_liste_fai_cat3 = mysql_fetch_assoc($liste_fai_cat3);
 $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 			 } ?>

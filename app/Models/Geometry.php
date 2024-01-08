@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -39,7 +39,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|Geometry whereChGeoUser($value)
  * @method static Builder|Geometry whereChGeoWkt($value)
  * @method static Builder|Geometry whereTypeGeometrieId($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Geometry extends Model
 {

@@ -9,14 +9,14 @@
   <paths>
     <output>docs</output>
   </paths>
-  <version number="2.10">
+  <version number="2">
     <api>
       <source dsn=".">
         <path>app</path>
         <path>database/factories</path>
         <path>database/seeders</path>
         <path>legacy/php/GenCity</path>
-        <path>lib/Squirrel</path>
+        <path>libs/Squirrel</path>
         <path>tests</path>
       </source>
     </api>

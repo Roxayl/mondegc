@@ -14,25 +14,25 @@ if (isset($_POST['monument_ID'])) {
   $colname_ch_pat_confimation_suppression = $_POST['monument_ID'];
 }
 
-$query_ch_pat_confimation_suppression = sprintf("SELECT ch_pat_id, ch_pat_villeID FROM patrimoine WHERE ch_pat_id = %s", GetSQLValueString($colname_ch_pat_confimation_suppression, "int"));
-$ch_pat_confimation_suppression = mysql_query($query_ch_pat_confimation_suppression, $maconnexion) or die(mysql_error());
+$query_ch_pat_confimation_suppression = sprintf("SELECT ch_pat_id, ch_pat_villeID FROM patrimoine WHERE ch_pat_id = %s", escape_sql($colname_ch_pat_confimation_suppression, "int"));
+$ch_pat_confimation_suppression = mysql_query($query_ch_pat_confimation_suppression, $maconnexion);
 $row_ch_pat_confimation_suppression = mysql_fetch_assoc($ch_pat_confimation_suppression);
 $totalRows_ch_pat_confimation_suppression = mysql_num_rows($ch_pat_confimation_suppression);
 
 // suppression des villes
 
 if((isset($_POST['monument_ID'])) && ($_POST['monument_ID'] != "")) {
-    $eloquentPatrimoine = \App\Models\Patrimoine::findOrFail($_POST['monument_ID']);
+    $eloquentPatrimoine = \Roxayl\MondeGC\Models\Patrimoine::query()->findOrFail($_POST['monument_ID']);
 
     $eloquentPatrimoine->deleteInfluences();
 
     $deleteSQL = sprintf("DELETE FROM patrimoine WHERE ch_pat_id=%s",
-        GetSQLValueString($_POST['monument_ID'], "int"));
-    $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+        escape_sql($_POST['monument_ID'], "int"));
+    $Result1 = mysql_query($deleteSQL, $maconnexion);
 
     $deleteSQL2 = sprintf("DELETE FROM dispatch_mon_cat WHERE ch_disp_mon_id=%s",
-        GetSQLValueString($_POST['monument_ID'], "int"));
-    $Result2 = mysql_query($deleteSQL2, $maconnexion) or die(mysql_error());
+        escape_sql($_POST['monument_ID'], "int"));
+    $Result2 = mysql_query($deleteSQL2, $maconnexion);
 
     getErrorMessage('success', "Le monument a été supprimé avec succès.");
 
@@ -55,17 +55,6 @@ if((isset($_POST['monument_ID'])) && ($_POST['monument_ID'] != "")) {
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
 <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">

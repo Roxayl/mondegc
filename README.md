@@ -3,7 +3,7 @@
 
 <p align="center">
 <a href="https://github.com/Roxayl/mondegc/actions"><img src="https://github.com/Roxayl/mondegc/actions/workflows/build.yml/badge.svg" alt="CI" /></a>
-<a href="https://discord.gg/qPSn8nsS2p"><img src="https://img.shields.io/discord/328496654514782209" alt="Discord" /></a>
+<a href="https://discord.gg/4P3HqVbbgR"><img src="https://img.shields.io/discord/328496654514782209" alt="Discord" /></a>
 </p>
 
 Le Monde GC constitue l'application Web de référence du [Monde de Génération City](https://generation-city.com/monde/), 
@@ -16,13 +16,11 @@ un monde virtuel reposant sur les jeux de construction de ville et le jeu de rô
 générale
 
 Liens : [Site du Monde GC](https://generation-city.com/monde/) -
-[Le forum de la communauté](https://www.forum-gc.com/) - [Discord](https://discord.gg/4VMfsaU)
+[Le forum de la communauté](https://www.forum-gc.com/) - [Discord](https://discord.gg/4P3HqVbbgR)
 
 ## Table des matières
 
-- [Table des matières](#table-des-matières)
 - [À propos](#à-propos)
-- [Structure des dépôts Git](#structure-des-dépôts-git)
 - [Installation](#installation)
   - [Environnement](#environnement)
   - [Installation via Docker](#installation-via-docker)
@@ -30,6 +28,7 @@ Liens : [Site du Monde GC](https://generation-city.com/monde/) -
     - [Installer l'application](#installer-lapplication)
   - [Lancement et arrêt de l'application](#lancement-et-arrêt-de-lapplication)
 - [Développement et tests](#développement-et-tests)
+  - [Structure des dépôts Git](#structure-des-dépôts-git)
   - [Gestion des bibliothèques externes](#gestion-des-bibliothèques-externes)
     - [Gérer des dépendances Composer](#gérer-des-dépendances-composer)
     - [Gérer les assets CSS et JavaScript](#gérer-les-assets-css-et-javascript)
@@ -44,28 +43,15 @@ Liens : [Site du Monde GC](https://generation-city.com/monde/) -
 ## À propos
 
 Le site du Monde GC est une application développée par [Calimero](https://www.forum-gc.com/u167), et lancée en 2013. 
-Son développement a été repris par [Sakuro](https://www.forum-gc.com/u615) et [romu23](https://www.forum-gc.com/u81), 
+Son développement a été repris par [Sakuro](https://www.forum-gc.com/u615) et [Roxayl](https://www.forum-gc.com/u81), 
 avec la contribution de [Myname](https://www.forum-gc.com/u2345) et de [vallamir](https://www.forum-gc.com/u319). 
-L'aspect graphique est réalisé par [Lesime](https://www.forum-gc.com/u23) et romu23.
+L'aspect graphique est réalisé par [Lesime](https://www.forum-gc.com/u23) et Roxayl.
 
 Le site du Monde GC, depuis la [version 2.5](https://www.forum-gc.com/t6872p110-notes-de-mise-a-jour-monde-gc#287597) 
 (juillet 2020), repose sur le framework [Laravel](https://laravel.com/), et les nouvelles fonctionnalités du site 
-reposent sur ce framework. La [documentation](https://laravel.com/docs/8.x) de Laravel est riche et n'hésitez pas à 
-vous renseigner sur son fonctionnement, intuitif et puissant, afin de pouvoir contribuer vous aussi au projet phare de 
+reposent sur ce framework. La [documentation](https://laravel.com/docs/9.x) de Laravel est riche et n'hésitez pas à 
+vous renseigner sur son fonctionnement, intuitif et puissant. Les sources sont [accessibles à tous](https://www.forum-gc.com/t7372-contribuez-au-site-du-monde-gc) depuis avril 2023 : venez vous aussi contribuer au projet phare de 
 la communauté [Génération City](http://www.forum-gc.com/).
-
-## Structure des dépôts Git
-
-Les sources du site sont gérées par Git, hébergées sur un certain nombre de plateformes.
-
-| Plateforme | Dépôt                                                               | Complet ? | Visibilité | Commentaires                             |
-| ---------- | ------------------------------------------------------------------- | --------- | ---------- | ---------------------------------------- |
-| GitHub     | [Roxayl/mondegc](https://github.com/Roxayl/mondegc)                 | Oui       | Privé      | Dépôt principal                          |
-| Bitbucket  | [Roxayl/mondegc](https://bitbucket.org/Roxayl/mondegc/)             | Oui       | Privé      | Miroir du dépôt principal, lecture seule |
-| GitHub     | [Roxayl/mondegc-laravel](https://github.com/Roxayl/mondegc-laravel) | **Non**   | Public     | Copie limitée du dépôt principal         |
-
-Notez que les sources du dépôt [Roxayl/mondegc-laravel](https://github.com/Roxayl/mondegc-laravel) sont incomplètes
-et vous ne pourrez pas installer et exécuter l'application à partir de celui-ci.
 
 ## Installation
 
@@ -73,12 +59,12 @@ et vous ne pourrez pas installer et exécuter l'application à partir de celui-c
 
 Le Monde GC s'exécute sur un environnement de développement comprenant les logiciels suivants :
 
-* **[PHP](https://www.php.net/) 8.0**
-* Un moteur de base de données : **[MySQL](https://www.mysql.com/fr/)** ou **[MariaDB](https://mariadb.org/)**
-* Un serveur Web : **[Apache](https://httpd.apache.org/)** (fortement conseillé) ou **[nginx](https://www.nginx.com/)**
+* **[PHP](https://www.php.net/) 8.1**
+* Un moteur de base de données : **[MySQL](https://www.mysql.com/fr/)** (5.7 ou supérieur) ou **[MariaDB](https://mariadb.org/)** (10.3 ou supérieur)
+* Un serveur Web : **[Apache](https://httpd.apache.org/)** (2.4, fortement conseillé) ou **[nginx](https://www.nginx.com/)**
 (nécessite d'adapter les règles de réécriture d'URL)
-* **[Composer](https://getcomposer.org/)**, le gestionnaire de dépendances pour PHP
-* **[Node.js et npm](https://www.npmjs.com/get-npm)**, un moteur JavaScript et un gestionnaire de dépendances pour des 
+* **[Composer](https://getcomposer.org/)** 2, le gestionnaire de dépendances pour PHP
+* **[Node.js](https://nodejs.org) 16** et **[npm](https://www.npmjs.com/)**, un moteur JavaScript et un gestionnaire de dépendances pour des 
 environnements JavaScript
 
 ### Installation via Docker
@@ -89,7 +75,7 @@ L'application fournit un fichier de configuration permettant d'exécuter l'appli
 
 Ce guide fournit les étapes pour démarrer l'application Web sur votre machine. Elle détaille :
 
-- l'installation de Docker
+- l'installation de Docker et Docker Compose
     - sur Windows
     - sur les systèmes Linux
 - l'installation et l'initialisation de l'application
@@ -128,7 +114,7 @@ Une fois que tout est installé, vous êtes prêt pour déployer l'application W
 
 3. Accédez au conteneur de l'application via la commande à saisir dans un terminal.
    ```bash
-    > docker exec -ti mondegc_app sh
+    > docker-compose exec app /bin/bash
    ```
 
 4. Dans le conteneur de l'application, accédez au dossier comprenant les fichiers de l'application et exécutez la 
@@ -164,23 +150,32 @@ Le processus de développement suit les règles décrites par **Git Flow**. Pour
 [cet article](https://les-enovateurs.com/gitflow-workflow-git-incontournableprojets-de-qualite/) donne des détails sur 
 le cadre posé par ce *workflow*.
 
+### Structure des dépôts Git
+
+Les sources du site sont gérées par Git, hébergées sur un certain nombre de plateformes.
+
+| Plateforme | Dépôt                                                   | Complet ? | Visibilité | Commentaires                             |
+| ---------- | ------------------------------------------------------- | --------- |------------| ---------------------------------------- |
+| GitHub     | [Roxayl/mondegc](https://github.com/Roxayl/mondegc)     | Oui       | Public     | Dépôt principal                          |
+| Bitbucket  | [Roxayl/mondegc](https://bitbucket.org/Roxayl/mondegc/) | Oui       | Privée     | Miroir du dépôt principal, lecture seule |
+
 ### Gestion des bibliothèques externes
 
 Pour accéder au répertoire de l'application au sein du **conteneur principal** ``mondegc_app``, vous pouvez taper les 
 commandes suivantes dans un terminal dans le répertoire racine :
    ```
-    > docker exec -ti mondegc_app /bin/bash
+    > docker-compose exec app /bin/bash
    ```
 
 À partir de là, vous pouvez accéder à l'interface en ligne de commande fournie par 
-[Artisan](https://laravel.com/docs/8.x/artisan), gérer les dépendances NPM et Composer, et exécuter les tests.
+[Artisan](https://laravel.com/docs/9.x/artisan), gérer les dépendances NPM et Composer, et exécuter les tests.
 
 #### Gérer des dépendances Composer
 
 L'application utilise [Composer](https://getcomposer.org/) afin d'installer et mettre à jour les bibliothèques qu'elle 
 utilise.
 
-Dans le conteneur principal, vous pouvez mettre à jour les bibliothèques externes décrites dans le fichier 
+Dans le conteneur principal (app), vous pouvez mettre à jour les bibliothèques externes décrites dans le fichier 
 [composer.json](./composer.json) via la commande ``composer update``.
 
 #### Gérer les assets CSS et JavaScript

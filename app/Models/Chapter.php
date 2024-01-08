@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Models\Traits\Versionable;
 use Carbon\Carbon;
 use Database\Factories\ChapterFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Models\Traits\Versionable;
 
 /**
  * Class Chapter
@@ -61,7 +61,7 @@ use Illuminate\Support\Str;
  * @method static Builder|Chapter whereDeletedAt($value)
  * @method static Query\Builder|Chapter withTrashed()
  * @method static Query\Builder|Chapter withoutTrashed()
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Chapter extends Model
 {

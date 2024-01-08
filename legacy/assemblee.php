@@ -1,5 +1,7 @@
 <?php
-        
+
+use Roxayl\MondeGC\Models\Pays;
+
 //Connexion et deconnexion
 include('php/log.php');
 
@@ -8,7 +10,7 @@ if(isset($_SESSION['userObject'])) {
     $userPaysAllowedToVote = $thisUser->getCountries(\GenCity\Monde\User::getUserPermission('Dirigeant'));
 }
 
-$paysRFGC = new \GenCity\Monde\Pays(29);
+$paysRFGC = Pays::query()->find(29);
 
 $proposalList = new \GenCity\Proposal\ProposalList();
 
@@ -40,17 +42,6 @@ $proposalsFinished = $proposalList->getFinished();
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
@@ -59,7 +50,7 @@ $proposalsFinished = $proposalList->getFinished();
 <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url('https://romukulot.fr/kaleera/images/fnMcE.png');
+	background-image: url('https://roxayl.fr/kaleera/images/fnMcE.png');
 }
 #map {
 	height: 500px;
@@ -130,7 +121,7 @@ Eventy::action('display.beforeHeadClosingTag')
     <div class="span3 bs-docs-sidebar">
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#info-institut">
-          <img src="https://romukulot.fr/kaleera/images/7YPwC.png">
+          <img src="https://roxayl.fr/kaleera/images/7YPwC.png">
           <p><strong>Assemblée générale</strong></p>
           <p><em>Organisation des Cités gécéennes</em></p>
           </a></li>
@@ -155,8 +146,12 @@ Eventy::action('display.beforeHeadClosingTag')
     <div class="row-fluid">
         <div class="span8">
             <p>L'Assemblée générale de l'Organisation des Cités gécéennes (OCGC) est un organe de délibération et de prise de décisions composé de tous les pays officiellement reconnus par la communauté internationale. Son siège se trouve au même endroit que celui de l'OCGC, à Lutèce, la capitale de la
-                <a href="page-pays.php?ch_pay_id=<?= $paysRFGC->get('ch_pay_id') ?>">
-                  <img class="img-menu-drapeau" src="<?= $paysRFGC->get('ch_pay_lien_imgdrapeau') ?>">&nbsp;RFGC</a>.
+            <?php if($paysRFGC): ?>
+                <a href="page-pays.php?ch_pay_id=<?= $paysRFGC->ch_pay_id ?>">
+                  <img class="img-menu-drapeau" src="<?= $paysRFGC->ch_pay_lien_imgdrapeau ?>">&nbsp;RFGC</a>.
+            <?php else: ?>
+                RFGC.
+            <?php endif; ?>
             </p>
             <p><i>Articles détaillés :</i> <a href="http://www.forum-gc.com/f18-partie-privee"><i class="icon-globe"></i> Forum</a> &#183; <a href="http://vasel.yt/wiki/index.php?title=Assembl%C3%A9e_G%C3%A9n%C3%A9rale_de_l%27OCGC"><i class="icon-globe"></i> Wiki</a></p>
         <br>

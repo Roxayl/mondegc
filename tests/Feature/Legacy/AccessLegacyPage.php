@@ -18,7 +18,15 @@ class AccessLegacyPage extends TestCase
     protected bool $seed = true;
 
     /**
-     * @return void
+     * @inheritDoc
+     */
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+    }
+
+    /**
+     * @inheritDoc
      */
     public function setUp(): void
     {
@@ -33,7 +41,7 @@ class AccessLegacyPage extends TestCase
 
     /**
      * @param string $page Page legacy à tester ({@see pages}).
-     * @param int $assertStatus
+     * @param int $assertStatus Code HTTP à valider.
      * @param array $query Paramètres passés par l'URL.
      */
     protected function assertAccessLegacyPage(string $page, int $assertStatus = 200, array $query = []): void
@@ -65,10 +73,23 @@ class AccessLegacyPage extends TestCase
     }
 
     /**
-     * @return void
+     * @inheritDoc
      */
     public function tearDown(): void
     {
         parent::tearDown();
+
+        try {
+            mysql_query('COMMIT');
+            mysql_query('UNLOCK TABLES');
+        } catch (\Throwable) { }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
     }
 }

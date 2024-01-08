@@ -1,6 +1,6 @@
 @php
-$viewDirectory = \App\Models\Infrastructure
-                ::getUrlParameterFromMorph(get_class($infrastructure->infrastructurable));
+$viewDirectory = \Roxayl\MondeGC\Models\Infrastructure::getUrlParameterFromMorph(
+    get_class($infrastructure->infrastructurable));
 $viewActionVerb = 'Ajouter';
 @endphp
 
@@ -65,9 +65,9 @@ $viewActionVerb = 'Ajouter';
           @csrf
 
           <input type="hidden" name="infrastructurable_type"
-                 value="{{ request()->infrastructurable_type }}">
+                 value="{{ $viewDirectory }}">
           <input type="hidden" name="infrastructurable_id"
-                 value="{{ request()->infrastructurable_id }}">
+                 value="{{ $infrastructure->infrastructurable_id }}">
           @if(!is_null($infrastructureOfficielle))
             <input type="hidden" name="ch_inf_off_id"
                    value="{{ $infrastructureOfficielle->ch_inf_off_id }}">

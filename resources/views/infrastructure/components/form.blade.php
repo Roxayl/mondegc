@@ -62,7 +62,7 @@
   <div class="control-group" id="sprytextfield_lien_wiki">
     <label class="control-label" for="lien_wiki">
         <span class="external-link-icon"
-         style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></span>
+         style="background-image:url('https://roxayl.fr/kaleera/images/h4FQp.png');"></span>
         Lien sur le wiki
         <a href="#" rel="clickover" title="Lien vers le Wiki GC" data-content="Si nécessaire, précisez un lien vers le wiki."><i class="icon-info-sign"></i></a></label>
     <div class="controls">

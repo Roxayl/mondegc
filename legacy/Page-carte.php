@@ -11,12 +11,12 @@ if($_SERVER["REMOTE_ADDR"] === '127.0.0.1') {
 // Calcul des statistiques
 
 $query_stat_pays = "SELECT ch_pay_id, ch_pay_continent, ch_pay_population_carte FROM pays WHERE ch_pay_publication = 1";
-$stat_pays = mysql_query($query_stat_pays, $maconnexion) or die(mysql_error());
+$stat_pays = mysql_query($query_stat_pays, $maconnexion);
 $row_stat_pays = mysql_fetch_assoc($stat_pays);
 $totalRows_stat_pays = mysql_num_rows($stat_pays);
 
 $query_stat_ville = "SELECT COUNT(ch_vil_ID) AS nbville, ch_pay_continent, SUM(ch_vil_population) AS nbhabitant FROM villes INNER JOIN pays ON ch_pay_id = ch_vil_paysID WHERE ch_vil_capitale != 3 AND ch_pay_publication = 1 GROUP BY ch_pay_id";
-$stat_ville = mysql_query($query_stat_ville, $maconnexion) or die(mysql_error());
+$stat_ville = mysql_query($query_stat_ville, $maconnexion);
 $row_stat_ville = mysql_fetch_assoc($stat_ville);
 $totalRows_stat_ville = mysql_num_rows($stat_ville);
 
@@ -76,7 +76,6 @@ do {
             break;
     }
 } while($row_stat_pays = mysql_fetch_assoc($stat_pays));
-mysql_data_seek($stat_pays, 0);
 
 //Récupération des statistiques issues des villes
 do {
@@ -109,7 +108,6 @@ do {
             break;
     }
 } while($row_stat_ville = mysql_fetch_assoc($stat_ville));
-mysql_data_seek($stat_ville, 0);
 
 $nbpays_Aurinea = $nbpays_Aurinea + 1;
 $nbvilles_Aurinea = $nbvilles_Aurinea + $nbvilles_RFGC;
@@ -119,9 +117,9 @@ $nbhabitants_Aurinea = $nbhabitants_Aurinea + $nbhabitants_RFGC;
 // Liste des pays par continent
 
 $query_listePays = "SELECT ch_pay_id, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgdrapeau, (SELECT COUNT(ch_vil_ID) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS nbville, (SELECT SUM(ch_vil_population) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) + ch_pay_population_carte AS nbhabitant FROM pays WHERE ch_pay_publication = 1 Group By ch_pay_id ORDER BY ch_pay_nom ASC";
-$listePays = mysql_query($query_listePays, $maconnexion) or die(mysql_error());
-$row_listePays = mysql_fetch_assoc($listePays);
-$totalRows_listePays = mysql_num_rows($listePays);
+
+$listePays = collect(DB::connection('mysql_legacy')->select(DB::raw($query_listePays)))->map(fn(object $row) => (array) $row)->toArray();
+$totalRows_listePays = count($listePays);
 
 // Fin de la temporisation de sortie
 if($_SERVER["REMOTE_ADDR"] === '127.0.0.1') {
@@ -129,7 +127,7 @@ if($_SERVER["REMOTE_ADDR"] === '127.0.0.1') {
 }
 
 // Ressources
-$paysResources = \App\Services\EconomyService::getPaysResources();
+$paysResources = \Roxayl\MondeGC\Services\EconomyService::getPaysResources();
 
 ?>
 <!DOCTYPE html>
@@ -146,17 +144,6 @@ $paysResources = \App\Services\EconomyService::getPaysResources();
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
 <!-- TemplateEndEditable -->
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
@@ -274,7 +261,7 @@ Eventy::action('display.beforeHeadClosingTag')
     <div class="span4"> <img src="assets/img/continents/rfgc.png" alt="img-RFGC"> </div>
     <div class="span8">
       <ul class="listes liste-pays">
-        <?php do {
+        <?php foreach($listePays as $row_listePays) {
 			if ($row_listePays['ch_pay_continent'] == 'RFGC') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_listePays['ch_pay_lien_imgdrapeau']))
 					{
@@ -285,8 +272,7 @@ Eventy::action('display.beforeHeadClosingTag')
                     'temperance' => $paysResources[$row_listePays['ch_pay_id']]['resources'],
                 ]);
 			}
-        } while ($row_listePays = mysql_fetch_assoc($listePays));
-		  mysql_data_seek($listePays,0); ?>
+        } ?>
         <p>&nbsp;</p>
       </ul>
     </div>
@@ -306,7 +292,7 @@ Eventy::action('display.beforeHeadClosingTag')
     <div class="span4"> <img src="assets/img/continents/aurinea.png" alt="img-continent-Aurin&eacute;a"> </div>
     <div class="span8">
       <ul class="listes liste-pays">
-        <?php do { 
+        <?php foreach($listePays as $row_listePays) {
 			if ($row_listePays['ch_pay_continent'] == 'Aurinea') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_listePays['ch_pay_lien_imgdrapeau']))
 					{
@@ -317,8 +303,7 @@ Eventy::action('display.beforeHeadClosingTag')
                     'temperance' => $paysResources[$row_listePays['ch_pay_id']]['resources'],
                 ]);
 			}
-        } while ($row_listePays = mysql_fetch_assoc($listePays));
-        mysql_data_seek($listePays,0); ?>
+        } ?>
 
         <!-- RFGC -->
         <li>
@@ -356,7 +341,7 @@ Eventy::action('display.beforeHeadClosingTag')
     <div class="span4"> <img src="assets/img/continents/volcania.png" alt="img-continent-Volcania"> </div>
     <div class="span8">
       <ul class="listes liste-pays">
-        <?php do { 
+        <?php foreach($listePays as $row_listePays) {
 			if ($row_listePays['ch_pay_continent'] == 'Volcania') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_listePays['ch_pay_lien_imgdrapeau']))
 					{
@@ -367,8 +352,7 @@ Eventy::action('display.beforeHeadClosingTag')
                     'temperance' => $paysResources[$row_listePays['ch_pay_id']]['resources'],
                 ]);
 			}
-        } while ($row_listePays = mysql_fetch_assoc($listePays));
-        mysql_data_seek($listePays,0); ?>
+        } ?>
         <p>&nbsp;</p>
       </ul>
     </div>
@@ -390,7 +374,7 @@ Eventy::action('display.beforeHeadClosingTag')
     <div class="span4"> <img src="assets/img/continents/aldesyl.png" alt="img-continent-Aldesyl"> </div>
     <div class="span8">
       <ul class="listes liste-pays">
-        <?php do { 
+        <?php foreach($listePays as $row_listePays) {
 			if ($row_listePays['ch_pay_continent'] == 'Aldesyl') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_listePays['ch_pay_lien_imgdrapeau']))
 					{
@@ -401,8 +385,7 @@ Eventy::action('display.beforeHeadClosingTag')
                     'temperance' => $paysResources[$row_listePays['ch_pay_id']]['resources'],
                 ]);
 			}
-        } while ($row_listePays = mysql_fetch_assoc($listePays));
-        mysql_data_seek($listePays, 0); ?>
+        } ?>
         <p>&nbsp;</p>
       </ul>
     </div>
@@ -424,7 +407,7 @@ Eventy::action('display.beforeHeadClosingTag')
     <div class="span4"> <img src="assets/img/continents/oceania.png" alt="img-continent-Oceania"> </div>
     <div class="span8">
       <ul class="listes liste-pays">
-        <?php do { 
+        <?php foreach($listePays as $row_listePays) {
 			if ($row_listePays['ch_pay_continent'] == 'Oceania') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_listePays['ch_pay_lien_imgdrapeau']))
 					{
@@ -435,8 +418,7 @@ Eventy::action('display.beforeHeadClosingTag')
                 'temperance' => $paysResources[$row_listePays['ch_pay_id']]['resources'],
             ]);
             }
-        } while ($row_listePays = mysql_fetch_assoc($listePays));
-        mysql_data_seek($listePays,0); ?>
+        } ?>
         <p>&nbsp;</p>
       </ul>
     </div>
@@ -458,7 +440,7 @@ Eventy::action('display.beforeHeadClosingTag')
     <div class="span4"> <img src="assets/img/continents/philicie.png" alt="img-continent-Philicie"> </div>
     <div class="span8">
       <ul class="listes liste-pays">
-        <?php do { 
+        <?php foreach($listePays as $row_listePays) {
 			if ($row_listePays['ch_pay_continent'] == 'Philicie') {
                 	if (preg_match("#^http://www.generation-city.com/monde/userfiles/#", $row_listePays['ch_pay_lien_imgdrapeau']))
 					{
@@ -469,8 +451,7 @@ Eventy::action('display.beforeHeadClosingTag')
                 'temperance' => $paysResources[$row_listePays['ch_pay_id']]['resources'],
             ]);
             }
-        } while ($row_listePays = mysql_fetch_assoc($listePays));
-        mysql_data_seek($listePays,0); ?>
+        } ?>
         <p>&nbsp;</p>
       </ul>
     </div>

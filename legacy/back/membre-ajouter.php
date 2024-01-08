@@ -3,15 +3,12 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
-
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
@@ -27,13 +24,13 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "new_user")) {
 
 
   $insertSQL = sprintf("INSERT INTO users_provisoire (ch_use_prov_login, ch_use_prov_clef, ch_use_prov_mail, ch_use_prov_paysID, ch_use_prov_statut) VALUES (%s, %s, %s, %s, %s)",
-                       GetSQLValueString($login, "text"),
-                       GetSQLValueString($clef, "text"),
-                       GetSQLValueString($mail, "text"),
-                       GetSQLValueString($paysID, "int"),
-                       GetSQLValueString($ch_use_prov_statut, "int"));
+                       escape_sql($login, "text"),
+                       escape_sql($clef, "text"),
+                       escape_sql($mail, "text"),
+                       escape_sql($paysID, "int"),
+                       escape_sql($ch_use_prov_statut, "int"));
 
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   \GenCity\Monde\Logger\Log::createItem('users_provisoire', null, 'insert',
       $_SESSION['userObject']->get('ch_use_id'), array('data', array('ch_use_prov_login' => $login)));
@@ -90,7 +87,7 @@ $message.= $passage_ligne."--".$boundary."--".$passage_ligne;
 
 //=====Envoi de l'e-mail.
 mail($mail,$sujet,$message,$header);
-mail('contact@romukulot.fr',$sujet,$message,$header);
+mail('contact@roxayl.fr',$sujet,$message,$header);
 //==========
     if (!mail($to, $subject, $body, $headers)) {
               $redirect_error= "error.php"; // Redirect if there is an error.
@@ -103,7 +100,7 @@ mail('contact@romukulot.fr',$sujet,$message,$header);
 
 
 $query_pays = "SELECT ch_pay_id, ch_pay_nom FROM pays ORDER BY ch_pay_nom ASC";
-$pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
+$pays = mysql_query($query_pays, $maconnexion);
 $row_pays = mysql_fetch_assoc($pays);
 $totalRows_pays = mysql_num_rows($pays);
 
@@ -135,17 +132,6 @@ $totalRows_pays = mysql_num_rows($pays);
 <link href="../SpryAssets/SpryValidationConfirm.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationSelect.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -174,7 +160,7 @@ Eventy::action('display.beforeHeadClosingTag')
       <!-- Debut formulaire membre
         ================================================== -->
       <section id="info-generales" class="well">
-        <form action="<?php echo $editFormAction; ?>" name="new_user" method="POST" class="form-horizontal" id="InfoHeader">
+        <form action="<?= e($editFormAction) ?>" name="new_user" method="POST" class="form-horizontal" id="InfoHeader">
           <!-- Definir statut du membre -->
           <h3>D&eacute;finir le statut du membre :</h3>
           <div id="spryradio1">

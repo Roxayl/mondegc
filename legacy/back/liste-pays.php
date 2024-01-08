@@ -3,10 +3,8 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
     header("Status: 301 Moved Permanently", false, 301);
     header('Location: ' . legacyPage('connexion'));
     exit();
@@ -17,22 +15,24 @@ $currentPage = $_SERVER["PHP_SELF"];
 $maxRows_ListPays = 30;
 $pageNum_ListPays = 0;
 if (isset($_GET['pageNum_ListPays'])) {
-  $pageNum_ListPays = $_GET['pageNum_ListPays'];
+  $pageNum_ListPays = (int) $_GET['pageNum_ListPays'];
 }
 $startRow_ListPays = $pageNum_ListPays * $maxRows_ListPays;
 $order_by = "ch_pay_mis_jour";
 $tri = "DESC";
 if (isset($_GET['order_by'])) {
-  $order_by = $_GET['order_by'];
-  $nom_colonne = $_GET['order_by'];
+  $order_by = escape_sql($_GET['order_by'], 'order_by_columns', [
+      'ch_pay_publication', 'ch_pay_nom', 'ch_pay_emplacement', 'ch_pay_continent', 'ch_use_login', 'ch_pay_mis_jour',
+  ]);
+  $nom_colonne = $order_by;
 }
 if (isset($_GET['tri'])) {
-  $tri = $_GET['tri'];
+  $tri = escape_sql($_GET['tri'], 'order_by_pos');
 }
 
 $query_ListPays = "SELECT pays.ch_pay_id, pays.ch_pay_publication, pays.ch_pay_continent, pays.ch_pay_emplacement, pays.ch_pay_nom, pays.ch_pay_lien_imgdrapeau, pays.ch_pay_mis_jour FROM pays ORDER BY $order_by $tri";
 $query_limit_ListPays = sprintf("%s LIMIT %d, %d", $query_ListPays, $startRow_ListPays, $maxRows_ListPays);
-$ListPays = mysql_query($query_limit_ListPays, $maconnexion) or die(mysql_error());
+$ListPays = mysql_query($query_limit_ListPays, $maconnexion);
 $row_ListPays = mysql_fetch_assoc($ListPays);
 
 if (isset($_GET['totalRows_ListPays'])) {
@@ -54,17 +54,6 @@ $totalPages_ListPays = ceil($totalRows_ListPays/$maxRows_ListPays)-1;
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
 <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -101,15 +90,14 @@ Eventy::action('display.beforeHeadClosingTag')
           <tr class="tablehead2">
             <th scope="col" id="<?php
 			  if ( $nom_colonne != "ch_pay_publication" ) {echo 'tri_actuel';}?>"><a href="liste-pays.php?order_by=ch_pay_publication&tri=ASC"><i class="icon-globe"></i></a></th>
-            <th scope="col" id="tri_actuel">Drapeau</th>
+            <th scope="col">Drapeau</th>
             <th scope="col" id="<?php 
 			  if ( $nom_colonne != "ch_pay_nom" ) { echo 'tri_actuel';}?>"><a href="liste-pays.php?order_by=ch_pay_nom&tri=ASC">Pays</a></th>
             <th scope="col" id="<?php
 			  if ( $nom_colonne != "ch_pay_emplacement" ) { echo 'tri_actuel'; }?>"><a href="liste-pays.php?order_by=ch_pay_emplacement&tri=ASC">Emplacement</a></th>
             <th scope="col" id="<?php 
 			  if ( $nom_colonne != "ch_pay_continent" ) { echo 'tri_actuel'; }?>"><a href="liste-pays.php?order_by=ch_pay_continent&tri=ASC">Continent</a></th>
-            <th scope="col" id="<?php
-			  if ( $nom_colonne != "ch_use_login" ) { echo 'tri_actuel'; }?>"><a href="liste-pays.php?order_by=ch_use_login&tri=ASC">Dirigeant</a></th>
+            <th scope="col">Dirigeant</th>
             <th scope="col" id="<?php 
 			  if ( $nom_colonne != "ch_pay_mis_jour" ) { echo 'tri_actuel'; }?>"><a href="liste-pays.php?order_by=ch_pay_mis_jour&tri=DESC">Mise &agrave; jour</a></th>
             <th scope="col" id="tri_actuel">&nbsp;</th>

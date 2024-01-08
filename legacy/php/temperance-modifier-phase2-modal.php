@@ -15,12 +15,12 @@ if (isset($_GET['ch_temp_id'])) {
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance")) {
   $updateSQL = sprintf("UPDATE temperance SET ch_temp_statut=%s, ch_temp_mis_jour=%s WHERE ch_temp_id=%s",
-                       GetSQLValueString($_POST['ch_temp_statut'], "int"),
-                       GetSQLValueString($_POST['ch_temp_mis_jour'], "date"),
-					   GetSQLValueString($_POST['ch_temp_id'], "int"));
+                       escape_sql($_POST['ch_temp_statut'], "int"),
+                       escape_sql($_POST['ch_temp_mis_jour'], "date"),
+					   escape_sql($_POST['ch_temp_id'], "int"));
 
   
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
 
   $updateGoTo = DEF_URI_PATH . "back/institut_economie.php";
   appendQueryString($updateGoTo);
@@ -32,7 +32,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance"))
 
 <!-- Modal Header-->
 
-<form action="<?php echo $editFormAction; ?>" name="phase-temperance" method="POST" class="form-horizontal" id="phase-temperance">
+<form action="<?= e($editFormAction) ?>" name="phase-temperance" method="POST" class="form-horizontal" id="phase-temperance">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
     <h3 id="myModalLabel">Ouverture des votes</h3>

@@ -1,5 +1,5 @@
 
-@inject('helperService', 'App\Services\HelperService')
+@inject('helperService', 'Roxayl\MondeGC\Services\HelperService')
 
 @extends('layouts.legacy')
 
@@ -13,7 +13,7 @@
 
     <div class="container corps-page">
 
-        {!! \App\Services\LegacyPageService::menuHautConseil() !!}
+        {!! \Roxayl\MondeGC\Services\LegacyPageService::menuHautConseil() !!}
 
         <div class="titre-bleu anchor">
           <h1>Paramètres avancés</h1>

@@ -11,30 +11,30 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
     $oldInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($_POST['ch_inf_off_id']);
 
     $updateSQL = sprintf("UPDATE infrastructures_officielles SET ch_inf_off_label=%s, ch_inf_off_date=%s, ch_inf_off_nom=%s, ch_inf_off_desc=%s, ch_inf_off_icone=%s, ch_inf_off_budget=%s, ch_inf_off_Industrie=%s, ch_inf_off_Commerce=%s, ch_inf_off_Agriculture=%s, ch_inf_off_Tourisme=%s, ch_inf_off_Recherche=%s, ch_inf_off_Environnement=%s, ch_inf_off_Education=%s WHERE ch_inf_off_id=%s",
-        GetSQLValueString($_POST['ch_inf_off_label'], "text"),
-        GetSQLValueString($_POST['ch_inf_off_date'], "date"),
-        GetSQLValueString($_POST['ch_inf_off_nom'], "text"),
-        GetSQLValueString($_POST['ch_inf_off_desc'], "text"),
-        GetSQLValueString($_POST['ch_inf_off_icone'], "text"),
-        GetSQLValueString($_POST['ch_inf_off_budget'], "int"),
-        GetSQLValueString($_POST['ch_inf_off_Industrie'], "int"),
-        GetSQLValueString($_POST['ch_inf_off_Commerce'], "int"),
-        GetSQLValueString($_POST['ch_inf_off_Agriculture'], "int"),
-        GetSQLValueString($_POST['ch_inf_off_Tourisme'], "int"),
-        GetSQLValueString($_POST['ch_inf_off_Recherche'], "int"),
-        GetSQLValueString($_POST['ch_inf_off_Environnement'], "int"),
-        GetSQLValueString($_POST['ch_inf_off_Education'], "int"),
-        GetSQLValueString($_POST['ch_inf_off_id'], "int"));
+        escape_sql($_POST['ch_inf_off_label'], "text"),
+        escape_sql($_POST['ch_inf_off_date'], "date"),
+        escape_sql($_POST['ch_inf_off_nom'], "text"),
+        escape_sql($_POST['ch_inf_off_desc'], "text"),
+        escape_sql($_POST['ch_inf_off_icone'], "text"),
+        escape_sql($_POST['ch_inf_off_budget'], "int"),
+        escape_sql($_POST['ch_inf_off_Industrie'], "int"),
+        escape_sql($_POST['ch_inf_off_Commerce'], "int"),
+        escape_sql($_POST['ch_inf_off_Agriculture'], "int"),
+        escape_sql($_POST['ch_inf_off_Tourisme'], "int"),
+        escape_sql($_POST['ch_inf_off_Recherche'], "int"),
+        escape_sql($_POST['ch_inf_off_Environnement'], "int"),
+        escape_sql($_POST['ch_inf_off_Education'], "int"),
+        escape_sql($_POST['ch_inf_off_id'], "int"));
 
-    $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    $Result1 = mysql_query($updateSQL, $maconnexion);
 
     $newInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($_POST['ch_inf_off_id']);
 
     // Gestion des groupes d'infrastructures
     $delete_group = mysql_query('DELETE FROM infrastructures_officielles_groupes WHERE ID_infra_officielle = ' . mysql_real_escape_string($_POST['ch_inf_off_id']));
     $insert_group = mysql_query(sprintf('INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle) VALUES(%s, %s)',
-        GetSQLValueString($_POST['groupe_infra']),
-        GetSQLValueString($_POST['ch_inf_off_id'])
+        escape_sql($_POST['groupe_infra']),
+        escape_sql($_POST['ch_inf_off_id'])
     ));
 
     \GenCity\Monde\Logger\Log::createItem('infrastructures_officielles', (int)$_POST['ch_inf_off_id'],
@@ -42,7 +42,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
         array('entity' => $newInfraOff->model->getInfo(), 'old_entity' => $oldInfraOff->model->getInfo()));
 
     // Recalculer les influences des infrastructures
-    $eloquentInfrastructures = \App\Models\Infrastructure
+    $eloquentInfrastructures = \Roxayl\MondeGC\Models\Infrastructure
         ::where('ch_inf_off_id', $newInfraOff->get('ch_inf_off_id'))->get();
     foreach($eloquentInfrastructures as $infrastructure) {
         $infrastructure->generateInfluence();
@@ -67,8 +67,8 @@ if (isset($_GET['infrastructure_off'])) {
   $colname_infra_officielles = $_GET['infrastructure_off'];
 }
 
-$query_infra_officielles = sprintf("SELECT * FROM infrastructures_officielles WHERE ch_inf_off_id = %s", GetSQLValueString($colname_infra_officielles, "int"));
-$infra_officielles = mysql_query($query_infra_officielles, $maconnexion) or die(mysql_error());
+$query_infra_officielles = sprintf("SELECT * FROM infrastructures_officielles WHERE ch_inf_off_id = %s", escape_sql($colname_infra_officielles, "int"));
+$infra_officielles = mysql_query($query_infra_officielles, $maconnexion);
 $row_infra_officielles = mysql_fetch_assoc($infra_officielles);
 $totalRows_infra_officielles = mysql_num_rows($infra_officielles);
 
@@ -90,7 +90,7 @@ if(!empty($row_infra_officielles_group)) {
 
 <!-- Modal Header-->
 
-<form action="<?php echo $editFormAction; ?>" name="ajout-inf_off" method="POST" class="form-horizontal" id="ajout-inf_off">
+<form action="<?= e($editFormAction) ?>" name="ajout-inf_off" method="POST" class="form-horizontal" id="ajout-inf_off">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Modifier une infrastructure officielle</h3>

@@ -3,7 +3,6 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-
 if(!isset($_SESSION['userObject'])) {
     header("Status: 301 Moved Permanently", false, 301);
     header('Location: ' . legacyPage('connexion'));
@@ -20,35 +19,35 @@ appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_ville")) {
   $insertSQL = sprintf("INSERT INTO villes (ch_vil_paysID, ch_vil_user, ch_vil_label, ch_vil_date_enregistrement, ch_vil_mis_jour, ch_vil_nb_update, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_type_jeu, ch_vil_nom, ch_vil_armoiries, ch_vil_capitale, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_vil_lien_img2, ch_vil_lien_img3, ch_vil_lien_img4, ch_vil_lien_img5, ch_vil_legende_img1, ch_vil_legende_img2, ch_vil_legende_img3, ch_vil_legende_img4, ch_vil_legende_img5, ch_vil_header, ch_vil_contenu) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_vil_paysID'], "int"),
-                       GetSQLValueString($_POST['ch_vil_user'], "int"),
-                       GetSQLValueString($_POST['ch_vil_label'], "text"),
-                       GetSQLValueString($_POST['ch_vil_date_enregistrement'], "date"),
-                       GetSQLValueString($_POST['ch_vil_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_vil_nb_update'], "int"),
-                       GetSQLValueString($_POST['form_coord_X'], "decimal"),
-                       GetSQLValueString($_POST['form_coord_Y'], "decimal"),
-					   GetSQLValueString($_POST['ch_vil_type_jeu'], "text"),
-                       GetSQLValueString($_POST['ch_vil_nom'], "text"),
-					   GetSQLValueString($_POST['ch_vil_armoiries'], "text"),
-                       GetSQLValueString($_POST['ch_vil_capitale'], "int"),
-                       GetSQLValueString($_POST['ch_vil_population'], "int"),
-                       GetSQLValueString($_POST['ch_vil_specialite'], "text"),
-                       GetSQLValueString($_POST['ch_vil_lien_img1'], "text"),
-                       GetSQLValueString($_POST['ch_vil_lien_img2'], "text"),
-                       GetSQLValueString($_POST['ch_vil_lien_img3'], "text"),
-                       GetSQLValueString($_POST['ch_vil_lien_img4'], "text"),
-                       GetSQLValueString($_POST['ch_vil_lien_img5'], "text"),
-                       GetSQLValueString($_POST['ch_vil_legende_img1'], "text"),
-                       GetSQLValueString($_POST['ch_vil_legende_img2'], "text"),
-                       GetSQLValueString($_POST['ch_vil_legende_img3'], "text"),
-                       GetSQLValueString($_POST['ch_vil_legende_img4'], "text"),
-                       GetSQLValueString($_POST['ch_vil_legende_img5'], "text"),
-                       GetSQLValueString($_POST['ch_vil_header'], "text"),
-                       GetSQLValueString($_POST['ch_vil_contenu'], "text"));
+                       escape_sql($_POST['ch_vil_paysID'], "int"),
+                       escape_sql($_POST['ch_vil_user'], "int"),
+                       escape_sql($_POST['ch_vil_label'], "text"),
+                       escape_sql($_POST['ch_vil_date_enregistrement'], "date"),
+                       escape_sql($_POST['ch_vil_mis_jour'], "date"),
+                       escape_sql($_POST['ch_vil_nb_update'], "int"),
+                       escape_sql($_POST['form_coord_X'], "decimal"),
+                       escape_sql($_POST['form_coord_Y'], "decimal"),
+					   escape_sql($_POST['ch_vil_type_jeu'], "text"),
+                       escape_sql($_POST['ch_vil_nom'], "text"),
+					   escape_sql($_POST['ch_vil_armoiries'], "text"),
+                       escape_sql($_POST['ch_vil_capitale'], "int"),
+                       escape_sql($_POST['ch_vil_population'], "int"),
+                       escape_sql($_POST['ch_vil_specialite'], "text"),
+                       escape_sql($_POST['ch_vil_lien_img1'], "text"),
+                       escape_sql($_POST['ch_vil_lien_img2'], "text"),
+                       escape_sql($_POST['ch_vil_lien_img3'], "text"),
+                       escape_sql($_POST['ch_vil_lien_img4'], "text"),
+                       escape_sql($_POST['ch_vil_lien_img5'], "text"),
+                       escape_sql($_POST['ch_vil_legende_img1'], "text"),
+                       escape_sql($_POST['ch_vil_legende_img2'], "text"),
+                       escape_sql($_POST['ch_vil_legende_img3'], "text"),
+                       escape_sql($_POST['ch_vil_legende_img4'], "text"),
+                       escape_sql($_POST['ch_vil_legende_img5'], "text"),
+                       escape_sql($_POST['ch_vil_header'], "text"),
+                       escape_sql($_POST['ch_vil_contenu'], "text"));
 
   
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   $insertGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_vil_paysID'] . "#mes-villes";
   appendQueryString($insertGoTo);
@@ -58,15 +57,15 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_ville")) {
 
 $User = $_SESSION['user_ID'];
 
-$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_id = %s", GetSQLValueString($User, "int"));
-$users = mysql_query($query_users, $maconnexion) or die(mysql_error());
+$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_id = %s", escape_sql($User, "int"));
+$users = mysql_query($query_users, $maconnexion);
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
 
 //Liste des joueurs pour choisir maire
 
 $query_list_users = sprintf("SELECT ch_use_id, ch_use_login FROM users ORDER BY ch_use_login");
-$list_users = mysql_query($query_list_users, $maconnexion) or die(mysql_error());
+$list_users = mysql_query($query_list_users, $maconnexion);
 $row_list_users = mysql_fetch_assoc($list_users);
 $totalRows_list_users = mysql_num_rows($list_users);
 ?>
@@ -88,17 +87,6 @@ $totalRows_list_users = mysql_num_rows($list_users);
 <link href="../SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -185,7 +173,7 @@ Eventy::action('display.beforeHeadClosingTag')
         <h1>Ajouter une ville</h1>
       </div>
       <!-- Debut formulaire -->
-      <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_ville" Id="ajout_ville" onsubmit='return verif_champ(document.ajout_ville.form_coord_X.value);' >
+      <form action="<?= e($editFormAction) ?>" method="POST" class="form-horizontal well" name="ajout_ville" Id="ajout_ville" onsubmit='return verif_champ(document.ajout_ville.form_coord_X.value);' >
         <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
           Ce formulaire contient les informations qui seront affich&eacute;e sur la page consacr&eacute;e &agrave; votre ville et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Compl&eacute;tez-le au fur et &agrave; mesure et mettez-le &agrave; jour.</div>

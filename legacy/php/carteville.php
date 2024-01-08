@@ -5,16 +5,16 @@ if (isset($_GET['ch_ville_id'])) {
   $colname_MarkerVilles = $_GET['ch_ville_id'];
 }
 
-$query_MarkerVilles = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_mis_jour, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_armoiries, ch_vil_mis_jour, ch_vil_capitale, ch_use_lien_imgpersonnage, ch_use_login, ch_use_id, ch_vil_nom, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_pay_emplacement, ch_pay_nom, ch_pay_lien_imgdrapeau FROM villes INNER JOIN pays ON ch_pay_id = ch_vil_paysID INNER JOIN users on ch_vil_user=ch_use_id WHERE ch_vil_ID = %s AND ch_vil_capitale<>3", GetSQLValueString($colname_MarkerVilles, "int"));
-$MarkerVilles = mysql_query($query_MarkerVilles, $maconnexion) or die(mysql_error());
+$query_MarkerVilles = sprintf("SELECT ch_vil_ID, ch_vil_paysID, ch_vil_mis_jour, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_armoiries, ch_vil_mis_jour, ch_vil_capitale, ch_use_lien_imgpersonnage, ch_use_login, ch_use_id, ch_vil_nom, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_pay_emplacement, ch_pay_nom, ch_pay_lien_imgdrapeau FROM villes INNER JOIN pays ON ch_pay_id = ch_vil_paysID INNER JOIN users on ch_vil_user=ch_use_id WHERE ch_vil_ID = %s AND ch_vil_capitale<>3", escape_sql($colname_MarkerVilles, "int"));
+$MarkerVilles = mysql_query($query_MarkerVilles, $maconnexion);
 $row_MarkerVilles = mysql_fetch_assoc($MarkerVilles);
 $totalRows_MarkerVilles = mysql_num_rows($MarkerVilles);
 
 
 // Connexion BDD Monument pour afficher markers des monuments
 
-$query_MarkerMonument = sprintf("SELECT ch_pat_id, ch_pat_paysID, ch_pat_villeID, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_mis_jour, ch_pat_nom, ch_pat_lien_img1, ch_vil_armoiries, ch_vil_ID, ch_vil_nom, ch_vil_capitale, pays.ch_pay_id, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_id = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN villes ON  ch_pat_villeID=villes.ch_vil_ID INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE ch_pat_statut=1 AND ch_vil_capitale <> 3 AND pays.ch_pay_publication = 1 AND ch_vil_ID = %s ORDER BY ch_pat_id ASC", GetSQLValueString($colname_MarkerVilles, "int"));
-$MarkerMonument = mysql_query($query_MarkerMonument, $maconnexion) or die(mysql_error());
+$query_MarkerMonument = sprintf("SELECT ch_pat_id, ch_pat_paysID, ch_pat_villeID, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_mis_jour, ch_pat_nom, ch_pat_lien_img1, ch_vil_armoiries, ch_vil_ID, ch_vil_nom, ch_vil_capitale, pays.ch_pay_id, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_id = ch_disp_mon_id) AS listcat FROM patrimoine INNER JOIN villes ON  ch_pat_villeID=villes.ch_vil_ID INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE ch_pat_statut=1 AND ch_vil_capitale <> 3 AND pays.ch_pay_publication = 1 AND ch_vil_ID = %s ORDER BY ch_pat_id ASC", escape_sql($colname_MarkerVilles, "int"));
+$MarkerMonument = mysql_query($query_MarkerMonument, $maconnexion);
 $row_MarkerMonument = mysql_fetch_assoc($MarkerMonument);
 $totalRows_MarkerMonument = mysql_num_rows($MarkerMonument);
 
@@ -25,21 +25,21 @@ $PaysID = $row_MarkerVilles ['ch_vil_paysID'];
 // Connexion BDD gometries pour afficher terres
 
 $query_ZonesTerres = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_type, ch_geo_nom FROM geometries WHERE ch_geo_geometries = 'polygon' AND ch_geo_type= 'terre'";
-$ZonesTerres = mysql_query($query_ZonesTerres, $maconnexion) or die(mysql_error());
+$ZonesTerres = mysql_query($query_ZonesTerres, $maconnexion);
 $row_ZonesTerres = mysql_fetch_assoc($ZonesTerres);
 $totalRows_ZonesTerres = mysql_num_rows($ZonesTerres);
 
 // Connexion BDD gometries pour afficher zones des pays
 
-$query_ZonesPays = sprintf("SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_type, ch_geo_nom, ch_geo_mesure, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'polygon' AND (ch_geo_pay_id = %s OR ch_geo_pay_id = 1)", GetSQLValueString($PaysID, "int"));
-$ZonesPays = mysql_query($query_ZonesPays, $maconnexion) or die(mysql_error());
+$query_ZonesPays = sprintf("SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_type, ch_geo_nom, ch_geo_mesure, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'polygon' AND (ch_geo_pay_id = %s OR ch_geo_pay_id = 1)", escape_sql($PaysID, "int"));
+$ZonesPays = mysql_query($query_ZonesPays, $maconnexion);
 $row_ZonesPays = mysql_fetch_assoc($ZonesPays);
 $totalRows_ZonesPays = mysql_num_rows($ZonesPays);
 
 // Connexion BDD gometries pour afficher voies des pays
 
-$query_VoiesPays = sprintf("SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_type, ch_geo_nom, ch_geo_mesure, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'line' AND (ch_geo_pay_id = %s OR ch_geo_pay_id = 1)", GetSQLValueString($PaysID, "int"));
-$VoiesPays = mysql_query($query_VoiesPays, $maconnexion) or die(mysql_error());
+$query_VoiesPays = sprintf("SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_type, ch_geo_nom, ch_geo_mesure, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'line' AND (ch_geo_pay_id = %s OR ch_geo_pay_id = 1)", escape_sql($PaysID, "int"));
+$VoiesPays = mysql_query($query_VoiesPays, $maconnexion);
 $row_VoiesPays = mysql_fetch_assoc($VoiesPays);
 $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 ?>
@@ -160,7 +160,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
     		'externalProjection': new OpenLayers.Projection("EPSG:4326")
 			});
 			<?php do {
-			$Nomzone = str_replace ( '-', ' ', $row_ZonesTerres['ch_geo_nom']);
+			$Nomzone = $row_ZonesTerres['ch_geo_nom'];
 			$typeZone = $row_ZonesTerres['ch_geo_type'];
 			styleZones($typeZone, $fillcolor, $fillOpacity, $strokeWidth, $strokeColor, $strokeOpacity, $Trait);
 			?>
@@ -172,7 +172,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				couleurTrait : "<?php echo $strokeColor; ?>",
 				opaciteTrait : "<?php echo $strokeOpacity; ?>",
 				Trait : "<?php echo $Trait; ?>",
-				name : "<?php echo $Nomzone; ?>"
+				name : "<?php echo e($Nomzone); ?>"
             }
 		vectorsTerres.addFeatures([polygonFeature]);
 		<?php } while ($row_ZonesTerres = mysql_fetch_assoc($ZonesTerres)); ?>
@@ -241,7 +241,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
     		'externalProjection': new OpenLayers.Projection("EPSG:4326")
 			});
 			<?php do { 
-			$Nomzone = str_replace ( '-', ' ', $row_ZonesPays['ch_geo_nom']);
+			$Nomzone = $row_ZonesPays['ch_geo_nom'];
 			$typeZone = $row_ZonesPays['ch_geo_type'];
 			$surface = $row_ZonesPays['ch_geo_mesure'];
 			styleZones($typeZone, $fillcolor, $fillOpacity, $strokeWidth, $strokeColor, $strokeOpacity, $Trait);
@@ -255,8 +255,8 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				couleurTrait : "<?php echo $strokeColor; ?>",
 				opaciteTrait : "<?php echo $strokeOpacity; ?>",
 				Trait : "<?php echo $Trait; ?>",
-				name : "<?php echo $Nomzone; ?>",
-				popupContentHTML: "<div class='fiche'><p>&nbsp;</p><div><h3><?php echo addslashes($Nomzone); ?></h3><p><em>cr&eacute;&eacute; par <?= e($row_ZonesPays['ch_use_login']) ?> <?php if ($row_ZonesPays['ch_geo_pay_id'] == 1) {?>(avec l'Institut G&eacute;c&eacute;en de G&eacute;ographie)<?php } ?></em></p><p>&nbsp;</p><p><strong>Type&nbsp;:</strong> <?php echo $label; ?></h4><p><strong>Surface&nbsp;:</strong> <?= e($row_ZonesPays['ch_geo_mesure']) ?>Km<sup>2</sup></p><?php if ($row_ZonesPays['ch_geo_pay_id'] != 1) {?><p><strong>Population&nbsp;:</strong> <?php echo $chiffre_francais = number_format($population, 0, ',', ' ');?></p><ul><div class='row-fluid'><li class='span3'><a title='Budget'><img src='assets/img/ressources/budget.png' alt='icone Budget'></a><p><?php $chiffre_francais = number_format($budget, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Industrie'><img src='assets/img/ressources/industrie.png' alt='icone Industrie'></a><p><?php $chiffre_francais = number_format($industrie, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Commerce'><img src='assets/img/ressources/bureau.png' alt='icone Commerce'></a><p><?php $chiffre_francais = number_format($commerce, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Agriculture'><img src='assets/img/ressources/agriculture.png' alt='icone Agriculture'></a><p><?php $chiffre_francais = number_format($agriculture, 0, ',', ' '); echo $chiffre_francais; ?></p></li></div><div class='row-fluid'><li class='span3'><a title='Tourisme'><img src='assets/img/ressources/tourisme.png' alt='icone Tourisme'></a><p><?php $chiffre_francais = number_format($tourisme, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Recherche'><img src='assets/img/ressources/recherche.png' alt='icone Recherche'></a><p><?php $chiffre_francais = number_format($recherche, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Environnement'><img src='assets/img/ressources/environnement.png' alt=icone Environnement'></a><p><?php $chiffre_francais = number_format($environnement, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Education'><img src='assets/img/ressources/education.png' alt='icone Education'></a><p><?php $chiffre_francais = number_format($education, 0, ',', ' '); echo $chiffre_francais; ?></p></li></div></ul><div class='clearfix'></div><?php } ?></div>"
+				name : "<?php echo e($Nomzone); ?>",
+				popupContentHTML: "<div class='fiche'><p>&nbsp;</p><div><h3><?php echo e($Nomzone); ?></h3><p><em>cr&eacute;&eacute; par <?= e($row_ZonesPays['ch_use_login']) ?> <?php if ($row_ZonesPays['ch_geo_pay_id'] == 1) {?>(avec l'Institut G&eacute;c&eacute;en de G&eacute;ographie)<?php } ?></em></p><p>&nbsp;</p><p><strong>Type&nbsp;:</strong> <?php echo e($label); ?></h4><p><strong>Surface&nbsp;:</strong> <?= e($row_ZonesPays['ch_geo_mesure']) ?>Km<sup>2</sup></p><?php if ($row_ZonesPays['ch_geo_pay_id'] != 1) {?><p><strong>Population&nbsp;:</strong> <?= formatNum($population) ?></p><ul><div class='row-fluid'><li class='span3'><a title='Budget'><img src='assets/img/ressources/budget.png' alt='icone Budget'></a><p><?= formatNum($budget) ?></p></li><li class='span3'><a title='Industrie'><img src='assets/img/ressources/industrie.png' alt='icone Industrie'></a><p><?= formatNum($industrie) ?></p></li><li class='span3'><a title='Commerce'><img src='assets/img/ressources/bureau.png' alt='icone Commerce'></a><p><?= formatNum($commerce) ?></p></li><li class='span3'><a title='Agriculture'><img src='assets/img/ressources/agriculture.png' alt='icone Agriculture'></a><p><?= formatNum($agriculture) ?></p></li></div><div class='row-fluid'><li class='span3'><a title='Tourisme'><img src='assets/img/ressources/tourisme.png' alt='icone Tourisme'></a><p><?= formatNum($tourisme) ?></p></li><li class='span3'><a title='Recherche'><img src='assets/img/ressources/recherche.png' alt='icone Recherche'></a><p><?= formatNum($recherche) ?></p></li><li class='span3'><a title='Environnement'><img src='assets/img/ressources/environnement.png' alt=icone Environnement'></a><p><?= formatNum($environnement) ?>/p></li><li class='span3'><a title='Education'><img src='assets/img/ressources/education.png' alt='icone Education'></a><p><?= formatNum($education) ?></p></li></div></ul><div class='clearfix'></div><?php } ?></div>"
 				
             } 
 			
@@ -302,7 +302,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 			
 <?php if ($row_VoiesPays) { ?>						
 			<?php do {
-			$Nomvoie = str_replace ( '-', ' ', $row_VoiesPays['ch_geo_nom']);
+			$Nomvoie = $row_VoiesPays['ch_geo_nom'];
 			$typeVoie = $row_VoiesPays['ch_geo_type'];
 			$surface = $row_VoiesPays['ch_geo_mesure'];
 			styleVoies($typeVoie, $couleurTrait, $epaisseurTrait, $Trait);
@@ -313,10 +313,10 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				couleurTrait : "<?php echo $couleurTrait; ?>",
 				epaisseurTrait : "<?php echo $epaisseurTrait; ?>",
 				Trait : "<?php echo $Trait; ?>",
-				name : "<?php echo $Nomvoie; ?>",
+				name : "<?php echo e($Nomvoie); ?>",
 				xoffset : "20",
 				yoffset : "10",
-				popupContentHTML: "<div class='fiche'><p>&nbsp;</p><div><h3><?php echo addslashes($Nomvoie); ?></h3><p><em>cr&eacute;&eacute; par <?= e($row_VoiesPays['ch_use_login']) ?> <?php if ($row_VoiesPays['ch_geo_pay_id'] == 1) {?>(avec l'Institut G&eacute;c&eacute;en de G&eacute;ographie)<?php } ?></em></p><p>&nbsp;</p><p><strong>Type&nbsp;:</strong> <?php echo $label; ?></h4><p><strong>Longueur&nbsp;:</strong> <?= e($row_VoiesPays['ch_geo_mesure']) ?>Km</p><?php if ($row_VoiesPays['ch_geo_pay_id'] != 1) {?><ul><div class='row-fluid'><li class='span3'><a title='Budget'><img src='assets/img/ressources/budget.png' alt='icone Budget'></a><p><?php $chiffre_francais = number_format($budget, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Industrie'><img src='assets/img/ressources/industrie.png' alt='icone Industrie'></a><p><?php $chiffre_francais = number_format($industrie, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Commerce'><img src='assets/img/ressources/bureau.png' alt='icone Commerce'></a><p><?php $chiffre_francais = number_format($commerce, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Agriculture'><img src='assets/img/ressources/agriculture.png' alt='icone Agriculture'></a><p><?php $chiffre_francais = number_format($agriculture, 0, ',', ' '); echo $chiffre_francais; ?></p></li></div><div class='row-fluid'><li class='span3'><a title='Tourisme'><img src='assets/img/ressources/tourisme.png' alt='icone Tourisme'></a><p><?php $chiffre_francais = number_format($tourisme, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Recherche'><img src='assets/img/ressources/recherche.png' alt='icone Recherche'></a><p><?php $chiffre_francais = number_format($recherche, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Environnement'><img src='assets/img/ressources/environnement.png' alt=icone Environnement'></a><p><?php $chiffre_francais = number_format($environnement, 0, ',', ' '); echo $chiffre_francais; ?></p></li><li class='span3'><a title='Education'><img src='assets/img/ressources/education.png' alt='icone Education'></a><p><?php $chiffre_francais = number_format($education, 0, ',', ' '); echo $chiffre_francais; ?></p></li></div></ul><div class='clearfix'></div><?php } ?></div>"
+				popupContentHTML: "<div class='fiche'><p>&nbsp;</p><div><h3><?php echo e($Nomvoie); ?></h3><p><em>cr&eacute;&eacute; par <?= e($row_VoiesPays['ch_use_login']) ?> <?php if ($row_VoiesPays['ch_geo_pay_id'] == 1) {?>(avec l'Institut G&eacute;c&eacute;en de G&eacute;ographie)<?php } ?></em></p><p>&nbsp;</p><p><strong>Type&nbsp;:</strong> <?php echo e($label); ?></h4><p><strong>Longueur&nbsp;:</strong> <?= e($row_VoiesPays['ch_geo_mesure']) ?>Km</p><?php if ($row_VoiesPays['ch_geo_pay_id'] != 1) {?><ul><div class='row-fluid'><li class='span3'><a title='Budget'><img src='assets/img/ressources/budget.png' alt='icone Budget'></a><p><?= formatNum($budget) ?></p></li><li class='span3'><a title='Industrie'><img src='assets/img/ressources/industrie.png' alt='icone Industrie'></a><p><?= formatNum($industrie) ?></p></li><li class='span3'><a title='Commerce'><img src='assets/img/ressources/bureau.png' alt='icone Commerce'></a><p><?= formatNum($commerce) ?></p></li><li class='span3'><a title='Agriculture'><img src='assets/img/ressources/agriculture.png' alt='icone Agriculture'></a><p><?= formatNum($agriculture) ?></p></li></div><div class='row-fluid'><li class='span3'><a title='Tourisme'><img src='assets/img/ressources/tourisme.png' alt='icone Tourisme'></a><p><?= formatNum($tourisme) ?></p></li><li class='span3'><a title='Recherche'><img src='assets/img/ressources/recherche.png' alt='icone Recherche'></a><p><?= formatNum($recherche) ?></p></li><li class='span3'><a title='Environnement'><img src='assets/img/ressources/environnement.png' alt=icone Environnement'></a><p><?= formatNum($environnement) ?></p></li><li class='span3'><a title='Education'><img src='assets/img/ressources/education.png' alt='icone Education'></a><p><?= formatNum($education) ?></p></li></div></ul><div class='clearfix'></div><?php } ?></div>"
             } 
 			vectorsVoies.addFeatures([polygonFeature]);
 		<?php } while ($row_VoiesPays = mysql_fetch_assoc($VoiesPays)); ?>
@@ -393,7 +393,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 	            map.addControl(new OpenLayers.Control.MousePosition());
 				// navigation avec le clavier
 	            map.addControl(new OpenLayers.Control.KeyboardDefaults());
-	       		map.setCenter(new OpenLayers.LonLat(<?php echo $x; ?>, <?php echo $y; ?>), 5);
+	       		map.setCenter(new OpenLayers.LonLat(<?php echo e($x); ?>, <?php echo e($y); ?>), 5);
 				
             vectors2.addFeatures(createFeatures2());
             vectors3.addFeatures(createFeatures3());
@@ -411,8 +411,8 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
             var features = [];
 			
 			<?php do { 
-			$Nomville = str_replace ( '-', ' ', $row_MarkerVilles['ch_vil_nom']);
-$Specialiteville = str_replace ( '-', ' ', $row_MarkerVilles['ch_vil_specialite']);
+			$Nomville = $row_MarkerVilles['ch_vil_nom'];
+$Specialiteville = $row_MarkerVilles['ch_vil_specialite'];
 			?>
 		var x = '<?= e($row_MarkerVilles['ch_vil_coord_X']) ?>' ;
 		var y = '<?= e($row_MarkerVilles['ch_vil_coord_Y']) ?>' ;
@@ -438,17 +438,15 @@ $Specialiteville = str_replace ( '-', ' ', $row_MarkerVilles['ch_vil_specialite'
 		var sizeicon = 12;
 		<?php } elseif ($row_MarkerVilles['ch_vil_population'] <= 10000000) { ?>
 		var sizeicon = 13;
-		<?php } elseif ($row_MarkerVilles['ch_vil_population'] >= 10000000) { ?>
-		var sizeicon = 14;
 		<?php } else { ?>
-		var sizeicon = 6;
-  <?php } ?>
+		var sizeicon = 14;
+		<?php } ?>
                 features.push(new OpenLayers.Feature.Vector(
                     new OpenLayers.Geometry.Point(x,y), features.attributes = {
-                name: "<?php echo $Nomville; ?>",
+                name: "<?php echo e($Nomville); ?>",
 				size : sizeicon,
 				couleur : pointercolor,
-				popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><a href='page-ville.php?ch_pay_id=<?= e($row_MarkerVilles['ch_vil_paysID']) ?>&ch_ville_id=<?= e($row_MarkerVilles['ch_vil_ID']) ?>'><?php if ($row_MarkerVilles['ch_vil_lien_img1']) {?><img src='<?php echo addslashes($row_MarkerVilles['ch_vil_lien_img1']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/ville.jpg'><?php }?></a></div><div><h3><?php echo addslashes($Nomville); ?></h3><p><em>cr&eacute;&eacute;e par <?php echo addslashes($row_MarkerVilles['ch_use_login']); ?></em></p></div><div class='infocarte-icon'><?php if ($row_MarkerVilles['ch_use_lien_imgpersonnage']) {?><img class='avatar' src='<?php echo addslashes($row_MarkerVilles['ch_use_lien_imgpersonnage']); ?>'></img><?php } else { ?><img src='assets/img/imagesdefaut/personnage.jpg'><?php }?><?php if ($row_MarkerVilles['ch_vil_armoiries']) {?><img class='armoirie' src='<?php echo addslashes($row_MarkerVilles['ch_vil_armoiries']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/blason.jpg'><?php }?></div><p>Mise &agrave; jour le&nbsp;: <strong><?php  echo date('d/m/Y', strtotime( $row_MarkerVilles['ch_vil_mis_jour'])); ?> &agrave; <?php  echo date('G:i', strtotime($row_MarkerVilles['ch_vil_mis_jour'])); ?></strong></p><p>Population&nbsp;: <strong><?php $population_pays_francais = number_format($row_MarkerVilles['ch_vil_population'], 0, ',', ' '); echo $population_pays_francais; ?> habitants</strong></p><p>Sp&eacute;cialit&eacute;&nbsp;: <strong><?php if ( $row_MarkerVilles['ch_vil_specialite']) { echo addslashes($Specialiteville);} else { echo 'NA'; } ?></strong></p><div class='pull-center'></div></div><div class='pied'><a class='btn btn-primary' href='page-ville.php?ch_pay_id=<?= e($row_MarkerVilles['ch_vil_paysID']) ?>&ch_ville_id=<?= e($row_MarkerVilles['ch_vil_ID']) ?>'>Visiter cette ville</a></div>"
+				popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><a href='page-ville.php?ch_pay_id=<?= e($row_MarkerVilles['ch_vil_paysID']) ?>&ch_ville_id=<?= e($row_MarkerVilles['ch_vil_ID']) ?>'><?php if ($row_MarkerVilles['ch_vil_lien_img1']) {?><img src='<?php echo e($row_MarkerVilles['ch_vil_lien_img1']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/ville.jpg'><?php }?></a></div><div><h3><?php echo e($Nomville); ?></h3><p><em>cr&eacute;&eacute;e par <?php echo e($row_MarkerVilles['ch_use_login']); ?></em></p></div><div class='infocarte-icon'><?php if ($row_MarkerVilles['ch_use_lien_imgpersonnage']) {?><img class='avatar' src='<?php echo e($row_MarkerVilles['ch_use_lien_imgpersonnage']); ?>'></img><?php } else { ?><img src='assets/img/imagesdefaut/personnage.jpg'><?php }?><?php if ($row_MarkerVilles['ch_vil_armoiries']) {?><img class='armoirie' src='<?php echo e($row_MarkerVilles['ch_vil_armoiries']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/blason.jpg'><?php }?></div><p>Mise &agrave; jour le&nbsp;: <strong><?php  echo date('d/m/Y', strtotime( $row_MarkerVilles['ch_vil_mis_jour'])); ?> &agrave; <?php  echo date('G:i', strtotime($row_MarkerVilles['ch_vil_mis_jour'])); ?></strong></p><p>Population&nbsp;: <strong><?= formatNum($row_MarkerVilles['ch_vil_population']); ?> habitants</strong></p><p>Sp&eacute;cialit&eacute;&nbsp;: <strong><?php if ( $row_MarkerVilles['ch_vil_specialite']) { echo e($Specialiteville);} else { echo 'NA'; } ?></strong></p><div class='pull-center'></div></div><div class='pied'><a class='btn btn-primary' href='page-ville.php?ch_pay_id=<?= e($row_MarkerVilles['ch_vil_paysID']) ?>&ch_ville_id=<?= e($row_MarkerVilles['ch_vil_ID']) ?>'>Visiter cette ville</a></div>"
             }));
 		<?php } while ($row_MarkerVilles = mysql_fetch_assoc($MarkerVilles)); ?>
             return features;
@@ -461,14 +459,14 @@ $Specialiteville = str_replace ( '-', ' ', $row_MarkerVilles['ch_vil_specialite'
             var features = [];
 			
 			<?php do { 
-			$NomMonument = str_replace ( '-', ' ', $row_MarkerMonument['ch_pat_nom']);
-			$Nomville = str_replace ( '-', ' ', $row_MarkerMonument['ch_vil_nom']);
+			$NomMonument = $row_MarkerMonument['ch_pat_nom'];
+			$Nomville = $row_MarkerMonument['ch_vil_nom'];
 			
 $listcategories = $row_MarkerMonument['listcat'];
 			if ($row_MarkerMonument['listcat']) {
 
 $query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories) AND ch_mon_cat_statut =1";
-$liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
+$liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion);
 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
 			 }
@@ -478,8 +476,8 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
        
                 features.push(new OpenLayers.Feature.Vector(
                     new OpenLayers.Geometry.Point(x,y), features.attributes = {
-                name: "Monument\n\n<?php echo addslashes($NomMonument); ?>",
-				popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><a href='page-monument.php?ch_pat_id=<?= e($row_MarkerMonument['ch_pat_id']) ?>'><?php if ($row_MarkerMonument['ch_pat_lien_img1']) {?><img src='<?php echo $row_MarkerMonument['ch_pat_lien_img1']; ?>'><?php } else { ?><img src='assets/img/imagesdefaut/ville.jpg'><?php }?></a></div><div><h3><?php echo addslashes($NomMonument); ?></h3><p><em>cr&eacute;&eacute;e par <?php echo addslashes($row_MarkerMonument['ch_use_login']); ?></em></p></div><div class='infocarte-icon'><?php if ($row_MarkerMonument['ch_use_lien_imgpersonnage']) {?><img class='avatar' src='<?php echo addslashes($row_MarkerMonument['ch_use_lien_imgpersonnage']); ?>'></img><?php } else { ?><img src='assets/img/imagesdefaut/personnage.jpg'><?php }?><?php if ($row_MarkerMonument['ch_vil_armoiries']) {?><img class='armoirie' src='<?php echo addslashes($row_MarkerMonument['ch_vil_armoiries']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/blason.jpg'><?php }?></div><p>Monument appartenant &agrave; la ville <strong><a href='page-ville.php?ch_pay_id=<?= e($row_MarkerMonument['ch_pay_id']) ?>&ch_ville_id=<?= e($row_MarkerMonument['ch_vil_ID']) ?>'><?php echo addslashes($Nomville); ?></a></strong></p><p>Mise &agrave; jour le&nbsp;: <strong><?php  echo date('d/m/Y', strtotime( $row_MarkerMonument['ch_pat_mis_jour'])); ?> &agrave; <?php  echo date('G:i', strtotime($row_MarkerMonument['ch_pat_mis_jour'])); ?></strong></p><div class='pull-center'></div><?php if ($row_MarkerMonument['listcat']) {?><div class='row-fluid icone-categorie'><?php do { ?><div><a title='<?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>'><img src='<?php echo $row_liste_mon_cat3['ch_mon_cat_icon']; ?>' alt='icone <?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>' style='background-color:<?php echo $row_liste_mon_cat3['ch_mon_cat_couleur']; ?>; margin-left:10px;'></a></div><?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); } ?></div><div class='pied'><p>&nbsp;</p><a class='btn btn-primary' href='page-monument.php?ch_pat_id=<?= e($row_MarkerMonument['ch_pat_id']) ?>'>Visiter ce monument</a></div>"
+                name: "Monument\n\n<?php echo e($NomMonument); ?>",
+				popupContentHTML: "<div class='fiche'><div class='pull-center illustration'><a href='page-monument.php?ch_pat_id=<?= e($row_MarkerMonument['ch_pat_id']) ?>'><?php if ($row_MarkerMonument['ch_pat_lien_img1']) {?><img src='<?php echo $row_MarkerMonument['ch_pat_lien_img1']; ?>'><?php } else { ?><img src='assets/img/imagesdefaut/ville.jpg'><?php }?></a></div><div><h3><?php echo e($NomMonument); ?></h3><p><em>cr&eacute;&eacute;e par <?php echo e($row_MarkerMonument['ch_use_login']); ?></em></p></div><div class='infocarte-icon'><?php if ($row_MarkerMonument['ch_use_lien_imgpersonnage']) {?><img class='avatar' src='<?php echo e($row_MarkerMonument['ch_use_lien_imgpersonnage']); ?>'></img><?php } else { ?><img src='assets/img/imagesdefaut/personnage.jpg'><?php }?><?php if ($row_MarkerMonument['ch_vil_armoiries']) {?><img class='armoirie' src='<?php echo e($row_MarkerMonument['ch_vil_armoiries']); ?>'><?php } else { ?><img src='assets/img/imagesdefaut/blason.jpg'><?php }?></div><p>Monument appartenant &agrave; la ville <strong><a href='page-ville.php?ch_pay_id=<?= e($row_MarkerMonument['ch_pay_id']) ?>&ch_ville_id=<?= e($row_MarkerMonument['ch_vil_ID']) ?>'><?php echo e($Nomville); ?></a></strong></p><p>Mise &agrave; jour le&nbsp;: <strong><?php  echo date('d/m/Y', strtotime( $row_MarkerMonument['ch_pat_mis_jour'])); ?> &agrave; <?php  echo date('G:i', strtotime($row_MarkerMonument['ch_pat_mis_jour'])); ?></strong></p><div class='pull-center'></div><?php if ($row_MarkerMonument['listcat']) {?><div class='row-fluid icone-categorie'><?php do { ?><div><a title='<?php echo e($row_liste_mon_cat3['ch_mon_cat_nom']); ?>'><img src='<?php echo e($row_liste_mon_cat3['ch_mon_cat_icon']); ?>' alt='icone <?php echo e($row_liste_mon_cat3['ch_mon_cat_nom']); ?>' style='background-color:<?php echo e($row_liste_mon_cat3['ch_mon_cat_couleur']); ?>; margin-left:10px;'></a></div><?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); } ?></div><div class='pied'><p>&nbsp;</p><a class='btn btn-primary' href='page-monument.php?ch_pat_id=<?= e($row_MarkerMonument['ch_pat_id']) ?>'>Visiter ce monument</a></div>"
             }));
 		<?php if ($row_MarkerMonument['listcat']) { mysql_free_result($liste_mon_cat3); }?>
 		<?php } while ($row_MarkerMonument = mysql_fetch_assoc($MarkerMonument)); ?>
@@ -571,4 +569,3 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
 <?php
 mysql_free_result($MarkerVilles);
 mysql_free_result($MarkerMonument);
-?>

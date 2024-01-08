@@ -26,24 +26,24 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_fait_his")) {
 $_POST['ch_his_date_fait2'] == NULL;
 }	
   $insertSQL = sprintf("INSERT INTO histoire (ch_his_paysID, ch_his_label, ch_his_date, ch_his_personnage, ch_his_mis_jour, ch_his_nb_update, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_nom, ch_his_statut, ch_his_lien_img1, ch_his_legende_img1, ch_his_description, ch_his_contenu) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_his_paysID'], "int"),
-                       GetSQLValueString($_POST['ch_his_label'], "text"),
-                       GetSQLValueString($_POST['ch_his_date'], "date"),
-                       GetSQLValueString($_POST['ch_his_personnage'], "int"),
-                       GetSQLValueString($_POST['ch_his_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_his_nb_update'], "int"),
-                       GetSQLValueString($_POST['ch_his_date_fait'], "date"),
-                       GetSQLValueString($_POST['ch_his_date_fait2'], "date"),
-                       GetSQLValueString($_POST['ch_his_profession'], "text"),
-                       GetSQLValueString($_POST['ch_his_nom'], "text"),
-                       GetSQLValueString($_POST['ch_his_statut'], "int"),
-                       GetSQLValueString($_POST['ch_his_lien_img1'], "text"),
-                       GetSQLValueString($_POST['ch_his_legende_img1'], "text"),
-                       GetSQLValueString($_POST['ch_his_description'], "text"),
-                       GetSQLValueString($_POST['ch_his_contenu'], "text"));
+                       escape_sql($_POST['ch_his_paysID'], "int"),
+                       escape_sql($_POST['ch_his_label'], "text"),
+                       escape_sql($_POST['ch_his_date'], "date"),
+                       escape_sql($_POST['ch_his_personnage'], "int"),
+                       escape_sql($_POST['ch_his_mis_jour'], "date"),
+                       escape_sql($_POST['ch_his_nb_update'], "int"),
+                       escape_sql($_POST['ch_his_date_fait'], "date"),
+                       escape_sql($_POST['ch_his_date_fait2'], "date"),
+                       escape_sql($_POST['ch_his_profession'], "text"),
+                       escape_sql($_POST['ch_his_nom'], "text"),
+                       escape_sql($_POST['ch_his_statut'], "int"),
+                       escape_sql($_POST['ch_his_lien_img1'], "text"),
+                       escape_sql($_POST['ch_his_legende_img1'], "text"),
+                       escape_sql($_POST['ch_his_description'], "text"),
+                       escape_sql($_POST['ch_his_contenu'], "text"));
 
 
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   getErrorMessage('success', __s($_POST['ch_his_nom']) . "
     a été ajouté à vos personnages historiques.");
@@ -56,8 +56,8 @@ $_POST['ch_his_date_fait2'] == NULL;
 
 
 
-$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", GetSQLValueString($paysID, "int"));
-$users = mysql_query($query_users, $maconnexion) or die(mysql_error());
+$query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", escape_sql($paysID, "int"));
+$users = mysql_query($query_users, $maconnexion);
 $row_users = mysql_fetch_assoc($users);
 $totalRows_users = mysql_num_rows($users);
 ?>
@@ -80,17 +80,6 @@ $totalRows_users = mysql_num_rows($users);
 <link href="../SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -150,7 +139,7 @@ Eventy::action('display.beforeHeadClosingTag')
 
       <div class="clearfix"></div>
       <!-- Debut formulaire -->
-      <form action="<?php echo $editFormAction; ?>" method="POST" class="form-horizontal well" name="ajout_fait_hist" Id="ajout_fait_his">
+      <form action="<?= e($editFormAction) ?>" method="POST" class="form-horizontal well" name="ajout_fait_hist" Id="ajout_fait_his">
         <div class="alert alert-tips">
           <button type="button" class="close" data-dismiss="alert">×</button>
           Ce formulaire contient les informations qui seront affich&eacute;es sur la page consacr&eacute;e &agrave; un personnage historique. Les personnages historiques construisent l'histoire de votre pays. Veillez &agrave; ce qu'elle soit coh&eacute;rente avec les pays qui vous entourent. La gestion de l'histoire du Monde GC est confi&eacute;e au <a href="../histoire.php" title="lien vers la page consacr&eacute;e au Comité">Comité d'Histoire</a>.</div>

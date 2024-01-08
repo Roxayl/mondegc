@@ -4,42 +4,42 @@
 
 
 $query_MarkerPays = "SELECT DISTINCT ch_pay_id, ch_pay_continent, ch_pay_emplacement, ch_pay_nom, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_pay_header_presentation, ch_pay_mis_jour, ch_pay_population_carte, ch_use_lien_imgpersonnage, ch_use_login, (SELECT SUM(ch_vil_population) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS ch_pay_population, (SELECT COUNT(ch_vil_ID) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS ch_pay_nbvilles FROM pays LEFT JOIN users ON pays.ch_pay_id = users.ch_use_paysID WHERE ch_pay_publication = 1 GROUP BY ch_pay_id ORDER BY ch_pay_nom ASC";
-$MarkerPays = mysql_query($query_MarkerPays, $maconnexion) or die(mysql_error());
+$MarkerPays = mysql_query($query_MarkerPays, $maconnexion);
 $row_MarkerPays = mysql_fetch_assoc($MarkerPays);
 $totalRows_MarkerPays = mysql_num_rows($MarkerPays);
 
 // Connexion BDD Villes pour afficher markers des villes
 
 $query_MarkerVilles = "SELECT ch_vil_ID, ch_vil_paysID, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_mis_jour, ch_vil_armoiries, ch_vil_nom, ch_vil_capitale, ch_vil_specialite, ch_vil_population, ch_vil_lien_img1, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login FROM villes INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE ch_vil_capitale <> 3 AND pays.ch_pay_publication = 1 ORDER BY ch_vil_paysID ASC";
-$MarkerVilles = mysql_query($query_MarkerVilles, $maconnexion) or die(mysql_error());
+$MarkerVilles = mysql_query($query_MarkerVilles, $maconnexion);
 $row_MarkerVilles = mysql_fetch_assoc($MarkerVilles);
 $totalRows_MarkerVilles = mysql_num_rows($MarkerVilles);
 
 // Connexion BDD Monument pour afficher markers des monuments
 
 $query_MarkerMonument = "SELECT ch_pat_id, ch_pat_paysID, ch_pat_villeID, ch_pat_coord_X, ch_pat_coord_Y, ch_pat_mis_jour, ch_pat_nom, ch_pat_lien_img1, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_id = ch_disp_mon_id) AS listcat, ch_vil_armoiries, ch_vil_ID, ch_vil_nom, ch_vil_capitale, pays.ch_pay_id, pays.ch_pay_publication, pays.ch_pay_nom, ch_use_lien_imgpersonnage, ch_use_login FROM patrimoine INNER JOIN villes ON  ch_pat_villeID=villes.ch_vil_ID INNER JOIN pays ON villes.ch_vil_paysID = pays.ch_pay_id LEFT JOIN users ON villes.ch_vil_user = users.ch_use_id WHERE ch_pat_statut=1 AND ch_vil_capitale <> 3 AND pays.ch_pay_publication = 1 ORDER BY ch_pat_id ASC";
-$MarkerMonument = mysql_query($query_MarkerMonument, $maconnexion) or die(mysql_error());
+$MarkerMonument = mysql_query($query_MarkerMonument, $maconnexion);
 $row_MarkerMonument = mysql_fetch_assoc($MarkerMonument);
 $totalRows_MarkerMonument = mysql_num_rows($MarkerMonument);
 
 // Connexion BDD gometries pour afficher terres
 
 $query_ZonesTerres = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_type, ch_geo_nom FROM geometries WHERE ch_geo_geometries = 'polygon' AND ch_geo_type= 'terre'";
-$ZonesTerres = mysql_query($query_ZonesTerres, $maconnexion) or die(mysql_error());
+$ZonesTerres = mysql_query($query_ZonesTerres, $maconnexion);
 $row_ZonesTerres = mysql_fetch_assoc($ZonesTerres);
 $totalRows_ZonesTerres = mysql_num_rows($ZonesTerres);
 
 // Connexion BDD gometries pour afficher zones des pays
 
 $query_ZonesPays = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id LEFT JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'polygon' AND ch_geo_type != 'terre'";
-$ZonesPays = mysql_query($query_ZonesPays, $maconnexion) or die(mysql_error());
+$ZonesPays = mysql_query($query_ZonesPays, $maconnexion);
 $row_ZonesPays = mysql_fetch_assoc($ZonesPays);
 $totalRows_ZonesPays = mysql_num_rows($ZonesPays);
 
 // Connexion BDD gometries pour afficher voies des pays
 
 $query_VoiesPays = "SELECT ch_geo_id, ch_geo_wkt, ch_geo_pay_id, ch_geo_user, ch_geo_maj_user, ch_geo_date, ch_geo_mis_jour, ch_geo_geometries, ch_geo_mesure, ch_geo_type, ch_geo_nom, ch_use_login FROM geometries LEFT JOIN pays ON ch_geo_pay_id = ch_pay_id INNER JOIN users ON ch_geo_user = ch_use_id WHERE (ch_pay_publication = 1 OR ch_geo_pay_id = 1) AND ch_geo_geometries = 'line'";
-$VoiesPays = mysql_query($query_VoiesPays, $maconnexion) or die(mysql_error());
+$VoiesPays = mysql_query($query_VoiesPays, $maconnexion);
 $row_VoiesPays = mysql_fetch_assoc($VoiesPays);
 $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 ?>
@@ -54,8 +54,8 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 			    var mapMinZoom = 0;
 			    var mapMaxZoom = 7;
 				var ll, popupClass, popupContentHTML;
-				var x = '<?php echo __s($_GET['x']); ?>' ;
-				var y = '<?php echo __s($_GET['y']); ?>' ;
+				var x = '<?php echo e($_GET['x']); ?>' ;
+				var y = '<?php echo e($_GET['y']); ?>' ;
 				var urlicon ='Carto/images/pin.png';
 		        // avoid pink tiles
 		OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
@@ -181,7 +181,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
     		'externalProjection': new OpenLayers.Projection("EPSG:4326")
 			});
 			<?php do {
-			$Nomzone = str_replace ( '-', ' ', $row_ZonesTerres['ch_geo_nom']);
+			$Nomzone = $row_ZonesTerres['ch_geo_nom'];
 			$typeZone = $row_ZonesTerres['ch_geo_type'];
 			styleZones($typeZone, $fillcolor, $fillOpacity, $strokeWidth, $strokeColor, $strokeOpacity, $Trait);
 			?>
@@ -193,7 +193,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				couleurTrait : "<?php echo $strokeColor; ?>",
 				opaciteTrait : "<?php echo $strokeOpacity; ?>",
 				Trait : "<?php echo $Trait; ?>",
-				name : "<?php echo $Nomzone; ?>"
+				name : "<?php echo e($Nomzone); ?>"
             }
 		vectorsTerres.addFeatures([polygonFeature]);
 		<?php } while ($row_ZonesTerres = mysql_fetch_assoc($ZonesTerres)); ?>
@@ -258,7 +258,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
     		'externalProjection': new OpenLayers.Projection("EPSG:4326")
 			});
 			<?php do { 
-			$Nomzone = str_replace ( '-', ' ', $row_ZonesPays['ch_geo_nom']);
+			$Nomzone = $row_ZonesPays['ch_geo_nom'];
 			$typeZone = $row_ZonesPays['ch_geo_type'];
 			$surface = $row_ZonesPays['ch_geo_mesure'];
 			styleZones($typeZone, $fillcolor, $fillOpacity, $strokeWidth, $strokeColor, $strokeOpacity, $Trait);
@@ -272,7 +272,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				couleurTrait : "<?php echo $strokeColor; ?>",
 				opaciteTrait : "<?php echo $strokeOpacity; ?>",
 				Trait : "<?php echo $Trait; ?>",
-				name : "<?php echo $Nomzone; ?>"
+				name : "<?php echo e($Nomzone); ?>"
             } 
 			
 			  // Ajout calque administration si zone administrative
@@ -315,7 +315,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 			
 			
 			<?php do {
-			$Nomvoie = str_replace ( '-', ' ', $row_VoiesPays['ch_geo_nom']);
+			$Nomvoie = $row_VoiesPays['ch_geo_nom'];
 			$typeVoie = $row_VoiesPays['ch_geo_type'];
 			$surface = $row_VoiesPays['ch_geo_mesure'];
 			styleVoies($typeVoie, $couleurTrait, $epaisseurTrait, $Trait);
@@ -531,12 +531,12 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
             var features = [];
 			
 			<?php do { 
-			$Nompays = str_replace ( '-', ' ', $row_MarkerPays['ch_pay_nom']);
+			$Nompays = $row_MarkerPays['ch_pay_nom'];
 $emplacement = $row_MarkerPays['ch_pay_emplacement'];
 coordEmplacement($emplacement, $x, $y);
 ?>
-		var x = '<?php echo $x; ?>' ;
-		var y = '<?php echo $y; ?>' ;  
+		var x = '<?php echo e($x); ?>' ;
+		var y = '<?php echo e($y); ?>' ;  
 		var urlicon ='<?= e($row_MarkerPays['ch_pay_lien_imgdrapeau']) ?>'
                 features.push(new OpenLayers.Feature.Vector(
                     new OpenLayers.Geometry.Point(x,y), features.attributes = {
@@ -555,7 +555,7 @@ coordEmplacement($emplacement, $x, $y);
             var features = [];
 			
 			<?php do { 
-			$Nomville = str_replace ( '-', ' ', $row_MarkerVilles['ch_vil_nom']);
+			$Nomville = $row_MarkerVilles['ch_vil_nom'];
 			?>
 		var x = '<?= e($row_MarkerVilles['ch_vil_coord_X']) ?>' ;
 		var y = '<?= e($row_MarkerVilles['ch_vil_coord_Y']) ?>' ;
@@ -568,7 +568,7 @@ coordEmplacement($emplacement, $x, $y);
 		tailleVilles($population, $sizeicon); ?>
                 features.push(new OpenLayers.Feature.Vector(
                     new OpenLayers.Geometry.Point(x,y), features.attributes = {
-                name: "<?php echo $Nomville; ?>",
+                name: "<?php echo e($Nomville); ?>",
 				size : <?php echo $sizeicon; ?>,
 				couleur : pointercolor
             }));
@@ -583,13 +583,13 @@ coordEmplacement($emplacement, $x, $y);
             var features = [];
 			
 			<?php do { 
-			$NomMonument = str_replace ( '-', ' ', $row_MarkerMonument['ch_pat_nom']);
+			$NomMonument = $row_MarkerMonument['ch_pat_nom'];
 			?>
 		var x = '<?= e($row_MarkerMonument['ch_pat_coord_X']) ?>' ;
 		var y = '<?= e($row_MarkerMonument['ch_pat_coord_Y']) ?>' ;
                 features.push(new OpenLayers.Feature.Vector(
                 new OpenLayers.Geometry.Point(x,y), features.attributes = {
-                	name: "Monument\n\n<?php echo addslashes($NomMonument); ?>"
+                	name: "Monument\n\n<?php echo e($NomMonument); ?>"
             		}
 				));
 		<?php } while ($row_MarkerMonument = mysql_fetch_assoc($MarkerMonument)); ?>

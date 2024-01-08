@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Models\Page;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Roxayl\MondeGC\Models\Page;
 
 class PageController extends Controller
 {
@@ -15,7 +15,7 @@ class PageController extends Controller
      */
     public function index(int $page, string $url)
     {
-        $page = Page::findOrFail($page)->getPageOrFail();
+        $page = Page::query()->findOrFail($page)->getPageOrFail();
 
         if(trim($page->url) !== trim($url)) {
             return redirect("page/{$page->id}-{$page->url}");

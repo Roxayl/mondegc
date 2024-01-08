@@ -3,30 +3,28 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	   }
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-categorie")) {
 $insertSQL = sprintf("INSERT INTO monument_categories (ch_mon_cat_label, ch_mon_cat_statut, ch_mon_cat_date, ch_mon_cat_mis_jour, ch_mon_cat_nb_update, ch_mon_cat_nom, ch_mon_cat_desc, ch_mon_cat_icon, ch_mon_cat_couleur) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_mon_cat_label'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_statut'], "int"),
-                       GetSQLValueString($_POST['ch_mon_cat_date'], "date"),
-                       GetSQLValueString($_POST['ch_mon_cat_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_mon_cat_nb_update'], "int"),
-                       GetSQLValueString($_POST['ch_mon_cat_nom'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_desc'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_icon'], "text"),
-					             GetSQLValueString($_POST['ch_mon_cat_couleur'], "text"),
-                       GetSQLValueString($_POST['ch_mon_cat_quete'], "text"));
+                       escape_sql($_POST['ch_mon_cat_label'], "text"),
+                       escape_sql($_POST['ch_mon_cat_statut'], "int"),
+                       escape_sql($_POST['ch_mon_cat_date'], "date"),
+                       escape_sql($_POST['ch_mon_cat_mis_jour'], "date"),
+                       escape_sql($_POST['ch_mon_cat_nb_update'], "int"),
+                       escape_sql($_POST['ch_mon_cat_nom'], "text"),
+                       escape_sql($_POST['ch_mon_cat_desc'], "text"),
+                       escape_sql($_POST['ch_mon_cat_icon'], "text"),
+					   escape_sql($_POST['ch_mon_cat_couleur'], "text"),
+                       escape_sql($_POST['ch_mon_cat_quete'], "text"));
 					   
 
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   $insertGoTo = DEF_URI_PATH . "back/institut_patrimoine.php";
   appendQueryString($insertGoTo);
@@ -37,8 +35,8 @@ $insertSQL = sprintf("INSERT INTO monument_categories (ch_mon_cat_label, ch_mon_
 //requete instituts
 $institut_id = 3;
 
-$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
-$institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
+$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", escape_sql($institut_id, "int"));
+$institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
@@ -53,7 +51,7 @@ $startRow_liste_mon_cat = $pageNum_liste_mon_cat * $maxRows_liste_mon_cat;
 
 $query_liste_mon_cat = "SELECT * FROM monument_categories ORDER BY ch_mon_cat_mis_jour DESC";
 $query_limit_liste_mon_cat = sprintf("%s LIMIT %d, %d", $query_liste_mon_cat, $startRow_liste_mon_cat, $maxRows_liste_mon_cat);
-$liste_mon_cat = mysql_query($query_limit_liste_mon_cat, $maconnexion) or die(mysql_error());
+$liste_mon_cat = mysql_query($query_limit_liste_mon_cat, $maconnexion);
 $row_liste_mon_cat = mysql_fetch_assoc($liste_mon_cat);
 
 if (isset($_GET['totalRows_liste_mon_cat'])) {
@@ -83,7 +81,7 @@ $queryString_liste_mon_cat = sprintf("&totalRows_liste_mon_cat=%d%s", $totalRows
 //requete liste categories monuments pour pouvoir selectionner la categorie 
 
 $query_liste_mon_cat2 = "SELECT * FROM monument_categories ORDER BY ch_mon_cat_mis_jour DESC";
-$liste_mon_cat2 = mysql_query($query_liste_mon_cat2, $maconnexion) or die(mysql_error());
+$liste_mon_cat2 = mysql_query($query_liste_mon_cat2, $maconnexion);
 $row_liste_mon_cat2 = mysql_fetch_assoc($liste_mon_cat2);
 $totalRows_liste_mon_cat2 = mysql_num_rows($liste_mon_cat2);
 
@@ -111,9 +109,9 @@ FROM dispatch_mon_cat as monument
 INNER JOIN patrimoine ON monument.ch_disp_mon_id = ch_pat_id 
 WHERE monument.ch_disp_cat_id = %s OR %s IS NULL AND ch_pat_statut = 1 
 GROUP BY monument.ch_disp_mon_id
-ORDER BY monument.ch_disp_date DESC", GetSQLValueString($colname_classer_mon, "int"), GetSQLValueString($colname_classer_mon, "int"));
+ORDER BY monument.ch_disp_date DESC", escape_sql($colname_classer_mon, "int"), escape_sql($colname_classer_mon, "int"));
 $query_limit_classer_mon = sprintf("%s LIMIT %d, %d", $query_classer_mon, $startRow_classer_mon, $maxRows_classer_mon);
-$classer_mon = mysql_query($query_limit_classer_mon, $maconnexion) or die(mysql_error());
+$classer_mon = mysql_query($query_limit_classer_mon, $maconnexion);
 $row_classer_mon = mysql_fetch_assoc($classer_mon);
 
 if (isset($_GET['totalRows_classer_mon'])) {
@@ -144,8 +142,8 @@ $queryString_classer_mon = sprintf("&totalRows_classer_mon=%d%s", $totalRows_cla
 
 //requete listes monuments restants
 
-$query_liste_mon_restants = sprintf("SELECT ch_pat_id AS nb_mon_restants FROM patrimoine WHERE ch_pat_id NOT IN (SELECT ch_disp_mon_id FROM dispatch_mon_cat WHERE ch_disp_cat_id = %s OR %s IS NULL)", GetSQLValueString($colname_classer_mon, "int"), GetSQLValueString($colname_classer_mon, "int"));
-$liste_mon_restants = mysql_query($query_liste_mon_restants, $maconnexion) or die(mysql_error());
+$query_liste_mon_restants = sprintf("SELECT ch_pat_id AS nb_mon_restants FROM patrimoine WHERE ch_pat_id NOT IN (SELECT ch_disp_mon_id FROM dispatch_mon_cat WHERE ch_disp_cat_id = %s OR %s IS NULL)", escape_sql($colname_classer_mon, "int"), escape_sql($colname_classer_mon, "int"));
+$liste_mon_restants = mysql_query($query_liste_mon_restants, $maconnexion);
 $row_liste_mon_restants = mysql_fetch_assoc($liste_mon_restants);
 $totalRows_liste_mon_restants = mysql_num_rows($liste_mon_restants);
 
@@ -153,7 +151,7 @@ $totalRows_liste_mon_restants = mysql_num_rows($liste_mon_restants);
 
 $query_new_mon = "SELECT ch_pat_id, ch_pat_lien_img1, ch_pat_nom, ch_pat_mis_jour FROM patrimoine INNER JOIN pays ON ch_pat_paysID = ch_pay_id WHERE ch_pat_id NOT IN (
         SELECT ch_disp_mon_id FROM dispatch_mon_cat ) AND ch_pay_publication = 1 ORDER BY ch_pat_nom ASC";
-$new_mon = mysql_query($query_new_mon, $maconnexion) or die(mysql_error());
+$new_mon = mysql_query($query_new_mon, $maconnexion);
 $row_new_mon = mysql_fetch_assoc($new_mon);
 $totalRows_new_mon = mysql_num_rows($new_mon);
 
@@ -178,17 +176,6 @@ $_SESSION['last_work'] = "institut_patrimoine.php";
 <link href="../SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -331,7 +318,7 @@ $('#closemodal').click(function() {
     <a href="#ajouter-cat" role="button" class="btn btn-primary" title="Ajouter une cat&eacute;gorie" data-toggle="modal">Ajouter une cat&eacute;gorie</a> 
     <!-- Modal -->
     <div id="ajouter-cat" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-width="760">
-      <form action="<?php echo $editFormAction; ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
+      <form action="<?= e($editFormAction) ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h3 id="myModalLabel">Ajouter une nouvelle cat&eacute;gorie de monuments</h3>
@@ -470,7 +457,7 @@ $('#closemodal').click(function() {
           
 
 $query_liste_mon_cat3 = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID In ($listcategories)";
-$liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion) or die(mysql_error());
+$liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion);
 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
 			 } ?>
@@ -508,7 +495,7 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
         <?php if ($row_liste_mon_cat3) {?>
         <?php do { ?>
           <!-- Icone et popover de la categorie -->
-          <div class="span2 icone-categorie"><a href="#" rel="clickover" title="<?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>" data-placement="left" data-content="<?php echo $row_liste_mon_cat3['ch_mon_cat_desc']; ?>"><img src="<?php echo $row_liste_mon_cat3['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_liste_mon_cat3['ch_mon_cat_nom']; ?>"></a></div>
+          <div class="span2 icone-categorie"><a href="#" rel="clickover" title="<?= e($row_liste_mon_cat3['ch_mon_cat_nom']) ?>" data-placement="left" data-content="<?= e($row_liste_mon_cat3['ch_mon_cat_desc']) ?>"><img src="<?= e($row_liste_mon_cat3['ch_mon_cat_icon']) ?>" alt="icone <?= e($row_liste_mon_cat3['ch_mon_cat_nom']) ?>"></a></div>
           <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)); ?>
         <?php } ?>
       </div>

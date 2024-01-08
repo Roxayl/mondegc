@@ -4,11 +4,12 @@
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
 if(!isset($_SESSION['userObject'])) {
-// Redirection vers page de connexion
+    // Redirection vers page de connexion
     header("Status: 301 Moved Permanently", false, 301);
     header('Location: ' . legacyPage('connexion'));
     exit();
 }
+
 $_SESSION['last_work'] = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php' . '?' . $_SERVER['QUERY_STRING'];
 
 //Recuperation variables
@@ -19,8 +20,8 @@ if(isset($_REQUEST['userID'])) {
     unset($_REQUEST['userID']);
 }
 
-$query_User = sprintf("SELECT * FROM users WHERE ch_use_id = %s", GetSQLValueString($colname_User, "int"));
-$User = mysql_query($query_User, $maconnexion) or die(mysql_error());
+$query_User = sprintf("SELECT * FROM users WHERE ch_use_id = %s", escape_sql($colname_User, "int"));
+$User = mysql_query($query_User, $maconnexion);
 $row_User = mysql_fetch_assoc($User);
 $totalRows_User = mysql_num_rows($User);
 
@@ -44,15 +45,15 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
     }
 
     $updateSQL = sprintf("UPDATE users SET ch_use_acces=%s, ch_use_statut=%s, ch_use_paysID=%s, ch_use_login=%s, ch_use_password=%s, ch_use_mail=%s WHERE ch_use_id=%s",
-        GetSQLValueString($banni, "int"),
-        GetSQLValueString($_POST['ch_use_statut'], "int"),
-        GetSQLValueString($_POST['ch_use_paysID'], "int"),
-        GetSQLValueString($_POST['ch_use_login'], "text"),
-        GetSQLValueString($hashed_password, "text"),
-        GetSQLValueString($_POST['ch_use_mail'], "text"),
-        GetSQLValueString($_POST['ch_use_id'], "int"));
+        escape_sql($banni, "int"),
+        escape_sql($_POST['ch_use_statut'], "int"),
+        escape_sql($_POST['ch_use_paysID'], "int"),
+        escape_sql($_POST['ch_use_login'], "text"),
+        escape_sql($hashed_password, "text"),
+        escape_sql($_POST['ch_use_mail'], "text"),
+        escape_sql($_POST['ch_use_id'], "int"));
 
-    $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    $Result1 = mysql_query($updateSQL, $maconnexion);
 
     $updateGoTo = DEF_URI_PATH . "back/membre-modifier_back.php";
     appendQueryString($updateGoTo);
@@ -66,19 +67,19 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
     $updateSQL = sprintf("UPDATE personnage SET nom_personnage = %s, predicat = %s,
                       prenom_personnage = %s, biographie = %s, titre_personnage = %s
                       WHERE id = %s",
-        GetSQLValueString($_POST['ch_use_nom_dirigeant'], 'text'),
-        GetSQLValueString($_POST['ch_use_predicat_dirigeant'], 'text'),
-        GetSQLValueString($_POST['ch_use_prenom_dirigeant'], 'text'),
-        GetSQLValueString($_POST['ch_use_biographie_dirigeant'], "text"),
-        GetSQLValueString($_POST['ch_use_titre_dirigeant'], "text"),
-        GetSQLValueString($_POST['personnage_id'], "int"));
+        escape_sql($_POST['ch_use_nom_dirigeant'], 'text'),
+        escape_sql($_POST['ch_use_predicat_dirigeant'], 'text'),
+        escape_sql($_POST['ch_use_prenom_dirigeant'], 'text'),
+        escape_sql($_POST['ch_use_biographie_dirigeant'], "text"),
+        escape_sql($_POST['ch_use_titre_dirigeant'], "text"),
+        escape_sql($_POST['personnage_id'], "int"));
 
     $selectSQL = mysql_query(sprintf('SELECT entity_id FROM personnage WHERE id = %s',
-        GetSQLValueString($_POST['personnage_id'], 'int')));
+        escape_sql($_POST['personnage_id'], 'int')));
     $personnageData = mysql_fetch_assoc($selectSQL);
     $thisPays = new \GenCity\Monde\Pays($personnageData['entity_id']);
 
-    $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+    $Result1 = mysql_query($updateSQL, $maconnexion);
 
     $updateGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID={$thisPays->ch_pay_id}";
     appendQueryString($updateGoTo);
@@ -113,17 +114,6 @@ appendQueryString($editFormAction);
 <link href="../SpryAssets/SpryValidationPassword.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationSelect.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">

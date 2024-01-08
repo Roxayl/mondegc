@@ -7,8 +7,8 @@ if (isset($_GET['ch_disp_FH_id'])) {
   $colname_ch_disp_FH_id = $_GET['ch_disp_FH_id'];
 }
 
-$query_fai = sprintf("SELECT ch_disp_FH_id, ch_disp_fait_hist_cat_id, ch_disp_fait_hist_id, ch_his_nom, ch_his_lien_img1, ch_fai_cat_nom, ch_fai_cat_icon,  	ch_fai_cat_couleur FROM dispatch_fait_his_cat INNER JOIN histoire ON ch_disp_fait_hist_id = ch_his_id INNER JOIN faithist_categories ON ch_disp_fait_hist_cat_id = ch_fai_cat_ID WHERE ch_disp_FH_id = %s", GetSQLValueString($colname_ch_disp_FH_id, "int"));
-$fai = mysql_query($query_fai, $maconnexion) or die(mysql_error());
+$query_fai = sprintf("SELECT ch_disp_FH_id, ch_disp_fait_hist_cat_id, ch_disp_fait_hist_id, ch_his_nom, ch_his_lien_img1, ch_fai_cat_nom, ch_fai_cat_icon,  	ch_fai_cat_couleur FROM dispatch_fait_his_cat INNER JOIN histoire ON ch_disp_fait_hist_id = ch_his_id INNER JOIN faithist_categories ON ch_disp_fait_hist_cat_id = ch_fai_cat_ID WHERE ch_disp_FH_id = %s", escape_sql($colname_ch_disp_FH_id, "int"));
+$fai = mysql_query($query_fai, $maconnexion);
 $row_fai = mysql_fetch_assoc($fai);
 $totalRows_fai = mysql_num_rows($fai);
 

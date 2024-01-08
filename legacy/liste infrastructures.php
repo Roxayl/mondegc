@@ -36,11 +36,11 @@ if(is_null($thisGroup)) {
         JOIN infrastructures_officielles_groupes iog ON iof.ch_inf_off_id = iog.ID_infra_officielle
         WHERE ID_groupes = %s
         ORDER BY %s",
-        GetSQLValueString($thisGroup->get('id')),
+        escape_sql($thisGroup->get('id')),
         mysql_real_escape_string($type_classement));
 }
 $query_limit_liste_infra_officielles = sprintf("%s LIMIT %d, %d", $query_liste_infra_officielles, $startRow_liste_infra_officielles, $maxRows_liste_infra_officielles);
-$liste_infra_officielles = mysql_query($query_limit_liste_infra_officielles, $maconnexion) or die(mysql_error());
+$liste_infra_officielles = mysql_query($query_limit_liste_infra_officielles, $maconnexion);
 $row_liste_infra_officielles = mysql_fetch_assoc($liste_infra_officielles);
 
 if (isset($_GET['totalRows_liste_infra_officielles'])) {
@@ -84,17 +84,6 @@ $queryString_liste_infra_officielles = sprintf("&totalRows_liste_infra_officiell
 <link href="assets/css/colorpicker.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">

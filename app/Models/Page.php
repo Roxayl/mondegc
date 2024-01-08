@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -33,7 +33,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @method static Builder|Page whereTitle($value)
  * @method static Builder|Page whereUpdatedAt($value)
  * @method static Builder|Page whereUrl($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Page extends Model
 {

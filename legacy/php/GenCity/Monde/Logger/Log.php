@@ -30,7 +30,7 @@ class Log extends BaseModel {
     static function getTotal() {
 
         $query = 'SELECT COUNT(*) AS nbrrows FROM ' . LogModel::$tableName;
-        $mysql_query = mysql_query($query) or die(mysql_error());
+        $mysql_query = mysql_query($query);
         return (int)mysql_fetch_assoc($mysql_query)['nbrrows'];
 
     }
@@ -42,14 +42,14 @@ class Log extends BaseModel {
           VALUES(%s, %s, %s, %s, %s, NOW())';
 
         $query = sprintf($query,
-            GetSQLValueString($this->get('target')),
-            GetSQLValueString($this->get('target_id')),
-            GetSQLValueString($this->get('type_action')),
-            GetSQLValueString($this->get('user_id')),
-            GetSQLValueString($this->get('data_changes'))
+            escape_sql($this->get('target')),
+            escape_sql($this->get('target_id')),
+            escape_sql($this->get('type_action')),
+            escape_sql($this->get('user_id')),
+            escape_sql($this->get('data_changes'))
         );
 
-        mysql_query($query) or die(mysql_error());
+        mysql_query($query);
 
     }
 

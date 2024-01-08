@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace Roxayl\MondeGC\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 
 class SynchronizeAuthentication
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param Request $request
+     * @param \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if (session()->has('userLegacyId') && auth()->guest()) {
             $userLegacyId = session('userLegacyId');

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -56,7 +56,7 @@ use Illuminate\Support\Facades\DB;
  * @method static Builder|MonumentCategory whereChMonCatRecherche($value)
  * @method static Builder|MonumentCategory whereChMonCatStatut($value)
  * @method static Builder|MonumentCategory whereChMonCatTourisme($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class MonumentCategory extends Model
 {

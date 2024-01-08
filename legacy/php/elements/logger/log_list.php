@@ -5,12 +5,13 @@ $logs = $data['logs'];
 /** @var \GenCity\Monde\Logger\Log[] $logs */
 foreach($logs as $log):
 
-    $thisUser = new \GenCity\Monde\User($log->get('user_id'));
+    $userId = $log->get('user_id');
+    $thisUser = null;
+    $username = 'Un utilisateur';
 
-    try {
+    if(! is_null($userId)) {
+        $thisUser = new \GenCity\Monde\User($userId);
         $username = $thisUser->get('ch_use_login');
-    } catch(Exception $e) {
-        $username = 'Un utilisateur';
     }
 
     $label = e($username);
@@ -56,7 +57,7 @@ foreach($logs as $log):
             $label .= " un comité."; break;
 
         default:
-            $label = e($thisUser->get('ch_use_login')) . " a effectué une action sur un élément ("
+            $label = e($username) . " a effectué une action sur un élément ("
                 . e($log->get('target')) . ") du site.";
 
     }

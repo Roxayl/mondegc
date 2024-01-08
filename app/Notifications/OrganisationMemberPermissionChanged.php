@@ -1,41 +1,53 @@
 <?php
 
-namespace App\Notifications;
+namespace Roxayl\MondeGC\Notifications;
 
-use App\Models\OrganisationMember;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use Roxayl\MondeGC\Models\OrganisationMember;
 
 class OrganisationMemberPermissionChanged extends Notification
 {
     use Queueable;
 
-    private ?OrganisationMember $organisation_member;
-    private array $availableActions = ["accepted", "promotedAdministrator"];
-    private ?string $action;
+    /**
+     * @var OrganisationMember
+     */
+    private OrganisationMember $organisationMember;
+
+    /**
+     * @var string
+     */
+    private string $action;
+
+    /**
+     * @var array|string[]
+     */
+    private array $availableActions = ['accepted', 'promotedAdministrator'];
 
     /**
      * Create a new notification instance.
      *
-     * @param OrganisationMember $organisation_member
-     * @param $action
+     * @param  OrganisationMember  $organisationMember
+     * @param  string  $action
      */
-    public function __construct(OrganisationMember $organisation_member, $action)
+    public function __construct(OrganisationMember $organisationMember, string $action)
     {
-        $this->organisation_member = $organisation_member;
-        if(!in_array($action, $this->availableActions))
+        if(! in_array($action, $this->availableActions, true)) {
             throw new \InvalidArgumentException("Mauvais type d'action.");
+        }
+
+        $this->organisationMember = $organisationMember;
         $this->action = $action;
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param  object  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via(object $notifiable): array
     {
         return ['database'];
     }
@@ -43,13 +55,13 @@ class OrganisationMemberPermissionChanged extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param  object  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray(object $notifiable): array
     {
         return [
-            'organisation_member_id' => $this->organisation_member->id,
+            'organisation_member_id' => $this->organisationMember->id,
             'action' => $this->action,
         ];
     }

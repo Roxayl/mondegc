@@ -3,29 +3,27 @@
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
-if ($_SESSION['statut'] AND ($_SESSION['statut']>=20))
-{
-} else {
-	// Redirection vers page connexion
-header("Status: 301 Moved Permanently", false, 301);
-header('Location: ' . legacyPage('connexion'));
-exit();
-	}
+if (!($_SESSION['statut'] and ($_SESSION['statut'] >= 20))) {
+    // Redirection vers page connexion
+    header("Status: 301 Moved Permanently", false, 301);
+    header('Location: ' . legacyPage('connexion'));
+    exit();
+}
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-categorie")) {
   $insertSQL = sprintf("INSERT INTO faithist_categories (ch_fai_cat_label, ch_fai_cat_statut, ch_fai_cat_date, ch_fai_cat_mis_jour, ch_fai_cat_nb_update, ch_fai_cat_nom, ch_fai_cat_desc, ch_fai_cat_icon, ch_fai_cat_couleur) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_fai_cat_label'], "text"),
-                       GetSQLValueString($_POST['ch_fai_cat_statut'], "int"),
-                       GetSQLValueString($_POST['ch_fai_cat_date'], "date"),
-                       GetSQLValueString($_POST['ch_fai_cat_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_fai_cat_nb_update'], "int"),
-                       GetSQLValueString($_POST['ch_fai_cat_nom'], "text"),
-                       GetSQLValueString($_POST['ch_fai_cat_desc'], "text"),
-                       GetSQLValueString($_POST['ch_fai_cat_icon'], "text"),
-					   GetSQLValueString($_POST['ch_fai_cat_couleur'], "text"));
+                       escape_sql($_POST['ch_fai_cat_label'], "text"),
+                       escape_sql($_POST['ch_fai_cat_statut'], "int"),
+                       escape_sql($_POST['ch_fai_cat_date'], "date"),
+                       escape_sql($_POST['ch_fai_cat_mis_jour'], "date"),
+                       escape_sql($_POST['ch_fai_cat_nb_update'], "int"),
+                       escape_sql($_POST['ch_fai_cat_nom'], "text"),
+                       escape_sql($_POST['ch_fai_cat_desc'], "text"),
+                       escape_sql($_POST['ch_fai_cat_icon'], "text"),
+					   escape_sql($_POST['ch_fai_cat_couleur'], "text"));
 
 
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   $insertGoTo = DEF_URI_PATH . "back/institut_histoire.php";
   appendQueryString($insertGoTo);
@@ -36,8 +34,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-categorie")) 
 //requete instituts
 $institut_id = 4;
 
-$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
-$institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
+$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", escape_sql($institut_id, "int"));
+$institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
@@ -52,7 +50,7 @@ $startRow_liste_fait_cat = $pageNum_liste_fait_cat * $maxRows_liste_fait_cat;
 
 $query_liste_fait_cat = "SELECT * FROM faithist_categories ORDER BY ch_fai_cat_mis_jour DESC";
 $query_limit_liste_fait_cat = sprintf("%s LIMIT %d, %d", $query_liste_fait_cat, $startRow_liste_fait_cat, $maxRows_liste_fait_cat);
-$liste_fait_cat = mysql_query($query_limit_liste_fait_cat, $maconnexion) or die(mysql_error());
+$liste_fait_cat = mysql_query($query_limit_liste_fait_cat, $maconnexion);
 $row_liste_fait_cat = mysql_fetch_assoc($liste_fait_cat);
 
 if (isset($_GET['totalRows_liste_fait_cat'])) {
@@ -83,7 +81,7 @@ $queryString_liste_fait_cat = sprintf("&totalRows_liste_fait_cat=%d%s", $totalRo
 //requete liste categories faits hist pour pouvoir selectionner la categorie 
 
 $query_liste_fait_cat2 = "SELECT * FROM faithist_categories ORDER BY ch_fai_cat_mis_jour DESC";
-$liste_fait_cat2 = mysql_query($query_liste_fait_cat2, $maconnexion) or die(mysql_error());
+$liste_fait_cat2 = mysql_query($query_liste_fait_cat2, $maconnexion);
 $row_liste_fait_cat2 = mysql_fetch_assoc($liste_fait_cat2);
 $totalRows_liste_fait_cat2 = mysql_num_rows($liste_fait_cat2);
 
@@ -111,9 +109,9 @@ FROM dispatch_fait_his_cat as fait
 INNER JOIN histoire ON fait.ch_disp_fait_hist_id = ch_his_id 
 WHERE fait.ch_disp_fait_hist_cat_id = %s OR %s IS NULL AND ch_his_statut = 1 
 GROUP BY fait.ch_disp_fait_hist_id
-ORDER BY fait.ch_disp_FH_date DESC", GetSQLValueString($colname_classer_fait_his, "int"), GetSQLValueString($colname_classer_fait_his, "int"));
+ORDER BY fait.ch_disp_FH_date DESC", escape_sql($colname_classer_fait_his, "int"), escape_sql($colname_classer_fait_his, "int"));
 $query_limit_classer_fait_his = sprintf("%s LIMIT %d, %d", $query_classer_fait_his, $startRow_classer_fait_his, $maxRows_classer_fait_his);
-$classer_fait_his = mysql_query($query_limit_classer_fait_his, $maconnexion) or die(mysql_error());
+$classer_fait_his = mysql_query($query_limit_classer_fait_his, $maconnexion);
 $row_classer_fait_his = mysql_fetch_assoc($classer_fait_his);
 
 if (isset($_GET['totalRows_classer_fait_his'])) {
@@ -143,8 +141,8 @@ $queryString_classer_fait_his = sprintf("&totalRows_classer_fait_his=%d%s", $tot
 
 //requete listes faits restants
 
-$query_liste_fait_restants = sprintf("SELECT ch_his_id AS nb_faits_restants FROM histoire WHERE ch_his_id NOT IN (SELECT ch_disp_fait_hist_id FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_cat_id = %s OR %s IS NULL)", GetSQLValueString($colname_classer_fait_his, "int"), GetSQLValueString($colname_classer_fait_his, "int"));
-$liste_fait_restants = mysql_query($query_liste_fait_restants, $maconnexion) or die(mysql_error());
+$query_liste_fait_restants = sprintf("SELECT ch_his_id AS nb_faits_restants FROM histoire WHERE ch_his_id NOT IN (SELECT ch_disp_fait_hist_id FROM dispatch_fait_his_cat WHERE ch_disp_fait_hist_cat_id = %s OR %s IS NULL)", escape_sql($colname_classer_fait_his, "int"), escape_sql($colname_classer_fait_his, "int"));
+$liste_fait_restants = mysql_query($query_liste_fait_restants, $maconnexion);
 $row_liste_fait_restants = mysql_fetch_assoc($liste_fait_restants);
 $totalRows_liste_fait_restants = mysql_num_rows($liste_fait_restants);
 
@@ -153,7 +151,7 @@ $totalRows_liste_fait_restants = mysql_num_rows($liste_fait_restants);
 
 $query_new_fait = "SELECT ch_his_id, ch_his_lien_img1, ch_his_nom, ch_his_mis_jour FROM histoire INNER JOIN pays ON ch_his_paysID = ch_pay_id WHERE ch_his_id NOT IN (
         SELECT ch_disp_fait_hist_id FROM dispatch_fait_his_cat ) AND ch_pay_publication = 1 ORDER BY ch_his_mis_jour DESC";
-$new_fait = mysql_query($query_new_fait, $maconnexion) or die(mysql_error());
+$new_fait = mysql_query($query_new_fait, $maconnexion);
 $row_new_fait = mysql_fetch_assoc($new_fait);
 $totalRows_new_fait = mysql_num_rows($new_fait);
 
@@ -179,17 +177,6 @@ $_SESSION['last_work'] = "institut_histoire.php";
 <link href="../SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryValidationRadio.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -330,7 +317,7 @@ $('#closemodal').click(function() {
     <a href="#ajouter-cat" role="button" class="btn btn-primary" title="Ajouter une cat&eacute;gorie" data-toggle="modal">Ajouter une cat&eacute;gorie</a> 
     <!-- Modal -->
     <div id="ajouter-cat" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-width="760">
-      <form action="<?php echo $editFormAction; ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
+      <form action="<?= e($editFormAction) ?>" name="ajout-categorie" method="POST" class="form-horizontal" id="ajout-categorie">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h3 id="myModalLabel">Ajouter une nouvelle cat&eacute;gorie historique</h3>
@@ -463,7 +450,7 @@ $('#closemodal').click(function() {
           
 
 $query_liste_fait_cat3 = "SELECT * FROM faithist_categories WHERE ch_fai_cat_ID In ($listcategories)";
-$liste_fait_cat3 = mysql_query($query_liste_fait_cat3, $maconnexion) or die(mysql_error());
+$liste_fait_cat3 = mysql_query($query_liste_fait_cat3, $maconnexion);
 $row_liste_fait_cat3 = mysql_fetch_assoc($liste_fait_cat3);
 $totalRows_liste_fait_cat3 = mysql_num_rows($liste_fait_cat3);
 			 } ?>

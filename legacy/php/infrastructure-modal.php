@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Infrastructure;
+use Roxayl\MondeGC\Models\Infrastructure;
 use Carbon\Carbon;
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
@@ -76,7 +76,7 @@ $eloquentInfrastructure = Infrastructure::with('infrastructureOfficielle')
             <?php if(!empty($eloquentInfrastructure->lien_wiki)) { ?> &#183;
         <a href="<?= e($eloquentInfrastructure->lien_wiki) ?>" target="_blank">
             <div class="external-link-icon"
-                 style="background-image:url('https://romukulot.fr/kaleera/images/h4FQp.png');"></div>
+                 style="background-image:url('https://roxayl.fr/kaleera/images/h4FQp.png');"></div>
             Lien sur le Wiki GC</a>
         <?php } ?>
 

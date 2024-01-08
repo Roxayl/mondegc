@@ -38,7 +38,7 @@ return [
         |
         */
 
-        'namespace' => 'App\Models',
+        'namespace' => 'Roxayl\MondeGC\Models',
 
         /*
         |--------------------------------------------------------------------------

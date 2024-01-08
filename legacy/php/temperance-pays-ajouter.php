@@ -5,16 +5,16 @@ appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-temperance")) {
   $insertSQL = sprintf("INSERT INTO temperance (ch_temp_label, ch_temp_date, ch_temp_mis_jour, ch_temp_element, ch_temp_element_id, ch_temp_statut, ch_temp_note, ch_temp_tendance) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_temp_label'], "text"),
-                       GetSQLValueString($_POST['ch_temp_date'], "date"),
-                       GetSQLValueString($_POST['ch_temp_mis_jour'], "date"),
-                       GetSQLValueString($_POST['ch_temp_element'], "text"),
-                       GetSQLValueString($_POST['ch_temp_element_id'], "int"),
-                       GetSQLValueString($_POST['ch_temp_statut'], "int"),
-                       GetSQLValueString($_POST['ch_temp_note'], "int"),
-					   GetSQLValueString($_POST['ch_temp_tendance'], "text"));
+                       escape_sql($_POST['ch_temp_label'], "text"),
+                       escape_sql($_POST['ch_temp_date'], "date"),
+                       escape_sql($_POST['ch_temp_mis_jour'], "date"),
+                       escape_sql($_POST['ch_temp_element'], "text"),
+                       escape_sql($_POST['ch_temp_element_id'], "int"),
+                       escape_sql($_POST['ch_temp_statut'], "int"),
+                       escape_sql($_POST['ch_temp_note'], "int"),
+					   escape_sql($_POST['ch_temp_tendance'], "text"));
 
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   $insertGoTo = DEF_URI_PATH . 'back/institut_economie.php';
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -22,8 +22,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-temperance"))
 $colname_pays = $_POST['ch_temp_element_id'];
 //requete pays
 
-$query_mail = sprintf("SELECT ch_pay_nom, ch_use_mail FROM pays INNER JOIN users ON ch_pay_id=ch_use_paysID WHERE ch_pay_id=%s", GetSQLValueString($colname_pays, "int"));
-$mail = mysql_query($query_mail, $maconnexion) or die(mysql_error());
+$query_mail = sprintf("SELECT ch_pay_nom, ch_use_mail FROM pays INNER JOIN users ON ch_pay_id=ch_use_paysID WHERE ch_pay_id=%s", escape_sql($colname_pays, "int"));
+$mail = mysql_query($query_mail, $maconnexion);
 $row_mail = mysql_fetch_assoc($mail);
 $totalRows_mail = mysql_num_rows($mail);
 
@@ -95,14 +95,14 @@ mail($mail,$sujet,$message,$header);
 //requete pays
 
 $query_pays = "SELECT ch_pay_id, ch_pay_nom FROM pays WHERE ch_pay_publication=1 ORDER BY ch_pay_nom";
-$pays = mysql_query($query_pays, $maconnexion) or die(mysql_error());
+$pays = mysql_query($query_pays, $maconnexion);
 $row_pays = mysql_fetch_assoc($pays);
 $totalRows_pays = mysql_num_rows($pays);
 ?>
 
 <!-- Modal Header-->
 
-<form action="<?php echo $editFormAction; ?>" name="ajout-temperance" method="POST" class="form-horizontal" id="ajout-temperance">
+<form action="<?= e($editFormAction) ?>" name="ajout-temperance" method="POST" class="form-horizontal" id="ajout-temperance">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3 id="myModalLabel">Temp&eacute;rer un pays</h3>

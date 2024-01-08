@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Roxayl\MondeGC\Models\Enums\Resource;
 
 class CreateResourceHistoryTable extends Migration
 {
@@ -18,8 +19,8 @@ class CreateResourceHistoryTable extends Migration
             $table->string('resourceable_type', 191)->index();
             $table->bigInteger('resourceable_id')->index();
 
-            foreach(config('enums.resources') as $resource) {
-                $table->integer($resource);
+            foreach(Resource::cases() as $resource) {
+                $table->integer($resource->value);
             }
 
             $table->timestamps();

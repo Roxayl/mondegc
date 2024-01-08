@@ -5,26 +5,26 @@ appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout-inf_off")) {
   $insertSQL = sprintf("INSERT INTO infrastructures_officielles (ch_inf_off_label, ch_inf_off_date, ch_inf_off_nom, ch_inf_off_desc, ch_inf_off_icone, ch_inf_off_budget, ch_inf_off_Industrie, ch_inf_off_Commerce, ch_inf_off_Agriculture, ch_inf_off_Tourisme, ch_inf_off_Recherche, ch_inf_off_Environnement, ch_inf_off_Education) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ch_inf_off_label'], "text"),
-                       GetSQLValueString($_POST['ch_inf_off_date'], "date"),
-                       GetSQLValueString($_POST['ch_inf_off_nom'], "text"),
-                       GetSQLValueString($_POST['ch_inf_off_desc'], "text"),
-                       GetSQLValueString($_POST['ch_inf_off_icone'], "text"),
-                       GetSQLValueString($_POST['ch_inf_off_budget'], "int"),
-                       GetSQLValueString($_POST['ch_inf_off_Industrie'], "int"),
-					   GetSQLValueString($_POST['ch_inf_off_Commerce'], "int"),
-                       GetSQLValueString($_POST['ch_inf_off_Agriculture'], "int"),
-                       GetSQLValueString($_POST['ch_inf_off_Tourisme'], "int"),
-                       GetSQLValueString($_POST['ch_inf_off_Recherche'], "int"),
-                       GetSQLValueString($_POST['ch_inf_off_Environnement'], "int"),
-                       GetSQLValueString($_POST['ch_inf_off_Education'], "int"));
+                       escape_sql($_POST['ch_inf_off_label'], "text"),
+                       escape_sql($_POST['ch_inf_off_date'], "date"),
+                       escape_sql($_POST['ch_inf_off_nom'], "text"),
+                       escape_sql($_POST['ch_inf_off_desc'], "text"),
+                       escape_sql($_POST['ch_inf_off_icone'], "text"),
+                       escape_sql($_POST['ch_inf_off_budget'], "int"),
+                       escape_sql($_POST['ch_inf_off_Industrie'], "int"),
+					   escape_sql($_POST['ch_inf_off_Commerce'], "int"),
+                       escape_sql($_POST['ch_inf_off_Agriculture'], "int"),
+                       escape_sql($_POST['ch_inf_off_Tourisme'], "int"),
+                       escape_sql($_POST['ch_inf_off_Recherche'], "int"),
+                       escape_sql($_POST['ch_inf_off_Environnement'], "int"),
+                       escape_sql($_POST['ch_inf_off_Education'], "int"));
   
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   $last_id = mysql_insert_id();
   $insert_group = mysql_query(sprintf('INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle) VALUES(%s, %s)',
-      GetSQLValueString($_POST['groupe_infra']),
-      GetSQLValueString($last_id)
+      escape_sql($_POST['groupe_infra']),
+      escape_sql($last_id)
   ));
 
   $thisInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($last_id);
@@ -48,7 +48,7 @@ $infra_group = mysql_query($query_infra_group, $maconnexion);
 
 <!-- Modal Header-->
 
-<form action="<?php echo $editFormAction; ?>" name="ajout-inf_off" method="POST" class="form-horizontal" id="ajout-inf_off">
+<form action="<?= e($editFormAction) ?>" name="ajout-inf_off" method="POST" class="form-horizontal" id="ajout-inf_off">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
     <h3 id="myModalLabel">Ajouter une infrastructure dans la liste officielle</h3>

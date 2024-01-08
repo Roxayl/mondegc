@@ -37,7 +37,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "infra_group_modal_s
 
 <!-- Modal Header-->
 
-<form action="<?php echo $editFormAction; ?>" name="infra_group_modal" method="POST" class="form-horizontal" id="infra_group_modal_form">
+<form action="<?= e($editFormAction) ?>" name="infra_group_modal" method="POST" class="form-horizontal" id="infra_group_modal_form">
 
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

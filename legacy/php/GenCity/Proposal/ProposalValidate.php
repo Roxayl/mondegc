@@ -2,8 +2,8 @@
 
 namespace GenCity\Proposal;
 
-use App\Models\OcgcProposal;
-use App\Jobs\Discord;
+use Roxayl\MondeGC\Models\OcgcProposal;
+use Roxayl\MondeGC\Jobs\Discord;
 
 class ProposalValidate {
 
@@ -48,8 +48,8 @@ class ProposalValidate {
 
         $query = sprintf('
             UPDATE ocgc_proposals SET is_valid = %s WHERE id = %s',
-            GetSQLValueString($is_valid_value, 'int'),
-            GetSQLValueString($this->proposal->get('id'), 'int'));
+            escape_sql($is_valid_value, 'int'),
+            escape_sql($this->proposal->get('id'), 'int'));
         mysql_query($query);
 
     }
@@ -59,7 +59,7 @@ class ProposalValidate {
         $this->runQuery(Proposal::allValidationStatus('debatePending'));
 
         /** @var OcgcProposal $eloquentProposal */
-        $eloquentProposal = OcgcProposal::findOrFail($this->proposal->get('id'));
+        $eloquentProposal = OcgcProposal::query()->findOrFail($this->proposal->get('id'));
         Discord\NotifyCreatedProposal::dispatch($eloquentProposal);
 
         // Cette proposition est acceptée par l'OCGC après sa date de début de vote ;

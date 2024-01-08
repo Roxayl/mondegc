@@ -14,8 +14,8 @@ if (isset($_POST['monument_ID'])) {
   $colname_ch_pat_confimation_suppression = $_POST['monument_ID'];
 }
 
-$query_ch_pat_confimation_suppression = sprintf("SELECT ch_pat_id, ch_pat_villeID, ch_pat_nom, ch_pat_lien_img1 FROM patrimoine WHERE ch_pat_id = %s", GetSQLValueString($colname_ch_pat_confimation_suppression, "int"));
-$ch_pat_confimation_suppression = mysql_query($query_ch_pat_confimation_suppression, $maconnexion) or die(mysql_error());
+$query_ch_pat_confimation_suppression = sprintf("SELECT ch_pat_id, ch_pat_villeID, ch_pat_nom, ch_pat_lien_img1 FROM patrimoine WHERE ch_pat_id = %s", escape_sql($colname_ch_pat_confimation_suppression, "int"));
+$ch_pat_confimation_suppression = mysql_query($query_ch_pat_confimation_suppression, $maconnexion);
 $row_ch_pat_confimation_suppression = mysql_fetch_assoc($ch_pat_confimation_suppression);
 $totalRows_ch_pat_confimation_suppression = mysql_num_rows($ch_pat_confimation_suppression);
 
@@ -34,17 +34,6 @@ $_SESSION['ville_encours'] = $row_ch_pat_confimation_suppression['ch_pat_villeID
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
 <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="../assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="../assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">

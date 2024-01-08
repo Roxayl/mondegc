@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace Roxayl\MondeGC\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
@@ -25,6 +25,7 @@ class Handler extends ExceptionHandler
         'current_password',
         'password',
         'password_confirmation',
+        'mot_de_passe',
     ];
 
     /**
@@ -32,7 +33,7 @@ class Handler extends ExceptionHandler
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->reportable(function (Throwable $e) {
             //

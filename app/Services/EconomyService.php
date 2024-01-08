@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace Roxayl\MondeGC\Services;
 
-use App\Models\Pays;
-use App\Models\Traits\Influencable;
-use App\Models\Traits\Resourceable;
 use Illuminate\Database\Eloquent\Collection;
+use Roxayl\MondeGC\Models\Enums\Resource;
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
 
 class EconomyService
 {
@@ -16,8 +17,8 @@ class EconomyService
     {
         $return = [];
 
-        foreach(config('enums.resources') as $resource) {
-            $return[$resource] = 0;
+        foreach(Resource::cases() as $resource) {
+            $return[$resource->value] = 0;
         }
 
         return $return;
@@ -59,14 +60,14 @@ class EconomyService
      * @return float[] Un tableau de ressources contenant la somme  les ressources générées un
      *                 ensemble d'influençables.
      */
-    public static function sumGeneratedResourcesFromInfluencables(array|\ArrayAccess $influencables): array
+    public static function sumGeneratedResourcesFromInfluencables(iterable $influencables): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
         foreach($influencables as $chapterResource) {
             $generatedResources = $chapterResource->getGeneratedResources();
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] += $generatedResources[$resource];
+            foreach(Resource::cases() as $resource) {
+                $sumResources[$resource->value] += $generatedResources[$resource->value];
             }
         }
 
@@ -80,14 +81,14 @@ class EconomyService
      * @return float[] Un tableau de ressources contenant la somme des ressources générées par un ensemble
      *                 de ressourceables.
      */
-    public static function sumGeneratedResourcesFromResourceables(array|\ArrayAccess $resourceables): array
+    public static function sumGeneratedResourcesFromResourceables(iterable $resourceables): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
         foreach($resourceables as $chapterResource) {
             $generatedResources = $chapterResource->resources();
-            foreach(config('enums.resources') as $resource) {
-                $sumResources[$resource] += $generatedResources[$resource];
+            foreach(Resource::cases() as $resource) {
+                $sumResources[$resource->value] += $generatedResources[$resource->value];
             }
         }
 

@@ -62,21 +62,21 @@ class Proposal extends BaseModel {
                          YEAR(CURDATE()), %s, NOW(), NOW())';
 
         $query = sprintf($query,
-             GetSQLValueString($this->get('ID_pays')),
-             GetSQLValueString($this->get('question')),
-             GetSQLValueString($this->get('type')),
-             GetSQLValueString($this->get('type_reponse')),
-             GetSQLValueString($this->get('reponse_1')),
-             GetSQLValueString($this->get('reponse_2')),
-             GetSQLValueString($this->get('reponse_3')),
-             GetSQLValueString($this->get('reponse_4')),
-             GetSQLValueString($this->get('reponse_5')),
-             GetSQLValueString($this->get('threshold')),
-             GetSQLValueString($this->get('is_valid'), 'int'),
-             GetSQLValueString($this->get('motive')),
-             GetSQLValueString($this->get('debate_start')),
-             GetSQLValueString($this->get('debate_end')),
-             GetSQLValueString($this->get('res_id'))
+             escape_sql($this->get('ID_pays')),
+             escape_sql($this->get('question')),
+             escape_sql($this->get('type')),
+             escape_sql($this->get('type_reponse')),
+             escape_sql($this->get('reponse_1')),
+             escape_sql($this->get('reponse_2')),
+             escape_sql($this->get('reponse_3')),
+             escape_sql($this->get('reponse_4')),
+             escape_sql($this->get('reponse_5')),
+             escape_sql($this->get('threshold')),
+             escape_sql($this->get('is_valid'), 'int'),
+             escape_sql($this->get('motive')),
+             escape_sql($this->get('debate_start')),
+             escape_sql($this->get('debate_end')),
+             escape_sql($this->get('res_id'))
         );
         mysql_query($query) or getErrorMessage('error', "Impossible !");
 
@@ -91,21 +91,21 @@ class Proposal extends BaseModel {
     /**
      * Met à jour la proposition dans la base de données.
      */
-    public function update() {
+    public function update(): void {
 
         $structure = $this->model->getStructure();
 
         $query = 'UPDATE ocgc_proposals SET ';
 
         foreach($structure as $field => $default) {
-            $query .= ' ' . $field . ' = ' . GetSQLValueString($this->get($field));
+            $query .= ' ' . $field . ' = ' . escape_sql($this->get($field));
             end($structure);
             if($field !== key($structure)) {
                 $query .= ', ';
             }
         }
 
-        $query .= ' WHERE id = ' . GetSQLValueString($this->get('id'));
+        $query .= ' WHERE id = ' . escape_sql($this->get('id'));
         mysql_query($query);
 
     }

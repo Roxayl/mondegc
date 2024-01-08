@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Organisation;
+namespace Roxayl\MondeGC\Http\Requests\Organisation;
 
-use App\Models\Organisation;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
+use Roxayl\MondeGC\Models\Organisation;
 
 class MigrateType extends FormRequest
 {
@@ -90,7 +90,7 @@ class MigrateType extends FormRequest
      */
     public function rules(): array
     {
-        $this->organisation = Organisation::findOrFail(
+        $this->organisation = Organisation::query()->findOrFail(
             request()->route('organisation'));
         $type = request()->input('type');
 

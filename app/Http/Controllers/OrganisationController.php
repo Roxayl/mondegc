@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Events\Organisation\TypeMigrated;
-use App\Http\Requests\Organisation\MigrateType;
-use App\Models\Communique;
-use App\Models\Organisation;
-use App\Models\OrganisationMember;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Events\Organisation\TypeMigrated;
+use Roxayl\MondeGC\Http\Requests\Organisation\MigrateType;
+use Roxayl\MondeGC\Models\Communique;
+use Roxayl\MondeGC\Models\Organisation;
+use Roxayl\MondeGC\Models\OrganisationMember;
 
 class OrganisationController extends Controller
 {
@@ -58,17 +58,18 @@ class OrganisationController extends Controller
         $organisation->fill($request->except(['_method', '_token']));
 
         $type = $request->input('type');
-        if(!in_array($type, Organisation::$typesCreatable))
+        if(! in_array($type, Organisation::$typesCreatable)) {
             throw new \InvalidArgumentException("Mauvais type d'organisation.");
+        }
         $organisation->type = $type;
 
         $organisation->save();
 
-        $memberData = array(
+        $memberData = [
             'organisation_id' => $organisation->id,
             'permissions' => Organisation::$permissions['owner'],
-            'pays_id' => $request->pays_id
-        );
+            'pays_id' => $request->input('pays_id')
+        ];
         OrganisationMember::create($memberData);
 
         return redirect()->route('organisation.showslug',
@@ -85,6 +86,7 @@ class OrganisationController extends Controller
      */
     public function show(int $id, string $slug = null): View|RedirectResponse
     {
+        /** @var Organisation $organisation */
         $organisation = Organisation::with(['members', 'membersPending'])
             ->findOrFail($id);
 
@@ -136,6 +138,7 @@ class OrganisationController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
+        /** @var Organisation $organisation */
         $organisation = Organisation::with('members')->findOrFail($id);
         $this->authorize('update', $organisation);
 
@@ -183,7 +186,7 @@ class OrganisationController extends Controller
      */
     public function migrate(int $id): View
     {
-        $organisation = Organisation::findOrFail($id);
+        $organisation = Organisation::query()->findOrFail($id);
         $this->authorize('update', $organisation);
 
         return view('organisation.migrate', compact(['organisation']));
@@ -198,10 +201,10 @@ class OrganisationController extends Controller
      */
     public function runMigration(MigrateType $request, int $id): RedirectResponse
     {
-        $organisation = Organisation::findOrFail($id);
+        $organisation = Organisation::query()->findOrFail($id);
         $this->authorize('update', $organisation);
 
-        $organisation->type = $request->type;
+        $organisation->type = $request->input('type');
         $organisation->type_migrated_at = Carbon::now();
 
         $organisation->save();
@@ -210,6 +213,6 @@ class OrganisationController extends Controller
 
         return redirect()->back()
             ->with('message', 'success|Votre organisation est devenue une '
-                . __("organisation.types.$request->type"));
+                . __("organisation.types.$organisation->type"));
     }
 }

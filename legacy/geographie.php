@@ -6,15 +6,15 @@ include('php/log.php');
 //requete instituts
 $institut_id = 2;
 
-$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", GetSQLValueString($institut_id, "int"));
-$institut = mysql_query($query_institut, $maconnexion) or die(mysql_error());
+$query_institut = sprintf("SELECT * FROM instituts WHERE ch_ins_ID = %s", escape_sql($institut_id, "int"));
+$institut = mysql_query($query_institut, $maconnexion);
 $row_institut = mysql_fetch_assoc($institut);
 $totalRows_institut = mysql_num_rows($institut);
 
 //requete liste pays pour pouvoir selectionner le pays
 
 $query_liste_pays = "SELECT ch_pay_id, ch_pay_nom FROM pays WHERE ch_pay_publication = 1 ORDER BY ch_pay_mis_jour DESC";
-$liste_pays = mysql_query($query_liste_pays, $maconnexion) or die(mysql_error());
+$liste_pays = mysql_query($query_liste_pays, $maconnexion);
 $row_liste_pays = mysql_fetch_assoc($liste_pays);
 $totalRows_liste_pays = mysql_num_rows($liste_pays);
 
@@ -41,17 +41,6 @@ $_GET['ch_pay_id'] = $row_liste_pays['ch_pay_id'];
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">

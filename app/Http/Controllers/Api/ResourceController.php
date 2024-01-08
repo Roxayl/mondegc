@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace Roxayl\MondeGC\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\Repositories\BaseRepository;
-use App\Models\Repositories\Resource;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Roxayl\MondeGC\Http\Controllers\Controller;
+use Roxayl\MondeGC\Models\Repositories\Resource;
 
 class ResourceController extends Controller
 {
@@ -27,7 +25,7 @@ class ResourceController extends Controller
     {
         $shortModelName = Resource::getModels()[$type];
 
-        $page = $request->input('page') ?? 1;
+        /* $page = $request->input('page') ?? 1; */
         // FIXME: la pagination ne fonctionne pas pour une raison ou une autre...
         /* $perPage = BaseRepository::perPage; */
 

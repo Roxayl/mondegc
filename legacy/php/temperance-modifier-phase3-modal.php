@@ -30,8 +30,8 @@ if (isset($_GET['nb_juges'])) {
 
 	//requete notation-temperance
 
-$query_questionnaires = sprintf("SELECT DISTINCT SUM(ch_not_temp_q1+ch_not_temp_q2+ch_not_temp_q3+ch_not_temp_q4+ch_not_temp_q5+ch_not_temp_q6+ch_not_temp_q7+ch_not_temp_q8+ch_not_temp_q9+ch_not_temp_q10) AS note FROM notation_temperance WHERE ch_not_temp_temperance_id=%s", GetSQLValueString( $colname_temperance, "int"));
-$questionnaires = mysql_query($query_questionnaires, $maconnexion) or die(mysql_error());
+$query_questionnaires = sprintf("SELECT DISTINCT SUM(ch_not_temp_q1+ch_not_temp_q2+ch_not_temp_q3+ch_not_temp_q4+ch_not_temp_q5+ch_not_temp_q6+ch_not_temp_q7+ch_not_temp_q8+ch_not_temp_q9+ch_not_temp_q10) AS note FROM notation_temperance WHERE ch_not_temp_temperance_id=%s", escape_sql( $colname_temperance, "int"));
+$questionnaires = mysql_query($query_questionnaires, $maconnexion);
 $row_questionnaires = mysql_fetch_assoc($questionnaires);
 $totalRows_questionnaires = mysql_num_rows($questionnaires);
 
@@ -41,8 +41,8 @@ $note = $row_questionnaires['note'] / $nb_juges * 3;
 
 		//Recherche note precedente
 
-$query_note_prec = sprintf("SELECT ch_temp_note FROM temperance WHERE ch_temp_statut='3' AND ch_temp_element=%s AND ch_temp_element_id=%s ORDER BY ch_temp_mis_jour DESC", GetSQLValueString( $element, "text"), GetSQLValueString( $element_id, "int"));
-$note_prec = mysql_query($query_note_prec, $maconnexion) or die(mysql_error());
+$query_note_prec = sprintf("SELECT ch_temp_note FROM temperance WHERE ch_temp_statut='3' AND ch_temp_element=%s AND ch_temp_element_id=%s ORDER BY ch_temp_mis_jour DESC", escape_sql( $element, "text"), escape_sql( $element_id, "int"));
+$note_prec = mysql_query($query_note_prec, $maconnexion);
 $row_note_prec = mysql_fetch_assoc($note_prec);
 $totalRows_note_prec = mysql_num_rows($note_prec);	
   	
@@ -64,14 +64,14 @@ $ch_temp_tendance = "inf";
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance")) {
   $updateSQL = sprintf("UPDATE temperance SET ch_temp_statut=%s, ch_temp_mis_jour=%s, ch_temp_note=%s, ch_temp_tendance=%s WHERE ch_temp_id=%s",
-                       GetSQLValueString($_POST['ch_temp_statut'], "int"),
-                       GetSQLValueString($_POST['ch_temp_mis_jour'], "date"),
-					   GetSQLValueString($_POST['ch_temp_note'], "int"),
-					   GetSQLValueString($_POST['ch_temp_tendance'], "text"),
-					   GetSQLValueString($_POST['ch_temp_id'], "int"));
+                       escape_sql($_POST['ch_temp_statut'], "int"),
+                       escape_sql($_POST['ch_temp_mis_jour'], "date"),
+					   escape_sql($_POST['ch_temp_note'], "int"),
+					   escape_sql($_POST['ch_temp_tendance'], "text"),
+					   escape_sql($_POST['ch_temp_id'], "int"));
 
   
-  $Result1 = mysql_query($updateSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($updateSQL, $maconnexion);
 
   $updateGoTo = DEF_URI_PATH . "back/institut_economie.php";
   appendQueryString($updateGoTo);
@@ -82,7 +82,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance"))
 ?>
 
 <!-- Modal Header-->
-<form action="<?php echo $editFormAction; ?>" name="phase-temperance" method="POST" class="form-horizontal" id="phase-temperance">
+<form action="<?= e($editFormAction) ?>" name="phase-temperance" method="POST" class="form-horizontal" id="phase-temperance">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
     <h3 id="myModalLabel">Fermeture des votes</h3>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $url_image
  * @property int $order
  * @property Carbon $created
- * @property-read Collection|InfrastructureOfficielle[] $infrastructures_officielles
+ * @property-read Collection<int, InfrastructureOfficielle> $infrastructuresOfficielles
  * @property-read int|null $infrastructures_officielles_count
  * @method static Builder|InfrastructureGroupe newModelQuery()
  * @method static Builder|InfrastructureGroupe newQuery()
@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static Builder|InfrastructureGroupe whereNomGroupe($value)
  * @method static Builder|InfrastructureGroupe whereOrder($value)
  * @method static Builder|InfrastructureGroupe whereUrlImage($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class InfrastructureGroupe extends Model
 {

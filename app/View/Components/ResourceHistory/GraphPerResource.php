@@ -1,17 +1,18 @@
 <?php
 
-namespace App\View\Components\ResourceHistory;
+namespace Roxayl\MondeGC\View\Components\ResourceHistory;
 
-use App\Models\Contracts\Resourceable;
-use App\Models\ResourceHistory;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
+use Roxayl\MondeGC\Models\ResourceHistory;
 
 class GraphPerResource extends Graph
 {
     /**
-     * @var Collection<int, Resourceable>|Resourceable[]
+     * @var Collection<int, Resourceable>
      */
     public Collection $resourceables;
 
@@ -20,10 +21,27 @@ class GraphPerResource extends Graph
      */
     public string $resourceName;
 
-    public function __construct(Collection $resourceables, string $resourceName)
-    {
+    public ?Carbon $startDate;
+
+    public ?Carbon $endDate;
+
+    /**
+     * @param Collection $resourceables
+     * @param string $resourceName
+     * @param Carbon|null $startDate
+     * @param Carbon|null $endDate
+     */
+    public function __construct(
+        Collection $resourceables,
+        string $resourceName,
+        Carbon $startDate = null,
+        Carbon $endDate = null
+    ) {
         $this->resourceables = $resourceables;
         $this->resourceName = $resourceName;
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
+
         $this->chartData = $this->generateChartData();
     }
 
@@ -64,7 +82,9 @@ class GraphPerResource extends Graph
                 'borderColor' => '#' . $this->generateColorHex()
             ];
 
-            $resourceableEntries = ResourceHistory::forResourceable($resourceable)->chartSelect()->get();
+            $resourceableEntries = ResourceHistory::forResourceable($resourceable)
+                ->chartSelect($this->startDate, $this->endDate)
+                ->get();
 
             /** @var ResourceHistory $entry */
             foreach($resourceableEntries as $entry) {

@@ -6,7 +6,7 @@
 
 @else
     <blockquote>
-        {!! \App\Services\HelperService::purifyHtml($communique->ch_com_contenu) !!}
+        {!! \Roxayl\MondeGC\Services\HelperService::purifyHtml($communique->ch_com_contenu) !!}
         <br>
         <small>
             {{ $communique->publisher()?->getName()  }} -

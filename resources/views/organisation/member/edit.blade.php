@@ -16,12 +16,12 @@
         <label for="permissions">Droits d'accès :</label>
         <select name="permissions" id="permissions">
             <option
-                {{ (old("permissions") == \App\Models\Organisation::$permissions['administrator'] ? "selected":"") }}
-                value="{{\App\Models\Organisation::$permissions['administrator']}}"
+                {{ (old("permissions") == \Roxayl\MondeGC\Models\Organisation::$permissions['administrator'] ? "selected":"") }}
+                value="{{\Roxayl\MondeGC\Models\Organisation::$permissions['administrator']}}"
                     >Administrateur</option>
             <option
-                {{ (old("permissions") == \App\Models\Organisation::$permissions['member'] ? "selected":"") }}
-                value="{{\App\Models\Organisation::$permissions['member']}}"
+                {{ (old("permissions") == \Roxayl\MondeGC\Models\Organisation::$permissions['member'] ? "selected":"") }}
+                value="{{\Roxayl\MondeGC\Models\Organisation::$permissions['member']}}"
                     >Membre</option>
         </select>
     </div>

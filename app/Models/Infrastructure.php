@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Models\Contracts\Influencable;
-use App\Models\Presenters\InfrastructurePresenter;
-use App\Models\Traits\DeletesInfluences;
-use App\Models\Traits\Influencable as GeneratesInfluence;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Contracts\Infrastructurable;
+use Roxayl\MondeGC\Models\Presenters\InfrastructurePresenter;
+use Roxayl\MondeGC\Models\Traits\DeletesInfluences;
+use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
 
 /**
  * Class Infrastructure
@@ -40,8 +41,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string|null $infrastructurable_type
  * @property-read Collection|Influence[] $influences
  * @property-read int|null $influences_count
- * @property-read Model|\Eloquent $infrastructurable
- * @property-read InfrastructureOfficielle $infrastructure_officielle
+ * @property-read (Model|\Eloquent)&Infrastructurable $infrastructurable
+ * @property-read InfrastructureOfficielle|null $infrastructureOfficielle
  * @property-read CustomUser|null $judge
  * @method static Builder|Infrastructure newModelQuery()
  * @method static Builder|Infrastructure newQuery()
@@ -67,7 +68,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @method static Builder|Infrastructure whereLienWiki($value)
  * @method static Builder|Infrastructure whereNomInfra($value)
  * @method static Builder|Infrastructure whereUserCreator($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Infrastructure extends Model implements Influencable
 {

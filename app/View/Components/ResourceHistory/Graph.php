@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\ResourceHistory;
+namespace Roxayl\MondeGC\View\Components\ResourceHistory;
 
 use Illuminate\View\Component;
 use Illuminate\View\View;

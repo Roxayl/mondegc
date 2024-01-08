@@ -1,16 +1,7 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Models\Contracts\Infrastructurable;
-use App\Models\Contracts\Resourceable;
-use App\Models\Contracts\Roleplayable;
-use App\Models\Presenters\InfrastructurablePresenter;
-use App\Models\Presenters\VillePresenter;
-use App\Models\Traits\Infrastructurable as HasInfrastructures;
-use App\Models\Traits\Resourceable as HasResources;
-use App\Models\Traits\Roleplayable as ParticipatesInRoleplay;
-use App\Services\EconomyService;
 use Carbon\Carbon;
 use Database\Factories\VilleFactory;
 use Illuminate\Database\Eloquent;
@@ -21,6 +12,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Models\Contracts\Infrastructurable;
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Roxayl\MondeGC\Models\Enums\Resource;
+use Roxayl\MondeGC\Models\Presenters\InfrastructurablePresenter;
+use Roxayl\MondeGC\Models\Presenters\VillePresenter;
+use Roxayl\MondeGC\Models\Traits\Infrastructurable as HasInfrastructures;
+use Roxayl\MondeGC\Models\Traits\Resourceable as HasResources;
+use Roxayl\MondeGC\Models\Traits\Roleplayable as ParticipatesInRoleplay;
+use Roxayl\MondeGC\Services\EconomyService;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -102,7 +103,7 @@ use Spatie\Searchable\SearchResult;
  * @method static Builder|Ville whereChVilUser($value)
  * @method static VilleFactory factory(...$parameters)
  * @method static Builder|Ville visible()
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Ville extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
 {
@@ -246,10 +247,10 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
         $patrimoineResources = $this->patrimoineResources();
         $roleplayResources = $this->roleplayResources();
 
-        foreach(config('enums.resources') as $resource) {
-            $sumResources[$resource] += $infrastructureResources[$resource]
-                + $patrimoineResources[$resource]
-                + $roleplayResources[$resource];
+        foreach(Resource::cases() as $resource) {
+            $sumResources[$resource->value] += $infrastructureResources[$resource->value]
+                + $patrimoineResources[$resource->value]
+                + $roleplayResources[$resource->value];
         }
 
         return $sumResources;

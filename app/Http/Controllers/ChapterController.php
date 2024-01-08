@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Models\Chapter;
-use App\Models\Roleplay;
-use App\Services\StringBladeService;
-use App\View\Components\Blocks\TextDiff;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Mpociot\Versionable\Version;
+use Roxayl\MondeGC\Models\Chapter;
+use Roxayl\MondeGC\Models\Roleplay;
+use Roxayl\MondeGC\Services\StringBladeService;
+use Roxayl\MondeGC\View\Components\Blocks\TextDiff;
 
 class ChapterController extends Controller
 {
@@ -81,7 +81,7 @@ class ChapterController extends Controller
         $chapter->setReasonAttribute($request->input('reason') ?? "Création d'un nouveau chapitre");
 
         // Enregistrer le modèle. Les champs "starting_date", "ending_date", et "order" sont définis à partir
-        // de l'événement "creating" dispatché par le modèle (voir \App\Models\Chapter::boot()).
+        // de l'événement "creating" dispatché par le modèle (voir \Roxayl\MondeGC\Models\Chapter::boot()).
         $chapter->save();
 
         return redirect(route('roleplay.show', $roleplay) . '#chapter-' . $chapter->identifier)
@@ -147,7 +147,7 @@ class ChapterController extends Controller
         $chapter->setReasonAttribute($request->input('reason'));
 
         // Enregistrer le modèle. Les champs "starting_date", "ending_date", et "order" sont définis à partir
-        // de l'événement "creating" dispatché par le modèle (voir \App\Models\Chapter::boot()).
+        // de l'événement "creating" dispatché par le modèle (voir \Roxayl\MondeGC\Models\Chapter::boot()).
         $chapter->save();
 
         return redirect(route('roleplay.show', $chapter->roleplay) . '#chapter-' . $chapter->identifier)

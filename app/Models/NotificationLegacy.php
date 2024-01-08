@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|NotificationLegacy whereRecipientId($value)
  * @method static Builder|NotificationLegacy whereTypeNotif($value)
  * @method static Builder|NotificationLegacy whereUnread($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class NotificationLegacy extends Model
 {

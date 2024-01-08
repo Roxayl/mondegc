@@ -14,8 +14,8 @@ if (isset($_GET['clef'])) {
 }
 
 
-$query_user_prov = sprintf("SELECT * FROM users_provisoire WHERE ch_use_prov_login = %s AND ch_use_prov_clef = %s", GetSQLValueString($login, "text"), GetSQLValueString($clef, "text"));
-$user_prov = mysql_query($query_user_prov, $maconnexion) or die(mysql_error());
+$query_user_prov = sprintf("SELECT * FROM users_provisoire WHERE ch_use_prov_login = %s AND ch_use_prov_clef = %s", escape_sql($login, "text"), escape_sql($clef, "text"));
+$user_prov = mysql_query($query_user_prov, $maconnexion);
 $row_user_prov = mysql_fetch_assoc($user_prov);
 $totalRows_user_prov = mysql_num_rows($user_prov);
 
@@ -27,17 +27,17 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
   $password = md5($_POST['ch-use_password'].$salt);
   $insertSQL = sprintf("INSERT INTO users (ch_use_date, ch_use_acces, ch_use_last_log, ch_use_login, ch_use_password, ch_use_mail, ch_use_paysID, ch_use_statut, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant, ch_use_biographie_dirigeant)
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, NULL, NULL, NULL, NULL, NULL, NULL)",
-       GetSQLValueString($_POST['ch_use_date'], "date"),
-       GetSQLValueString($_POST['ch_use_acces'], "int"),
-       GetSQLValueString($_POST['ch_use_last_log'], "date"),
-       GetSQLValueString($_POST['ch_use_login'], "text"),
-       GetSQLValueString($password, "text"),
-       GetSQLValueString($_POST['ch_use_mail'], "text"),
-       GetSQLValueString($_POST['ch_use_paysID'], "int"),
-       GetSQLValueString($_POST['ch_use_statut'], "int"));
+       escape_sql($_POST['ch_use_date'], "date"),
+       escape_sql($_POST['ch_use_acces'], "int"),
+       escape_sql($_POST['ch_use_last_log'], "date"),
+       escape_sql($_POST['ch_use_login'], "text"),
+       escape_sql($password, "text"),
+       escape_sql($_POST['ch_use_mail'], "text"),
+       escape_sql($_POST['ch_use_paysID'], "int"),
+       escape_sql($_POST['ch_use_statut'], "int"));
 
   
-  $Result1 = mysql_query($insertSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($insertSQL, $maconnexion);
 
   $last_user_id = mysql_insert_id();
 
@@ -45,11 +45,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
   $insert_users_pays = sprintf(
       'INSERT INTO users_pays(ID_pays, ID_user, permissions) ' .
              'VALUES(%s, %s, %s)',
-      GetSQLValueString($_POST['ch_use_paysID'], 'int'),
-      GetSQLValueString($last_user_id, 'int'),
+      escape_sql($_POST['ch_use_paysID'], 'int'),
+      escape_sql($last_user_id, 'int'),
       10
   );
-  mysql_query($insert_users_pays) or die(mysql_error());
+  mysql_query($insert_users_pays);
 
   // On ajoute une entrée dans la table 'personnages' s'il n'y avait pas encore de perso.
   $thisPays = new \GenCity\Monde\Pays($_POST['ch_use_paysID']);
@@ -63,20 +63,20 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
                    VALUES(%s, %s,
                           '', '', '',
                           '', '', '')",
-            GetSQLValueString('pays', 'text'),
-            GetSQLValueString($_POST['ch_use_paysID'], 'int')
+            escape_sql('pays', 'text'),
+            escape_sql($_POST['ch_use_paysID'], 'int')
       );
-      mysql_query($insert_personnage) or die(mysql_error());
+      mysql_query($insert_personnage);
   }
 
   
   // Effacement de la clef sur User_provisoire
   $userprov = $row_user_prov['ch_use_prov_ID'];
    $deleteSQL = sprintf("DELETE FROM users_provisoire WHERE ch_use_prov_ID=%s",
-                       GetSQLValueString($userprov, "int"));
+                       escape_sql($userprov, "int"));
 
   
-  $Result1 = mysql_query($deleteSQL, $maconnexion) or die(mysql_error());
+  $Result1 = mysql_query($deleteSQL, $maconnexion);
   $insertGoTo = DEF_URI_PATH . 'index.php';
   appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
@@ -104,17 +104,6 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoUser")) {
 <link href="SpryAssets/SpryValidationSelect.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
@@ -151,7 +140,7 @@ Eventy::action('display.beforeHeadClosingTag')
         <button type="button" class="close" data-dismiss="alert">�</button>
         <p>Bienvenue dans le Monde GC <?= e($row_user_prov['ch_use_prov_login']) ?>. Compl&eacute;tez votre profil afin de finaliser votre inscription.</p>
       </div>
-      <form action="<?php echo $editFormAction; ?>" name="InfoUser" method="POST" class="form-horizontal" id="InfoHeader">
+      <form action="<?= e($editFormAction) ?>" name="InfoUser" method="POST" class="form-horizontal" id="InfoHeader">
         <!-- Boutons cach�s -->
         <?php 
 		$now= date("Y-m-d G:i:s");?>

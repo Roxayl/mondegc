@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace Roxayl\MondeGC\Models;
 
-use App\Models\Contracts\Roleplayable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Roxayl\MondeGC\Models\Contracts\Roleplayable;
 
 /**
  * Class Communique
@@ -37,7 +37,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|Communique whereChComStatut($value)
  * @method static Builder|Communique whereChComTitre($value)
  * @method static Builder|Communique whereChComUserId($value)
- * @mixin Model
+ * @mixin \Eloquent
  */
 class Communique extends Model
 {

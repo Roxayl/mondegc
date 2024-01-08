@@ -1,22 +1,27 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Roxayl\MondeGC\Http\Controllers;
 
-use App\Models\Contracts\Influencable;
-use App\Models\Factories\InfluencableFactory;
-use App\Services\HelperService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Factories\InfluencableFactory;
+use Roxayl\MondeGC\Services\HelperService;
 use YlsIdeas\FeatureFlags\Facades\Features;
 
 class BackOfficeController extends Controller
 {
-    private function checkAuthorization(): void
+    public function __construct()
     {
-        if(! auth()->user()?->hasMinPermission('ocgc')) {
-            abort(403);
-        }
+        $this->middleware(function(Request $request, \Closure $next) {
+            if(! auth()->user()?->hasMinPermission('ocgc')) {
+                abort(403);
+            }
+
+            return $next($request);
+        });
     }
 
     /**
@@ -24,8 +29,6 @@ class BackOfficeController extends Controller
      */
     public function advancedParameters(): View
     {
-        $this->checkAuthorization();
-
         $cacheSize = HelperService::formatBytes(HelperService::directorySize(
             storage_path('framework/cache/data')
         ));
@@ -40,8 +43,6 @@ class BackOfficeController extends Controller
      */
     public function purgeCache(): RedirectResponse
     {
-        $this->checkAuthorization();
-
         cache()->flush();
 
         return redirect()->route('back-office.advanced-parameters')

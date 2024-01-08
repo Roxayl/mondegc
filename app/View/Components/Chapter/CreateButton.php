@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\Chapter;
+namespace Roxayl\MondeGC\View\Components\Chapter;
 
-use App\Models\Roleplay;
-use App\View\Components\BaseComponent;
 use Illuminate\View\View;
+use Roxayl\MondeGC\Models\Roleplay;
+use Roxayl\MondeGC\View\Components\BaseComponent;
 
 class CreateButton extends BaseComponent
 {

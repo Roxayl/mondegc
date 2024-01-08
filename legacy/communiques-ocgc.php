@@ -15,7 +15,7 @@ $startRow_communiquesPays = $pageNum_communiquesPays * $maxRows_communiquesPays;
 
 $query_communiquesPays = "SELECT article.ch_com_id, COUNT(commentaire.ch_com_id) AS nb_commentaires, article.ch_com_date, article.ch_com_titre, article.ch_com_contenu, ch_use_login, ch_ins_nom, ch_ins_ID FROM communiques AS article INNER JOIN users ON ch_use_id = article.ch_com_user_id INNER JOIN  instituts ON article.ch_com_element_id = ch_ins_ID LEFT OUTER JOIN communiques AS commentaire ON article.ch_com_id = commentaire.ch_com_element_id WHERE article.ch_com_categorie = 'institut' AND article.ch_com_statut = '1' GROUP BY article.ch_com_id ORDER BY article.ch_com_date DESC";
 $query_limit_communiquesPays = sprintf("%s LIMIT %d, %d", $query_communiquesPays, $startRow_communiquesPays, $maxRows_communiquesPays);
-$communiquesPays = mysql_query($query_limit_communiquesPays, $maconnexion) or die(mysql_error());
+$communiquesPays = mysql_query($query_limit_communiquesPays, $maconnexion);
 $row_communiquesPays = mysql_fetch_assoc($communiquesPays);
 
 if (isset($_GET['totalRows_communiquesPays'])) {
@@ -58,17 +58,6 @@ $queryString_communiquesPays = sprintf("&totalRows_communiquesPays=%d%s", $total
 <link href="assets/css/bootstrap-modal.css" rel="stylesheet" type="text/css">
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i|Titillium+Web:400,600&subset=latin-ext" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<!--[if gte IE 9]>
-  <style type="text/css">
-    .gradient {
-       filter: none;
-    }
-  </style>
-<![endif]-->
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
@@ -96,10 +85,6 @@ img.olTileImage {
 }
 }
 </style>
-<!-- CARTE -->
-<script src="assets/js/OpenLayers.mobile.js" type="text/javascript"></script>
-<script src="assets/js/OpenLayers.js" type="text/javascript"></script>
-<?php require('php/cartepays.php'); ?>
 <!-- BOOTSTRAP -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.js"></script>

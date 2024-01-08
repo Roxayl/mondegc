@@ -31,7 +31,7 @@
                 sortField: 'text',
                 dropdownParent: "body",
                 onChange: function () {
-                    $('#spryselect1').find('.control-label').html('<img class="pull-right" src="https://squirrel.romukulot.fr/media/icons/ajax-loader2.gif"> <i class="icon-time"></i> Chargement... ');
+                    $('#spryselect1').find('.control-label').html('<img class="pull-right" src="https://squirrel.roxayl.fr/media/icons/ajax-loader2.gif"> <i class="icon-time"></i> Chargement... ');
                     $('#form-infra-list').submit();
                 }
             });

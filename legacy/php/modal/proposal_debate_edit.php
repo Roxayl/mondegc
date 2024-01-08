@@ -28,7 +28,7 @@ if(isset($_POST['proposal_debate_edit'])) {
 
 ?>
 
-<form action="<?php echo $editFormAction; ?>" name="pays_leader_edit" method="POST" class="form-horizontal" id="proposal_debate_edit">
+<form action="<?= e($editFormAction) ?>" name="pays_leader_edit" method="POST" class="form-horizontal" id="proposal_debate_edit">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Gérer les liens des débats de cette proposition</h3>

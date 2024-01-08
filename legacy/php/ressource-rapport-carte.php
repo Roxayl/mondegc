@@ -1,5 +1,7 @@
 <?php
 
+use Roxayl\MondeGC\Models\Enums\Resource;
+
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
@@ -16,8 +18,8 @@ if (isset($_GET['ch_temp_id'])) {
 
 //recherche des mesures des zones de la carte
 
-$query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", GetSQLValueString($colname_Pays, "int"));
-$geometries = mysql_query($query_geometries, $maconnexion) or die(mysql_error());
+$query_geometries = sprintf("SELECT SUM(ch_geo_mesure) as mesure, ch_geo_type FROM geometries WHERE ch_geo_pay_id = %s AND ch_geo_type != 'maritime' AND ch_geo_type != 'region' GROUP BY ch_geo_type ORDER BY ch_geo_geometries", escape_sql($colname_Pays, "int"));
+$geometries = mysql_query($query_geometries, $maconnexion);
 $row_geometries = mysql_fetch_assoc($geometries);
 ?>
 
@@ -52,7 +54,7 @@ $row_geometries = mysql_fetch_assoc($geometries);
 <?php } ?>
     <?php
     renderElement('temperance/resources', [
-        'resources' => compact(config('enums.resources'))
+        'resources' => compact(array_column(Resource::cases(), 'value'))
     ]); ?>
   </div>
   <?php } while ($row_geometries = mysql_fetch_assoc($geometries)); ?>
