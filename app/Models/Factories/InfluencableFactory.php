@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models\Factories;
+namespace Roxayl\MondeGC\Models\Factories;
 
-use App\Models\ChapterResourceable;
-use App\Models\Contracts\Influencable;
-use App\Models\Infrastructure;
-use App\Models\Managers\PaysMapManager;
-use App\Models\Patrimoine;
-use App\Models\Pays;
+use Roxayl\MondeGC\Models\ChapterResourceable;
+use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Infrastructure;
+use Roxayl\MondeGC\Models\Managers\PaysMapManager;
+use Roxayl\MondeGC\Models\Patrimoine;
+use Roxayl\MondeGC\Models\Pays;
 use Illuminate\Support\Collection;
 
 class InfluencableFactory

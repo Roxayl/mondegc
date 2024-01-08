@@ -54,8 +54,6 @@ class BackOfficeController extends Controller
      */
     public function regenerateInfluences(): RedirectResponse
     {
-        $this->checkAuthorization();
-
         /** @var Influencable[] $influencables */
         $influencables = InfluencableFactory::list();
 
