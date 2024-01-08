@@ -257,3 +257,6 @@ Route::get('back-office/advanced-parameters', [Controllers\BackOfficeController:
     ->name('back-office.advanced-parameters');
 Route::post('back-office/advanced-parameters/purge-cache', [Controllers\BackOfficeController::class, 'purgeCache'])
     ->name('back-office.advanced-parameters.purge-cache');
+Route::post('back-office/advanced-parameters/regenerate-influences',
+    [Controllers\BackOfficeController::class, 'regenerateInfluences'])
+    ->name('back-office.advanced-parameters.regenerate-influences');

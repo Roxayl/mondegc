@@ -4,7 +4,11 @@ namespace Roxayl\MondeGC\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Roxayl\MondeGC\Models\Contracts\Influencable;
+use Roxayl\MondeGC\Models\Factories\InfluencableFactory;
+use Roxayl\MondeGC\Models\Influence;
 use Roxayl\MondeGC\Services\HelperService;
 use YlsIdeas\FeatureFlags\Facades\Features;
 
@@ -32,7 +36,11 @@ class BackOfficeController extends Controller
 
         $cacheEnabled = Features::accessible('cache');
 
-        return view('back-office.advanced-parameters', compact('cacheSize', 'cacheEnabled'));
+        $influenceTableSize = Influence::count();
+
+        return view('back-office.advanced-parameters', compact(
+            'cacheSize', 'cacheEnabled', 'influenceTableSize'
+        ));
     }
 
     /**
@@ -44,5 +52,27 @@ class BackOfficeController extends Controller
 
         return redirect()->route('back-office.advanced-parameters')
             ->with('message', 'success|Le cache a été purgé avec succès.');
+    }
+
+    /**
+     * @return RedirectResponse
+     */
+    public function regenerateInfluences(): RedirectResponse
+    {
+        /** @var Influencable[] $influencables */
+        $influencables = InfluencableFactory::list();
+
+        DB::transaction(function() use ($influencables) {
+            DB::table('influence')->delete();
+
+            foreach($influencables as $influencable) {
+                $influencable->generateInfluence();
+            }
+        });
+
+        cache()->flush();
+
+        return redirect()->route('back-office.advanced-parameters')
+            ->with('message', 'success|Les influences ont été regénérées avec succès.');
     }
 }
