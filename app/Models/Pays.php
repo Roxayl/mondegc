@@ -24,6 +24,7 @@ use Roxayl\MondeGC\Models\Presenters\PaysPresenter;
 use Roxayl\MondeGC\Models\Traits\Infrastructurable as HasInfrastructures;
 use Roxayl\MondeGC\Models\Traits\Resourceable as HasResources;
 use Roxayl\MondeGC\Models\Traits\Roleplayable as ParticipatesInRoleplay;
+use Roxayl\MondeGC\Models\Traits\Versionable;
 use Roxayl\MondeGC\Services\EconomyService;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -153,6 +154,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
 {
     use HasFactory, HasInfrastructures, HasResources, ParticipatesInRoleplay;
     use InfrastructurablePresenter, PaysPresenter;
+    use Versionable;
 
     protected $table = 'pays';
     protected $primaryKey = 'ch_pay_id';
@@ -211,6 +213,24 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         'ch_pay_text_culture',
         'ch_pay_header_patrimoine',
         'ch_pay_text_patrimoine',
+    ];
+
+    protected $dontVersionFields = [
+        'ch_pay_label',
+        'ch_pay_publication',
+        'ch_pay_date',
+        'ch_pay_nb_update',
+        'ch_pay_mis_jour',
+        'ch_pay_budget_carte',
+        'ch_pay_industrie_carte',
+        'ch_pay_commerce_carte',
+        'ch_pay_agriculture_carte',
+        'ch_pay_tourisme_carte',
+        'ch_pay_recherche_carte',
+        'ch_pay_environnement_carte',
+        'ch_pay_education_carte',
+        'ch_pay_population_carte',
+        'ch_pay_emploi_carte',
     ];
 
     public const STATUS_ACTIVE = 1;
