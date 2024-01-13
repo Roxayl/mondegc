@@ -256,13 +256,17 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
         return $sumResources;
     }
 
-    public static function boot()
+    public function isEnabled(): bool
+    {
+        return $this->pays->isEnabled();
+    }
+
+    public static function boot(): void
     {
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function ($ville) {
-            /** @var Ville $ville */
+        static::deleting(function(Ville $ville): void {
             $ville->deleteAllInfrastructures();
         });
     }

@@ -90,6 +90,9 @@ class Patrimoine extends Model implements Influencable, Searchable
     const CREATED_AT = 'ch_pat_date';
     const UPDATED_AT =  'ch_pat_mis_jour';
 
+    public const STATUS_ENABLED = 1;
+    public const STATUS_DISABLED = 0;
+
     protected $casts = [
         'ch_pat_statut' => 'int',
         'ch_pat_paysID' => 'int',
@@ -191,12 +194,17 @@ class Patrimoine extends Model implements Influencable, Searchable
         $influence->save();
     }
 
-    public static function boot()
+    public function isEnabled(): bool
+    {
+        return true;
+    }
+
+    public static function boot(): void
     {
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function($patrimoine) {
+        static::deleting(function(Patrimoine $patrimoine): void {
             $patrimoine->deleteInfluences();
         });
     }
