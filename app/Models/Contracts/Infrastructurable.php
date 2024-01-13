@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Roxayl\MondeGC\Models\InfrastructureGroupe;
 use Roxayl\MondeGC\Models\InfrastructureOfficielle;
 
-interface Infrastructurable
+interface Infrastructurable extends Enable
 {
     /* ===================================
      *  Méthodes définies dans le trait Infrastructurable.

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
 
 //Connexion et deconnexion
 include('php/log.php');
@@ -27,7 +26,6 @@ $villes_extratrtr = mysql_query($query_villes_extratrtr, $maconnexion);
 $row_villes_extratrtr = mysql_fetch_assoc($villes_extratrtr);
 $totalRows_villes_extratrtr = mysql_num_rows($villes_extratrtr);
 
-
 //Addition des populations des villes
 $query_population = sprintf("SELECT Sum(ch_vil_population) AS population_pays FROM villes WHERE villes.ch_vil_capitale != 3 AND villes.ch_vil_paysID = %s", escape_sql($colname_Pays, "int"));
 $population = mysql_query($query_population, $maconnexion);
@@ -44,12 +42,6 @@ $totalRows_User = mysql_num_rows($User);
 // Obtention personnage
 $thisPays = new \GenCity\Monde\Pays($colname_Pays);
 $personnage = \GenCity\Monde\Personnage::constructFromEntity($thisPays);
-
- //Recherche des monuments du pays
-//$query_monument = sprintf("SELECT ch_pat_ID, ch_pat_paysID, ch_pat_date, ch_pat_mis_jour, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_description, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine WHERE ch_pat_statut = 1 AND ch_pat_paysID = %s ORDER BY ch_pat_mis_jour DESC", escape_sql($colname_Pays, "int"));
-//$monument = mysql_query($query_monument, $maconnexion);
-//$row_monument = mysql_fetch_assoc($monument);
-//$totalRows_monument = mysql_num_rows($monument);
 
 //Recherche des quêtes de CHAQUE ville
 $query_monument = sprintf("SELECT ch_pat_ID, ch_pat_paysID, ch_pat_villeID, ch_pat_date, ch_pat_mis_jour, ch_pat_nom, ch_pat_statut, ch_pat_lien_img1, ch_pat_description, (SELECT GROUP_CONCAT(ch_disp_cat_id) FROM dispatch_mon_cat WHERE ch_pat_ID = ch_disp_mon_id) AS listcat FROM patrimoine WHERE ch_pat_villeID = %s ORDER BY ch_pat_mis_jour DESC", escape_sql($colname_infoVille, "int"));
@@ -85,59 +77,6 @@ $eloquentPays = \Roxayl\MondeGC\Models\Pays::query()->findOrFail($colname_Pays);
 $organisations = $eloquentPays->otherOrganisations();
 $alliance = $eloquentPays->alliance();
 
-$_SESSION['last_work'] = 'page-pays.php?ch_pay_id='.$row_Pays['ch_pay_id'];
-
-
-//Mise à jour formulaire pays
-if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
-
-      $updateSQL = sprintf("UPDATE pays SET ch_pay_label=%s, ch_pay_publication=%s, ch_pay_continent=%s, ch_pay_emplacement=%s, ch_pay_lien_forum=%s, lien_wiki = %s, ch_pay_nom=%s, ch_pay_devise=%s, ch_pay_lien_imgheader=%s, ch_pay_lien_imgdrapeau=%s, ch_pay_date=%s, ch_pay_mis_jour=%s, ch_pay_nb_update=%s, ch_pay_forme_etat=%s, ch_pay_capitale=%s, ch_pay_langue_officielle=%s, ch_pay_monnaie=%s, ch_pay_header_presentation=%s, ch_pay_text_presentation=%s, ch_pay_header_geographie=%s, ch_pay_text_geographie=%s, ch_pay_header_politique=%s, ch_pay_text_politique=%s, ch_pay_header_histoire=%s, ch_pay_text_histoire=%s, ch_pay_header_economie=%s, ch_pay_text_economie=%s, ch_pay_header_transport=%s, ch_pay_text_transport=%s, ch_pay_header_sport=%s, ch_pay_text_sport=%s, ch_pay_header_culture=%s, ch_pay_text_culture=%s, ch_pay_header_patrimoine=%s, ch_pay_text_patrimoine=%s WHERE ch_pay_id=%s",
-                           escape_sql($_POST['ch_pay_label'], "text"),
-                           escape_sql($_POST['ch_pay_publication'], "int"),
-                           escape_sql($ch_pay_continent, "text"),
-                           escape_sql($_POST['ch_pay_emplacement'], "int"),
-                           escape_sql($_POST['ch_pay_lien_forum'], "text"),
-                           escape_sql($_POST['lien_wiki'], "text"),
-                           escape_sql($_POST['ch_pay_nom'], "text"),
-                           escape_sql($_POST['ch_pay_devise'], "text"),
-                           escape_sql($_POST['ch_pay_lien_imgheader'], "text"),
-                           escape_sql($_POST['ch_pay_lien_imgdrapeau'], "text"),
-                           escape_sql($_POST['ch_pay_date'], "date"),
-                           escape_sql($_POST['ch_pay_mis_jour'], "date"),
-                           escape_sql($_POST['ch_pay_nb_update'], "int"),
-                           escape_sql($_POST['ch_pay_forme_etat'], "text"),
-                           escape_sql($_POST['ch_pay_capitale'], "text"),
-                           escape_sql($_POST['ch_pay_langue_officielle'], "text"),
-                           escape_sql($_POST['ch_pay_monnaie'], "text"),
-                           escape_sql($_POST['ch_pay_header_presentation'], "text"),
-                           escape_sql($_POST['ch_pay_text_presentation'], "text"),
-                           escape_sql($_POST['ch_pay_header_geographie'], "text"),
-                           escape_sql($_POST['ch_pay_text_geographie'], "text"),
-                           escape_sql($_POST['ch_pay_header_politique'], "text"),
-                           escape_sql($_POST['ch_pay_text_politique'], "text"),
-                           escape_sql($_POST['ch_pay_header_histoire'], "text"),
-                           escape_sql($_POST['ch_pay_text_histoire'], "text"),
-                           escape_sql($_POST['ch_pay_header_economie'], "text"),
-                           escape_sql($_POST['ch_pay_text_economie'], "text"),
-                           escape_sql($_POST['ch_pay_header_transport'], "text"),
-                           escape_sql($_POST['ch_pay_text_transport'], "text"),
-                           escape_sql($_POST['ch_pay_header_sport'], "text"),
-                           escape_sql($_POST['ch_pay_text_sport'], "text"),
-                           escape_sql($_POST['ch_pay_header_culture'], "text"),
-                           escape_sql($_POST['ch_pay_text_culture'], "text"),
-                           escape_sql($_POST['ch_pay_header_patrimoine'], "text"),
-                           escape_sql($_POST['ch_pay_text_patrimoine'], "text"),
-                           escape_sql($_POST['ch_pay_id'], "int"));
-
-
-      $Result1 = mysql_query($updateSQL, $maconnexion);
-      getErrorMessage('success', "Le pays a été modifié avec succès !");
-
-  $updateGoTo = DEF_URI_PATH . "page-pays.php?ch_pay_id=" . (int)$_POST['ch_pay_id'];
-  appendQueryString($updateGoTo);
-  header(sprintf("Location: %s", $updateGoTo));
-  exit;
-}
 ?>
 <!DOCTYPE html>
 <html lang="fr">

@@ -107,12 +107,12 @@ class MonumentCategory extends Model
             'ch_disp_mon_id');
     }
 
-    public static function boot()
+    public static function boot(): void
     {
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function($monumentCategory) {
+        static::deleting(function(MonumentCategory $monumentCategory): void {
             // Supprime les entrées liées à la catégorie dans la table pivot.
             DB::delete('DELETE FROM dispatch_mon_cat WHERE ch_disp_cat_id = ?',
                 [$monumentCategory->ch_disp_cat_id]);

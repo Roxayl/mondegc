@@ -15,6 +15,7 @@ use Illuminate\Database\Query;
 use Illuminate\Support;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Roxayl\MondeGC\Models\Contracts\Enable;
 use Roxayl\MondeGC\Models\Contracts\Roleplayable;
 use Roxayl\MondeGC\Models\Factories\RoleplayableFactory;
 use Spatie\Searchable\Searchable;
@@ -56,7 +57,7 @@ use Spatie\Searchable\SearchResult;
  * @method static Query\Builder|Roleplay withoutTrashed()
  * @mixin \Eloquent
  */
-class Roleplay extends Model implements Searchable
+class Roleplay extends Model implements Searchable, Enable
 {
     use HasFactory;
     use SoftDeletes;
@@ -294,11 +295,19 @@ class Roleplay extends Model implements Searchable
         return true;
     }
 
-    public static function boot()
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return ! $this->trashed();
+    }
+
+    public static function boot(): void
     {
         parent::boot();
 
-        static::creating(function (Roleplay $roleplay) {
+        static::creating(function(Roleplay $roleplay): void {
             $roleplay->starting_date = now();
             $roleplay->ending_date = null;
         });

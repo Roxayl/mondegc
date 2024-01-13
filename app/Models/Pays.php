@@ -34,7 +34,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  *
  * @property int $ch_pay_id
  * @property string $ch_pay_label
- * @property bool $ch_pay_publication
+ * @property int $ch_pay_publication
  * @property string $ch_pay_continent
  * @property int|null $ch_pay_emplacement
  * @property string|null $ch_pay_lien_forum
@@ -653,13 +653,20 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         return $sumResources;
     }
 
-    public static function boot()
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->ch_pay_publication === Pays::STATUS_ACTIVE;
+    }
+
+    public static function boot(): void
     {
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function ($pays) {
-            /** @var Pays $pays */
+        static::deleting(function(Pays $pays): void {
             $pays->deleteAllInfrastructures();
             $pays->getMapManager()->removeOldInfluenceRows();
         });

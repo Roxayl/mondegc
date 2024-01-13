@@ -285,18 +285,19 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
                           <?php endif; ?>
                           <li class="nav-header" style="text-transform: none;">
                               <span class="badge org-<?= e($thisOrganisation->type) ?>">
-                              <?= e(__("organisation.types.{$thisOrganisation->type}")) ?>
+                              <?= e(__("organisation.types.$thisOrganisation->type")) ?>
                               </span>
                           </li>
                       <?php
                       endif;
                       ?>
 
-                      <li><a href="<?= DEF_URI_PATH . 'organisation/' . $thisOrganisation->id ?>">
-                              <img src="<?= e($thisOrganisation->flag) ?>"
-                                   class="img-menu-drapeau">
+                      <li>
+                          <a href="<?= DEF_URI_PATH . 'organisation/' . $thisOrganisation->id ?>">
+                              <img src="<?= e($thisOrganisation->flag) ?>" class="img-menu-drapeau" alt="">
                               <?= e($thisOrganisation->name) ?>
-                          </a></li>
+                          </a>
+                      </li>
                   <?php endforeach; ?>
               </div>
             </ul>
@@ -320,7 +321,8 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
               <li><a href="<?= DEF_URI_PATH ?>assemblee.php">
                   Assemblée générale
                   <?php if(count($navbar_pendingVotes)): ?><br>
-                      <span class="btn-small"><strong><img src="<?= DEF_URI_PATH ?>assets/img/2019/AGicon.png"> Session en cours</strong><br>
+                      <span class="btn-small">
+                          <strong><img src="<?= DEF_URI_PATH ?>assets/img/2019/AGicon.png" alt=""> Session en cours</strong><br>
                           <?= count($navbar_pendingVotes) ?>
                           proposition<?= count($navbar_pendingVotes) > 1 ? 's' : '' ?>
                           actuellement soumise<?= count($navbar_pendingVotes) > 1 ? 's' : '' ?> au vote
@@ -356,7 +358,6 @@ $navbar_organisationList = \Roxayl\MondeGC\Models\Organisation::allOrdered()->ge
               <li class="nav-header">L'univers GC</li>
               <li><a href="https://www.forum-gc.com">Le forum</a></li>
               <li><a href="https://discord.com/invite/4P3HqVbbgR">Discord</a></li>
-              <li><a href="https://vasel.yt/wiki/index.php?title=Accueil">Le Wiki</a></li>
               <li><a href="https://squirrel.roxayl.fr/">Squirrel</a></li>
               <li class="nav-header">Contribuer</li>
               <li><a href="https://github.com/Roxayl/mondegc">GitHub</a></li>

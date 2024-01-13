@@ -234,10 +234,10 @@ class Infrastructure extends Model implements Influencable
             unset($tmp);
         }
 
-        $divider = 2;
+        $divider = $this->getDivider();
 
         $resourcesPerMonth = array_map(
-            function($val) use($divider) {
+            function(int $val) use($divider) {
                 return (int)($val / $divider);
             },
             $totalResources);
@@ -263,12 +263,33 @@ class Infrastructure extends Model implements Influencable
         }
     }
 
-    public static function boot()
+    /**
+     * @return int
+     */
+    public function getDivider(): int
+    {
+        if($this->ch_inf_date->greaterThan(
+            Carbon::createFromFormat('Y-m-d H:i:s', '2023-01-01 00:00:00')
+        )) {
+            return 2;
+        }
+        return 4;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->ch_inf_statut === self::JUGEMENT_ACCEPTED && $this->infrastructurable?->isEnabled();
+    }
+
+    public static function boot(): void
     {
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function($infrastructure) {
+        static::deleting(function(Infrastructure $infrastructure): void {
             $infrastructure->deleteInfluences();
         });
     }
