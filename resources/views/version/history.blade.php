@@ -4,7 +4,7 @@
 @extends('layouts.legacy')
 
 @section('title')
-    Historique du chapitre {{ $chapter->order }} : {{ $chapter->name }}
+    {{ $title }}
 @endsection
 
 @section('content')
@@ -17,24 +17,11 @@
 
             <div class="titre-bleu">
                 <h1>
-                    Historique du chapitre {{ $chapter->order }} : {{ $chapter->name }}
-                    <span class="badge badge-info badge-beta">Bêta</span>
+                    {{ $title }}
                 </h1>
             </div>
 
-            <ul class="breadcrumb">
-                <li>Roleplay <span class="divider">/</span></li>
-                <li><a href="{{ route('roleplay.show', $chapter->roleplay) }}">
-                        {{ $chapter->roleplay->name }}</a>
-                    <span class="divider">/</span></li>
-                <li><a href="{{ route('roleplay.show', $chapter->roleplay) }}#chapter-{{ $firstChapter->identifier }}">
-                        Chapitres</a>
-                    <span class="divider">/</span></li>
-                <li><a href="{{ route('roleplay.show', $chapter->roleplay) }}#chapter-{{ $chapter->identifier }}">
-                        {{ $chapter->name }}</a>
-                    <span class="divider">/</span></li>
-                <li class="active">Historique</li>
-            </ul>
+            {!! $breadcrumb !!}
 
             <div class="clearfix"></div>
 
@@ -63,7 +50,7 @@
                             <td>{{ $version->created_at->format('Y/m/d à H:i:s') }}</td>
                             <td>{{ $version->reason }}</td>
                             <td>
-                                <a href="{{ route('chapter.diff', [
+                                <a href="{{ route($diffRoute, [
                                         'version1' => $version,
                                         'version2' => $version->previous(),
                                     ]) }}"
@@ -105,7 +92,7 @@
     @parent
 
     <script>
-        (function($, document, window) {
+        (function($, document) {
             $(document).on('click', 'a.diff-toggle-btn', function(ev) {
                 ev.preventDefault();
 
