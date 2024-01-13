@@ -18,17 +18,32 @@ class InfluencableFactory
     public const contract = Influencable::class;
 
     /**
+     * Ensemble des modèles influençables actifs.
+     *
      * @return Collection<int, Influencable>
      */
-    public static function list(): Collection
+    public function listEnabled(): Collection
     {
-        $models = ChapterResourceable::all()->merge(Infrastructure::all())->merge(Patrimoine::all());
-
-        $paysList = Pays::all();
-        foreach($paysList as $pays) {
-            $models = $models->add(new PaysMapManager($pays));
-        }
-
-        return $models;
+        return collect()
+            ->merge(
+                ChapterResourceable::query()
+                    ->with('chapter')->has('chapter')
+                    ->whereRelation('chapter', 'deleted_at', 'IS NULL')
+                    ->get()
+            )
+            ->merge(
+                Infrastructure::query()->with('infrastructurable')->whereChInfStatut(Infrastructure::JUGEMENT_ACCEPTED)->get()
+            )
+            ->merge(
+                Patrimoine::query()->whereChPatStatut(Patrimoine::STATUS_ENABLED)->get()
+            )
+            ->merge(
+                Pays::query()->whereChPayPublication(Pays::STATUS_ACTIVE)->get()->map(
+                    fn(Pays $pays): PaysMapManager => new PaysMapManager($pays)
+                )
+            )
+            ->filter(function(Influencable $influencable): bool {
+                return $influencable->isEnabled();
+            });
     }
 }

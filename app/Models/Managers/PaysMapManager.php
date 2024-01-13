@@ -74,4 +74,9 @@ class PaysMapManager implements Influencable
         $influence->fill($resources)
             ->save();
     }
+
+    public function isEnabled(): bool
+    {
+        return $this->pays->isEnabled();
+    }
 }

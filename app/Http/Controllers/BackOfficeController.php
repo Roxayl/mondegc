@@ -55,12 +55,13 @@ class BackOfficeController extends Controller
     }
 
     /**
+     * @param InfluencableFactory $influencableFactory
      * @return RedirectResponse
      */
-    public function regenerateInfluences(): RedirectResponse
+    public function regenerateInfluences(InfluencableFactory $influencableFactory): RedirectResponse
     {
         /** @var Influencable[] $influencables */
-        $influencables = InfluencableFactory::list();
+        $influencables = $influencableFactory->listEnabled();
 
         DB::transaction(function() use ($influencables) {
             DB::table('influence')->delete();

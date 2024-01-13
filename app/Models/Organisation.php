@@ -391,4 +391,9 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
 
         return $sumResources;
     }
+
+    public function isEnabled(): bool
+    {
+        return ! $this->trashed();
+    }
 }

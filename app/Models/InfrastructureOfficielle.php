@@ -123,13 +123,13 @@ class InfrastructureOfficielle extends Model
         return $resources;
     }
 
-    public static function boot()
+    public static function boot(): void
     {
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function($infrastructureOfficielle) {
-            $infrastructureOfficielle->infrastructures()->each(function($infrastructure) {
+        static::deleting(function(InfrastructureOfficielle $infrastructureOfficielle): void {
+            $infrastructureOfficielle->infrastructures()->each(function(Infrastructure $infrastructure): void {
                 $infrastructure->delete();
             });
         });

@@ -37,6 +37,7 @@ use Roxayl\MondeGC\Services\EconomyService;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Chapter $chapter
+ * @property Roleplay $roleplay
  * @property Resourceable $resourceable
  * @property-read Collection|Influence[] $influences
  * @property-read int|null $influences_count
@@ -168,22 +169,27 @@ class ChapterResourceable extends Model implements Influencable
             ->save();
     }
 
-    public static function boot()
+    public function isEnabled(): bool
+    {
+        return $this->chapter->isEnabled() && $this->roleplay->isEnabled();
+    }
+
+    public static function boot(): void
     {
         parent::boot();
 
         // Générer les influences à la création du modèle.
-        static::created(function(ChapterResourceable $chapterResourceable) {
+        static::created(function(ChapterResourceable $chapterResourceable): void {
             $chapterResourceable->generateInfluence();
         });
 
         // Regénérer les influences à la modification du modèle.
-        static::updated(function(ChapterResourceable $chapterResourceable) {
+        static::updated(function(ChapterResourceable $chapterResourceable): void {
             $chapterResourceable->generateInfluence();
         });
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function(ChapterResourceable $chapterResourceable) {
+        static::deleting(function(ChapterResourceable $chapterResourceable): void {
             $chapterResourceable->deleteInfluences();
         });
     }

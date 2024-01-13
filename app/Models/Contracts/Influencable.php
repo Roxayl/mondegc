@@ -5,7 +5,7 @@ namespace Roxayl\MondeGC\Models\Contracts;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
 
-interface Influencable
+interface Influencable extends Enable
 {
     /**
      * @return MorphMany Relation entre l'influencable et les influences.
