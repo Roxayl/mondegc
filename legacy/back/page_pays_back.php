@@ -18,7 +18,7 @@ $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.
 appendQueryString($editFormAction);
 
 //Récupération variables
-$colname_paysID = $_REQUEST['paysID'];
+$colname_paysID = $_REQUEST['paysID'] ?? $_REQUEST['ch_pay_id'];
 unset($_REQUEST['paysID']);
 
 //Requete Pays
