@@ -50,6 +50,15 @@ Route::get('page/{page}-{url}', [Controllers\PageController::class, 'index'])->n
 
 /*
 |--------------------------------------------------------------------------
+| Pays
+|--------------------------------------------------------------------------
+*/
+Route::get('pays/history/{pays}', [Controllers\PaysController::class, 'history'])->name('pays.history');
+Route::get('pays/diff/{version1}/{version2?}', [Controllers\PaysController::class, 'diff'])
+    ->name('pays.diff');
+
+/*
+|--------------------------------------------------------------------------
 | Organisation
 |--------------------------------------------------------------------------
 */
@@ -213,8 +222,6 @@ Route::delete('chapter-resourceable/{chapterResourceable}',
 */
 Route::post('version/revert/{version}', [Controllers\VersionController::class, 'revert'])
     ->name('version.revert');
-Route::get('version/diff/{version1}/{version2?}/{key}', [Controllers\VersionController::class, 'diff'])
-    ->name('version.diff');
 
 /*
 |--------------------------------------------------------------------------

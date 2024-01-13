@@ -22,17 +22,17 @@ $colname_paysID = $_REQUEST['paysID'] ?? $_REQUEST['ch_pay_id'];
 unset($_REQUEST['paysID']);
 
 //Requete Pays
-
 $query_InfoGenerale = sprintf("SELECT * FROM pays WHERE ch_pay_id = %s", escape_sql($colname_paysID, "int"));
 $InfoGenerale = mysql_query($query_InfoGenerale, $maconnexion);
 $row_InfoGenerale = mysql_fetch_assoc($InfoGenerale);
 $totalRows_InfoGenerale = mysql_num_rows($InfoGenerale);
 
 //Requete User
-
 $query_User = sprintf("SELECT ch_use_id, ch_use_login, ch_use_statut FROM users WHERE ch_use_paysID = %s AND ch_use_statut >= 10", escape_sql($colname_paysID, "int"));
 $User = mysql_query($query_User, $maconnexion);
 $row_User = mysql_fetch_assoc($User);
+
+$eloquentPays = EloquentPays::query()->findOrFail($row_InfoGenerale['ch_pay_id']);
 
 //Mise à jour formulaire pays
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
@@ -41,7 +41,6 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
     $thisPays = new Pays($_POST['ch_pay_id']);
     if($thisUser->minStatus('OCGC') || $thisPays->getUserPermission($thisUser) >= Pays::$permissions['codirigeant'])
     {
-
         if ($_POST['ch_pay_emplacement'] >= 3 and $_POST['ch_pay_emplacement'] <= 4 ){ $ch_pay_continent = "RFGC";}
         if ($_POST['ch_pay_emplacement'] >= 5 and $_POST['ch_pay_emplacement'] < 14 ){ $ch_pay_continent = "Aurinea";}
         if ($_POST['ch_pay_emplacement'] < 3 ){ $ch_pay_continent = "Aurinea";}
@@ -49,12 +48,12 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
         if ($_POST['ch_pay_emplacement'] >= 18 and $_POST['ch_pay_emplacement'] < 24 ){ $ch_pay_continent = "Volcania";}
         if ($_POST['ch_pay_emplacement'] >= 24 and $_POST['ch_pay_emplacement'] <= 27 ){ $ch_pay_continent = "Aldesyl";}
         if ($_POST['ch_pay_emplacement'] >= 27 and $_POST['ch_pay_emplacement'] <= 42 ){ $ch_pay_continent = "Philicie";}
-        if( $_POST['ch_pay_emplacement'] > 42 and $_POST['ch_pay_emplacement'] <= 56 ){ $ch_pay_continent = "Aldesyl";}
-        if( $_POST['ch_pay_emplacement'] >= 56 and $_POST['ch_pay_emplacement'] <= 57 ){ $ch_pay_continent = "Volcania";}
+        if ($_POST['ch_pay_emplacement'] > 42 and $_POST['ch_pay_emplacement'] <= 56 ){ $ch_pay_continent = "Aldesyl";}
+        if ($_POST['ch_pay_emplacement'] >= 56 and $_POST['ch_pay_emplacement'] <= 57 ){ $ch_pay_continent = "Volcania";}
         if ($_POST['ch_pay_emplacement'] >= 57 and $_POST['ch_pay_emplacement'] <= 58 ){ $ch_pay_continent = "Aldesyl";}
         if ($_POST['ch_pay_emplacement'] >= 59){ $ch_pay_continent = "Volcania";}
 
-      $updateSQL = sprintf("UPDATE pays SET ch_pay_label=%s, ch_pay_publication=%s, ch_pay_continent=%s, ch_pay_emplacement=%s, ch_pay_lien_forum=%s, lien_wiki = %s, ch_pay_nom=%s, ch_pay_devise=%s, ch_pay_lien_imgheader=%s, ch_pay_lien_imgdrapeau=%s, ch_pay_date=%s, ch_pay_mis_jour=%s, ch_pay_nb_update=%s, ch_pay_forme_etat=%s, ch_pay_capitale=%s, ch_pay_langue_officielle=%s, ch_pay_monnaie=%s, ch_pay_header_presentation=%s, ch_pay_text_presentation=%s, ch_pay_header_geographie=%s, ch_pay_text_geographie=%s, ch_pay_header_politique=%s, ch_pay_text_politique=%s, ch_pay_header_histoire=%s, ch_pay_text_histoire=%s, ch_pay_header_economie=%s, ch_pay_text_economie=%s, ch_pay_header_transport=%s, ch_pay_text_transport=%s, ch_pay_header_sport=%s, ch_pay_text_sport=%s, ch_pay_header_culture=%s, ch_pay_text_culture=%s, ch_pay_header_patrimoine=%s, ch_pay_text_patrimoine=%s WHERE ch_pay_id=%s",
+        $updateSQL = sprintf("UPDATE pays SET ch_pay_label=%s, ch_pay_publication=%s, ch_pay_continent=%s, ch_pay_emplacement=%s, ch_pay_lien_forum=%s, lien_wiki = %s, ch_pay_nom=%s, ch_pay_devise=%s, ch_pay_lien_imgheader=%s, ch_pay_lien_imgdrapeau=%s, ch_pay_date=%s, ch_pay_mis_jour=%s, ch_pay_nb_update=%s, ch_pay_forme_etat=%s, ch_pay_capitale=%s, ch_pay_langue_officielle=%s, ch_pay_monnaie=%s, ch_pay_header_presentation=%s, ch_pay_text_presentation=%s, ch_pay_header_geographie=%s, ch_pay_text_geographie=%s, ch_pay_header_politique=%s, ch_pay_text_politique=%s, ch_pay_header_histoire=%s, ch_pay_text_histoire=%s, ch_pay_header_economie=%s, ch_pay_text_economie=%s, ch_pay_header_transport=%s, ch_pay_text_transport=%s, ch_pay_header_sport=%s, ch_pay_text_sport=%s, ch_pay_header_culture=%s, ch_pay_text_culture=%s, ch_pay_header_patrimoine=%s, ch_pay_text_patrimoine=%s WHERE ch_pay_id=%s",
                            escape_sql($_POST['ch_pay_label'], "text"),
                            escape_sql($_POST['ch_pay_publication'], "int"),
                            escape_sql($ch_pay_continent, "text"),
@@ -92,17 +91,19 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoHeader")) {
                            escape_sql($_POST['ch_pay_text_patrimoine'], "text"),
                            escape_sql($_POST['ch_pay_id'], "int"));
 
+        $eloquentPays->fill(request()->all($eloquentPays->getFillable()));
+        $eloquentPays->save();
 
-      $Result1 = mysql_query($updateSQL, $maconnexion);
-      getErrorMessage('success', "Le pays a été modifié avec succès !");
+        $Result1 = mysql_query($updateSQL, $maconnexion);
+        getErrorMessage('success', "Le pays a été modifié avec succès !");
     } else {
         getErrorMessage('error', "Vous n'avez pas accès à cette partie.");
     }
   
-  $updateGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_pay_id'];
-  appendQueryString($updateGoTo);
-  header(sprintf("Location: %s", $updateGoTo));
-  exit;
+    $updateGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_pay_id'];
+    appendQueryString($updateGoTo);
+    header(sprintf("Location: %s", $updateGoTo));
+    exit;
 }
 
 //requete liste des villes du joueur
@@ -273,9 +274,6 @@ $paysPersonnages = $thisPays->getCharacters();
 if(!empty($paysPersonnages)) {
     $paysPersonnages = $paysPersonnages[0];
 }
-
-// Pays
-$eloquentPays = EloquentPays::query()->findOrFail($row_InfoGenerale['ch_pay_id']);
 
 ?>
 <!DOCTYPE html>
