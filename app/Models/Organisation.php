@@ -22,6 +22,7 @@ use Roxayl\MondeGC\Models\Presenters\OrganisationPresenter;
 use Roxayl\MondeGC\Models\Traits\Infrastructurable as HasInfrastructures;
 use Roxayl\MondeGC\Models\Traits\Resourceable as HasResources;
 use Roxayl\MondeGC\Models\Traits\Roleplayable as ParticipatesInRoleplay;
+use Roxayl\MondeGC\Models\Traits\Versionable;
 use Roxayl\MondeGC\Services\EconomyService;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -82,6 +83,7 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     use SoftDeletes;
     use HasFactory, HasInfrastructures, HasResources, ParticipatesInRoleplay;
     use InfrastructurablePresenter, OrganisationPresenter;
+    use Versionable;
 
     protected $table = 'organisation';
 
@@ -103,6 +105,14 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
 
     protected $attributes = [
         'allow_temperance' => false,
+    ];
+
+    protected array $dontVersionFields = [
+        'id',
+        'type_migrated_at',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     public const PERMISSION_OWNER = 100;

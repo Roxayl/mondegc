@@ -47,7 +47,7 @@
                     @foreach($versions as $version)
                         <tr>
                             <td>{{ $version->responsible_user?->ch_use_login }}</td>
-                            <td>{{ $version->created_at->format('Y/m/d à H:i:s') }}</td>
+                            <td>{{ $version->created_at->format('d/m/Y à H:i') }}</td>
                             <td>{{ $version->reason }}</td>
                             <td>
                                 <a href="{{ route($diffRoute, [

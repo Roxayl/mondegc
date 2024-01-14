@@ -59,6 +59,15 @@ Route::get('pays/diff/{version1}/{version2?}', [Controllers\PaysController::clas
 
 /*
 |--------------------------------------------------------------------------
+| Ville
+|--------------------------------------------------------------------------
+*/
+Route::get('ville/history/{ville}', [Controllers\VilleController::class, 'history'])->name('ville.history');
+Route::get('ville/diff/{version1}/{version2?}', [Controllers\VilleController::class, 'diff'])
+    ->name('ville.diff');
+
+/*
+|--------------------------------------------------------------------------
 | Organisation
 |--------------------------------------------------------------------------
 */
@@ -71,6 +80,10 @@ Route::get('organisation/{organisation}/delete', [Controllers\OrganisationContro
     ->name('organisation.delete');
 Route::match(['put', 'patch'], 'organisation/{organisation}/migrate', [Controllers\OrganisationController::class, 'runMigration'])
     ->name('organisation.run-migration');
+Route::get('organisation/history/{organisation}', [Controllers\OrganisationController::class, 'history'])
+    ->name('organisation.history');
+Route::get('organisation/diff/{version1}/{version2?}', [Controllers\OrganisationController::class, 'diff'])
+    ->name('organisation.diff');
 
 /*
 |--------------------------------------------------------------------------

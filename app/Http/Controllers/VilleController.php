@@ -5,22 +5,22 @@ namespace Roxayl\MondeGC\Http\Controllers;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Mpociot\Versionable\Version;
-use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Ville;
 use Roxayl\MondeGC\Services\VersionDiffService;
 
-class PaysController extends Controller
+class VilleController extends Controller
 {
     /**
-     * @param Pays $pays
+     * @param Ville $ville
      * @return View
      */
-    public function history(Pays $pays): View
+    public function history(Ville $ville): View
     {
-        $versions = $pays->versions()->latest('version_id')->paginate();
-        $canRevert = Gate::allows('revert', $pays);
-        $title = 'Historique du pays ' . $pays->ch_pay_nom;
-        $diffRoute = 'pays.diff';
-        $breadcrumb = view('pays.components.history-breadcrumb', compact('pays'));
+        $versions = $ville->versions()->latest('version_id')->paginate();
+        $canRevert = Gate::allows('revert', $ville);
+        $title = 'Historique de la ville ' . $ville->ch_vil_nom;
+        $diffRoute = 'ville.diff';
+        $breadcrumb = view('ville.components.history-breadcrumb', compact('ville'));
 
         return view(
             'version.history',
@@ -29,7 +29,7 @@ class PaysController extends Controller
     }
 
     /**
-     * Compare deux versions d'un pays.
+     * Compare deux versions d'une ville.
      *
      * @param VersionDiffService $diffService
      * @param Version $version1
@@ -38,10 +38,10 @@ class PaysController extends Controller
      */
     public function diff(VersionDiffService $diffService, Version $version1, ?Version $version2 = null): View
     {
-        $this->authorize('viewAny', Pays::class);
+        $this->authorize('viewAny', Ville::class);
 
-        /** @var Pays $model1 */
-        /** @var Pays $model2 */
+        /** @var Ville $model1 */
+        /** @var Ville $model2 */
         $model1 = $version1->getModel();
         if($version2 === null) {
             $model2 = new ($model1::class);

@@ -21,6 +21,7 @@ use Roxayl\MondeGC\Models\Presenters\VillePresenter;
 use Roxayl\MondeGC\Models\Traits\Infrastructurable as HasInfrastructures;
 use Roxayl\MondeGC\Models\Traits\Resourceable as HasResources;
 use Roxayl\MondeGC\Models\Traits\Roleplayable as ParticipatesInRoleplay;
+use Roxayl\MondeGC\Models\Traits\Versionable;
 use Roxayl\MondeGC\Services\EconomyService;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -109,6 +110,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
 {
     use HasFactory, HasInfrastructures, HasResources, ParticipatesInRoleplay;
     use InfrastructurablePresenter, VillePresenter;
+    use Versionable;
 
     protected $table = 'villes';
     protected $primaryKey = 'ch_vil_ID';
@@ -160,6 +162,16 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
         'ch_vil_transports',
         'ch_vil_administration',
         'ch_vil_culture'
+    ];
+
+    protected array $dontVersionFields = [
+        'ch_vil_ID',
+        'ch_vil_paysID',
+        'ch_vil_user',
+        'ch_vil_label',
+        'ch_vil_date_enregistrement',
+        'ch_vil_mis_jour',
+        'ch_vil_nb_update',
     ];
 
     /**
