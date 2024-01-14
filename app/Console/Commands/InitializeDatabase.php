@@ -21,16 +21,6 @@ class InitializeDatabase extends Initializer
     protected $description = "Initialise la base de données en créant le schéma de la base et les données";
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return int
