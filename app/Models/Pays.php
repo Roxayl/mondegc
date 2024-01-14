@@ -215,7 +215,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         'ch_pay_text_patrimoine',
     ];
 
-    protected $dontVersionFields = [
+    protected array $dontVersionFields = [
         'ch_pay_label',
         'ch_pay_publication',
         'ch_pay_date',

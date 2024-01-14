@@ -8,11 +8,13 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
+use Mpociot\Versionable\Version;
 use Roxayl\MondeGC\Events\Organisation\TypeMigrated;
 use Roxayl\MondeGC\Http\Requests\Organisation\MigrateType;
 use Roxayl\MondeGC\Models\Communique;
 use Roxayl\MondeGC\Models\Organisation;
 use Roxayl\MondeGC\Models\OrganisationMember;
+use Roxayl\MondeGC\Services\VersionDiffService;
 
 class OrganisationController extends Controller
 {
@@ -214,5 +216,49 @@ class OrganisationController extends Controller
         return redirect()->back()
             ->with('message', 'success|Votre organisation est devenue une '
                 . __("organisation.types.$organisation->type"));
+    }
+
+    /**
+     * @param Organisation $organisation
+     * @return \Illuminate\View\View
+     */
+    public function history(Organisation $organisation): View
+    {
+        $versions = $organisation->versions()->latest('version_id')->paginate();
+        $canRevert = Gate::allows('revert', $organisation);
+        $title = 'Historique de l\'organisation ' . $organisation->name;
+        $diffRoute = 'organisation.diff';
+        $breadcrumb = view('organisation.components.history-breadcrumb', compact('organisation'));
+
+        return view(
+            'version.history',
+            compact('title', 'breadcrumb', 'versions', 'canRevert', 'diffRoute')
+        );
+    }
+
+    /**
+     * Compare deux versions d'une organisation.
+     *
+     * @param VersionDiffService $diffService
+     * @param Version $version1
+     * @param Version|null $version2
+     * @return View
+     */
+    public function diff(VersionDiffService $diffService, Version $version1, ?Version $version2 = null): View
+    {
+        $this->authorize('viewAny', Organisation::class);
+
+        /** @var Organisation $model1 */
+        /** @var Organisation $model2 */
+        $model1 = $version1->getModel();
+        if($version2 === null) {
+            $model2 = new ($model1::class);
+        } else {
+            $model2 = $version2->getModel();
+        }
+
+        $diffs = $diffService->generate($model1, $model2);
+
+        return view('version.diff', compact('diffs'));
     }
 }

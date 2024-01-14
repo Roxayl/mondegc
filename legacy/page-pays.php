@@ -259,7 +259,7 @@ Eventy::action('display.beforeHeadClosingTag')
       </form>
       <?php } ?>
       <a class="btn btn-primary pull-right" href="<?= route('pays.history', $eloquentPays) ?>">
-          <i class="icon-share icon-white"></i> Historique
+          <i class="icon-time icon-white"></i> Historique
       </a>
       <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
       <a class="btn btn-primary pull-right" href="php/partage-pays.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>

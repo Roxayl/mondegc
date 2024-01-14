@@ -78,6 +78,10 @@
             </ul>
 
             <div class="pull-right">
+                <a class="btn btn-primary"
+                   href="{{route('organisation.history', $organisation)}}">
+                    <i class="icon-time icon-white"></i> Historique
+                </a>
                 @can('update', $organisation)
                 <a class="btn btn-primary"
                    href="{{route('organisation.edit', $organisation->id)}}">
