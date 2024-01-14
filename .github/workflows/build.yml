@@ -136,4 +136,5 @@ jobs:
             find ./.env -type f -exec sed -i '' -e "/^APP_BUILD=/s/=.*/=\'$BUILD_NUMBER\'/" {} \;
             php artisan optimize:clear
             php artisan migrate --force
+            php artisan monde:regenerate-influences
             php artisan up
