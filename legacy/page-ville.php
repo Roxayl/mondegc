@@ -368,6 +368,11 @@ Eventy::action('display.beforeHeadClosingTag')
         <button class="btn btn-primary" type="submit" title="modifier la page de cette ville"><i class="icon-pencil icon-white"></i></button>
       </form>
       <?php } ?>
+
+      <a class="btn btn-primary pull-right"
+         href="<?= route('ville.history', $eloquentVille) ?>" title="Historique">
+          <i class="icon-time icon-white"></i> Historique
+      </a>
       <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
       <a class="btn btn-primary pull-right" href="php/partage-ville.php?ch_vil_ID=<?= e($row_infoVille['ch_vil_ID']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>

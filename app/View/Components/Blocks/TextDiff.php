@@ -3,6 +3,7 @@
 namespace Roxayl\MondeGC\View\Components\Blocks;
 
 use Caxy\HtmlDiff\HtmlDiff;
+use Caxy\HtmlDiff\HtmlDiffConfig;
 use Roxayl\MondeGC\View\Components\BaseComponent;
 
 class TextDiff extends BaseComponent
@@ -21,6 +22,10 @@ class TextDiff extends BaseComponent
      */
     public function render(): string
     {
-        return (new HtmlDiff($this->text1, $this->text2))->build();
+        $config = new HtmlDiffConfig();
+
+        return (new HtmlDiff($this->text1, $this->text2))
+            ->setConfig($config)
+            ->build();
     }
 }

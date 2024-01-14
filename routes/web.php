@@ -50,6 +50,24 @@ Route::get('page/{page}-{url}', [Controllers\PageController::class, 'index'])->n
 
 /*
 |--------------------------------------------------------------------------
+| Pays
+|--------------------------------------------------------------------------
+*/
+Route::get('pays/history/{pays}', [Controllers\PaysController::class, 'history'])->name('pays.history');
+Route::get('pays/diff/{version1}/{version2?}', [Controllers\PaysController::class, 'diff'])
+    ->name('pays.diff');
+
+/*
+|--------------------------------------------------------------------------
+| Ville
+|--------------------------------------------------------------------------
+*/
+Route::get('ville/history/{ville}', [Controllers\VilleController::class, 'history'])->name('ville.history');
+Route::get('ville/diff/{version1}/{version2?}', [Controllers\VilleController::class, 'diff'])
+    ->name('ville.diff');
+
+/*
+|--------------------------------------------------------------------------
 | Organisation
 |--------------------------------------------------------------------------
 */
@@ -62,6 +80,10 @@ Route::get('organisation/{organisation}/delete', [Controllers\OrganisationContro
     ->name('organisation.delete');
 Route::match(['put', 'patch'], 'organisation/{organisation}/migrate', [Controllers\OrganisationController::class, 'runMigration'])
     ->name('organisation.run-migration');
+Route::get('organisation/history/{organisation}', [Controllers\OrganisationController::class, 'history'])
+    ->name('organisation.history');
+Route::get('organisation/diff/{version1}/{version2?}', [Controllers\OrganisationController::class, 'diff'])
+    ->name('organisation.diff');
 
 /*
 |--------------------------------------------------------------------------
@@ -213,8 +235,6 @@ Route::delete('chapter-resourceable/{chapterResourceable}',
 */
 Route::post('version/revert/{version}', [Controllers\VersionController::class, 'revert'])
     ->name('version.revert');
-Route::get('version/diff/{version1}/{version2?}/{key}', [Controllers\VersionController::class, 'diff'])
-    ->name('version.diff');
 
 /*
 |--------------------------------------------------------------------------

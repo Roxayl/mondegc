@@ -22,16 +22,6 @@ class GenerateHtaccess extends Command
         . "selon la configuration de l'application";
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return int

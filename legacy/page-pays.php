@@ -255,9 +255,12 @@ Eventy::action('display.beforeHeadClosingTag')
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/page_pays_back.php" method="post">
         <input name="paysID" type="hidden" value="<?= e($row_Pays['ch_pay_id']) ?>">
         <input name="userID" type="hidden" value="<?= e($row_User['ch_use_id']) ?>">
-        <button class="btn btn-primary" type="submit" title="modifier la page de ce pays"><i class="icon-pencil icon-white"></i></button>
+        <button class="btn btn-primary" type="submit" title="Modifier la page de ce pays"><i class="icon-pencil icon-white"></i></button>
       </form>
       <?php } ?>
+      <a class="btn btn-primary pull-right" href="<?= route('pays.history', $eloquentPays) ?>">
+          <i class="icon-time icon-white"></i> Historique
+      </a>
       <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
       <a class="btn btn-primary pull-right" href="php/partage-pays.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>

@@ -4,12 +4,9 @@ namespace Roxayl\MondeGC\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-use Roxayl\MondeGC\Models\Contracts\Influencable;
-use Roxayl\MondeGC\Models\Factories\InfluencableFactory;
-use Roxayl\MondeGC\Models\Influence;
 use Roxayl\MondeGC\Services\HelperService;
+use Roxayl\MondeGC\Services\RegenerateInfluenceService;
 use YlsIdeas\FeatureFlags\Facades\Features;
 
 class BackOfficeController extends Controller
@@ -26,9 +23,10 @@ class BackOfficeController extends Controller
     }
 
     /**
+     * @param RegenerateInfluenceService $regenerateInfluenceService
      * @return View
      */
-    public function advancedParameters(): View
+    public function advancedParameters(RegenerateInfluenceService $regenerateInfluenceService): View
     {
         $cacheSize = HelperService::formatBytes(HelperService::directorySize(
             storage_path('framework/cache/data')
@@ -36,7 +34,7 @@ class BackOfficeController extends Controller
 
         $cacheEnabled = Features::accessible('cache');
 
-        $influenceTableSize = Influence::count();
+        $influenceTableSize = $regenerateInfluenceService->influenceCount();
 
         return view('back-office.advanced-parameters', compact(
             'cacheSize', 'cacheEnabled', 'influenceTableSize'
@@ -55,23 +53,12 @@ class BackOfficeController extends Controller
     }
 
     /**
-     * @param InfluencableFactory $influencableFactory
+     * @param RegenerateInfluenceService $regenerateInfluenceService
      * @return RedirectResponse
      */
-    public function regenerateInfluences(InfluencableFactory $influencableFactory): RedirectResponse
+    public function regenerateInfluences(RegenerateInfluenceService $regenerateInfluenceService): RedirectResponse
     {
-        /** @var Influencable[] $influencables */
-        $influencables = $influencableFactory->listEnabled();
-
-        DB::transaction(function() use ($influencables) {
-            DB::table('influence')->delete();
-
-            foreach($influencables as $influencable) {
-                $influencable->generateInfluence();
-            }
-        });
-
-        cache()->flush();
+        $regenerateInfluenceService->regenerate();
 
         return redirect()->route('back-office.advanced-parameters')
             ->with('message', 'success|Les influences ont été regénérées avec succès.');

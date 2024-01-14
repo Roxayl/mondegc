@@ -3,21 +3,24 @@
 namespace Roxayl\MondeGC\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Roxayl\MondeGC\Models\CustomUser;
 use Roxayl\MondeGC\Models\Organisation;
+use Roxayl\MondeGC\Policies\Contracts\VersionablePolicy;
 use Roxayl\MondeGC\Policies\Traits\ManagesInfrastructures;
 
-class OrganisationPolicy
+class OrganisationPolicy implements VersionablePolicy
 {
     use HandlesAuthorization, ManagesInfrastructures;
-    
+
     /**
      * Determine whether the user can view any organisations.
      *
-     * @param CustomUser $user
+     * @param CustomUser|null $user
      * @return bool
      */
-    public function viewAny(CustomUser $user): bool
+    public function viewAny(?CustomUser $user): bool
     {
         return true;
     }
@@ -25,11 +28,11 @@ class OrganisationPolicy
     /**
      * Determine whether the user can view the organisation.
      *
-     * @param CustomUser $user
+     * @param CustomUser|null $user
      * @param Organisation $organisation
      * @return bool
      */
-    public function view(CustomUser $user, Organisation $organisation): bool
+    public function view(?CustomUser $user, Organisation $organisation): bool
     {
         return true;
     }
@@ -109,5 +112,15 @@ class OrganisationPolicy
     {
         return $organisation->maxPermission($user) >=
             Organisation::$permissions['administrator'];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function revert(CustomUser|Authenticatable $user, Organisation|Model $model): bool
+    {
+        if($user->hasMinPermission('ocgc')) return true;
+
+        return $this->administrate($user, $model);
     }
 }

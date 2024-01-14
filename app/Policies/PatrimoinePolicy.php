@@ -9,7 +9,7 @@ class PatrimoinePolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(CustomUser $user): bool
+    public function viewAny(?CustomUser $user): bool
     {
         return true;
     }
