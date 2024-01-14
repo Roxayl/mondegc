@@ -10,14 +10,14 @@ use Roxayl\MondeGC\Policies\Traits\ManagesInfrastructures;
 class OrganisationPolicy
 {
     use HandlesAuthorization, ManagesInfrastructures;
-    
+
     /**
      * Determine whether the user can view any organisations.
      *
-     * @param CustomUser $user
+     * @param CustomUser|null $user
      * @return bool
      */
-    public function viewAny(CustomUser $user): bool
+    public function viewAny(?CustomUser $user): bool
     {
         return true;
     }
@@ -25,11 +25,11 @@ class OrganisationPolicy
     /**
      * Determine whether the user can view the organisation.
      *
-     * @param CustomUser $user
+     * @param CustomUser|null $user
      * @param Organisation $organisation
      * @return bool
      */
-    public function view(CustomUser $user, Organisation $organisation): bool
+    public function view(?CustomUser $user, Organisation $organisation): bool
     {
         return true;
     }
