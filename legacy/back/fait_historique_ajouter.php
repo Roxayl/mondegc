@@ -9,14 +9,10 @@ if(!isset($_SESSION['userObject'])) {
     exit();
 }
 
-$paysID = "-1";
-if (isset($_POST['paysID'])) {
-  $paysID = $_POST['paysID'];
-}
+$paysID = $_POST['paysID'] ?? $_POST['ch_his_paysID'];
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
-
 
 $thisPays = new \GenCity\Monde\Pays($paysID);
 

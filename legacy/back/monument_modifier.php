@@ -43,12 +43,15 @@ $liste_mon_cat3 = mysql_query($query_liste_mon_cat3, $maconnexion);
 $row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3);
 $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
 
-$query_liste_mon_cat_nope = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur NOT BETWEEN 100 AND 199 ORDER BY ch_mon_cat_couleur";
-$liste_mon_cat_nope = mysql_query($query_liste_mon_cat_nope, $maconnexion);
-$row_liste_mon_cat_nope = mysql_fetch_assoc($liste_mon_cat_nope);
-$totalRows_liste_mon_cat_nope = mysql_num_rows($liste_mon_cat_nope);
+if($totalRows_liste_mon_cat3) {
+    $query_liste_mon_cat_nope = "SELECT * FROM monument_categories WHERE ch_mon_cat_ID NOT In ($listcategories) AND ch_mon_cat_couleur NOT BETWEEN 100 AND 199 ORDER BY ch_mon_cat_couleur";
+    $liste_mon_cat_nope = mysql_query($query_liste_mon_cat_nope, $maconnexion);
+    $row_liste_mon_cat_nope = mysql_fetch_assoc($liste_mon_cat_nope);
+    $totalRows_liste_mon_cat_nope = mysql_num_rows($liste_mon_cat_nope);
+} else {
+    $totalRows_liste_mon_cat_nope = 0;
 }
-
+      }
 
 $_SESSION['last_work'] = 'page-monument.php?ch_pat_id='.$row_monument['ch_pat_id'];
 
@@ -333,11 +336,13 @@ Eventy::action('display.beforeHeadClosingTag')
                 <div class="clearfix"></div>
         <?php if($row_monument['ch_pat_statut'] == $row_liste_mon_cat_nope['ch_mon_cat_statut']) { ?>
         <div style="text-align: center; padding-bottom: 0.5em;"><br><br>Voici tous les <?php if ($nb_cat_ok!==0) { ?>autres<?php } else { ?><?php }?> objectifs que vous pourriez tenter d'obtenir :</div>
+            <?php if($totalRows_liste_mon_cat_nope): ?>
             <ul class="listes" style="text-align: center;">
                <?php do { ?> <a href="#" rel="clickover" title="<?= __s($row_liste_mon_cat_nope['ch_mon_cat_nom']) ?>" data-content="<?= __s($row_liste_mon_cat_nope['ch_mon_cat_desc']) ?>"><img style="max-width: 50px;" src="<?= __s($row_liste_mon_cat_nope['ch_mon_cat_icon']) ?>"></i></a>
             <?php } while ($row_liste_mon_cat_nope = mysql_fetch_assoc($liste_mon_cat_nope)) ?>
             </ul>
            <?php mysql_free_result($liste_mon_cat_nope); ?>
+            <?php endif; ?>
          <?php } else { ?>
          <div style="text-align: center; background-image: url('https://i11.servimg.com/u/f11/18/33/87/18/z_lum_11.jpg'); background-attachment: fixed; background-position: right; padding:2em; margin-top: 2em;"><h2>Vous avez terminé tous les objectifs disponibles pour le moment,<br> FÉLICITATIONS !
           <br><small style="font-size: 15px;">Et si vous proposiez de nouveaux objectifs à ajouter pour les <?php if ($row_monument['ch_pat_statut']==0) { ?>Entreprise<?php } else { ?>Quêtes<?php }?> ?</small></h4><br><button style="background: #f0eeec; color: black;" href="http://vasel.yt/wiki/index.php?title=GO/Infrastructures" class="btn btn-primary">Je participe au projet</button></h2>
