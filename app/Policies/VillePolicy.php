@@ -28,6 +28,18 @@ class VillePolicy implements VersionablePolicy
      * @param Ville $ville
      * @return bool
      */
+    public function update(CustomUser $user, Ville $ville): bool
+    {
+        if($user->hasMinPermission('admin')) return true;
+
+        return $ville->getUsers()->contains($user);
+    }
+
+    /**
+     * @param CustomUser $user
+     * @param Ville $ville
+     * @return bool
+     */
     public function delete(CustomUser $user, Ville $ville): bool
     {
         if($user->hasMinPermission('admin')) return true;

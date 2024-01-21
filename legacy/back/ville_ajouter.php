@@ -1,5 +1,7 @@
 <?php
 
+use Roxayl\MondeGC\Models\Ville;
+
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
@@ -17,42 +19,19 @@ if (isset($_POST['paysID'])) {
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
-if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_ville")) {
-  $insertSQL = sprintf("INSERT INTO villes (ch_vil_paysID, ch_vil_user, ch_vil_label, ch_vil_date_enregistrement, ch_vil_mis_jour, ch_vil_nb_update, ch_vil_coord_X, ch_vil_coord_Y, ch_vil_type_jeu, ch_vil_nom, ch_vil_armoiries, ch_vil_capitale, ch_vil_population, ch_vil_specialite, ch_vil_lien_img1, ch_vil_lien_img2, ch_vil_lien_img3, ch_vil_lien_img4, ch_vil_lien_img5, ch_vil_legende_img1, ch_vil_legende_img2, ch_vil_legende_img3, ch_vil_legende_img4, ch_vil_legende_img5, ch_vil_header, ch_vil_contenu) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       escape_sql($_POST['ch_vil_paysID'], "int"),
-                       escape_sql($_POST['ch_vil_user'], "int"),
-                       escape_sql($_POST['ch_vil_label'], "text"),
-                       escape_sql($_POST['ch_vil_date_enregistrement'], "date"),
-                       escape_sql($_POST['ch_vil_mis_jour'], "date"),
-                       escape_sql($_POST['ch_vil_nb_update'], "int"),
-                       escape_sql($_POST['form_coord_X'], "decimal"),
-                       escape_sql($_POST['form_coord_Y'], "decimal"),
-					   escape_sql($_POST['ch_vil_type_jeu'], "text"),
-                       escape_sql($_POST['ch_vil_nom'], "text"),
-					   escape_sql($_POST['ch_vil_armoiries'], "text"),
-                       escape_sql($_POST['ch_vil_capitale'], "int"),
-                       escape_sql($_POST['ch_vil_population'], "int"),
-                       escape_sql($_POST['ch_vil_specialite'], "text"),
-                       escape_sql($_POST['ch_vil_lien_img1'], "text"),
-                       escape_sql($_POST['ch_vil_lien_img2'], "text"),
-                       escape_sql($_POST['ch_vil_lien_img3'], "text"),
-                       escape_sql($_POST['ch_vil_lien_img4'], "text"),
-                       escape_sql($_POST['ch_vil_lien_img5'], "text"),
-                       escape_sql($_POST['ch_vil_legende_img1'], "text"),
-                       escape_sql($_POST['ch_vil_legende_img2'], "text"),
-                       escape_sql($_POST['ch_vil_legende_img3'], "text"),
-                       escape_sql($_POST['ch_vil_legende_img4'], "text"),
-                       escape_sql($_POST['ch_vil_legende_img5'], "text"),
-                       escape_sql($_POST['ch_vil_header'], "text"),
-                       escape_sql($_POST['ch_vil_contenu'], "text"));
+if((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_ville")) {
+    $eloquentVille = new Ville();
+    $eloquentVille->fill(request()->all($eloquentVille->getFillable()));
+    $eloquentVille->ch_vil_coord_X = $_POST['form_coord_X'];
+    $eloquentVille->ch_vil_coord_Y = $_POST['form_coord_Y'];
+    $eloquentVille->save();
 
-  
-  $Result1 = mysql_query($insertSQL, $maconnexion);
+    getErrorMessage('success', $eloquentVille->getName() . " a été ajoutée avec succès.");
 
-  $insertGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_vil_paysID'] . "#mes-villes";
-  appendQueryString($insertGoTo);
-  header(sprintf("Location: %s", $insertGoTo));
- exit;
+    $insertGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_vil_paysID'] . "#mes-villes";
+    appendQueryString($insertGoTo);
+    header(sprintf("Location: %s", $insertGoTo));
+    exit;
 }
 
 $User = $_SESSION['user_ID'];
@@ -297,6 +276,11 @@ Eventy::action('display.beforeHeadClosingTag')
           <textarea name="ch_vil_contenu" id="ch_vil_contenu" class="wysiwyg"  rows="20"></textarea>
         </div>
         <br>
+        <div>
+          <div class="alert alert-info">
+            D'autres sections de contenu seront disponibles après la création de votre ville.
+          </div>
+        </div>
         <hr>
         <h3>Carrousel</h3>
         <!-- Carousel -->

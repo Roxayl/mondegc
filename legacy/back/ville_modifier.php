@@ -1,7 +1,7 @@
 <?php
 
-use GenCity\Monde\Pays;
 use GenCity\Monde\Ville;
+use Roxayl\MondeGC\Models\Ville as EloquentVille;
 
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
@@ -15,60 +15,19 @@ if(!isset($_SESSION['userObject'])) {
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
-
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_ville")) {
+    $eloquentVille = EloquentVille::findOrFail($_POST['ch_vil_ID']);
 
-    $hasUserPermission = isset($_SESSION['userObject']);
-    $thisUser = $_SESSION['userObject'];
-    if($hasUserPermission) {
-        /** @var \GenCity\Monde\User $thisUser */
-        $hasUserPermission = $thisUser->minStatus('OCGC');
-    }
-
-    $thisVille = new Ville($_POST['ch_vil_ID']);
-    $thisPays = new Pays($thisVille->ch_vil_paysID);
-    if(!$hasUserPermission && $thisPays->getUserPermission() < Pays::$permissions['codirigeant']) {
+    if(! auth()->check() || ! auth()->user()->can('update', $eloquentVille)) {
         getErrorMessage('error', "Vous n'avez pas accès à cette partie.");
     }
 
-    else {
-  $updateSQL = sprintf("UPDATE villes SET ch_vil_paysID=%s, ch_vil_user=%s, ch_vil_label=%s, ch_vil_date_enregistrement=%s, ch_vil_mis_jour=%s, ch_vil_nb_update=%s, ch_vil_coord_X=%s, ch_vil_coord_Y=%s, ch_vil_type_jeu=%s, ch_vil_nom=%s, ch_vil_armoiries=%s, ch_vil_capitale=%s, ch_vil_population=%s, ch_vil_specialite=%s, ch_vil_lien_img1=%s, ch_vil_lien_img2=%s, ch_vil_lien_img3=%s, ch_vil_lien_img4=%s, ch_vil_lien_img5=%s, ch_vil_legende_img1=%s, ch_vil_legende_img2=%s, ch_vil_legende_img3=%s, ch_vil_legende_img4=%s, ch_vil_legende_img5=%s, ch_vil_header=%s, ch_vil_contenu=%s, ch_vil_transports=%s, ch_vil_administration=%s, ch_vil_culture=%s WHERE ch_vil_ID=%s",
-                       escape_sql($_POST['ch_vil_paysID'], "int"),
-                       escape_sql($_POST['ch_vil_user'], "int"),
-                       escape_sql($_POST['ch_vil_label'], "text"),
-                       escape_sql($_POST['ch_vil_date_enregistrement'], "date"),
-                       escape_sql($_POST['ch_vil_mis_jour'], "date"),
-                       escape_sql($_POST['ch_vil_nb_update'], "int"),
-                       escape_sql($_POST['form_coord_X'], "decimal"),
-                       escape_sql($_POST['form_coord_Y'], "decimal"),
-					   escape_sql($_POST['ch_vil_type_jeu'], "text"),
-                       escape_sql($_POST['ch_vil_nom'], "text"),
-					   escape_sql($_POST['ch_vil_armoiries'], "text"),
-                       escape_sql($_POST['ch_vil_capitale'], "int"),
-                       escape_sql($_POST['ch_vil_population'], "int"),
-                       escape_sql($_POST['ch_vil_specialite'], "text"),
-                       escape_sql($_POST['ch_vil_lien_img1'], "text"),
-                       escape_sql($_POST['ch_vil_lien_img2'], "text"),
-                       escape_sql($_POST['ch_vil_lien_img3'], "text"),
-                       escape_sql($_POST['ch_vil_lien_img4'], "text"),
-                       escape_sql($_POST['ch_vil_lien_img5'], "text"),
-                       escape_sql($_POST['ch_vil_legende_img1'], "text"),
-                       escape_sql($_POST['ch_vil_legende_img2'], "text"),
-                       escape_sql($_POST['ch_vil_legende_img3'], "text"),
-                       escape_sql($_POST['ch_vil_legende_img4'], "text"),
-                       escape_sql($_POST['ch_vil_legende_img5'], "text"),
-                       escape_sql($_POST['ch_vil_header'], "text"),
-                       escape_sql($_POST['ch_vil_contenu'], "text"),
-                       escape_sql($_POST['ch_vil_transports'], "text"),
-                       escape_sql($_POST['ch_vil_administration'], "text"),
-                       escape_sql($_POST['ch_vil_culture'], "text"),
-					   escape_sql($_POST['ch_vil_ID'], "int"));
+    $eloquentVille->fill(request()->all($eloquentVille->getFillable()));
+    $eloquentVille->ch_vil_coord_X = $_POST['form_coord_X'];
+    $eloquentVille->ch_vil_coord_Y = $_POST['form_coord_Y'];
+    $eloquentVille->save();
 
-  
-  $Result1 = mysql_query($updateSQL, $maconnexion);
-
-        getErrorMessage('success', "Ville modifiée avec succès.");
-    }
+    getErrorMessage('success', "Ville modifiée avec succès.");
 
   $updateGoTo = DEF_URI_PATH . "back/ville_modifier.php";
   appendQueryString($updateGoTo);
@@ -77,20 +36,15 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_ville")) {
 }
 
 //requete Villes
-
-if (isset($_REQUEST['ville-ID'])) {
-	$_SESSION['ville_encours'] = $_REQUEST['ville-ID'];
-	unset($_REQUEST['ville-ID']);
-}
-
-$query_ville = sprintf("SELECT * FROM villes INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s", escape_sql($_SESSION['ville_encours'], "int"));
+$query_ville = sprintf("SELECT * FROM villes INNER JOIN pays ON ch_vil_paysID = ch_pay_id WHERE ch_vil_ID = %s",
+    escape_sql($_REQUEST['ville-ID'], "int"));
 $ville = mysql_query($query_ville, $maconnexion);
 $row_ville = mysql_fetch_assoc($ville);
 $totalRows_ville = mysql_num_rows($ville);
 
 $paysID = $row_ville['ch_vil_paysID'];
 
-$thisVille = new Ville($_SESSION['ville_encours']);
+$thisVille = new Ville($_REQUEST['ville-ID']);
 
 //requete Infrastructure
 $maxRows_infrastructure = 15;
@@ -101,7 +55,8 @@ if (isset($_GET['pageNum_infrastructure'])) {
 $startRow_infrastructure = $pageNum_infrastructure * $maxRows_infrastructure;
 
 
-$query_infrastructure = sprintf("SELECT * FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id=infrastructures_officielles.ch_inf_off_id WHERE ch_inf_villeid = %s ORDER BY ch_inf_date DESC", escape_sql($_SESSION['ville_encours'], "int"));
+$query_infrastructure = sprintf("SELECT * FROM infrastructures INNER JOIN infrastructures_officielles ON infrastructures.ch_inf_off_id=infrastructures_officielles.ch_inf_off_id WHERE ch_inf_villeid = %s ORDER BY ch_inf_date DESC",
+    escape_sql($_REQUEST['ville-ID'], "int"));
 $query_limit_infrastructure = sprintf("%s LIMIT %d, %d", $query_infrastructure, $startRow_infrastructure, $maxRows_infrastructure);
 $infrastructure = mysql_query($query_limit_infrastructure, $maconnexion);
 $row_infrastructure = mysql_fetch_assoc($infrastructure);
@@ -139,7 +94,7 @@ if (isset($_GET['pageNum_monument'])) {
 $startRow_monument = $pageNum_monument * $maxRows_monument;
 
 
-$query_monument = sprintf("SELECT * FROM patrimoine WHERE ch_pat_villeID = %s ORDER BY ch_pat_mis_jour DESC", escape_sql($_SESSION['ville_encours'], "int"));
+$query_monument = sprintf("SELECT * FROM patrimoine WHERE ch_pat_villeID = %s ORDER BY ch_pat_mis_jour DESC", escape_sql($_REQUEST['ville-ID'], "int"));
 $query_limit_monument = sprintf("%s LIMIT %d, %d", $query_monument, $startRow_monument, $maxRows_monument);
 $monument = mysql_query($query_limit_monument, $maconnexion);
 $row_monument = mysql_fetch_assoc($monument);
@@ -349,22 +304,19 @@ Eventy::action('display.beforeHeadClosingTag')
 
       <!-- Moderation
      ================================================== -->
-      <?php if (($_SESSION['statut'] >= 20) AND ($row_User['ch_use_id'] != $_SESSION['user_ID'])) { ?>
-      <form class="pull-right" action="membre-modifier_back.php" method="post">
-        <input name="userID" type="hidden" value="<?= e($row_User['ch_use_id']) ?>">
-        <button class="btn btn-danger" type="submit" title="page de gestion du profil"><i class="icon-user-white"></i> Profil du dirigeant</button>
-      </form>
-      <form class="pull-right" action="page_pays_back.php" method="post">
-        <input name="paysID" type="hidden" value="<?= e($row_ville['ch_vil_paysID']) ?>">
-        <button class="btn btn-danger" type="submit" title="page de gestion du pays"><i class="icon-pays-small-white"></i> Modifier le pays</button>
-      </form>
-      <?php }?>
-      <form class="pull-right" action="ville_confirmation_supprimer.php" method="post">
-        <input name="ville-ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
-        <button class="btn btn-danger" type="submit" title="supprimer cette ville"><i class="icon-trash icon-white"></i></button>
-      </form>
-      <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
-      <a class="btn btn-primary pull-right" href="../php/partage-ville.php?ch_vil_ID=<?= e($row_ville['ch_vil_ID']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
+      <?php if(auth()->user()->can('delete', $eloquentVille)) { ?>
+          <form class="pull-right" action="ville_confirmation_supprimer.php" method="POST">
+            <input name="ville-ID" type="hidden" value="<?= e($row_ville['ch_vil_ID']) ?>">
+            <button class="btn btn-danger" type="submit" title="supprimer cette ville">
+                <i class="icon-trash icon-white"></i> Supprimer
+            </button>
+          </form>
+      <?php } ?>
+      <?php if(auth()->user()->can('update', $eloquentVille)) { ?>
+          <a class="btn btn-primary pull-right" href="../php/partage-ville.php?ch_vil_ID=<?= e($row_ville['ch_vil_ID']) ?>" data-toggle="modal"
+             data-target="#Modal-Monument" title="Poster sur le forum">
+              <i class="icon-share icon-white"></i> Partager sur le forum
+          </a>
       <?php } ?>
       <div class="clearfix"></div>
 
