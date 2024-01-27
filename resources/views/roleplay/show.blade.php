@@ -125,7 +125,7 @@
                 @can('manage', $roleplay)
                     <a href="{{ route('roleplay.edit', $roleplay) }}" class="btn btn-primary"
                        data-toggle="modal" data-target="#modal-container-small">
-                        <i class="icon-edit icon-white"></i> Modifier
+                        <i class="icon-edit icon-white"></i> Modifier/Gérer
                     </a>
                 @endcan
             </div>

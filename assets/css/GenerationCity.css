@@ -141,6 +141,11 @@ ul.proposal-responses li label {
     font-size: 1.1em;
 }
 
+.label-required {
+    content: " *";
+    color: red;
+}
+
 .align-left, .align-left p {
     text-align: left;
 }
