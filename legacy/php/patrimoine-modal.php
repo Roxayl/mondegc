@@ -185,7 +185,7 @@ $thisPays = new \GenCity\Monde\Pays($row_monument['ch_pat_paysID']);
   </ul>
   <!-- Message si pas de reactions -->
   <?php } else { ?>
-  <p>Ce monument n'as pas encore eu de visites</p>
+  <p>Ce monument n'a pas encore eu de visites</p>
   <?php } ?>
 </div>
 <div class="modal-footer"> 

@@ -126,7 +126,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
     <input type="hidden" name="MM_update" value="ajout_lien">
   </form>
 <?php } else { ?>
-  <h4>Le pays dans lequel est implant&eacute; votre ville n'as pas encore indiqu&eacute; le lien du sujet sur le Forum de G&eacute;n&eacute;ration City.</h4>
+  <h4>Le pays dans lequel est implant&eacute; votre ville n'a pas encore indiqu&eacute; le lien du sujet sur le Forum de G&eacute;n&eacute;ration City.</h4>
 <?php } ?>
 <!-- Si l'ID du monument n'est pas trouve-->
 <?php } else { ?>
