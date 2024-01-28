@@ -2,6 +2,8 @@
 
 namespace Roxayl\MondeGC\Models\Presenters;
 
+use Illuminate\Support\Str;
+
 trait PaysPresenter
 {
     public function accessorUrl(): string
@@ -20,11 +22,19 @@ trait PaysPresenter
 
     public function getFlag(): string
     {
-        return (string)$this->ch_pay_lien_imgdrapeau;
+        return (string) $this->ch_pay_lien_imgdrapeau;
     }
 
     public function getName(): string
     {
         return $this->ch_pay_nom;
+    }
+
+    public function showRouteParameter(): array
+    {
+        return [
+            'pays' => $this->ch_pay_id,
+            'paysSlug' => Str::slug($this->ch_pay_nom),
+        ];
     }
 }

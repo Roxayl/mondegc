@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Mpociot\Versionable\Version;
@@ -10,6 +13,22 @@ use Roxayl\MondeGC\Services\VersionDiffService;
 
 class PaysController extends Controller
 {
+    /**
+     * @param Pays $pays
+     * @param string $paysSlug
+     * @return RedirectResponse
+     */
+    public function show(Pays $pays, string $paysSlug): RedirectResponse
+    {
+        $routeParameter = $pays->showRouteParameter();
+
+        if($paysSlug !== $routeParameter['paysSlug']) {
+            return to_route('pays.show', $routeParameter);
+        }
+
+        return redirect('page-pays.php?ch_pay_id=' . $pays->ch_pay_id);
+    }
+
     /**
      * @param Pays $pays
      * @return View

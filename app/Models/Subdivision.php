@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Roxayl\MondeGC\Models\Presenters\SubdivisionPresenter;
 
 /**
  * Class Subdivision
@@ -19,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Carbon|null $updated_at
  * @property SubdivisionType|null $subdivision_type
  * @property-read SubdivisionType|null $subdivisionType
+ * @property-read Pays|null $pays
  * @method static Builder|Subdivision newModelQuery()
  * @method static Builder|Subdivision newQuery()
  * @method static Builder|Subdivision query()
@@ -33,6 +38,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Subdivision extends Model
 {
+    use SubdivisionPresenter;
+
     protected $table = 'subdivisions';
 
     protected $casts = [
@@ -52,5 +59,20 @@ class Subdivision extends Model
     public function subdivisionType(): BelongsTo
     {
         return $this->belongsTo(SubdivisionType::class);
+    }
+
+    /**
+     * @return HasOneThrough
+     */
+    public function pays(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            Pays::class,
+            SubdivisionType::class,
+            'id',
+            'ch_pay_id',
+            'subdivision_type_id',
+            'pays_id',
+        );
     }
 }
