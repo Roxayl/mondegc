@@ -35,6 +35,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  *
  * @property int $ch_pay_id
  * @property string $ch_pay_label
+ * @property bool $use_subdivisions
  * @property int $ch_pay_publication
  * @property string $ch_pay_continent
  * @property int|null $ch_pay_emplacement
@@ -124,6 +125,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @method static Builder|Pays whereChPayId($value)
  * @method static Builder|Pays whereChPayIndustrieCarte($value)
  * @method static Builder|Pays whereChPayLabel($value)
+ * @method static Builder|Pays whereUseSubdivisions($value)
  * @method static Builder|Pays whereChPayLangueOfficielle($value)
  * @method static Builder|Pays whereChPayLienForum($value)
  * @method static Builder|Pays whereChPayLienImgdrapeau($value)
@@ -217,6 +219,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
 
     protected array $dontVersionFields = [
         'ch_pay_label',
+        'use_subdivisions',
         'ch_pay_publication',
         'ch_pay_date',
         'ch_pay_nb_update',
