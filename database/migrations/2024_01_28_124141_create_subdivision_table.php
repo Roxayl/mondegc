@@ -18,6 +18,7 @@ class CreateSubdivisionTable extends Migration
             $table->integer('pays_id')->nullable();
             $table->string('type_name');
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('pays_id')
                 ->references('ch_pay_id')->on('pays')
                 ->nullOnDelete()->cascadeOnUpdate();
@@ -30,6 +31,7 @@ class CreateSubdivisionTable extends Migration
             $table->longText('summary')->nullable();
             $table->longText('content')->nullable();
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('subdivision_type_id')
                 ->references('id')->on('subdivision_types')
                 ->nullOnDelete()->cascadeOnUpdate();

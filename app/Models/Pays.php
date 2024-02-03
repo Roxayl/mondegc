@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -150,6 +151,13 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @method static Builder|Pays whereLienWiki($value)
  * @method static Builder|Pays active()
  * @method static Builder|Pays visible()
+ * @property-write mixed $reason
+ * @property-read Collection<int, \Roxayl\MondeGC\Models\SubdivisionType> $subdivisionTypes
+ * @property-read int|null $subdivision_types_count
+ * @property-read Collection<int, \Roxayl\MondeGC\Models\Subdivision> $subdivisions
+ * @property-read int|null $subdivisions_count
+ * @property-read Collection<int, \Roxayl\MondeGC\Models\Version> $versions
+ * @property-read int|null $versions_count
  * @mixin \Eloquent
  */
 class Pays extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
@@ -185,6 +193,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     ];
 
     protected $fillable = [
+        'use_subdivisions',
         'ch_pay_lien_forum',
         'lien_wiki',
         'ch_pay_nom',
@@ -397,6 +406,29 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     public function personnage(): ?Personnage
     {
         return Personnage::where('entity', 'pays')->where('entity_id', $this->ch_pay_id)->first();
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function subdivisionTypes(): HasMany
+    {
+        return $this->hasMany(SubdivisionType::class, 'pays_id');
+    }
+
+    /**
+     * @return HasManyThrough
+     */
+    public function subdivisions(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Subdivision::class,
+            SubdivisionType::class,
+            'pays_id',
+            'subdivision_type_id',
+            'id',
+            'id',
+        );
     }
 
     /**

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Roxayl\MondeGC\Models\Presenters\SubdivisionPresenter;
 
 /**
@@ -21,6 +22,7 @@ use Roxayl\MondeGC\Models\Presenters\SubdivisionPresenter;
  * @property string|null $content
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @property SubdivisionType|null $subdivision_type
  * @property-read SubdivisionType|null $subdivisionType
  * @property-read Pays|null $pays
@@ -34,11 +36,16 @@ use Roxayl\MondeGC\Models\Presenters\SubdivisionPresenter;
  * @method static Builder|Subdivision whereSubdivisionTypeId($value)
  * @method static Builder|Subdivision whereSummary($value)
  * @method static Builder|Subdivision whereUpdatedAt($value)
+ * @method static Builder|Subdivision onlyTrashed()
+ * @method static Builder|Subdivision whereDeletedAt($value)
+ * @method static Builder|Subdivision withTrashed()
+ * @method static Builder|Subdivision withoutTrashed()
  * @mixin \Eloquent
  */
 class Subdivision extends Model
 {
     use SubdivisionPresenter;
+    use SoftDeletes;
 
     protected $table = 'subdivisions';
 

@@ -55,6 +55,8 @@ Route::get('page/{page}-{url}', [Controllers\PageController::class, 'index'])->n
 */
 Route::get('pays', fn() => redirect('Page-carte.php#liste-pays'))->name('pays.index');
 Route::get('pays/{pays}-{paysSlug}', [Controllers\PaysController::class, 'show'])->name('pays.show');
+Route::match(['put', 'patch'], 'pays/manage-subdivisions/{pays}', [Controllers\PaysController::class, 'manageSubdivisions'])
+    ->name('pays.manage-subdivisions');
 Route::get('pays/history/{pays}', [Controllers\PaysController::class, 'history'])->name('pays.history');
 Route::get('pays/diff/{version1}/{version2?}', [Controllers\PaysController::class, 'diff'])
     ->name('pays.diff');

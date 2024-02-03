@@ -366,6 +366,7 @@ Eventy::action('display.beforeHeadClosingTag')
           </a></li>
         <li><a href="#dirigeants">Dirigeants</a></li>
         <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
+        <li><a href="#configuration">Configuration</a></li>
         <li><a href="#info-generales">Présentation</a></li>
         <li><a href="#personnage">Personnage</a></li>
         <?php }?>
@@ -456,6 +457,46 @@ Eventy::action('display.beforeHeadClosingTag')
 
       <?php if ($_SESSION['userObject']->minStatus('OCGC') ||
                 $thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
+
+
+      <section class="">
+        <div id="configuration" class="titre-vert anchor">
+            <h1>Configuration</h1>
+        </div>
+        <div class="well">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                  <a class="accordion-toggle" data-toggle="collapse" href="#collapse-subdivision">
+                      Subdivisions administratives
+                      <?php if($eloquentPays->use_subdivisions): ?>
+                        <span class="badge badge-success">Actives</span>
+                      <?php else: ?>
+                        <span class="badge badge-warning">Non actives</span>
+                      <?php endif; ?>
+                  </a>
+                </div>
+                  <div id="collapse-subdivision" class="accordion-body collapse">
+                      <div class="well">
+                        Vous pouvez gérer choisir d'utiliser (ou non) les subdivisions administratives pour votre pays.
+                        <?php if($eloquentPays->use_subdivisions): ?>
+                            Elles sont actuellement activées.
+                        <?php else: ?>
+                            Elles sont actuellement désactivées.
+                        <?php endif; ?>
+                        <form method="POST" action="<?= route('pays.manage-subdivisions', ['pays' => $eloquentPays]) ?>">
+                            <input type="hidden" name="_method" value="PUT">
+                            <input type="hidden" name="_token" value="<?= csrf_token() ?>">
+                            <input type="hidden" name="enable" value="<?= $eloquentPays->use_subdivisions ? '0' : '1' ?>">
+                            <button type="submit" class="btn btn-primary">
+                                <?= $eloquentPays->use_subdivisions ? 'Désactiver' : 'Activer' ?>
+                            </button>
+                        </form>
+                      </div>
+                  </div>
+            </div>
+        </div>
+      </section>
+
       <!-- Debut formulaire Page Pays
         ================================================== -->
       <section class="">
@@ -818,7 +859,6 @@ Eventy::action('display.beforeHeadClosingTag')
 
     </section>
 
-
       <!-- Liste des Villes du membre
         ================================================== -->
       <section>
@@ -833,7 +873,7 @@ Eventy::action('display.beforeHeadClosingTag')
             <tr class="tablehead">
               <th width="5%" scope="col"><a href="#" rel="clickover" title="Statut de votre ville" data-content="la ville peut-&ecirc;tre publi&eacute;e sur votre page pays ou masqu&eacute;e. Le drapeau indique la capitale."><i class="icon-globe"></i></a></th>
               <th width="64%" scope="col">Nom</th>
-              <th width="23%" scope="col">population</th>
+              <th width="23%" scope="col">Population</th>
               <th width="4%" scope="col">&nbsp;</th>
               <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
               <th width="4%" scope="col">&nbsp;</th>

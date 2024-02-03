@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Roxayl\MondeGC\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Mpociot\Versionable\Version;
+use Roxayl\MondeGC\Models\Managers\PaysSubdivisionManager;
 use Roxayl\MondeGC\Models\Pays;
 use Roxayl\MondeGC\Services\VersionDiffService;
 
@@ -27,6 +29,29 @@ class PaysController extends Controller
         }
 
         return redirect('page-pays.php?ch_pay_id=' . $pays->ch_pay_id);
+    }
+
+    /**
+     * @param Request $request
+     * @param PaysSubdivisionManager $subdivisionManager
+     * @param Pays $pays
+     * @return RedirectResponse
+     */
+    public function manageSubdivisions(
+        Request $request,
+        PaysSubdivisionManager $subdivisionManager,
+        Pays $pays,
+    ): RedirectResponse {
+        $enable = $request->get('enable');
+
+        if($enable) {
+            $subdivisionManager->enable($pays);
+        } else {
+            $subdivisionManager->disable($pays);
+        }
+
+        return redirect('back/page_pays_back.php?ch_pay_id=' . $pays->ch_pay_id)
+            ->with('message', 'success|Vos subdivisions administratives ont été modifiées avec succès.');
     }
 
     /**
