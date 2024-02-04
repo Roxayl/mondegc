@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Services;
 
 use Roxayl\MondeGC\Http\Controllers\Legacy\LegacySiteController;
@@ -22,7 +24,7 @@ class LegacyPageService
          * une version adaptée du chemin en "dot notation" sans l'extension, e.g. 'back.ocgc_proposal_create'.
          */
         $target = str_replace('/', '.', $path);
-        if(substr($target, -4) === '.php') {
+        if(str_ends_with($target, '.php')) {
             $target = substr($target, 0, -4);
         }
         $_GET['target'] = $target;

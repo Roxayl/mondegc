@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Services;
 
 use HTMLPurifier;
@@ -18,10 +20,10 @@ class HelperService
 
     /**
      * @param string $element
-     * @param array|scalar $data
+     * @param mixed $data
      * @return string
      */
-    public static function renderLegacyElement(string $element, float|array|bool|int|string $data): string
+    public static function renderLegacyElement(string $element, mixed $data): string
     {
         if(!is_array($data)) {
             $data = [$data];
