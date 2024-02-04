@@ -508,8 +508,8 @@ Eventy::action('display.beforeHeadClosingTag')
                   pays et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Compl&eacute;tez-le au fur et &agrave; mesure que
                   votre pays grandit. </p>
           </div>
-        <form action="<?= e($editFormAction) ?>" name="InfoHeader" method="POST" class="form-horizontal" id="InfoHeader">
-          <div class="accordion" id="accordion2"> 
+        <form action="<?= e($editFormAction) ?>" name="InfoHeader" method="POST" class="form-horizontal well" id="InfoHeader">
+          <div class="accordion" id="accordion2">
             <!-- Boutons cachés -->
             <?php 
 				  $now= date("Y-m-d G:i:s");
@@ -534,7 +534,7 @@ Eventy::action('display.beforeHeadClosingTag')
                       <h3>Modifier l'emplacement :</h3>
                       <div id="spryradio2">
                         <select name="ch_pay_emplacement" id="ch_pay_emplacement">
-                          <?php for ($nb_emplacement = 1; $nb_emplacement <= 58; $nb_emplacement++) {?>
+                          <?php for ($nb_emplacement = 1; $nb_emplacement <= 59; $nb_emplacement++) {?>
                           <option value="<?php echo $nb_emplacement ?>"<?php if (!(strcmp("$nb_emplacement", $row_InfoGenerale['ch_pay_emplacement']))) {echo "selected=\"selected\"";} ?>> N°<?php echo $nb_emplacement ?></option>
                           <?php }?>
                         </select>
@@ -544,7 +544,7 @@ Eventy::action('display.beforeHeadClosingTag')
                       <h3>Modifier le statut du pays :</h3>
                       <div id="spryradio1">
                         <label class="radio" for="ch_pay_publication_0">
-                          <input <?php if (!(strcmp($row_InfoGenerale['ch_pay_publication'],"1"))) {echo "checked=\"checked\"";} ?> type="radio" selected="selected" name="ch_pay_publication" value="1" id="ch_pay_publication_0">
+                          <input <?php if (!(strcmp($row_InfoGenerale['ch_pay_publication'],"1"))) {echo "checked=\"checked\"";} ?> type="radio" name="ch_pay_publication" value="1" id="ch_pay_publication_0">
                           Visible<a href="#" rel="clickover" title="Visible" data-content="Le pays sera visible dans le menu des continents et sur la carte du mondeGC"><i class="icon-info-sign"></i></a></label>
                         <p>&nbsp;</p>
                         <label class="radio" for="ch_pay_publication_1">
