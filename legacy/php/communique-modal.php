@@ -226,9 +226,8 @@ $eloquentCommunique = \Roxayl\MondeGC\Models\Communique::query()->findOrFail($co
   <?php } else if ($ch_com_categorie == 'com_ville') { ?>
   <p>Cette ville n'a pas encore de visiteurs</p>
   <?php } else if ($ch_com_categorie == 'com_communique') { ?>
-  <p>Ce communiqu&eacute; n'as pas encore suscit&eacute; de r&eacute;actions</p>
-  <?php } else { 
-} 
+  <p>Ce communiqu&eacute; n'a pas encore suscit&eacute; de r&eacute;actions</p>
+  <?php }
 } ?>
 </div>
 <div class="modal-footer"> 

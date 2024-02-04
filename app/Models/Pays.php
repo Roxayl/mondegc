@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -35,6 +36,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  *
  * @property int $ch_pay_id
  * @property string $ch_pay_label
+ * @property bool $use_subdivisions
  * @property int $ch_pay_publication
  * @property string $ch_pay_continent
  * @property int|null $ch_pay_emplacement
@@ -124,6 +126,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @method static Builder|Pays whereChPayId($value)
  * @method static Builder|Pays whereChPayIndustrieCarte($value)
  * @method static Builder|Pays whereChPayLabel($value)
+ * @method static Builder|Pays whereUseSubdivisions($value)
  * @method static Builder|Pays whereChPayLangueOfficielle($value)
  * @method static Builder|Pays whereChPayLienForum($value)
  * @method static Builder|Pays whereChPayLienImgdrapeau($value)
@@ -148,6 +151,13 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @method static Builder|Pays whereLienWiki($value)
  * @method static Builder|Pays active()
  * @method static Builder|Pays visible()
+ * @property-write mixed $reason
+ * @property-read Collection<int, \Roxayl\MondeGC\Models\SubdivisionType> $subdivisionTypes
+ * @property-read int|null $subdivision_types_count
+ * @property-read Collection<int, \Roxayl\MondeGC\Models\Subdivision> $subdivisions
+ * @property-read int|null $subdivisions_count
+ * @property-read Collection<int, \Roxayl\MondeGC\Models\Version> $versions
+ * @property-read int|null $versions_count
  * @mixin \Eloquent
  */
 class Pays extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
@@ -217,6 +227,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
 
     protected array $dontVersionFields = [
         'ch_pay_label',
+        'use_subdivisions',
         'ch_pay_publication',
         'ch_pay_date',
         'ch_pay_nb_update',
@@ -394,6 +405,29 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     public function personnage(): ?Personnage
     {
         return Personnage::where('entity', 'pays')->where('entity_id', $this->ch_pay_id)->first();
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function subdivisionTypes(): HasMany
+    {
+        return $this->hasMany(SubdivisionType::class, 'pays_id');
+    }
+
+    /**
+     * @return HasManyThrough
+     */
+    public function subdivisions(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Subdivision::class,
+            SubdivisionType::class,
+            'pays_id',
+            'subdivision_type_id',
+            'id',
+            'id',
+        );
     }
 
     /**

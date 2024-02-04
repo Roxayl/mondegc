@@ -2,6 +2,7 @@
 
 namespace Roxayl\MondeGC\Providers;
 
+use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Reliese\Coders\CodersServiceProvider;
@@ -25,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::defaultView('blocks.pagination.bootstrap-2');
+
+        Carbon::setLocale(app()->getLocale());
 
         Features::noScheduling();
     }

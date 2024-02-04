@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Roxayl\MondeGC\Services\HelperService;
 use Roxayl\MondeGC\Services\RegenerateInfluenceService;
-use YlsIdeas\FeatureFlags\Facades\Features;
+use YlsIdeas\FeatureFlags\Manager;
 
 class BackOfficeController extends Controller
 {
@@ -23,16 +23,19 @@ class BackOfficeController extends Controller
     }
 
     /**
+     * @param Manager $featureManager
      * @param RegenerateInfluenceService $regenerateInfluenceService
      * @return View
      */
-    public function advancedParameters(RegenerateInfluenceService $regenerateInfluenceService): View
-    {
+    public function advancedParameters(
+        Manager $featureManager,
+        RegenerateInfluenceService $regenerateInfluenceService
+    ): View {
         $cacheSize = HelperService::formatBytes(HelperService::directorySize(
             storage_path('framework/cache/data')
         ));
 
-        $cacheEnabled = Features::accessible('cache');
+        $cacheEnabled = $featureManager->accessible('cache');
 
         $influenceTableSize = $regenerateInfluenceService->influenceCount();
 

@@ -128,7 +128,7 @@ require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
         <li class="active">Nouvelle proposition à l'Assemblée générale</li>
     </ul>
 
-    <?php renderElement('errormsgs'); ?>
+    <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
 
     <?php if(!$_error): ?>
 

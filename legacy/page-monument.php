@@ -313,7 +313,7 @@ Eventy::action('display.beforeHeadClosingTag')
 
         <p><?= __s($row_monument['ch_pat_description']) ?></p><br>
 
-     <?php renderElement('errormsgs'); ?>
+        <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
         <!-- Dernières actualités -->
         <?php if($row_monument['ch_mon_cat_statut'] == 0) { ?>
 

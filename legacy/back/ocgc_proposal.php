@@ -207,7 +207,7 @@ require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
         </li>
     </ul>
 
-    <?php renderElement('errormsgs'); ?>
+    <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
 
     <div class="well" style="margin-top: -50px;">
 
@@ -416,7 +416,7 @@ require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 
   <?php else: // end if($_error) ?>
 
-    <?php renderElement('errormsgs'); ?>
+    <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
 
   <?php endif; ?>
 

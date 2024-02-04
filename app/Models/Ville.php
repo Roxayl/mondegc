@@ -33,6 +33,7 @@ use Spatie\Searchable\SearchResult;
  * @property int $ch_vil_paysID
  * @property int $ch_vil_user
  * @property string $ch_vil_label
+ * @property int|null $subdivision_id
  * @property Carbon|null $ch_vil_date_enregistrement
  * @property Carbon|null $ch_vil_mis_jour
  * @property int|null $ch_vil_nb_update
@@ -83,6 +84,7 @@ use Spatie\Searchable\SearchResult;
  * @method static Builder|Ville whereChVilHeader($value)
  * @method static Builder|Ville whereChVilID($value)
  * @method static Builder|Ville whereChVilLabel($value)
+ * @method static Builder|Ville whereSubdivisionId($value)
  * @method static Builder|Ville whereChVilLegendeImg1($value)
  * @method static Builder|Ville whereChVilLegendeImg2($value)
  * @method static Builder|Ville whereChVilLegendeImg3($value)
@@ -120,6 +122,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
     protected $casts = [
         'ch_vil_paysID' => 'int',
         'ch_vil_user' => 'int',
+        'subdivision_id' => 'int',
         'ch_vil_nb_update' => 'int',
         'ch_vil_coord_X' => 'float',
         'ch_vil_coord_Y' => 'float',
@@ -136,6 +139,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
         'ch_vil_paysID',
         'ch_vil_user',
         'ch_vil_label',
+        'subdivision_id',
         'ch_vil_date_enregistrement',
         'ch_vil_mis_jour',
         'ch_vil_nb_update',
@@ -169,6 +173,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
         'ch_vil_paysID',
         'ch_vil_user',
         'ch_vil_label',
+        'subdivision_id',
         'ch_vil_date_enregistrement',
         'ch_vil_mis_jour',
         'ch_vil_nb_update',
@@ -214,6 +219,14 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
     public function patrimoines(): HasMany
     {
         return $this->hasMany(Patrimoine::class, 'ch_pat_villeID');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function subdivision(): BelongsTo
+    {
+        return $this->belongsTo(Subdivision::class, 'subdivision_id');
     }
 
     /**

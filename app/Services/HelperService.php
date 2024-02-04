@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Services;
 
 use HTMLPurifier;
 use HTMLPurifier_Config;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\ViewErrorBag;
+use Roxayl\MondeGC\View\Components\Blocks\Flash;
 
 class HelperService
 {
@@ -14,33 +15,15 @@ class HelperService
      */
     public static function displayAlert(): string
     {
-        $output = '';
-
-        // Messages généralement définis pendant une redirection.
-        if (Session::has('message')) {
-            list($type, $message) = explode('|', Session::get('message'));
-            $output .= sprintf('<div class="alert alert-%s">%s</div>', $type, $message);
-        }
-
-        // Affiche le contenu de la variable 'errors', notamment pour la validation.
-        $errors = request()->session()->get('errors') ?: new ViewErrorBag;
-        if($errors->any()) {
-            $output .= '<div class="alert alert-danger"><ul>';
-            foreach ($errors->all() as $error) {
-                $output .= sprintf('<li>%s</li>', $error);
-            }
-            $output .= '</ul></div>';
-        }
-
-        return $output;
+        return app(Flash::class)->render();
     }
 
     /**
      * @param string $element
-     * @param array|scalar $data
+     * @param mixed $data
      * @return string
      */
-    public static function renderLegacyElement(string $element, float|array|bool|int|string $data): string
+    public static function renderLegacyElement(string $element, mixed $data): string
     {
         if(!is_array($data)) {
             $data = [$data];

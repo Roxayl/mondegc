@@ -317,7 +317,7 @@ Eventy::action('display.beforeHeadClosingTag')
       </div>
       <div id="info">
         <h1>Modifier la carte</h1>
-          <?php renderElement('errormsgs'); ?>
+        <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
         <p>Cliquez sur les outils &agrave; droite de la carte pour ajouter ou modifier des &eacute;l&eacute;ments.</p>
         <p>Utilsez le premier outil pour ajouter votre premi&egrave;re route ou le troisi&egrave;me outil lors &agrave; sauvegarder votre trac&eacute;.</p>
         <p>Utilisez Ctrl-Z ou Cmd-Z pour annuler les derniers points trac&eacute;s.</p>

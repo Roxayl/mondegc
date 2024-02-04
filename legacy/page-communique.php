@@ -202,7 +202,7 @@ Eventy::action('display.beforeHeadClosingTag')
     ================================================== -->
 <div class="container corps-page">
 
-    <?php renderElement('errormsgs'); ?>
+    <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
 
     <?php if(isset($breadcrumb_content)): ?>
         <ul class="breadcrumb" style="padding-top: 0;">

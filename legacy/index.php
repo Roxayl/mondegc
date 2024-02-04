@@ -115,7 +115,7 @@ Eventy::action('display.beforeHeadClosingTag')
 <div class="row-fluid">
     <div class="span8" id="postswrapper" style="padding-bottom: 5px;">
 
-        <?php renderElement('errormsgs'); ?>
+        <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
 
         <div id="actu" class="titre-vert no-bg anchor">
           <h1 style="font-size: 26px; padding-left: 16px;">Derni&egrave;res actualit&eacute;s</h1>

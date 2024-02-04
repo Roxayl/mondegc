@@ -302,7 +302,7 @@ $('#closemodal').click(function() {
             <a class="btn" href="<?php printf("%s?pageNum_classer_mon=%d%s#classer-monument", $currentPage, min($totalPages_classer_mon, $pageNum_classer_mon + 1), $queryString_classer_mon); ?>"> <i class="icon-forward"></i></a>
             <?php } // Show if not last page ?></small>
           <?php } else { ?>
-          <p>Cette cat&eacute;gorie n'as pas encore de monument index&eacute;</p>
+          <p>Cette cat&eacute;gorie n'a pas encore de monument index&eacute;</p>
           <?php }  ?>
         </div>
       </section>

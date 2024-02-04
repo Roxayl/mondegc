@@ -228,12 +228,9 @@ Eventy::action('display.beforeHeadClosingTag')
   </div>
 
   <div class="well">
-      <?php renderElement('errormsgs'); ?>
+      <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
   </div>
-
   <div class="clearfix"></div>
-
-      <?php renderElement('errormsgs'); ?>
 
     <!-- Carte
      ================================================== -->

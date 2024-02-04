@@ -67,7 +67,7 @@ class InfrastructureController extends Controller
 
         $infrastructureOfficielle = null;
         if($request->has('infrastructure_officielle_id')) {
-            $infrastructureOfficielle = InfrastructureOfficielle::query()->findOrFail(
+            $infrastructureOfficielle = InfrastructureOfficielle::query()->find(
                 $request->input('infrastructure_officielle_id')
             );
         }

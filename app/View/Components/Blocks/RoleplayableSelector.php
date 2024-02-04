@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\View\Components\Blocks;
 
 use Illuminate\Http\Request;
@@ -53,10 +55,10 @@ class RoleplayableSelector extends Component
      */
     public static function createRoleplayableFromForm(Request $request)
     {
-        $form = $request->all();
+        $form = $request->all(['type', 'id']);
 
         /** @var Roleplayable|null $roleplayable */
-        $roleplayable = RoleplayableFactory::find($form['type'], $form['id']);
+        $roleplayable = RoleplayableFactory::find($form['type'], (int) $form['id']);
 
         if($roleplayable === null) {
             throw ValidationException::withMessages(["Ce roleplayable n'existe pas."]);

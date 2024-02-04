@@ -113,8 +113,7 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
 <p>Cette ville n'a pas encore de visiteurs</p>
 <?php } else if ($ch_com_categorie == 'com_communique') { ?>
 <p>Ce communiqu&eacute; n'a pas encore suscit&eacute; de r&eacute;actions</p>
-<?php } else { 
-} ?>
+<?php } ?>
 </div>
 <?php } ?>
 
@@ -132,21 +131,18 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
 
     <form action="" method="POST" name="ajout_communique" id="ajout_communique">
 
-<ul id="EcrireCommentaire" class="listes listes-visiteurs" style="background: #abbcc8;">
-  <li class="row-fluid" style="background: rgb(171, 188, 200);">
-    <div class="span9">
-        <label style="height: 45px;"><h3 style="border-color: #1D262C; color: #444444; border-style: solid; border-width: 0 0 1px; font-family: 'Titillium Web', sans-serif; font-size: 1rem; margin-left: -1em; width: 137%;">Publier un message au nom de</h3>
-        <select name="ch_com_pays_id" style="border: #1d262c; background: transparent; margin-top: -4.1em; height: 25px; width: 104%; margin-left: 14em; color: black;">
-            <?php foreach($userPays as $thisPays): ?>
-                <option value="<?= __s($thisPays->get('ch_pay_id')) ?>">
-                    <?= __s($thisPays->get('ch_pay_nom')) ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-        </label>
-    </div>
-  </li>
-</ul>
+        <div id="EcrireCommentaire" class="listes listes-visiteurs">
+            <label>
+                Publier un message au nom de
+                <select name="ch_com_pays_id">
+                    <?php foreach($userPays as $thisPays): ?>
+                        <option value="<?= e($thisPays->get('ch_pay_id')) ?>">
+                            <?= e($thisPays->get('ch_pay_nom')) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+        </div>
         <!-- Bouton cachés -->
         <?php 
 				  $now= date("Y-m-d G:i:s");?>

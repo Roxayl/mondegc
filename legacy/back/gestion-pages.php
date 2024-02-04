@@ -70,7 +70,7 @@ Eventy::action('display.beforeHeadClosingTag')
   <section>
     <div class="well" id="categories">
 
-        <?php renderElement('errormsgs'); ?>
+        <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
 
         <p>Bienvenue sur la page de gestion des pages (huhu...). Vous pouvez modifier des blocs de texte prédéfinis
             via le panneau d'administration.</p>

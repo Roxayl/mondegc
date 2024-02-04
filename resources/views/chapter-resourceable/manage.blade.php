@@ -16,8 +16,7 @@
 
 <h4>Gérer les ressources générées au cours de ce chapitre...</h4>
 
-@foreach($chapter->resourceables as $chapterResourceable)
-
+@forelse($chapter->resourceables as $chapterResourceable)
     <div class="pull-right">
         <a href="#" class="component-trigger"
             {!! \Roxayl\MondeGC\View\Components\BaseComponent::getTargetHtmlAttributes(route('chapter-resourceable.edit', $chapterResourceable),
@@ -48,4 +47,9 @@
 
     <div class="clearfix"></div>
 
-@endforeach
+@empty
+    <small>
+        <i class="icon-info-sign"></i> Pas de ressources générées au cours de ce chapitre.
+    </small>
+
+@endforelse

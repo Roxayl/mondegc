@@ -142,7 +142,7 @@ Eventy::action('display.beforeHeadClosingTag')
 
     <section id="presentation">
     <div class="well">
-        <?php renderElement('errormsgs'); ?>
+        <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
     <div class="row-fluid">
         <div class="span8">
             <p>L'Assemblée générale de l'Organisation des Cités gécéennes (OCGC) est un organe de délibération et de prise de décisions composé de tous les pays officiellement reconnus par la communauté internationale. Son siège se trouve au même endroit que celui de l'OCGC, à Lutèce, la capitale de la

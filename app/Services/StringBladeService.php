@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Services;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -58,10 +60,10 @@ class StringBladeService
      *
      * @param string $bladeString
      * @param array $data
-     * @return bool|string
+     * @return string
      * @throws FileNotFoundException
      */
-    public function render(string $bladeString, array $data = [])
+    public function render(string $bladeString, array $data = []): string
     {
         // Put the php version of blade String to *.php temp file & returns the temp file path
         $bladePath = $this->getBlade($bladeString);
@@ -84,12 +86,12 @@ class StringBladeService
     {
         $cachePath = rtrim(config('cache.stores.file.path'), '/');
         $tempFileName = sha1('string-blade' . microtime());
-        $directory = "{$cachePath}/string-blades";
+        $directory = "$cachePath/string-blades";
 
         if(!is_dir($directory)) {
             mkdir($directory);
         }
 
-        return "{$directory}/{$tempFileName}.php";
+        return "$directory/$tempFileName.php";
     }
 }

@@ -9,14 +9,14 @@
 @csrf
 
 <div class="form-group">
-    <label for="chapter_name_field">Nom</label>
+    <label for="chapter_name_field">Nom<span class="label-required">*</span></label>
     <input type="text" id="chapter_name_field" class="form-control span9"
            name="name" value="{{ old('name', $chapter->name) }}"/>
 </div>
 
 <div class="form-group">
-    <label for="chapter_summary_field">Résumé</label>
-    <textarea id="chapter_summary_field" class="form-control span9" rows="5"
+    <label for="chapter_summary_field">Résumé<span class="label-required">*</span></label>
+    <textarea id="chapter_summary_field" class="form-control span9" rows="6"
            name="summary">{{ old('summary', $chapter->summary) }}</textarea>
 </div>
 
