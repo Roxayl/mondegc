@@ -5,11 +5,15 @@ namespace Roxayl\MondeGC\Policies;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Roxayl\MondeGC\Models\CustomUser;
 use Roxayl\MondeGC\Models\Roleplay;
-use YlsIdeas\FeatureFlags\Facades\Features;
+use YlsIdeas\FeatureFlags\Manager as FeatureManager;
 
 class RoleplayPolicy
 {
     use HandlesAuthorization;
+
+    public function __construct(private readonly FeatureManager $featureManager)
+    {
+    }
 
     /**
      * Détermine si l'utilisateur peut utiliser le système de roleplay.
@@ -19,11 +23,11 @@ class RoleplayPolicy
      */
     public function display(?CustomUser $user): bool
     {
-        if(! Features::accessible('roleplay')) {
+        if(! $this->featureManager->accessible('roleplay')) {
             return false;
         }
 
-        if(Features::accessible('roleplay-only-restricted')) {
+        if($this->featureManager->accessible('roleplay-only-restricted')) {
             if($user === null || ! $user->hasMinPermission('ocgc')) {
                 return false;
             }

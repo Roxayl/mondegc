@@ -2,7 +2,8 @@
 
 use Roxayl\MondeGC\Models\Pays as EloquentPays;
 use GenCity\Monde\Pays;
- 
+use YlsIdeas\FeatureFlags\Facades\Features;
+
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
@@ -366,7 +367,9 @@ Eventy::action('display.beforeHeadClosingTag')
           </a></li>
         <li><a href="#dirigeants">Dirigeants</a></li>
         <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
+        <?php if(Features::accessible('subdivision')): ?>
         <li><a href="#configuration">Configuration</a></li>
+        <?php endif; ?>
         <li><a href="#info-generales">Présentation</a></li>
         <li><a href="#personnage">Personnage</a></li>
         <?php }?>
@@ -459,6 +462,7 @@ Eventy::action('display.beforeHeadClosingTag')
                 $thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
 
 
+      <?php if(Features::accessible('subdivision')): ?>
       <section class="">
         <div id="configuration" class="titre-vert anchor">
             <h1>Configuration</h1>
@@ -496,6 +500,7 @@ Eventy::action('display.beforeHeadClosingTag')
             </div>
         </div>
       </section>
+      <?php endif; ?>
 
       <!-- Debut formulaire Page Pays
         ================================================== -->

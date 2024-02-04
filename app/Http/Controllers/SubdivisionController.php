@@ -6,9 +6,21 @@ namespace Roxayl\MondeGC\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Roxayl\MondeGC\Models\Subdivision;
+use YlsIdeas\FeatureFlags\Manager as FeatureManager;
 
 class SubdivisionController extends Controller
 {
+    public function __construct(private readonly FeatureManager $featureManager)
+    {
+        $this->middleware(function(Request $request, \Closure $next) {
+            if(! $this->featureManager->accessible('subdivision')) {
+                abort(404);
+            }
+
+            return $next($request);
+        });
+    }
+
     public function create()
     {
         // TODO.
