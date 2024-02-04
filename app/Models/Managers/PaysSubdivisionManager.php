@@ -27,7 +27,8 @@ class PaysSubdivisionManager
                 ->each(function(Subdivision $subdivision): void {
                     $subdivision->restore();
                 });
-            $pays->update(['use_subdivisions' => true]);
+            $pays->use_subdivisions = true;
+            $pays->save();
         });
     }
 
@@ -43,7 +44,8 @@ class PaysSubdivisionManager
             $pays->subdivisions->each(function(Subdivision $subdivisionType): void {
                 $subdivisionType->delete();
             });
-            $pays->update(['use_subdivisions' => false]);
+            $pays->use_subdivisions = false;
+            $pays->save();
         });
     }
 }

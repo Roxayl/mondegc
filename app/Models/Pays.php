@@ -193,7 +193,6 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     ];
 
     protected $fillable = [
-        'use_subdivisions',
         'ch_pay_lien_forum',
         'lien_wiki',
         'ch_pay_nom',
