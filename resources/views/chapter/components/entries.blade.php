@@ -8,7 +8,16 @@
             </div>
         @endcan
 
+        @php $lastDate = null; @endphp
+
         @foreach($chapter->entries as $entry)
+
+            @if($lastDate === null || $lastDate !== $entry->created_at->format('d/m/Y'))
+                <div class="mt-3 mb-0 chapter-entry-date-header">
+                    <small>{{ $entry->created_at->translatedFormat('j F Y') }}</small>
+                </div>
+                @php $lastDate = $entry->created_at->format('d/m/Y') @endphp
+            @endif
 
             <div class="chapter-entry">
                 @can('manage', $entry)
