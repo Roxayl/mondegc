@@ -2,7 +2,8 @@
 
 use Roxayl\MondeGC\Models\Pays as EloquentPays;
 use GenCity\Monde\Pays;
- 
+use YlsIdeas\FeatureFlags\Facades\Features;
+
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
@@ -366,6 +367,9 @@ Eventy::action('display.beforeHeadClosingTag')
           </a></li>
         <li><a href="#dirigeants">Dirigeants</a></li>
         <?php if ($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
+        <?php if(Features::accessible('subdivision')): ?>
+        <li><a href="#configuration">Configuration</a></li>
+        <?php endif; ?>
         <li><a href="#info-generales">Présentation</a></li>
         <li><a href="#personnage">Personnage</a></li>
         <?php }?>
@@ -456,6 +460,48 @@ Eventy::action('display.beforeHeadClosingTag')
 
       <?php if ($_SESSION['userObject']->minStatus('OCGC') ||
                 $thisPays->getUserPermission() >= Pays::$permissions['codirigeant']) { ?>
+
+
+      <?php if(Features::accessible('subdivision')): ?>
+      <section class="">
+        <div id="configuration" class="titre-vert anchor">
+            <h1>Configuration</h1>
+        </div>
+        <div class="well">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                  <a class="accordion-toggle" data-toggle="collapse" href="#collapse-subdivision">
+                      Subdivisions administratives
+                      <?php if($eloquentPays->use_subdivisions): ?>
+                        <span class="badge badge-success">Actives</span>
+                      <?php else: ?>
+                        <span class="badge badge-warning">Non actives</span>
+                      <?php endif; ?>
+                  </a>
+                </div>
+                  <div id="collapse-subdivision" class="accordion-body collapse">
+                      <div class="well">
+                        Vous pouvez gérer choisir d'utiliser (ou non) les subdivisions administratives pour votre pays.
+                        <?php if($eloquentPays->use_subdivisions): ?>
+                            Elles sont actuellement activées.
+                        <?php else: ?>
+                            Elles sont actuellement désactivées.
+                        <?php endif; ?>
+                        <form method="POST" action="<?= route('pays.manage-subdivisions', ['pays' => $eloquentPays]) ?>">
+                            <input type="hidden" name="_method" value="PUT">
+                            <input type="hidden" name="_token" value="<?= csrf_token() ?>">
+                            <input type="hidden" name="enable" value="<?= $eloquentPays->use_subdivisions ? '0' : '1' ?>">
+                            <button type="submit" class="btn btn-primary">
+                                <?= $eloquentPays->use_subdivisions ? 'Désactiver' : 'Activer' ?>
+                            </button>
+                        </form>
+                      </div>
+                  </div>
+            </div>
+        </div>
+      </section>
+      <?php endif; ?>
+
       <!-- Debut formulaire Page Pays
         ================================================== -->
       <section class="">
@@ -467,8 +513,8 @@ Eventy::action('display.beforeHeadClosingTag')
                   pays et plus g&eacute;n&eacute;ralement dans l'ensemble du site. Compl&eacute;tez-le au fur et &agrave; mesure que
                   votre pays grandit. </p>
           </div>
-        <form action="<?= e($editFormAction) ?>" name="InfoHeader" method="POST" class="form-horizontal" id="InfoHeader">
-          <div class="accordion" id="accordion2"> 
+        <form action="<?= e($editFormAction) ?>" name="InfoHeader" method="POST" class="form-horizontal well" id="InfoHeader">
+          <div class="accordion" id="accordion2">
             <!-- Boutons cachés -->
             <?php 
 				  $now= date("Y-m-d G:i:s");
@@ -493,7 +539,7 @@ Eventy::action('display.beforeHeadClosingTag')
                       <h3>Modifier l'emplacement :</h3>
                       <div id="spryradio2">
                         <select name="ch_pay_emplacement" id="ch_pay_emplacement">
-                          <?php for ($nb_emplacement = 1; $nb_emplacement <= 58; $nb_emplacement++) {?>
+                          <?php for ($nb_emplacement = 1; $nb_emplacement <= 59; $nb_emplacement++) {?>
                           <option value="<?php echo $nb_emplacement ?>"<?php if (!(strcmp("$nb_emplacement", $row_InfoGenerale['ch_pay_emplacement']))) {echo "selected=\"selected\"";} ?>> N°<?php echo $nb_emplacement ?></option>
                           <?php }?>
                         </select>
@@ -503,7 +549,7 @@ Eventy::action('display.beforeHeadClosingTag')
                       <h3>Modifier le statut du pays :</h3>
                       <div id="spryradio1">
                         <label class="radio" for="ch_pay_publication_0">
-                          <input <?php if (!(strcmp($row_InfoGenerale['ch_pay_publication'],"1"))) {echo "checked=\"checked\"";} ?> type="radio" selected="selected" name="ch_pay_publication" value="1" id="ch_pay_publication_0">
+                          <input <?php if (!(strcmp($row_InfoGenerale['ch_pay_publication'],"1"))) {echo "checked=\"checked\"";} ?> type="radio" name="ch_pay_publication" value="1" id="ch_pay_publication_0">
                           Visible<a href="#" rel="clickover" title="Visible" data-content="Le pays sera visible dans le menu des continents et sur la carte du mondeGC"><i class="icon-info-sign"></i></a></label>
                         <p>&nbsp;</p>
                         <label class="radio" for="ch_pay_publication_1">
@@ -818,7 +864,6 @@ Eventy::action('display.beforeHeadClosingTag')
 
     </section>
 
-
       <!-- Liste des Villes du membre
         ================================================== -->
       <section>
@@ -833,7 +878,7 @@ Eventy::action('display.beforeHeadClosingTag')
             <tr class="tablehead">
               <th width="5%" scope="col"><a href="#" rel="clickover" title="Statut de votre ville" data-content="la ville peut-&ecirc;tre publi&eacute;e sur votre page pays ou masqu&eacute;e. Le drapeau indique la capitale."><i class="icon-globe"></i></a></th>
               <th width="64%" scope="col">Nom</th>
-              <th width="23%" scope="col">population</th>
+              <th width="23%" scope="col">Population</th>
               <th width="4%" scope="col">&nbsp;</th>
               <?php if($thisPays->getUserPermission() >= Pays::$permissions['codirigeant']): ?>
               <th width="4%" scope="col">&nbsp;</th>

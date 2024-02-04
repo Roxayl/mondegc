@@ -20,8 +20,7 @@ trait ManagesInfrastructures
      * @param Infrastructurable $infrastructurable
      * @return bool
      */
-    public function manageInfrastructure(
-        CustomUser $user, Infrastructurable $infrastructurable): bool
+    public function manageInfrastructure(CustomUser $user, Infrastructurable $infrastructurable): bool
     {
         if($user->hasMinPermission('ocgc')) {
             return true;
