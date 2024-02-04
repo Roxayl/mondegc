@@ -85,7 +85,7 @@ Eventy::action('display.beforeHeadClosingTag')
   <section>
     <div class="well" id="categories">
 
-        <?php renderElement('errormsgs'); ?>
+        <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
 
         <p>Cette page contient les actions d'administration effectuées par les utilisateurs, conservées à des fins
             d'historique.</p>

@@ -49,7 +49,7 @@ class AuthenticationService
         $_SESSION['nom_dirigeant'] = $user->ch_use_nom_dirigeant;
         $_SESSION['prenom_dirigeant'] = $user->ch_use_prenom_dirigeant;
         $_SESSION['derniere_visite'] = $user->last_activity;
-        $_SESSION['errormsgs'] = [];
+        $_SESSION['errmsgs'] ??= [];
 
         $_SESSION['userObject'] = new Monde\User($user->ch_use_id);
 

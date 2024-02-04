@@ -143,7 +143,7 @@ Eventy::action('display.beforeHeadClosingTag')
       <h1>G&eacute;rer mon compte</h1>
     </div>
 
-    <?php renderElement('errormsgs'); ?>
+    <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
 
     <!-- Formulaire de modification du membre
          ================================================== -->

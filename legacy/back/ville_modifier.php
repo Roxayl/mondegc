@@ -320,7 +320,7 @@ Eventy::action('display.beforeHeadClosingTag')
       <?php } ?>
       <div class="clearfix"></div>
 
-        <?php renderElement('errormsgs'); ?>
+        <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
 
       <!-- Debut formulaire de modification ville
      ================================================== -->

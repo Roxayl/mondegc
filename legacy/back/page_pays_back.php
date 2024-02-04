@@ -411,7 +411,7 @@ Eventy::action('display.beforeHeadClosingTag')
       <div class="modal container fade" id="Modal-Monument"></div>
       <div class="clearfix"></div>
 
-        <?php renderElement('errormsgs'); ?>
+        <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
 
 
   <!-- Dirigeants

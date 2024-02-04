@@ -205,7 +205,7 @@ Eventy::action('display.beforeHeadClosingTag')
     </div>
     <div class="clearfix"></div>
 
-    <?php renderElement('errormsgs'); ?>
+    <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
 
     <!-- Liste des temperances
      ================================================== -->

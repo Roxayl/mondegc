@@ -99,7 +99,7 @@ if (isset($uploadconfirm)) {
       <!-- Debut formulaire -->
       <div class="well well-large">
 
-        <?php renderElement('errormsgs'); ?>
+        <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
 
         <!-- Image de contr�le drapeau --> 
         <img src="<?= e($character['lien_img']) ?>" alt="avatar <?= e($character['nom_personnage']) ?>" title="drapeau <?= e($character['nom_personnage']) ?>>">

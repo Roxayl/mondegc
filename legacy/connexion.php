@@ -159,7 +159,7 @@ Eventy::action('display.beforeHeadClosingTag')
       <h1>Connexion au compte</h1>
       </div>
 
-      <?php renderElement('errormsgs'); ?>
+      <?= app(\Roxayl\MondeGC\View\Components\Blocks\Flash::class)->render(); ?>
 
       <div class="row-fluid">
     <section class="span7">
