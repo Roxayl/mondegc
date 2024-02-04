@@ -3416,6 +3416,16 @@ Tablet COLLAPSE
     text-decoration: none;
 }
 
+.chapter-entry-date-header {
+    text-align: center;
+}
+
+.chapter-entry-date-header small {
+    margin: 0;
+    padding: 0;
+    color: #919191;
+}
+
 
 /* text/html diff */
 
