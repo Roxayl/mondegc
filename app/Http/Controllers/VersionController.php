@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
@@ -29,13 +31,17 @@ class VersionController extends Controller
                 throw ValidationException::withMessages(["Cette version est déjà la dernière."]);
             }
 
-            $oldReason = $version->reason;
+            if(! empty($version->reason)) {
+                $reason = "Retour à la version : " . $version->reason;
+            } else {
+                $reason = "Retour à la version du " . $version->created_at->format('d/m/Y à H:i:s');
+            }
 
             $version->revert();
 
             // Enregistre la raison de la modification.
             $latestVersion = Version::query()->latest()->first();
-            $latestVersion->reason = "Retour à la version : " . $oldReason;
+            $latestVersion->reason = $reason;
             $latestVersion->save();
         });
 

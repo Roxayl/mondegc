@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Middleware;
 
 use Closure;
@@ -21,7 +23,7 @@ class AuthenticateApi
         if($requestToken !== config('scribe.auth.use_value')) {
             return app(Authenticate::class)->handle(
                 $request,
-                function($request) use ($next) {
+                function(Request $request) use ($next) {
                     return $next($request);
                 },
                 'api');

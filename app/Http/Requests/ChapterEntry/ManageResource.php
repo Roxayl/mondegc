@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Requests\ChapterEntry;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -27,7 +29,7 @@ class ManageResource extends FormRequest
      */
     public function setMediaFromRequest(ChapterEntry $entry): void
     {
-        $mediaType = $this->input('media_type');
+        $mediaType = $this->input('media_type') ?? '';
 
         if(! $this->exists('media_type') || $mediaType === 'none') {
             $entry->media_type = null;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
@@ -65,7 +67,7 @@ class RoleplayController extends Controller
         $roleplay->save();
 
         /** @var Roleplayable|null $organizer */
-        $organizer = RoleplayableFactory::find($request->input('type'), $request->input('id'));
+        $organizer = RoleplayableFactory::find($request->input('type'), (int) $request->input('id'));
         if(! $organizer) {
             throw ValidationException::withMessages(["Cette entité n'existe pas."]);
         }
@@ -191,7 +193,7 @@ class RoleplayController extends Controller
     {
         $this->authorize('display', Roleplay::class);
 
-        $type   = $request->input('type');
+        $type   = $request->input('type') ?? '';
         $term   = $request->input('term');
 
         $roleplayables = RoleplayableFactory::list($type, $term);

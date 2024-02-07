@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Requests\Organisation;
 
 use Carbon\Carbon;
@@ -25,7 +27,7 @@ class MigrateType extends FormRequest
     {
         $allowed = true;
 
-        if(!auth()->user()->hasMinPermission('admin')) {
+        if(! auth()->check() || ! auth()->user()->hasMinPermission('admin')) {
             $allowed = false;
         }
 
@@ -46,7 +48,7 @@ class MigrateType extends FormRequest
         // Vérifie qu'aucun membre ne fait déjà partie d'une alliance.
         $members = $this->organisation->members;
         foreach($members as $member) {
-            if(!empty($member->pays->alliance())) {
+            if(! empty($member->pays->alliance())) {
                 $allowed = false;
                 break;
             }
@@ -73,7 +75,7 @@ class MigrateType extends FormRequest
 
         // Empêche la migration si l'organisation a déjà changé de type au cours des
         // sept derniers jours.
-        if(!is_null($this->organisation->type_migrated_at)) {
+        if(! is_null($this->organisation->type_migrated_at)) {
             if($this->organisation->type_migrated_at > Carbon::now()->subDays(7)) {
                 $allowed = false;
             }
@@ -90,8 +92,7 @@ class MigrateType extends FormRequest
      */
     public function rules(): array
     {
-        $this->organisation = Organisation::query()->findOrFail(
-            request()->route('organisation'));
+        $this->organisation = Organisation::query()->findOrFail(request()->route('organisation'));
         $type = request()->input('type');
 
         $errors = [];
@@ -117,7 +118,7 @@ class MigrateType extends FormRequest
             }
         }
 
-        if(!$this->canMigrateBasedOnTime()) {
+        if(! $this->canMigrateBasedOnTime()) {
             $errors['early'] =  __('organisation.validation.migrate-too-early-error');
         }
 
