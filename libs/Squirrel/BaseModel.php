@@ -16,7 +16,7 @@ class BaseModel
 
     public function get(string $prop): mixed
     {
-        if(is_array($this->model)) {
+        if (is_array($this->model)) {
             return $this->model[$prop];
         } else {
             return $this->model->$prop;
@@ -25,7 +25,7 @@ class BaseModel
 
     public function set(string $prop, mixed $value): void
     {
-        if(is_array($this->model)) {
+        if (is_array($this->model)) {
             $this->model[$prop] = $value;
         } else {
             $this->model->$prop = $value;
@@ -38,10 +38,10 @@ class BaseModel
 
         $query = 'UPDATE ' . $this->{$this->model::$tableName} . ' SET ';
 
-        foreach($structure as $field => $default) {
+        foreach ($structure as $field => $default) {
             $query .= ' `' . $field . '` = ' . escape_sql($this->get($field));
             end($structure);
-            if($field !== key($structure)) {
+            if ($field !== key($structure)) {
                 $query .= ', ';
             }
         }

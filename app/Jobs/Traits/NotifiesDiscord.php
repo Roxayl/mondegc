@@ -10,10 +10,10 @@ trait NotifiesDiscord
 {
     public function getWebhookName(): string
     {
-        if(property_exists($this, 'webhookName')) {
+        if (property_exists($this, 'webhookName')) {
             $webhookName = $this->webhookName;
         } else {
-            if(config('discord.webhookUrl.debug')) {
+            if (config('discord.webhookUrl.debug')) {
                 $webhookName = 'debug';
             } else {
                 $webhookName = array_key_first(config('discord.webhookUrl'));

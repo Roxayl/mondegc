@@ -13,12 +13,12 @@ class DatabaseSeeder extends Seeder
      * Run the database seeds.
      *
      * @todo Unfinished implementation.
+     *
      * @return void
      */
     public function run(): void
     {
-        DB::transaction(function() {
-
+        DB::transaction(function () {
             // Créer un premier utilisateur admin.
             $adminUser = CustomUser::factory()
                     ->hasAttached(
@@ -26,16 +26,15 @@ class DatabaseSeeder extends Seeder
                         ['permissions' => Pays::PERMISSION_DIRIGEANT])
                     ->create([
                         'ch_use_login' => 'Admin',
-                        'ch_use_mail'  => 'contact@generation-city.com',
+                        'ch_use_mail' => 'contact@generation-city.com',
                     ]);
 
-            if($adminUser) {
-                $this->command->info("Successfully created admin user.");
+            if ($adminUser) {
+                $this->command->info('Successfully created admin user.');
                 $this->command->table(['Username', 'Password'], [[$adminUser->ch_use_login, 'password']]);
             } else {
-                $this->command->error("Unable to create admin user. Skipping...");
+                $this->command->error('Unable to create admin user. Skipping...');
             }
-
 
             // Exécuter les autres seeders.
             $this->call([
@@ -43,7 +42,6 @@ class DatabaseSeeder extends Seeder
                 RoleplayableSeeder::class,
                 RoleplaySeeder::class,
             ]);
-
         });
     }
 }

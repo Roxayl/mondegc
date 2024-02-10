@@ -28,7 +28,7 @@ trait Infrastructurable
 
     public function deleteAllInfrastructures(): void
     {
-        $this->infrastructures()->each(function($infrastructure) {
+        $this->infrastructures()->each(function ($infrastructure) {
             $infrastructure->delete();
         });
     }

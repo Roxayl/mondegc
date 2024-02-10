@@ -4,9 +4,9 @@ namespace Squirrel;
 
 abstract class ModelStructure implements ModelStructureInterface
 {
-    static string $tableName;
+    public static string $tableName;
 
-    static string $primary_key;
+    public static string $primary_key;
 
     public array $info = [];
 
@@ -14,9 +14,9 @@ abstract class ModelStructure implements ModelStructureInterface
 
     public function __construct(int|string|array|null $data = null)
     {
-        if(is_numeric($data)) {
+        if (is_numeric($data)) {
             $this->info = $this->populate($data);
-        } elseif(is_null($data)) {
+        } elseif (is_null($data)) {
             $this->info = $this->getStructure();
         } else {
             $this->info = $data;
@@ -26,18 +26,19 @@ abstract class ModelStructure implements ModelStructureInterface
     protected function populate(int|string $id): mixed
     {
         $sql = sprintf('SELECT * FROM ' . static::$tableName .
-            ' WHERE ' . $this::$primary_key .' = %s',
+            ' WHERE ' . $this::$primary_key . ' = %s',
             escape_sql($id, 'int'));
         $query = mysql_query($sql);
+
         return mysql_fetch_assoc($query);
     }
 
     public function getStructure(): mixed
     {
-        if(! array_key_exists(static::$tableName, self::$structure)) {
+        if (! array_key_exists(static::$tableName, self::$structure)) {
             $query = mysql_query('DESCRIBE ' . static::$tableName);
             $finalTable = [];
-            while($row = mysql_fetch_assoc($query)) {
+            while ($row = mysql_fetch_assoc($query)) {
                 $finalTable[$row['Field']] = $row['Default'];
             }
             self::$structure[static::$tableName] = $finalTable;

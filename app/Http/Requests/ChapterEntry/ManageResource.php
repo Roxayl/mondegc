@@ -13,7 +13,7 @@ class ManageResource extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @param ChapterEntry $entry
+     * @param  ChapterEntry  $entry
      * @return bool
      */
     public function authorize(ChapterEntry $entry): bool
@@ -32,16 +32,17 @@ class ManageResource extends FormRequest
     {
         $mediaType = $this->input('media_type') ?? '';
 
-        if(! $this->exists('media_type') || $mediaType === 'none') {
+        if (! $this->exists('media_type') || $mediaType === 'none') {
             $entry->media_type = null;
             $entry->media_parameters = null;
             $entry->media_data = null;
+
             return;
         }
 
         $entry->media_type = str_replace('_', '.', $mediaType);
 
-        if(! array_key_exists($entry->media_type, ChapterEntry::getComponentMorphMap())) {
+        if (! array_key_exists($entry->media_type, ChapterEntry::getComponentMorphMap())) {
             throw ValidationException::withMessages(["Ce type de média n'existe pas."]);
         }
 

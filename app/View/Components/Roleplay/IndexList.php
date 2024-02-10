@@ -24,7 +24,7 @@ class IndexList extends Component
     public function render(): View
     {
         return view('roleplay.components.index-list', [
-            'rps' => $this->rps
+            'rps' => $this->rps,
         ]);
     }
 }

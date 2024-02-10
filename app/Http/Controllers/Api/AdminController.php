@@ -18,7 +18,7 @@ class AdminController extends Controller
         /** @var Authenticatable&CustomUser|null $user */
         $user = $auth->user();
 
-        if(! $auth->check() || ! $user?->hasMinPermission('admin')) {
+        if (! $auth->check() || ! $user?->hasMinPermission('admin')) {
             abort(403);
         }
     }

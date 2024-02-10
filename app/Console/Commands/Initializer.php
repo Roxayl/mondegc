@@ -14,8 +14,8 @@ abstract class Initializer extends Command
     {
         $this->line('Copie de .env --> .env.testing');
 
-        if(! File::exists(base_path('.env'))) {
-            throw new FileNotFoundException("Fichier .env non existant.");
+        if (! File::exists(base_path('.env'))) {
+            throw new FileNotFoundException('Fichier .env non existant.');
         }
 
         $testingPath = base_path('.env.testing');
@@ -31,20 +31,20 @@ abstract class Initializer extends Command
     /**
      * Modifie la valeur d'une clé dans un fichier .env.
      *
-     * @param string $path
-     * @param string $key
-     * @param string $newValue
-     * @param string|null $oldValue
+     * @param  string  $path
+     * @param  string  $key
+     * @param  string  $newValue
+     * @param  string|null  $oldValue
      * @return bool Renvoie <code>true</code> en cas de succès lors de l'écriture de la nouvelle valeur,
      *              <code>false</code> sinon.
      */
     protected function saveEnvValueToFile(string $path, string $key, string $newValue, ?string $oldValue = null): bool
     {
-        if($oldValue === null) {
+        if ($oldValue === null) {
             $oldValue = '';
         }
 
-        if(!file_exists($path)) {
+        if (! file_exists($path)) {
             return false;
         }
 
@@ -54,6 +54,6 @@ abstract class Initializer extends Command
             file_get_contents($path)
         ));
 
-        return !($success === false);
+        return ! ($success === false);
     }
 }

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Roxayl\MondeGC\Models\Presenters\SubdivisionPresenter;
 
 /**
- * Class Subdivision
+ * Class Subdivision.
  *
  * @property int $id
  * @property int|null $subdivision_type_id
@@ -26,6 +26,7 @@ use Roxayl\MondeGC\Models\Presenters\SubdivisionPresenter;
  * @property SubdivisionType|null $subdivision_type
  * @property-read SubdivisionType|null $subdivisionType
  * @property-read Pays|null $pays
+ *
  * @method static Builder|Subdivision newModelQuery()
  * @method static Builder|Subdivision newQuery()
  * @method static Builder|Subdivision query()
@@ -40,6 +41,7 @@ use Roxayl\MondeGC\Models\Presenters\SubdivisionPresenter;
  * @method static Builder|Subdivision whereDeletedAt($value)
  * @method static Builder|Subdivision withTrashed()
  * @method static Builder|Subdivision withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Subdivision extends Model
@@ -50,14 +52,14 @@ class Subdivision extends Model
     protected $table = 'subdivisions';
 
     protected $casts = [
-        'subdivision_type_id' => 'int'
+        'subdivision_type_id' => 'int',
     ];
 
     protected $fillable = [
         'subdivision_type_id',
         'name',
         'summary',
-        'content'
+        'content',
     ];
 
     /**

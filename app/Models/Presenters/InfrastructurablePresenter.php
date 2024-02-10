@@ -15,9 +15,9 @@ trait InfrastructurablePresenter
     protected function getInfrastructurableData(): array
     {
         $fieldPrimaryKey = $this->primaryKey;
+
         return [
-            'infrastructurable_type' => Infrastructure::
-                getUrlParameterFromMorph(self::class),
+            'infrastructurable_type' => Infrastructure::getUrlParameterFromMorph(self::class),
             'infrastructurable_id' => $this->$fieldPrimaryKey,
         ];
     }
@@ -30,7 +30,7 @@ trait InfrastructurablePresenter
         $data = $this->getInfrastructurableData();
         $routeParameters = [];
 
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             $routeParameters[Str::camel($key)] = $value;
         }
 
@@ -46,9 +46,10 @@ trait InfrastructurablePresenter
     {
         $params = $this->selectGroupRouteParameter();
         $params['infrastructure_groupe_id'] = $infrastructureGroupe->id;
-        if(! is_null($infrastructureOfficielle)) {
+        if (! is_null($infrastructureOfficielle)) {
             $params['infrastructure_officielle_id'] = $infrastructureOfficielle->id;
         }
+
         return $params;
     }
 

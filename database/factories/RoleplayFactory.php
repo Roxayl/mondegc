@@ -40,7 +40,6 @@ class RoleplayFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Roleplay $rp) {
-
             $type = self::$defaultOrganizerType;
 
             // Lie ce roleplay à un roleplayable par défaut.
@@ -50,10 +49,9 @@ class RoleplayFactory extends Factory
 
             // Lie ce roleplay à une organisation par défaut.
             /** @var Organisation|null $organisation */
-            if( ($organisation = Organisation::inRandomOrder()->first()) !== null) {
+            if (($organisation = Organisation::inRandomOrder()->first()) !== null) {
                 $rp->addOrganizer($organisation);
             }
-
         });
     }
 }

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class TypeGeometry
+ * Class TypeGeometry.
  *
  * @property int $id
  * @property int $group_id
@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Collection|Geometry[] $geometries
  * @property-read TypeGeometriesGroup $typeGeometriesGroup
  * @property-read int|null $geometries_count
+ *
  * @method static Builder|TypeGeometry newModelQuery()
  * @method static Builder|TypeGeometry newQuery()
  * @method static Builder|TypeGeometry query()
@@ -48,6 +49,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static Builder|TypeGeometry whereLabel($value)
  * @method static Builder|TypeGeometry whereTypeGeometrie($value)
  * @method static Builder|TypeGeometry whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class TypeGeometry extends Model
@@ -64,7 +66,7 @@ class TypeGeometry extends Model
         'coef_recherche' => 'float',
         'coef_environnement' => 'float',
         'coef_education' => 'float',
-        'coef_population' => 'float'
+        'coef_population' => 'float',
     ];
 
     protected $fillable = [
@@ -79,7 +81,7 @@ class TypeGeometry extends Model
         'coef_recherche',
         'coef_environnement',
         'coef_education',
-        'coef_population'
+        'coef_population',
     ];
 
     /**

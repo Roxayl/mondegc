@@ -20,17 +20,17 @@ class RoleplayPolicy
     /**
      * Détermine si l'utilisateur peut utiliser le système de roleplay.
      *
-     * @param CustomUser|null $user
+     * @param  CustomUser|null  $user
      * @return bool
      */
     public function display(?CustomUser $user): bool
     {
-        if(! $this->featureManager->accessible('roleplay')) {
+        if (! $this->featureManager->accessible('roleplay')) {
             return false;
         }
 
-        if($this->featureManager->accessible('roleplay-only-restricted')) {
-            if($user === null || ! $user->hasMinPermission('ocgc')) {
+        if ($this->featureManager->accessible('roleplay-only-restricted')) {
+            if ($user === null || ! $user->hasMinPermission('ocgc')) {
                 return false;
             }
         }
@@ -40,7 +40,8 @@ class RoleplayPolicy
 
     /**
      * Vérifie si un utilisateur peut créer des roleplays.
-     * @param CustomUser $user
+     *
+     * @param  CustomUser  $user
      * @return bool
      */
     public function create(CustomUser $user): bool
@@ -53,8 +54,8 @@ class RoleplayPolicy
     /**
      * Détermine s'il est possible de créer des chapitres.
      *
-     * @param CustomUser $user
-     * @param Roleplay $roleplay
+     * @param  CustomUser  $user
+     * @param  Roleplay  $roleplay
      * @return bool
      */
     public function createChapters(CustomUser $user, Roleplay $roleplay): bool
@@ -67,8 +68,8 @@ class RoleplayPolicy
     /**
      * Détermine si un utilisateur peut gérer un roleplay.
      *
-     * @param CustomUser $user
-     * @param Roleplay $roleplay
+     * @param  CustomUser  $user
+     * @param  Roleplay  $roleplay
      * @return bool
      */
     public function manage(CustomUser $user, Roleplay $roleplay): bool

@@ -22,7 +22,7 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * Class Roleplay
+ * Class Roleplay.
  *
  * @property int $id
  * @property string $name
@@ -36,8 +36,11 @@ use Spatie\Searchable\SearchResult;
  * @property CustomUser $owner
  * @property Collection|Chapter[] $chapters
  * @property Support\Carbon|null $deleted_at
+ *
  * @method static Builder|Roleplay current() Filtre sur la liste des roleplays actuels, en cours.
+ *
  * @property-read int|null $chapters_count
+ *
  * @method static RoleplayFactory factory(...$parameters)
  * @method static Builder|Roleplay newModelQuery()
  * @method static Builder|Roleplay newQuery()
@@ -55,6 +58,7 @@ use Spatie\Searchable\SearchResult;
  * @method static Builder|Roleplay whereDeletedAt($value)
  * @method static Query\Builder|Roleplay withTrashed()
  * @method static Query\Builder|Roleplay withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Roleplay extends Model implements Searchable, Enable
@@ -65,7 +69,7 @@ class Roleplay extends Model implements Searchable, Enable
     protected $table = 'roleplay';
 
     protected $casts = [
-        'user_id' => 'int'
+        'user_id' => 'int',
     ];
 
     protected $dates = [
@@ -117,7 +121,7 @@ class Roleplay extends Model implements Searchable, Enable
      */
     public function getSearchResult(): SearchResult
     {
-        if($this->isValid()) {
+        if ($this->isValid()) {
             $context = "Roleplay en cours commençant le {$this->starting_date->format('d/m/Y')}";
         } else {
             $context = "Roleplay du {$this->starting_date->format('d/m/Y')} "
@@ -137,7 +141,7 @@ class Roleplay extends Model implements Searchable, Enable
      * Filtre sur la liste des roleplays actuels, en cours.
      * Ce filtre va considérer que les roleplays terminés il y a moins de 2 jours sont toujours "actuels".
      *
-     * @param Builder $query
+     * @param  Builder  $query
      * @return Builder
      */
     public function scopeCurrent(Builder $query): Builder
@@ -167,11 +171,13 @@ class Roleplay extends Model implements Searchable, Enable
      */
     public function currentChapter(): ?Chapter
     {
-        if($this->isValid()) {
+        if ($this->isValid()) {
             /** @var Chapter|null $chapter */
             $chapter = $this->chapters()->orderBy('order', 'desc')->first();
+
             return $chapter;
         }
+
         return null;
     }
 
@@ -196,13 +202,15 @@ class Roleplay extends Model implements Searchable, Enable
 
         $roleplayOrganizers = new Collection();
 
-        foreach($query as $row) {
+        foreach ($query as $row) {
             /** @var Roleplayable|null $organizer */
             $organizer = RoleplayableFactory::find($row->organizer_type, $row->organizer_id);
 
-            if($organizer === null) continue;
+            if ($organizer === null) {
+                continue;
+            }
 
-            if(! $roleplayOrganizers->contains($organizer)) {
+            if (! $roleplayOrganizers->contains($organizer)) {
                 $roleplayOrganizers->add($organizer);
             }
         }
@@ -211,7 +219,7 @@ class Roleplay extends Model implements Searchable, Enable
     }
 
     /**
-     * @param Roleplayable $model
+     * @param  Roleplayable  $model
      * @return bool
      */
     public function hasOrganizer(Roleplayable $model): bool
@@ -220,7 +228,7 @@ class Roleplay extends Model implements Searchable, Enable
     }
 
     /**
-     * @param Support\Collection $roleplayables
+     * @param  Support\Collection  $roleplayables
      * @return bool
      */
     public function hasOrganizerAmong(Support\Collection $roleplayables): bool
@@ -229,22 +237,22 @@ class Roleplay extends Model implements Searchable, Enable
             ->where('roleplay_id', $this->id)
             ->where(function (Query\Builder $query) use ($roleplayables) {
                 /** @var Model&Roleplayable $roleplayable */
-                foreach($roleplayables as $roleplayable) {
-                    $query->orWhere(function(Query\Builder $query) use ($roleplayable) {
+                foreach ($roleplayables as $roleplayable) {
+                    $query->orWhere(function (Query\Builder $query) use ($roleplayable) {
                         $query->where('organizer_type', $roleplayable->getMorphClass())
                               ->where('organizer_id', $roleplayable->getKey());
                     });
                 }
             });
 
-        if(self::$memoizeRoleplayables) {
+        if (self::$memoizeRoleplayables) {
             $hash = sha1($query->toSql());
 
-            if(self::$roleplayableHashes === null) {
+            if (self::$roleplayableHashes === null) {
                 self::$roleplayableHashes = collect();
             }
 
-            if(! self::$roleplayableHashes->has($hash)) {
+            if (! self::$roleplayableHashes->has($hash)) {
                 $hasOrganizer = $query->get()->isNotEmpty();
                 self::$roleplayableHashes->put($hash, $hasOrganizer);
             }
@@ -256,12 +264,12 @@ class Roleplay extends Model implements Searchable, Enable
     }
 
     /**
-     * @param Roleplayable $model
+     * @param  Roleplayable  $model
      * @return bool
      */
     public function addOrganizer(Roleplayable $model): bool
     {
-        if($this->hasOrganizer($model)) {
+        if ($this->hasOrganizer($model)) {
             return false;
         }
 
@@ -277,12 +285,12 @@ class Roleplay extends Model implements Searchable, Enable
     }
 
     /**
-     * @param Roleplayable $model
+     * @param  Roleplayable  $model
      * @return bool
      */
     public function removeOrganizer(Roleplayable $model): bool
     {
-        if(! $this->hasOrganizer($model)) {
+        if (! $this->hasOrganizer($model)) {
             return false;
         }
 
@@ -307,7 +315,7 @@ class Roleplay extends Model implements Searchable, Enable
     {
         parent::boot();
 
-        static::creating(function(Roleplay $roleplay): void {
+        static::creating(function (Roleplay $roleplay): void {
             $roleplay->starting_date = now();
             $roleplay->ending_date = null;
         });

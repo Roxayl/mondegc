@@ -16,7 +16,7 @@ trait OrganisationPresenter
 
     public function getFlag(): string
     {
-        return (string)$this->flag;
+        return (string) $this->flag;
     }
 
     public function getName(): string

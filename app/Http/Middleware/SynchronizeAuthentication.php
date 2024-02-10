@@ -20,7 +20,7 @@ class SynchronizeAuthentication
         if (session()->has('userLegacyId') && auth()->guest()) {
             $userLegacyId = session('userLegacyId');
             auth()->loginUsingId($userLegacyId);
-        } elseif (!session()->has('userLegacyId')) {
+        } elseif (! session()->has('userLegacyId')) {
             auth()->logout();
         }
 

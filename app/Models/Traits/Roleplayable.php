@@ -28,7 +28,7 @@ trait Roleplayable
      */
     public function roleplayResources(): array
     {
-        if(! Features::accessible('roleplay')) {
+        if (! Features::accessible('roleplay')) {
             return EconomyService::resourcesPrefilled();
         }
 

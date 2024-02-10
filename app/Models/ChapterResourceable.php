@@ -19,7 +19,7 @@ use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
 use Roxayl\MondeGC\Services\EconomyService;
 
 /**
- * Class ChapterResourceable
+ * Class ChapterResourceable.
  *
  * @property int $id
  * @property int $chapter_id
@@ -41,6 +41,7 @@ use Roxayl\MondeGC\Services\EconomyService;
  * @property Resourceable $resourceable
  * @property-read Collection|Influence[] $influences
  * @property-read int|null $influences_count
+ *
  * @method static ChapterResourceableFactory factory(...$parameters)
  * @method static Builder|ChapterResourceable newModelQuery()
  * @method static Builder|ChapterResourceable newQuery()
@@ -60,6 +61,7 @@ use Roxayl\MondeGC\Services\EconomyService;
  * @method static Builder|ChapterResourceable whereDescription($value)
  * @method static Builder|ChapterResourceable whereTourisme($value)
  * @method static Builder|ChapterResourceable whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class ChapterResourceable extends Model implements Influencable
@@ -123,7 +125,7 @@ class ChapterResourceable extends Model implements Influencable
     public function resources(): array
     {
         $sumResources = EconomyService::resourcesPrefilled();
-        foreach(Resource::cases() as $resource) {
+        foreach (Resource::cases() as $resource) {
             $sumResources[$resource->value] += $this->{$resource->value};
         }
 
@@ -131,7 +133,7 @@ class ChapterResourceable extends Model implements Influencable
     }
 
     /**
-     * @param Chapter $chapter
+     * @param  Chapter  $chapter
      */
     public function setChapter(Chapter $chapter): void
     {
@@ -140,7 +142,8 @@ class ChapterResourceable extends Model implements Influencable
     }
 
     /**
-     * @param Resourceable|Roleplayable $resourceable
+     * @param  Resourceable|Roleplayable  $resourceable
+     *
      * @todo Ségréger les interfaces Resourceable et Roleplayable, car pour le moment, ça n'a pas bcp de sens...
      */
     public function setResourceable(Resourceable|Roleplayable $resourceable): void
@@ -162,8 +165,8 @@ class ChapterResourceable extends Model implements Influencable
         $resources = $this->resources();
 
         $influence = new Influence;
-        $influence->influencable_type      = $influencableType;
-        $influence->influencable_id        = $this->id;
+        $influence->influencable_type = $influencableType;
+        $influence->influencable_id = $this->id;
         $influence->generates_influence_at = $this->created_at;
         $influence->fill($resources)
             ->save();
@@ -179,17 +182,17 @@ class ChapterResourceable extends Model implements Influencable
         parent::boot();
 
         // Générer les influences à la création du modèle.
-        static::created(function(ChapterResourceable $chapterResourceable): void {
+        static::created(function (ChapterResourceable $chapterResourceable): void {
             $chapterResourceable->generateInfluence();
         });
 
         // Regénérer les influences à la modification du modèle.
-        static::updated(function(ChapterResourceable $chapterResourceable): void {
+        static::updated(function (ChapterResourceable $chapterResourceable): void {
             $chapterResourceable->generateInfluence();
         });
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function(ChapterResourceable $chapterResourceable): void {
+        static::deleting(function (ChapterResourceable $chapterResourceable): void {
             $chapterResourceable->deleteInfluences();
         });
     }

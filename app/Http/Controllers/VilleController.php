@@ -13,7 +13,7 @@ use Roxayl\MondeGC\Services\VersionDiffService;
 class VilleController extends Controller
 {
     /**
-     * @param Ville $ville
+     * @param  Ville  $ville
      * @return View
      */
     public function history(Ville $ville): View
@@ -33,9 +33,9 @@ class VilleController extends Controller
     /**
      * Compare deux versions d'une ville.
      *
-     * @param VersionDiffService $diffService
-     * @param Version $version1
-     * @param Version|null $version2
+     * @param  VersionDiffService  $diffService
+     * @param  Version  $version1
+     * @param  Version|null  $version2
      * @return View
      */
     public function diff(VersionDiffService $diffService, Version $version1, ?Version $version2 = null): View
@@ -45,7 +45,7 @@ class VilleController extends Controller
         /** @var Ville $model1 */
         /** @var Ville $model2 */
         $model1 = $version1->getModel();
-        if($version2 === null) {
+        if ($version2 === null) {
             $model2 = new ($model1::class);
         } else {
             $model2 = $version2->getModel();

@@ -11,7 +11,7 @@ class AuthenticateApi
     /**
      * Handle an incoming request.
      *
-     * @param  Request   $request
+     * @param  Request  $request
      * @param  \Closure  $next
      * @return mixed
      */
@@ -19,11 +19,11 @@ class AuthenticateApi
     {
         $requestToken = $request->bearerToken();
 
-        if($requestToken !== config('scribe.auth.use_value')) {
+        if ($requestToken !== config('scribe.auth.use_value')) {
             /** @noinspection PhpParamsInspection */
             return app(Authenticate::class)->handle(
                 $request,
-                function(Request $request) use ($next) {
+                function (Request $request) use ($next) {
                     return $next($request);
                 },
                 'api');

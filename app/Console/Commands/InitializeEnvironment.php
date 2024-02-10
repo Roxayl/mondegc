@@ -31,8 +31,9 @@ class InitializeEnvironment extends Initializer
     public function handle(): int
     {
         // Vérifier que les conditions d'exécution du script d'initialisation sont ok.
-        if(File::exists('.env')) {
+        if (File::exists('.env')) {
             $this->error("Vous ne pouvez pas initialiser l'application car un fichier .env existe déjà.");
+
             return 1;
         }
 
@@ -63,7 +64,7 @@ class InitializeEnvironment extends Initializer
 
     private function generateLegacyHashKey(): void
     {
-        $this->line("Génération de la clé de hachage (legacy) : LEGACY_SALT");
+        $this->line('Génération de la clé de hachage (legacy) : LEGACY_SALT');
 
         $path = base_path('.env');
         $salt = Str::random(32);

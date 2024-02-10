@@ -10,7 +10,7 @@ use Roxayl\MondeGC\Services\LegacyPageService;
 class MapController extends Controller
 {
     /**
-     * @param LegacyPageService $legacyPageService
+     * @param  LegacyPageService  $legacyPageService
      * @return View
      */
     public function explore(LegacyPageService $legacyPageService): View

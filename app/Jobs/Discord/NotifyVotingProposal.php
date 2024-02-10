@@ -40,7 +40,7 @@ class NotifyVotingProposal implements ShouldQueue, NotifiesDiscord
         $content = "**VOTE EN COURS !**\r\n"
             . "Une proposition est en cours de vote à l'Assemblée générale !";
 
-        if(! empty($roleId = config('discord.role.players'))) {
+        if (! empty($roleId = config('discord.role.players'))) {
             $content .= "\r\n<@&$roleId>";
         }
 
@@ -61,32 +61,32 @@ class NotifyVotingProposal implements ShouldQueue, NotifiesDiscord
                     ],
                     'color' => hexdec('234067'),
                     'footer' => [
-                        'text' => "Le Monde GC",
-                        'icon_url' => "https://generation-city.com/monde/assets/ico/apple-touch-icon-72-precomposed.png",
+                        'text' => 'Le Monde GC',
+                        'icon_url' => 'https://generation-city.com/monde/assets/ico/apple-touch-icon-72-precomposed.png',
                     ],
                     'fields' => [
                         [
-                            "name" => "Identifiant",
-                            "value" => $this->proposal->fullIdentifier(),
-                            "inline" => true,
+                            'name' => 'Identifiant',
+                            'value' => $this->proposal->fullIdentifier(),
+                            'inline' => true,
                         ],
                         [
-                            "name" => "Créée par",
-                            "value" => $this->proposal->pays ? $this->proposal->pays->ch_pay_nom : "Pays inconnu",
-                            "inline" => true,
+                            'name' => 'Créée par',
+                            'value' => $this->proposal->pays ? $this->proposal->pays->ch_pay_nom : 'Pays inconnu',
+                            'inline' => true,
                         ],
                         [
-                            "name" => "Date limite de vote",
-                            "value" => $this->proposal->debate_end->format('d/m/Y à H:i'),
-                            "inline" => false,
+                            'name' => 'Date limite de vote',
+                            'value' => $this->proposal->debate_end->format('d/m/Y à H:i'),
+                            'inline' => false,
                         ],
                         [
-                            "name" => "Modalités",
-                            "value" => $this->proposal->responses()->implode(",\r\n"),
-                            "inline" => false,
+                            'name' => 'Modalités',
+                            'value' => $this->proposal->responses()->implode(",\r\n"),
+                            'inline' => false,
                         ],
-                    ]
-                ]
+                    ],
+                ],
             ],
         ];
     }

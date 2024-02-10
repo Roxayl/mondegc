@@ -12,12 +12,12 @@ use Roxayl\MondeGC\Models\Repositories\Resource;
 class ResourceController extends Controller
 {
     /**
-     * /resource
+     * /resource.
      *
      * Ressources générées par les entités.
      *
-     * @param Request $request
-     * @param string $type
+     * @param  Request  $request
+     * @param  string  $type
      * @return ResourceCollection
      *
      * @urlParam  type  string required  Type de l'entité générant des ressources. Prend les valeurs "ville", "pays",

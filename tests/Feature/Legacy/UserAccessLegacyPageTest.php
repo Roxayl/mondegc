@@ -30,7 +30,7 @@ class UserAccessLegacyPageTest extends AccessLegacyPage
         $_SERVER['QUERY_STRING'] = '';
 
         // Se connecter avec le premier utilisateur, administrateur.
-        require_once(base_path('legacy/php/init/legacy_init.php'));
+        require_once base_path('legacy/php/init/legacy_init.php');
         $this->user = CustomUser::query()->first();
         $this->assertNotNull($this->user);
         $this->actingAs($this->user);
@@ -44,7 +44,7 @@ class UserAccessLegacyPageTest extends AccessLegacyPage
     public function testAccessIndexPage(): void
     {
         $this->assertAuthenticated();
-        $this->markTestIncomplete("Ce test ne fonctionne pas pour le moment.");
+        $this->markTestIncomplete('Ce test ne fonctionne pas pour le moment.');
 
         // $this->assertAccessLegacyPage('index');
     }
@@ -55,7 +55,7 @@ class UserAccessLegacyPageTest extends AccessLegacyPage
     public function testAccessDashboardPage(): void
     {
         $this->assertAuthenticated();
-        $this->markTestIncomplete("Ce test ne fonctionne pas pour le moment.");
+        $this->markTestIncomplete('Ce test ne fonctionne pas pour le moment.');
 
         // $this->assertAccessLegacyPage('dashboard');
     }
@@ -66,7 +66,7 @@ class UserAccessLegacyPageTest extends AccessLegacyPage
     public function testAccessOcgcProposalCreatePage(): void
     {
         $this->assertAuthenticated();
-        $this->markTestIncomplete("Ce test ne fonctionne pas pour le moment.");
+        $this->markTestIncomplete('Ce test ne fonctionne pas pour le moment.');
 
         // $this->assertAccessLegacyPage('back.ocgc_proposal_create');
     }
@@ -79,7 +79,7 @@ class UserAccessLegacyPageTest extends AccessLegacyPage
         $pays = $this->user->pays->first();
 
         $this->assertAuthenticated();
-        $this->markTestIncomplete("Ce test ne fonctionne pas pour le moment.");
+        $this->markTestIncomplete('Ce test ne fonctionne pas pour le moment.');
 
         /* $this->assertAccessLegacyPage(
             page: 'back.page_pays_back',

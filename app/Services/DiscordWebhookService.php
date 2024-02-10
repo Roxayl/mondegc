@@ -12,7 +12,7 @@ class DiscordWebhookService
     private string $webhookUrl;
 
     /**
-     * @param string $webhookUrl
+     * @param  string  $webhookUrl
      */
     public function __construct(string $webhookUrl)
     {
@@ -22,7 +22,7 @@ class DiscordWebhookService
     /**
      * Envoie un message à travers le webhook.
      *
-     * @param array $payload
+     * @param  array  $payload
      */
     public function sendMessage(array $payload): void
     {
@@ -62,84 +62,84 @@ class DiscordWebhookService
      */
     public function getExamplePayload(): array
     {
-        $timestamp = date("c", strtotime("now"));
+        $timestamp = date('c', strtotime('now'));
 
         return [
             // Message (formatable as Markdown : https://discordapp.com/developers/docs/reference#message-formatting)
-            "content" => "Hello World!",
+            'content' => 'Hello World!',
 
             // Username
-            "username" => "Le Monde GC",
+            'username' => 'Le Monde GC',
 
             // Avatar URL.
             // "avatar_url" => "",
 
             // Text-to-speech
-            "tts" => false,
+            'tts' => false,
 
             // File upload
             // "file" => "",
 
             // Embeds Array
-            "embeds" => [
+            'embeds' => [
                 [
                     // Embed Title
-                    "title" => "PHP - Send message to Discord (embeds) via Webhook",
+                    'title' => 'PHP - Send message to Discord (embeds) via Webhook',
 
                     // Embed Type
-                    "type" => "rich",
+                    'type' => 'rich',
 
                     // Embed Description
-                    "description" => "Hello world!",
+                    'description' => 'Hello world!',
 
                     // URL of title link
-                    "url" => "https://gist.github.com/Mo45/cb0813cb8a6ebcd6524f6a36d4f8862c",
+                    'url' => 'https://gist.github.com/Mo45/cb0813cb8a6ebcd6524f6a36d4f8862c',
 
                     // Timestamp of embed must be formatted as ISO8601
-                    "timestamp" => $timestamp,
+                    'timestamp' => $timestamp,
 
                     // Embed left border color in HEX
-                    "color" => hexdec("3366ff"),
+                    'color' => hexdec('3366ff'),
 
                     // Footer
-                    "footer" => [
-                        "text" => "GitHub.com/Mo45",
-                        "icon_url" => "https://ru.gravatar.com/userimage/28503754/1168e2bddca84fec2a63addb348c571d.jpg?size=375"
+                    'footer' => [
+                        'text' => 'GitHub.com/Mo45',
+                        'icon_url' => 'https://ru.gravatar.com/userimage/28503754/1168e2bddca84fec2a63addb348c571d.jpg?size=375',
                     ],
 
                     // Image to send
-                    "image" => [
-                        "url" => "https://ru.gravatar.com/userimage/28503754/1168e2bddca84fec2a63addb348c571d.jpg?size=600"
+                    'image' => [
+                        'url' => 'https://ru.gravatar.com/userimage/28503754/1168e2bddca84fec2a63addb348c571d.jpg?size=600',
                     ],
 
                     // Thumbnail
-                    "thumbnail" => [
-                        "url" => "https://ru.gravatar.com/userimage/28503754/1168e2bddca84fec2a63addb348c571d.jpg?size=400",
+                    'thumbnail' => [
+                        'url' => 'https://ru.gravatar.com/userimage/28503754/1168e2bddca84fec2a63addb348c571d.jpg?size=400',
                     ],
 
                     // Author
-                    "author" => [
-                        "name" => "krasin.space",
-                        "url" => "https://krasin.space/"
+                    'author' => [
+                        'name' => 'krasin.space',
+                        'url' => 'https://krasin.space/',
                     ],
 
                     // Additional Fields array
-                    "fields" => [
+                    'fields' => [
                         // Field 1
                         [
-                            "name" => "Field #1 Name",
-                            "value" => "Field #1 Value",
-                            "inline" => false
+                            'name' => 'Field #1 Name',
+                            'value' => 'Field #1 Value',
+                            'inline' => false,
                         ],
                         // Field 2
                         [
-                            "name" => "Field #2 Name",
-                            "value" => "Field #2 Value",
-                            "inline" => true
-                        ]
-                    ]
-                ]
-            ]
+                            'name' => 'Field #2 Name',
+                            'value' => 'Field #2 Value',
+                            'inline' => true,
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 

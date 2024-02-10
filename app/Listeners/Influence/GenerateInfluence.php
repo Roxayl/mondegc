@@ -11,7 +11,7 @@ class GenerateInfluence
     /**
      * Handle the event.
      *
-     * @param InfluencableEvent $event
+     * @param  InfluencableEvent  $event
      */
     public function handle(InfluencableEvent $event): void
     {

@@ -13,15 +13,15 @@ class SendInfraJudgementNotification
     /**
      * Handle the event.
      *
-     * @param InfrastructureJudged $event
+     * @param  InfrastructureJudged  $event
      */
     public function handle(InfrastructureJudged $event): void
     {
         $infrastructure = $event->infrastructure;
         $infrastructurable = $infrastructure->infrastructurable;
 
-        if( $infrastructure->ch_inf_statut === $infrastructure::JUGEMENT_PENDING
-          || is_null($infrastructurable) ) {
+        if ($infrastructure->ch_inf_statut === $infrastructure::JUGEMENT_PENDING
+          || is_null($infrastructurable)) {
             return;
         }
 

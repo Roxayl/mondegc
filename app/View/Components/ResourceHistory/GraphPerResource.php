@@ -14,16 +14,16 @@ use Roxayl\MondeGC\Models\ResourceHistory;
 class GraphPerResource extends Graph
 {
     /**
-     * @param Collection<int, Resourceable> $resourceables
-     * @param string $resourceName
-     * @param Carbon|null $startDate
-     * @param Carbon|null $endDate
+     * @param  Collection<int, Resourceable>  $resourceables
+     * @param  string  $resourceName
+     * @param  Carbon|null  $startDate
+     * @param  Carbon|null  $endDate
      */
     public function __construct(
         public Collection $resourceables,
-        public string     $resourceName,
-        public ?Carbon    $startDate = null,
-        public ?Carbon    $endDate = null
+        public string $resourceName,
+        public ?Carbon $startDate = null,
+        public ?Carbon $endDate = null
     ) {
         $this->chartData = $this->generateChartData();
     }
@@ -44,9 +44,9 @@ class GraphPerResource extends Graph
     public function render(): View
     {
         return view('blocks.resource-graph', [
-            'chartData'    => $this->chartData,
+            'chartData' => $this->chartData,
             'resourceName' => $this->resourceName,
-            'graphId'      => $this->graphId,
+            'graphId' => $this->graphId,
         ]);
     }
 
@@ -57,12 +57,12 @@ class GraphPerResource extends Graph
     {
         $datasets = [];
 
-        foreach($this->resourceables as $resourceable) {
+        foreach ($this->resourceables as $resourceable) {
             $dataset = [
                 'label' => Str::limit($resourceable->getName(), 25),
                 'data' => [],
                 'fill' => false,
-                'borderColor' => '#' . $this->generateColorHex()
+                'borderColor' => '#' . $this->generateColorHex(),
             ];
 
             $resourceableEntries = ResourceHistory::forResourceable($resourceable)
@@ -70,7 +70,7 @@ class GraphPerResource extends Graph
                 ->get();
 
             /** @var ResourceHistory $entry */
-            foreach($resourceableEntries as $entry) {
+            foreach ($resourceableEntries as $entry) {
                 $dataset['data'][] = [
                     'x' => $entry->created_date,
                     'y' => $entry->{$this->resourceName},

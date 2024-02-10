@@ -16,8 +16,8 @@ class ChapterResourceablePolicy
     /**
      * Détermine si l'utilisateur peut assigner des ressources à une entité ressourçeable dans le cadre d'un roleplay.
      *
-     * @param CustomUser $user
-     * @param ChapterResourceable $resourceable
+     * @param  CustomUser  $user
+     * @param  ChapterResourceable  $resourceable
      * @return bool
      */
     public function create(CustomUser $user, ChapterResourceable $resourceable): bool
@@ -29,8 +29,8 @@ class ChapterResourceablePolicy
      * Détermine si l'utilisateur peut modifier ou supprimer l'assignation de ressources à une entité ressourçeable
      * dans le cadre d'un roleplay.
      *
-     * @param CustomUser $user
-     * @param ChapterResourceable $resourceable
+     * @param  CustomUser  $user
+     * @param  ChapterResourceable  $resourceable
      * @return bool
      */
     public function manage(CustomUser $user, ChapterResourceable $resourceable): bool

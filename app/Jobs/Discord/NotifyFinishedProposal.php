@@ -39,7 +39,7 @@ class NotifyFinishedProposal implements ShouldQueue, NotifiesDiscord
     {
         return [
             'content' => "**VOTE TERMINÉ !**\r\n"
-                . "La procédure de vote de cette proposition est terminée.",
+                . 'La procédure de vote de cette proposition est terminée.',
             'embeds' => [
                 [
                     'title' => trim(Str::limit($this->proposal->question, 120)),
@@ -55,32 +55,32 @@ class NotifyFinishedProposal implements ShouldQueue, NotifiesDiscord
                     ],
                     'color' => hexdec('234067'),
                     'footer' => [
-                        'text' => "Le Monde GC",
-                        'icon_url' => "https://generation-city.com/monde/assets/ico/apple-touch-icon-72-precomposed.png",
+                        'text' => 'Le Monde GC',
+                        'icon_url' => 'https://generation-city.com/monde/assets/ico/apple-touch-icon-72-precomposed.png',
                     ],
                     'fields' => [
                         [
-                            "name" => "Identifiant",
-                            "value" => $this->proposal->fullIdentifier(),
-                            "inline" => true,
+                            'name' => 'Identifiant',
+                            'value' => $this->proposal->fullIdentifier(),
+                            'inline' => true,
                         ],
                         [
-                            "name" => "Créée par",
-                            "value" => $this->proposal->pays ? $this->proposal->pays->ch_pay_nom : "Pays inconnu",
-                            "inline" => true,
+                            'name' => 'Créée par',
+                            'value' => $this->proposal->pays ? $this->proposal->pays->ch_pay_nom : 'Pays inconnu',
+                            'inline' => true,
                         ],
                         [
-                            "name" => "Votée le",
-                            "value" => $this->proposal->debate_end->format('d/m/Y'),
-                            "inline" => false,
+                            'name' => 'Votée le',
+                            'value' => $this->proposal->debate_end->format('d/m/Y'),
+                            'inline' => false,
                         ],
                         [
-                            "name" => "Résultat",
-                            "value" => $this->proposal->results()->pluck('intitule')->implode(",\r\n"),
-                            "inline" => false,
+                            'name' => 'Résultat',
+                            'value' => $this->proposal->results()->pluck('intitule')->implode(",\r\n"),
+                            'inline' => false,
                         ],
-                    ]
-                ]
+                    ],
+                ],
             ],
         ];
     }

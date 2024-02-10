@@ -50,7 +50,7 @@ class RoleplayController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse
@@ -68,7 +68,7 @@ class RoleplayController extends Controller
 
         /** @var Roleplayable|null $organizer */
         $organizer = RoleplayableFactory::find($request->input('type'), (int) $request->input('id'));
-        if(! $organizer) {
+        if (! $organizer) {
             throw ValidationException::withMessages(["Cette entité n'existe pas."]);
         }
         $roleplay->addOrganizer($organizer);
@@ -82,7 +82,7 @@ class RoleplayController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Roleplay $roleplay
+     * @param  Roleplay  $roleplay
      * @return View
      */
     public function edit(Roleplay $roleplay): View
@@ -95,8 +95,8 @@ class RoleplayController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param Roleplay $roleplay
+     * @param  Request  $request
+     * @param  Roleplay  $roleplay
      * @return RedirectResponse
      */
     public function update(Request $request, Roleplay $roleplay): RedirectResponse
@@ -115,7 +115,7 @@ class RoleplayController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Roleplay $roleplay
+     * @param  Roleplay  $roleplay
      * @return View
      */
     public function show(Roleplay $roleplay): View
@@ -130,7 +130,7 @@ class RoleplayController extends Controller
     /**
      * Affiche la page de confirmation de la suppression de roleplay.
      *
-     * @param Roleplay $roleplay
+     * @param  Roleplay  $roleplay
      * @return View
      */
     public function delete(Roleplay $roleplay): View
@@ -143,7 +143,7 @@ class RoleplayController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Roleplay $roleplay
+     * @param  Roleplay  $roleplay
      * @return RedirectResponse
      */
     public function destroy(Roleplay $roleplay): RedirectResponse
@@ -157,7 +157,7 @@ class RoleplayController extends Controller
     }
 
     /**
-     * @param Roleplay $roleplay
+     * @param  Roleplay  $roleplay
      * @return View
      */
     public function confirmClose(Roleplay $roleplay): View
@@ -168,7 +168,7 @@ class RoleplayController extends Controller
     }
 
     /**
-     * @param Roleplay $roleplay
+     * @param  Roleplay  $roleplay
      * @return RedirectResponse
      */
     public function close(Roleplay $roleplay): RedirectResponse
@@ -186,22 +186,22 @@ class RoleplayController extends Controller
     /**
      * Renvoie les résultats d'une recherche de roleplayables, pour l'interface d'ajout d'organisateurs de roleplay.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return JsonResponse
      */
     public function roleplayables(Request $request): JsonResponse
     {
         $this->authorize('display', Roleplay::class);
 
-        $type   = $request->input('type') ?? '';
-        $term   = $request->input('term');
+        $type = $request->input('type') ?? '';
+        $term = $request->input('term');
 
         $roleplayables = RoleplayableFactory::list($type, $term);
 
         $result = [];
-        foreach($roleplayables as $roleplayable) {
+        foreach ($roleplayables as $roleplayable) {
             $result[] = [
-                'id'    => $roleplayable->getKey(),
+                'id' => $roleplayable->getKey(),
                 'value' => $roleplayable->getKey(),
                 'label' => $roleplayable->getName(),
             ];
@@ -213,8 +213,8 @@ class RoleplayController extends Controller
     /**
      * Donne le contenu HTML du bloc listant les organisateurs du roleplay.
      *
-     * @param Roleplay $roleplay
-     * @param StringBladeService $stringBlade
+     * @param  Roleplay  $roleplay
+     * @param  StringBladeService  $stringBlade
      * @return Response
      */
     public function organizers(Roleplay $roleplay, StringBladeService $stringBlade): Response
@@ -233,8 +233,8 @@ class RoleplayController extends Controller
     /**
      * Affiche l'interface de gestion des organisateurs de roleplay.
      *
-     * @param Roleplay $roleplay
-     * @param StringBladeService $stringBlade
+     * @param  Roleplay  $roleplay
+     * @param  StringBladeService  $stringBlade
      * @return Response
      */
     public function manageOrganizers(Roleplay $roleplay, StringBladeService $stringBlade): Response
@@ -253,8 +253,8 @@ class RoleplayController extends Controller
     /**
      * Affiche l'interface d'ajout d'organisateurs de roleplay.
      *
-     * @param Roleplay $roleplay
-     * @param StringBladeService $stringBlade
+     * @param  Roleplay  $roleplay
+     * @param  StringBladeService  $stringBlade
      * @return Response
      */
     public function addOrganizer(Roleplay $roleplay, StringBladeService $stringBlade): Response
@@ -273,8 +273,8 @@ class RoleplayController extends Controller
     /**
      * Ajoute un organisateur à un roleplay, et redirige vers la page du roleplay.
      *
-     * @param Roleplay $roleplay
-     * @param Request $request
+     * @param  Roleplay  $roleplay
+     * @param  Request  $request
      * @return RedirectResponse
      */
     public function createOrganizer(Roleplay $roleplay, Request $request): RedirectResponse
@@ -283,21 +283,21 @@ class RoleplayController extends Controller
 
         $roleplayable = RoleplayableSelector::createRoleplayableFromForm($request);
 
-        if($roleplay->hasOrganizer($roleplayable)) {
+        if ($roleplay->hasOrganizer($roleplayable)) {
             throw ValidationException::withMessages(["C'est déjà un organisateur de ce roleplay."]);
         }
 
         $roleplay->addOrganizer($roleplayable);
 
         return redirect()->route('roleplay.show', $roleplay)
-            ->with('message', "success|Cet organisateur a été ajouté avec succès.");
+            ->with('message', 'success|Cet organisateur a été ajouté avec succès.');
     }
 
     /**
      * Supprime un organisateur du roleplay, et redirige vers la page du roleplay.
      *
-     * @param Roleplay $roleplay
-     * @param Request $request
+     * @param  Roleplay  $roleplay
+     * @param  Request  $request
      * @return RedirectResponse
      */
     public function removeOrganizer(Roleplay $roleplay, Request $request): RedirectResponse
@@ -306,17 +306,17 @@ class RoleplayController extends Controller
 
         $roleplayable = RoleplayableSelector::createRoleplayableFromForm($request);
 
-        if(! $roleplay->hasOrganizer($roleplayable)) {
+        if (! $roleplay->hasOrganizer($roleplayable)) {
             throw ValidationException::withMessages(["Ce n'est pas un organisateur de ce roleplay."]);
         }
 
-        if($roleplay->organizers()->count() <= 1) {
-            throw ValidationException::withMessages(["Il doit y avoir au moins un organisateur."]);
+        if ($roleplay->organizers()->count() <= 1) {
+            throw ValidationException::withMessages(['Il doit y avoir au moins un organisateur.']);
         }
 
         $roleplay->removeOrganizer($roleplayable);
 
         return redirect()->route('roleplay.show', $roleplay)
-            ->with('message', "success|Cet organisateur a été retiré avec succès.");
+            ->with('message', 'success|Cet organisateur a été retiré avec succès.');
     }
 }

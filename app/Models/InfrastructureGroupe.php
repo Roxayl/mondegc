@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * Class InfrastructureGroupe
+ * Class InfrastructureGroupe.
  *
  * @property int $id
  * @property string|null $nom_groupe
@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property Carbon $created
  * @property-read Collection<int, InfrastructureOfficielle> $infrastructuresOfficielles
  * @property-read int|null $infrastructures_officielles_count
+ *
  * @method static Builder|InfrastructureGroupe newModelQuery()
  * @method static Builder|InfrastructureGroupe newQuery()
  * @method static Builder|InfrastructureGroupe query()
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static Builder|InfrastructureGroupe whereNomGroupe($value)
  * @method static Builder|InfrastructureGroupe whereOrder($value)
  * @method static Builder|InfrastructureGroupe whereUrlImage($value)
+ *
  * @mixin \Eloquent
  */
 class InfrastructureGroupe extends Model
@@ -34,18 +36,18 @@ class InfrastructureGroupe extends Model
     public $timestamps = false;
 
     protected $casts = [
-        'order' => 'int'
+        'order' => 'int',
     ];
 
     protected $dates = [
-        'created'
+        'created',
     ];
 
     protected $fillable = [
         'nom_groupe',
         'url_image',
         'order',
-        'created'
+        'created',
     ];
 
     /**

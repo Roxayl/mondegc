@@ -20,6 +20,7 @@ interface Influencable extends Enable
 
     /**
      * Obtient les ressources générées au moment actuel, par l'influencable.
+     *
      * @return Collection Collection contenant les ressources générées par l'influencable.
      */
     public function getGeneratedResources(): Collection;
@@ -27,6 +28,7 @@ interface Influencable extends Enable
     /**
      * Obtient les ressources générées par l'influencable, en prenant en compte l'ensemble
      * des influences créées.
+     *
      * @return Collection Collection contenant les ressources générées par l'influencable.
      */
     public function getFinalResources(): Collection;
@@ -34,8 +36,9 @@ interface Influencable extends Enable
     /**
      * Supprime les anciennes entrées dans la table 'influences', lorsqu'on veut générer
      * à nouveau l'influence d'un influencable, par exemple.
-     * @param \Closure $f Fonction de vérification, qui doit renvoyer 'true' lorsque les
-     *                    influences peuvent être supprimées.
+     *
+     * @param  \Closure  $f  Fonction de vérification, qui doit renvoyer 'true' lorsque les
+     *                       influences peuvent être supprimées.
      * @return bool Renvoie <code>true</code> lorsque les influences ont été supprimées ;
      *              <code>false</code> sinon.
      */
@@ -43,6 +46,7 @@ interface Influencable extends Enable
 
     /**
      * Donne le rendement actuel, en pourcentage, de l'influencable actuel.
+     *
      * @return int Taux de rendement sur 100.
      */
     public function efficiencyRate(): int;
