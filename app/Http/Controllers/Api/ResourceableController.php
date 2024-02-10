@@ -15,12 +15,12 @@ use Roxayl\MondeGC\Models\Repositories\Resourceable;
 class ResourceableController extends Controller
 {
     /**
-     * /resourceable
+     * /resourceable.
      *
      * Liste d'entités générant des ressources.
      *
-     * @param Request $request
-     * @param string $type
+     * @param  Request  $request
+     * @param  string  $type
      * @return ResourceCollection
      *
      * @urlParam  type  string required  Type de l'entité générant des ressources. Prend les valeurs "ville", "pays",

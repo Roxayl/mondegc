@@ -33,7 +33,6 @@ interface Infrastructurable extends Enable
      */
     public function deleteAllInfrastructures(): void;
 
-
     /* ===================================
      *  Méthodes définies dans le trait InfrastructurablePresenter.
      * =================================== */
@@ -50,13 +49,14 @@ interface Infrastructurable extends Enable
      * Donne les paramètres dans l'URL pour la route 'infrastructure.create' pour un modèle
      * {@see Infrastructurable} donné.
      * Il est nécessaire de spécifier un groupe d'infrastructure {@see InfrastructureGroupe},
-     * et il est possible de définir l'infrastructure officielle
+     * et il est possible de définir l'infrastructure officielle.
      *
      * {@see InfrastructureOfficielle} sélectionnée, le cas échéant.
-     * @param InfrastructureGroupe $infrastructureGroupe Groupe d'infrastructure choisi.
-     * @param InfrastructureOfficielle|null $infrastructureOfficielle Infrastructure
-     *        officielle sélectionnée. Facultatif si l'utilisateur n'a pas choisi d'infra
-     *        officielle.
+     *
+     * @param  InfrastructureGroupe  $infrastructureGroupe  Groupe d'infrastructure choisi.
+     * @param  InfrastructureOfficielle|null  $infrastructureOfficielle  Infrastructure
+     *                                                                   officielle sélectionnée. Facultatif si l'utilisateur n'a pas choisi d'infra
+     *                                                                   officielle.
      * @return array Un array contenant les paramètres de la route.
      */
     public function createRouteParameter(
@@ -66,13 +66,13 @@ interface Infrastructurable extends Enable
 
     public function getType(): string;
 
-
     /* ===================================
      *  Méthodes définies dans les presenters des modèles.
      * =================================== */
 
     /**
      * Donne le lien d'accès vers l'infrastructurable désigné.
+     *
      * @return string URL vers la page de présentation de l'infrastructurable.
      */
     public function accessorUrl(): string;
@@ -82,7 +82,6 @@ interface Infrastructurable extends Enable
     public function getFlag(): string;
 
     public function getName(): string;
-
 
     /* ===================================
      *  Méthodes définies dans les modèles.

@@ -14,7 +14,7 @@ use Roxayl\MondeGC\View\Components;
 use Roxayl\MondeGC\View\Components\ChapterEntry\BaseMediaEntry;
 
 /**
- * Class ChapterEntry
+ * Class ChapterEntry.
  *
  * @property int $id
  * @property int $chapter_id
@@ -29,6 +29,7 @@ use Roxayl\MondeGC\View\Components\ChapterEntry\BaseMediaEntry;
  * @property Carbon|null $updated_at
  * @property-read Chapter $chapter
  * @property-read (Model|\Eloquent)&Roleplayable $roleplayable
+ *
  * @method static Builder|ChapterEntry newModelQuery()
  * @method static Builder|ChapterEntry newQuery()
  * @method static Builder|ChapterEntry query()
@@ -44,6 +45,7 @@ use Roxayl\MondeGC\View\Components\ChapterEntry\BaseMediaEntry;
  * @method static Builder|ChapterEntry whereMediaParameters($value)
  * @method static Builder|ChapterEntry whereUpdatedAt($value)
  * @method static ChapterEntryFactory factory(...$parameters)
+ *
  * @mixin \Eloquent
  */
 class ChapterEntry extends Model
@@ -94,9 +96,10 @@ class ChapterEntry extends Model
      */
     public static function getComponentMorphMap(?string $key = null): array|string
     {
-        if($key === null) {
+        if ($key === null) {
             return self::$componentMorphMap;
         }
+
         return self::$componentMorphMap[$key];
     }
 
@@ -108,11 +111,12 @@ class ChapterEntry extends Model
         $mediaType = $this->media_type;
 
         $componentMorphMap = self::getComponentMorphMap();
-        if(! array_key_exists($mediaType, $componentMorphMap)) {
+        if (! array_key_exists($mediaType, $componentMorphMap)) {
             return null;
         }
 
         $className = $componentMorphMap[$mediaType];
+
         return new $className($this);
     }
 
@@ -120,13 +124,13 @@ class ChapterEntry extends Model
      * A partir de la valeur de {@see media_type}, définit la valeur de {@see media_data} à partir de ce qui est
      * passé en paramètre (cf. {@see media_parameters}).
      *
-     * @param array<string, array> $parameters
+     * @param  array<string, array>  $parameters
      */
     public function generateMediaData(array $parameters = []): void
     {
         $mediaComponent = $this->mediaViewComponent();
 
-        if($mediaComponent === null) {
+        if ($mediaComponent === null) {
             $this->media_type = null;
             $this->media_parameters = null;
             $this->media_data = null;

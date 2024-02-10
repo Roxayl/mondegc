@@ -26,10 +26,11 @@ class OverrideVendorFiles extends Command
 
     /**
      * Indique l'emplacement source => destination des fichiers à override.
+     *
      * @var string[]
      */
     protected $fileCopies = [
-        'app/Overrides/Searchable/SearchResult.php' => 'vendor/spatie/laravel-searchable/src/SearchResult.php'
+        'app/Overrides/Searchable/SearchResult.php' => 'vendor/spatie/laravel-searchable/src/SearchResult.php',
     ];
 
     /**
@@ -40,6 +41,7 @@ class OverrideVendorFiles extends Command
     public function handle(): int
     {
         $this->copyFiles();
+
         return 0;
     }
 
@@ -51,12 +53,13 @@ class OverrideVendorFiles extends Command
             $backupPath = storage_path('app/copy-backup/' . Str::random(6));
             mkdir($backupPath, 0777, true);
         } catch(\Exception $e) {
-            $this->error("Impossible de créer le dossier.");
+            $this->error('Impossible de créer le dossier.');
+
             return;
         }
 
         try {
-            foreach($this->fileCopies as $origin => $destination) {
+            foreach ($this->fileCopies as $origin => $destination) {
                 $this->line("Copie de $origin ==> $destination");
 
                 $fileBackupPath = $backupPath . '/' . basename($destination);
@@ -65,9 +68,9 @@ class OverrideVendorFiles extends Command
                 copy($destinationPath, $fileBackupPath);
                 copy($originPath, $destinationPath);
             }
-            $this->info("Copies réalisées avec succès.");
+            $this->info('Copies réalisées avec succès.');
         } catch(\Exception $e) {
-            $this->error("Une des copies a échoué.");
+            $this->error('Une des copies a échoué.');
         }
     }
 }

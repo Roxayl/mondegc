@@ -19,7 +19,7 @@ class CreateResourceHistoryTable extends Migration
             $table->string('resourceable_type', 191)->index();
             $table->bigInteger('resourceable_id')->index();
 
-            foreach(Resource::cases() as $resource) {
+            foreach (Resource::cases() as $resource) {
                 $table->integer($resource->value);
             }
 

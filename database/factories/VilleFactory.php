@@ -26,8 +26,8 @@ class VilleFactory extends Factory
     {
         return [
             'ch_vil_paysID' => Pays::inRandomOrder()->first()->ch_pay_id,
-            'ch_vil_user'   => CustomUser::inRandomOrder()->first()->ch_use_id,
-            'ch_vil_label'  => 'ville',
+            'ch_vil_user' => CustomUser::inRandomOrder()->first()->ch_use_id,
+            'ch_vil_label' => 'ville',
             'ch_vil_date_enregistrement' => Carbon::now(),
             'ch_vil_mis_jour' => Carbon::now(),
             'ch_vil_nb_update' => 0,

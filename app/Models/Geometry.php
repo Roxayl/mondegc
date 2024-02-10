@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class Geometry
+ * Class Geometry.
  *
  * @property int $ch_geo_id
  * @property int|null $type_geometrie_id
@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $ch_geo_nom
  * @property-read TypeGeometry|null $typeGeometry
  * @property-read Pays $pays
+ *
  * @method static Builder|Geometry newModelQuery()
  * @method static Builder|Geometry newQuery()
  * @method static Builder|Geometry query()
@@ -39,6 +40,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|Geometry whereChGeoUser($value)
  * @method static Builder|Geometry whereChGeoWkt($value)
  * @method static Builder|Geometry whereTypeGeometrieId($value)
+ *
  * @mixin \Eloquent
  */
 class Geometry extends Model
@@ -52,12 +54,12 @@ class Geometry extends Model
         'ch_geo_pay_id' => 'int',
         'ch_geo_user' => 'int',
         'ch_geo_maj_user' => 'int',
-        'ch_geo_mesure' => 'float'
+        'ch_geo_mesure' => 'float',
     ];
 
     protected $dates = [
         'ch_geo_date',
-        'ch_geo_mis_jour'
+        'ch_geo_mis_jour',
     ];
 
     protected $fillable = [
@@ -71,7 +73,7 @@ class Geometry extends Model
         'ch_geo_geometries',
         'ch_geo_mesure',
         'ch_geo_type',
-        'ch_geo_nom'
+        'ch_geo_nom',
     ];
 
     /**

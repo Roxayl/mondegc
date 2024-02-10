@@ -19,7 +19,7 @@ class MapUpdated implements InfluencableEvent
     /**
      * Create a new event instance.
      *
-     * @param Pays $pays
+     * @param  Pays  $pays
      */
     public function __construct(Pays $pays)
     {

@@ -36,7 +36,7 @@ class ChapterEntryFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (ChapterEntry $entry) {
-            if($entry->media_type !== null) {
+            if ($entry->media_type !== null) {
                 $entry->media_data = $this->faker->chapterEntryMediaData($entry->media_type);
             }
         });

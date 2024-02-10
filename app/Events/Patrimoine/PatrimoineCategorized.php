@@ -19,7 +19,7 @@ class PatrimoineCategorized implements InfluencableEvent
     /**
      * Create a new event instance.
      *
-     * @param Patrimoine $patrimoine
+     * @param  Patrimoine  $patrimoine
      */
     public function __construct(Patrimoine $patrimoine)
     {

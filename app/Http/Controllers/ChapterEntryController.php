@@ -42,8 +42,8 @@ class ChapterEntryController extends Controller
     }
 
     /**
-     * @param Chapter $chapter
-     * @param StringBladeService $stringBlade
+     * @param  Chapter  $chapter
+     * @param  StringBladeService  $stringBlade
      * @return Response
      */
     public function createButton(Chapter $chapter, StringBladeService $stringBlade): Response
@@ -78,7 +78,7 @@ class ChapterEntryController extends Controller
         $entry->chapter_id = $chapter->getKey();
 
         // Vérifier que le chapitre est actif.
-        if(! $entry->chapter->isCurrent()) {
+        if (! $entry->chapter->isCurrent()) {
             throw ValidationException::withMessages(["Ce chapitre n'est plus actif."]);
         }
 
@@ -88,8 +88,8 @@ class ChapterEntryController extends Controller
         $roleplayable = RoleplayableSelector::createRoleplayableFromForm($request);
         /** @var CustomUser $user */
         $user = auth()->user();
-        if(Gate::denies('manage', $chapter->roleplay) && ! $user->hasRoleplayable($roleplayable)) {
-            throw ValidationException::withMessages(["Vous ne pouvez pas créer un post avec cette entité."]);
+        if (Gate::denies('manage', $chapter->roleplay) && ! $user->hasRoleplayable($roleplayable)) {
+            throw ValidationException::withMessages(['Vous ne pouvez pas créer un post avec cette entité.']);
         }
         $entry->roleplayable_id = $roleplayable->getKey();
         $entry->roleplayable_type = get_class($roleplayable);

@@ -41,7 +41,7 @@ class PaysRegistered extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'pays_id' => $this->pays->ch_pay_id
+            'pays_id' => $this->pays->ch_pay_id,
         ];
     }
 }

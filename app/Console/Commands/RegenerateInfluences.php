@@ -21,12 +21,12 @@ class RegenerateInfluences extends Command
      *
      * @var string
      */
-    protected $description = "Régénère les influences générées par les entités influençables.";
+    protected $description = 'Régénère les influences générées par les entités influençables.';
 
     /**
      * Execute the console command.
      *
-     * @param RegenerateInfluenceService $regenerateInfluenceService
+     * @param  RegenerateInfluenceService  $regenerateInfluenceService
      * @return int
      */
     public function handle(RegenerateInfluenceService $regenerateInfluenceService): int
@@ -37,11 +37,12 @@ class RegenerateInfluences extends Command
             $regenerateInfluenceService->regenerate();
             $this->info('Influences regénérées avec succès ('
                 . $regenerateInfluenceService->influenceCount() . ' influence(s) actuellement dans la base de données).');
-        }
-        catch (\Throwable $ex) {
+        } catch (\Throwable $ex) {
             $this->error("Une erreur s'est produite : " . $ex->getMessage());
+
             return 1;
         }
+
         return 0;
     }
 }

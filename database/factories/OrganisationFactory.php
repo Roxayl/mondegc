@@ -39,10 +39,10 @@ class OrganisationFactory extends Factory
             DB::table('organisation_members')
                 ->insert([
                     'organisation_id' => $organisation->id,
-                    'pays_id'         => Pays::inRandomOrder()->first()->ch_pay_id,
-                    'permissions'     => Organisation::PERMISSION_OWNER,
-                    'created_at'      => Carbon::now(),
-                    'updated_at'      => Carbon::now(),
+                    'pays_id' => Pays::inRandomOrder()->first()->ch_pay_id,
+                    'permissions' => Organisation::PERMISSION_OWNER,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
                 ]);
         });
     }

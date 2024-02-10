@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * Class Influence
+ * Class Influence.
  *
  * @property int $id
  * @property string $influencable_type
@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read Model|\Eloquent $influencable
+ *
  * @method static Builder|Influence newModelQuery()
  * @method static Builder|Influence newQuery()
  * @method static Builder|Influence query()
@@ -42,6 +43,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @method static Builder|Influence whereRecherche($value)
  * @method static Builder|Influence whereTourisme($value)
  * @method static Builder|Influence whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Influence extends Model
@@ -56,11 +58,11 @@ class Influence extends Model
         'environnement' => 'int',
         'industrie' => 'int',
         'recherche' => 'int',
-        'tourisme' => 'int'
+        'tourisme' => 'int',
     ];
 
     protected $dates = [
-        'generates_influence_at'
+        'generates_influence_at',
     ];
 
     protected $fillable = [
@@ -71,7 +73,7 @@ class Influence extends Model
         'environnement',
         'industrie',
         'recherche',
-        'tourisme'
+        'tourisme',
     ];
 
     /**

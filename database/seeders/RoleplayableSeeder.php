@@ -18,8 +18,7 @@ class RoleplayableSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::transaction(function() {
-
+        DB::transaction(function () {
             Pays::factory()
                 ->create();
 
@@ -29,12 +28,11 @@ class RoleplayableSeeder extends Seeder
                 ->count(2)
                 ->create([
                     'ch_vil_paysID' => $pays->ch_pay_id,
-                    'ch_vil_user'   => $user->ch_use_id,
+                    'ch_vil_user' => $user->ch_use_id,
                 ]);
 
             Organisation::factory()
                 ->create();
-
         });
     }
 }

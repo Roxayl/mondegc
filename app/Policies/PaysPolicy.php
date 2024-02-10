@@ -17,7 +17,7 @@ class PaysPolicy implements VersionablePolicy
     use HandlesAuthorization, ManagesInfrastructures;
 
     /**
-     * @param CustomUser|null $user
+     * @param  CustomUser|null  $user
      * @return bool
      */
     public function viewAny(?CustomUser $user): bool
@@ -26,13 +26,15 @@ class PaysPolicy implements VersionablePolicy
     }
 
     /**
-     * @param CustomUser $user
-     * @param Pays $pays
+     * @param  CustomUser  $user
+     * @param  Pays  $pays
      * @return bool
      */
     public function update(CustomUser $user, Pays $pays): bool
     {
-        if($user->hasMinPermission('ocgc')) return true;
+        if ($user->hasMinPermission('ocgc')) {
+            return true;
+        }
 
         return $pays->users->contains($user);
     }

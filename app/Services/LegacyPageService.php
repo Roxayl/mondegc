@@ -9,9 +9,9 @@ use Roxayl\MondeGC\Http\Controllers\Legacy\LegacySiteController;
 class LegacyPageService
 {
     /**
-     * Renvoie le contenu de la réponse suite à l'appel au controller legacy
+     * Renvoie le contenu de la réponse suite à l'appel au controller legacy.
      *
-     * @param  string  $path Chemin d'accès (e.g. " /back/ocgc_proposal_create.php").
+     * @param  string  $path  Chemin d'accès (e.g. " /back/ocgc_proposal_create.php").
      * @return string Réponse sous forme de chaîne.
      */
     private function callLegacyController(string $path): string
@@ -24,7 +24,7 @@ class LegacyPageService
          * une version adaptée du chemin en "dot notation" sans l'extension, e.g. 'back.ocgc_proposal_create'.
          */
         $target = str_replace('/', '.', $path);
-        if(str_ends_with($target, '.php')) {
+        if (str_ends_with($target, '.php')) {
             $target = substr($target, 0, -4);
         }
         $_GET['target'] = $target;
@@ -38,16 +38,16 @@ class LegacyPageService
     /**
      * Contenu HTML de la barre de navigation.
      *
-     * @param  string|null  $navbarContext Elément du menu à lmarquer comme actif.
+     * @param  string|null  $navbarContext  Elément du menu à lmarquer comme actif.
      * @return string
      */
     public function navbar(?string $navbarContext = null): string
     {
         // On créé dynamiquement la variable permettant d'activer l'élément de menu spécifié.
-        if(in_array(
+        if (in_array(
             $navbarContext,
             ['accueil', 'dashboard', 'carte', 'menupays', 'pays', 'institut', 'participer', 'generation_city'],
-        true)
+            true)
         ) {
             $$navbarContext = true;
         }

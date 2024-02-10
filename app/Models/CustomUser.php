@@ -19,7 +19,7 @@ use JetBrains\PhpStorm\ExpectedValues;
 use Roxayl\MondeGC\Models\Contracts\Roleplayable;
 
 /**
- * Roxayl\MondeGC\Models\CustomUser
+ * Roxayl\MondeGC\Models\CustomUser.
  *
  * @property int $ch_use_id
  * @property bool|null $ch_use_acces
@@ -50,6 +50,7 @@ use Roxayl\MondeGC\Models\Contracts\Roleplayable;
  * @property-read int|null $pays_count
  * @property-read Eloquent\Collection|Roleplay[] $ownedRoleplays
  * @property-read int|null $owned_roleplays_count
+ *
  * @method static CustomUserFactory factory(...$parameters)
  * @method static Builder|CustomUser newModelQuery()
  * @method static Builder|CustomUser newQuery()
@@ -71,6 +72,7 @@ use Roxayl\MondeGC\Models\Contracts\Roleplayable;
  * @method static Builder|CustomUser whereChUseStatut($value)
  * @method static Builder|CustomUser whereChUseTitreDirigeant($value)
  * @method static Builder|CustomUser whereLastActivity($value)
+ *
  * @mixin \Eloquent
  */
 class CustomUser extends Authenticatable
@@ -84,16 +86,16 @@ class CustomUser extends Authenticatable
     protected $casts = [
         'ch_use_acces' => 'bool',
         'ch_use_paysID' => 'int',
-        'ch_use_statut' => 'int'
+        'ch_use_statut' => 'int',
     ];
 
     protected $dates = [
         'ch_use_date',
-        'ch_use_last_log'
+        'ch_use_last_log',
     ];
 
     protected $hidden = [
-        'ch_use_password'
+        'ch_use_password',
     ];
 
     protected $fillable = [
@@ -110,7 +112,7 @@ class CustomUser extends Authenticatable
         'ch_use_titre_dirigeant',
         'ch_use_nom_dirigeant',
         'ch_use_prenom_dirigeant',
-        'ch_use_biographie_dirigeant'
+        'ch_use_biographie_dirigeant',
     ];
 
     /* Niveau de permissions défini dans ch_use_statut */
@@ -158,6 +160,7 @@ class CustomUser extends Authenticatable
 
     /**
      * Donne les pays gérés par l'utilisateur, avec les niveaux de permission qu'il possède sur le pays.
+     *
      * @return BelongsToMany
      */
     public function pays(): BelongsToMany
@@ -178,6 +181,7 @@ class CustomUser extends Authenticatable
 
     /**
      * Donne les villes gérées par l'utilisateur, au travers de ses pays.
+     *
      * @return Collection<int, Ville>
      */
     public function villes(): Collection
@@ -185,7 +189,7 @@ class CustomUser extends Authenticatable
         $villes = collect();
 
         // Obtenir les villes des pays gérés par l'utilisateur.
-        foreach($this->pays as $pays) {
+        foreach ($this->pays as $pays) {
             $villes = $villes->merge($pays->villes);
         }
 
@@ -194,13 +198,14 @@ class CustomUser extends Authenticatable
 
     /**
      * Donne les organisations gérées par l'utilisateur, au travers de ses pays.
+     *
      * @return Collection<int, Organisation>
      */
     public function organisations(): Collection
     {
         $organisations = collect();
 
-        foreach($this->pays as $pays) {
+        foreach ($this->pays as $pays) {
             $organisations = $organisations->merge($pays->managedOrganisations());
         }
 
@@ -214,7 +219,7 @@ class CustomUser extends Authenticatable
      */
     public function getAuthIdentifierName(): string
     {
-        return "ch_use_id";
+        return 'ch_use_id';
     }
 
     /**
@@ -247,7 +252,8 @@ class CustomUser extends Authenticatable
 
     /**
      * Vérifie si un utilisateur possède bien un pays, au niveau de permission co-dirigeant.
-     * @param Pays $pays Pays à vérifier.
+     *
+     * @param  Pays  $pays  Pays à vérifier.
      * @return bool Renvoie <code>true</code> lorsque l'utilisateur dirige le pays,
      *              <code>false</code> sinon.
      */
@@ -259,16 +265,18 @@ class CustomUser extends Authenticatable
 
     /**
      * Donne les modèles roleplayables gérés par l'utilisateur.
+     *
      * @return Collection
+     *
      * @see Roleplayable
      */
     public function roleplayables(): Collection
     {
         $methods = ['getPays', 'organisations', 'villes'];
 
-        if($this->cachedRoleplayables === null) {
+        if ($this->cachedRoleplayables === null) {
             $roleplayables = collect();
-            foreach($methods as $method) {
+            foreach ($methods as $method) {
                 $roleplayables = $roleplayables->merge($this->$method());
             }
             $this->cachedRoleplayables = $roleplayables;
@@ -279,39 +287,39 @@ class CustomUser extends Authenticatable
 
     /**
      * Détermine si l'utilisateur possède un roleplayable donné.
+     *
      * @param  Roleplayable|null  $roleplayable
      * @return bool
      */
     public function hasRoleplayable(?Roleplayable $roleplayable): bool
     {
-        if($roleplayable === null) {
+        if ($roleplayable === null) {
             return false;
         }
 
-        foreach($this->roleplayables() as $userRoleplayable) {
-            if($userRoleplayable::class === $roleplayable::class
-               && $userRoleplayable->getKey() === $roleplayable->getKey())
-            {
+        foreach ($this->roleplayables() as $userRoleplayable) {
+            if ($userRoleplayable::class === $roleplayable::class
+               && $userRoleplayable->getKey() === $roleplayable->getKey()) {
                 return true;
             }
         }
+
         return false;
     }
 
     /**
-     * @param string $level Prend les valeurs suivantes : "member", "juge", "ocgc", "admin".
+     * @param  string  $level  Prend les valeurs suivantes : "member", "juge", "ocgc", "admin".
      * @return bool
      */
     public function hasMinPermission(
         #[ExpectedValues('member', 'juge', 'ocgc', 'admin')] string $level
-    ): bool
-    {
+    ): bool {
         $permission = match ($level) {
             'member' => self::MEMBER,
-            'juge'   => self::JUGE,
-            'ocgc'   => self::OCGC,
-            'admin'  => self::ADMIN,
-            default  => throw new \InvalidArgumentException("Mauvais type de permission."),
+            'juge' => self::JUGE,
+            'ocgc' => self::OCGC,
+            'admin' => self::ADMIN,
+            default => throw new \InvalidArgumentException('Mauvais type de permission.'),
         };
 
         return $this->ch_use_statut >= $permission;

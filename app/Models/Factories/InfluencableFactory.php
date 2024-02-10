@@ -2,13 +2,13 @@
 
 namespace Roxayl\MondeGC\Models\Factories;
 
+use Illuminate\Support\Collection;
 use Roxayl\MondeGC\Models\ChapterResourceable;
 use Roxayl\MondeGC\Models\Contracts\Influencable;
 use Roxayl\MondeGC\Models\Infrastructure;
 use Roxayl\MondeGC\Models\Managers\PaysMapManager;
 use Roxayl\MondeGC\Models\Patrimoine;
 use Roxayl\MondeGC\Models\Pays;
-use Illuminate\Support\Collection;
 
 class InfluencableFactory
 {
@@ -39,10 +39,10 @@ class InfluencableFactory
             )
             ->merge(
                 Pays::query()->whereChPayPublication(Pays::STATUS_ACTIVE)->get()->map(
-                    fn(Pays $pays): PaysMapManager => new PaysMapManager($pays)
+                    fn (Pays $pays): PaysMapManager => new PaysMapManager($pays)
                 )
             )
-            ->filter(function(Influencable $influencable): bool {
+            ->filter(function (Influencable $influencable): bool {
                 return $influencable->isEnabled();
             });
     }

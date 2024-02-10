@@ -16,7 +16,7 @@ class ChapterEntryMediaProvider extends Base
                 ],
                 'media' => [
                     'author' => 'Clément Ferrand',
-                    'text' => "Nous revendiquons la partie en bleu du pôle sud. Nous réfléchirons à en faire un statut de "
+                    'text' => 'Nous revendiquons la partie en bleu du pôle sud. Nous réfléchirons à en faire un statut de '
                             . "TOM dans les prochaines semaines afin que l'OCGC valide notre revendication.",
                     'date' => '2020-12-12 12:58:00',
                 ],
@@ -27,11 +27,11 @@ class ChapterEntryMediaProvider extends Base
                 ],
                 'media' => [
                     'author' => 'José San Garcia',
-                    'text' => "Le premier rapport sur les ressources naturelles avérées et probables au pôle nord est "
-                            . "presque prêt. En attendant voici les cartes des pôles et de leur contexte géographique.",
+                    'text' => 'Le premier rapport sur les ressources naturelles avérées et probables au pôle nord est '
+                            . 'presque prêt. En attendant voici les cartes des pôles et de leur contexte géographique.',
                     'date' => '2021-06-20 14:35:12',
                 ],
-            ]
+            ],
         ],
         'forum.post' => [
             [
@@ -40,7 +40,7 @@ class ChapterEntryMediaProvider extends Base
                 ],
                 'media' => [
                     'author' => 'vallamir',
-                    'text' => "Yes ;) Je te concocte un petit truc pour notre partenariat Océania Rail en attendant ;)",
+                    'text' => 'Yes ;) Je te concocte un petit truc pour notre partenariat Océania Rail en attendant ;)',
                     'date' => '2020-12-12 12:58:00',
                 ],
             ],
@@ -50,10 +50,10 @@ class ChapterEntryMediaProvider extends Base
                 ],
                 'media' => [
                     'author' => 'romu23',
-                    'text' => "Faut-il dire Shibubu ou Shiboubouille ?",
+                    'text' => 'Faut-il dire Shibubu ou Shiboubouille ?',
                     'date' => '2021-06-20 14:35:12',
                 ],
-            ]
+            ],
         ],
     ];
 
@@ -65,7 +65,7 @@ class ChapterEntryMediaProvider extends Base
      */
     public function chapterEntryMediaData(string $mediaType): array
     {
-        if(! array_key_exists($mediaType, self::$mediaTypes)) {
+        if (! array_key_exists($mediaType, self::$mediaTypes)) {
             throw new \InvalidArgumentException("Le type de média n'existe pas.");
         }
 

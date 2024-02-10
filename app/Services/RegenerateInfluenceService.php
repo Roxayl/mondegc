@@ -14,8 +14,8 @@ class RegenerateInfluenceService
 {
     public function __construct(
         private readonly InfluencableFactory $influencableFactory,
-        private readonly DatabaseManager     $db,
-        private readonly CacheManager        $cache
+        private readonly DatabaseManager $db,
+        private readonly CacheManager $cache
     ) {
     }
 
@@ -27,10 +27,10 @@ class RegenerateInfluenceService
         /** @var Influencable[] $influencables */
         $influencables = $this->influencableFactory->listEnabled();
 
-        $this->db->transaction(function() use ($influencables) {
+        $this->db->transaction(function () use ($influencables) {
             $this->db->table('influence')->delete();
 
-            foreach($influencables as $influencable) {
+            foreach ($influencables as $influencable) {
                 $influencable->generateInfluence();
             }
         });

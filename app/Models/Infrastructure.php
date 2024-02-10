@@ -15,7 +15,7 @@ use Roxayl\MondeGC\Models\Traits\DeletesInfluences;
 use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
 
 /**
- * Class Infrastructure
+ * Class Infrastructure.
  *
  * @property int $ch_inf_id
  * @property string $ch_inf_label
@@ -44,6 +44,7 @@ use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
  * @property-read (Model|\Eloquent)&Infrastructurable $infrastructurable
  * @property-read InfrastructureOfficielle|null $infrastructureOfficielle
  * @property-read CustomUser|null $judge
+ *
  * @method static Builder|Infrastructure newModelQuery()
  * @method static Builder|Infrastructure newQuery()
  * @method static Builder|Infrastructure query()
@@ -68,6 +69,7 @@ use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
  * @method static Builder|Infrastructure whereLienWiki($value)
  * @method static Builder|Infrastructure whereNomInfra($value)
  * @method static Builder|Infrastructure whereUserCreator($value)
+ *
  * @mixin \Eloquent
  */
 class Infrastructure extends Model implements Influencable
@@ -85,7 +87,7 @@ class Infrastructure extends Model implements Influencable
         'ch_inf_villeid' => 'int',
         'ch_inf_statut' => 'int',
         'user_creator' => 'int',
-        'ch_inf_juge' => 'int'
+        'ch_inf_juge' => 'int',
     ];
 
     protected $dates = [
@@ -170,7 +172,7 @@ class Infrastructure extends Model implements Influencable
     }
 
     /**
-     * @param string $parameter
+     * @param  string  $parameter
      * @return string
      */
     public static function getMorphFromUrlParameter(string $parameter): string
@@ -179,19 +181,20 @@ class Infrastructure extends Model implements Influencable
             'ville' => Ville::class,
             'pays' => Pays::class,
             'organisation' => Organisation::class,
-            default => throw new \InvalidArgumentException("Mauvais type de modèle."),
+            default => throw new \InvalidArgumentException('Mauvais type de modèle.'),
         };
 
         return self::getActualClassNameForMorph($class);
     }
 
     /**
-     * @param string $morphType
+     * @param  string  $morphType
      * @return string
      */
     public static function getUrlParameterFromMorph(string $morphType): string
     {
-        $morph = explode("\\", $morphType);
+        $morph = explode('\\', $morphType);
+
         return strtolower(end($morph));
     }
 
@@ -200,27 +203,25 @@ class Infrastructure extends Model implements Influencable
      */
     public function generateInfluence(): void
     {
-        $notAccepted = fn() => $this->ch_inf_statut !== self::JUGEMENT_ACCEPTED;
+        $notAccepted = fn () => $this->ch_inf_statut !== self::JUGEMENT_ACCEPTED;
 
         $this->removeOldInfluenceRows($notAccepted);
-        if($notAccepted()) {
+        if ($notAccepted()) {
             return;
         }
 
         $totalResources = $this->infrastructureOfficielle->mapResources();
 
-        if(!empty($this->infrastructurable) && $this->infrastructurable->getType() === 'organisation') {
-
+        if (! empty($this->infrastructurable) && $this->infrastructurable->getType() === 'organisation') {
             // Dans le cas où l'organisation est une "alliance" ou "agence GC", on augmente les
             // ressources 'positives' générées de 50% (multiplie par 1.5) et les ressources
             // 'négatives' de 15% (multiplie de 1.15).
             /* TODO On peut envisager une classe qui contient les modifications types aux ressources
              * économiques ? Cela impliquerait de transformer les données de ressources du type
              * 'array' à un classe spécifique... */
-            if( in_array($this->infrastructurable->type,
-                  [Organisation::TYPE_AGENCY, Organisation::TYPE_ALLIANCE], true) )
-            {
-                $tmp = array_map(fn($val) => $val > 0 ? (int)($val * 1.5) : (int)($val * 1.15),
+            if (in_array($this->infrastructurable->type,
+                [Organisation::TYPE_AGENCY, Organisation::TYPE_ALLIANCE], true)) {
+                $tmp = array_map(fn ($val) => $val > 0 ? (int) ($val * 1.5) : (int) ($val * 1.15),
                     $totalResources);
                 $totalResources = $tmp;
             }
@@ -228,7 +229,7 @@ class Infrastructure extends Model implements Influencable
             // On augmente les ressources générées selon la formule suivante :
             // valeurResources * nbrMembresOrga ^ 1.2
             $nbrMembresOrganisation = $this->infrastructurable->members->count();
-            $tmp = array_map(fn($val) => (int)($val * pow($nbrMembresOrganisation, 1.2)),
+            $tmp = array_map(fn ($val) => (int) ($val * pow($nbrMembresOrganisation, 1.2)),
                 $totalResources);
             $totalResources = $tmp;
             unset($tmp);
@@ -237,21 +238,21 @@ class Infrastructure extends Model implements Influencable
         $divider = $this->getDivider();
 
         $resourcesPerMonth = array_map(
-            function(int $val) use($divider) {
-                return (int)($val / $divider);
+            function (int $val) use ($divider) {
+                return (int) ($val / $divider);
             },
             $totalResources);
 
-        for($i = 0; $i < $divider; $i++) {
+        for ($i = 0; $i < $divider; $i++) {
             $influence = new Influence;
             $influence->influencable_type = Influence::getActualClassNameForMorph(get_class($this));
             $influence->influencable_id = $this->ch_inf_id;
 
-            if($i >= $divider - 1) {
+            if ($i >= $divider - 1) {
                 array_walk($totalResources,
-                    function($val, $key) use($divider, $totalResources, &$resourcesPerMonth) {
+                    function ($val, $key) use ($divider, $totalResources, &$resourcesPerMonth) {
                         $diff = $totalResources[$key] - ($resourcesPerMonth[$key] * $divider);
-                        if($diff !== 0) {
+                        if ($diff !== 0) {
                             $resourcesPerMonth[$key] += $diff;
                         }
                     });
@@ -268,11 +269,12 @@ class Infrastructure extends Model implements Influencable
      */
     public function getDivider(): int
     {
-        if($this->ch_inf_date->greaterThan(
+        if ($this->ch_inf_date->greaterThan(
             Carbon::createFromFormat('Y-m-d H:i:s', '2023-01-01 00:00:00')
         )) {
             return 2;
         }
+
         return 4;
     }
 
@@ -289,7 +291,7 @@ class Infrastructure extends Model implements Influencable
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function(Infrastructure $infrastructure): void {
+        static::deleting(function (Infrastructure $infrastructure): void {
             $infrastructure->deleteInfluences();
         });
     }

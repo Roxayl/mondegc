@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class MonumentCategory
+ * Class MonumentCategory.
  *
  * @property int $ch_mon_cat_ID
  * @property string|null $ch_mon_cat_label
@@ -34,6 +34,7 @@ use Illuminate\Support\Facades\DB;
  * @property string|null $bg_image_url
  * @property-read Collection|Patrimoine[] $patrimoine
  * @property-read int|null $patrimoine_count
+ *
  * @method static Builder|MonumentCategory newModelQuery()
  * @method static Builder|MonumentCategory newQuery()
  * @method static Builder|MonumentCategory query()
@@ -56,6 +57,7 @@ use Illuminate\Support\Facades\DB;
  * @method static Builder|MonumentCategory whereChMonCatRecherche($value)
  * @method static Builder|MonumentCategory whereChMonCatStatut($value)
  * @method static Builder|MonumentCategory whereChMonCatTourisme($value)
+ *
  * @mixin \Eloquent
  */
 class MonumentCategory extends Model
@@ -76,7 +78,7 @@ class MonumentCategory extends Model
         'ch_mon_cat_recherche' => 'int',
         'ch_mon_cat_environnement' => 'int',
         'ch_mon_cat_education' => 'int',
-        'ch_mon_cat_budget' => 'int'
+        'ch_mon_cat_budget' => 'int',
     ];
 
     protected $fillable = [
@@ -92,7 +94,7 @@ class MonumentCategory extends Model
         'ch_mon_cat_recherche',
         'ch_mon_cat_environnement',
         'ch_mon_cat_education',
-        'ch_mon_cat_budget'
+        'ch_mon_cat_budget',
     ];
 
     /**
@@ -112,7 +114,7 @@ class MonumentCategory extends Model
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function(MonumentCategory $monumentCategory): void {
+        static::deleting(function (MonumentCategory $monumentCategory): void {
             // Supprime les entrées liées à la catégorie dans la table pivot.
             DB::delete('DELETE FROM dispatch_mon_cat WHERE ch_disp_cat_id = ?',
                 [$monumentCategory->ch_disp_cat_id]);

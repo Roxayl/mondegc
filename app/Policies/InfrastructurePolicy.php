@@ -12,7 +12,7 @@ class InfrastructurePolicy
     use HandlesAuthorization;
 
     /**
-     * @param CustomUser $user
+     * @param  CustomUser  $user
      * @return bool
      */
     public function viewAny(CustomUser $user): bool
@@ -21,7 +21,7 @@ class InfrastructurePolicy
     }
 
     /**
-     * @param CustomUser $user
+     * @param  CustomUser  $user
      * @return bool
      */
     public function judgeInfrastructure(CustomUser $user): bool

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class SubdivisionType
+ * Class SubdivisionType.
  *
  * @property int $id
  * @property int|null $pays_id
@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Pays|null $pays
  * @property Collection|Subdivision[] $subdivisions
  * @property-read int|null $subdivisions_count
+ *
  * @method static Builder|SubdivisionType newModelQuery()
  * @method static Builder|SubdivisionType newQuery()
  * @method static Builder|SubdivisionType query()
@@ -34,6 +35,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static Builder|SubdivisionType whereDeletedAt($value)
  * @method static Builder|SubdivisionType withTrashed()
  * @method static Builder|SubdivisionType withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class SubdivisionType extends Model
@@ -43,12 +45,12 @@ class SubdivisionType extends Model
     protected $table = 'subdivision_types';
 
     protected $casts = [
-        'pays_id' => 'int'
+        'pays_id' => 'int',
     ];
 
     protected $fillable = [
         'pays_id',
-        'type_name'
+        'type_name',
     ];
 
     /**

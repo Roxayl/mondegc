@@ -12,14 +12,14 @@ use Roxayl\MondeGC\Models\Infrastructure;
 class InfrastructureJudgeController extends Controller
 {
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return View
      */
     public function index(Request $request): View
     {
         $type = $request->has('type') ? $request->get('type') : 'pending';
-        if(!in_array($type, ['pending', 'accepted', 'rejected'], true)) {
-            throw new \InvalidArgumentException("Mauvais type de liste.");
+        if (! in_array($type, ['pending', 'accepted', 'rejected'], true)) {
+            throw new \InvalidArgumentException('Mauvais type de liste.');
         }
 
         $this->authorize('judgeInfrastructure', Infrastructure::class);
@@ -30,7 +30,7 @@ class InfrastructureJudgeController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return View
      */
     public function show(int $id): View
@@ -43,8 +43,8 @@ class InfrastructureJudgeController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param int $id
+     * @param  Request  $request
+     * @param  int  $id
      * @return RedirectResponse
      */
     public function judge(Request $request, int $id): RedirectResponse
@@ -53,16 +53,16 @@ class InfrastructureJudgeController extends Controller
 
         $this->authorize('judgeInfrastructure', Infrastructure::class);
 
-        if(!in_array($request->input('ch_inf_statut'), [1, 2, 3]))
-            throw new \InvalidArgumentException("Mauvais type de statut.");
+        if (! in_array($request->input('ch_inf_statut'), [1, 2, 3])) {
+            throw new \InvalidArgumentException('Mauvais type de statut.');
+        }
 
         $infrastructure->ch_inf_statut = $request->input('ch_inf_statut');
         $infrastructure->ch_inf_juge = auth()->user()->getAuthIdentifier();
         $infrastructure->judged_at = Carbon::now();
-        if((int)$infrastructure->ch_inf_statut === Infrastructure::JUGEMENT_REJECTED) {
+        if ((int) $infrastructure->ch_inf_statut === Infrastructure::JUGEMENT_REJECTED) {
             $infrastructure->ch_inf_commentaire_juge = $request->input('ch_inf_commentaire_juge');
-        }
-        else {
+        } else {
             $infrastructure->ch_inf_commentaire_juge = null;
         }
 

@@ -13,7 +13,7 @@ use Roxayl\MondeGC\Models\Enums\Resource;
 use Roxayl\MondeGC\Models\Traits;
 
 /**
- * Class ResourceHistory
+ * Class ResourceHistory.
  *
  * @property int $id
  * @property string $resourceable_type
@@ -30,6 +30,7 @@ use Roxayl\MondeGC\Models\Traits;
  * @property Carbon|null $updated_at
  * @property-read array<string> $resources
  * @property-read Model|\Eloquent $resourceable
+ *
  * @method static Builder|ResourceHistory chartSelect(?Carbon $startDate = null, ?Carbon $endDate = null)
  * @method static Builder|ResourceHistory forResourceable(Resourceable $resourceable)
  * @method static Builder|ResourceHistory forResourceables(Collection $resourceables)
@@ -49,6 +50,7 @@ use Roxayl\MondeGC\Models\Traits;
  * @method static Builder|ResourceHistory whereResourceableType($value)
  * @method static Builder|ResourceHistory whereTourisme($value)
  * @method static Builder|ResourceHistory whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class ResourceHistory extends Model implements SimpleResourceable
@@ -66,7 +68,7 @@ class ResourceHistory extends Model implements SimpleResourceable
         'tourisme' => 'int',
         'recherche' => 'int',
         'environnement' => 'int',
-        'education' => 'int'
+        'education' => 'int',
     ];
 
     protected $fillable = [
@@ -79,7 +81,7 @@ class ResourceHistory extends Model implements SimpleResourceable
         'tourisme',
         'recherche',
         'environnement',
-        'education'
+        'education',
     ];
 
     /**
@@ -97,7 +99,7 @@ class ResourceHistory extends Model implements SimpleResourceable
     {
         $data = [];
 
-        foreach(Resource::cases() as $resource) {
+        foreach (Resource::cases() as $resource) {
             $data[] = $this->{$resource->value};
         }
 
@@ -105,15 +107,15 @@ class ResourceHistory extends Model implements SimpleResourceable
     }
 
     /**
-     * @param Builder $query
-     * @param Collection $resourceables
+     * @param  Builder  $query
+     * @param  Collection  $resourceables
      * @return Builder
      */
     public function scopeForResourceables(Builder $query, Collection $resourceables): Builder
     {
         return $query->where(function (Builder $query) use ($resourceables) {
             /** @var Model&Resourceable $resourceable */
-            foreach($resourceables as $resourceable) {
+            foreach ($resourceables as $resourceable) {
                 $query = $query->orWhere(function (Builder $query) use ($resourceable) {
                     $this->scopeForResourceable($query, $resourceable);
                 });
@@ -122,8 +124,8 @@ class ResourceHistory extends Model implements SimpleResourceable
     }
 
     /**
-     * @param Builder $query
-     * @param Resourceable $resourceable
+     * @param  Builder  $query
+     * @param  Resourceable  $resourceable
      * @return Builder
      */
     public function scopeForResourceable(Builder $query, Resourceable $resourceable): Builder
@@ -133,9 +135,9 @@ class ResourceHistory extends Model implements SimpleResourceable
     }
 
     /**
-     * @param Builder $query
-     * @param Carbon|null $startDate
-     * @param Carbon|null $endDate
+     * @param  Builder  $query
+     * @param  Carbon|null  $startDate
+     * @param  Carbon|null  $endDate
      * @return Builder
      */
     public function scopeChartSelect(Builder $query, ?Carbon $startDate = null, ?Carbon $endDate = null): Builder
@@ -146,10 +148,10 @@ class ResourceHistory extends Model implements SimpleResourceable
             ->selectRaw('DATE(created_at) AS created_date')
             ->orderBy('created_at');
 
-        if($startDate) {
+        if ($startDate) {
             $query->where('created_at', '>=', $startDate);
         }
-        if($endDate) {
+        if ($endDate) {
             $query->where('created_at', '<=', $endDate);
         }
 

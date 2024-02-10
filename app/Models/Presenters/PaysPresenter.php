@@ -9,6 +9,7 @@ trait PaysPresenter
     public function accessorUrl(): string
     {
         $infrastructurableData = $this->getInfrastructurableData();
+
         return url('page-pays.php?ch_pay_id=' .
             $infrastructurableData['infrastructurable_id']);
     }
@@ -16,7 +17,8 @@ trait PaysPresenter
     public function backAccessorUrl(): string
     {
         $infrastructurableData = $this->getInfrastructurableData();
-        return url("back/page_pays_back.php?paysID=" .
+
+        return url('back/page_pays_back.php?paysID=' .
             $infrastructurableData['infrastructurable_id']);
     }
 

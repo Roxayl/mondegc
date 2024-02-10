@@ -19,7 +19,7 @@ class InfrastructureJudged implements InfluencableEvent
     /**
      * Create a new event instance.
      *
-     * @param Infrastructure $infrastructure
+     * @param  Infrastructure  $infrastructure
      */
     public function __construct(Infrastructure $infrastructure)
     {

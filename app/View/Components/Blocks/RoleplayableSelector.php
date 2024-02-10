@@ -31,7 +31,7 @@ class RoleplayableSelector extends Component
 
         $this->formId = uniqid();
 
-        if($endpointUrl === null) {
+        if ($endpointUrl === null) {
             $endpointUrl = route(self::defaultRouteEndpoint);
         }
         $this->endpointUrl = $endpointUrl;
@@ -49,8 +49,9 @@ class RoleplayableSelector extends Component
      * Créé une instance d'un roleplayable à partir des paramètre passés dans la requête {@see Request}.
      * Il est nécessaire que les champs "type" et "id" soient présents dans les paramètres de la requête.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return Roleplayable
+     *
      * @throws ValidationException
      */
     public static function createRoleplayableFromForm(Request $request)
@@ -60,7 +61,7 @@ class RoleplayableSelector extends Component
         /** @var Roleplayable|null $roleplayable */
         $roleplayable = RoleplayableFactory::find($form['type'], (int) $form['id']);
 
-        if($roleplayable === null) {
+        if ($roleplayable === null) {
             throw ValidationException::withMessages(["Ce roleplayable n'existe pas."]);
         }
 
