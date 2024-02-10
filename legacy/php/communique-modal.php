@@ -168,7 +168,7 @@ $eloquentCommunique = \Roxayl\MondeGC\Models\Communique::query()->findOrFail($co
     <h1>R&eacute;actions</h1>
   </div>
   <?php if ($row_commentaire) { ?>
-  <ul class="listes">
+  <ul class="listes listes-visiteurs">
     <?php do {
 
     $paysReaction = new \GenCity\Monde\Pays($row_commentaire['ch_use_paysID']);
