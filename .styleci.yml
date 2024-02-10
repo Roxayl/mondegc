@@ -3,6 +3,7 @@ enabled:
   - concat_with_spaces
 disabled:
   - no_unused_imports
+  - concat_without_spaces
 finder:
   exclude:
     - "legacy"
