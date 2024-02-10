@@ -10,14 +10,18 @@ trait InfrastructurePresenter
     {
         switch($type) {
             case 'pending':
-                $title = 'Infrastructures en attente de jugement'; break;
+                $title = 'Infrastructures en attente de jugement';
+                break;
             case 'rejected':
-                $title = "Infrastructures rejetées"; break;
+                $title = 'Infrastructures rejetées';
+                break;
             case 'accepted':
-                $title = "Infrastructures acceptées"; break;
+                $title = 'Infrastructures acceptées';
+                break;
             default:
-                $title = "";
+                $title = '';
         }
+
         return $title;
     }
 
@@ -35,14 +39,15 @@ trait InfrastructurePresenter
             self::JUGEMENT_REJECTED => [
                 'text' => 'Rejetée',
                 'color' => 'red',
-            ]
+            ],
         ];
-        return (object)$map[$this->ch_inf_statut];
+
+        return (object) $map[$this->ch_inf_statut];
     }
 
     public function wellDescription(): string
     {
-        $str  = "<em><i class='icon-calendar'></i> {$this->ch_inf_date->diffForHumans()}</em> &#183; ";
+        $str = "<em><i class='icon-calendar'></i> {$this->ch_inf_date->diffForHumans()}</em> &#183; ";
         $str .= Str::limit(e($this->ch_inf_commentaire), 150);
 
         return $str;

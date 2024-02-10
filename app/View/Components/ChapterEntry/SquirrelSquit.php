@@ -30,8 +30,8 @@ class SquirrelSquit extends BaseMediaEntry
         $client = new Client();
         $response = $client->request('GET', $url);
         /** @noinspection PhpClassConstantAccessedViaChildClassInspection */
-        if($response->getStatusCode() !== Response::HTTP_OK) {
-            throw new HttpClientException("Impossible de charger le squit.");
+        if ($response->getStatusCode() !== Response::HTTP_OK) {
+            throw new HttpClientException('Impossible de charger le squit.');
         }
 
         $html = new HtmlDocument($response->getBody());

@@ -8,7 +8,7 @@ use Illuminate\Support\Carbon;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Class Page
+ * Class Page.
  *
  * @property int $id
  * @property string $title
@@ -20,6 +20,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @property Carbon|null $updated_at
  * @property Carbon|null $published_at
  * @property string|null $cover_image
+ *
  * @method static Builder|Page newModelQuery()
  * @method static Builder|Page newQuery()
  * @method static Builder|Page query()
@@ -33,6 +34,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @method static Builder|Page whereTitle($value)
  * @method static Builder|Page whereUpdatedAt($value)
  * @method static Builder|Page whereUrl($value)
+ *
  * @mixin \Eloquent
  */
 class Page extends Model
@@ -61,7 +63,7 @@ class Page extends Model
     public function getPageOrFail(): self
     {
         // Si la page n'est pas publiée.
-        if(strtotime($this->published_at) > time() || is_null($this->published_at)) {
+        if (strtotime($this->published_at) > time() || is_null($this->published_at)) {
             throw new NotFoundHttpException();
         }
 

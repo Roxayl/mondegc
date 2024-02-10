@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use Roxayl\MondeGC\Models\Enums\Resource;
 
 /**
- * Class InfrastructureOfficielle
+ * Class InfrastructureOfficielle.
  *
  * @property int $ch_inf_off_id
  * @property string $ch_inf_off_label
@@ -32,6 +32,7 @@ use Roxayl\MondeGC\Models\Enums\Resource;
  * @property-read int|null $infrastructure_groupe_count
  * @property-read Collection|Infrastructure[] $infrastructures
  * @property-read int|null $infrastructures_count
+ *
  * @method static Builder|InfrastructureOfficielle newModelQuery()
  * @method static Builder|InfrastructureOfficielle newQuery()
  * @method static Builder|InfrastructureOfficielle query()
@@ -49,6 +50,7 @@ use Roxayl\MondeGC\Models\Enums\Resource;
  * @method static Builder|InfrastructureOfficielle whereChInfOffNom($value)
  * @method static Builder|InfrastructureOfficielle whereChInfOffRecherche($value)
  * @method static Builder|InfrastructureOfficielle whereChInfOffTourisme($value)
+ *
  * @mixin \Eloquent
  */
 class InfrastructureOfficielle extends Model
@@ -65,11 +67,11 @@ class InfrastructureOfficielle extends Model
         'ch_inf_off_Tourisme' => 'int',
         'ch_inf_off_Recherche' => 'int',
         'ch_inf_off_Environnement' => 'int',
-        'ch_inf_off_Education' => 'int'
+        'ch_inf_off_Education' => 'int',
     ];
 
     protected $dates = [
-        'ch_inf_off_date'
+        'ch_inf_off_date',
     ];
 
     protected $fillable = [
@@ -85,7 +87,7 @@ class InfrastructureOfficielle extends Model
         'ch_inf_off_Tourisme',
         'ch_inf_off_Recherche',
         'ch_inf_off_Environnement',
-        'ch_inf_off_Education'
+        'ch_inf_off_Education',
     ];
 
     /**
@@ -115,11 +117,12 @@ class InfrastructureOfficielle extends Model
     public function mapResources(): array
     {
         $resources = [];
-        foreach(Resource::cases() as $resource) {
+        foreach (Resource::cases() as $resource) {
             $field = 'ch_inf_off_' . ($resource === Resource::BUDGET
                     ? $resource->value : Str::ucfirst($resource->value));
-            $resources[$resource->value] = (int)$this->$field;
+            $resources[$resource->value] = (int) $this->$field;
         }
+
         return $resources;
     }
 
@@ -128,8 +131,8 @@ class InfrastructureOfficielle extends Model
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function(InfrastructureOfficielle $infrastructureOfficielle): void {
-            $infrastructureOfficielle->infrastructures()->each(function(Infrastructure $infrastructure): void {
+        static::deleting(function (InfrastructureOfficielle $infrastructureOfficielle): void {
+            $infrastructureOfficielle->infrastructures()->each(function (Infrastructure $infrastructure): void {
                 $infrastructure->delete();
             });
         });

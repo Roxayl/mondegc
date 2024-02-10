@@ -27,7 +27,7 @@ class MigrateType extends FormRequest
     {
         $allowed = true;
 
-        if(! auth()->check() || ! auth()->user()->hasMinPermission('admin')) {
+        if (! auth()->check() || ! auth()->user()->hasMinPermission('admin')) {
             $allowed = false;
         }
 
@@ -40,15 +40,15 @@ class MigrateType extends FormRequest
 
         // Vérifie que l'organisation a déjà 2 infrastructures validées
         // et a au moins 2 membres.
-        if($this->organisation->infrastructures->count() < 3
+        if ($this->organisation->infrastructures->count() < 3
                 || $this->organisation->members->count() < 2) {
             $allowed = false;
         }
 
         // Vérifie qu'aucun membre ne fait déjà partie d'une alliance.
         $members = $this->organisation->members;
-        foreach($members as $member) {
-            if(! empty($member->pays->alliance())) {
+        foreach ($members as $member) {
+            if (! empty($member->pays->alliance())) {
                 $allowed = false;
                 break;
             }
@@ -62,7 +62,7 @@ class MigrateType extends FormRequest
         $allowed = true;
 
         // Vérifie que l'organisation n'a aucune infrastructure.
-        if($this->organisation->infrastructuresAll->count() > 0) {
+        if ($this->organisation->infrastructuresAll->count() > 0) {
             $allowed = false;
         }
 
@@ -75,8 +75,8 @@ class MigrateType extends FormRequest
 
         // Empêche la migration si l'organisation a déjà changé de type au cours des
         // sept derniers jours.
-        if(! is_null($this->organisation->type_migrated_at)) {
-            if($this->organisation->type_migrated_at > Carbon::now()->subDays(7)) {
+        if (! is_null($this->organisation->type_migrated_at)) {
+            if ($this->organisation->type_migrated_at > Carbon::now()->subDays(7)) {
                 $allowed = false;
             }
         }
@@ -88,6 +88,7 @@ class MigrateType extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array
+     *
      * @throws ValidationException
      */
     public function rules(): array
@@ -97,36 +98,37 @@ class MigrateType extends FormRequest
 
         $errors = [];
 
-        if($this->organisation->type !== Organisation::TYPE_ALLIANCE
+        if ($this->organisation->type !== Organisation::TYPE_ALLIANCE
            && $type === Organisation::TYPE_ALLIANCE) {
-            if(!$this->canMigrateToAlliance()) {
+            if (! $this->canMigrateToAlliance()) {
                 $errors['type'] = __('organisation.validation.migrate-alliance-error');
             }
         }
 
-        if($this->organisation->type !== Organisation::TYPE_GROUP
+        if ($this->organisation->type !== Organisation::TYPE_GROUP
            && $type === Organisation::TYPE_GROUP) {
-            if(! $this->canMigrateToGroup()) {
+            if (! $this->canMigrateToGroup()) {
                 $errors['type'] = __('organisation.validation.migrate-group-error');
             }
         }
 
-        if($this->organisation->type === Organisation::TYPE_AGENCY
+        if ($this->organisation->type === Organisation::TYPE_AGENCY
            || $type === Organisation::TYPE_AGENCY) {
-            if(! $this->canMigrateToAgency()) {
+            if (! $this->canMigrateToAgency()) {
                 $errors['type'] = __('organisation.validation.migrate-agency-error');
             }
         }
 
-        if(! $this->canMigrateBasedOnTime()) {
-            $errors['early'] =  __('organisation.validation.migrate-too-early-error');
+        if (! $this->canMigrateBasedOnTime()) {
+            $errors['early'] = __('organisation.validation.migrate-too-early-error');
         }
 
-        if(count($errors)) {
+        if (count($errors)) {
             throw ValidationException::withMessages($errors);
         }
 
         $types = implode(',', Organisation::$types);
+
         return [
             'type' => "required|in:$types",
         ];

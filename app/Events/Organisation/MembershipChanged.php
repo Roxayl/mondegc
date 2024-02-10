@@ -17,7 +17,7 @@ class MembershipChanged
     /**
      * Create a new event instance.
      *
-     * @param Organisation $organisation
+     * @param  Organisation  $organisation
      */
     public function __construct(Organisation $organisation)
     {

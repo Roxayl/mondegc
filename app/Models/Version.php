@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Mpociot\Versionable\Version as BaseVersion;
 
 /**
- * Roxayl\MondeGC\Models\Version
+ * Roxayl\MondeGC\Models\Version.
  *
  * @property int $version_id
  * @property string $versionable_id
@@ -20,6 +20,7 @@ use Mpociot\Versionable\Version as BaseVersion;
  * @property Carbon|null $updated_at
  * @property-read mixed|CustomUser $responsible_user
  * @property-read Model|\Eloquent $versionable
+ *
  * @method static Builder|Version forVersionable(string $type, string|int $id)
  * @method static Builder|Version newModelQuery()
  * @method static Builder|Version newQuery()
@@ -32,6 +33,7 @@ use Mpociot\Versionable\Version as BaseVersion;
  * @method static Builder|Version whereVersionId($value)
  * @method static Builder|Version whereVersionableId($value)
  * @method static Builder|Version whereVersionableType($value)
+ *
  * @mixin \Eloquent
  */
 class Version extends BaseVersion
@@ -40,9 +42,9 @@ class Version extends BaseVersion
      * Filtre une requête par versionnable, en fonction de son type et de son identifiant.
      * ({@see \Illuminate\Database\Eloquent\Relations\MorphTo}).
      *
-     * @param Builder $query
-     * @param string $type
-     * @param int|string $id
+     * @param  Builder  $query
+     * @param  string  $type
+     * @param  int|string  $id
      * @return Builder
      */
     public function scopeForVersionable(Builder $query, string $type, int|string $id): Builder

@@ -32,7 +32,7 @@ use Spatie\Searchable\SearchResult;
 use YlsIdeas\FeatureFlags\Facades\Features;
 
 /**
- * Class Pays
+ * Class Pays.
  *
  * @property int $ch_pay_id
  * @property string $ch_pay_label
@@ -98,6 +98,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property-read Collection|Ville[] $villes
  * @property-read int|null $villes_count
  * @property-read array<string> $resources
+ *
  * @method static PaysFactory factory(...$parameters)
  * @method static Builder|Pays newModelQuery()
  * @method static Builder|Pays newQuery()
@@ -151,6 +152,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @method static Builder|Pays whereLienWiki($value)
  * @method static Builder|Pays active()
  * @method static Builder|Pays visible()
+ *
  * @property-write mixed $reason
  * @property-read Collection<int, \Roxayl\MondeGC\Models\SubdivisionType> $subdivisionTypes
  * @property-read int|null $subdivision_types_count
@@ -158,6 +160,7 @@ use YlsIdeas\FeatureFlags\Facades\Features;
  * @property-read int|null $subdivisions_count
  * @property-read Collection<int, \Roxayl\MondeGC\Models\Version> $versions
  * @property-read int|null $versions_count
+ *
  * @mixin \Eloquent
  */
 class Pays extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
@@ -184,12 +187,12 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         'ch_pay_environnement_carte' => 'int',
         'ch_pay_education_carte' => 'int',
         'ch_pay_population_carte' => 'int',
-        'ch_pay_emploi_carte' => 'int'
+        'ch_pay_emploi_carte' => 'int',
     ];
 
     protected $dates = [
         'ch_pay_date',
-        'ch_pay_mis_jour'
+        'ch_pay_mis_jour',
     ];
 
     protected $fillable = [
@@ -270,9 +273,10 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
      */
     public function getMapManager(): PaysMapManager
     {
-        if(is_null($this->mapManager)) {
+        if (is_null($this->mapManager)) {
             $this->mapManager = new PaysMapManager($this);
         }
+
         return $this->mapManager;
     }
 
@@ -289,8 +293,8 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
      */
     public function getSearchResult(): SearchResult
     {
-        $context = "Continent " . $this->ch_pay_continent
-            . ((int)$this->ch_pay_publication === self::STATUS_ARCHIVED ? ' - Pays archivé' : '');
+        $context = 'Continent ' . $this->ch_pay_continent
+            . ((int) $this->ch_pay_publication === self::STATUS_ARCHIVED ? ' - Pays archivé' : '');
 
         return new SearchResult(
             $this, $this->ch_pay_nom, $context,
@@ -355,6 +359,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     /**
      * Donne les organisations gérées par le pays (donc sur lesquelles le pays a un niveau de permission d'au
      * moins administrateur).
+     *
      * @return Support\Collection<int, Organisation>
      */
     public function managedOrganisations(): Support\Collection
@@ -449,14 +454,14 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     /**
      * Récupère les pays actifs.
      *
-     * @param Builder $query
+     * @param  Builder  $query
      * @return Builder
      */
     public function scopeActive(Builder $query): Builder
     {
         $inactivityMonths = config('gameplay.country_inactivity_months');
         $columns = array_merge([$this->getKeyName()], $this->getFillable(), $this->getDates());
-        
+
         return $query->visible()
             ->select($columns)
             ->join('users_pays', 'users_pays.ID_pays', '=', 'ch_pay_id')
@@ -484,7 +489,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
              JOIN users_pays ON users_pays.ID_user = users.ch_use_id
              WHERE users_pays.ID_pays = ?', [$this->ch_pay_id]);
 
-        if(isset($result[0])) {
+        if (isset($result[0])) {
             $date = new Carbon($result[0]->last_date);
         } else {
             // Si ce pays n'a pas d'utilisateur, on génère une date de dernière activité bien ancienne pour "simuler"
@@ -503,19 +508,19 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         $lastActivity = $this->getLastActivity();
         $coefficient = 1;
 
-        if($lastActivity < Carbon::now()->subMonths(6)) {
+        if ($lastActivity < Carbon::now()->subMonths(6)) {
             $coefficient = 0.5;
-        } elseif($lastActivity < Carbon::now()->subMonths(5)) {
+        } elseif ($lastActivity < Carbon::now()->subMonths(5)) {
             $coefficient = 0.6;
-        } elseif($lastActivity < Carbon::now()->subMonths(4)) {
+        } elseif ($lastActivity < Carbon::now()->subMonths(4)) {
             $coefficient = 0.7;
-        } elseif($lastActivity < Carbon::now()->subMonths(3)) {
+        } elseif ($lastActivity < Carbon::now()->subMonths(3)) {
             $coefficient = 0.8;
-        } elseif($lastActivity < Carbon::now()->subMonths(2)) {
+        } elseif ($lastActivity < Carbon::now()->subMonths(2)) {
             $coefficient = 0.9;
         }
 
-        return (float)$coefficient;
+        return (float) $coefficient;
     }
 
     /**
@@ -541,7 +546,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
     /**
      * Donne les ressources générées par les organisations du pays.
      *
-     * @param bool $includeAlliance Inclut les statistiques générées par l'alliance.
+     * @param  bool  $includeAlliance  Inclut les statistiques générées par l'alliance.
      * @return array<string, float>
      */
     public function organisationResources(bool $includeAlliance = true): array
@@ -549,27 +554,27 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         $resourceCacheParameters = ['includeAlliance' => $includeAlliance];
 
         // Récupérer les données depuis le cache, si disponible.
-        if(Features::accessible('cache') && cache()->has($this->resourceCacheKey($resourceCacheParameters))) {
+        if (Features::accessible('cache') && cache()->has($this->resourceCacheKey($resourceCacheParameters))) {
             return cache()->get($this->resourceCacheKey($resourceCacheParameters));
         }
 
         $sumResources = EconomyService::resourcesPrefilled();
 
-        foreach($this->organisationsAll() as $organisation) {
-            if(! $includeAlliance && $organisation->membersGenerateResources()) {
+        foreach ($this->organisationsAll() as $organisation) {
+            if (! $includeAlliance && $organisation->membersGenerateResources()) {
                 continue;
             }
             $generatedResources = $organisation->organisationResources();
             $nbMembers = $organisation->members->count();
 
-            foreach(Resource::cases() as $resource) {
-                $generatedResources[$resource->value] = (int)($generatedResources[$resource->value] / $nbMembers);
+            foreach (Resource::cases() as $resource) {
+                $generatedResources[$resource->value] = (int) ($generatedResources[$resource->value] / $nbMembers);
                 $sumResources[$resource->value] += $generatedResources[$resource->value];
             }
         }
 
         // Mettre en cache les ressources durant une durée aléatoire.
-        if(Features::accessible('cache')) {
+        if (Features::accessible('cache')) {
             $cacheTtl = random_int(config('cache.ttl_lower_bound'), config('cache.ttl_higher_bound'));
             cache()->put($this->resourceCacheKey($resourceCacheParameters), $sumResources, now()->addMinutes($cacheTtl));
         }
@@ -590,7 +595,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         $resourceCacheParameters = ['withOrganisations' => 'withoutAlliance'];
 
         // Récupérer les données depuis le cache, si disponible.
-        if(Features::accessible('cache') && cache()->has($this->resourceCacheKey($resourceCacheParameters))) {
+        if (Features::accessible('cache') && cache()->has($this->resourceCacheKey($resourceCacheParameters))) {
             return cache()->get($this->resourceCacheKey($resourceCacheParameters));
         }
 
@@ -598,21 +603,21 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         $inactivityCoefficient = $this->inactivityCoefficient();
 
         $baseResources = $this->baseResources();
-        $withoutAllianceResources =  $this->organisationResources(false);
+        $withoutAllianceResources = $this->organisationResources(false);
 
-        foreach(Resource::cases() as $resource) {
+        foreach (Resource::cases() as $resource) {
             // Pour toutes les ressources positives, on peut être amené à diminuer la quantité
             // de ressources données si le pays est inactif.
-            if($withoutAllianceResources[$resource->value] > 0) {
+            if ($withoutAllianceResources[$resource->value] > 0) {
                 $withoutAllianceResources[$resource->value] =
-                    (int)($withoutAllianceResources[$resource->value] * $inactivityCoefficient);
+                    (int) ($withoutAllianceResources[$resource->value] * $inactivityCoefficient);
             }
             $sumResources[$resource->value] += $baseResources[$resource->value]
                 + $withoutAllianceResources[$resource->value];
         }
 
         // Mettre en cache les ressources durant une durée aléatoire.
-        if(Features::accessible('cache')) {
+        if (Features::accessible('cache')) {
             $cacheTtl = random_int(config('cache.ttl_lower_bound'), config('cache.ttl_higher_bound'));
             cache()->put($this->resourceCacheKey($resourceCacheParameters), $sumResources, now()->addMinutes($cacheTtl));
         }
@@ -630,7 +635,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         $resourceCacheParameters = ['withOrganisations' => false];
 
         // Récupérer les données depuis le cache, si disponible.
-        if(Features::accessible('cache') && cache()->has($this->resourceCacheKey($resourceCacheParameters))) {
+        if (Features::accessible('cache') && cache()->has($this->resourceCacheKey($resourceCacheParameters))) {
             return cache()->get($this->resourceCacheKey($resourceCacheParameters));
         }
 
@@ -642,7 +647,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         $infrastructureResources = $this->infrastructureResources();
         $roleplayResources = $this->roleplayResources();
 
-        foreach(Resource::cases() as $resource) {
+        foreach (Resource::cases() as $resource) {
             $sumResources[$resource->value] += $villeResources[$resource->value]
                 + $mapResources[$resource->value]
                 + $infrastructureResources[$resource->value]
@@ -650,13 +655,13 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
 
             // Pour toutes les ressources positives, on peut être amené à diminuer la quantité
             // de ressources données si le pays est inactif.
-            if($sumResources[$resource->value] > 0) {
-                $sumResources[$resource->value] = (int)($sumResources[$resource->value] * $inactivityCoefficient);
+            if ($sumResources[$resource->value] > 0) {
+                $sumResources[$resource->value] = (int) ($sumResources[$resource->value] * $inactivityCoefficient);
             }
         }
 
         // Mettre en cache les ressources durant une durée aléatoire.
-        if(Features::accessible('cache')) {
+        if (Features::accessible('cache')) {
             $cacheTtl = random_int(config('cache.ttl_lower_bound'), config('cache.ttl_higher_bound'));
             cache()->put($this->resourceCacheKey($resourceCacheParameters), $sumResources, now()->addMinutes($cacheTtl));
         }
@@ -677,7 +682,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         $resourceCacheParameters = ['withOrganisations' => true];
 
         // Récupérer les données depuis le cache, si disponible.
-        if(Features::accessible('cache') && cache()->has($this->resourceCacheKey($resourceCacheParameters))) {
+        if (Features::accessible('cache') && cache()->has($this->resourceCacheKey($resourceCacheParameters))) {
             return cache()->get($this->resourceCacheKey($resourceCacheParameters));
         }
 
@@ -685,13 +690,13 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         $inactivityCoefficient = $this->inactivityCoefficient();
 
         $withoutOrganisationResources = $this->baseResources();
-        $organisationResources =  $this->organisationResources();
+        $organisationResources = $this->organisationResources();
 
-        foreach(Resource::cases() as $resource) {
+        foreach (Resource::cases() as $resource) {
             // Pour toutes les ressources positives, on peut être amené à diminuer la quantité
             // de ressources données si le pays est inactif.
-            if($organisationResources[$resource->value] > 0) {
-                $organisationResources[$resource->value] = (int)($organisationResources[$resource->value] * $inactivityCoefficient);
+            if ($organisationResources[$resource->value] > 0) {
+                $organisationResources[$resource->value] = (int) ($organisationResources[$resource->value] * $inactivityCoefficient);
             }
 
             $sumResources[$resource->value] += $withoutOrganisationResources[$resource->value]
@@ -699,7 +704,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         }
 
         // Mettre en cache les ressources durant une durée aléatoire.
-        if(Features::accessible('cache')) {
+        if (Features::accessible('cache')) {
             $cacheTtl = random_int(config('cache.ttl_lower_bound'), config('cache.ttl_higher_bound'));
             cache()->put($this->resourceCacheKey($resourceCacheParameters), $sumResources, now()->addMinutes($cacheTtl));
         }
@@ -720,7 +725,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function(Pays $pays): void {
+        static::deleting(function (Pays $pays): void {
             $pays->deleteAllInfrastructures();
             $pays->getMapManager()->removeOldInfluenceRows();
         });

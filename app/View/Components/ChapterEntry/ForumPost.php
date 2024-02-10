@@ -27,15 +27,15 @@ class ForumPost extends BaseMediaEntry
     {
         $url = $parameters['url'];
         $postId = parse_url($url)['fragment'];
-        if(! is_numeric($postId)) {
+        if (! is_numeric($postId)) {
             throw new \InvalidArgumentException("L'identifiant du post n'est pas correct.");
         }
 
         $client = new Client();
         $response = $client->request('GET', $url);
         /** @noinspection PhpClassConstantAccessedViaChildClassInspection */
-        if($response->getStatusCode() !== Response::HTTP_OK) {
-            throw new HttpClientException("Impossible de charger le post du forum.");
+        if ($response->getStatusCode() !== Response::HTTP_OK) {
+            throw new HttpClientException('Impossible de charger le post du forum.');
         }
 
         $html = new HtmlDocument($response->getBody()->getContents());

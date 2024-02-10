@@ -14,13 +14,13 @@ class ScriptConfiguration extends Component
 
     public function __construct()
     {
-        if(defined('DEF_URI_PATH')) {
+        if (defined('DEF_URI_PATH')) {
             $baseUrl = DEF_URI_PATH;
         } else {
             $baseUrl = url('');
         }
 
-        if(! Str::endsWith($baseUrl, '/')) {
+        if (! Str::endsWith($baseUrl, '/')) {
             $baseUrl .= '/';
         }
 

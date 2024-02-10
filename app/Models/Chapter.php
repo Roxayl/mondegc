@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 use Roxayl\MondeGC\Models\Traits\Versionable;
 
 /**
- * Class Chapter
+ * Class Chapter.
  *
  * @property int $id
  * @property int $roleplay_id
@@ -42,6 +42,7 @@ use Roxayl\MondeGC\Models\Traits\Versionable;
  * @property-read int|null $entries_count
  * @property-read Collection|Version[] $versions
  * @property-read int|null $versions_count
+ *
  * @method static ChapterFactory factory(...$parameters)
  * @method static Builder|Chapter newModelQuery()
  * @method static Builder|Chapter newQuery()
@@ -61,6 +62,7 @@ use Roxayl\MondeGC\Models\Traits\Versionable;
  * @method static Builder|Chapter whereDeletedAt($value)
  * @method static Query\Builder|Chapter withTrashed()
  * @method static Query\Builder|Chapter withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Chapter extends Model
@@ -94,7 +96,7 @@ class Chapter extends Model
 
     const validationRules = [
         'name' => ['min:2', 'max:191', 'required'],
-        'summary' => ['min:2', 'required']
+        'summary' => ['min:2', 'required'],
     ];
 
     /**
@@ -131,6 +133,7 @@ class Chapter extends Model
 
     /**
      * Détermine si le chapitre en question est le chapitre courant.
+     *
      * @return bool
      */
     public function isCurrent(): bool
@@ -151,7 +154,7 @@ class Chapter extends Model
      */
     public function getTitleAttribute(): string
     {
-        return "Chapitre " . $this->order . " : " . $this->name;
+        return 'Chapitre ' . $this->order . ' : ' . $this->name;
     }
 
     /**
@@ -176,7 +179,7 @@ class Chapter extends Model
 
             // Evidemment, il faut que le chapitre existe au préalable ($previousChapter vaut 'null' lorsqu'on créé
             // le tout premier chapitre du roleplay).
-            if($previousChapter) {
+            if ($previousChapter) {
                 $previousChapter->ending_date = now();
                 $previousChapter->save();
             }
@@ -197,7 +200,7 @@ class Chapter extends Model
                 ->orderBy('order')
                 ->get();
 
-            for($i = 0; $i < $chapters->count(); $i++) {
+            for ($i = 0; $i < $chapters->count(); $i++) {
                 /** @var Chapter $chapter */
                 $chapter = $chapters->get($i);
                 $chapter->order = $i + 1;

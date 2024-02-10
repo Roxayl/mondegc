@@ -18,8 +18,8 @@ class Resourceable extends BaseRepository
      */
     protected static array $models = [
         'organisation' => Organisation::class,
-        'pays'         => Pays::class,
-        'ville'        => Ville::class,
+        'pays' => Pays::class,
+        'ville' => Ville::class,
     ];
 
     /**
@@ -39,14 +39,14 @@ class Resourceable extends BaseRepository
     }
 
     /**
-     * @param array|null $models
+     * @param  array|null  $models
      * @return $this
      */
     public function fetch(?array $models = null): self
     {
         $resourceables = collect();
 
-        if($models === null) {
+        if ($models === null) {
             $models = self::$models;
         }
 
@@ -89,12 +89,13 @@ class Resourceable extends BaseRepository
     public function withResources(): self
     {
         $this->collection->map(/**
-         * @param IResourceable|Model $resourceable
+         * @param  IResourceable|Model  $resourceable
          * @return IResourceable
-         */ function(IResourceable $resourceable) {
-            if(get_class($resourceable) === Ville::class) {
+         */ function (IResourceable $resourceable) {
+            if (get_class($resourceable) === Ville::class) {
                 return $resourceable;
             }
+
             return $resourceable->append('resources');
         });
 

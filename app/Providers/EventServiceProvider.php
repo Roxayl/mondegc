@@ -56,7 +56,7 @@ class EventServiceProvider extends ServiceProvider
 
         // On affiche une balise <script> avec les infos de configuration, juste avant
         // la balise </head>.
-        Eventy::addAction('display.beforeHeadClosingTag', function(): void {
+        Eventy::addAction('display.beforeHeadClosingTag', function (): void {
             echo (new ScriptConfiguration)->render()->toHtml();
         });
     }

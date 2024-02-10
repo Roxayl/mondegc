@@ -30,7 +30,7 @@ class OrganisationMemberPermissionChanged extends Notification
      */
     public function __construct(private readonly OrganisationMember $organisationMember, string $action)
     {
-        if(! in_array($action, $this->availableActions, true)) {
+        if (! in_array($action, $this->availableActions, true)) {
             throw new \InvalidArgumentException("Mauvais type d'action.");
         }
 

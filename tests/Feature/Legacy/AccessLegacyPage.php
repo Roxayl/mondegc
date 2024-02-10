@@ -40,9 +40,9 @@ class AccessLegacyPage extends TestCase
     }
 
     /**
-     * @param string $page Page legacy à tester ({@see pages}).
-     * @param int $assertStatus Code HTTP à valider.
-     * @param array $query Paramètres passés par l'URL.
+     * @param  string  $page  Page legacy à tester ({@see pages}).
+     * @param  int  $assertStatus  Code HTTP à valider.
+     * @param  array  $query  Paramètres passés par l'URL.
      */
     protected function assertAccessLegacyPage(string $page, int $assertStatus = 200, array $query = []): void
     {
@@ -50,8 +50,8 @@ class AccessLegacyPage extends TestCase
     }
 
     /**
-     * @param string $page
-     * @param array $query
+     * @param  string  $page
+     * @param  array  $query
      * @return TestResponse
      */
     protected function getLegacyPage(string $page, array $query = []): TestResponse
@@ -59,7 +59,7 @@ class AccessLegacyPage extends TestCase
         $queryString = http_build_query($query);
 
         $uri = '/' . str_replace('.', '/', $page) . '.php';
-        $fullUri = $uri . '?' .  $queryString;
+        $fullUri = $uri . '?' . $queryString;
 
         // Initialiser l'application legacy.
         $_SERVER['REQUEST_METHOD'] = 'GET';
@@ -82,7 +82,8 @@ class AccessLegacyPage extends TestCase
         try {
             mysql_query('COMMIT');
             mysql_query('UNLOCK TABLES');
-        } catch (\Throwable) { }
+        } catch (\Throwable) {
+        }
     }
 
     /**

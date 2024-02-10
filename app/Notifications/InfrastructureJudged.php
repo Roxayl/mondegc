@@ -48,7 +48,7 @@ class InfrastructureJudged extends Notification
     {
         return [
             'infrastructure_id' => $this->infrastructure->ch_inf_id,
-            'accepted' => $this->accepted
+            'accepted' => $this->accepted,
         ];
     }
 }

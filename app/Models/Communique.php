@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Roxayl\MondeGC\Models\Contracts\Roleplayable;
 
 /**
- * Class Communique
+ * Class Communique.
  *
  * @property int $ch_com_ID
  * @property string $ch_com_label
@@ -23,6 +23,7 @@ use Roxayl\MondeGC\Models\Contracts\Roleplayable;
  * @property string $ch_com_contenu
  * @property int|null $ch_com_pays_id
  * @property CustomUser $user
+ *
  * @method static Builder|Communique newModelQuery()
  * @method static Builder|Communique newQuery()
  * @method static Builder|Communique query()
@@ -37,6 +38,7 @@ use Roxayl\MondeGC\Models\Contracts\Roleplayable;
  * @method static Builder|Communique whereChComStatut($value)
  * @method static Builder|Communique whereChComTitre($value)
  * @method static Builder|Communique whereChComUserId($value)
+ *
  * @mixin \Eloquent
  */
 class Communique extends Model
@@ -48,7 +50,7 @@ class Communique extends Model
         'ch_com_statut' => 'int',
         'ch_com_element_id' => 'int',
         'ch_com_user_id' => 'int',
-        'ch_com_pays_id' => 'int'
+        'ch_com_pays_id' => 'int',
     ];
 
     const CREATED_AT = 'ch_com_date';
@@ -56,7 +58,7 @@ class Communique extends Model
 
     protected $dates = [
         'ch_com_date',
-        'ch_com_date_mis_jour'
+        'ch_com_date_mis_jour',
     ];
 
     protected $fillable = [
@@ -65,7 +67,7 @@ class Communique extends Model
         'ch_com_element_id',
         'ch_com_titre',
         'ch_com_contenu',
-        'ch_com_pays_id'
+        'ch_com_pays_id',
     ];
 
     public const STATUS_PUBLISHED = 1;
@@ -100,7 +102,7 @@ class Communique extends Model
     {
         $class = self::$publisherMorphMap[$this->ch_com_categorie];
 
-        if($class === null) {
+        if ($class === null) {
             throw new \InvalidArgumentException("Pas de classe assignée pour {$this->ch_com_categorie}.");
         }
 

@@ -29,30 +29,32 @@ class PaysMapManager implements Influencable
 
     /**
      * Génère un tableau contenant les ressources de la carte.
+     *
      * @return array
      */
     public function mapResources(): array
     {
         $result = [];
-        foreach(Resource::cases() as $resource) {
+        foreach (Resource::cases() as $resource) {
             $field = "ch_pay_{$resource->value}_carte";
             $result[$resource->value] = $this->pays->$field;
         }
+
         return $result;
     }
 
     public function removeOldInfluenceRows(\Closure $f = null): bool
     {
-       // On écrase la méthode définie dans le trait, car elle recherche une relation
-       // dans Models\Pays... et comme PaysMapManager n'est pas une classe Eloquent...
-       // on est obligé de rechercher les influences du pays "manuellement".
+        // On écrase la méthode définie dans le trait, car elle recherche une relation
+        // dans Models\Pays... et comme PaysMapManager n'est pas une classe Eloquent...
+        // on est obligé de rechercher les influences du pays "manuellement".
 
         $influencable_type = Influence::getActualClassNameForMorph(get_class());
 
         $existingInfluences = Influence::where('influencable_id', $this->pays->ch_pay_id)
             ->where('influencable_type', $influencable_type)->get();
 
-        foreach($existingInfluences as $existingInfluence) {
+        foreach ($existingInfluences as $existingInfluence) {
             $existingInfluence->delete();
         }
 

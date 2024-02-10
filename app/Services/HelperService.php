@@ -19,52 +19,55 @@ class HelperService
     }
 
     /**
-     * @param string $element
-     * @param mixed $data
+     * @param  string  $element
+     * @param  mixed  $data
      * @return string
      */
     public static function renderLegacyElement(string $element, mixed $data): string
     {
-        if(!is_array($data)) {
+        if (! is_array($data)) {
             $data = [$data];
         }
 
         ob_start();
-        require(base_path('legacy/php/elements/' . $element . '.php'));
+        require base_path('legacy/php/elements/' . $element . '.php');
+
         return ob_get_clean();
     }
 
     /**
-     * @param string|null $text
+     * @param  string|null  $text
      * @return string
      */
     public static function purifyHtml(?string $text): string
     {
         static $purifier = null;
-        if(is_null($purifier)) {
+        if (is_null($purifier)) {
             $config = HTMLPurifier_Config::createDefault();
             $config->set('HTML.SafeIframe', true);
             $config->set('URI.SafeIframeRegexp',
                 '%^https://(.*)%');
             $purifier = new HTMLPurifier($config);
         }
+
         return $purifier->purify($text);
     }
 
     /**
      * Calcule la taille d'un répertoire.
      *
-     * @param string $directory
+     * @param  string  $directory
      * @return float
      */
     public static function directorySize(string $directory): float
     {
         $size = 0;
-        foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory)) as $file) {
-            if($file->getFileName() !== '..') {
+        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory)) as $file) {
+            if ($file->getFileName() !== '..') {
                 $size += $file->getSize();
             }
         }
+
         return $size;
     }
 

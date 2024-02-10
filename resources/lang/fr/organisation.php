@@ -10,20 +10,20 @@ return [
     */
 
     'types' => [
-        'agency' => "Agence GC",
+        'agency' => 'Agence GC',
         'agency-description' => "Les agences GC sont des organismes de l'OCGC qui agissent dans des domaines spécifiques : la santé, l'environnement, l'agriculture...",
         'agency-criteria' => [
             "La puissance économique de l'agence GC est seulement composée des <strong>ressources propres</strong> de l'organisation.",
             "L'agence GC peut créer des <strong>infrastructures</strong>.",
             "Les ressources générées par l'agence GC sont <strong>réparties entre les pays membres</strong>.",
-            "Un pays peut rejoindre <strong>plusieurs</strong> agences GC.",
+            'Un pays peut rejoindre <strong>plusieurs</strong> agences GC.',
         ],
         'agency-prerequisites' => [
             "Nécessite d'être administrateur du site",
         ],
 
-        'alliance' => "Alliance",
-        'alliance-description' => "Les alliances sont au coeur des enjeux diplomatiques du Monde GC. Ce sont des unions économiques, politiques et militaires de premier ordre.",
+        'alliance' => 'Alliance',
+        'alliance-description' => 'Les alliances sont au coeur des enjeux diplomatiques du Monde GC. Ce sont des unions économiques, politiques et militaires de premier ordre.',
         'alliance-criteria' => [
             "La puissance économique de l'alliance est composée des <strong>ressources des pays</strong>, ainsi que <strong>celles de l'alliance</strong>.",
             "L'alliance peut créer des <strong>infrastructures</strong>.",
@@ -31,18 +31,18 @@ return [
             "Un pays ne peut rejoindre qu'<strong>une seule</strong> alliance.",
         ],
         'alliance-prerequisites' => [
-            "Avoir au moins 2 membres",
-            "Avoir 3 infrastructures validées",
+            'Avoir au moins 2 membres',
+            'Avoir 3 infrastructures validées',
             "Aucun membre ne doit déjà faire partie d'une alliance",
         ],
 
-        'organisation' => "Organisation",
+        'organisation' => 'Organisation',
         'organisation-description' => 'Les organisations regroupent les diverses pays autour de thématiques communes : sport, culture, sciences...',
         'organisation-criteria' => [
             "La puissance économique de l'organisation est seulement composée des <strong>ressources propres</strong> de l'organisation.",
             "L'organisation peut créer des <strong>infrastructures</strong>.",
             "Les ressources générées par l'organisation sont <strong>réparties entre les pays membres</strong>.",
-            "Un pays peut rejoindre <strong>plusieurs</strong> organisations.",
+            'Un pays peut rejoindre <strong>plusieurs</strong> organisations.',
         ],
         'organisation-prerequisites' => [],
 
@@ -53,7 +53,7 @@ return [
             "Un pays peut rejoindre <strong>plusieurs</strong> groupes d'États.",
         ],
         'group-prerequisites' => [
-            "Ne pas avoir d'infrastructures"
+            "Ne pas avoir d'infrastructures",
         ],
     ],
 
@@ -64,7 +64,7 @@ return [
     ],
 
     'migrate' => [
-        'no-criteria' => "Pas de critère",
+        'no-criteria' => 'Pas de critère',
     ],
 
     'validation' => [

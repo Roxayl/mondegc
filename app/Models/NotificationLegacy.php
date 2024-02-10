@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class Notification
+ * Class Notification.
  *
  * @property int $id
  * @property int|null $recipient_id
@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property bool $unread
  * @property Carbon $created
  * @property CustomUser $user
+ *
  * @method static Builder|NotificationLegacy newModelQuery()
  * @method static Builder|NotificationLegacy newQuery()
  * @method static Builder|NotificationLegacy query()
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|NotificationLegacy whereRecipientId($value)
  * @method static Builder|NotificationLegacy whereTypeNotif($value)
  * @method static Builder|NotificationLegacy whereUnread($value)
+ *
  * @mixin \Eloquent
  */
 class NotificationLegacy extends Model
@@ -36,11 +38,11 @@ class NotificationLegacy extends Model
     protected $casts = [
         'recipient_id' => 'int',
         'element' => 'int',
-        'unread' => 'bool'
+        'unread' => 'bool',
     ];
 
     protected $dates = [
-        'created'
+        'created',
     ];
 
     protected $fillable = [
@@ -48,7 +50,7 @@ class NotificationLegacy extends Model
         'type_notif',
         'element',
         'unread',
-        'created'
+        'created',
     ];
 
     /**

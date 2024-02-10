@@ -18,7 +18,7 @@ if (! function_exists('url')) {
         }
 
         return app(UrlGenerator::class)->to(
-            (! empty(config('app.directory_path')) ? config('app.directory_path') . '/' : ''). $path,
+            (! empty(config('app.directory_path')) ? config('app.directory_path') . '/' : '') . $path,
             $parameters, $secure);
     }
 }

@@ -20,8 +20,8 @@ class ChapterController extends Controller
     /**
      * Affiche le bouton de création de roleplay.
      *
-     * @param Roleplay $roleplay
-     * @param StringBladeService $stringBlade
+     * @param  Roleplay  $roleplay
+     * @param  StringBladeService  $stringBlade
      * @return Response
      */
     public function createButton(Roleplay $roleplay, StringBladeService $stringBlade): Response
@@ -40,8 +40,8 @@ class ChapterController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param Roleplay $roleplay
-     * @param StringBladeService $stringBlade
+     * @param  Roleplay  $roleplay
+     * @param  StringBladeService  $stringBlade
      * @return Response
      */
     public function create(Roleplay $roleplay, StringBladeService $stringBlade): Response
@@ -60,8 +60,8 @@ class ChapterController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Roleplay $roleplay
-     * @param Request $request
+     * @param  Roleplay  $roleplay
+     * @param  Request  $request
      * @return RedirectResponse
      */
     public function store(Roleplay $roleplay, Request $request): RedirectResponse
@@ -93,8 +93,8 @@ class ChapterController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Chapter $chapter
-     * @param StringBladeService $stringBlade
+     * @param  Chapter  $chapter
+     * @param  StringBladeService  $stringBlade
      * @return Response
      */
     public function show(Chapter $chapter, StringBladeService $stringBlade): Response
@@ -113,8 +113,8 @@ class ChapterController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Chapter $chapter
-     * @param StringBladeService $stringBlade
+     * @param  Chapter  $chapter
+     * @param  StringBladeService  $stringBlade
      * @return Response
      */
     public function edit(Chapter $chapter, StringBladeService $stringBlade): Response
@@ -133,8 +133,8 @@ class ChapterController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param Chapter $chapter
+     * @param  Request  $request
+     * @param  Chapter  $chapter
      * @return RedirectResponse
      */
     public function update(Request $request, Chapter $chapter): RedirectResponse
@@ -159,7 +159,7 @@ class ChapterController extends Controller
     /**
      * Affiche la page de confirmation de la suppression du chapitre.
      *
-     * @param Chapter $chapter
+     * @param  Chapter  $chapter
      * @return View
      */
     public function delete(Chapter $chapter): View
@@ -172,7 +172,7 @@ class ChapterController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Chapter $chapter
+     * @param  Chapter  $chapter
      * @return RedirectResponse
      */
     public function destroy(Chapter $chapter): RedirectResponse
@@ -190,7 +190,7 @@ class ChapterController extends Controller
     /**
      * Affiche l'historique des modifications d'un chapitre.
      *
-     * @param Chapter $chapter
+     * @param  Chapter  $chapter
      * @return View
      */
     public function history(Chapter $chapter): View
@@ -200,7 +200,7 @@ class ChapterController extends Controller
         $firstChapter = $chapter->roleplay->chapters->first();
         $versions = $chapter->versions()->latest('version_id')->paginate();
         $canRevert = Gate::allows('revert', $chapter);
-        $title = 'Historique du chapitre ' .  $chapter->order . ' : ' . $chapter->name;
+        $title = 'Historique du chapitre ' . $chapter->order . ' : ' . $chapter->name;
         $diffRoute = 'chapter.diff';
         $breadcrumb = view('chapter.components.history-breadcrumb', compact('firstChapter', 'chapter'));
 
@@ -213,9 +213,9 @@ class ChapterController extends Controller
     /**
      * Compare deux versions d'un chapitre.
      *
-     * @param VersionDiffService $diffService
-     * @param Version $version1
-     * @param Version|null $version2
+     * @param  VersionDiffService  $diffService
+     * @param  Version  $version1
+     * @param  Version|null  $version2
      * @return View
      */
     public function diff(VersionDiffService $diffService, Version $version1, ?Version $version2 = null): View
@@ -225,7 +225,7 @@ class ChapterController extends Controller
         /** @var Chapter $model1 */
         /** @var Chapter $model2 */
         $model1 = $version1->getModel();
-        if($version2 === null) {
+        if ($version2 === null) {
             $model2 = new ($model1::class);
         } else {
             $model2 = $version2->getModel();

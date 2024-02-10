@@ -11,10 +11,9 @@ trait DeletesInfluences
      */
     public function deleteInfluences(): void
     {
-        $influences = Influence
-            ::where('influencable_type', Influence::getActualClassNameForMorph(get_class()))
+        $influences = Influence::where('influencable_type', Influence::getActualClassNameForMorph(get_class()))
             ->where('influencable_id', $this->{$this->primaryKey})->get();
-        foreach($influences as $influence) {
+        foreach ($influences as $influence) {
             $influence->delete();
         }
     }

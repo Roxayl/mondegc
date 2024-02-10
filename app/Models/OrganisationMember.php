@@ -13,7 +13,7 @@ use Roxayl\MondeGC\Notifications\OrganisationMemberPermissionChanged;
 use Roxayl\MondeGC\Notifications\OrganisationMemberQuit;
 
 /**
- * Class OrganisationMember
+ * Class OrganisationMember.
  *
  * @property int $id
  * @property int|null $organisation_id
@@ -23,6 +23,7 @@ use Roxayl\MondeGC\Notifications\OrganisationMemberQuit;
  * @property Carbon|null $updated_at
  * @property Organisation $organisation
  * @property Pays $pays
+ *
  * @method static Builder|OrganisationMember newModelQuery()
  * @method static Builder|OrganisationMember newQuery()
  * @method static Builder|OrganisationMember query()
@@ -32,6 +33,7 @@ use Roxayl\MondeGC\Notifications\OrganisationMemberQuit;
  * @method static Builder|OrganisationMember wherePaysId($value)
  * @method static Builder|OrganisationMember wherePermissions($value)
  * @method static Builder|OrganisationMember whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class OrganisationMember extends Model
@@ -41,13 +43,13 @@ class OrganisationMember extends Model
     protected $casts = [
         'organisation_id' => 'int',
         'permissions' => 'int',
-        'pays_id' => 'int'
+        'pays_id' => 'int',
     ];
 
     protected $fillable = [
         'organisation_id',
         'permissions',
-        'pays_id'
+        'pays_id',
     ];
 
     /**
@@ -78,21 +80,21 @@ class OrganisationMember extends Model
             Organisation::$permissions['pending'] => 'En attente de validation',
             Organisation::$permissions['invited'] => 'Invitation envoyée',
             default => throw new \InvalidArgumentException(
-                "Mauvais type de permission."),
+                'Mauvais type de permission.'),
         };
     }
 
     /**
-     * @param Model|null $oldMember
+     * @param  Model|null  $oldMember
      */
     public function sendNotifications(Model $oldMember = null): void
     {
-        $oldPermission = !is_null($oldMember) ?
-            (int)$oldMember->permissions : $this->permissions;
+        $oldPermission = ! is_null($oldMember) ?
+            (int) $oldMember->permissions : $this->permissions;
 
         // Pays en attente de validation rejetée.
         // Notifiés : Dirigeants du pays.
-        if($oldPermission === Organisation::$permissions['pending'] && !$this->exists) {
+        if ($oldPermission === Organisation::$permissions['pending'] && ! $this->exists) {
             $pays = Pays::find($this->pays_id);
             $organisation = Organisation::find($this->organisation_id);
             $users = $pays->users;
@@ -102,11 +104,10 @@ class OrganisationMember extends Model
 
         // Pays en attente de validation acceptée, ou invitation acceptée.
         // Notifiés : Utilisateurs membres de l'organisation.
-        elseif( ($oldPermission === Organisation::$permissions['pending'] ||
+        elseif (($oldPermission === Organisation::$permissions['pending'] ||
                  $oldPermission === Organisation::$permissions['invited'])
                 &&
-                 $this->permissions === Organisation::$permissions['member'])
-        {
+                 $this->permissions === Organisation::$permissions['member']) {
             $users = Organisation::find(
                 $this->organisation_id)->getUsers(Organisation::$permissions['member']);
             Notification::send($users,
@@ -115,14 +116,14 @@ class OrganisationMember extends Model
 
         // Pays en attente de validation, à modérer par un administateur.
         // Notifiés : Administrateurs de l'organisation.
-        elseif($this->permissions === Organisation::$permissions['pending']) {
+        elseif ($this->permissions === Organisation::$permissions['pending']) {
             $users = Organisation::find($this->organisation_id)->getUsers();
             Notification::send($users, new OrganisationMemberJoined($this));
         }
 
         // Pays invité à rejoindre l'organisation.
         // Notifiés : Utilisateurs gérant le pays invité.
-        elseif($this->permissions === Organisation::$permissions['invited']) {
+        elseif ($this->permissions === Organisation::$permissions['invited']) {
             $pays = Pays::find($this->pays_id);
             $users = $pays->users;
             Notification::send($users, new OrganisationMemberInvited($this));
@@ -130,7 +131,7 @@ class OrganisationMember extends Model
 
         // Pays devenu administrateur.
         // Notifiés : Utilisateurs membres de l'organisation.
-        elseif($oldPermission >= Organisation::$permissions['member']
+        elseif ($oldPermission >= Organisation::$permissions['member']
             && $this->permissions === Organisation::$permissions['administrator']) {
             $users = Organisation::find(
                 $this->organisation_id)->getUsers(Organisation::$permissions['member']);
@@ -141,7 +142,7 @@ class OrganisationMember extends Model
 
         // Pays ayant quitté l'organisation.
         // Notifiés : Utilisateurs membres de l'organisation.
-        elseif(!$this->exists) {
+        elseif (! $this->exists) {
             $users = Organisation::find(
                 $this->organisation_id)->getUsers(Organisation::$permissions['member']);
             $pays = Pays::find($this->pays_id);

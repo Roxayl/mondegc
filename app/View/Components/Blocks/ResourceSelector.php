@@ -27,11 +27,11 @@ class ResourceSelector extends Component
 
         $nbResources = count($this->resourceList);
         $this->leftColumnCount = $this->rightColumnCount = $nbResources / 2;
-        if(count($this->resourceList) % 2 !== 0) {
+        if (count($this->resourceList) % 2 !== 0) {
             $this->leftColumnCount++;
         }
 
-        if($oldValues === null) {
+        if ($oldValues === null) {
             $this->oldValues = EconomyService::resourcesPrefilled();
         } else {
             $this->oldValues = $oldValues;

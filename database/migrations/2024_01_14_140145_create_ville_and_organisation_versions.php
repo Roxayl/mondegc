@@ -26,4 +26,4 @@ class CreateVilleAndOrganisationVersions extends Migration
     {
         //
     }
-};
+}
