@@ -20,7 +20,7 @@ class ChapterPolicy implements VersionablePolicy
     /**
      * Détermine si l'utilisateur peut afficher les chapitres et utiliser le système de roleplay.
      *
-     * @param CustomUser|null $user
+     * @param  CustomUser|null  $user
      * @return bool
      */
     public function display(?CustomUser $user): bool
@@ -31,8 +31,8 @@ class ChapterPolicy implements VersionablePolicy
     /**
      * Vérifie si un utilisateur peut gérer les chapitres d'un roleplay.
      *
-     * @param CustomUser $user
-     * @param Chapter $chapter
+     * @param  CustomUser  $user
+     * @param  Chapter  $chapter
      * @return bool
      */
     public function manage(CustomUser $user, Chapter $chapter): bool
@@ -56,8 +56,8 @@ class ChapterPolicy implements VersionablePolicy
     /**
      * Détermine si l'utilisateur peut assigner des ressources à une entité ressourçeable dans le cadre d'un roleplay.
      *
-     * @param CustomUser $user
-     * @param Chapter $chapter
+     * @param  CustomUser  $user
+     * @param  Chapter  $chapter
      * @return bool
      */
     public function createResourceables(CustomUser $user, Chapter $chapter): bool

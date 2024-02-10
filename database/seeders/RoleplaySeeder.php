@@ -36,7 +36,7 @@ class RoleplaySeeder extends Seeder
         /** @var CustomUser $user */
         $user = CustomUser::inRandomOrder()->first();
 
-        DB::transaction(function() use ($user, $chapterCount) {
+        DB::transaction(function () use ($user, $chapterCount) {
             Roleplay::factory()
                 ->sequence(
                     ['ending_date' => null],
@@ -45,41 +45,36 @@ class RoleplaySeeder extends Seeder
                 ->has(
                     Chapter::factory()
                         ->count($chapterCount)
-                        ->sequence(function($sequence) use ($user, $chapterCount) {
+                        ->sequence(function ($sequence) use ($user, $chapterCount) {
                             $i = ($sequence->index % $chapterCount) + 1;
+
                             return [
                                 'user_id' => $user,
-                                'order' => $i
+                                'order' => $i,
                             ];
                         })
                         ->has(
                             ChapterResourceable::factory()
-                                ->state(function(array $attributes, Chapter $chapter) {
+                                ->state(function (array $attributes, Chapter $chapter) {
                                     return ['chapter_id' => $chapter->id];
                                 })
                                 ->count(rand(0, 3))
                                 ->sequence(
                                     [
-                                      'resourceable_type'
-                                        => ChapterResourceable::getActualClassNameForMorph(Pays::class),
-                                      'resourceable_id'
-                                        => Pays::inRandomOrder()->first(),
+                                        'resourceable_type' => ChapterResourceable::getActualClassNameForMorph(Pays::class),
+                                        'resourceable_id' => Pays::inRandomOrder()->first(),
                                     ], [
-                                      'resourceable_type'
-                                        => ChapterResourceable::getActualClassNameForMorph(Organisation::class),
-                                      'resourceable_id'
-                                        => Organisation::inRandomOrder()->first(),
+                                        'resourceable_type' => ChapterResourceable::getActualClassNameForMorph(Organisation::class),
+                                        'resourceable_id' => Organisation::inRandomOrder()->first(),
                                     ], [
-                                      'resourceable_type'
-                                        => ChapterResourceable::getActualClassNameForMorph(Ville::class),
-                                      'resourceable_id'
-                                        => Ville::inRandomOrder()->first(),
+                                        'resourceable_type' => ChapterResourceable::getActualClassNameForMorph(Ville::class),
+                                        'resourceable_id' => Ville::inRandomOrder()->first(),
                                     ]),
                             'resourceables'
                         )
                         ->has(
                             ChapterEntry::factory()
-                                ->state(function(array $attributes, Chapter $chapter) {
+                                ->state(function (array $attributes, Chapter $chapter) {
                                     return ['chapter_id' => $chapter->id];
                                 })
                                 ->count(rand(0, 3))

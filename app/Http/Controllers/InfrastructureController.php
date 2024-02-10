@@ -21,12 +21,13 @@ class InfrastructureController extends Controller
     public function show(int $id): JsonResponse
     {
         $infrastructure = Infrastructure::with('infrastructurable')->findOrFail($id);
+
         return response()->json($infrastructure->toArray());
     }
 
     /**
-     * @param string $infrastructurableType
-     * @param int $infrastructurableId
+     * @param  string  $infrastructurableType
+     * @param  int  $infrastructurableId
      * @return View
      */
     public function selectGroup(string $infrastructurableType, int $infrastructurableId): View
@@ -42,16 +43,16 @@ class InfrastructureController extends Controller
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
 
         return view('infrastructure.select_group', compact([
-            'infrastructure', 'infrastructure_groupes'
+            'infrastructure', 'infrastructure_groupes',
         ]));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @param Request $request
-     * @param string $infrastructurableType
-     * @param int $infrastructurableId
+     * @param  Request  $request
+     * @param  string  $infrastructurableType
+     * @param  int  $infrastructurableId
      * @return View
      */
     public function create(Request $request, string $infrastructurableType, int $infrastructurableId): View
@@ -66,7 +67,7 @@ class InfrastructureController extends Controller
             $request->input('infrastructure_groupe_id'));
 
         $infrastructureOfficielle = null;
-        if($request->has('infrastructure_officielle_id')) {
+        if ($request->has('infrastructure_officielle_id')) {
             $infrastructureOfficielle = InfrastructureOfficielle::query()->find(
                 $request->input('infrastructure_officielle_id')
             );
@@ -75,14 +76,14 @@ class InfrastructureController extends Controller
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
 
         return view('infrastructure.create', compact([
-            'infrastructure', 'infrastructureGroupe', 'infrastructureOfficielle'
+            'infrastructure', 'infrastructureGroupe', 'infrastructureOfficielle',
         ]));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse
@@ -110,7 +111,7 @@ class InfrastructureController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return View
      */
     public function edit(int $id): View
@@ -125,16 +126,16 @@ class InfrastructureController extends Controller
 
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
 
-        return view('infrastructure.edit',compact([
-            'infrastructure', 'infrastructureOfficielle', 'infrastructureGroupe'
+        return view('infrastructure.edit', compact([
+            'infrastructure', 'infrastructureOfficielle', 'infrastructureGroupe',
         ]));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param int $id
+     * @param  Request  $request
+     * @param  int  $id
      * @return RedirectResponse
      */
     public function update(Request $request, int $id): RedirectResponse
@@ -153,7 +154,7 @@ class InfrastructureController extends Controller
     /**
      * Affiche le formulaire de confirmation pour supprimer une infrastructure.
      *
-     * @param int $id
+     * @param  int  $id
      * @return View
      */
     public function delete(int $id): View
@@ -168,7 +169,7 @@ class InfrastructureController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  int  $id
      * @return RedirectResponse
      */
     public function destroy(int $id): RedirectResponse

@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 
 /**
  * Classe abstraite représentant une collection de modèles ou d'entités.
+ *
  * @method self beforeGetting() Exécute une fonction avant d'appeler la méthode {@see get()}.
  */
 abstract class BaseRepository
@@ -41,11 +42,11 @@ abstract class BaseRepository
      */
     public function get(): ?Collection
     {
-        if(method_exists($this, 'beforeGetting')) {
+        if (method_exists($this, 'beforeGetting')) {
             $this->beforeGetting();
         }
 
-        if($this->totalCount === null) {
+        if ($this->totalCount === null) {
             $this->totalCount = $this->collection->count();
         }
 
@@ -53,7 +54,7 @@ abstract class BaseRepository
     }
 
     /**
-     * @param int $page
+     * @param  int  $page
      * @return $this
      */
     public function paginate(int $page): self
@@ -75,5 +76,5 @@ abstract class BaseRepository
     /**
      * @return $this
      */
-    public abstract function all(): self;
+    abstract public function all(): self;
 }

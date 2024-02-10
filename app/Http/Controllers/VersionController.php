@@ -16,25 +16,25 @@ class VersionController extends Controller
     /**
      * Permet de restaurer un modèle versionable à une version antérieure.
      *
-     * @param Version $version Version vers laquelle restaurer le modèle.
+     * @param  Version  $version  Version vers laquelle restaurer le modèle.
      */
     public function revert(Version $version): RedirectResponse
     {
-        DB::transaction(function() use ($version): void {
+        DB::transaction(function () use ($version): void {
             // Modèle versionné.
             /** @var Model|Versionable $model */
             $model = $version->getModel();
 
             $this->authorize('revert', $model);
 
-            if($version->isLast()) {
-                throw ValidationException::withMessages(["Cette version est déjà la dernière."]);
+            if ($version->isLast()) {
+                throw ValidationException::withMessages(['Cette version est déjà la dernière.']);
             }
 
-            if(! empty($version->reason)) {
-                $reason = "Retour à la version : " . $version->reason;
+            if (! empty($version->reason)) {
+                $reason = 'Retour à la version : ' . $version->reason;
             } else {
-                $reason = "Retour à la version du " . $version->created_at->format('d/m/Y à H:i');
+                $reason = 'Retour à la version du ' . $version->created_at->format('d/m/Y à H:i');
             }
 
             $version->revert();

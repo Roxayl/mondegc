@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 /**
- * Class OcgcProposal
+ * Class OcgcProposal.
  *
  * @property int $id
  * @property int|null $ID_pays
@@ -40,6 +40,7 @@ use Illuminate\Support\Str;
  * @property Carbon|null $created
  * @property Carbon|null $updated
  * @property-read Pays|null $pays
+ *
  * @method static Builder|OcgcProposal newModelQuery()
  * @method static Builder|OcgcProposal newQuery()
  * @method static Builder|OcgcProposal query()
@@ -66,6 +67,7 @@ use Illuminate\Support\Str;
  * @method static Builder|OcgcProposal whereType($value)
  * @method static Builder|OcgcProposal whereTypeReponse($value)
  * @method static Builder|OcgcProposal whereUpdated($value)
+ *
  * @mixin \Eloquent
  */
 class OcgcProposal extends Model
@@ -116,8 +118,8 @@ class OcgcProposal extends Model
      * @var string[] Correspondance entre le détail et l'identifiant d'un type de proposition.
      */
     private static array $typeDetail = [
-        'IRL' => "Sondage",
-        'RP'  => "Résolution",
+        'IRL' => 'Sondage',
+        'RP' => 'Résolution',
     ];
 
     /**
@@ -143,12 +145,12 @@ class OcgcProposal extends Model
     private function setMaxResponses(): void
     {
         // Obtenir le nombre maximal de réponses à partir des attributs de la base de données (e.g."reponse_5").
-        if(is_null(self::$maxResponses)) {
+        if (is_null(self::$maxResponses)) {
             $attrNames = $this->getFillable();
             $maxResponses = 0;
-            foreach($attrNames as $attrName) {
-                rescue(function() use($attrName, &$maxResponses) {
-                    if(Str::startsWith($attrName, 'reponse_')) {
+            foreach ($attrNames as $attrName) {
+                rescue(function () use ($attrName, &$maxResponses) {
+                    if (Str::startsWith($attrName, 'reponse_')) {
                         preg_match_all('!\d+!', $attrName, $matches);
                         $maxResponses = implode(' ', $matches[0]);
                     }
@@ -158,8 +160,8 @@ class OcgcProposal extends Model
         }
 
         // Vérifier que la valeur obtenue est correcte.
-        if(is_null(self::$maxResponses) || ! self::$maxResponses) {
-            throw new \UnexpectedValueException("Bad max response value.");
+        if (is_null(self::$maxResponses) || ! self::$maxResponses) {
+            throw new \UnexpectedValueException('Bad max response value.');
         }
     }
 
@@ -171,6 +173,7 @@ class OcgcProposal extends Model
     public function getMaxResponses(): int
     {
         $this->setMaxResponses();
+
         return self::$maxResponses;
     }
 
@@ -184,9 +187,9 @@ class OcgcProposal extends Model
         $responses = [];
 
         $responses[0] = 'Blanc';
-        for($i = 1; $i <= $this->getMaxResponses(); $i++) {
+        for ($i = 1; $i <= $this->getMaxResponses(); $i++) {
             $attribute = "reponse_$i";
-            if($this->$attribute !== null) {
+            if ($this->$attribute !== null) {
                 $responses[$i] = $this->$attribute;
             }
         }
@@ -212,13 +215,13 @@ class OcgcProposal extends Model
     /**
      * Ajoute de nouveaux pays votants à la proposition.
      *
-     * @param iterable<int> $paysIds Liste de pays décrits par leur identifiant.
+     * @param  iterable<int>  $paysIds  Liste de pays décrits par leur identifiant.
      */
     public function addVoters(iterable $paysIds): void
     {
         $votingCountries = $this->votingCountries()->pluck('ch_pay_id');
-        foreach($paysIds as $paysId) {
-            if($paysId === null || $votingCountries->contains($paysId)) {
+        foreach ($paysIds as $paysId) {
+            if ($paysId === null || $votingCountries->contains($paysId)) {
                 continue;
             }
             DB::table('ocgc_votes')->insert([

@@ -27,7 +27,7 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * Class Ville
+ * Class Ville.
  *
  * @property int $ch_vil_ID
  * @property int $ch_vil_paysID
@@ -70,6 +70,7 @@ use Spatie\Searchable\SearchResult;
  * @property-read Eloquent\Collection|Patrimoine[] $patrimoines
  * @property-read int|null $patrimoines_count
  * @property-read array<string> $resources
+ *
  * @method static Builder|Ville newModelQuery()
  * @method static Builder|Ville newQuery()
  * @method static Builder|Ville query()
@@ -106,6 +107,7 @@ use Spatie\Searchable\SearchResult;
  * @method static Builder|Ville whereChVilUser($value)
  * @method static VilleFactory factory(...$parameters)
  * @method static Builder|Ville visible()
+ *
  * @mixin \Eloquent
  */
 class Ville extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
@@ -127,12 +129,12 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
         'ch_vil_coord_X' => 'float',
         'ch_vil_coord_Y' => 'float',
         'ch_vil_capitale' => 'bool',
-        'ch_vil_population' => 'int'
+        'ch_vil_population' => 'int',
     ];
 
     protected $dates = [
         'ch_vil_date_enregistrement',
-        'ch_vil_mis_jour'
+        'ch_vil_mis_jour',
     ];
 
     protected $fillable = [
@@ -165,7 +167,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
         'ch_vil_contenu',
         'ch_vil_transports',
         'ch_vil_administration',
-        'ch_vil_culture'
+        'ch_vil_culture',
     ];
 
     protected array $dontVersionFields = [
@@ -193,7 +195,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
     public function getSearchResult(): SearchResult
     {
         $context = null;
-        if(!is_null($this->pays)) {
+        if (! is_null($this->pays)) {
             $context = 'Ville du pays <a href="page-pays.php?ch_pay_id='
                 . $this->ch_vil_paysID . '">' . $this->pays->ch_pay_nom . '</a>';
         }
@@ -272,7 +274,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
         $patrimoineResources = $this->patrimoineResources();
         $roleplayResources = $this->roleplayResources();
 
-        foreach(Resource::cases() as $resource) {
+        foreach (Resource::cases() as $resource) {
             $sumResources[$resource->value] += $infrastructureResources[$resource->value]
                 + $patrimoineResources[$resource->value]
                 + $roleplayResources[$resource->value];
@@ -291,7 +293,7 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function(Ville $ville): void {
+        static::deleting(function (Ville $ville): void {
             $ville->deleteAllInfrastructures();
         });
     }

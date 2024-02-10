@@ -23,16 +23,16 @@ class PaysFactory extends Factory
     public function definition(): array
     {
         return [
-            'ch_pay_label'       => 'pays',
+            'ch_pay_label' => 'pays',
             'ch_pay_publication' => 1,
             'ch_pay_emplacement' => $this->fetchFreeSpot(),
-            'ch_pay_continent'   => $this->faker->randomElement(['Oceania', 'Philicie', 'Aurinea', 'Volcania']),
-            'ch_pay_lien_forum'  => 'https://www.forum-gc.com/',
-            'ch_pay_nom'         => $this->faker->country(),
-            'ch_pay_devise'      => 'Ici, tout est à construire...',
-            'ch_pay_date'        => now(),
-            'ch_pay_mis_jour'    => now(),
-            'ch_pay_nb_update'   => 0,
+            'ch_pay_continent' => $this->faker->randomElement(['Oceania', 'Philicie', 'Aurinea', 'Volcania']),
+            'ch_pay_lien_forum' => 'https://www.forum-gc.com/',
+            'ch_pay_nom' => $this->faker->country(),
+            'ch_pay_devise' => 'Ici, tout est à construire...',
+            'ch_pay_date' => now(),
+            'ch_pay_mis_jour' => now(),
+            'ch_pay_nb_update' => 0,
         ];
     }
 

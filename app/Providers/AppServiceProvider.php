@@ -26,14 +26,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(Generator::class, function(): Generator {
+        $this->app->singleton(Generator::class, function (): Generator {
             $faker = Factory::create('fr_FR');
             $faker->addProvider(new FakerProviders\ChapterEntryMediaProvider($faker));
             $faker->addProvider(new FakerProviders\EventNameProvider($faker));
+
             return $faker;
         });
 
-        $this->app->singleton(StringBladeService::class, function(Application $app): StringBladeService {
+        $this->app->singleton(StringBladeService::class, function (Application $app): StringBladeService {
             return new StringBladeService(
                 $app->make(Filesystem::class),
                 $app->make(ViewFactory::class),
@@ -45,14 +46,14 @@ class AppServiceProvider extends ServiceProvider
             DiscordWebhookService::class,
             /**
              * @param  Application  $app
-             * @param  array  $parameters 'webhookName': L'identifiant du webhook à utiliser.
+             * @param  array  $parameters  'webhookName': L'identifiant du webhook à utiliser.
              * @return DiscordWebhookService
              */
-            function(Application $app, array $parameters): DiscordWebhookService {
+            function (Application $app, array $parameters): DiscordWebhookService {
                 $useDebugChannel = (config('app.debug') && $app->environment() !== 'production')
                     || ! array_key_exists('webhookName', $parameters);
 
-                if($useDebugChannel) {
+                if ($useDebugChannel) {
                     $webhookName = 'debug';
                 } else {
                     $webhookName = $parameters['webhookName'];
@@ -64,7 +65,7 @@ class AppServiceProvider extends ServiceProvider
             }
         );
 
-        if($this->app->environment() === 'local') {
+        if ($this->app->environment() === 'local') {
             $this->app->register(CodersServiceProvider::class);
         }
     }

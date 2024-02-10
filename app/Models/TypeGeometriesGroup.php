@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class TypeGeometriesGroup
+ * Class TypeGeometriesGroup.
  *
  * @property int $id
  * @property string $intitule
@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Carbon $updated_at
  * @property-read int|null $type_geometries_count
  * @property-read Collection|TypeGeometry[] $typeGeometries
+ *
  * @method static Builder|TypeGeometriesGroup newModelQuery()
  * @method static Builder|TypeGeometriesGroup newQuery()
  * @method static Builder|TypeGeometriesGroup query()
@@ -24,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static Builder|TypeGeometriesGroup whereId($value)
  * @method static Builder|TypeGeometriesGroup whereIntitule($value)
  * @method static Builder|TypeGeometriesGroup whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class TypeGeometriesGroup extends Model
@@ -31,7 +33,7 @@ class TypeGeometriesGroup extends Model
     protected $table = 'type_geometries_group';
 
     protected $fillable = [
-        'intitule'
+        'intitule',
     ];
 
     /**

@@ -10,7 +10,7 @@ use Roxayl\MondeGC\Jobs\Contracts\NotifiesDiscord;
 use Roxayl\MondeGC\Services\DiscordWebhookService;
 
 /**
- * Class DiscordNotification
+ * Class DiscordNotification.
  *
  * @property int $id
  * @property string $channel
@@ -18,9 +18,10 @@ use Roxayl\MondeGC\Services\DiscordWebhookService;
  * @property string $model_identifier
  * @property string $uuid
  * @property array $payload
- * @property boolean $is_sent
+ * @property bool $is_sent
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ *
  * @method static Builder|DiscordNotification newModelQuery()
  * @method static Builder|DiscordNotification newQuery()
  * @method static Builder|DiscordNotification query()
@@ -33,6 +34,7 @@ use Roxayl\MondeGC\Services\DiscordWebhookService;
  * @method static Builder|DiscordNotification whereType($value)
  * @method static Builder|DiscordNotification whereUpdatedAt($value)
  * @method static Builder|DiscordNotification whereUuid($value)
+ *
  * @mixin \Eloquent
  */
 class DiscordNotification extends Model
@@ -63,7 +65,7 @@ class DiscordNotification extends Model
     /**
      * Récupère une instance de {@see DiscordNotification} à partir des informations du job.
      *
-     * @param NotifiesDiscord $notification
+     * @param  NotifiesDiscord  $notification
      * @return DiscordNotification
      */
     public static function fetch(NotifiesDiscord $notification): DiscordNotification
@@ -71,18 +73,18 @@ class DiscordNotification extends Model
         $webhook = self::resolveWebhook($notification);
 
         // Check if a record representing the notification described in the 'NotifiesDiscord' instance already exists.
-        if($notification->isUnique()) {
+        if ($notification->isUnique()) {
             $model = $notification->getModelIdentifier();
             $primaryKey = $model->primaryKey;
-            $find = DiscordNotification
-                ::where('channel', $webhook->getWebhookUrl())
+            $find = DiscordNotification::where('channel', $webhook->getWebhookUrl())
                 ->where('type', get_class($notification))
                 ->where('model_identifier', $model->$primaryKey)
                 ->first();
 
             // If it exists, we return it, by updating its value with the notification data.
-            if($find instanceof DiscordNotification) {
+            if ($find instanceof DiscordNotification) {
                 $find->populate($notification, $webhook); // We reuse the instance of the webhook previously resolved.
+
                 return $find;
             }
         }
@@ -97,10 +99,10 @@ class DiscordNotification extends Model
     /**
      * Remplit les propriétés du modèle à partir des informations de l'objet {@see NotifiesDiscord}.
      *
-     * @param NotifiesDiscord $notification Job lié à une notification Discord.
-     * @param DiscordWebhookService|null $webhook Si le webhook n'est pas passé en paramètre, une instance du webhook
-     *                                            sera résolue à partir des informations de l'objet
-     *                                            {@see $notification}.
+     * @param  NotifiesDiscord  $notification  Job lié à une notification Discord.
+     * @param  DiscordWebhookService|null  $webhook  Si le webhook n'est pas passé en paramètre, une instance du webhook
+     *                                               sera résolue à partir des informations de l'objet
+     *                                               {@see $notification}.
      */
     private function populate(NotifiesDiscord $notification, ?DiscordWebhookService $webhook = null): void
     {
@@ -111,8 +113,8 @@ class DiscordNotification extends Model
         $this->webhook = $webhook ?? self::resolveWebhook($this->notification);
 
         $this->channel = $this->webhook->getWebhookUrl();
-        $this->type    = get_class($this->notification);
-        $this->uuid    = Str::uuid();
+        $this->type = get_class($this->notification);
+        $this->uuid = Str::uuid();
         $this->payload = $this->notification->generatePayload();
 
         $model = $this->notification->getModelIdentifier();
@@ -121,7 +123,7 @@ class DiscordNotification extends Model
     }
 
     /**
-     * @param NotifiesDiscord $notification
+     * @param  NotifiesDiscord  $notification
      * @return DiscordWebhookService
      */
     private static function resolveWebhook(NotifiesDiscord $notification): DiscordWebhookService
@@ -133,6 +135,7 @@ class DiscordNotification extends Model
      * Définit si la notification doit être unique, pour un channel, un type et un identifiant de modèle donné.
      *
      * @see NotifiesDiscord::isUnique()
+     *
      * @return bool
      */
     public function isUnique(): bool
@@ -145,14 +148,16 @@ class DiscordNotification extends Model
      */
     public function send(): void
     {
-        if(is_null($this->webhook)) {
-            throw new \UnexpectedValueException("Webhook instance is not defined.");
+        if (is_null($this->webhook)) {
+            throw new \UnexpectedValueException('Webhook instance is not defined.');
         }
 
         $this->save();
-        if($this->is_sent) return;
+        if ($this->is_sent) {
+            return;
+        }
 
-        rescue(function() {
+        rescue(function () {
             $this->webhook->sendMessage($this->payload);
             $this->is_sent = true;
             $this->save();

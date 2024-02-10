@@ -20,7 +20,7 @@ class GenerateHtaccess extends Command
      *
      * @var string
      */
-    protected $description = "Génère un fichier .htaccess au répertoire racine, "
+    protected $description = 'Génère un fichier .htaccess au répertoire racine, '
         . "selon la configuration de l'application";
 
     /**
@@ -33,7 +33,7 @@ class GenerateHtaccess extends Command
         $template = file_get_contents(resource_path('templates/htaccess-template.txt'));
 
         $directoryPath = config('app.directory_path');
-        if(! empty($directoryPath)) {
+        if (! empty($directoryPath)) {
             $directoryPath = '/' . $directoryPath;
         }
 

@@ -12,8 +12,8 @@ class SubdivisionController extends Controller
 {
     public function __construct(private readonly FeatureManager $featureManager)
     {
-        $this->middleware(function(Request $request, \Closure $next) {
-            if(! $this->featureManager->accessible('subdivision')) {
+        $this->middleware(function (Request $request, \Closure $next) {
+            if (! $this->featureManager->accessible('subdivision')) {
                 abort(404);
             }
 
@@ -40,7 +40,7 @@ class SubdivisionController extends Controller
     ) {
         $routeParameter = $subdivision->showRouteParameter();
 
-        if(
+        if (
             $paysId !== $routeParameter['paysId']
             || $paysSlug !== $routeParameter['paysSlug']
             || $subdivisionTypeName !== $routeParameter['subdivisionTypeName']
@@ -49,7 +49,7 @@ class SubdivisionController extends Controller
             return to_route('subdivision.show', $routeParameter);
         }
 
-        if(! $this->featureEnabled($subdivision)) {
+        if (! $this->featureEnabled($subdivision)) {
             abort(404);
         }
 
@@ -72,7 +72,7 @@ class SubdivisionController extends Controller
     }
 
     /**
-     * @param Subdivision $subdivision
+     * @param  Subdivision  $subdivision
      * @return bool
      */
     private function featureEnabled(Subdivision $subdivision): bool

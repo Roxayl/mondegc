@@ -9,7 +9,7 @@ return [
     /*
      * The HTML <title> for the generated documentation. If this is empty, Scribe will infer it from config('app.name').
      */
-    'title' => "API publique Monde GC",
+    'title' => 'API publique Monde GC',
 
     /*
      * A short description of your API. Will be included in the docs webpage, Postman collection and OpenAPI spec.
@@ -242,13 +242,13 @@ return [
          */
         'extra_info' => "Vous pouvez générer un jeton d'authentification à partir de son compte (dans le menu \"Mes " .
             "pays\" sur l'interface Web, \"Gérer mon compte\", puis dans la section \"Outils avancés\", appuyer sur " .
-            "\"Générer\").",
+            '"Générer").',
     ],
 
     /*
      * Text to place in the "Introduction" section, right after the `description`. Markdown and HTML are supported.
      */
-    'intro_text' => <<<INTRO
+    'intro_text' => <<<'INTRO'
 Cette documentation vous donne des informations sur chaque ressource fournie par l'API publique.
 INTRO
     ,
@@ -379,5 +379,5 @@ INTRO
      * Tell Scribe which connections should be transacted here.
      * If you only use one db connection, you can leave this as is.
      */
-    'database_connections_to_transact' => [config('database.default')]
+    'database_connections_to_transact' => [config('database.default')],
 ];

@@ -40,7 +40,7 @@ class UpdateMorphTypeClassNames extends Migration
      */
     public function up()
     {
-        DB::transaction(function() {
+        DB::transaction(function () {
             $this->runClassNameReplacements($this->oldPrefix, $this->newPrefix);
         });
     }
@@ -52,19 +52,19 @@ class UpdateMorphTypeClassNames extends Migration
      */
     public function down()
     {
-        DB::transaction(function() {
+        DB::transaction(function () {
             $this->runClassNameReplacements($this->newPrefix, $this->oldPrefix);
         });
     }
 
     /**
-     * @param string $oldPrefix
-     * @param string $newPrefix
+     * @param  string  $oldPrefix
+     * @param  string  $newPrefix
      */
     private function runClassNameReplacements(string $oldPrefix, string $newPrefix): void
     {
-        foreach($this->fields as $table => $fields) {
-            foreach($fields as $field) {
+        foreach ($this->fields as $table => $fields) {
+            foreach ($fields as $field) {
                 $classNames = DB::query()
                     ->select($field)->distinct()
                     ->from($table)
@@ -72,8 +72,10 @@ class UpdateMorphTypeClassNames extends Migration
                     ->pluck($field)
                     ->toArray();
 
-                foreach($classNames as $className) {
-                    if(empty($className)) continue;
+                foreach ($classNames as $className) {
+                    if (empty($className)) {
+                        continue;
+                    }
                     $updatedClassName = str_replace($oldPrefix, $newPrefix, $className);
                     $query = "UPDATE `$table` SET $field = :newValue WHERE $field = :oldValue";
                     $query = str_replace(':newValue', DB::getPdo()->quote($updatedClassName), $query);

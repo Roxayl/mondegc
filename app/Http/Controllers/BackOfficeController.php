@@ -15,8 +15,8 @@ class BackOfficeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(function(Request $request, \Closure $next): mixed {
-            if(! auth()->user()?->hasMinPermission('ocgc')) {
+        $this->middleware(function (Request $request, \Closure $next): mixed {
+            if (! auth()->user()?->hasMinPermission('ocgc')) {
                 abort(403);
             }
 
@@ -25,8 +25,8 @@ class BackOfficeController extends Controller
     }
 
     /**
-     * @param Manager $featureManager
-     * @param RegenerateInfluenceService $regenerateInfluenceService
+     * @param  Manager  $featureManager
+     * @param  RegenerateInfluenceService  $regenerateInfluenceService
      * @return View
      */
     public function advancedParameters(
@@ -58,7 +58,7 @@ class BackOfficeController extends Controller
     }
 
     /**
-     * @param RegenerateInfluenceService $regenerateInfluenceService
+     * @param  RegenerateInfluenceService  $regenerateInfluenceService
      * @return RedirectResponse
      */
     public function regenerateInfluences(RegenerateInfluenceService $regenerateInfluenceService): RedirectResponse

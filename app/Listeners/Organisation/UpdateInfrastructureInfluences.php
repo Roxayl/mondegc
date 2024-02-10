@@ -12,7 +12,7 @@ class UpdateInfrastructureInfluences
     /**
      * Handle the event.
      *
-     * @param object&(MembershipChanged|TypeMigrated) $event
+     * @param  object&(MembershipChanged|TypeMigrated)  $event
      */
     public function handle(object $event): void
     {
@@ -20,7 +20,7 @@ class UpdateInfrastructureInfluences
 
         $infrastructures = $organisation->infrastructures;
 
-        foreach($infrastructures as $infrastructure) {
+        foreach ($infrastructures as $infrastructure) {
             $infrastructure->generateInfluence();
         }
     }

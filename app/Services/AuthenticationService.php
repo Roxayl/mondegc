@@ -62,7 +62,7 @@ class AuthenticationService
     {
         $user = CustomUser::query()->find($id);
 
-        if(! $user) {
+        if (! $user) {
             throw new AuthenticationException();
         }
 
@@ -75,7 +75,7 @@ class AuthenticationService
     public function logout(): void
     {
         // Effacement du cookie de session.
-        setcookie('Session_mondeGC', '', time() - 7200,  '', '', false, true);
+        setcookie('Session_mondeGC', '', time() - 7200, '', '', false, true);
         unset($_COOKIE['Session_mondeGC']);
 
         // Supprime les variables de session stockant les informations sur l'utilisateur.

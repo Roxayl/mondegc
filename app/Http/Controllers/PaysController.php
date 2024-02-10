@@ -16,15 +16,15 @@ use Roxayl\MondeGC\Services\VersionDiffService;
 class PaysController extends Controller
 {
     /**
-     * @param Pays $pays
-     * @param string $paysSlug
+     * @param  Pays  $pays
+     * @param  string  $paysSlug
      * @return RedirectResponse
      */
     public function show(Pays $pays, string $paysSlug): RedirectResponse
     {
         $routeParameter = $pays->showRouteParameter();
 
-        if($paysSlug !== $routeParameter['paysSlug']) {
+        if ($paysSlug !== $routeParameter['paysSlug']) {
             return to_route('pays.show', $routeParameter);
         }
 
@@ -32,9 +32,9 @@ class PaysController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param PaysSubdivisionManager $subdivisionManager
-     * @param Pays $pays
+     * @param  Request  $request
+     * @param  PaysSubdivisionManager  $subdivisionManager
+     * @param  Pays  $pays
      * @return RedirectResponse
      */
     public function manageSubdivisions(
@@ -44,7 +44,7 @@ class PaysController extends Controller
     ): RedirectResponse {
         $enable = $request->get('enable');
 
-        if($enable) {
+        if ($enable) {
             $subdivisionManager->enable($pays);
         } else {
             $subdivisionManager->disable($pays);
@@ -55,7 +55,7 @@ class PaysController extends Controller
     }
 
     /**
-     * @param Pays $pays
+     * @param  Pays  $pays
      * @return View
      */
     public function history(Pays $pays): View
@@ -75,9 +75,9 @@ class PaysController extends Controller
     /**
      * Compare deux versions d'un pays.
      *
-     * @param VersionDiffService $diffService
-     * @param Version $version1
-     * @param Version|null $version2
+     * @param  VersionDiffService  $diffService
+     * @param  Version  $version1
+     * @param  Version|null  $version2
      * @return View
      */
     public function diff(VersionDiffService $diffService, Version $version1, ?Version $version2 = null): View
@@ -87,7 +87,7 @@ class PaysController extends Controller
         /** @var Pays $model1 */
         /** @var Pays $model2 */
         $model1 = $version1->getModel();
-        if($version2 === null) {
+        if ($version2 === null) {
             $model2 = new ($model1::class);
         } else {
             $model2 = $version2->getModel();

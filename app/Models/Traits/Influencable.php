@@ -36,9 +36,11 @@ trait Influencable
         $resources = Resource::cases();
 
         $arrayKeys = array_keys($resources);
-        foreach($resources as $key => $resource) {
+        foreach ($resources as $key => $resource) {
             $select .= "COALESCE(SUM($resource->value), 0) AS $resource->value";
-            if (end($arrayKeys) !== $key) $select .= ', ';
+            if (end($arrayKeys) !== $key) {
+                $select .= ', ';
+            }
         }
 
         $influences = $influences->selectRaw($select);
@@ -50,37 +52,40 @@ trait Influencable
     {
         $avgRate = [];
         $currentResources = $this->getGeneratedResources();
-        $finalResources   = $this->getFinalResources();
+        $finalResources = $this->getFinalResources();
 
-        foreach($currentResources as $key => $resource) {
+        foreach ($currentResources as $key => $resource) {
             $currentValue = abs($currentResources[$key]);
-            $finalValue   = abs($finalResources[$key]);
-            $thisRate = (float)($finalValue === 0 ? 0 : $currentValue / $finalValue);
+            $finalValue = abs($finalResources[$key]);
+            $thisRate = (float) ($finalValue === 0 ? 0 : $currentValue / $finalValue);
             $avgRate[] = $thisRate;
         }
 
         // Supprime les valeurs de taux égales à 0.
         $avgRate = array_filter($avgRate);
 
-        if(!count($avgRate)) return 0;
-        return (int)round(array_sum($avgRate) / count($avgRate) * 100);
+        if (! count($avgRate)) {
+            return 0;
+        }
+
+        return (int) round(array_sum($avgRate) / count($avgRate) * 100);
     }
 
     public function removeOldInfluenceRows(\Closure $f = null): bool
     {
         $delete = false;
 
-        if($f !== null) {
+        if ($f !== null) {
             $delete = $f();
         }
-        if(!$delete) {
-            $delete = !empty($this->influences());
+        if (! $delete) {
+            $delete = ! empty($this->influences());
         }
 
         // Supprime les entrées d'influence s'il existait déjà des entrées dans la BDD,
         // ou si la fonction de vérification renvoie 'true'.
-        if($delete) {
-            foreach($this->influences as $influence) {
+        if ($delete) {
+            foreach ($this->influences as $influence) {
                 $influence->delete();
             }
         }

@@ -32,6 +32,7 @@ class UpdateProject extends Command
     {
         $this->copyFiles();
         $this->migrateDatabase();
+
         return 0;
     }
 

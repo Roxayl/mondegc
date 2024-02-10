@@ -16,7 +16,7 @@ class CustomUserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::transaction(function() {
+        DB::transaction(function () {
             CustomUser::factory()
                 ->hasAttached(
                     Pays::factory(),

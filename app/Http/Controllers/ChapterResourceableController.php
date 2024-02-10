@@ -16,8 +16,8 @@ use Roxayl\MondeGC\View\Components\Blocks\RoleplayableSelector;
 class ChapterResourceableController extends Controller
 {
     /**
-     * @param Chapter $chapter
-     * @param StringBladeService $stringBlade
+     * @param  Chapter  $chapter
+     * @param  StringBladeService  $stringBlade
      * @return Response
      */
     public function show(Chapter $chapter, StringBladeService $stringBlade): Response
@@ -32,7 +32,7 @@ class ChapterResourceableController extends Controller
     }
 
     /**
-     * @param Chapter $chapter
+     * @param  Chapter  $chapter
      * @return View
      */
     public function manage(Chapter $chapter): View
@@ -43,7 +43,7 @@ class ChapterResourceableController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param Chapter $chapter
+     * @param  Chapter  $chapter
      * @return View
      */
     public function create(Chapter $chapter): View
@@ -54,8 +54,8 @@ class ChapterResourceableController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Chapter $chapter
-     * @param Request $request
+     * @param  Chapter  $chapter
+     * @param  Request  $request
      * @return RedirectResponse
      */
     public function store(Chapter $chapter, Request $request): RedirectResponse
@@ -79,7 +79,7 @@ class ChapterResourceableController extends Controller
     }
 
     /**
-     * @param ChapterResourceable $chapterResourceable
+     * @param  ChapterResourceable  $chapterResourceable
      * @return View
      */
     public function edit(ChapterResourceable $chapterResourceable): View
@@ -97,8 +97,8 @@ class ChapterResourceableController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param ChapterResourceable $chapterResourceable
+     * @param  Request  $request
+     * @param  ChapterResourceable  $chapterResourceable
      * @return RedirectResponse
      */
     public function update(Request $request, ChapterResourceable $chapterResourceable): RedirectResponse
@@ -120,7 +120,7 @@ class ChapterResourceableController extends Controller
     }
 
     /**
-     * @param ChapterResourceable $chapterResourceable
+     * @param  ChapterResourceable  $chapterResourceable
      * @return View
      */
     public function delete(ChapterResourceable $chapterResourceable): View
@@ -133,7 +133,7 @@ class ChapterResourceableController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param ChapterResourceable $chapterResourceable
+     * @param  ChapterResourceable  $chapterResourceable
      * @return RedirectResponse
      */
     public function destroy(ChapterResourceable $chapterResourceable): RedirectResponse

@@ -31,7 +31,7 @@ class OrganisationController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return View
      */
     public function create(Request $request): View
@@ -49,7 +49,7 @@ class OrganisationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse
@@ -60,7 +60,7 @@ class OrganisationController extends Controller
         $organisation->fill($request->except(['_method', '_token']));
 
         $type = $request->input('type');
-        if(! in_array($type, Organisation::$typesCreatable)) {
+        if (! in_array($type, Organisation::$typesCreatable)) {
             throw new \InvalidArgumentException("Mauvais type d'organisation.");
         }
         $organisation->type = $type;
@@ -70,20 +70,20 @@ class OrganisationController extends Controller
         $memberData = [
             'organisation_id' => $organisation->id,
             'permissions' => Organisation::$permissions['owner'],
-            'pays_id' => $request->input('pays_id')
+            'pays_id' => $request->input('pays_id'),
         ];
         OrganisationMember::create($memberData);
 
         return redirect()->route('organisation.showslug',
-              $organisation->showRouteParameter())
+            $organisation->showRouteParameter())
             ->with(['message' => "success|L'organisation a été créée avec succès !"]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @param string|null $slug
+     * @param  int  $id
+     * @param  string|null  $slug
      * @return View|RedirectResponse
      */
     public function show(int $id, string $slug = null): View|RedirectResponse
@@ -92,13 +92,13 @@ class OrganisationController extends Controller
         $organisation = Organisation::with(['members', 'membersPending'])
             ->findOrFail($id);
 
-        if(is_null($slug) || $organisation->slug !== Str::slug($slug)) {
+        if (is_null($slug) || $organisation->slug !== Str::slug($slug)) {
             return redirect()->route('organisation.showslug',
                 $organisation->showRouteParameter());
         }
 
         $communiques = $organisation->communiques();
-        if(Gate::denies('administrate', $organisation)) {
+        if (Gate::denies('administrate', $organisation)) {
             // Affiche seulement les communiqués publiés, si l'utilisateur n'a pas les
             // permissions pour administrer l'organisation.
             $communiques = $communiques->where('ch_com_statut', Communique::STATUS_PUBLISHED);
@@ -106,7 +106,7 @@ class OrganisationController extends Controller
         $communiques = $communiques->paginate(10);
 
         $members_invited = collect();
-        if(auth()->check()) {
+        if (auth()->check()) {
             $members_invited = $organisation->membersInvited(auth()->user())->get();
         }
 
@@ -117,7 +117,7 @@ class OrganisationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return View
      */
     public function edit(int $id): View
@@ -134,8 +134,8 @@ class OrganisationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param int $id
+     * @param  Request  $request
+     * @param  int  $id
      * @return RedirectResponse
      */
     public function update(Request $request, int $id): RedirectResponse
@@ -147,6 +147,7 @@ class OrganisationController extends Controller
         $organisation->allow_temperance = false;
 
         $organisation->update($request->except(['_method', '_token']));
+
         return redirect()->route('organisation.edit', ['organisation' => $id])
             ->with('message', 'success|Organisation mise à jour avec succès !');
     }
@@ -154,7 +155,7 @@ class OrganisationController extends Controller
     /**
      * Affiche le formulaire de confirmation de la suppression de l'organisation.
      *
-     * @param Organisation $organisation
+     * @param  Organisation  $organisation
      * @return View
      */
     public function delete(Organisation $organisation): View
@@ -167,7 +168,7 @@ class OrganisationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Organisation $organisation
+     * @param  Organisation  $organisation
      * @return RedirectResponse
      */
     public function destroy(Organisation $organisation): RedirectResponse
@@ -183,7 +184,7 @@ class OrganisationController extends Controller
     /**
      * Affiche l'interface permettant de migrer le type d'une organisation.
      *
-     * @param int $id
+     * @param  int  $id
      * @return View
      */
     public function migrate(int $id): View
@@ -197,8 +198,8 @@ class OrganisationController extends Controller
     /**
      * Migre une organisation.
      *
-     * @param MigrateType $request
-     * @param int $id
+     * @param  MigrateType  $request
+     * @param  int  $id
      * @return RedirectResponse
      */
     public function runMigration(MigrateType $request, int $id): RedirectResponse
@@ -219,7 +220,7 @@ class OrganisationController extends Controller
     }
 
     /**
-     * @param Organisation $organisation
+     * @param  Organisation  $organisation
      * @return \Illuminate\View\View
      */
     public function history(Organisation $organisation): View
@@ -239,9 +240,9 @@ class OrganisationController extends Controller
     /**
      * Compare deux versions d'une organisation.
      *
-     * @param VersionDiffService $diffService
-     * @param Version $version1
-     * @param Version|null $version2
+     * @param  VersionDiffService  $diffService
+     * @param  Version  $version1
+     * @param  Version|null  $version2
      * @return View
      */
     public function diff(VersionDiffService $diffService, Version $version1, ?Version $version2 = null): View
@@ -251,7 +252,7 @@ class OrganisationController extends Controller
         /** @var Organisation $model1 */
         /** @var Organisation $model2 */
         $model1 = $version1->getModel();
-        if($version2 === null) {
+        if ($version2 === null) {
             $model2 = new ($model1::class);
         } else {
             $model2 = $version2->getModel();

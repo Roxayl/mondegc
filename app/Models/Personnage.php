@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Personnage
+ * Class Personnage.
  *
  * @property int $id
  * @property string|null $entity
@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $biographie
  * @property string|null $titre_personnage
  * @property string|null $lien_img
+ *
  * @method static PersonnageFactory factory(...$parameters)
  * @method static Builder|Personnage newModelQuery()
  * @method static Builder|Personnage newQuery()
@@ -32,6 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|Personnage wherePredicat($value)
  * @method static Builder|Personnage wherePrenomPersonnage($value)
  * @method static Builder|Personnage whereTitrePersonnage($value)
+ *
  * @mixin \Eloquent
  */
 class Personnage extends Model
@@ -42,7 +44,7 @@ class Personnage extends Model
     public $timestamps = false;
 
     protected $casts = [
-        'entity_id' => 'int'
+        'entity_id' => 'int',
     ];
 
     protected $fillable = [
@@ -53,6 +55,6 @@ class Personnage extends Model
         'prenom_personnage',
         'biographie',
         'titre_personnage',
-        'lien_img'
+        'lien_img',
     ];
 }

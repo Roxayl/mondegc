@@ -20,7 +20,7 @@ class InitializeDatabase extends Initializer
      *
      * @var string
      */
-    protected $description = "Initialise la base de données en créant le schéma de la base et les données";
+    protected $description = 'Initialise la base de données en créant le schéma de la base et les données';
 
     /**
      * Execute the console command.
@@ -30,22 +30,24 @@ class InitializeDatabase extends Initializer
     public function handle(): int
     {
         // Vérifier que les conditions d'exécution du script d'initialisation de la DB sont ok.
-        if(! File::exists('.env')) {
+        if (! File::exists('.env')) {
             $this->error("Vous devez initialiser l'environnement au préalable.");
+
             return 1;
         }
 
         // Eviter l'exécution en prod.
-        if(app()->environment() === 'production') {
-            $this->error("Vous ne pouvez pas initialiser la base de données dans un environnement "
-                . "de production.");
+        if (app()->environment() === 'production') {
+            $this->error('Vous ne pouvez pas initialiser la base de données dans un environnement '
+                . 'de production.');
+
             return 1;
         }
 
         // Exécuter effectivement la commande d'initialisation de la DB.
         $this->call('monde:update');
         $this->call('db:seed');
-        $this->info("Base de données initialisée avec succès.");
+        $this->info('Base de données initialisée avec succès.');
 
         return 0;
     }

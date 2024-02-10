@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
- * Class UsersPays
+ * Class UsersPays.
  *
  * @property int $id
  * @property int $ID_pays
@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property-read int|null $organisation_members_count
  * @property-read Pays $pays
  * @property-read CustomUser $users
+ *
  * @method static Builder|UsersPays newModelQuery()
  * @method static Builder|UsersPays newQuery()
  * @method static Builder|UsersPays query()
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @method static Builder|UsersPays whereIDUser($value)
  * @method static Builder|UsersPays whereId($value)
  * @method static Builder|UsersPays wherePermissions($value)
+ *
  * @mixin Pivot
  * @mixin \Eloquent
  */
@@ -38,13 +40,13 @@ class UsersPays extends Pivot
     protected $casts = [
         'ID_pays' => 'int',
         'ID_user' => 'int',
-        'permissions' => 'int'
+        'permissions' => 'int',
     ];
 
     protected $fillable = [
         'ID_pays',
         'ID_user',
-        'permissions'
+        'permissions',
     ];
 
     /**

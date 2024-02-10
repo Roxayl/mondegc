@@ -17,7 +17,7 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * Class Patrimoine
+ * Class Patrimoine.
  *
  * @property int $ch_pat_id
  * @property string $ch_pat_label
@@ -49,6 +49,7 @@ use Spatie\Searchable\SearchResult;
  * @property-read Collection|MonumentCategory[] $monumentCategories
  * @property-read int|null $monument_categories_count
  * @property-read Ville $ville
+ *
  * @method static Builder|Patrimoine newModelQuery()
  * @method static Builder|Patrimoine newQuery()
  * @method static Builder|Patrimoine query()
@@ -77,6 +78,7 @@ use Spatie\Searchable\SearchResult;
  * @method static Builder|Patrimoine whereChPatPaysID($value)
  * @method static Builder|Patrimoine whereChPatStatut($value)
  * @method static Builder|Patrimoine whereChPatVilleID($value)
+ *
  * @mixin \Eloquent
  */
 class Patrimoine extends Model implements Influencable, Searchable
@@ -88,7 +90,7 @@ class Patrimoine extends Model implements Influencable, Searchable
     public $timestamps = false;
 
     const CREATED_AT = 'ch_pat_date';
-    const UPDATED_AT =  'ch_pat_mis_jour';
+    const UPDATED_AT = 'ch_pat_mis_jour';
 
     public const STATUS_ENABLED = 1;
     public const STATUS_DISABLED = 0;
@@ -100,12 +102,12 @@ class Patrimoine extends Model implements Influencable, Searchable
         'ch_pat_nb_update' => 'int',
         'ch_pat_coord_X' => 'float',
         'ch_pat_coord_Y' => 'float',
-        'ch_pat_juge' => 'int'
+        'ch_pat_juge' => 'int',
     ];
 
     protected $dates = [
         'ch_pat_date',
-        'ch_pat_mis_jour'
+        'ch_pat_mis_jour',
     ];
 
     protected $fillable = [
@@ -132,7 +134,7 @@ class Patrimoine extends Model implements Influencable, Searchable
     public function getSearchResult(): SearchResult
     {
         $context = null;
-        if(!is_null($this->ville)) {
+        if (! is_null($this->ville)) {
             $context = 'Quête basée dans la ville <a href="page-pays.php?ch_pay_id='
                 . $this->ch_pat_villeID . '">' . $this->ville->ch_vil_nom . '</a>';
         }
@@ -170,17 +172,18 @@ class Patrimoine extends Model implements Influencable, Searchable
 
         $categories = collect($this->monumentCategories()->get()->toArray());
 
-        if(!$categories->count()) {
+        if (! $categories->count()) {
             return;
         }
 
         $resources = Resource::cases();
 
-        $influenceResources = $categories->pipe(function($categories) use($resources) {
+        $influenceResources = $categories->pipe(function ($categories) use ($resources) {
             $return = [];
-            foreach($resources as $resource) {
+            foreach ($resources as $resource) {
                 $return[$resource->value] = $categories->sum("ch_mon_cat_$resource->value");
             }
+
             return $return;
         });
 
@@ -204,7 +207,7 @@ class Patrimoine extends Model implements Influencable, Searchable
         parent::boot();
 
         // Appelle la méthode ci-dessous avant d'appeler la méthode delete() sur ce modèle.
-        static::deleting(function(Patrimoine $patrimoine): void {
+        static::deleting(function (Patrimoine $patrimoine): void {
             $patrimoine->deleteInfluences();
         });
     }

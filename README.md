@@ -3,6 +3,7 @@
 
 <p align="center">
 <a href="https://github.com/Roxayl/mondegc/actions"><img src="https://github.com/Roxayl/mondegc/actions/workflows/build.yml/badge.svg" alt="CI" /></a>
+<a href="https://github.styleci.io/repos/349166635?branch=develop"><img src="https://github.styleci.io/repos/349166635/shield?branch=develop" alt="StyleCI"></a>
 <a href="https://discord.gg/4P3HqVbbgR"><img src="https://img.shields.io/discord/328496654514782209" alt="Discord" /></a>
 </p>
 

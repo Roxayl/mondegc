@@ -1,7 +1,7 @@
 <?php
 
-use Roxayl\MondeGC\Http\Controllers\Api;
 use Illuminate\Support\Facades\Route;
+use Roxayl\MondeGC\Http\Controllers\Api;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth.api', 'throttle:12,1'])->group(function() {
-
+Route::middleware(['auth.api', 'throttle:12,1'])->group(function () {
     Route::get('/resourceable/fetch/{type}', [Api\ResourceableController::class, 'fetch'])
         ->name('api.resourceable.fetch');
 
@@ -24,5 +23,4 @@ Route::middleware(['auth.api', 'throttle:12,1'])->group(function() {
 
     Route::get('/admin/store-resource-history', [Api\AdminController::class, 'storeResourceHistory'])
         ->name('api.admin.store-resource-history');
-
 });

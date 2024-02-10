@@ -41,7 +41,7 @@ class OrganisationMemberJoined extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'organisation_member_id' => $this->organisationMember->id
+            'organisation_member_id' => $this->organisationMember->id,
         ];
     }
 }

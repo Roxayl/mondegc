@@ -28,7 +28,7 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * Class Organisation
+ * Class Organisation.
  *
  * @property int $id
  * @property string|null $name
@@ -57,6 +57,7 @@ use Spatie\Searchable\SearchResult;
  * @property-read Collection|OrganisationMember[] $membersPending
  * @property-read int|null $members_pending_count
  * @property-read array<string> $resources
+ *
  * @method static Builder|Organisation newModelQuery()
  * @method static Builder|Organisation newQuery()
  * @method static Builder|Organisation query()
@@ -76,6 +77,7 @@ use Spatie\Searchable\SearchResult;
  * @method static Builder|Organisation whereDeletedAt($value)
  * @method static Query\Builder|Organisation withTrashed()
  * @method static Query\Builder|Organisation withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Organisation extends Model implements Searchable, Infrastructurable, Resourceable, Roleplayable
@@ -92,7 +94,7 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
         'logo',
         'flag',
         'text',
-        'allow_temperance'
+        'allow_temperance',
     ];
 
     protected $casts = [
@@ -142,15 +144,15 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     ];
 
     public static array $typesVisible = [
-        self::TYPE_ALLIANCE, self::TYPE_ORGANISATION, self::TYPE_GROUP
+        self::TYPE_ALLIANCE, self::TYPE_ORGANISATION, self::TYPE_GROUP,
     ];
 
     public static array $typesCreatable = [
-        self::TYPE_ORGANISATION, self::TYPE_GROUP
+        self::TYPE_ORGANISATION, self::TYPE_GROUP,
     ];
 
     public static array $typesWithEconomy = [
-        self::TYPE_AGENCY, self::TYPE_ALLIANCE, self::TYPE_ORGANISATION
+        self::TYPE_AGENCY, self::TYPE_ALLIANCE, self::TYPE_ORGANISATION,
     ];
 
     /**
@@ -194,12 +196,12 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     }
 
     /**
-     * @param CustomUser|null $user
+     * @param  CustomUser|null  $user
      * @return HasMany
      */
     public function membersInvited(?CustomUser $user): HasMany
     {
-        if(is_null($user)) {
+        if (is_null($user)) {
             return $this->hasMany(OrganisationMember::class)
                 ->where('permissions', '=', Organisation::$permissions['invited']);
         } else {
@@ -242,12 +244,12 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     }
 
     /**
-     * @param ?scalar $permission
+     * @param  ?scalar  $permission
      * @return Support\Collection
      */
     public function getUsers(float|bool|int|string $permission = null): Support\Collection
     {
-        if($permission === null) {
+        if ($permission === null) {
             $permission = self::$permissions['administrator'];
         }
 
@@ -257,12 +259,12 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
 
         $pays = [];
         $users = [];
-        foreach($members as $member) {
-            if(!in_array($member->pays_id, $pays)) {
+        foreach ($members as $member) {
+            if (! in_array($member->pays_id, $pays)) {
                 $pays[] = $member->pays_id;
                 $users_pays = UsersPays::where('ID_pays', '=', $member->pays_id)->get();
-                foreach($users_pays as $user_pays) {
-                    if(!in_array($user_pays->ID_user, $users)) {
+                foreach ($users_pays as $user_pays) {
+                    if (! in_array($user_pays->ID_user, $users)) {
                         $users[] = $user_pays->ID_user;
                     }
                 }
@@ -294,13 +296,14 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     }
 
     /**
-     * @param CustomUser $user
+     * @param  CustomUser  $user
      * @return int
      */
     public function maxPermission(CustomUser $user): int
     {
         $pays = array_column($user->pays()->get()->toArray(), 'ch_pay_id');
-        $permission = (int)$this->membersAll()->whereIn('pays_id', $pays)->max('permissions');
+        $permission = (int) $this->membersAll()->whereIn('pays_id', $pays)->max('permissions');
+
         return $permission;
     }
 
@@ -338,7 +341,7 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
         $infrastructureResources = $this->infrastructureResources();
         $roleplayResources = $this->roleplayResources();
 
-        foreach(Resource::cases() as $resource) {
+        foreach (Resource::cases() as $resource) {
             $sumResources[$resource->value] += $infrastructureResources[$resource->value]
                 + $roleplayResources[$resource->value];
         }
@@ -355,12 +358,12 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
 
         // Les alliances bénéficient les ressources de leurs pays ; on les calcule
         // le cas échéant.
-        if($this->membersGenerateResources()) {
+        if ($this->membersGenerateResources()) {
             $paysMembers = $this->members;
 
-            foreach($paysMembers as $members) {
+            foreach ($paysMembers as $members) {
                 $thisPaysResources = $members->pays->withoutAllianceResources();
-                foreach(Resource::cases() as $resource) {
+                foreach (Resource::cases() as $resource) {
                     $sumResources[$resource->value] += $thisPaysResources[$resource->value];
                 }
             }
@@ -376,7 +379,7 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
     {
         $memberCount = $this->members->count();
 
-        return array_map(fn(float $value) => (int) ($value / $memberCount), $this->organisationResources());
+        return array_map(fn (float $value) => (int) ($value / $memberCount), $this->organisationResources());
     }
 
     /**
@@ -388,12 +391,11 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
 
         // Les groupes d'États ne génèrent pas de ressources ; on ne calcule pas les ressources
         // le cas échéant et on renvoie directement un tableau de ressources à zéro.
-        if($this->type !== self::TYPE_GROUP) {
-
+        if ($this->type !== self::TYPE_GROUP) {
             $organisationResources = $this->organisationResources();
             $paysResources = $this->paysResources();
 
-            foreach(Resource::cases() as $resource) {
+            foreach (Resource::cases() as $resource) {
                 $sumResources[$resource->value] += $organisationResources[$resource->value]
                     + $paysResources[$resource->value];
             }

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Roxayl\MondeGC\Services;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Compilers\BladeCompiler;
 
 /**
@@ -29,8 +29,9 @@ class StringBladeService
     /**
      * Obtenir le chemin d'un template temporaire Blade.
      *
-     * @param string $bladeString
+     * @param  string  $bladeString
      * @return string
+     *
      * @throws FileNotFoundException
      */
     protected function getBlade(string $bladeString): string
@@ -39,18 +40,20 @@ class StringBladeService
 
         $content = $this->blade->compileString($bladeString);
 
-        if(! $this->file->put($bladePath, $content)) {
-            throw new FileNotFoundException("Impossible de créer un fichier temporaire.");
+        if (! $this->file->put($bladePath, $content)) {
+            throw new FileNotFoundException('Impossible de créer un fichier temporaire.');
         }
+
         return $bladePath;
     }
 
     /**
      * Afficher le rendu HTML.
      *
-     * @param string $bladeString
-     * @param array $data
+     * @param  string  $bladeString
+     * @param  array  $data
      * @return string
+     *
      * @throws FileNotFoundException
      */
     public function render(string $bladeString, array $data = []): string
@@ -78,7 +81,7 @@ class StringBladeService
         $tempFileName = sha1('string-blade' . microtime());
         $directory = "$cachePath/string-blades";
 
-        if(!is_dir($directory)) {
+        if (! is_dir($directory)) {
             mkdir($directory);
         }
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class Log
+ * Class Log.
  *
  * @property int $id
  * @property string $target
@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $data_changes
  * @property Carbon $created
  * @property CustomUser $user
+ *
  * @method static Builder|Log newModelQuery()
  * @method static Builder|Log newQuery()
  * @method static Builder|Log query()
@@ -28,6 +29,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|Log whereTargetId($value)
  * @method static Builder|Log whereTypeAction($value)
  * @method static Builder|Log whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class Log extends Model
@@ -37,11 +39,11 @@ class Log extends Model
 
     protected $casts = [
         'target_id' => 'int',
-        'user_id' => 'int'
+        'user_id' => 'int',
     ];
 
     protected $dates = [
-        'created'
+        'created',
     ];
 
     protected $fillable = [
@@ -50,7 +52,7 @@ class Log extends Model
         'type_action',
         'user_id',
         'data_changes',
-        'created'
+        'created',
     ];
 
     /**

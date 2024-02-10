@@ -20,7 +20,7 @@ trait GeneratesResourceHistory
         $resources = $this->resources();
 
         $fields = array_merge([
-            'resourceable_id'   => $this->getKey(),
+            'resourceable_id' => $this->getKey(),
             'resourceable_type' => get_class($this),
         ], $resources);
 

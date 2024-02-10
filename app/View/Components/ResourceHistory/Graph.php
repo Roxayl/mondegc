@@ -25,18 +25,19 @@ abstract class Graph extends Component
     public function render(): View
     {
         return view('blocks.resource-graph', [
-            'chartData'    => $this->chartData,
-            'graphId'      => $this->graphId,
+            'chartData' => $this->chartData,
+            'graphId' => $this->graphId,
         ]);
     }
 
     /**
-     * @param string $id
+     * @param  string  $id
      * @return $this
      */
     public function setGraphId(string $id): self
     {
         $this->graphId = $id;
+
         return $this;
     }
 

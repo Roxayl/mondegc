@@ -25,13 +25,13 @@ class ChapterResourceableFactory extends Factory
     {
         $resources = EconomyService::resourcesPrefilled();
 
-        foreach($resources as $resource => $value) {
+        foreach ($resources as $resource => $value) {
             $resources[$resource] = rand(10, 1000);
         }
 
         return $resources + [
             'resourceable_type' => ChapterResourceable::getActualClassNameForMorph(Pays::class),
-            'resourceable_id'   => Pays::inRandomOrder()->first()->ch_pay_id,
+            'resourceable_id' => Pays::inRandomOrder()->first()->ch_pay_id,
         ];
     }
 }

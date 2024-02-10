@@ -15,9 +15,9 @@ class LegacySiteController extends Controller
      * @param  string  $path
      * @return Response
      */
-    public function __invoke(Request $request, string $path = ""): Response
+    public function __invoke(Request $request, string $path = ''): Response
     {
         // Appeler le front controller et retourner une réponse.
-        return response(include base_path("public/front.php"));
+        return response(include base_path('public/front.php'));
     }
 }

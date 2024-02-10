@@ -47,7 +47,7 @@ class RouteServiceProvider extends ServiceProvider
     public function getPrefix(): string
     {
         $prefix = '';
-        if(php_sapi_name() !== "cli") {
+        if (php_sapi_name() !== 'cli') {
             $prefix = config('app.directory_path', '');
         }
 
@@ -81,8 +81,8 @@ class RouteServiceProvider extends ServiceProvider
         // On ne préfixe pas les URLs vers le site legacy.
         Route::middleware('legacy')
              ->namespace($this->namespace . '\Legacy')
-             ->group(function() {
-                Route::any('/{path?}', 'LegacySiteController')->where('path', '.*');
+             ->group(function () {
+                 Route::any('/{path?}', 'LegacySiteController')->where('path', '.*');
              });
     }
 
@@ -94,7 +94,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes(): void
     {
         $prefix = $this->getPrefix();
-        if($prefix) {
+        if ($prefix) {
             $prefix .= '/';
         }
         $prefix .= 'api';

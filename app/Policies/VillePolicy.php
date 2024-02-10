@@ -17,7 +17,7 @@ class VillePolicy implements VersionablePolicy
     use HandlesAuthorization, ManagesInfrastructures;
 
     /**
-     * @param CustomUser|null $user
+     * @param  CustomUser|null  $user
      * @return bool
      */
     public function viewAny(?CustomUser $user): bool
@@ -26,25 +26,29 @@ class VillePolicy implements VersionablePolicy
     }
 
     /**
-     * @param CustomUser $user
-     * @param Ville $ville
+     * @param  CustomUser  $user
+     * @param  Ville  $ville
      * @return bool
      */
     public function update(CustomUser $user, Ville $ville): bool
     {
-        if($user->hasMinPermission('admin')) return true;
+        if ($user->hasMinPermission('admin')) {
+            return true;
+        }
 
         return $ville->getUsers()->contains($user);
     }
 
     /**
-     * @param CustomUser $user
-     * @param Ville $ville
+     * @param  CustomUser  $user
+     * @param  Ville  $ville
      * @return bool
      */
     public function delete(CustomUser $user, Ville $ville): bool
     {
-        if($user->hasMinPermission('admin')) return true;
+        if ($user->hasMinPermission('admin')) {
+            return true;
+        }
 
         return $ville->getUsers()->contains($user);
     }
@@ -54,7 +58,9 @@ class VillePolicy implements VersionablePolicy
      */
     public function revert(CustomUser|Authenticatable $user, Ville|Model $model): bool
     {
-        if($user->hasMinPermission('ocgc')) return true;
+        if ($user->hasMinPermission('ocgc')) {
+            return true;
+        }
 
         return $model->getUsers()->contains($user);
     }

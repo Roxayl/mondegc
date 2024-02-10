@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Roxayl\MondeGC\Services;
 
 use Illuminate\Database\Eloquent\Collection;
-use Roxayl\MondeGC\Models\Enums\Resource;
-use Roxayl\MondeGC\Models\Pays;
 use Roxayl\MondeGC\Models\Contracts\Influencable;
 use Roxayl\MondeGC\Models\Contracts\Resourceable;
+use Roxayl\MondeGC\Models\Enums\Resource;
+use Roxayl\MondeGC\Models\Pays;
 
 class EconomyService
 {
@@ -19,7 +19,7 @@ class EconomyService
     {
         $return = [];
 
-        foreach(Resource::cases() as $resource) {
+        foreach (Resource::cases() as $resource) {
             $return[$resource->value] = 0;
         }
 
@@ -27,7 +27,7 @@ class EconomyService
     }
 
     /**
-     * @param string|null $sortBy Clé dans laquelle trier les ressources.
+     * @param  string|null  $sortBy  Clé dans laquelle trier les ressources.
      * @return array<int, array<string, mixed>>
      */
     public static function getPaysResources(?string $sortBy = null): array
@@ -38,7 +38,7 @@ class EconomyService
         $paysResources = [];
 
         /** @var Pays $pays */
-        foreach($allPays as $pays) {
+        foreach ($allPays as $pays) {
             $paysResources[$pays['ch_pay_id']]['ch_pay_id'] = $pays->ch_pay_id;
             $paysResources[$pays['ch_pay_id']]['ch_pay_nom'] = $pays->ch_pay_nom;
             $paysResources[$pays['ch_pay_id']]['ch_pay_lien_imgdrapeau'] = $pays->ch_pay_lien_imgdrapeau;
@@ -46,8 +46,8 @@ class EconomyService
             $paysResources[$pays['ch_pay_id']]['alliance'] = $pays->alliance();
         }
 
-        if($sortBy !== null) {
-            usort($paysResources, function($a, $b) use($sortBy) {
+        if ($sortBy !== null) {
+            usort($paysResources, function ($a, $b) use ($sortBy) {
                 return $a['resources'][$sortBy] > $b['resources'][$sortBy] ? -1 : 1;
             });
         }
@@ -58,7 +58,7 @@ class EconomyService
     /**
      * Génère la somme des ressources générées par un ensemble d'influençables.
      *
-     * @param Influencable[] $influencables
+     * @param  Influencable[]  $influencables
      * @return float[] Un tableau de ressources contenant la somme  les ressources générées un
      *                 ensemble d'influençables.
      */
@@ -66,9 +66,9 @@ class EconomyService
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
-        foreach($influencables as $chapterResource) {
+        foreach ($influencables as $chapterResource) {
             $generatedResources = $chapterResource->getGeneratedResources();
-            foreach(Resource::cases() as $resource) {
+            foreach (Resource::cases() as $resource) {
                 $sumResources[$resource->value] += $generatedResources[$resource->value];
             }
         }
@@ -79,7 +79,7 @@ class EconomyService
     /**
      * Génère la somme des ressources générées par un ensemble de ressourceables.
      *
-     * @param Resourceable[] $resourceables
+     * @param  Resourceable[]  $resourceables
      * @return float[] Un tableau de ressources contenant la somme des ressources générées par un ensemble
      *                 de ressourceables.
      */
@@ -87,9 +87,9 @@ class EconomyService
     {
         $sumResources = EconomyService::resourcesPrefilled();
 
-        foreach($resourceables as $chapterResource) {
+        foreach ($resourceables as $chapterResource) {
             $generatedResources = $chapterResource->resources();
-            foreach(Resource::cases() as $resource) {
+            foreach (Resource::cases() as $resource) {
                 $sumResources[$resource->value] += $generatedResources[$resource->value];
             }
         }
