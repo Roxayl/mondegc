@@ -1,17 +1,21 @@
-php:
-  preset: laravel
-  disabled:
-    - unused_use
-  finder:
-    exclude:
-      - "legacy"
-    not-name:
-      - "index.php"
-      - "server.php"
-js:
-  finder:
-    exclude:
-      - "legacy"
-    not-name:
-      - "webpack.mix.js"
-css: true
+preset: laravel
+enabled:
+  - concat_with_spaces
+disabled:
+  - no_unused_imports
+  - concat_without_spaces
+finder:
+  exclude:
+    - "legacy"
+    - "modules"
+    - "node_modules"
+    - "nova"
+    - "nova-components"
+    - "storage"
+    - "spark"
+    - "vendor"
+  not-name:
+    - "index.php"
+    - "server.php"
+    - "*.blade.php"
+    - "_ide_helper.php"
