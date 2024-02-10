@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\View\Components\ChapterEntry;
 
 use Illuminate\View\View;

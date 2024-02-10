@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Jobs;
 
 use Carbon\Carbon;
@@ -50,7 +52,8 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
                 $requiredTrait = GeneratesResourceHistory::class;
                 if(! in_array($requiredTrait, class_uses_recursive($resourceable))) {
                     $this->outputToConsole('Ignoring: '
-                        . $resourceable->getName() . '=' . $resourceable->getKey());
+                        . $resourceable->getName() . '=' . $resourceable->getKey()
+                    );
                     continue;
                 }
 
@@ -58,7 +61,6 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
                 $this->outputToConsole('Stored: ' . $resourceable->getName() . '=' . $resourceable->getKey());
             }
         }, 2);
-
     }
 
     /**
@@ -82,7 +84,8 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
     {
         if(! $this->shouldRun()) {
             throw new \LogicException(
-                "La tâche d'historisation des ressources générées ne devrait pas être exécutée.");
+                "La tâche d'historisation des ressources générées ne devrait pas être exécutée."
+            );
         }
     }
 
@@ -104,7 +107,7 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
         // On exécute seulement si nous sommes :
         //  - entre le 1er et le 2ème jour de chaque mois ; ou
         //  - entre le 14ème et 16ème jour de chaque mois.
-        if(! in_array(now()->day, [1, 2, 14, 15, 16], true)) {
+        if(! in_array(now()->day, [1, 2, 3, 14, 15, 16], true)) {
             return false;
         }
 

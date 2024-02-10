@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\View\Components\Chapter;
 
 use Illuminate\Contracts\View\View;
@@ -8,11 +10,8 @@ use Roxayl\MondeGC\View\Components\BaseComponent;
 
 class Chapter extends BaseComponent
 {
-    private ChapterModel $chapter;
-
-    public function __construct(ChapterModel $chapter)
+    public function __construct(private readonly ChapterModel $chapter)
     {
-        $this->chapter = $chapter;
     }
 
     /**

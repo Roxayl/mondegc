@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Notifications;
 
 use Illuminate\Bus\Queueable;
@@ -12,25 +14,13 @@ class OrganisationMemberQuit extends Notification
     use Queueable;
 
     /**
-     * @var Pays
-     */
-    private Pays $pays;
-
-    /**
-     * @var Organisation
-     */
-    private Organisation $organisation;
-
-    /**
      * Create a new notification instance.
      *
      * @param  Pays  $pays
      * @param  Organisation  $organisation
      */
-    public function __construct(Pays $pays, Organisation $organisation)
+    public function __construct(private readonly Pays $pays, private readonly Organisation $organisation)
     {
-        $this->pays = $pays;
-        $this->organisation = $organisation;
     }
 
     /**

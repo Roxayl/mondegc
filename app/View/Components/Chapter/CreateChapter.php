@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\View\Components\Chapter;
 
 use Illuminate\View\View;
@@ -11,12 +13,9 @@ class CreateChapter extends BaseComponent
 {
     public Chapter $chapter;
 
-    public Roleplay $roleplay;
-
-    public function __construct(Roleplay $roleplay)
+    public function __construct(public Roleplay $roleplay)
     {
         $this->chapter = new Chapter();
-        $this->roleplay = $roleplay;
     }
 
     /**

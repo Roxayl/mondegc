@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Notifications;
 
 use Illuminate\Bus\Queueable;
@@ -11,18 +13,12 @@ class OrganisationTypeMigrated extends Notification
     use Queueable;
 
     /**
-     * @var Organisation
-     */
-    private Organisation $organisation;
-
-    /**
      * Create a new notification instance.
      *
      * @param  Organisation  $organisation
      */
-    public function __construct(Organisation $organisation)
+    public function __construct(private readonly Organisation $organisation)
     {
-        $this->organisation = $organisation;
     }
 
     /**

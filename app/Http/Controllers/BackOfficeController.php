@@ -15,7 +15,7 @@ class BackOfficeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(function(Request $request, \Closure $next) {
+        $this->middleware(function(Request $request, \Closure $next): mixed {
             if(! auth()->user()?->hasMinPermission('ocgc')) {
                 abort(403);
             }

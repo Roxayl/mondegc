@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\View\Components\ChapterEntry;
 
 use Illuminate\View\View;
@@ -8,11 +10,8 @@ use Roxayl\MondeGC\View\Components\BaseComponent;
 
 class CreateButton extends BaseComponent
 {
-    public Chapter $chapter;
-
-    public function __construct(Chapter $chapter)
+    public function __construct(public Chapter $chapter)
     {
-        $this->chapter = $chapter;
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -52,17 +54,9 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        $this->addEventyActions();
-    }
-
-    /**
-     * Ajoute les actions pour les hooks Eventy.
-     */
-    private function addEventyActions(): void
-    {
-        // Ici, on fait afficher une balise <script> avec les infos de configuration, juste avant
+        // On affiche une balise <script> avec les infos de configuration, juste avant
         // la balise </head>.
-        Eventy::addAction('display.beforeHeadClosingTag', function() {
+        Eventy::addAction('display.beforeHeadClosingTag', function(): void {
             echo (new ScriptConfiguration)->render()->toHtml();
         });
     }

@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\View\Components\ChapterEntry;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Client\HttpClientException;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 use simplehtmldom\HtmlDocument;
 
@@ -26,7 +29,8 @@ class SquirrelSquit extends BaseMediaEntry
 
         $client = new Client();
         $response = $client->request('GET', $url);
-        if($response->getStatusCode() !== 200) {
+        /** @noinspection PhpClassConstantAccessedViaChildClassInspection */
+        if($response->getStatusCode() !== Response::HTTP_OK) {
             throw new HttpClientException("Impossible de charger le squit.");
         }
 

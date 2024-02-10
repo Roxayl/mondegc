@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
@@ -70,10 +72,10 @@ class ChapterResourceableController extends Controller
 
         $chapterResourceable->save();
 
-        return redirect(route('roleplay.show', $chapter->roleplay)
-                . '#chapter-' . $chapter->identifier)
+        return redirect(route('roleplay.show', $chapter->roleplay) . '#chapter-' . $chapter->identifier)
             ->with('message', 'success|Les ressources ont été assignées à '
-                . e($chapterResourceable->resourceable->getName()) . '.');
+                . e($chapterResourceable->resourceable->getName()) . '.'
+            );
     }
 
     /**
@@ -88,8 +90,10 @@ class ChapterResourceableController extends Controller
         $roleplayable = $chapterResourceable->resourceable;
         $oldValues = $chapterResourceable->resources();
 
-        return view('chapter-resourceable.edit',
-            compact('chapterResourceable', 'chapter', 'oldValues', 'roleplayable'));
+        return view(
+            'chapter-resourceable.edit',
+            compact('chapterResourceable', 'chapter', 'oldValues', 'roleplayable')
+        );
     }
 
     /**
@@ -111,7 +115,8 @@ class ChapterResourceableController extends Controller
         return redirect(route('roleplay.show', $chapterResourceable->roleplay())
                 . '#chapter-' . $chapterResourceable->chapter->identifier)
             ->with('message', 'success|Les ressources ont été modifiées et assignées à '
-                . e($chapterResourceable->resourceable->getName()) . '.');
+                . e($chapterResourceable->resourceable->getName()) . '.'
+            );
     }
 
     /**

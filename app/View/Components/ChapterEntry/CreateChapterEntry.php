@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\View\Components\ChapterEntry;
 
 use Illuminate\View\View;
@@ -11,12 +13,9 @@ class CreateChapterEntry extends BaseComponent
 {
     public ChapterEntry $entry;
 
-    public Chapter $chapter;
-
-    public function __construct(Chapter $chapter)
+    public function __construct(public Chapter $chapter)
     {
         $this->entry = new ChapterEntry();
-        $this->chapter = $chapter;
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\View\Components\ResourceHistory;
 
 use Carbon\Carbon;
@@ -12,36 +14,17 @@ use Roxayl\MondeGC\Models\ResourceHistory;
 class GraphPerResource extends Graph
 {
     /**
-     * @var Collection<int, Resourceable>
-     */
-    public Collection $resourceables;
-
-    /**
-     * @var string
-     */
-    public string $resourceName;
-
-    public ?Carbon $startDate;
-
-    public ?Carbon $endDate;
-
-    /**
-     * @param Collection $resourceables
+     * @param Collection<int, Resourceable> $resourceables
      * @param string $resourceName
      * @param Carbon|null $startDate
      * @param Carbon|null $endDate
      */
     public function __construct(
-        Collection $resourceables,
-        string $resourceName,
-        Carbon $startDate = null,
-        Carbon $endDate = null
+        public Collection $resourceables,
+        public string     $resourceName,
+        public ?Carbon    $startDate = null,
+        public ?Carbon    $endDate = null
     ) {
-        $this->resourceables = $resourceables;
-        $this->resourceName = $resourceName;
-        $this->startDate = $startDate;
-        $this->endDate = $endDate;
-
         $this->chartData = $this->generateChartData();
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Controllers;
 
 use Carbon\Carbon;
@@ -31,10 +33,10 @@ class DataExporterController extends Controller
             ,   'Pragma'              => 'public'
         ];
 
-        # add headers for each column in the CSV download
+        # Ajoute les en-têtes dans le fichier CSV résultat.
         array_unshift($data, array_keys($data[array_key_first($data)]));
 
-        $callback = function() use ($data) {
+        $callback = function() use ($data): void {
             $FH = fopen('php://output', 'w');
             foreach ($data as $row) {
                 $status = fputcsv($FH, $row);

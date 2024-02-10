@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
@@ -15,11 +17,11 @@ class CustomUserController extends Controller
 {
     /**
      * Vérifie que l'utilisateur passé en paramètre est actuellement connecté à l'application.
+     *
      * @param  CustomUser  $user L'utilisateur dont il faut tester le statut d'authentification.
-     * @return void
      * @throws AccessDeniedHttpException Lorsque l'utilisateur passé en paramètre n'est pas celui actuellement connecté.
      */
-    private function checkCurrentUser(CustomUser $user)
+    private function checkCurrentUser(CustomUser $user): void
     {
         $authUser = auth()->user();
 
@@ -29,7 +31,9 @@ class CustomUserController extends Controller
     }
 
     /**
-     * Renvoie la liste des {@see Roleplayable roleplayables} d'un utilisateur au format JSON.
+     * Renvoie la liste des {@see Roleplayable roleplayables} de l'utilisateur connecté au format JSON.
+     *
+     * @param Request $request
      * @return JsonResponse
      */
     public function roleplayables(Request $request): JsonResponse
@@ -41,14 +45,16 @@ class CustomUserController extends Controller
         /** @var CustomUser $user */
         $user = auth()->user();
 
-        $type   = Str::lower($request->input('type'));
-        $term   = Str::lower($request->input('term'));
+        $type   = Str::lower($request->input('type', ''));
+        $term   = Str::lower($request->input('term', ''));
 
         /** @var Collection<int, Roleplayable> $roleplayables */
-        $roleplayables = $user->roleplayables()->filter(function(Roleplayable $roleplayable) use ($type, $term) {
-            return Str::contains(Str::lower($roleplayable->getName()), $term)
-                && get_class($roleplayable) === 'Roxayl\MondeGC\Models\\' . Str::ucfirst($type);
-        });
+        $roleplayables = $user->roleplayables()->filter(
+            function(Roleplayable $roleplayable) use ($type, $term): bool {
+                return Str::contains(Str::lower($roleplayable->getName()), $term)
+                    && get_class($roleplayable) === 'Roxayl\MondeGC\Models\\' . Str::ucfirst($type);
+            }
+        );
 
         $result = [];
         foreach($roleplayables as $roleplayable) {
@@ -64,6 +70,7 @@ class CustomUserController extends Controller
 
     /**
      * Met à jour le jeton d'authentification à l'API.
+     *
      * @param  CustomUser  $user
      * @return RedirectResponse
      */

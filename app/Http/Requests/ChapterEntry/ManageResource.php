@@ -13,6 +13,7 @@ class ManageResource extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      *
+     * @param ChapterEntry $entry
      * @return bool
      */
     public function authorize(ChapterEntry $entry): bool

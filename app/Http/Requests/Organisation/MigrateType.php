@@ -11,7 +11,7 @@ use Roxayl\MondeGC\Models\Organisation;
 
 class MigrateType extends FormRequest
 {
-    protected ?Organisation $organisation;
+    protected Organisation $organisation;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -106,14 +106,14 @@ class MigrateType extends FormRequest
 
         if($this->organisation->type !== Organisation::TYPE_GROUP
            && $type === Organisation::TYPE_GROUP) {
-            if(!$this->canMigrateToGroup()) {
+            if(! $this->canMigrateToGroup()) {
                 $errors['type'] = __('organisation.validation.migrate-group-error');
             }
         }
 
         if($this->organisation->type === Organisation::TYPE_AGENCY
            || $type === Organisation::TYPE_AGENCY) {
-            if(!$this->canMigrateToAgency()) {
+            if(! $this->canMigrateToAgency()) {
                 $errors['type'] = __('organisation.validation.migrate-agency-error');
             }
         }

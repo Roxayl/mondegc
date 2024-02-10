@@ -20,7 +20,7 @@ class VersionController extends Controller
      */
     public function revert(Version $version): RedirectResponse
     {
-        DB::transaction(function() use ($version) {
+        DB::transaction(function() use ($version): void {
             // Modèle versionné.
             /** @var Model|Versionable $model */
             $model = $version->getModel();
@@ -34,7 +34,7 @@ class VersionController extends Controller
             if(! empty($version->reason)) {
                 $reason = "Retour à la version : " . $version->reason;
             } else {
-                $reason = "Retour à la version du " . $version->created_at->format('d/m/Y à H:i:s');
+                $reason = "Retour à la version du " . $version->created_at->format('d/m/Y à H:i');
             }
 
             $version->revert();
