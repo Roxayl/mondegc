@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Notifications;
 
 use Illuminate\Bus\Queueable;
@@ -11,18 +13,12 @@ class PaysRegistered extends Notification
     use Queueable;
 
     /**
-     * @var Pays
-     */
-    private Pays $pays;
-
-    /**
      * Create a new notification instance.
      *
      * @param  Pays  $pays
      */
-    public function __construct(Pays $pays)
+    public function __construct(private readonly Pays $pays)
     {
-        $this->pays = $pays;
     }
 
     /**

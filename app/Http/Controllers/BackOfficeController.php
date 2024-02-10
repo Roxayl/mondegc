@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
@@ -13,7 +15,7 @@ class BackOfficeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(function(Request $request, \Closure $next) {
+        $this->middleware(function(Request $request, \Closure $next): mixed {
             if(! auth()->user()?->hasMinPermission('ocgc')) {
                 abort(403);
             }

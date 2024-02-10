@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Jobs\Traits;
 
 use Roxayl\MondeGC\Models\DiscordNotification;

@@ -19,6 +19,10 @@ $user_prov = mysql_query($query_user_prov, $maconnexion);
 $row_user_prov = mysql_fetch_assoc($user_prov);
 $totalRows_user_prov = mysql_num_rows($user_prov);
 
+if(! $row_user_prov) {
+    abort(404);
+}
+
 $colname_UserID = "-1";
 if (isset($row_user_prov['ch_use_prov_login'])) {
   $colname_UserID = $row_user_prov['ch_use_prov_login'];
@@ -34,7 +38,7 @@ appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
   $salt = config('legacy.salt');
-  $password = md5($_POST['ch-use_password'].$salt);
+  $password = md5($_POST['ch_use_password'].$salt);
   $updateSQL = sprintf("UPDATE users SET ch_use_login=%s, ch_use_password=%s WHERE ch_use_id=%s",
                        escape_sql($_POST['ch_use_login'], "text"),
                        escape_sql($password, "text"),

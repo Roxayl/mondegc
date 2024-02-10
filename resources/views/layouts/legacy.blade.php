@@ -1,4 +1,4 @@
-@inject('navbarProvider', 'Roxayl\MondeGC\Services\LegacyPageService')
+@inject('legacyPageService', 'Roxayl\MondeGC\Services\LegacyPageService')
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -34,7 +34,7 @@
 <body @yield('body_attributes')>
     <!-- Navbar
     ================================================== -->
-    {!! $navbarProvider::navbar() !!}
+    {!! $legacyPageService->navbar() !!}
 
     @yield('content')
 
@@ -44,12 +44,12 @@
 
     <!-- Footer
     ================================================== -->
-    {!! $navbarProvider::footer() !!}
+    {!! $legacyPageService->footer() !!}
 
     <script src="{{mix('/js/vendor-compiled.js')}}"></script>
     <script src="{{mix('/js/application-compiled.js')}}"></script>
     <script type="text/javascript">
-    (function(window, document, $, undefined) {
+    (function(window, document, $) {
         $(function() {
             $('[rel="clickover"]').clickover();
         })

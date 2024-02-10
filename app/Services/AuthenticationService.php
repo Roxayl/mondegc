@@ -45,12 +45,6 @@ class AuthenticationService
         $_SESSION['user_ID'] = $user->ch_use_id;
         $_SESSION['user_last_log'] = $user->ch_use_last_log;
         $_SESSION['statut'] = $user->ch_use_statut;
-        $_SESSION['img_dirigeant'] = $user->ch_use_lien_imgpersonnage;
-        $_SESSION['predicat_dirigeant'] = $user->ch_use_predicat_dirigeant;
-        $_SESSION['titre_dirigeant'] = $user->ch_use_titre_dirigeant;
-        $_SESSION['nom_dirigeant'] = $user->ch_use_nom_dirigeant;
-        $_SESSION['prenom_dirigeant'] = $user->ch_use_prenom_dirigeant;
-        $_SESSION['derniere_visite'] = $user->last_activity;
         $_SESSION['errmsgs'] ??= [];
 
         $_SESSION['userObject'] = new Monde\User($user->ch_use_id);
@@ -81,8 +75,8 @@ class AuthenticationService
     public function logout(): void
     {
         // Effacement du cookie de session.
-        setcookie('Session_mondeGC', '', time() -3600, null, null, false, false);
-        unset($_COOKIE["Session_mondeGC"]);
+        setcookie('Session_mondeGC', '', time() - 7200,  '', '', false, true);
+        unset($_COOKIE['Session_mondeGC']);
 
         // Supprime les variables de session stockant les informations sur l'utilisateur.
         unset($_SESSION['login_user']);

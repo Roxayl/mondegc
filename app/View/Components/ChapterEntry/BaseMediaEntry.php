@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\View\Components\ChapterEntry;
 
 use Roxayl\MondeGC\Models\ChapterEntry;
@@ -7,11 +9,8 @@ use Roxayl\MondeGC\View\Components\BaseComponent;
 
 abstract class BaseMediaEntry extends BaseComponent
 {
-    public ChapterEntry $entry;
-
-    public function __construct(ChapterEntry $entry)
+    public function __construct(public ChapterEntry $entry)
     {
-        $this->entry = $entry;
     }
 
     /**

@@ -101,7 +101,7 @@ if (isset($_POST['identifiant'])) {
 
         // *** Creation du cookie
         $dureeCookieJours = 30;
-        setcookie('Session_mondeGC', $code_aleatoire, time() + $dureeCookieJours*24*3600, null, null, false, true);
+        setcookie('Session_mondeGC', $code_aleatoire, time() + ($dureeCookieJours * 24 * 3600), '', '', false, true);
 
         $authService = new AuthenticationService();
         $authService->loginUsingId($row_LoginRS['ch_use_id']);

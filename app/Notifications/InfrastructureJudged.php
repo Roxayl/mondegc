@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Notifications;
 
 use Illuminate\Bus\Queueable;
@@ -11,11 +13,6 @@ class InfrastructureJudged extends Notification
     use Queueable;
 
     /**
-     * @var Infrastructure
-     */
-    private Infrastructure $infrastructure;
-
-    /**
      * @var bool
      */
     private bool $accepted;
@@ -25,9 +22,8 @@ class InfrastructureJudged extends Notification
      *
      * @param  Infrastructure  $infrastructure
      */
-    public function __construct(Infrastructure $infrastructure)
+    public function __construct(private readonly Infrastructure $infrastructure)
     {
-        $this->infrastructure = $infrastructure;
         $this->accepted = $this->infrastructure->ch_inf_statut === Infrastructure::JUGEMENT_ACCEPTED;
     }
 

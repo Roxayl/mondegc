@@ -14,7 +14,7 @@ class LegacyPageService
      * @param  string  $path Chemin d'accès (e.g. " /back/ocgc_proposal_create.php").
      * @return string Réponse sous forme de chaîne.
      */
-    private static function callLegacyController(string $path): string
+    private function callLegacyController(string $path): string
     {
         /** @var LegacySiteController $controller */
         $controller = app(LegacySiteController::class);
@@ -41,7 +41,7 @@ class LegacyPageService
      * @param  string|null  $navbarContext Elément du menu à lmarquer comme actif.
      * @return string
      */
-    public static function navbar(?string $navbarContext = null): string
+    public function navbar(?string $navbarContext = null): string
     {
         // On créé dynamiquement la variable permettant d'activer l'élément de menu spécifié.
         if(in_array(
@@ -52,7 +52,7 @@ class LegacyPageService
             $$navbarContext = true;
         }
 
-        return self::callLegacyController('php/navbarloader.php');
+        return $this->callLegacyController('php/navbarloader.php');
     }
 
     /**
@@ -60,9 +60,9 @@ class LegacyPageService
      *
      * @return string
      */
-    public static function footer(): string
+    public function footer(): string
     {
-        return self::callLegacyController('php/footer.php');
+        return $this->callLegacyController('php/footer.php');
     }
 
     /**
@@ -70,9 +70,9 @@ class LegacyPageService
      *
      * @return string
      */
-    public static function carteGenerale(): string
+    public function carteGenerale(): string
     {
-        return self::callLegacyController('php/cartegenerale2.php');
+        return $this->callLegacyController('php/cartegenerale2.php');
     }
 
     /**
@@ -80,8 +80,8 @@ class LegacyPageService
      *
      * @return string
      */
-    public static function menuHautConseil(): string
+    public function menuHautConseil(): string
     {
-        return self::callLegacyController('php/menu-haut-conseil.php');
+        return $this->callLegacyController('php/menu-haut-conseil.php');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace GenCity\Proposal;
+use Carbon\CarbonImmutable;
 use DateTime;
 use GenCity\Monde\Pays;
 use GenCity\Monde\User;
@@ -8,8 +9,6 @@ use Squirrel\BaseModel;
 
 class Proposal extends BaseModel {
 
-    static $debate_day_start = 'friday';
-    static $debate_day_end   = 'saturday';
     static $date_formatting  = 'Y-m-d H:i:s';
 
     /** * @var array Détermine le type de sondage, IRL ou RP. */
@@ -198,7 +197,7 @@ class Proposal extends BaseModel {
         // Vérifier la date des débats
 
         $setDebateEnd = DateTime::createFromFormat(self::$date_formatting, $this->get('debate_start'));
-        $setDebateEnd->modify('+60 hours');
+        $setDebateEnd->modify('+72 hours');
         $this->set('debate_end', $setDebateEnd->format(self::$date_formatting));
 
         if(!$this->isValidDebateDate()) {
@@ -237,7 +236,11 @@ class Proposal extends BaseModel {
             $start_bonus_week = $i;
             $end_bonus_week = $i;
 
-            if(date('D') === 'Fri' || date('D') === 'Sat') {
+            $startingWeekDate = CarbonImmutable::now()->setTime(12, 0);
+            $endingWeekDate = $startingWeekDate->addDays(3);
+            $withinDebatePeriod = $startingWeekDate->isThursday()
+                && CarbonImmutable::now()->between($startingWeekDate, $endingWeekDate);
+            if($withinDebatePeriod) {
                 $end_bonus_week++;
             }
 
@@ -248,8 +251,8 @@ class Proposal extends BaseModel {
                 $end_week_string = "+$end_bonus_week week" . ($end_bonus_week > 1 ? 's' : '');
             }
 
-            $timeNextDebateStart = strtotime("next friday $start_week_string");
-            $timeNextDebateEnd = strtotime("next sunday $end_week_string") + (12*60*60); // On ajoute 12 heures.
+            $timeNextDebateStart = strtotime("next thursday $start_week_string") + (12*60*60); // jeudi midi ; on ajoute 12 heures.
+            $timeNextDebateEnd = strtotime("next sunday $end_week_string") + (12*60*60); // dimanche midi
             $dateNextDebateStart = date(self::$date_formatting, $timeNextDebateStart);
             $dateNextDebateEnd = date(self::$date_formatting, $timeNextDebateEnd);
             if($getDebateEnd) {
@@ -273,9 +276,9 @@ class Proposal extends BaseModel {
      */
     public function isValidDebateDate() {
 
-        $start_is_friday = date('D', strtotime($this->get('debate_start'))) === "Fri";
+        $start_is_thursday = date('D', strtotime($this->get('debate_start'))) === "Thu";
         $end_is_saturday = date('D', strtotime($this->get('debate_end'))) === "Sun";
-        return $start_is_friday && $end_is_saturday;
+        return $start_is_thursday && $end_is_saturday;
 
     }
 

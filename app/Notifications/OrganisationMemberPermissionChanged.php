@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Notifications;
 
 use Illuminate\Bus\Queueable;
@@ -9,11 +11,6 @@ use Roxayl\MondeGC\Models\OrganisationMember;
 class OrganisationMemberPermissionChanged extends Notification
 {
     use Queueable;
-
-    /**
-     * @var OrganisationMember
-     */
-    private OrganisationMember $organisationMember;
 
     /**
      * @var string
@@ -31,13 +28,12 @@ class OrganisationMemberPermissionChanged extends Notification
      * @param  OrganisationMember  $organisationMember
      * @param  string  $action
      */
-    public function __construct(OrganisationMember $organisationMember, string $action)
+    public function __construct(private readonly OrganisationMember $organisationMember, string $action)
     {
         if(! in_array($action, $this->availableActions, true)) {
             throw new \InvalidArgumentException("Mauvais type d'action.");
         }
 
-        $this->organisationMember = $organisationMember;
         $this->action = $action;
     }
 

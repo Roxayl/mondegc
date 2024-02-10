@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://mondegc.test'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -197,9 +197,7 @@ return [
         Roxayl\MondeGC\Providers\AppServiceProvider::class,
         Roxayl\MondeGC\Providers\AuthServiceProvider::class,
         Roxayl\MondeGC\Providers\EventServiceProvider::class,
-        Roxayl\MondeGC\Providers\FakerServiceProvider::class,
         Roxayl\MondeGC\Providers\RouteServiceProvider::class,
-        Roxayl\MondeGC\Providers\DiscordServiceProvider::class,
 
     ],
 
@@ -254,7 +252,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         // Packages.
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Debugbar' => \Barryvdh\Debugbar\Facades\Debugbar::class,
         'Eventy' => TorMorten\Eventy\Facades\Eventy::class,
 
     ],

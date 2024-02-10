@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\View\Components\Roleplay;
 
 use Illuminate\Contracts\View\View;
@@ -8,11 +10,8 @@ use Roxayl\MondeGC\View\Components\BaseComponent;
 
 class AddOrganizer extends BaseComponent
 {
-    public Roleplay $roleplay;
-
-    public function __construct(Roleplay $roleplay)
+    public function __construct(public Roleplay $roleplay)
     {
-        $this->roleplay = $roleplay;
     }
 
     /**

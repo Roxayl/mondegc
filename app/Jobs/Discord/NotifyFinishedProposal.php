@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Jobs\Discord;
 
 use Illuminate\Bus\Queueable;
@@ -17,13 +19,10 @@ class NotifyFinishedProposal implements ShouldQueue, NotifiesDiscord
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, NotifiesDiscordTrait;
 
-    private OcgcProposal $proposal;
-
     private string $webhookName = 'ocgc';
 
-    public function __construct(OcgcProposal $proposal)
+    public function __construct(private readonly OcgcProposal $proposal)
     {
-        $this->proposal = $proposal;
     }
 
     public function isUnique(): bool

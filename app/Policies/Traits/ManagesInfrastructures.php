@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Policies\Traits;
 
 use Illuminate\Support\Facades\Gate;
@@ -27,7 +29,8 @@ trait ManagesInfrastructures
         }
 
         $method = 'check' . Str::ucfirst(
-            Infrastructure::getUrlParameterFromMorph(get_class($infrastructurable)));
+            Infrastructure::getUrlParameterFromMorph(get_class($infrastructurable))
+        );
         return $this->$method($user, $infrastructurable);
     }
 
@@ -38,7 +41,7 @@ trait ManagesInfrastructures
      */
     protected function checkOrganisation(CustomUser $user, Organisation $infrastructurable): bool
     {
-        if(!$infrastructurable->hasEconomy()) {
+        if(! $infrastructurable->hasEconomy()) {
             return false;
         }
         return Gate::check('administrate', $infrastructurable);
@@ -62,9 +65,6 @@ trait ManagesInfrastructures
      */
     protected function checkPays(CustomUser $user, Pays $infrastructurable): bool
     {
-        if($user->ownsPays($infrastructurable)) {
-            return true;
-        }
-        return false;
+        return $user->ownsPays($infrastructurable);
     }
 }

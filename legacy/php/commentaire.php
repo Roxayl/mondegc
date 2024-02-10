@@ -27,7 +27,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
   $params = explode("&", $_SERVER['QUERY_STRING']);
   $newParams = array();
   foreach ($params as $param) {
-    if (stristr($param, "pageNum_commentaire") == false && 
+    if (stristr($param, "pageNum_commentaire") == false &&
         stristr($param, "totalRows_commentaire") == false) {
       array_push($newParams, $param);
     }
@@ -41,7 +41,7 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
 
 <!-- REACTIONS -->
 <?php if ($row_commentaire) { ?>
-<ul class="listes listes-visiteurs" style="background: #abbcc8;">
+<ul class="listes listes-visiteurs" style="background: #abbcc8; padding: 0;">
   <?php do {
 
     $paysReaction = new \GenCity\Monde\Pays($row_commentaire['ch_use_paysID']);
@@ -52,7 +52,7 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
     <div>
     <div class="span3 img-listes img-avatar">
         <?php if(isset($persoReaction)): ?>
-          <img src="<?= __s($persoReaction->get('lien_img')) ?>">
+          <img src="<?= e($persoReaction->get('lien_img')) ?>">
         <?php endif; ?>
     </div>
     <div class="span9 info-listes" style="background: white; padding-left: 1em; padding-right: 1em;">
@@ -71,21 +71,21 @@ $queryString_commentaire = sprintf("&totalRows_commentaire=%d%s", $totalRows_com
     </div>
 
     <?php if(isset($persoReaction)): ?>
-      <h4><?= __s($persoReaction->get('predicat')) ?> <?= __s($persoReaction->get('prenom_personnage')) ?> <?= __s($persoReaction->get('nom_personnage')) ?></h4>
+      <h4><?= e($persoReaction->get('predicat')) ?> <?= e($persoReaction->get('prenom_personnage')) ?> <?= e($persoReaction->get('nom_personnage')) ?></h4>
       <h5>
           <?= isset($paysReaction) ? '<a href="page-pays.php?ch_pay_id=' . $paysReaction->get('ch_pay_id') . '#diplomatie"><img class="img-menu-drapeau" src="
-            ' . __s($paysReaction->get('ch_pay_lien_imgdrapeau')) . '">
-            ' . __s($paysReaction->get('ch_pay_nom')) . '</a> &#183; ' : '' ?>
-          <?= __s($persoReaction->get('titre_personnage')) ?></h5>
+            ' . e($paysReaction->get('ch_pay_lien_imgdrapeau')) . '">
+            ' . e($paysReaction->get('ch_pay_nom')) . '</a> &#183; ' : '' ?>
+          <?= e($persoReaction->get('titre_personnage')) ?></h5>
       <!-- AFFICHAGE DATE --> 
-      <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_commentaire['ch_com_date'])); ?></small>
+      <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i", strtotime($row_commentaire['ch_com_date'])); ?></small>
       <p><?= htmlPurify($row_commentaire['ch_com_contenu']) ?></p>
 
       <?php else: ?>
       <h4><?= e($row_commentaire['ch_use_predicat_dirigeant']) ?> <?= e($row_commentaire['ch_use_prenom_dirigeant']) ?> <?= e($row_commentaire['ch_use_nom_dirigeant']) ?></h4>
       <h5><?= e($row_commentaire['ch_use_titre_dirigeant']) ?></h5>
       <!-- AFFICHAGE DATE -->
-      <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i:s", strtotime($row_commentaire['ch_com_date'])); ?></small>
+      <small>Le <?php echo date("d/m/Y", strtotime($row_commentaire['ch_com_date'])); ?> &agrave; <?php echo date("G:i", strtotime($row_commentaire['ch_com_date'])); ?></small>
       <p><?= htmlPurify($row_commentaire['ch_com_contenu']) ?></p>
       <a class="btn btn-primary" href="page-pays.php?ch_pay_id=<?= e($row_commentaire['ch_use_paysID']) ?>#diplomatie">Afficher son profil</a>
       <?php endif; ?>

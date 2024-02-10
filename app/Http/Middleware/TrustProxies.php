@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Middleware;
 
 use Illuminate\Http\Middleware\TrustProxies as Middleware;
@@ -18,6 +20,7 @@ class TrustProxies extends Middleware
      * The headers that should be used to detect proxies.
      *
      * @var int
+     * @noinspection PhpClassConstantAccessedViaChildClassInspection
      */
     protected $headers =
         Request::HEADER_X_FORWARDED_FOR |

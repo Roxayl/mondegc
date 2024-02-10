@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Middleware;
 
-use Closure;
 use Illuminate\Http\Request;
 
 class RedirectIfAuthenticated
@@ -11,11 +12,11 @@ class RedirectIfAuthenticated
      * Handle an incoming request.
      *
      * @param  Request  $request
-     * @param  Closure  $next
+     * @param  \Closure  $next
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $guard = null)
+    public function handle(Request $request, \Closure $next, ?string $guard = null): mixed
     {
         if (auth()->guard($guard)->check()) {
             return redirect('/home');

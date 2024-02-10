@@ -6,38 +6,28 @@ namespace Roxayl\MondeGC\Services;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\Blade;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Compilers\BladeCompiler;
 
 /**
  * Cette classe permet de compiler un template Blade à partir d'une chaîne de caractères.
  *
  * @see https://stackoverflow.com/questions/16891398/is-there-any-way-to-compile-a-blade-template-from-a-string
+ * @deprecated Désormais implémenté nativement via {@see \Illuminate\View\Compilers\BladeCompiler::render()}
+ *             dans Laravel 9.
  */
 class StringBladeService
 {
-    /**
-     * @var Filesystem
-    */
-    protected Filesystem $file;
-
-    /**
-     * @var \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-    */
-    protected $viewer;
-
-    /**
-     * StringBlade constructor.
-     *
-     * @param Filesystem $file
-     */
-    public function __construct(Filesystem $file)
-    {
-        $this->file = $file;
-        $this->viewer = view();
+    public function __construct(
+        protected readonly Filesystem $file,
+        protected readonly View|ViewFactory $view,
+        protected readonly BladeCompiler $blade
+    ) {
     }
 
     /**
-     * Get Blade file path.
+     * Obtenir le chemin d'un template temporaire Blade.
      *
      * @param string $bladeString
      * @return string
@@ -47,7 +37,7 @@ class StringBladeService
     {
         $bladePath = $this->generateBladePath();
 
-        $content = Blade::compileString($bladeString);
+        $content = $this->blade->compileString($bladeString);
 
         if(! $this->file->put($bladePath, $content)) {
             throw new FileNotFoundException("Impossible de créer un fichier temporaire.");
@@ -56,7 +46,7 @@ class StringBladeService
     }
 
     /**
-     * Get the rendered HTML.
+     * Afficher le rendu HTML.
      *
      * @param string $bladeString
      * @param array $data
@@ -69,7 +59,7 @@ class StringBladeService
         $bladePath = $this->getBlade($bladeString);
 
         // Render the php temp file & return the HTML content
-        $content = $this->viewer->file($bladePath, $data)->render();
+        $content = $this->view->file($bladePath, $data)->render();
 
         // Delete the php temp file.
         $this->file->delete($bladePath);
@@ -78,7 +68,7 @@ class StringBladeService
     }
 
     /**
-     * Generate a blade file path.
+     * Générer un chemin temporaire pour le template Blade.
      *
      * @return string
      */

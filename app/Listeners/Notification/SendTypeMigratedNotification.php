@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Listeners\Notification;
 
 use Illuminate\Support\Facades\Notification;
@@ -8,14 +10,6 @@ use Roxayl\MondeGC\Notifications\OrganisationTypeMigrated;
 
 class SendTypeMigratedNotification
 {
-    /**
-     * Create the event listener.
-     */
-    public function __construct()
-    {
-        //
-    }
-
     /**
      * Handle the event.
      *

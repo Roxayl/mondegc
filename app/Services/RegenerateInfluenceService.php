@@ -12,34 +12,11 @@ use Roxayl\MondeGC\Models\Influence;
 
 class RegenerateInfluenceService
 {
-    /**
-     * @var CacheManager
-     */
-    private CacheManager $cache;
-
-    /**
-     * @var InfluencableFactory
-     */
-    private InfluencableFactory $influencableFactory;
-
-    /**
-     * @var DatabaseManager
-     */
-    private DatabaseManager $db;
-
-    /**
-     * @param InfluencableFactory $influencableFactory
-     * @param DatabaseManager $databaseManager
-     * @param CacheManager $cache
-     */
     public function __construct(
-        InfluencableFactory $influencableFactory,
-        DatabaseManager $databaseManager,
-        CacheManager $cache
+        private readonly InfluencableFactory $influencableFactory,
+        private readonly DatabaseManager     $db,
+        private readonly CacheManager        $cache
     ) {
-        $this->influencableFactory = $influencableFactory;
-        $this->db = $databaseManager;
-        $this->cache = $cache;
     }
 
     /**

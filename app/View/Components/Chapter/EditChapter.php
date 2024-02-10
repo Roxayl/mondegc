@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\View\Components\Chapter;
 
 use Illuminate\View\View;
@@ -9,13 +11,10 @@ use Roxayl\MondeGC\View\Components\BaseComponent;
 
 class EditChapter extends BaseComponent
 {
-    public Chapter $chapter;
-
     public Roleplay $roleplay;
 
-    public function __construct(Chapter $chapter)
+    public function __construct(public Chapter $chapter)
     {
-        $this->chapter = $chapter;
         $this->roleplay = $chapter->roleplay;
     }
 

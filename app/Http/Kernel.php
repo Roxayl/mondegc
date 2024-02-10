@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use Roxayl\MondeGC\Http\Middleware;
 
 class Kernel extends HttpKernel
 {
