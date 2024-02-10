@@ -19,10 +19,6 @@ use Illuminate\View\Compilers\BladeCompiler;
  */
 class StringBladeService
 {
-    /**
-     * @param Filesystem $file
-     * @param View|ViewFactory $view
-     */
     public function __construct(
         protected readonly Filesystem $file,
         protected readonly View|ViewFactory $view,

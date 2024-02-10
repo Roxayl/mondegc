@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Console\Commands;
 
 use Exception;
@@ -20,16 +22,6 @@ class UpdateProject extends Command
      * @var string
      */
     protected $description = "Exécute les routines dans le cadre d'une mise à jour du site";
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.

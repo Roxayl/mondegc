@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Console\Commands;
 
 class InitializeTesting extends Initializer

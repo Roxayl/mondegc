@@ -15,7 +15,8 @@ class Flash extends BaseComponent
      */
     public function __construct(
         private readonly ?Request $request
-    ) {}
+    ) {
+    }
 
     /**
      * @inheritDoc
