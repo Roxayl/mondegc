@@ -23,7 +23,7 @@ class Flash extends BaseComponent
      */
     public function render(): string
     {
-        return $this->renderSessionMessages() . $this->renderLegacyMessages();
+        return '<div class="well">' . $this->renderSessionMessages() . $this->renderLegacyMessages() . '</div>';
     }
 
     /**
