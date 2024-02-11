@@ -2,9 +2,9 @@ name: "🏗️ Build and deploy"
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ main ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ main ]
 
 jobs:
 
@@ -68,7 +68,7 @@ jobs:
     name: "💾 Run backups"
     runs-on: ubuntu-20.04
     needs: run-tests
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
 
@@ -88,7 +88,7 @@ jobs:
     name: "🚀 Deploy to production"
     runs-on: ubuntu-20.04
     needs: run-backups
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
 

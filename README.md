@@ -2,7 +2,7 @@
 
 <p align="center">
 <a href="https://github.com/Roxayl/mondegc/actions"><img src="https://github.com/Roxayl/mondegc/actions/workflows/build.yml/badge.svg" alt="CI" /></a>
-<a href="https://github.styleci.io/repos/349166635?branch=develop"><img src="https://github.styleci.io/repos/349166635/shield?branch=develop" alt="StyleCI"></a>
+<a href="https://github.styleci.io/repos/349166635?branch=main"><img src="https://github.styleci.io/repos/349166635/shield?branch=main" alt="StyleCI"></a>
 <a href="https://codeclimate.com/github/Roxayl/mondegc/maintainability"><img src="https://api.codeclimate.com/v1/badges/58e9f09228db2ed7a781/maintainability"  alt="Code Climate"/></a>
 <a href="https://discord.gg/4P3HqVbbgR"><img src="https://img.shields.io/discord/328496654514782209" alt="Discord" /></a>
 </p>
@@ -147,9 +147,9 @@ tout moment avec ``docker-compose up -d``.
 
 ## Développement et tests
 
-Le processus de développement suit les règles décrites par **Git Flow**. Pour plus d'informations,
-[cet article](https://les-enovateurs.com/gitflow-workflow-git-incontournableprojets-de-qualite/) donne des détails sur 
-le cadre posé par ce *workflow*.
+Le processus de développement suit les règles décrites par **GitHub Flow**. Pour plus d'informations,
+[cet article](https://www.alexhyett.com/git-flow-github-flow/#what-is-github-flow) donne des détails sur 
+le cadre posé par cette stratégie de branche.
 
 ### Structure des dépôts Git
 
