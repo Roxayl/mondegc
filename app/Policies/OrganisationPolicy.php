@@ -123,6 +123,14 @@ class OrganisationPolicy implements VersionablePolicy
     /**
      * @inheritDoc
      */
+    public function viewDiff(CustomUser|Authenticatable $user, Organisation|Model $model): bool
+    {
+        return $this->viewAny($user);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function revert(CustomUser|Authenticatable $user, Organisation|Model $model): bool
     {
         if ($user->hasMinPermission('ocgc')) {

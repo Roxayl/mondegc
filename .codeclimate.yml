@@ -1,0 +1,62 @@
+version: "2"
+checks:
+  argument-count:
+    enabled: true
+    config:
+      threshold: 5
+  complex-logic:
+    enabled: true
+    config:
+      threshold: 5
+  file-lines:
+    enabled: true
+    config:
+      threshold: 300
+  method-complexity:
+    enabled: true
+    config:
+      threshold: 6
+  method-count:
+    enabled: true
+    config:
+      threshold: 25
+  method-lines:
+    enabled: true
+    config:
+      threshold: 100
+  nested-control-flow:
+    enabled: true
+    config:
+      threshold: 4
+  return-statements:
+    enabled: true
+    config:
+      threshold: 5
+  similar-code:
+    enabled: true
+    config:
+      threshold: #language-specific defaults. overrides affect all languages.
+  identical-code:
+    enabled: true
+    config:
+      threshold: #language-specific defaults. overrides affect all languages.
+plugins:
+  phpmd:
+    enabled: true
+exclude_patterns:
+  - ".phpdoc/"
+  - ".scribe/"
+  - "assets/"
+  - "Carto/"
+  - "config/"
+  - "database/"
+  - "docker/"
+  - "docs/"
+  - "Graphisme/"
+  - "libs/"
+  - "**/node_modules/"
+  - "public/"
+  - "storage/"
+  - "**/tests/"
+  - "userfiles/"
+  - "**/vendor/"

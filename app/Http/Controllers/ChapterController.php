@@ -9,11 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
-use Mpociot\Versionable\Version;
 use Roxayl\MondeGC\Models\Chapter;
 use Roxayl\MondeGC\Models\Roleplay;
 use Roxayl\MondeGC\Services\StringBladeService;
-use Roxayl\MondeGC\Services\VersionDiffService;
 
 class ChapterController extends Controller
 {
@@ -201,38 +199,11 @@ class ChapterController extends Controller
         $versions = $chapter->versions()->latest('version_id')->paginate();
         $canRevert = Gate::allows('revert', $chapter);
         $title = 'Historique du chapitre ' . $chapter->order . ' : ' . $chapter->name;
-        $diffRoute = 'chapter.diff';
         $breadcrumb = view('chapter.components.history-breadcrumb', compact('firstChapter', 'chapter'));
 
         return view(
             'version.history',
-            compact('title', 'breadcrumb', 'chapter', 'firstChapter', 'versions', 'canRevert', 'diffRoute')
+            compact('title', 'breadcrumb', 'chapter', 'firstChapter', 'versions', 'canRevert')
         );
-    }
-
-    /**
-     * Compare deux versions d'un chapitre.
-     *
-     * @param  VersionDiffService  $diffService
-     * @param  Version  $version1
-     * @param  Version|null  $version2
-     * @return View
-     */
-    public function diff(VersionDiffService $diffService, Version $version1, ?Version $version2 = null): View
-    {
-        $this->authorize('display', Chapter::class);
-
-        /** @var Chapter $model1 */
-        /** @var Chapter $model2 */
-        $model1 = $version1->getModel();
-        if ($version2 === null) {
-            $model2 = new ($model1::class);
-        } else {
-            $model2 = $version2->getModel();
-        }
-
-        $diffs = $diffService->generate($model1, $model2);
-
-        return view('version.diff', compact('diffs'));
     }
 }

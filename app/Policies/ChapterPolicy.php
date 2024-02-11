@@ -23,6 +23,17 @@ class ChapterPolicy implements VersionablePolicy
      * @param  CustomUser|null  $user
      * @return bool
      */
+    public function viewAny(?CustomUser $user): bool
+    {
+        return $this->viewAny($user);
+    }
+
+    /**
+     * Détermine si l'utilisateur peut afficher les chapitres et utiliser le système de roleplay.
+     *
+     * @param  CustomUser|null  $user
+     * @return bool
+     */
     public function display(?CustomUser $user): bool
     {
         return Gate::allows('display', Roleplay::class);
@@ -63,6 +74,14 @@ class ChapterPolicy implements VersionablePolicy
     public function createResourceables(CustomUser $user, Chapter $chapter): bool
     {
         return $chapter->roleplay->isValid() && Gate::allows('manage', $chapter->roleplay);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function viewDiff(CustomUser|Authenticatable $user, Chapter|Model $model): bool
+    {
+        return $this->viewAny($user);
     }
 
     /**

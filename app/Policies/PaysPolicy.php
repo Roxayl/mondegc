@@ -42,6 +42,14 @@ class PaysPolicy implements VersionablePolicy
     /**
      * @inheritDoc
      */
+    public function viewDiff(CustomUser|Authenticatable $user, Pays|Model $model): bool
+    {
+        return $this->viewAny($user);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function revert(CustomUser|Authenticatable $user, Pays|Model $model): bool
     {
         return $this->update($user, $model);
