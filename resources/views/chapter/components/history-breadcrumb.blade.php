@@ -1,5 +1,7 @@
 <ul class="breadcrumb">
-    <li>Roleplay <span class="divider">/</span></li>
+    <li><a href="{{ route('roleplay.index') }}">Événements</a>
+        <span class="badge badge-info badge-beta">Bêta</span>
+        <span class="divider">/</span></li>
     <li><a href="{{ route('roleplay.show', $chapter->roleplay) }}">
             {{ $chapter->roleplay->name }}</a>
         <span class="divider">/</span></li>

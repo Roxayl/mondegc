@@ -58,8 +58,6 @@ Route::get('pays/{pays}-{paysSlug}', [Controllers\PaysController::class, 'show']
 Route::match(['put', 'patch'], 'pays/manage-subdivisions/{pays}', [Controllers\PaysController::class, 'manageSubdivisions'])
     ->name('pays.manage-subdivisions');
 Route::get('pays/history/{pays}', [Controllers\PaysController::class, 'history'])->name('pays.history');
-Route::get('pays/diff/{version1}/{version2?}', [Controllers\PaysController::class, 'diff'])
-    ->name('pays.diff');
 
 /*
 |--------------------------------------------------------------------------
@@ -75,8 +73,6 @@ Route::get('pays/{paysId}-{paysSlug}/{subdivisionTypeName}/{subdivision}-{subdiv
 |--------------------------------------------------------------------------
 */
 Route::get('ville/history/{ville}', [Controllers\VilleController::class, 'history'])->name('ville.history');
-Route::get('ville/diff/{version1}/{version2?}', [Controllers\VilleController::class, 'diff'])
-    ->name('ville.diff');
 
 /*
 |--------------------------------------------------------------------------
@@ -94,8 +90,6 @@ Route::match(['put', 'patch'], 'organisation/{organisation}/migrate', [Controlle
     ->name('organisation.run-migration');
 Route::get('organisation/history/{organisation}', [Controllers\OrganisationController::class, 'history'])
     ->name('organisation.history');
-Route::get('organisation/diff/{version1}/{version2?}', [Controllers\OrganisationController::class, 'diff'])
-    ->name('organisation.diff');
 
 /*
 |--------------------------------------------------------------------------
@@ -184,8 +178,6 @@ Route::delete('roleplay/{roleplay}/remove-organizer', [Controllers\RoleplayContr
 */
 Route::get('chapter/create/{roleplay}', [Controllers\ChapterController::class, 'create'])
     ->name('chapter.create');
-Route::get('chapter/diff/{version1}/{version2?}', [Controllers\ChapterController::class, 'diff'])
-    ->name('chapter.diff');
 Route::post('chapter/{roleplay}', [Controllers\ChapterController::class, 'store'])
     ->name('chapter.store');
 Route::get('chapter/create-button/{roleplay}', [Controllers\ChapterController::class, 'createButton'])
@@ -245,6 +237,8 @@ Route::delete('chapter-resourceable/{chapterResourceable}',
 | Version
 |--------------------------------------------------------------------------
 */
+Route::get('version/diff/{version1}/{version2?}', [Controllers\VersionController::class, 'diff'])
+    ->name('version.diff');
 Route::post('version/revert/{version}', [Controllers\VersionController::class, 'revert'])
     ->name('version.revert');
 

@@ -56,6 +56,14 @@ class VillePolicy implements VersionablePolicy
     /**
      * @inheritDoc
      */
+    public function viewDiff(CustomUser|Authenticatable $user, Ville|Model $model): bool
+    {
+        return $this->viewAny($user);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function revert(CustomUser|Authenticatable $user, Ville|Model $model): bool
     {
         if ($user->hasMinPermission('ocgc')) {

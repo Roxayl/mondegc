@@ -50,7 +50,7 @@
                             <td>{{ $version->created_at->format('d/m/Y à H:i') }}</td>
                             <td>{{ $version->reason }}</td>
                             <td>
-                                <a href="{{ route($diffRoute, [
+                                <a href="{{ route('version.diff', [
                                         'version1' => $version,
                                         'version2' => $version->previous(),
                                     ]) }}"
