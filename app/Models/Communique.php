@@ -6,7 +6,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 use Roxayl\MondeGC\Models\Contracts\Roleplayable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * Class Communique.
@@ -38,10 +41,11 @@ use Roxayl\MondeGC\Models\Contracts\Roleplayable;
  * @method static Builder|Communique whereChComStatut($value)
  * @method static Builder|Communique whereChComTitre($value)
  * @method static Builder|Communique whereChComUserId($value)
+ * @method static Builder|Communique mainPosts()
  *
  * @mixin \Eloquent
  */
-class Communique extends Model
+class Communique extends Model implements Searchable
 {
     protected $table = 'communiques';
     protected $primaryKey = 'ch_com_ID';
@@ -73,6 +77,9 @@ class Communique extends Model
     public const STATUS_PUBLISHED = 1;
     public const STATUS_DRAFT = 2;
 
+    /**
+     * @var array<string, class-string<Roleplayable>|null>
+     */
     private static array $publisherMorphMap = [
         'com_communique' => Pays::class,
         'com_pays' => Pays::class,
@@ -85,6 +92,8 @@ class Communique extends Model
         'ville' => Ville::class,
     ];
 
+    public string $searchableType = 'Communiqués';
+
     /**
      * @return BelongsTo
      */
@@ -96,9 +105,9 @@ class Communique extends Model
     /**
      * Donne l'entité à l'origine du communiqué.
      *
-     * @return Roleplayable
+     * @return Roleplayable|null
      */
-    public function publisher(): Roleplayable
+    public function publisher(): ?Roleplayable
     {
         $class = self::$publisherMorphMap[$this->ch_com_categorie];
 
@@ -107,5 +116,38 @@ class Communique extends Model
         }
 
         return $class::find($this->ch_com_element_id);
+    }
+
+    /**
+     * Donne les communiqués principaux, e.g. qui ne sont pas des réponses à d'autres communiqués.
+     *
+     * @param  Builder  $query
+     * @return Builder
+     */
+    public function scopeMainPosts(Builder $query): Builder
+    {
+        return $query->where('ch_com_categorie', 'NOT LIKE', 'com_%');
+    }
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        $context = 'Publié le ' . $this->ch_com_date->format('d/m/Y à H:i');
+
+        try {
+            $publisher = $this->publisher();
+            if ($publisher !== null) {
+                $context .= ' par <a href="' . e($publisher->accessorUrl()) . '">' . e($publisher->getName()) . '</a>';
+            }
+        } catch (\InvalidArgumentException $ex) {
+        }
+
+        return new SearchResult(
+            $this, (string) $this->ch_com_titre, $context,
+            Str::limit(strip_tags($this->ch_com_contenu), 150),
+            url("page-communique.php?com_id=$this->ch_com_ID")
+        );
     }
 }

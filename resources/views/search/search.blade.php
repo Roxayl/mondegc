@@ -1,3 +1,4 @@
+@inject('helperService', 'Roxayl\MondeGC\Services\HelperService')
 
 @extends('layouts.legacy')
 
@@ -76,6 +77,8 @@ $('#search-tabs-container a').click(function (ev) {
             </div>
 
             </form>
+
+            {!! $helperService::displayAlert() !!}
 
             @isset($results)
                 <ul class="nav nav-tabs" id="search-tabs-container">
