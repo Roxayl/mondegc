@@ -74,21 +74,27 @@ Eventy::action('display.beforeHeadClosingTag')
   <?php if ($row_fait_his['ch_his_personnage'] == 2) { ?>
   <form class="pull-right" action="<?= DEF_URI_PATH ?>back/personnage_historique_modifier.php" method="post">
     <input name="ch_his_id" type="hidden" value="<?= e($row_fait_his['ch_his_id']) ?>">
-    <button class="btn btn-danger" type="submit" title="modifier ce fait historique"><i class="icon-pencil icon-white"></i></button>
+    <button class="btn btn-primary" type="submit" title="modifier ce fait historique"><i class="icon-pencil icon-white"></i></button>
   </form>
   <?php } else {?>
 <form class="pull-right" action="<?= DEF_URI_PATH ?>back/fait_historique_modifier.php" method="post">
     <input name="ch_his_id" type="hidden" value="<?= e($row_fait_his['ch_his_id']) ?>">
-    <button class="btn btn-danger" type="submit" title="modifier ce fait historique"><i class="icon-pencil icon-white"></i></button>
+    <button class="btn btn-primary" type="submit" title="modifier ce fait historique"><i class="icon-pencil icon-white"></i></button>
   </form>
   <?php }?>
   <?php }?>
   <?php if ($row_fait_his['ch_use_id'] == $_SESSION['user_ID']) { ?>
   <a class="btn btn-primary pull-right" href="php/partage-fait-hist.php?ch_his_id=<?= e($row_fait_his['ch_his_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
   <?php } ?>
+  <ul class="breadcrumb pull-left mt-3">
+    <li><a href="Page-carte.php#liste-pays">Pays</a> <span class="divider">/</span></li>
+    <li><a href="page-pays.php?ch_pay_id=<?= e($row_fait_his['ch_his_paysID']) ?>"><?= e($row_fait_his['ch_pay_nom']) ?></a> <span class="divider">/</span></li>
+    <li><a href="page-pays.php?ch_pay_id=<?= e($row_fait_his['ch_his_paysID']) ?>#histoire">Histoire</a> <span class="divider">/</span></li>
+    <li class="active"><?= e($row_fait_his['ch_his_nom']) ?></li>
+  </ul>
   <div class="clearfix"></div>
   <!-- Titre-->
-  <div class="titre-vert"> <img src="assets/img/IconesBDD/100/faithistorique.png" alt="fait historique">
+  <div class="titre-vert">
     <h1><?= e($row_fait_his['ch_his_nom']) ?></h1>
   </div>
   <!-- Affichage fait historique-->

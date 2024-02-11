@@ -180,7 +180,6 @@ Eventy::action('display.beforeHeadClosingTag')
       <ul class="nav nav-list bs-docs-sidenav">
         <li class="row-fluid"><a href="#pays_stats"><img src="<?= e($row_Pays['ch_pay_lien_imgdrapeau']) ?>">
           <p><strong><?= e($row_Pays['ch_pay_nom']) ?></strong></p>
-          <p><em>Cr&eacute;&eacute; par <?= e($row_User['ch_use_login']) ?></em></p>
           </a></li>
 
         <li><a href="#presentation">Pr&eacute;sentation</a></li>

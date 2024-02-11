@@ -41,7 +41,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
   <!-- Titre-->
-  <div class="titre-vert"> <img src="assets/img/IconesBDD/100/faithistorique.png" alt="fait historique">
+  <div class="titre-vert">
     <h1><?= e($row_fait_his['ch_his_nom']) ?></h1>
   </div>
 </div>

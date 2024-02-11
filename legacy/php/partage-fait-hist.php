@@ -59,7 +59,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
     <div class="span8">
       <div class="well">
         <h3>Message&nbsp;:</h3>
-        <div class="pull-center"><img src="http://monde.generation-city.com/assets/img/IconesBDD/100/faithistorique.png">
+        <div class="pull-center">
           <h4><?= e($row_fait_hist['ch_his_nom']) ?></h4>
           <img src="<?php echo $row_fait_hist['ch_his_lien_img1']; ?>"></div>
         <p><?= e($row_fait_hist['ch_his_description']) ?></p>
