@@ -1,9 +1,9 @@
-
 <p align="center"><a href="https://generation-city.com/monde/" target="_blank"><img src="https://generation-city.com/monde/assets/img/2019/logo-navbar.png" width="420" alt="Monde GC"></a></p>
 
 <p align="center">
 <a href="https://github.com/Roxayl/mondegc/actions"><img src="https://github.com/Roxayl/mondegc/actions/workflows/build.yml/badge.svg" alt="CI" /></a>
 <a href="https://github.styleci.io/repos/349166635?branch=develop"><img src="https://github.styleci.io/repos/349166635/shield?branch=develop" alt="StyleCI"></a>
+<a href="https://codeclimate.com/github/Roxayl/mondegc/maintainability"><img src="https://api.codeclimate.com/v1/badges/58e9f09228db2ed7a781/maintainability"  alt="Code Climate"/></a>
 <a href="https://discord.gg/4P3HqVbbgR"><img src="https://img.shields.io/discord/328496654514782209" alt="Discord" /></a>
 </p>
 
