@@ -25,10 +25,11 @@ services:
     volumes:
       - ./docker/mysql/data:/var/lib/mysql
       - ./docker/mysql/entrypoint:/docker-entrypoint-initdb.d
-    command: [mysqld,
-        --default-authentication-plugin=mysql_native_password,
-        --character-set-server=utf8mb4,
-        --collation-server=utf8mb4_unicode_ci]
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --sql-mode=IGNORE_SPACE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
     environment:
       MYSQL_ROOT_PASSWORD: root
 
