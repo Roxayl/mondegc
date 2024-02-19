@@ -27,6 +27,7 @@ Liens : [Site du Monde GC](https://generation-city.com/monde/) -
   - [Installation via Docker](#installation-via-docker)
     - [Installer Docker](#installer-docker)
     - [Installer l'application](#installer-lapplication)
+  - [Télécharger les données de cartographie](#télécharger-les-données-de-cartographie)
   - [Lancement et arrêt de l'application](#lancement-et-arrêt-de-lapplication)
 - [Développement et tests](#développement-et-tests)
   - [Structure des dépôts Git](#structure-des-dépôts-git)
@@ -35,10 +36,9 @@ Liens : [Site du Monde GC](https://generation-city.com/monde/) -
     - [Gérer les assets CSS et JavaScript](#gérer-les-assets-css-et-javascript)
   - [Tests](#tests)
   - [Helpers](#helpers)
-- [Services complémentaires](#services-complémentaires)
-  - [PHPMyAdmin](#phpmyadmin)
-  - [MailHog](#mailhog)
-  - [Documentation de l'API](#documentation-de-lapi)
+  - [Services complémentaires](#services-complémentaires)
+    - [PHPMyAdmin](#phpmyadmin)
+    - [MailHog](#mailhog)
 - [API publique](#api-publique)
 
 ## À propos
@@ -51,8 +51,9 @@ L'aspect graphique est réalisé par [Lesime](https://www.forum-gc.com/u23) et R
 Le site du Monde GC, depuis la [version 2.5](https://www.forum-gc.com/t6872p110-notes-de-mise-a-jour-monde-gc#287597) 
 (juillet 2020), repose sur le framework [Laravel](https://laravel.com/), et les nouvelles fonctionnalités du site 
 reposent sur ce framework. La [documentation](https://laravel.com/docs/9.x) de Laravel est riche et n'hésitez pas à 
-vous renseigner sur son fonctionnement, intuitif et puissant. Les sources sont [accessibles à tous](https://www.forum-gc.com/t7372-contribuez-au-site-du-monde-gc) depuis avril 2023 : venez vous aussi contribuer au projet phare de 
-la communauté [Génération City](http://www.forum-gc.com/).
+vous renseigner sur son fonctionnement, intuitif et puissant. Les sources sont
+[accessibles à tous](https://www.forum-gc.com/t7372-contribuez-au-site-du-monde-gc) depuis avril 2023 : venez vous 
+aussi contribuer au projet phare de la communauté [Génération City](http://www.forum-gc.com/).
 
 ## Installation
 
@@ -104,41 +105,53 @@ Une fois que tout est installé, vous êtes prêt pour déployer l'application W
 
 1. Clonez le dépôt Git dans un répertoire sur votre machine, en ligne de commande :
    ```bash
-    > git clone https://bitbucket.org/Roxayl/mondegc.git
+   git clone https://bitbucket.org/Roxayl/mondegc.git
    ```
 
 2. Lancez les conteneurs Docker de l'application via la commande suivante, depuis le répertoire où est
    installé l'application :
    ```bash
-    > docker-compose up -d
+   docker-compose up -d
    ```
 
 3. Accédez au conteneur de l'application via la commande à saisir dans un terminal.
    ```bash
-    > docker-compose exec app /bin/bash
+   docker-compose exec app /bin/bash
    ```
 
 4. Dans le conteneur de l'application, accédez au dossier comprenant les fichiers de l'application et exécutez la 
 commande permettant d'installer les dépendances et bibliothèques externes PHP (gérée par Composer).
    ```bash
-    > composer install
+   composer install
    ```
 
 5. Toujours dans le conteneur de l'application, exécutez la commande d'initialisation. Cette commande va notamment 
 générer des clés et d'autres variables d'environnement.
    ```bash
-    > php artisan monde:init-env
+   php artisan monde:init-env
    ```
 
 6. Initialisez ensuite la base de données. Enfin, vous pouvez sortir du conteneur via la commande ``exit``.
    ```bash
-    > php artisan monde:init-db
-    > exit
+   php artisan monde:init-db
+   exit
    ```
 
 7. Vwalà ! Retrouvez le Monde GC à l'adresse suivante : **[http://localhost](http://localhost)**. La base de données 
 est initialisée avec un utilisateur par défaut, dont vous pouvez utiliser les identifiants pour vous connecter (nom 
 d'utilisateur : ``Admin``, mot de passe : ``password``).
+
+### Télécharger les données de cartographie
+
+La carte interactive repose sur une matrice de tuiles. Vous pouvez télécharger l'ensemble des images qui composent la 
+carte à partir des liens ci-dessous. Deux archives sont proposés, une **archive complète** et une **archive allégée**, 
+contenant uniquement les tuiles correpondant aux niveaux de zoom les plus faibles. Vous pouvez télécharger et extraire 
+le contenu de ces archives dans le répertoire racine.
+
+| Type d'archive   |                                    Téléchargement                                    |   Taille | Niveaux de zoom |
+|:-----------------|:------------------------------------------------------------------------------------:|---------:|:---------------:|
+| Archive complète |  [carto-full.zip](https://generation-city.com/monde/docs/dev-assets/carto-full.zip)  | 1 135 Mo |       1-7       |
+| Archive allégée  | [carto-light.zip](https://generation-city.com/monde/docs/dev-assets/carto-light.zip) |   168 Mo |       1-4       |
 
 ### Lancement et arrêt de l'application
 
@@ -148,25 +161,26 @@ tout moment avec ``docker-compose up -d``.
 ## Développement et tests
 
 Le processus de développement suit les règles décrites par **GitHub Flow**. Pour plus d'informations,
-[cet article](https://www.alexhyett.com/git-flow-github-flow/#what-is-github-flow) donne des détails sur 
-le cadre posé par cette stratégie de branche.
+[cet article](https://www.alexhyett.com/git-flow-github-flow/#what-is-github-flow) donne des détails sur le cadre posé 
+par cette stratégie de branche. Pour plus d'informations sur les modalités de contribution, consultez le document
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### Structure des dépôts Git
 
 Les sources du site sont gérées par Git, hébergées sur un certain nombre de plateformes.
 
-| Plateforme | Dépôt                                                   | Complet ? | Visibilité | Commentaires                             |
-| ---------- | ------------------------------------------------------- | --------- |------------| ---------------------------------------- |
-| GitHub     | [Roxayl/mondegc](https://github.com/Roxayl/mondegc)     | Oui       | Public     | Dépôt principal                          |
-| Bitbucket  | [Roxayl/mondegc](https://bitbucket.org/Roxayl/mondegc/) | Oui       | Privée     | Miroir du dépôt principal, lecture seule |
+| Plateforme |                          Dépôt                          | Complet ? | Visibilité | Commentaires                             |
+|:----------:|:-------------------------------------------------------:|:---------:|:----------:|:-----------------------------------------|
+|   GitHub   |   [Roxayl/mondegc](https://github.com/Roxayl/mondegc)   |    Oui    |   Public   | Dépôt principal                          |
+| Bitbucket  | [Roxayl/mondegc](https://bitbucket.org/Roxayl/mondegc/) |    Oui    |   Privée   | Miroir du dépôt principal, lecture seule |
 
 ### Gestion des bibliothèques externes
 
 Pour accéder au répertoire de l'application au sein du **conteneur principal** ``mondegc_app``, vous pouvez taper les 
 commandes suivantes dans un terminal dans le répertoire racine :
-   ```
-    > docker-compose exec app /bin/bash
-   ```
+```bash
+docker-compose exec app /bin/bash
+```
 
 À partir de là, vous pouvez accéder à l'interface en ligne de commande fournie par 
 [Artisan](https://laravel.com/docs/9.x/artisan), gérer les dépendances NPM et Composer, et exécuter les tests.
@@ -212,57 +226,30 @@ le code et contribuer à l'autocomplétion. Il est possible de générer les pro
 et méthodes des modèles sont intégrés dans le bloc PHPDoc de la classe concernée.
 
 ```bash
-> php artisan ide-helper:models --write
+php artisan ide-helper:models --write
 ```
 
 Il est également possible de générer un *helper* pour les façades Laravel, ainsi qu'un fichier dédié à l'autocomplétion 
 par PhpStorm. Les commandes pour le faire sont décrits sur la 
 [documentation de la librairie](https://github.com/barryvdh/laravel-ide-helper#readme).
 
-## Services complémentaires
+### Services complémentaires
 
 Vous pouvez accéder au site via l'adresse : [http://localhost](http://localhost). Par ailleurs, le fichier de 
 configuration Docker installe des services annexes permettant de faciliter la gestion des données du site Web, décrits 
 ci-dessous.
 
-### PHPMyAdmin
+#### PHPMyAdmin
 
 Vous pouvez accéder à une instance de PHPMyAdmin, qui fournit une interface Web pour gérer la base de données, à 
 l'adresse : [http://localhost:8080](http://localhost:8080). Les identifiants d'accès sont précisés dans le fichier 
 [.env](.env) généré lors de l'installation de l'application.
 
-### MailHog
+#### MailHog
 
 MailHog fournit un serveur mail permettant de tester l'envoi de courriers électroniques sortants générés par 
 l'application. MailHog est configuré pour fonctionner dès l'initialisation du conteneur Docker. Vous pouvez accéder à 
 son interface Web à l'adresse : [http://localhost:8025](http://localhost:8025).
-
-### Documentation de l'API
-
-Vous pouvez générer la documentation de l'API des sources de l'application, via l'outil 
-[phpDocumentor](https://www.phpdoc.org/). Il vous permet de créer automatiquement les pages HTML décrivant des classes 
-de l'application, à partir des annotations [PHPDoc](https://fr.wikipedia.org/wiki/PHPDoc) contenues dans les sources.
-
-Pour cela, vous pouvez exécuter la commande suivante, à partir du répertoire racine :
-
-- sur un terminal PowerShell (Windows) :
-   ```bash
-    > docker run --rm -v ${pwd}:/data phpdoc/phpdoc:3 run
-   ```
-- sur un terminal Bash (Linux) :
-   ```bash
-    > docker run --rm -v $(pwd):/data phpdoc/phpdoc:3 run
-   ```
-
-Cette commande va installer l'image Docker de l'outil, et générer les pages de la documentation de l'API. Ces pages au 
-format HTML seront rangés dans le dossier [docs/](./docs). Une fois générée, vous pouvez consulter la documentation à 
-l'adresse [http://localhost/docs/index.html](http://localhost/docs/index.html).
-
-Il est également possible de générer la documentation de l'[API publique](#api-publique), permettant aux autres 
-services d'accéder aux données de l'application. Cette documentation est générée par 
-[Scribe](https://scribe.readthedocs.io/en/latest/). Pour ce faire, vous pouvez exécuter la commande dans le conteneur 
-de l'application : ```php artisan scribe:generate```. Cette commande va stocker les pages Web dans le répertoire 
-[docs/public-api/](./docs/public-api).
 
 ## API publique
 
