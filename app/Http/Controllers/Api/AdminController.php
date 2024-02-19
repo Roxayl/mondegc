@@ -24,6 +24,8 @@ class AdminController extends Controller
     }
 
     /**
+     * /admin/store-resource-history.
+     *
      * Exécute l'historisation des ressources des entités ressourçables.
      *
      * @return JsonResponse

@@ -138,4 +138,5 @@ jobs:
             php artisan migrate --force
             php artisan monde:generate-htaccess
             php artisan monde:regenerate-influences
+            php artisan scribe:generate
             php artisan up

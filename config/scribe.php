@@ -171,6 +171,10 @@ return [
          * Middleware to attach to the docs endpoint (if `add_routes` is true).
          */
         'middleware' => [],
+        // Directory within `public` in which to store CSS and JS assets.
+        // By default, assets are stored in `public/vendor/scribe`.
+        // If set, assets will be stored in `public/{{assets_directory}}`
+        'assets_directory' => null,
     ],
 
     'try_it_out' => [
@@ -300,11 +304,6 @@ INTRO
     ],
 
     /*
-     * Endpoints which don't have a @group will be placed in this default group.
-     */
-    'default_group' => 'Endpoints',
-
-    /*
      * Custom logo path. This will be used as the value of the src attribute for the <img> tag,
      * so make sure it points to an accessible URL or path. Set to false to not use a logo.
      *
@@ -313,13 +312,7 @@ INTRO
      * - 'logo' => 'img/logo.png' // for `laravel` type
      *
      */
-    'logo' => false,
-
-    /*
-     * If you would like the package to generate the same example values for parameters on each run,
-     * set this to any number (eg. 1234)
-     */
-    'faker_seed' => null,
+    'logo' => '../../assets/img/2019/logo-navbar.png',
 
     /**
      * The strategies Scribe will use to extract information about your routes at each stage.
@@ -380,4 +373,34 @@ INTRO
      * If you only use one db connection, you can leave this as is.
      */
     'database_connections_to_transact' => [config('database.default')],
+    'external' => ['html_attributes' => []],
+    'groups' => [
+        // Endpoints which don't have a @group will be placed in this default group.
+        'default' => 'Endpoints',
+        // By default, Scribe will sort groups alphabetically, and endpoints in the order their routes are defined.
+        // You can override this by listing the groups, subgroups and endpoints here in the order you want them.
+        // See https://scribe.knuckles.wtf/blog/laravel-v4#easier-sorting and https://scribe.knuckles.wtf/laravel/reference/config#order for details
+        'order' => [
+            'Endpoints' => [
+                '/resourceable',
+                '/resource',
+            ],
+        ],
+    ],
+    // Customize the "Last updated" value displayed in the docs by specifying tokens and formats.
+    // Examples:
+    // - {date:F j Y} => March 28, 2022
+    // - {git:short} => Short hash of the last Git commit
+    // Available tokens are `{date:<format>}` and `{git:<format>}`.
+    // The format you pass to `date` will be passed to PHP's `date()` function.
+    // The format you pass to `git` can be either "short" or "long".
+    'last_updated' => 'Last updated: {date:F j, Y}',
+    'examples' => [
+        // Set this to any number (eg. 1234) to generate the same example values for parameters on each run,
+        'faker_seed' => null,
+        // With API resources and transformers, Scribe tries to generate example models to use in your API responses.
+        // By default, Scribe will try the model's factory, and if that fails, try fetching the first from the database.
+        // You can reorder or remove strategies here.
+        'models_source' => ['factoryCreate', 'factoryMake', 'databaseFirst'],
+    ],
 ];
