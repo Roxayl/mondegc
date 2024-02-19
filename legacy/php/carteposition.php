@@ -56,7 +56,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				var ll, popupClass, popupContentHTML;
 				var x = '<?php echo e($_GET['x']); ?>' ;
 				var y = '<?php echo e($_GET['y']); ?>' ;
-				var urlicon ='Carto/images/pin.png';
+				var urlicon ='carto/images/pin.png';
 		        // avoid pink tiles
 		OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
 		OpenLayers.Util.onImageLoadErrorColor = "transparent";
@@ -95,7 +95,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 	            var tmsoverlay;
 				
                 // calque de base geographique
-                tmsoverlay = new OpenLayers.Layer.TMS( " Geographique", "Carto/CarteMondeGC_2013/",
+                tmsoverlay = new OpenLayers.Layer.TMS( " Geographique", "carto/CarteMondeGC_2013/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
@@ -107,7 +107,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				if (! OpenLayers.Util.alphaHack()) { tmsoverlay.setOpacity(1); }
 				
 				// calque de base satellite
-	            tmsoverlay = new OpenLayers.Layer.TMS( " Satellite", "Carto/Carte-Monde-GC-sat/",
+	            tmsoverlay = new OpenLayers.Layer.TMS( " Satellite", "carto/Carte-Monde-GC-sat/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
@@ -119,7 +119,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				
 				
 				// calque de base neutre
-				tmsoverlay = new OpenLayers.Layer.TMS( " Neutre", "Carto/Carte-Monde-GC-neutre/",
+				tmsoverlay = new OpenLayers.Layer.TMS( " Neutre", "carto/Carte-Monde-GC-neutre/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
@@ -130,7 +130,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				if (! OpenLayers.Util.alphaHack()) { tmsoverlay.setOpacity(1); }
 
                 // calque beta
-	            tmsoverlay = new OpenLayers.Layer.TMS( " Geographique (2018 - beta)", "Carto/CarteGC_2018/",
+	            tmsoverlay = new OpenLayers.Layer.TMS( " Geographique (2018 - beta)", "carto/CarteGC_2018/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
@@ -479,7 +479,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 						graphicName: "square",
 						fillColor: "white",
 						strokeColor: "black",
-                        externalGraphic: "Carto/images/pin.png",
+                        externalGraphic: "carto/images/pin.png",
                         graphicOpacity: 1,
 						graphicWidth: 40,
 						graphicYOffset : -40,

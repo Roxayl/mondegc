@@ -80,7 +80,7 @@ $_SESSION['last_work'] = "institut_geographie.php";
 <meta name="author" content="">
 
 <!-- Le styles -->
-<link href="../Carto/OLdefault.css" rel="stylesheet">
+<link href="../carto/OLdefault.css" rel="stylesheet">
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
 <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="../assets/css/bootstrap-modal.css" rel="stylesheet" type="text/css">
@@ -135,7 +135,7 @@ div.editPanel {
 	position: absolute;
 }
 .editPanel div {
-	background-image: url("../Carto/images/edit_sprite.png");
+	background-image: url("../carto/images/edit_sprite.png");
 	background-repeat: no-repeat;
 	width: 40px;
 	height: 30px;

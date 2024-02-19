@@ -90,7 +90,7 @@ $alliance = $eloquentPays->alliance();
 <meta name="author" content="">
 
 <!-- Le styles -->
-<link href="Carto/OLdefault.css" rel="stylesheet">
+<link href="carto/OLdefault.css" rel="stylesheet">
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="assets/css/bootstrap-modal.css" rel="stylesheet" type="text/css">
@@ -337,7 +337,7 @@ Eventy::action('display.beforeHeadClosingTag')
       <div class="row-fluid">
         <div class="span12">
           <h4>Situation&nbsp</h4>
-          <img src="Carto/Emplacements/emplacement<?= e($row_Pays['ch_pay_emplacement']) ?>.jpg" alt="situation du pays <?= e($row_Pays['ch_pay_nom']) ?>" title="situation pays <?= e($row_Pays['ch_pay_nom']) ?>">
+          <img src="carto/Emplacements/emplacement<?= e($row_Pays['ch_pay_emplacement']) ?>.jpg" alt="situation du pays <?= e($row_Pays['ch_pay_nom']) ?>" title="situation pays <?= e($row_Pays['ch_pay_nom']) ?>">
           <div class="well">
             <p><strong>Capitale&nbsp;:&nbsp;</strong><?= e($row_Pays['ch_pay_capitale']) ?></p>
             <p><strong>Langues officielles&nbsp;:&nbsp;</strong><?= e($row_Pays['ch_pay_langue_officielle']) ?></p>

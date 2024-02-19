@@ -78,7 +78,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 	            map = new OpenLayers.Map('map', options);
 				
   // calque de base geographique
-                var tmsoverlay1 = new OpenLayers.Layer.TMS( " Geographique", "Carto/CarteMondeGC_2013/",
+                var tmsoverlay1 = new OpenLayers.Layer.TMS( " Geographique", "carto/CarteMondeGC_2013/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
@@ -89,7 +89,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 	            map.addLayer(tmsoverlay1);
 
   // calque satellite
-	            var tmsoverlay2 = new OpenLayers.Layer.TMS( " Satellite", "Carto/Carte-Monde-GC-sat/",
+	            var tmsoverlay2 = new OpenLayers.Layer.TMS( " Satellite", "carto/Carte-Monde-GC-sat/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: false,
 						type: 'png', getURL: overlay_getTileURL,
@@ -100,7 +100,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 	            map.addLayer(tmsoverlay2);
   
    // calque NEUTRE
-	            var tmsoverlay3 = new OpenLayers.Layer.TMS( " Neutre", "Carto/Carte-Monde-GC-neutre/",
+	            var tmsoverlay3 = new OpenLayers.Layer.TMS( " Neutre", "carto/Carte-Monde-GC-neutre/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: false,
 						type: 'png', getURL: overlay_getTileURL,
@@ -111,7 +111,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 	            map.addLayer(tmsoverlay3);
 
     // calque beta
-                var tmsoverlay4 = new OpenLayers.Layer.TMS( " Geographique (2018 - beta)", "Carto/CarteGC_2018/",
+                var tmsoverlay4 = new OpenLayers.Layer.TMS( " Geographique (2018 - beta)", "carto/CarteGC_2018/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,

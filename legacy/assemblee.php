@@ -35,7 +35,7 @@ $proposalsFinished = $proposalList->getFinished();
 <meta name="author" content="">
 
 <!-- Le styles -->
-<link href="Carto/OLdefault.css" rel="stylesheet">
+<link href="carto/OLdefault.css" rel="stylesheet">
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="assets/css/bootstrap-modal.css" rel="stylesheet" type="text/css">

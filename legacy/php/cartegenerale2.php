@@ -113,7 +113,7 @@ $totalRows_VoiesPaysPetites = mysql_num_rows($VoiesPaysPetites);
          *****************/
 
         // calque Climat
-        var tmsoverlay4 = new OpenLayers.Layer.TMS(" Climats", "Carto/Carte-Monde-GC-Climat/",
+        var tmsoverlay4 = new OpenLayers.Layer.TMS(" Climats", "carto/Carte-Monde-GC-Climat/",
             {
                 serviceVersion: '.', layername: '.', alpha: true,
                 type: 'png', getURL: overlay_getTileURL,
@@ -128,7 +128,7 @@ $totalRows_VoiesPaysPetites = mysql_num_rows($VoiesPaysPetites);
         }
 
         // calque de base geographique
-        var tmsoverlay1 = new OpenLayers.Layer.TMS(" Geographique", "Carto/CarteMondeGC_2013/",
+        var tmsoverlay1 = new OpenLayers.Layer.TMS(" Geographique", "carto/CarteMondeGC_2013/",
             {
                 serviceVersion: '.', layername: '.', alpha: true,
                 type: 'png', getURL: overlay_getTileURL,
@@ -139,7 +139,7 @@ $totalRows_VoiesPaysPetites = mysql_num_rows($VoiesPaysPetites);
         map.addLayer(tmsoverlay1);
 
         // calque satellite
-        var tmsoverlay2 = new OpenLayers.Layer.TMS(" Satellite", "Carto/Carte-Monde-GC-sat/",
+        var tmsoverlay2 = new OpenLayers.Layer.TMS(" Satellite", "carto/Carte-Monde-GC-sat/",
             {
                 serviceVersion: '.', layername: '.', alpha: false,
                 type: 'png', getURL: overlay_getTileURL,
@@ -150,7 +150,7 @@ $totalRows_VoiesPaysPetites = mysql_num_rows($VoiesPaysPetites);
         map.addLayer(tmsoverlay2);
 
         // calque neutre
-        var tmsoverlay3 = new OpenLayers.Layer.TMS(" Neutre", "Carto/Carte-Monde-GC-neutre/",
+        var tmsoverlay3 = new OpenLayers.Layer.TMS(" Neutre", "carto/Carte-Monde-GC-neutre/",
             {
                 serviceVersion: '.', layername: '.', alpha: false,
                 type: 'png', getURL: overlay_getTileURL,
@@ -161,7 +161,7 @@ $totalRows_VoiesPaysPetites = mysql_num_rows($VoiesPaysPetites);
         map.addLayer(tmsoverlay3);
 
         // calque GC 2018 (non fonctionnel)
-        var tmsoverlay4 = new OpenLayers.Layer.TMS(" Geographique (2018 - beta)", "Carto/CarteGC_2018/",
+        var tmsoverlay4 = new OpenLayers.Layer.TMS(" Geographique (2018 - beta)", "carto/CarteGC_2018/",
             {
                 serviceVersion: '.', layername: '.', alpha: false,
                 type: 'png', getURL: overlay_getTileURL,
@@ -913,7 +913,7 @@ $totalRows_VoiesPaysPetites = mysql_num_rows($VoiesPaysPetites);
 
         // Affichage legende au changement de calque. 
 
-        var legende = "<div class='fiche'><div class='pull-center' style='padding-top:10px;'><h3>L&eacute;gende</h3></div><div style='margin-top:10px;'><div class='pull-left' margin:5px; margin-top:-5px;'>&nbsp;</div><img src='Carto/images/fontiere.png'>Fronti&egrave;res</p></div><div style='margin-top:10px;'><div class='pull-left' margin:5px; margin-top:-5px;'>&nbsp;</div><img src='Carto/images/capitale.png'>Capitale</p></div><div style='margin-top:10px;'><div class='pull-left' margin:5px; margin-top:-5px;'>&nbsp;</div><img src='Carto/images/ville.png'>Ville</p></div><div style='margin-top:10px;'><div class='pull-left' margin:5px; margin-top:-5px;'>&nbsp;</div><img src='Carto/images/monument.png'>Monument</p></div><div><h4 style='padding-bottom:10px;'>Carte des climats</h4><div style='margin-top:5px;'><div class='pull-left' style='background-color:#808080; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p>Subtropical</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#ff0000; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>&Eacute;quatorial &agrave; humidit&eacute; constante</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#ff6a00; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>Tropical &agrave; saison pluviom&eacute;trique altern&eacute;e</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#ffd800; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>M&eacute;diterran&eacute;en</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#4cff00; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>Steppes et d&eacute;serts &agrave; latitude moyenne</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#267f00; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>Temp&eacute;r&eacute;</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#00ffff; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>Continental &agrave; hiver froid</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#0094ff; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>Montagnard</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#0000ff; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>Froid sans &eacute;t&eacute;</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#ff00dc; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>D&eacute;serts et semi-d&eacute;serts de la zone chaude</p></div><div style='margin-top:10px;'><div class='pull-left' margin:5px; margin-top:-5px;'><img src='Carto/images/courant-froid.png' width='50px' style='margin-left:5px; margin-right:5px;'></div><p style='margin-top:10px;'>Courant froid</p></div><div style='margin-top:10px;'><div class='pull-left' margin:5px; margin-top:-5px;'><img src='Carto/images/courant-chaud.png' width='50px' style='margin-left:5px; margin-right:5px;'></div><p style='margin-top:10px;'>Courant chaud</p></div><div style='margin-top:10px;'><div class='pull-left' margin:5px; margin-top:-5px;'><img src='Carto/images/courant-neutre.png' width='50px' style='margin-left:5px; margin-right:5px;'></div><p style='margin-top:10px;'>Contre courant &eacute;quatorial</p></div></div>";
+        var legende = "<div class='fiche'><div class='pull-center' style='padding-top:10px;'><h3>L&eacute;gende</h3></div><div style='margin-top:10px;'><div class='pull-left' margin:5px; margin-top:-5px;'>&nbsp;</div><img src='carto/images/fontiere.png'>Fronti&egrave;res</p></div><div style='margin-top:10px;'><div class='pull-left' margin:5px; margin-top:-5px;'>&nbsp;</div><img src='carto/images/capitale.png'>Capitale</p></div><div style='margin-top:10px;'><div class='pull-left' margin:5px; margin-top:-5px;'>&nbsp;</div><img src='carto/images/ville.png'>Ville</p></div><div style='margin-top:10px;'><div class='pull-left' margin:5px; margin-top:-5px;'>&nbsp;</div><img src='carto/images/monument.png'>Monument</p></div><div><h4 style='padding-bottom:10px;'>Carte des climats</h4><div style='margin-top:5px;'><div class='pull-left' style='background-color:#808080; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p>Subtropical</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#ff0000; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>&Eacute;quatorial &agrave; humidit&eacute; constante</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#ff6a00; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>Tropical &agrave; saison pluviom&eacute;trique altern&eacute;e</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#ffd800; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>M&eacute;diterran&eacute;en</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#4cff00; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>Steppes et d&eacute;serts &agrave; latitude moyenne</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#267f00; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>Temp&eacute;r&eacute;</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#00ffff; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>Continental &agrave; hiver froid</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#0094ff; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>Montagnard</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#0000ff; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>Froid sans &eacute;t&eacute;</p></div><div style='margin-top:10px;'><div class='pull-left' style='background-color:#ff00dc; width:50px; height:20px; margin:5px; margin-top:-5px;'>&nbsp;</div><p style='margin-top:10px;'>D&eacute;serts et semi-d&eacute;serts de la zone chaude</p></div><div style='margin-top:10px;'><div class='pull-left' margin:5px; margin-top:-5px;'><img src='carto/images/courant-froid.png' width='50px' style='margin-left:5px; margin-right:5px;'></div><p style='margin-top:10px;'>Courant froid</p></div><div style='margin-top:10px;'><div class='pull-left' margin:5px; margin-top:-5px;'><img src='carto/images/courant-chaud.png' width='50px' style='margin-left:5px; margin-right:5px;'></div><p style='margin-top:10px;'>Courant chaud</p></div><div style='margin-top:10px;'><div class='pull-left' margin:5px; margin-top:-5px;'><img src='carto/images/courant-neutre.png' width='50px' style='margin-left:5px; margin-right:5px;'></div><p style='margin-top:10px;'>Contre courant &eacute;quatorial</p></div></div>";
 
         var panel = new OpenLayers.Control.Panel();
         panel.addControls([

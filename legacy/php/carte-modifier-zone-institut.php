@@ -75,7 +75,7 @@ if(!isset($bounds))
 	            map = new OpenLayers.Map('map', options);
 				
   			// calque de base geographique
-	            var tmsoverlay1 = new OpenLayers.Layer.TMS( " Geographique", "http://www.generation-city.com/monde/Carto/CarteMondeGC_2013/",
+	            var tmsoverlay1 = new OpenLayers.Layer.TMS( " Geographique", "http://www.generation-city.com/monde/carto/CarteMondeGC_2013/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
@@ -87,7 +87,7 @@ if(!isset($bounds))
 	            map.addLayer(tmsoverlay1);
 
   			// calque satellite
-	            var tmsoverlay2 = new OpenLayers.Layer.TMS( " Satellite", "http://www.generation-city.com/monde/Carto/Carte-Monde-GC-sat/",
+	            var tmsoverlay2 = new OpenLayers.Layer.TMS( " Satellite", "http://www.generation-city.com/monde/carto/Carte-Monde-GC-sat/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: false,
 						type: 'png', getURL: overlay_getTileURL,
@@ -98,7 +98,7 @@ if(!isset($bounds))
 	            map.addLayer(tmsoverlay2);
   
    			// calque NEUTRE
-	            var tmsoverlay3 = new OpenLayers.Layer.TMS( " Neutre", "http://www.generation-city.com/monde/Carto/Carte-Monde-GC-neutre/",
+	            var tmsoverlay3 = new OpenLayers.Layer.TMS( " Neutre", "http://www.generation-city.com/monde/carto/Carte-Monde-GC-neutre/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: false,
 						type: 'png', getURL: overlay_getTileURL,
@@ -109,7 +109,7 @@ if(!isset($bounds))
 	            map.addLayer(tmsoverlay3);
 
             // calque GC 2018 (non fonctionnel)
-	            var tmsoverlay4 = new OpenLayers.Layer.TMS( " Geographique (2018 - beta)", "Carto/CarteGC_2018/",
+	            var tmsoverlay4 = new OpenLayers.Layer.TMS( " Geographique (2018 - beta)", "carto/CarteGC_2018/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: false,
 						type: 'png', getURL: overlay_getTileURL,

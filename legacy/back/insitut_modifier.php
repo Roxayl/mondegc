@@ -90,7 +90,7 @@ $coord_Y = $row_institut['ch_ins_coord_Y'];
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
-<link href="../Carto/OLdefault.css" rel="stylesheet">
+<link href="../carto/OLdefault.css" rel="stylesheet">
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
 <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="../SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">

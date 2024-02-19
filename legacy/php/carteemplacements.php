@@ -53,7 +53,7 @@ $totalRows_MarkerPays = mysql_num_rows($MarkerPays);
 	            map = new OpenLayers.Map('map', options);
 				
 				// calque de base neutre
-				var tmsoverlay = new OpenLayers.Layer.TMS( " Emplacements", "../Carto/Carte-Monde-GC-emplacements/",
+				var tmsoverlay = new OpenLayers.Layer.TMS( " Emplacements", "../carto/Carte-Monde-GC-emplacements/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,

@@ -5,7 +5,7 @@ RewriteCond %{REQUEST_URI} !^/public/
 RewriteCond %{REQUEST_URI} !^/assets/
 RewriteCond %{REQUEST_URI} !^/back/
 RewriteCond %{REQUEST_URI} !^/docs
-RewriteCond %{REQUEST_URI} !^/Carto/
+RewriteCond %{REQUEST_URI} !^/carto/
 RewriteCond %{REQUEST_URI} !^/libs/
 RewriteCond %{REQUEST_URI} !^/php/
 RewriteCond %{REQUEST_URI} !^/services/

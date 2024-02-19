@@ -202,7 +202,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
-<link href="Carto/OLdefault.css" rel="stylesheet">
+<link href="carto/OLdefault.css" rel="stylesheet">
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="assets/css/bootstrap-modal.css" rel="stylesheet" type="text/css">
@@ -251,7 +251,7 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "modifier_feature")) 
         position: absolute;
     }
     .editPanel div {
-        background-image: url("Carto/images/edit_sprite.png");
+        background-image: url("carto/images/edit_sprite.png");
         background-repeat: no-repeat;
         width: 40px;
         height: 30px;

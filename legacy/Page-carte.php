@@ -138,7 +138,7 @@ $paysResources = \Roxayl\MondeGC\Services\EconomyService::getPaysResources();
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
-<link href="Carto/OLdefault.css" rel="stylesheet">
+<link href="carto/OLdefault.css" rel="stylesheet">
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="assets/css/GenerationCity.css?v=<?= $mondegc_config['version'] ?>" rel="stylesheet" type="text/css">
@@ -202,10 +202,10 @@ div.olControlPanel {
 	background-repeat: no-repeat
 }
 .helpButtonItemInactive {
-	background-image: url("Carto/images/icon_legend.png");
+	background-image: url("carto/images/icon_legend.png");
 }
 .helpButtonItemActive {
-	background-image: url("Carto/images/icon_legend_active.png");
+	background-image: url("carto/images/icon_legend_active.png");
 }
 </style>
 

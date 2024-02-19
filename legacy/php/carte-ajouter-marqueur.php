@@ -67,7 +67,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 					 // Ajout d'un marker
 					var size = new OpenLayers.Size(50,50);
                     var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
-                    var icon = new OpenLayers.Icon('../Carto/images/pin.png', size, offset);   
+                    var icon = new OpenLayers.Icon('../carto/images/pin.png', size, offset);   
                     var markerslayer = map.getLayer('Markers');
 					markerslayer.clearMarkers();
                     markerslayer.addMarker(new OpenLayers.Marker(lonlat,icon));
@@ -122,7 +122,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				var tmsoverlay;
 				
  // calque de base geographique
-	            tmsoverlay = new OpenLayers.Layer.TMS( " Geographique", "../Carto/CarteMondeGC_2013/",
+	            tmsoverlay = new OpenLayers.Layer.TMS( " Geographique", "../carto/CarteMondeGC_2013/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
@@ -133,7 +133,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 	            map.addLayer(tmsoverlay);
 								
 				// calque de base satellite
-               tmsoverlay = new OpenLayers.Layer.TMS( " Satellite", "../Carto/Carte-Monde-GC-sat/",
+               tmsoverlay = new OpenLayers.Layer.TMS( " Satellite", "../carto/Carte-Monde-GC-sat/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
@@ -145,7 +145,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				
 				
 				// calque de base neutre
-				tmsoverlay = new OpenLayers.Layer.TMS( " Neutre", "../Carto/Carte-Monde-GC-neutre/",
+				tmsoverlay = new OpenLayers.Layer.TMS( " Neutre", "../carto/Carte-Monde-GC-neutre/",
 	                {
 	                    serviceVersion: '.', layername: '.', alpha: true,
 						type: 'png', getURL: overlay_getTileURL,
@@ -156,7 +156,7 @@ $totalRows_VoiesPays = mysql_num_rows($VoiesPays);
 				if (! OpenLayers.Util.alphaHack()) { tmsoverlay.setOpacity(1); }
 
                 // calque GC 2018 (non fonctionnel)
-                tmsoverlay = new OpenLayers.Layer.TMS(" Geographique (2018 - beta)", "Carto/CarteGC_2018/",
+                tmsoverlay = new OpenLayers.Layer.TMS(" Geographique (2018 - beta)", "carto/CarteGC_2018/",
                     {
                         serviceVersion: '.', layername: '.', alpha: false,
                         type: 'png', getURL: overlay_getTileURL,
@@ -563,7 +563,7 @@ coordEmplacement($emplacement, $x, $y);
 		        var y = '<?php echo $coord_Y; ?>'; 
 				var size = new OpenLayers.Size(50,50);
                 var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
-                var icon = new OpenLayers.Icon('../Carto/images/pin.png', size, offset); 
+                var icon = new OpenLayers.Icon('../carto/images/pin.png', size, offset); 
                 var marker = new OpenLayers.Marker(new OpenLayers.LonLat(x,y), icon);
 				markers.addMarker(marker);
 				

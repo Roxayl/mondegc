@@ -10,7 +10,7 @@
 @endsection
 
 @section('styles')
-    <link href="Carto/OLdefault.css" rel="stylesheet">
+    <link href="carto/OLdefault.css" rel="stylesheet">
     <style>
     #map {
         width: 100%;
@@ -43,10 +43,10 @@
         background-repeat: no-repeat
     }
     .helpButtonItemInactive {
-        background-image: url("Carto/images/icon_legend.png");
+        background-image: url("carto/images/icon_legend.png");
     }
     .helpButtonItemActive {
-        background-image: url("Carto/images/icon_legend_active.png");
+        background-image: url("carto/images/icon_legend_active.png");
     }
     </style>
 @endsection

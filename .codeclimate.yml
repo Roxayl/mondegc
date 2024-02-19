@@ -47,7 +47,7 @@ exclude_patterns:
   - ".phpdoc/"
   - ".scribe/"
   - "assets/"
-  - "Carto/"
+  - "carto/"
   - "config/"
   - "database/"
   - "docker/"

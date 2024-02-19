@@ -59,7 +59,7 @@ $totalRows_list_users = mysql_num_rows($list_users);
 <meta name="author" content="">
 
 <!-- Le styles -->
-<link href="../Carto/OLdefault.css" rel="stylesheet">
+<link href="../carto/OLdefault.css" rel="stylesheet">
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
 <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="../SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">

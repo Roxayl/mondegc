@@ -121,7 +121,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "InfoHeader")) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
-<link href="../Carto/OLdefault.css" rel="stylesheet">
+<link href="../carto/OLdefault.css" rel="stylesheet">
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
 <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="../SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
@@ -200,7 +200,7 @@ Eventy::action('display.beforeHeadClosingTag')
       <div id="spryradio2">
         <ul class="Icone-thumb">
           <?php for ($nb_emplacement = 1; $nb_emplacement <= 59; $nb_emplacement++) {?>
-          <li class=""> <img src="../Carto/Emplacements/emplacement<?php echo $nb_emplacement ?>.jpg">
+          <li class=""> <img src="../carto/Emplacements/emplacement<?php echo $nb_emplacement ?>.jpg">
             <label>
               <input type="radio" name="ch_pay_emplacement" value="<?php echo $nb_emplacement ?>" id="ch_pay_emplacement_<?php echo $nb_emplacement ?>">
               N°<?php echo $nb_emplacement ?> </label>

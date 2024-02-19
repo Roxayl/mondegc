@@ -113,7 +113,7 @@ Eventy::action('display.beforeHeadClosingTag')
               <td><img src="../assets/img/statutpays<?= e($row_ListPays['ch_pay_publication']) ?>.png" alt="Statut"></td>
               <td><img src="<?= e($row_ListPays['ch_pay_lien_imgdrapeau']) ?>" width="75px"></td>
               <td><?= e($row_ListPays['ch_pay_nom']) ?></td>
-              <td>N°<?= e($row_ListPays['ch_pay_emplacement']) ?> <img class="pull-right" src="../Carto/Emplacements/emplacement<?= e($row_ListPays['ch_pay_emplacement']) ?>.jpg" width="50px"></td>
+              <td>N°<?= e($row_ListPays['ch_pay_emplacement']) ?> <img class="pull-right" src="../carto/Emplacements/emplacement<?= e($row_ListPays['ch_pay_emplacement']) ?>.jpg" width="50px"></td>
               <td><?= e($row_ListPays['ch_pay_continent']) ?></td>
               <td>
               <?php $thisPays = new \GenCity\Monde\Pays($row_ListPays['ch_pay_id']);
