@@ -52,7 +52,6 @@ exclude_patterns:
   - "database/"
   - "docker/"
   - "docs/"
-  - "Graphisme/"
   - "libs/"
   - "**/node_modules/"
   - "public/"
