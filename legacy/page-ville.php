@@ -16,7 +16,7 @@ $infoVille = mysql_query($query_infoVille, $maconnexion);
 $row_infoVille = mysql_fetch_assoc($infoVille);
 $totalRows_infoVille = mysql_num_rows($infoVille);
 
-$query_Pays = sprintf("SELECT ch_pay_id, ch_pay_publication, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_use_id FROM pays INNER JOIN users ON ch_use_paysID=ch_pay_id AND ch_use_id >=10 WHERE ch_pay_id = %s", escape_sql($row_infoVille['ch_vil_paysID'], "int"));
+$query_Pays = sprintf("SELECT ch_pay_id, ch_pay_publication, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau FROM pays WHERE ch_pay_id = %s", escape_sql($row_infoVille['ch_vil_paysID'], "int"));
 $Pays = mysql_query($query_Pays, $maconnexion);
 $row_Pays = mysql_fetch_assoc($Pays);
 $totalRows_Pays = mysql_num_rows($Pays);
@@ -299,9 +299,7 @@ Eventy::action('display.beforeHeadClosingTag')
           <p><strong><?= e($row_infoVille['ch_vil_nom']) ?></strong></p>
           <p><em>Cr&eacute;&eacute;e par <?= e($row_User['ch_use_login']) ?></em></p>
           </a></li>
-        <?php if($row_User['ch_use_id'] != $row_Pays['ch_use_id']) { ?>
         <li><a href="#diplomatie">Diplomatie</a></li>
-        <?php } ?>
         <li><a href="#presentation">Pr&eacute;sentation</a></li>
         <li><a href="#communiques">Communiqu&eacute;s</a></li>
         <?php if ($row_infoVille['ch_vil_capitale']==4) { ?><?php } else { ?><li><a href="#carte">Carte</a></li><?php }?>
@@ -358,7 +356,7 @@ Eventy::action('display.beforeHeadClosingTag')
       <?php } ?>
       <!-- Moderation
      ================================================== -->
-      <?php if (($_SESSION['statut'] >= 20) OR ($row_User['ch_use_id'] == $_SESSION['user_ID'])) { ?>
+      <?php if (Gate::allows('update', $eloquentVille)) { ?>
       <form class="pull-right" action="<?= DEF_URI_PATH ?>back/ville_confirmation_supprimer.php" method="post">
         <input name="ville-ID" type="hidden" value="<?= e($row_infoVille['ch_vil_ID']) ?>">
         <button class="btn btn-danger" type="submit" title="supprimer cette ville"><i class="icon-trash icon-white"></i></button>
@@ -373,7 +371,7 @@ Eventy::action('display.beforeHeadClosingTag')
          href="<?= route('ville.history', $eloquentVille) ?>" title="Historique">
           <i class="icon-time icon-white"></i> Historique
       </a>
-      <?php if ($row_User['ch_use_id'] == $_SESSION['user_ID']) { ?>
+      <?php if (Gate::allows('update', $eloquentVille)) { ?>
       <a class="btn btn-primary pull-right" href="php/partage-ville.php?ch_vil_ID=<?= e($row_infoVille['ch_vil_ID']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
       <?php } ?>
       <div class="clearfix"></div>

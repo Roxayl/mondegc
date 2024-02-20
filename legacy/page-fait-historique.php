@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Gate;
+use Roxayl\MondeGC\Models\Pays;
+
 //Connexion et deconnexion
 include('php/log.php');
 
@@ -9,20 +12,20 @@ if (isset($_GET['ch_his_id'])) {
   $colname_fait_his = $_GET['ch_his_id'];
 }
 
-$query_fait_his = sprintf("SELECT ch_his_id, ch_his_label, ch_his_statut, ch_his_profession, ch_his_personnage, ch_his_paysID, ch_his_date, ch_his_mis_jour, ch_his_nb_update, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_nom, ch_his_lien_img1, ch_his_legende_img1, ch_his_description, ch_his_contenu, ch_pay_id, ch_pay_nom, ch_use_id, (SELECT GROUP_CONCAT(ch_disp_fait_hist_cat_id) FROM dispatch_fait_his_cat WHERE ch_his_ID = ch_disp_fait_hist_id) AS listcat FROM histoire INNER JOIN pays ON ch_his_paysID = ch_pay_id INNER JOIN users ON ch_pay_id = ch_use_paysID WHERE ch_his_id = %s", escape_sql($colname_fait_his, "int"));
+$query_fait_his = sprintf("SELECT ch_his_id, ch_his_label, ch_his_statut, ch_his_profession, ch_his_personnage, ch_his_paysID, ch_his_date, ch_his_mis_jour, ch_his_nb_update, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_nom, ch_his_lien_img1, ch_his_legende_img1, ch_his_description, ch_his_contenu, ch_pay_id, ch_pay_nom, (SELECT GROUP_CONCAT(ch_disp_fait_hist_cat_id) FROM dispatch_fait_his_cat WHERE ch_his_ID = ch_disp_fait_hist_id) AS listcat FROM histoire INNER JOIN pays ON ch_his_paysID = ch_pay_id WHERE ch_his_id = %s", escape_sql($colname_fait_his, "int"));
 $fait_his = mysql_query($query_fait_his, $maconnexion);
 $row_fait_his = mysql_fetch_assoc($fait_his);
 $totalRows_fait_his = mysql_num_rows($fait_his);
 
+$eloquentPays = Pays::findOrFail($row_fait_his['ch_pay_id']);
+
 // *** Requête pour infos sur les categories.
 $listcategories = ($row_fait_his['listcat']);
-			if ($row_fait_his['listcat']) {
-          
-
-$query_liste_fai_cat3 = "SELECT * FROM faithist_categories WHERE ch_fai_cat_ID In ($listcategories) AND ch_fai_cat_statut = 1";
-$liste_fai_cat3 = mysql_query($query_liste_fai_cat3, $maconnexion);
-$row_liste_fai_cat3 = mysql_fetch_assoc($liste_fai_cat3);
-$totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
+if ($row_fait_his['listcat']) {
+    $query_liste_fai_cat3 = "SELECT * FROM faithist_categories WHERE ch_fai_cat_ID In ($listcategories) AND ch_fai_cat_statut = 1";
+    $liste_fai_cat3 = mysql_query($query_liste_fai_cat3, $maconnexion);
+    $row_liste_fai_cat3 = mysql_fetch_assoc($liste_fai_cat3);
+    $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
 }
 
 $_SESSION['last_work'] = 'page-fait-historique.php?ch_his_id='.$row_fait_his['ch_his_id'];
@@ -66,7 +69,7 @@ Eventy::action('display.beforeHeadClosingTag')
 <div class="container corps-page"> 
   <!-- Moderation
      ================================================== -->
-  <?php if (($_SESSION['statut'] >= 20) OR ($row_fait_his['ch_use_id'] == $_SESSION['user_ID'])) { ?>
+  <?php if (Gate::allows('update', $eloquentPays)) { ?>
   <form class="pull-right" action="<?= DEF_URI_PATH ?>back/fait_historique_confirmation_supprimer.php" method="post">
     <input name="ch_his_id" type="hidden" value="<?= e($row_fait_his['ch_his_id']) ?>">
     <button class="btn btn-danger" type="submit" title="supprimer ce fait historique"><i class="icon-trash icon-white"></i></button>
@@ -83,7 +86,7 @@ Eventy::action('display.beforeHeadClosingTag')
   </form>
   <?php }?>
   <?php }?>
-  <?php if ($row_fait_his['ch_use_id'] == $_SESSION['user_ID']) { ?>
+  <?php if (Gate::allows('update', $eloquentPays)) { ?>
   <a class="btn btn-primary pull-right" href="php/partage-fait-hist.php?ch_his_id=<?= e($row_fait_his['ch_his_id']) ?>" data-toggle="modal" data-target="#Modal-Monument" title="Poster sur le forum"><i class="icon-share icon-white"></i> Partager sur le forum</a>
   <?php } ?>
   <ul class="breadcrumb pull-left mt-3">
