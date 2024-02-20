@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
@@ -14,7 +16,9 @@ class OrganisationMemberController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('require-ajax', ['only' => ['joinOrganisation', 'edit']]);
+        $this->middleware('require-ajax', [
+            'only' => ['joinOrganisation', 'edit'],
+        ]);
     }
 
     /**
@@ -92,7 +96,7 @@ class OrganisationMemberController extends Controller
     public function invite(int $organisationId): View
     {
         $organisation = Organisation::with('members')->findOrFail($organisationId);
-        $pays = Pays::where('ch_pay_publication', '=', Pays::$statut['active'])->get();
+        $pays = Pays::query()->where('ch_pay_publication', '=', Pays::$statut['active'])->get();
 
         return view('organisation.member.invite', compact(['organisation', 'pays']));
     }

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Roxayl\MondeGC\Http\Controllers;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Response;
 use LogicException;
 use Roxayl\MondeGC\Models\Pays;
 use Roxayl\MondeGC\Services\EconomyService;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DataExporterController extends Controller
@@ -18,7 +18,7 @@ class DataExporterController extends Controller
      * sous forme de réponse HTTP.
      *
      * @param  string  $filename
-     * @param  array  $data
+     * @param  array<int, array<string, scalar>>  $data
      * @return StreamedResponse
      */
     protected function exportToCsv(string $filename, array $data): StreamedResponse
@@ -26,24 +26,28 @@ class DataExporterController extends Controller
         $filename = $filename . '-' . Carbon::today()->format('Y-m-d') . '.csv';
 
         $headers = [
-            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',   'Content-type' => 'text/csv',   'Content-Disposition' => 'attachment; filename=' . $filename,   'Expires' => '0',   'Pragma' => 'public',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Content-type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename=' . $filename,
+            'Expires' => '0',
+            'Pragma' => 'public',
         ];
 
         // Ajoute les en-têtes dans le fichier CSV résultat.
         array_unshift($data, array_keys($data[array_key_first($data)]));
 
         $callback = function () use ($data): void {
-            $FH = fopen('php://output', 'w');
+            $fileHandler = fopen('php://output', 'w');
             foreach ($data as $row) {
-                $status = fputcsv($FH, $row);
+                $status = fputcsv($fileHandler, $row);
                 if ($status === false) {
-                    throw new LogicException('fputcsv() error');
+                    throw new LogicException('Erreur fputcsv().');
                 }
             }
-            fclose($FH);
+            fclose($fileHandler);
         };
 
-        return Response::stream($callback, 200, $headers);
+        return response()->stream($callback, Response::HTTP_OK, $headers);
     }
 
     /**

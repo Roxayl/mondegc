@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
@@ -17,6 +19,10 @@ class NotificationController extends Controller
      */
     public function index(): View
     {
+        if (! auth()->check()) {
+            abort(403);
+        }
+
         $unread = auth()->user()->unreadNotifications;
 
         $count = max(10, $unread->count());

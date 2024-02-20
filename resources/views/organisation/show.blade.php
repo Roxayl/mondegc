@@ -56,9 +56,9 @@
                             </div>
                         @endif
                     @endcan
-                    @if($members_invited->count())
+                    @if($membersInvited->count())
                         <div class="badge badge-warning" style="display: inline-block;">
-                            {{ $members_invited->count() }}
+                            {{ $membersInvited->count() }}
                             {{ \Illuminate\Support\Str::plural('invitation',
                                 $organisation->membersPending->count()) }} en attente
                         </div>

@@ -39,7 +39,7 @@ class OrganisationController extends Controller
 
         $pays = auth()->user()->pays;
 
-        $type = $request->has('type') ? $request->get('type') : null;
+        $type = $request->get('type');
 
         return view('organisation.create', compact(['organisation', 'pays', 'type']));
     }
@@ -55,10 +55,10 @@ class OrganisationController extends Controller
         $this->authorize('create', Organisation::class);
 
         $organisation = new Organisation();
-        $organisation->fill($request->except(['_method', '_token']));
+        $organisation->fill($request->all($organisation->getFillable()));
 
         $type = $request->input('type');
-        if (! in_array($type, Organisation::$typesCreatable)) {
+        if (! in_array($type, Organisation::$typesCreatable, true)) {
             throw new \InvalidArgumentException("Mauvais type d'organisation.");
         }
         $organisation->type = $type;
@@ -103,13 +103,14 @@ class OrganisationController extends Controller
         }
         $communiques = $communiques->paginate(10);
 
-        $members_invited = collect();
+        $membersInvited = collect();
         if (auth()->check()) {
-            $members_invited = $organisation->membersInvited(auth()->user())->get();
+            $membersInvited = $organisation->membersInvited(auth()->user())->get();
         }
 
         return view('organisation.show', compact(
-            ['organisation', 'communiques', 'members_invited']));
+            ['organisation', 'communiques', 'membersInvited'])
+        );
     }
 
     /**
@@ -214,18 +215,19 @@ class OrganisationController extends Controller
 
         return redirect()->back()
             ->with('message', 'success|Votre organisation est devenue une '
-                . __("organisation.types.$organisation->type"));
+                . __("organisation.types.$organisation->type")
+            );
     }
 
     /**
      * @param  Organisation  $organisation
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function history(Organisation $organisation): View
     {
         $versions = $organisation->versions()->latest('version_id')->paginate();
         $canRevert = Gate::allows('revert', $organisation);
-        $title = 'Historique de l\'organisation ' . $organisation->name;
+        $title = "Historique de l'organisation $organisation->name";
         $breadcrumb = view('organisation.components.history-breadcrumb', compact('organisation'));
 
         return view(

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Controllers;
 
 use Carbon\Carbon;
@@ -17,7 +19,7 @@ class InfrastructureJudgeController extends Controller
      */
     public function index(Request $request): View
     {
-        $type = $request->has('type') ? $request->get('type') : 'pending';
+        $type = $request->input('type') ?? 'pending';
         if (! in_array($type, ['pending', 'accepted', 'rejected'], true)) {
             throw new \InvalidArgumentException('Mauvais type de liste.');
         }
@@ -53,14 +55,14 @@ class InfrastructureJudgeController extends Controller
 
         $this->authorize('judgeInfrastructure', Infrastructure::class);
 
-        if (! in_array($request->input('ch_inf_statut'), [1, 2, 3])) {
+        if (! in_array((int) $request->input('ch_inf_statut'), [1, 2, 3], true)) {
             throw new \InvalidArgumentException('Mauvais type de statut.');
         }
 
-        $infrastructure->ch_inf_statut = $request->input('ch_inf_statut');
+        $infrastructure->ch_inf_statut = (int) $request->input('ch_inf_statut');
         $infrastructure->ch_inf_juge = auth()->user()->getAuthIdentifier();
         $infrastructure->judged_at = Carbon::now();
-        if ((int) $infrastructure->ch_inf_statut === Infrastructure::JUGEMENT_REJECTED) {
+        if ($infrastructure->ch_inf_statut === Infrastructure::JUGEMENT_REJECTED) {
             $infrastructure->ch_inf_commentaire_juge = $request->input('ch_inf_commentaire_juge');
         } else {
             $infrastructure->ch_inf_commentaire_juge = null;

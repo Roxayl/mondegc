@@ -65,12 +65,12 @@
 
 @endforeach
 
-@if($members_invited->count())
+@if($membersInvited->count())
     <h3>
         Invitations reçues
-        <span class="label label-warning">{{$members_invited->count()}}</span>
+        <span class="label label-warning">{{$membersInvited->count()}}</span>
     </h3>
-    @foreach($members_invited as $member)
+    @foreach($membersInvited as $member)
 
         @php
         $dropdown = [

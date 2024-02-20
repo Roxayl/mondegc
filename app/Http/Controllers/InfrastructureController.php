@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
@@ -119,10 +121,12 @@ class InfrastructureController extends Controller
         $infrastructure = Infrastructure::query()->findOrFail($id);
 
         $infrastructureOfficielle = InfrastructureOfficielle::query()->findOrFail(
-            $infrastructure->infrastructureOfficielle?->ch_inf_off_id);
+            $infrastructure->infrastructureOfficielle?->ch_inf_off_id
+        );
 
         $infrastructureGroupe = InfrastructureGroupe::query()->findOrFail(
-            $infrastructure->infrastructureOfficielle?->infrastructureGroupe->first()?->id);
+            $infrastructure->infrastructureOfficielle?->infrastructureGroupe->first()?->id
+        );
 
         $this->authorize('manageInfrastructure', $infrastructure->infrastructurable);
 
