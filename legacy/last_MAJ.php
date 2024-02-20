@@ -519,7 +519,7 @@ do {
               &agrave;
               <?php  echo date("G:i", strtotime($row_LastCommunique['date'])); ?>
               </small>
-              <p>La page de la ville située à <a href="page-pays?ch_pay_id=<?= $thisPays->get('ch_pay_id') ?>"><?= __s($thisPays->get('ch_pay_nom')) ?></a> a été mise à jour :</p>
+              <p>La page de la ville située à <a href="page-pays.php?ch_pay_id=<?= $thisPays->get('ch_pay_id') ?>"><?= __s($thisPays->get('ch_pay_nom')) ?></a> a été mise à jour :</p>
               <h4><a href="page-ville.php?ch_pay_id=<?= e($row_LastCommunique['pays_institution']) ?>&ch_ville_id=<?= e($row_LastCommunique['id_institution']) ?>"> <?= e($row_LastCommunique['titre']) ?> </a> </h4>
             </div>
         </div>
@@ -896,4 +896,3 @@ $("button").click(function(){
 </script>
 <?php
 mysql_free_result($LastCommunique);
-?>

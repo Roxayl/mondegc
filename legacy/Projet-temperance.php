@@ -207,7 +207,7 @@ $totalRows_nb_juges = mysql_num_rows($nb_juges);
               <a href="page-pays.php?ch_pay_id=<?= e($row_liste_temperance['element_id']) ?>" title="lien vers la page du pays"><img src="<?= e($row_liste_temperance['image']) ?>"></a>
               <?php } ?>
               <?php	if ($row_liste_temperance['element'] == "ville") { ?>
-              <a href="page-ville.php?ch_pay_id=<?= e($row_liste_temperance['pays_id']) ?>&ch_ville_id=<?= e($row_liste_temperance['element_id']) ?>" title="lien vers la page de la ville"><img src="<?= e($row_liste_temperance['image']) ?>"></a>
+              <a href="page-ville.php?ch_pay_id=<?= e($row_liste_temperance['pays_id']) ?>&ch_ville_id=<?= e($row_liste_temperance['element_id']) ?>" title="Lien vers la page de la ville"><img src="<?= e($row_liste_temperance['image']) ?>"></a>
               <?php } ?>
             </div>
             <!-- Nom element tempere -->

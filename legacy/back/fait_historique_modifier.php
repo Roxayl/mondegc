@@ -73,7 +73,7 @@ $thisPays = new \GenCity\Monde\Pays($row_Fait_his['ch_his_paysID']);
 <!-- head Html -->
 <head>
 <meta charset="utf-8">
-<title>modifier un fait historique</title>
+<title>Modifier un fait historique</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
