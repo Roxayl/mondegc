@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 //deconnexion
 require(DEF_LEGACYROOTPATH . 'php/logout.php');
 
@@ -105,15 +107,7 @@ $row_pays = mysql_fetch_assoc($pays);
 $totalRows_pays = mysql_num_rows($pays);
 
 //fonction clef activation
-	$characts    = 'abcdefghijklmnopqrstuvwxyz';
-    $characts   .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';	
-	$characts   .= '1234567890'; 
-	$code_aleatoire      = ''; 
-
-	for($i=0;$i < 10;$i++)    //10 est le nombre de caractères
-	{ 
-        $code_aleatoire .= substr($characts,rand()%(strlen($characts)),1); 
-	}
+$code_aleatoire = Str::random(10);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
