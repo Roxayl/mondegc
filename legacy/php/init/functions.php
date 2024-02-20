@@ -318,11 +318,15 @@ function get_note_finale(int $note): string
 /**
  * Affichage date en français pour fait historique.
  *
- * @param string $date
+ * @param string|null $date
  * @return string
  */
-function affDate(string $date): string
+function affDate(?string $date): string
 {
+    if(empty($date)) {
+        return '';
+    }
+
     $year = substr($date, 0, 4);
     $month = substr($date, 5, 2);
     $day = substr($date, 8, 2);
