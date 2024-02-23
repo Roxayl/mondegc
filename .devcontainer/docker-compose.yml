@@ -28,6 +28,7 @@ services:
       - --sql-mode=IGNORE_SPACE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: "%"
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
