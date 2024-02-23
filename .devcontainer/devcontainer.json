@@ -1,33 +1,53 @@
 // cf. https://aka.ms/vscode-remote/devcontainer.json.
 {
-  "name": "mondegc-codespaces",
+  "name": "mondegc_dev",
   "dockerComposeFile": [
     "docker-compose.yml"
   ],
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": "/var/www/html",
   "service": "app",
   "shutdownAction": "stopCompose",
-  "extensions": [
-    "editorconfig.editorconfig",
-    "ryannaddy.laravel-artisan",
-    "amiralizadeh9480.laravel-extra-intellisense",
-    "stef-k.laravel-goto-controller",
-    "codingyu.laravel-goto-view",
-    "mikestead.dotenv",
-    "christian-kohler.path-intellisense",
-    "esbenp.prettier-vscode",
-    "CoenraadS.bracket-pair-colorizer"
-  ],
-  "settings": {
-    "#terminal.integrated.shell.linux": "/bin/bash"
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "editorconfig.editorconfig",
+        "ryannaddy.laravel-artisan",
+        "amiralizadeh9480.laravel-extra-intellisense",
+        "stef-k.laravel-goto-controller",
+        "codingyu.laravel-goto-view",
+        "mikestead.dotenv",
+        "christian-kohler.path-intellisense",
+        "esbenp.prettier-vscode",
+        "CoenraadS.bracket-pair-colorizer"
+      ]
+    },
+    "settings": {
+      "#terminal.integrated.shell.linux": "/bin/bash"
+    }
   },
   "forwardPorts": [
-    80
+    80,
+    1025,
+    3306,
+    8025,
+    8080
   ],
   "postCreateCommand": "composer install && php artisan monde:init-env && php artisan monde:init-db",
   "portsAttributes": {
     "80": {
-      "label": "HTTP"
+      "label": "App HTTP"
+    },
+    "1025": {
+      "label": "Mailhog SMTP"
+    },
+    "3306": {
+      "label": "MySQL endpoint"
+    },
+    "8025": {
+      "label": "Mailhog HTTP"
+    },
+    "8080": {
+      "label": "PHPMyAdmin HTTP"
     }
-  },
+  }
 }

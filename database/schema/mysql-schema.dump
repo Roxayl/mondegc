@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `communiques` (
   PRIMARY KEY (`ch_com_ID`),
   KEY `communiques_users_ch_use_id_fk` (`ch_com_user_id`),
   CONSTRAINT `communiques_users_ch_use_id_fk` FOREIGN KEY (`ch_com_user_id`) REFERENCES `users` (`ch_use_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `dispatch_fait_his_cat` (
   `ch_disp_fait_hist_id` int NOT NULL,
   `ch_disp_FH_date` datetime NOT NULL,
   PRIMARY KEY (`ch_disp_FH_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `dispatch_mem_group` (
   `ch_disp_mem_statut` tinyint NOT NULL,
   `ch_disp_MG_date` datetime NOT NULL,
   PRIMARY KEY (`ch_disp_MG_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `dispatch_mon_cat` (
   `ch_disp_mon_id` int NOT NULL,
   `ch_disp_date` datetime NOT NULL,
   PRIMARY KEY (`ch_disp_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `faithist_categories` (
   `ch_fai_cat_icon` varchar(250) DEFAULT NULL,
   `ch_fai_cat_couleur` varchar(7) DEFAULT NULL,
   PRIMARY KEY (`ch_fai_cat_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `geometries` (
   KEY `geometries_pays_ch_pay_id_fk` (`ch_geo_pay_id`),
   CONSTRAINT `geometries_pays_ch_pay_id_fk` FOREIGN KEY (`ch_geo_pay_id`) REFERENCES `pays` (`ch_pay_id`) ON UPDATE CASCADE,
   CONSTRAINT `geometries_type_geometries_id_fk` FOREIGN KEY (`type_geometrie_id`) REFERENCES `type_geometries` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -175,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `histoire` (
   `ch_his_contenu` mediumtext,
   PRIMARY KEY (`ch_his_id`),
   KEY `fk_histoire_pays1_idx` (`ch_his_paysID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `influence` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `influence_influencable_type_influencable_id_index` (`influencable_type`,`influencable_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -227,7 +227,7 @@ CREATE TABLE IF NOT EXISTS `infrastructures` (
   KEY `ch_inf_villeid__index` (`ch_inf_villeid`),
   KEY `infrastructures_users_ch_use_id_fk` (`user_creator`),
   CONSTRAINT `infrastructures_users_ch_use_id_fk` FOREIGN KEY (`user_creator`) REFERENCES `users` (`ch_use_id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -239,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `infrastructures_groupes` (
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `infrastructures_groupes_id_uindex` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -259,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `infrastructures_officielles` (
   `ch_inf_off_Environnement` int DEFAULT NULL,
   `ch_inf_off_Education` int DEFAULT NULL,
   PRIMARY KEY (`ch_inf_off_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -269,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `infrastructures_officielles_groupes` (
   `ID_infra_officielle` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `infrastructures_officielles_groupes_id_uindex` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -290,7 +290,7 @@ CREATE TABLE IF NOT EXISTS `instituts` (
   `ch_ins_img` varchar(250) DEFAULT NULL,
   `ch_ins_desc` mediumtext,
   PRIMARY KEY (`ch_ins_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -301,7 +301,7 @@ CREATE TABLE IF NOT EXISTS `legacy_pages` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `pages_this_id_uindex` (`this_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -316,7 +316,7 @@ CREATE TABLE IF NOT EXISTS `log` (
   PRIMARY KEY (`id`),
   KEY `log_user_id_index` (`user_id`),
   CONSTRAINT `log_users_ch_use_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`ch_use_id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -332,7 +332,7 @@ CREATE TABLE IF NOT EXISTS `membres_groupes` (
   `ch_mem_group_icon` varchar(250) DEFAULT NULL,
   `ch_mem_group_couleur` varchar(7) DEFAULT NULL,
   PRIMARY KEY (`ch_mem_group_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -341,7 +341,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -366,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `monument_categories` (
   `ch_mon_cat_budget` int DEFAULT NULL,
   `bg_image_url` varchar(191) DEFAULT NULL,
   PRIMARY KEY (`ch_mon_cat_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -397,7 +397,7 @@ CREATE TABLE IF NOT EXISTS `notation_temperance` (
   `ch_not_temp_q10` int DEFAULT NULL,
   `ch_not_temp_q10_com` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`ch_not_temp_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -412,7 +412,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -426,7 +426,7 @@ CREATE TABLE IF NOT EXISTS `notifications_legacy` (
   PRIMARY KEY (`id`),
   KEY `notifications_recipient_id_index` (`recipient_id`),
   CONSTRAINT `notifications_users_ch_use_id_fk` FOREIGN KEY (`recipient_id`) REFERENCES `users` (`ch_use_id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -456,7 +456,7 @@ CREATE TABLE IF NOT EXISTS `ocgc_proposals` (
   `updated` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `proposal_id` (`res_year`,`res_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Propositions de loi à l''Assemblée Générale';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Propositions de loi à l''Assemblée Générale';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -467,7 +467,7 @@ CREATE TABLE IF NOT EXISTS `ocgc_votes` (
   `reponse_choisie` int DEFAULT NULL COMMENT 'ID de la réponse. NULL = abstention ; 0 = vote blanc ; 1 à 5 = réponses',
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Votes aux propositions de l''Assemblée Générale';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Votes aux propositions de l''Assemblée Générale';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -484,7 +484,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `organisation_id_index` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -500,7 +500,7 @@ CREATE TABLE IF NOT EXISTS `organisation_members` (
   KEY `organisation_members_pays_id_index` (`pays_id`),
   CONSTRAINT `organisation_members_organisation_id_fk` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `organisation_members_pays_ch_pay_id_fk` FOREIGN KEY (`pays_id`) REFERENCES `pays` (`ch_pay_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -516,7 +516,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `published_at` datetime DEFAULT NULL,
   `cover_image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -548,7 +548,7 @@ CREATE TABLE IF NOT EXISTS `patrimoine` (
   `ch_pat_commentaire_juge` mediumtext,
   PRIMARY KEY (`ch_pat_id`),
   KEY `fk_patrimoine_villes1_idx` (`ch_pat_villeID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -600,7 +600,7 @@ CREATE TABLE IF NOT EXISTS `pays` (
   `ch_pay_population_carte` int DEFAULT '0',
   `ch_pay_emploi_carte` int DEFAULT '0',
   PRIMARY KEY (`ch_pay_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -615,7 +615,7 @@ CREATE TABLE IF NOT EXISTS `personnage` (
   `titre_personnage` varchar(191) DEFAULT NULL,
   `lien_img` varchar(191) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -659,7 +659,7 @@ CREATE TABLE IF NOT EXISTS `temperance` (
   `ch_temp_note` int DEFAULT NULL,
   `ch_temp_tendance` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`ch_temp_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -682,7 +682,7 @@ CREATE TABLE IF NOT EXISTS `type_geometries` (
   PRIMARY KEY (`id`),
   KEY `type_geometries_type_geometries_group_id_fk` (`group_id`),
   CONSTRAINT `type_geometries_type_geometries_group_id_fk` FOREIGN KEY (`group_id`) REFERENCES `type_geometries_group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -692,7 +692,7 @@ CREATE TABLE IF NOT EXISTS `type_geometries_group` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -714,7 +714,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `ch_use_prenom_dirigeant` varchar(50) DEFAULT NULL,
   `ch_use_biographie_dirigeant` mediumtext,
   PRIMARY KEY (`ch_use_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -723,7 +723,7 @@ CREATE TABLE IF NOT EXISTS `users_dispatch_session` (
   `ch_users_session_dispatch_Key` varchar(20) NOT NULL,
   `ch_users_session_dispatch_sessionID` int NOT NULL,
   PRIMARY KEY (`ch_users_session_dispatch_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -733,7 +733,7 @@ CREATE TABLE IF NOT EXISTS `users_pays` (
   `ID_user` int NOT NULL,
   `permissions` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -745,7 +745,7 @@ CREATE TABLE IF NOT EXISTS `users_provisoire` (
   `ch_use_prov_paysID` tinyint DEFAULT NULL,
   `ch_use_prov_statut` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`ch_use_prov_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -756,7 +756,7 @@ CREATE TABLE IF NOT EXISTS `users_session` (
   `ch_use_session_connect` tinyint(1) NOT NULL,
   `ch_use_session_date` datetime NOT NULL,
   PRIMARY KEY (`ch_use_session_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -794,7 +794,7 @@ CREATE TABLE IF NOT EXISTS `villes` (
   PRIMARY KEY (`ch_vil_ID`),
   KEY `fk_villes_pays_idx` (`ch_vil_paysID`),
   CONSTRAINT `villes_pays_ch_pay_id_fk` FOREIGN KEY (`ch_vil_paysID`) REFERENCES `pays` (`ch_pay_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
