@@ -4,8 +4,7 @@ FROM    php:8.1-apache
 # Variables d'environnement.
 ENV     COMPOSER_ALLOW_SUPERUSER=1
 
-# Expose le port 80 du conteneur à l'hôte et sélectionne le répertoire de travail.
-EXPOSE  80
+# Sélectionne le répertoire de travail.
 WORKDIR /var/www/html
 
 # Met à jour les listes du gestionnaire de paquets.
