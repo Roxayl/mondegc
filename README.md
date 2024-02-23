@@ -71,9 +71,9 @@ environnements JavaScript
 
 ### Installation via Docker
 
-L'application fournit un fichier de configuration permettant d'exécuter l'application de manière conteneurisée, via 
+L'application fournit une configuration permettant d'exécuter l'application de manière conteneurisée, via 
 [Docker](https://fr.wikipedia.org/wiki/Docker_(logiciel)). La configuration est décrite dans les fichiers 
-[docker-compose.yml](./docker-compose.yml) et [Dockerfile](./docker/Dockerfile).
+[docker-compose.yml](./.devcontainer/docker-compose.yml) et [Dockerfile](./.devcontainer/Dockerfile).
 
 Ce guide fournit les étapes pour démarrer l'application Web sur votre machine. Elle détaille :
 
@@ -108,10 +108,10 @@ Une fois que tout est installé, vous êtes prêt pour déployer l'application W
    git clone https://bitbucket.org/Roxayl/mondegc.git
    ```
 
-2. Lancez les conteneurs Docker de l'application via la commande suivante, depuis le répertoire où est
-   installé l'application :
+2. Lancez les conteneurs Docker de l'application via la commande suivante, depuis le répertoire ``.devcontainer`` :
    ```bash
-   docker-compose up -d
+   cd .devcontainer
+   docker-compose -p mondegc_dev up -d
    ```
 
 3. Accédez au conteneur de l'application via la commande à saisir dans un terminal.
@@ -177,7 +177,7 @@ Les sources du site sont gérées par Git, hébergées sur un certain nombre de 
 ### Gestion des bibliothèques externes
 
 Pour accéder au répertoire de l'application au sein du **conteneur principal** ``mondegc_app``, vous pouvez taper les 
-commandes suivantes dans un terminal dans le répertoire racine :
+commandes suivantes dans un terminal dans le répertoire ``.devcontainer`` :
 ```bash
 docker-compose exec app /bin/bash
 ```
