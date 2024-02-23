@@ -1,5 +1,4 @@
 version: "3"
-
 services:
 
   app:
@@ -10,14 +9,9 @@ services:
     tty: true
     volumes:
       - ../:/var/www/html:cached
-    environment:
-      PHP_EXTENSION_XDEBUG: 1
-      PHP_INI_UPLOAD_MAX_FILESIZE: 64M
-      PHP_INI_POST_MAX_SIZE: 64M
-      PHP_INI_DISPLAY_ERRORS: 1
-      PHP_INI_STARTUP_ERRORS: 1
-      PHP_INI_DATE__TIMEZONE: Europe/Paris
-      APACHE_DOCUMENT_ROOT: /var/www/html
+    depends_on:
+      - mysql
+      - mailhog
 
   mysql:
     image: mysql:5.7
@@ -25,8 +19,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ../docker/mysql/data:/var/lib/mysql
-      - ../docker/mysql/entrypoint:/docker-entrypoint-initdb.d
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/entrypoint:/docker-entrypoint-initdb.d
     command:
       - --default-authentication-plugin=mysql_native_password
       - --character-set-server=utf8mb4

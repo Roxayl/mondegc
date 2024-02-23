@@ -1,6 +1,6 @@
 // cf. https://aka.ms/vscode-remote/devcontainer.json.
 {
-  "name": "mondegc-dev",
+  "name": "mondegc_dev",
   "dockerComposeFile": [
     "docker-compose.yml"
   ],
@@ -26,12 +26,28 @@
     }
   },
   "forwardPorts": [
-    80
+    80,
+    1025,
+    3306,
+    8025,
+    8080
   ],
   "postCreateCommand": "composer install && php artisan monde:init-env && php artisan monde:init-db",
   "portsAttributes": {
     "80": {
       "label": "App HTTP"
+    },
+    "1025": {
+      "label": "Mailhog SMTP"
+    },
+    "3306": {
+      "label": "MySQL endpoint"
+    },
+    "8025": {
+      "label": "Mailhog HTTP"
+    },
+    "8080": {
+      "label": "PHPMyAdmin HTTP"
     }
   }
 }
