@@ -119,8 +119,8 @@ Une fois que tout est installé, vous êtes prêt pour déployer l'application W
    docker-compose exec app /bin/bash
    ```
 
-4. Dans le conteneur de l'application, accédez au dossier comprenant les fichiers de l'application et exécutez la 
-commande permettant d'installer les dépendances et bibliothèques externes PHP (gérée par Composer).
+4. Dans le conteneur de l'application, exécutez la commande permettant d'installer les dépendances et bibliothèques
+externes PHP (gérée par Composer).
    ```bash
    composer install
    ```
