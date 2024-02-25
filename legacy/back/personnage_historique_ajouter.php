@@ -10,7 +10,7 @@ if(!isset($_SESSION['userObject'])) {
 }
 
 $paysID = "-1";
-if (isset($_POST['paysID'])) {
+if (isset($_POST['ch_his_paysID'])) {
   $paysID = $_POST['paysID'];
 }
 
