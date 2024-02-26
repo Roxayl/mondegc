@@ -21,11 +21,14 @@ Liens : [Site du Monde GC](https://generation-city.com/monde/) -
 
 ## Table des matières
 
+- [Table des matières](#table-des-matières)
 - [À propos](#à-propos)
 - [Installation](#installation)
   - [Environnement](#environnement)
   - [Installation via Docker](#installation-via-docker)
     - [Installer Docker](#installer-docker)
+      - [Installer Docker sur Windows](#installer-docker-sur-windows)
+      - [Installer Docker sur Linux](#installer-docker-sur-linux)
     - [Installer l'application](#installer-lapplication)
   - [Télécharger les données de cartographie](#télécharger-les-données-de-cartographie)
   - [Lancement et arrêt de l'application](#lancement-et-arrêt-de-lapplication)
@@ -105,7 +108,7 @@ Une fois que tout est installé, vous êtes prêt pour déployer l'application W
 
 1. Clonez le dépôt Git dans un répertoire sur votre machine, en ligne de commande :
    ```bash
-   git clone https://bitbucket.org/Roxayl/mondegc.git
+   git clone git@github.com:Roxayl/mondegc.git
    ```
 
 2. Lancez les conteneurs Docker de l'application via la commande suivante, depuis le répertoire ``.devcontainer`` :
@@ -116,7 +119,7 @@ Une fois que tout est installé, vous êtes prêt pour déployer l'application W
 
 3. Accédez au conteneur de l'application via la commande à saisir dans un terminal.
    ```bash
-   docker-compose exec app /bin/bash
+   docker-compose -p mondegc_dev exec app /bin/bash
    ```
 
 4. Dans le conteneur de l'application, exécutez la commande permettant d'installer les dépendances et bibliothèques
@@ -179,7 +182,7 @@ Les sources du site sont gérées par Git, hébergées sur un certain nombre de 
 Pour accéder au répertoire de l'application au sein du **conteneur principal** ``mondegc_app``, vous pouvez taper les 
 commandes suivantes dans un terminal dans le répertoire ``.devcontainer`` :
 ```bash
-docker-compose exec app /bin/bash
+docker-compose -p mondegc_dev exec app /bin/bash
 ```
 
 À partir de là, vous pouvez accéder à l'interface en ligne de commande fournie par 
