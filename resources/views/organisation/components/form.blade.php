@@ -36,7 +36,7 @@
         <div class="controls">
           <textarea name="text" id="text" class="wysiwyg" rows="15">{{old('text', $organisation->text)}}</textarea>
           <br>
-          <span class="textareaMaxCharsMsg">6000 caractères maximum.</span>
+          <span class="textareaMaxCharsMsg">20000 caractères maximum.</span>
           <span class="textareaMinCharsMsg">2 caractères minimum.</span>
         </div>
     </div>

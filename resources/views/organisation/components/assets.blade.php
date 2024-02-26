@@ -29,6 +29,6 @@
     var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "none", {maxChars:60, minChars:2, validateOn:["change"], isRequired:true});
     var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "url", {maxChars:190, validateOn:["change"], isRequired:true});
     var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "url", {maxChars:190, validateOn:["change"], isRequired:false});
-    var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:6000, minChars:2, validateOn:["change"], isRequired:false, useCharacterMasking:false});
+    var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:20000, minChars:2, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
 @endsection

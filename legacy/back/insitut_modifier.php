@@ -220,11 +220,11 @@ Eventy::action('display.beforeHeadClosingTag')
     <input type="hidden" name="form_coord_Y" id="form_coord_Y" value="<?= __s($row_institut['ch_ins_coord_Y']) ?>">
     <!-- Description -->
     <div id="sprytextarea1" class="control-group">
-      <label class="control-label" for="ch_ins_desc">Description <a href="#" rel="clickover" title="Description" data-content="D&eacute;crivez en quelques mots la mission du comité. 6000 caractères maximum"><i class="icon-info-sign"></i></a></label>
+      <label class="control-label" for="ch_ins_desc">Description <a href="#" rel="clickover" title="Description" data-content="D&eacute;crivez en quelques mots la mission du comité. 20000 caractères maximum."><i class="icon-info-sign"></i></a></label>
     <div class="controls">
       <textarea name="ch_ins_desc" id="ch_ins_desc" class="wysiwyg" rows="15"><?= __s($row_institut['ch_ins_desc']) ?></textarea>
       <br>
-      <span class="textareaMaxCharsMsg">6000 caract&egrave;res maximum.</span><span class="textareaMinCharsMsg">2 caract&egrave;res minimum.</span>
+      <span class="textareaMaxCharsMsg">20000 caract&egrave;res maximum.</span><span class="textareaMinCharsMsg">2 caract&egrave;res minimum.</span>
     </div>
     </div>
 
@@ -273,7 +273,7 @@ var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2", "none
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "url", {maxChars:250, validateOn:["change"], isRequired:false});
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "url", {maxChars:250, validateOn:["change"], isRequired:false});
 var sprytextfield28 = new Spry.Widget.ValidationTextField("sprytextfield28", "url", {maxChars:250, validateOn:["change"], isRequired:false});
-var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:6000, minChars:2, validateOn:["change"], isRequired:false, useCharacterMasking:false});
+var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1", {maxChars:20000, minChars:2, validateOn:["change"], isRequired:false, useCharacterMasking:false});
 </script>
 </body>
 </html>
