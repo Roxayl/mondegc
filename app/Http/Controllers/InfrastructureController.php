@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Roxayl\MondeGC\Models\Infrastructure;
 use Roxayl\MondeGC\Models\InfrastructureGroupe;
 use Roxayl\MondeGC\Models\InfrastructureOfficielle;
@@ -186,5 +187,22 @@ class InfrastructureController extends Controller
 
         return redirect($infrastructure->infrastructurable->backAccessorUrl() . '#infrastructures')
             ->with('message', "success|L'infrastructure a été supprimée.");
+    }
+
+    /**
+     * @param  Infrastructure  $infrastructure
+     * @return View
+     */
+    public function history(Infrastructure $infrastructure): View
+    {
+        $versions = $infrastructure->versions()->latest('version_id')->paginate();
+        $canRevert = Gate::allows('revert', $infrastructure);
+        $title = "Historique de l'infrastructure $infrastructure->ch_inf_label";
+        $breadcrumb = null;
+
+        return view(
+            'version.history',
+            compact('title', 'breadcrumb', 'versions', 'canRevert')
+        );
     }
 }
