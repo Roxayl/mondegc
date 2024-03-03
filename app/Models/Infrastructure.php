@@ -73,6 +73,7 @@ use Roxayl\MondeGC\Models\Traits\Versionable;
  * @method static Builder|Infrastructure whereLienWiki($value)
  * @method static Builder|Infrastructure whereNomInfra($value)
  * @method static Builder|Infrastructure whereUserCreator($value)
+ *
  * @mixin \Eloquent
  */
 class Infrastructure extends Model implements Influencable

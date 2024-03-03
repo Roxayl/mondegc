@@ -24,4 +24,4 @@ class SeedInfrastructureHistory extends Migration
     {
         //
     }
-};
+}
