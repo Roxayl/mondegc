@@ -2710,25 +2710,25 @@
         },
         {
             "name": "mpociot/versionable",
-            "version": "4.4.0",
+            "version": "4.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mpociot/versionable.git",
-                "reference": "666a4634eae51cca1f81fda79a76206d30451500"
+                "reference": "8bf4c211cbf0bdd382e90fd38451fb76296cb1fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpociot/versionable/zipball/666a4634eae51cca1f81fda79a76206d30451500",
-                "reference": "666a4634eae51cca1f81fda79a76206d30451500",
+                "url": "https://api.github.com/repos/mpociot/versionable/zipball/8bf4c211cbf0bdd382e90fd38451fb76296cb1fd",
+                "reference": "8bf4c211cbf0bdd382e90fd38451fb76296cb1fd",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "~5.3 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
+                "illuminate/support": "~5.3 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
                 "php": ">=7.1.0 || >=7.2.5 || >=8.0 || >=8.1 || >= 8.2"
             },
             "require-dev": {
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^3.1 || ^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0",
+                "orchestra/testbench": "^3.1 || ^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0",
                 "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0 || ^10.0"
             },
             "type": "library",
@@ -2772,7 +2772,7 @@
                 "issues": "https://github.com/mpociot/versionable/issues",
                 "source": "https://github.com/mpociot/versionable"
             },
-            "time": "2023-03-27T13:56:40+00:00"
+            "time": "2024-03-03T23:13:00+00:00"
         },
         {
             "name": "nesbot/carbon",
