@@ -1136,11 +1136,11 @@ require(DEF_LEGACYROOTPATH . 'php/communiques-back.php'); ?>
 					echo DEF_URI_PATH . "back/fait_historique_modifier.php";
 						} ?>" method="post">
                     <input name="ch_his_id" type="hidden" value="<?= e($row_fait_hist['ch_his_id']) ?>">
-                    <button class="btn" type="submit" title="modifier cet &eacute;l&eacute;ment historique"><i class="icon-pencil"></i></button>
+                    <button class="btn btn-primary" type="submit" title="modifier cet &eacute;l&eacute;ment historique"><i class="icon-pencil icon-white"></i></button>
                   </form></td>
                 <td><form action="<?= DEF_URI_PATH ?>back/fait_historique_confirmation_supprimer.php" method="post">
                     <input name="ch_his_id" type="hidden" value="<?= e($row_fait_hist['ch_his_id']) ?>">
-                    <button class="btn" type="submit" title="supprimer ce fait historique"><i class="icon-trash"></i></button>
+                    <button class="btn btn-danger" type="submit" title="supprimer ce fait historique"><i class="icon-trash icon-white"></i></button>
                   </form></td>
               </tr>
               <?php } while ($row_fait_hist = mysql_fetch_assoc($fait_hist)); ?>

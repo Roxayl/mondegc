@@ -10,21 +10,22 @@ if(!isset($_SESSION['userObject'])) {
 }
 
 $paysID = "-1";
-if (isset($_POST['ch_his_paysID'])) {
+if (isset($_POST['paysID'])) {
   $paysID = $_POST['paysID'];
 }
-
+elseif (isset($_POST['ch_his_paysID'])) {
+    $paysID = $_POST['ch_his_paysID'];
+}
 
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
-
 
 $thisPays = new \GenCity\Monde\Pays($paysID);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ajout_fait_his")) {
 	if ($_POST['ch_his_periode'] == true) {
-$_POST['ch_his_date_fait2'] == NULL;
-}	
+        $_POST['ch_his_date_fait2'] == NULL;
+    }
   $insertSQL = sprintf("INSERT INTO histoire (ch_his_paysID, ch_his_label, ch_his_date, ch_his_personnage, ch_his_mis_jour, ch_his_nb_update, ch_his_date_fait, ch_his_date_fait2, ch_his_profession, ch_his_nom, ch_his_statut, ch_his_lien_img1, ch_his_legende_img1, ch_his_description, ch_his_contenu) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        escape_sql($_POST['ch_his_paysID'], "int"),
                        escape_sql($_POST['ch_his_label'], "text"),
@@ -42,7 +43,6 @@ $_POST['ch_his_date_fait2'] == NULL;
                        escape_sql($_POST['ch_his_description'], "text"),
                        escape_sql($_POST['ch_his_contenu'], "text"));
 
-
   $Result1 = mysql_query($insertSQL, $maconnexion);
 
   getErrorMessage('success', __s($_POST['ch_his_nom']) . "
@@ -51,9 +51,8 @@ $_POST['ch_his_date_fait2'] == NULL;
   $insertGoTo = DEF_URI_PATH . "back/page_pays_back.php?paysID=" . (int)$_POST['ch_his_paysID'];
   appendQueryString($insertGoTo);
   header(sprintf("Location: %s", $insertGoTo));
- exit;
+  exit;
 }
-
 
 
 $query_users = sprintf("SELECT ch_use_id, ch_use_login FROM users WHERE ch_use_paysID = %s", escape_sql($paysID, "int"));
