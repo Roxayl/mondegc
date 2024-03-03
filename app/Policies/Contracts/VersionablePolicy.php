@@ -10,11 +10,11 @@ interface VersionablePolicy
     /**
      * Détermine si un utilisateur peut afficher la diff d'un modèle versionable donné.
      *
-     * @param  Authenticatable  $user
+     * @param  Authenticatable|null  $user
      * @param  Model  $model
      * @return bool
      */
-    public function viewDiff(Authenticatable $user, Model $model): bool;
+    public function viewDiff(?Authenticatable $user, Model $model): bool;
 
     /**
      * Détermine, pour un modèle versionable, si l'utilisateur peut rétablir une version ancienne du modèle.

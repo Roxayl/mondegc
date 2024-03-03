@@ -79,7 +79,7 @@ class ChapterPolicy implements VersionablePolicy
     /**
      * @inheritDoc
      */
-    public function viewDiff(CustomUser|Authenticatable $user, Chapter|Model $model): bool
+    public function viewDiff(CustomUser|Authenticatable|null $user, Chapter|Model $model): bool
     {
         return $this->viewAny($user);
     }
