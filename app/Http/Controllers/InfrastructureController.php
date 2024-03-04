@@ -197,7 +197,7 @@ class InfrastructureController extends Controller
     {
         $versions = $infrastructure->versions()->latest('version_id')->paginate();
         $canRevert = Gate::allows('revert', $infrastructure);
-        $title = "Historique de l'infrastructure $infrastructure->ch_inf_label";
+        $title = "Historique de l'infrastructure $infrastructure->nom_infra";
         $breadcrumb = null;
 
         return view(

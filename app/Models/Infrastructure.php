@@ -119,6 +119,8 @@ class Infrastructure extends Model implements Influencable
     protected array $dontVersionFields = [
         'ch_inf_off_id',
         'ch_inf_villeid',
+        'infrastructurable_type',
+        'infrastructurable_id',
     ];
 
     public const JUGEMENT_PENDING = 1;
