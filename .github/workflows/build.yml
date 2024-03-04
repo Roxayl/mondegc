@@ -42,7 +42,7 @@ jobs:
           extensions: curl, gd, iconv, json, mbstring, pdo, pdo_mysql, zip
 
       - name: Install PHP dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: composer install -q --no-ansi --no-interaction --no-progress
 
       - name: Initialize environment and database
         env:
