@@ -80,6 +80,11 @@ $eloquentInfrastructure = Infrastructure::with('infrastructureOfficielle')
             Lien sur le Wiki GC</a>
         <?php } ?>
 
+        <br>
+        <a class="btn btn-primary" href="<?= route('infrastructure.history', $eloquentInfrastructure)  ?>">
+            <i class="icon-time icon-white"></i> Historique
+        </a>
+
     </div>
     </div>
 

@@ -13,6 +13,7 @@ use Roxayl\MondeGC\Models\Contracts\Infrastructurable;
 use Roxayl\MondeGC\Models\Presenters\InfrastructurePresenter;
 use Roxayl\MondeGC\Models\Traits\DeletesInfluences;
 use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
+use Roxayl\MondeGC\Models\Traits\Versionable;
 
 /**
  * Class Infrastructure.
@@ -44,6 +45,9 @@ use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
  * @property-read (Model|\Eloquent)&Infrastructurable $infrastructurable
  * @property-read InfrastructureOfficielle|null $infrastructureOfficielle
  * @property-read CustomUser|null $judge
+ * @property-read Collection<int, Version> $versions
+ * @property-read int|null $versions_count
+ * @property-write mixed $reason
  *
  * @method static Builder|Infrastructure newModelQuery()
  * @method static Builder|Infrastructure newQuery()
@@ -75,6 +79,7 @@ use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
 class Infrastructure extends Model implements Influencable
 {
     use InfrastructurePresenter, GeneratesInfluence, DeletesInfluences;
+    use Versionable;
 
     protected $table = 'infrastructures';
     protected $primaryKey = 'ch_inf_id';
@@ -109,6 +114,11 @@ class Infrastructure extends Model implements Influencable
         'lien_wiki',
         'infrastructurable_type',
         'infrastructurable_id',
+    ];
+
+    protected array $dontVersionFields = [
+        'ch_inf_off_id',
+        'ch_inf_villeid',
     ];
 
     public const JUGEMENT_PENDING = 1;

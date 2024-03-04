@@ -56,7 +56,7 @@ class VillePolicy implements VersionablePolicy
     /**
      * @inheritDoc
      */
-    public function viewDiff(CustomUser|Authenticatable $user, Ville|Model $model): bool
+    public function viewDiff(CustomUser|Authenticatable|null $user, Ville|Model $model): bool
     {
         return $this->viewAny($user);
     }

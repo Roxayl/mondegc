@@ -123,7 +123,7 @@ class OrganisationPolicy implements VersionablePolicy
     /**
      * @inheritDoc
      */
-    public function viewDiff(CustomUser|Authenticatable $user, Organisation|Model $model): bool
+    public function viewDiff(CustomUser|Authenticatable|null $user, Organisation|Model $model): bool
     {
         return $this->viewAny($user);
     }

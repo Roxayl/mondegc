@@ -133,6 +133,8 @@ Route::get('infrastructure/{infrastructure_id}/delete', [Controllers\Infrastruct
     ->name('infrastructure.delete');
 Route::delete('infrastructure/{infrastructure_id}', [Controllers\InfrastructureController::class, 'destroy'])
     ->name('infrastructure.destroy');
+Route::get('infrastructure/history/{infrastructure}', [Controllers\InfrastructureController::class, 'history'])
+    ->name('infrastructure.history');
 
 /*
 |--------------------------------------------------------------------------
