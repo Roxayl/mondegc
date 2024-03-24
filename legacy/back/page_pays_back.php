@@ -650,9 +650,6 @@ Eventy::action('display.beforeHeadClosingTag')
               <div id="collapsefour" class="accordion-body collapse">
                 <div class="accordion-inner"> 
                   <!-- Header -->
-                  <div class="alert alert-danger">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    Attention, ne pas passer &agrave; la ligne ou faire diff&eacute;rents paragraphes pour l'en-t&ecirc;te pr&eacute;sentation. L'en-t&ecirc;te est affich&eacute; sur la carte  et le passage &agrave; la ligne emp&ecirc;che la carte g&eacute;n&eacute;rale de s'afficher.</div>
                   <div id="sprytextarea2">
                     <label for="ch_pay_header_presentation">En-t&ecirc;te <a href="#" rel="clickover" title="En-t&ecirc;te présentation" data-content=" L'en-t&ecirc;te est mis en exergue dans la mise en page. 250 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
                     <textarea rows="3" name="ch_pay_header_presentation" class="span12" id="ch_pay_header_presentation"><?= htmlPurify($row_InfoGenerale['ch_pay_header_presentation']) ?></textarea>
