@@ -8,6 +8,9 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Roxayl\MondeGC\Models\Pays;
 use Roxayl\MondeGC\Models\Subdivision;
 use Roxayl\MondeGC\Models\SubdivisionType;
@@ -39,14 +42,33 @@ class SubdivisionController extends Controller
         $subdivision->setRelation('pays', $pays);
 
         $preselectedType = $request->input('subdivisionTypeId');
+        $isEdit = false;
 
-        return view('subdivision.create', compact('subdivision', 'pays', 'preselectedType'));
+        return view(
+            'subdivision.create',
+            compact('subdivision', 'pays', 'preselectedType', 'isEdit')
+        );
     }
 
     public function store(Request $request): RedirectResponse
     {
-        $subdivisionType = SubdivisionType::query()->findOrFail($request->get('subdivisionTypeId'));
+        $subdivisionType = SubdivisionType::query()->find($request->get('subdivisionType'));
+        if (! $subdivisionType) {
+            throw ValidationException::withMessages([
+                'subdivisionTypeId' => "Ce type de subdivision n'existe pas.",
+            ]);
+        }
         Gate::authorize('update', $subdivisionType->pays);
+
+        Validator::make(
+            $request->all(),
+            [
+                'subdivisionType' => [
+                    'required',
+                    Rule::in($subdivisionType->pays->subdivisionTypes->pluck($subdivisionType->getKeyName())),
+                ],
+            ] + $this->getRules()
+        )->validate();
 
         $subdivision = new Subdivision();
         $subdivision->fill($request->all());
@@ -54,7 +76,7 @@ class SubdivisionController extends Controller
         $subdivision->subdivision_type_id = $subdivisionType->getKey();
         $subdivision->save();
 
-        return redirect('pays.edit', $subdivision->pays)
+        return redirect()->route('pays.edit', ['pays' => $subdivision->pays])
             ->with('message', 'success|Subdivision administrative créée.');
     }
 
@@ -85,22 +107,31 @@ class SubdivisionController extends Controller
 
     public function edit(Subdivision $subdivision): View
     {
+        $pays = $subdivision->pays;
         Gate::authorize('update', $subdivision->pays);
 
-        return view('subdivision.edit', compact('subdivision'));
+        $preselectedType = $subdivision->subdivisionType->getKey();
+        $isEdit = true;
+
+        return view(
+            'subdivision.edit',
+            compact('subdivision', 'pays', 'preselectedType', 'isEdit')
+        );
     }
 
     public function update(Request $request, Subdivision $subdivision): RedirectResponse
     {
-        $subdivisionType = SubdivisionType::query()->findOrFail($request->get('subdivisionTypeId'));
-        Gate::authorize('update', $subdivisionType->pays);
+        Gate::authorize('update', $subdivision->pays);
+
+        Validator::make(
+            $request->all(),
+            $this->getRules()
+        )->validate();
 
         $subdivision->fill($request->all());
-        $subdivision->setRelation('subdivisionType', $subdivisionType);
-        $subdivision->subdivision_type_id = $subdivisionType->getKey();
         $subdivision->save();
 
-        return redirect()->route('pays.edit', $subdivision->pays)
+        return redirect()->route('pays.edit', ['pays' => $subdivision->pays])
             ->with('message', 'success|Subdivision administrative créée.');
     }
 
@@ -110,7 +141,7 @@ class SubdivisionController extends Controller
 
         $subdivision->delete();
 
-        return redirect('pays.show', $subdivision->pays->showRouteParameter())
+        return redirect()->route('pays.edit', ['pays' => $subdivision->pays])
             ->with('message', 'success|Subdivision administrative supprimée.');
     }
 
@@ -121,5 +152,16 @@ class SubdivisionController extends Controller
     private function featureEnabled(Subdivision $subdivision): bool
     {
         return (bool) $subdivision->pays?->use_subdivisions;
+    }
+
+    /**
+     * @return array<string, string|array>
+     */
+    private function getRules(): array
+    {
+        return [
+            'summary' => 'required|min:2|max:191',
+            'content' => 'max:50000',
+        ];
     }
 }

@@ -41,18 +41,23 @@
                     <span class="divider">/</span>
                 </li>
                 <li>
-                    {{ $subdivision->name }}
+                    <a href="{{ route('subdivision.show', $subdivision->showRouteParameter()) }}#subdivision">
+                        {{ $subdivision->name }}
+                    </a>
                     <span class="divider">/</span>
                 </li>
                 <li class="active">Modifier</li>
             </ul>
 
-            <div class="well">
+            <div class="clearfix"></div>
 
+            <div class="well">
                 {!! Roxayl\MondeGC\Services\HelperService::displayAlert() !!}
 
-
-
+                <form action="{{ route('subdivision.edit', $subdivision) }}" method="POST">
+                    @method('PUT')
+                    @include('subdivision.components.form')
+                </form>
             </div>
 
         </div>

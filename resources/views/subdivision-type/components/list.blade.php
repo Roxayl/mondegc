@@ -35,10 +35,12 @@
                     <tr>
                         <td><?= e($subdivision->name) ?></td>
                         <td>
-                            <a class="btn btn-primary" href="<?= route('subdivision.create', ['subdivisionType' => $subdivisionType,]) ?>">
+                            <a class="btn btn-primary"
+                               href="<?= route('subdivision.edit', ['subdivision' => $subdivision]) ?>">
                                 <i class="icon-pencil icon-white"></i>
                             </a>
-                            <a class="btn btn-danger" href="<?= route('subdivision.delete', ['subdivisionType' => $subdivisionType]) ?>">
+                            <a class="btn btn-danger"
+                               href="<?= route('subdivision.delete', ['subdivision' => $subdivision]) ?>">
                                 <i class="icon-trash icon-white"></i>
                             </a>
                         </td>

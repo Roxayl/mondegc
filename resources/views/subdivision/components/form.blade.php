@@ -25,7 +25,7 @@
     <label class="control-label" for="subdivisionType">
         Type
     </label>
-    <select name="subdivisionType">
+    <select name="subdivisionType" @if($isEdit) disabled @endif>
         @foreach($pays->subdivisionTypes as $subdivisionType)
             <option value="{{ $subdivisionType->getKey() }}"
                 @if($preselectedType == $subdivisionType->getKey()) selected @endif
@@ -36,7 +36,7 @@
 
 <div id="sprytextfield1" class="control-group">
     <label class="control-label" for="name">
-        Nom
+        Nom<span class="label-required">*</span>
         <a href="#" rel="clickover" title="Nom" data-content="60 caractères maximum.">
             <i class="icon-info-sign"></i>
         </a>
@@ -47,6 +47,18 @@
         <span class="textfieldMinCharsMsg">2 caractères minimum.</span>
         <span class="textfieldRequiredMsg">Ce champ est obligatoire.</span>
     </div>
+</div>
+
+<div class="control-group">
+    <label class="control-label" for="summary">Résumé<span class="label-required">*</span></label>
+    <textarea id="summary" class="form-control span9" rows="6"
+           name="summary">{{ old('summary', $subdivision->summary) }}</textarea>
+</div>
+
+<div class="control-group">
+    <label class="control-label" for="content">Présentation</label>
+    <textarea id="content" class="wysiwyg form-control span9" rows="15"
+              name="content">{{ old('content', $subdivision->content) }}</textarea>
 </div>
 
 <button type="submit" class="btn btn-primary">
