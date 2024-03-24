@@ -35,20 +35,20 @@
                     <span class="divider">/</span>
                 </li>
                 <li>
-                    <a href="{{ route('pays.show', $subdivision->pays->showRouteParameter()) }}#subdivision">
-                        {{ $subdivision->subdivisionType?->type_name }}
-                    </a>
+                    Subdivisions
                     <span class="divider">/</span>
                 </li>
                 <li class="active">Créer</li>
             </ul>
 
-            <div class="well">
+            <div class="clearfix"></div>
 
+            <div class="well">
                 {!! Roxayl\MondeGC\Services\HelperService::displayAlert() !!}
 
-
-
+                <form action="{{ route('subdivision.store') }}" method="POST">
+                    @include('subdivision.components.form')
+                </form>
             </div>
 
         </div>

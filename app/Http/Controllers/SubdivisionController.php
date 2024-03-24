@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Roxayl\MondeGC\Models\Pays;
 use Roxayl\MondeGC\Models\Subdivision;
 use Roxayl\MondeGC\Models\SubdivisionType;
 use YlsIdeas\FeatureFlags\Manager as FeatureManager;
@@ -16,7 +17,7 @@ class SubdivisionController extends Controller
 {
     public function __construct(private readonly FeatureManager $featureManager)
     {
-        $this->middleware(function (Request $request, \Closure $next) {
+        $this->middleware(function (Request $request, \Closure $next): mixed {
             if (! $this->featureManager->accessible('subdivision')) {
                 abort(404);
             }
@@ -25,11 +26,21 @@ class SubdivisionController extends Controller
         });
     }
 
-    public function create(): View
+    public function create(Request $request, Pays $pays): View|RedirectResponse
     {
-        $subdivision = new Subdivision();
+        Gate::authorize('update', $pays);
 
-        return view('subdivision.create', compact('subdivision'));
+        if ($pays->subdivisionTypes->isEmpty()) {
+            return redirect()->route('pays.edit', $pays)
+                ->with('message', 'error|Vous devez créer un type de subdivision administrative au préalable');
+        }
+
+        $subdivision = new Subdivision();
+        $subdivision->setRelation('pays', $pays);
+
+        $preselectedType = $request->input('subdivisionTypeId');
+
+        return view('subdivision.create', compact('subdivision', 'pays', 'preselectedType'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -43,7 +54,7 @@ class SubdivisionController extends Controller
         $subdivision->subdivision_type_id = $subdivisionType->getKey();
         $subdivision->save();
 
-        return redirect('pays.show', $subdivision->pays->showRouteParameter())
+        return redirect('pays.edit', $subdivision->pays)
             ->with('message', 'success|Subdivision administrative créée.');
     }
 
@@ -89,7 +100,7 @@ class SubdivisionController extends Controller
         $subdivision->subdivision_type_id = $subdivisionType->getKey();
         $subdivision->save();
 
-        return redirect('pays.show', $subdivision->pays->showRouteParameter())
+        return redirect()->route('pays.edit', $subdivision->pays)
             ->with('message', 'success|Subdivision administrative créée.');
     }
 

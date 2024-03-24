@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 use Roxayl\MondeGC\Http\Controllers;
+use Roxayl\MondeGC\Models\Pays;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,9 @@ Route::get('page/{page}-{url}', [Controllers\PageController::class, 'index'])->n
 |--------------------------------------------------------------------------
 */
 Route::get('pays', fn (): RedirectResponse => redirect('Page-carte.php#liste-pays'))->name('pays.index');
+Route::get('pays/{pays}/edit', function (Pays $pays): RedirectResponse {
+    return redirect('back/page_pays_back.php?paysID=' . (int) $pays->getKey());
+})->name('pays.edit');
 Route::get('pays/{pays}-{paysSlug}', [Controllers\PaysController::class, 'show'])->name('pays.show');
 Route::match(['put', 'patch'], 'pays/manage-subdivisions/{pays}', [Controllers\PaysController::class, 'manageSubdivisions'])
     ->name('pays.manage-subdivisions');
@@ -69,7 +73,7 @@ Route::get('pays/history/{pays}', [Controllers\PaysController::class, 'history']
 */
 Route::get('pays/{paysId}-{paysSlug}/{subdivisionTypeName}/{subdivision}-{subdivisionSlug}',
     [Controllers\SubdivisionController::class, 'show'])->name('subdivision.show');
-Route::get('pays/subdivision/create', [Controllers\SubdivisionController::class, 'create'])
+Route::get('pays/subdivision/create/{pays}', [Controllers\SubdivisionController::class, 'create'])
     ->name('subdivision.create');
 Route::post('pays/subdivision/create', [Controllers\SubdivisionController::class, 'store'])
     ->name('subdivision.store');

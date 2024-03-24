@@ -14,6 +14,10 @@
             <a href="{{ route('subdivision-type.edit', ['subdivisionType' => $subdivisionType]) }}" class="btn btn-primary btn-cta">
                 <i class="icon-pencil icon-white"></i>
             </a>
+            <a href="{{ route('subdivision.create', ['pays' => $pays, 'subdivisionTypeId' => $subdivisionType->id]) }}"
+               class="btn btn-primary btn-cta">
+                <i class="icon-plus-sign icon-white"></i> Ajouter une subdivision
+            </a>
         </div>
         <h3>{{ $subdivisionType->type_name }}</h3>
         @if(! count($subdivisionType->subdivisions))
@@ -31,7 +35,7 @@
                     <tr>
                         <td><?= e($subdivision->name) ?></td>
                         <td>
-                            <a class="btn btn-primary" href="<?= route('subdivision.create', ['subdivisionType' => $subdivisionType]) ?>">
+                            <a class="btn btn-primary" href="<?= route('subdivision.create', ['subdivisionType' => $subdivisionType,]) ?>">
                                 <i class="icon-pencil icon-white"></i>
                             </a>
                             <a class="btn btn-danger" href="<?= route('subdivision.delete', ['subdivisionType' => $subdivisionType]) ?>">
