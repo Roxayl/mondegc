@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Models;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -47,14 +49,12 @@ class Page extends Model
         'seo_keywords',
         'published_at',
         'cover_image',
-
     ];
 
     protected $dates = [
         'created_at',
         'updated_at',
         'published_at',
-
     ];
 
     /**
@@ -63,7 +63,7 @@ class Page extends Model
     public function getPageOrFail(): self
     {
         // Si la page n'est pas publiée.
-        if (strtotime($this->published_at) > time() || is_null($this->published_at)) {
+        if (is_null($this->published_at) || $this->published_at->isFuture()) {
             throw new NotFoundHttpException();
         }
 

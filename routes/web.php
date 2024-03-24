@@ -1,5 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 use Roxayl\MondeGC\Http\Controllers;
 
@@ -26,9 +29,9 @@ use Roxayl\MondeGC\Http\Controllers;
 */
 
 // Laravel UI authentication routes (deprecated)...
-Route::get('login', fn () => redirect(url('connexion.php')))->name('login');
-Route::post('login', fn () => redirect(url('connexion.php')));
-Route::post('logout', fn () => redirect(url('connexion.php?doLogout=true'))) // FIXME: nécessite de passer le jeton CSRF
+Route::get('login', fn (): RedirectResponse => redirect(url('connexion.php')))->name('login');
+Route::post('login', fn (): RedirectResponse => redirect(url('connexion.php')));
+Route::post('logout', fn (): RedirectResponse => redirect(url('connexion.php?doLogout=true'))) // FIXME: nécessite de passer le jeton CSRF
     ->name('logout');
 
 /*
@@ -53,7 +56,7 @@ Route::get('page/{page}-{url}', [Controllers\PageController::class, 'index'])->n
 | Pays
 |--------------------------------------------------------------------------
 */
-Route::get('pays', fn () => redirect('Page-carte.php#liste-pays'))->name('pays.index');
+Route::get('pays', fn (): RedirectResponse => redirect('Page-carte.php#liste-pays'))->name('pays.index');
 Route::get('pays/{pays}-{paysSlug}', [Controllers\PaysController::class, 'show'])->name('pays.show');
 Route::match(['put', 'patch'], 'pays/manage-subdivisions/{pays}', [Controllers\PaysController::class, 'manageSubdivisions'])
     ->name('pays.manage-subdivisions');
