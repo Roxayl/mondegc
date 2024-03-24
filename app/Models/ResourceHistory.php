@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Models;
 
 use Carbon\Carbon;
@@ -113,7 +115,7 @@ class ResourceHistory extends Model implements SimpleResourceable
      */
     public function scopeForResourceables(Builder $query, Collection $resourceables): Builder
     {
-        return $query->where(function (Builder $query) use ($resourceables) {
+        return $query->where(function (Builder $query) use ($resourceables): void {
             /** @var Model&Resourceable $resourceable */
             foreach ($resourceables as $resourceable) {
                 $query = $query->orWhere(function (Builder $query) use ($resourceable) {

@@ -6,7 +6,6 @@ use Database\Factories\CustomUserFactory;
 use Illuminate\Database\Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,7 +14,6 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use JetBrains\PhpStorm\ExpectedValues;
 use Roxayl\MondeGC\Models\Contracts\Roleplayable;
 
 /**
@@ -311,9 +309,8 @@ class CustomUser extends Authenticatable
      * @param  string  $level  Prend les valeurs suivantes : "member", "juge", "ocgc", "admin".
      * @return bool
      */
-    public function hasMinPermission(
-        #[ExpectedValues('member', 'juge', 'ocgc', 'admin')] string $level
-    ): bool {
+    public function hasMinPermission(string $level): bool
+    {
         $permission = match ($level) {
             'member' => self::MEMBER,
             'juge' => self::JUGE,
