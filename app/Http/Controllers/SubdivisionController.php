@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Roxayl\MondeGC\Http\Controllers;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Roxayl\MondeGC\Models\Subdivision;
+use Roxayl\MondeGC\Models\SubdivisionType;
 use YlsIdeas\FeatureFlags\Manager as FeatureManager;
 
 class SubdivisionController extends Controller
@@ -21,14 +25,26 @@ class SubdivisionController extends Controller
         });
     }
 
-    public function create()
+    public function create(): View
     {
-        // TODO.
+        $subdivision = new Subdivision();
+
+        return view('subdivision.create', compact('subdivision'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        // TODO.
+        $subdivisionType = SubdivisionType::query()->findOrFail($request->get('subdivisionTypeId'));
+        Gate::authorize('update', $subdivisionType->pays);
+
+        $subdivision = new Subdivision();
+        $subdivision->fill($request->all());
+        $subdivision->setRelation('subdivisionType', $subdivisionType);
+        $subdivision->subdivision_type_id = $subdivisionType->getKey();
+        $subdivision->save();
+
+        return redirect('pays.show', $subdivision->pays->showRouteParameter())
+            ->with('message', 'success|Subdivision administrative créée.');
     }
 
     public function show(
@@ -37,7 +53,7 @@ class SubdivisionController extends Controller
         string $subdivisionTypeName,
         Subdivision $subdivision,
         string $subdivisionSlug
-    ) {
+    ): View|RedirectResponse {
         $routeParameter = $subdivision->showRouteParameter();
 
         if (
@@ -56,19 +72,35 @@ class SubdivisionController extends Controller
         return view('subdivision.show', compact('subdivision'));
     }
 
-    public function edit($id)
+    public function edit(Subdivision $subdivision): View
     {
-        // TODO.
+        Gate::authorize('update', $subdivision->pays);
+
+        return view('subdivision.edit', compact('subdivision'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Subdivision $subdivision): RedirectResponse
     {
-        // TODO.
+        $subdivisionType = SubdivisionType::query()->findOrFail($request->get('subdivisionTypeId'));
+        Gate::authorize('update', $subdivisionType->pays);
+
+        $subdivision->fill($request->all());
+        $subdivision->setRelation('subdivisionType', $subdivisionType);
+        $subdivision->subdivision_type_id = $subdivisionType->getKey();
+        $subdivision->save();
+
+        return redirect('pays.show', $subdivision->pays->showRouteParameter())
+            ->with('message', 'success|Subdivision administrative créée.');
     }
 
-    public function destroy($id)
+    public function destroy(Subdivision $subdivision): RedirectResponse
     {
-        // TODO.
+        Gate::authorize('update', $subdivision->pays);
+
+        $subdivision->delete();
+
+        return redirect('pays.show', $subdivision->pays->showRouteParameter())
+            ->with('message', 'success|Subdivision administrative supprimée.');
     }
 
     /**

@@ -25,7 +25,7 @@ return [
         'roleplay' => true,
         'roleplay-only-restricted' => false,
         'cache' => true,
-        'subdivision' => false,
+        'subdivision' => true,
     ],
 
     /*
