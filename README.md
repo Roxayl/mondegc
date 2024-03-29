@@ -158,8 +158,8 @@ le contenu de ces archives dans le répertoire racine.
 
 ### Lancement et arrêt de l'application
 
-Vous pouvez arrêter l'application via la commande ``docker-compose down``, à partir du répertoire racine. Relancez-la à 
-tout moment avec ``docker-compose up -d``.
+Vous pouvez arrêter l'application via la commande ``docker-compose -p mondegc_dev down``, à partir du répertoire racine. Relancez-la à 
+tout moment avec ``docker-compose -p mondegc_dev up -d``.
 
 ## Développement et tests
 

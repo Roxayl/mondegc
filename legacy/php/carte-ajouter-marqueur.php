@@ -2,7 +2,7 @@
 
 // Connexion BDD Pays pour afficher markers des pays
 
-$query_MarkerPays = sprintf ("SELECT DISTINCT ch_pay_id, ch_pay_continent, ch_pay_emplacement, ch_pay_nom, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_pay_header_presentation, ch_pay_mis_jour, ch_pay_population_carte, ch_use_lien_imgpersonnage, ch_use_login, (SELECT SUM(ch_vil_population) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS ch_pay_population, (SELECT COUNT(ch_vil_ID) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS ch_pay_nbvilles FROM pays LEFT JOIN users ON pays.ch_pay_id = users.ch_use_paysID WHERE ch_pay_publication = 1 AND ch_pay_id=%s GROUP BY ch_pay_id ORDER BY ch_pay_nom ASC", escape_sql($paysID, "int"));
+$query_MarkerPays = sprintf ("SELECT DISTINCT ch_pay_id, ch_pay_continent, ch_pay_emplacement, ch_pay_nom, ch_pay_lien_imgheader, ch_pay_lien_imgdrapeau, ch_pay_mis_jour, ch_pay_population_carte, ch_use_lien_imgpersonnage, ch_use_login, (SELECT SUM(ch_vil_population) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS ch_pay_population, (SELECT COUNT(ch_vil_ID) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS ch_pay_nbvilles FROM pays LEFT JOIN users ON pays.ch_pay_id = users.ch_use_paysID WHERE ch_pay_publication = 1 AND ch_pay_id=%s GROUP BY ch_pay_id ORDER BY ch_pay_nom ASC", escape_sql($paysID, "int"));
 $MarkerPays = mysql_query($query_MarkerPays, $maconnexion);
 $row_MarkerPays = mysql_fetch_assoc($MarkerPays);
 $totalRows_MarkerPays = mysql_num_rows($MarkerPays);
