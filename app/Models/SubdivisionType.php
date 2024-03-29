@@ -51,7 +51,6 @@ class SubdivisionType extends Model
     ];
 
     protected $fillable = [
-        'pays_id',
         'type_name',
     ];
 

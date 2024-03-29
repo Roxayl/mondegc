@@ -373,6 +373,9 @@ Eventy::action('display.beforeHeadClosingTag')
         <li><a href="#info-generales">Présentation</a></li>
         <li><a href="#personnage">Personnage</a></li>
         <?php }?>
+        <?php if($eloquentPays->use_subdivisions): ?>
+          <li><a href="#subdivisions">Subdivisions</a></li>
+        <?php endif; ?>
         <li><a href="#villes">Villes</a></li>
         <li><a href="#infrastructures">Infrastructures</a></li>
         <li><a href="#routes-campagne">Routes et campagne</a></li>
@@ -860,6 +863,13 @@ Eventy::action('display.beforeHeadClosingTag')
     <?php } ?>
 
     </section>
+
+    <?php if($eloquentPays->use_subdivisions):
+        echo app(\Roxayl\MondeGC\Services\StringBladeService::class)->render(
+            '<x-subdivision-type.index-list :pays="$pays" />',
+            ['pays' => $eloquentPays]
+        );
+    endif; ?>
 
       <!-- Liste des Villes du membre
         ================================================== -->
