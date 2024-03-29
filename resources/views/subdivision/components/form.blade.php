@@ -43,7 +43,7 @@
     </label>
     <div class="controls">
         <input class="input-xlarge" name="name" type="text" id="name" value="{{ old('name', $subdivision->name) }}" maxlength="120">
-        <span class="textfieldMaxCharsMsg">90 caractères max.</span>
+        <span class="textfieldMaxCharsMsg">60 caractères max.</span>
         <span class="textfieldMinCharsMsg">2 caractères minimum.</span>
         <span class="textfieldRequiredMsg">Ce champ est obligatoire.</span>
     </div>

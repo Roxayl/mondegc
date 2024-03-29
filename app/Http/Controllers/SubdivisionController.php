@@ -132,6 +132,7 @@ class SubdivisionController extends Controller
         $subdivision->save();
 
         return redirect()->route('pays.edit', ['pays' => $subdivision->pays])
+            ->withFragment('#subdivisions')
             ->with('message', 'success|Subdivision administrative créée.');
     }
 
@@ -142,6 +143,7 @@ class SubdivisionController extends Controller
         $subdivision->delete();
 
         return redirect()->route('pays.edit', ['pays' => $subdivision->pays])
+            ->withFragment('#subdivisions')
             ->with('message', 'success|Subdivision administrative supprimée.');
     }
 

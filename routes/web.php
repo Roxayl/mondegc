@@ -81,7 +81,7 @@ Route::get('pays/subdivision/update/{subdivision}', [Controllers\SubdivisionCont
     ->name('subdivision.edit');
 Route::match(['put', 'patch'], 'pays/subdivision/update/{subdivision}', [Controllers\SubdivisionController::class, 'update'])
     ->name('subdivision.update');
-Route::delete('pays/subdivision/delete/{subdivision}', [Controllers\SubdivisionController::class, 'delete'])
+Route::delete('pays/subdivision/delete/{subdivision}', [Controllers\SubdivisionController::class, 'destroy'])
     ->name('subdivision.delete');
 
 /*
@@ -97,7 +97,7 @@ Route::get('pays/subdivisions/type/update/{subdivisionType}', [Controllers\Subdi
     ->name('subdivision-type.edit');
 Route::match(['put', 'patch'], 'pays/subdivision/type/update/{subdivisionType}', [Controllers\SubdivisionTypeController::class, 'update'])
     ->name('subdivision-type.update');
-Route::delete('pays/subdivision/type/delete/{subdivisionType}', [Controllers\SubdivisionTypeController::class, 'delete'])
+Route::delete('pays/subdivision/type/delete/{subdivisionType}', [Controllers\SubdivisionTypeController::class, 'destroy'])
     ->name('subdivision-type.delete');
 
 /*

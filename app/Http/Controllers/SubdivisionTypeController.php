@@ -25,7 +25,7 @@ class SubdivisionTypeController extends Controller
         });
     }
 
-    public function create(Request $request, Pays $pays): View
+    public function create(Pays $pays): View
     {
         Gate::authorize('update', $pays);
 
@@ -46,7 +46,8 @@ class SubdivisionTypeController extends Controller
         $subdivisionType->pays_id = $pays->getKey();
         $subdivisionType->save();
 
-        return redirect('pays.show', $pays->showRouteParameter())
+        return redirect()->route('pays.edit', ['pays' => $pays])
+            ->withFragment('#subdivisions')
             ->with('message', 'success|Type de subdivision administrative créée.');
     }
 
@@ -62,11 +63,13 @@ class SubdivisionTypeController extends Controller
         $pays = Pays::query()->findOrFail($subdivisionType->pays_id);
         Gate::authorize('update', $pays);
 
-        $subdivisionType = new SubdivisionType();
         $subdivisionType->fill($request->all());
+        $subdivisionType->setRelation('pays', $pays);
+        $subdivisionType->pays_id = $pays->getKey();
         $subdivisionType->save();
 
-        return redirect('pays.show', $pays->showRouteParameter())
+        return redirect()->route('pays.edit', ['pays' => $pays])
+            ->withFragment('#subdivisions')
             ->with('message', 'success|Type de subdivision administrative mise à jour.');
     }
 
@@ -76,16 +79,8 @@ class SubdivisionTypeController extends Controller
         Gate::authorize('update', $pays);
         $subdivisionType->delete();
 
-        return redirect('pays.show', $pays->showRouteParameter())
+        return redirect()->route('pays.edit', ['pays' => $pays])
+            ->withFragment('#subdivisions')
             ->with('message', 'success|Type de subdivision administrative supprimée.');
-    }
-
-    /**
-     * @param  SubdivisionType  $subdivisionType
-     * @return bool
-     */
-    private function featureEnabled(SubdivisionType $subdivisionType): bool
-    {
-        return (bool) $subdivisionType->pays?->use_subdivisions;
     }
 }
