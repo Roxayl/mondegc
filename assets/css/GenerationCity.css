@@ -1279,9 +1279,18 @@ canvas#parliament-chart {
     z-index: 1;
 }
 
+.listes.listes-two-columns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 10px;
+}
+
+.listes.listes-two-columns h4 {
+    font-size: 1.4em;
+}
+
 .listes li {
-    background: rgb(249, 249, 249);
-    background: linear-gradient(90deg, rgba(249, 249, 249, 1) 0%, rgba(241, 241, 241, 1) 10%, rgba(241, 241, 241, 1) 90%, rgb(231, 231, 231) 100%);
+    background-color: #ececec;
     margin-top: 10px;
     margin-bottom: 0;
     padding: 5px;
@@ -1291,7 +1300,7 @@ canvas#parliament-chart {
 }
 
 .listes:not(.listes-visiteurs) li:hover {
-    margin-left: 0.8em;
+    margin-left: 0.7em;
     transition: margin-left 0.5s cubic-bezier(.22,.61,.36,1);
 }
 
