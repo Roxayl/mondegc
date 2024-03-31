@@ -31,7 +31,7 @@ function mysql_query(string $query, mixed $resource = null): PDOStatement|bool
         $start = hrtime(true);
     }
 
-    $_DB_LEGACY_LAST_STMT = DB::connection('mysql_legacy')->getPdo()->query($query);
+    $_DB_LEGACY_LAST_STMT = DB::connection('mysql')->getPdo()->query($query);
 
     if ($_DEBUGBAR_ENABLED) {
         $end = hrtime(true);
@@ -53,7 +53,7 @@ function mysql_real_escape_string(?string $string, mixed $resource = null): null
         return null;
     }
 
-    $string = DB::connection('mysql_legacy')->getPdo()->quote($string);
+    $string = DB::connection('mysql')->getPdo()->quote($string);
     if (is_string($string)) {
         if (Str::startsWith($string, ["'", '"'])) {
             $string = substr($string, 1);
@@ -109,5 +109,5 @@ function mysql_free_result(PDOStatement $statement): void
  */
 function mysql_insert_id(mixed $resource = null): false|string
 {
-    return DB::connection('mysql_legacy')->getPdo()->lastInsertId();
+    return DB::connection('mysql')->getPdo()->lastInsertId();
 }
