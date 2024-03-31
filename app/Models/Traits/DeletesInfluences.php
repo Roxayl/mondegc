@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Models\Traits;
 
 use Roxayl\MondeGC\Models\Influence;

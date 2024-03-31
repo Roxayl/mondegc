@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Models\Traits;
 
+use Roxayl\MondeGC\Models\Contracts\Resourceable;
 use Roxayl\MondeGC\Models\Organisation;
 use Roxayl\MondeGC\Models\Pays;
 use Roxayl\MondeGC\Models\ResourceHistory;
@@ -16,7 +19,7 @@ trait GeneratesResourceHistory
      */
     public function generateResourceHistory(): ResourceHistory
     {
-        /** @var Pays|Ville|Organisation|\Roxayl\MondeGC\Models\Contracts\Resourceable $this */
+        /** @var (Pays|Ville|Organisation)&Resourceable $this */
         $resources = $this->resources();
 
         $fields = array_merge([

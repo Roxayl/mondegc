@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Models;
 
 use Carbon\Carbon;
@@ -129,7 +131,7 @@ class OcgcProposal extends Model
     {
         parent::__construct($attributes);
 
-        $this->setMaxResponses();
+        $this->detectMaxResponses();
     }
 
     /**
@@ -142,7 +144,7 @@ class OcgcProposal extends Model
         return $this->belongsTo(Pays::class, 'ID_pays', 'ch_pay_id');
     }
 
-    private function setMaxResponses(): void
+    private function detectMaxResponses(): void
     {
         // Obtenir le nombre maximal de réponses à partir des attributs de la base de données (e.g."reponse_5").
         if (is_null(self::$maxResponses)) {
@@ -152,7 +154,7 @@ class OcgcProposal extends Model
                 rescue(function () use ($attrName, &$maxResponses) {
                     if (Str::startsWith($attrName, 'reponse_')) {
                         preg_match_all('!\d+!', $attrName, $matches);
-                        $maxResponses = implode(' ', $matches[0]);
+                        $maxResponses = (int) implode(' ', $matches[0]);
                     }
                 });
             }
@@ -172,7 +174,7 @@ class OcgcProposal extends Model
      */
     public function getMaxResponses(): int
     {
-        $this->setMaxResponses();
+        $this->detectMaxResponses();
 
         return self::$maxResponses;
     }

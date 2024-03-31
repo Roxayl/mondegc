@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Models;
 
 use Carbon\Carbon;
@@ -36,11 +38,9 @@ use Spatie\Searchable\SearchResult;
  * @property CustomUser $owner
  * @property Collection|Chapter[] $chapters
  * @property Support\Carbon|null $deleted_at
- *
- * @method static Builder|Roleplay current() Filtre sur la liste des roleplays actuels, en cours.
- *
  * @property-read int|null $chapters_count
  *
+ * @method static Builder|Roleplay current() Filtre sur la liste des roleplays actuels, en cours.
  * @method static RoleplayFactory factory(...$parameters)
  * @method static Builder|Roleplay newModelQuery()
  * @method static Builder|Roleplay newQuery()

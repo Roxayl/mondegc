@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Models\Managers;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;

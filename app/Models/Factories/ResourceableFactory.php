@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Roxayl\MondeGC\Models\Factories;
 
 use Roxayl\MondeGC\Models\Contracts\Resourceable;
