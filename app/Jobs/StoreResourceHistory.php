@@ -23,20 +23,12 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var Collection<int, Contracts\Resourceable>
-     */
-    private Collection $resourceable;
-
-    /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Resourceable $resourceableRepository)
+    public function __construct(private readonly Resourceable $resourceableRepository)
     {
-        $this->checkShouldRun();
-
-        $this->resourceable = $resourceableRepository->query()->all()->get();
     }
 
     /**
@@ -44,19 +36,26 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
      */
     public function handle(): void
     {
-        $this->checkShouldRun();
+        if (! $this->shouldRun()) {
+            throw new \LogicException(
+                "La tâche d'historisation des ressources générées ne devrait pas être exécutée."
+            );
+        }
 
-        DB::transaction(function () {
+        $requiredTrait = GeneratesResourceHistory::class;
+
+        /**
+         * @var Collection<int, Contracts\Resourceable> $resourceables
+         */
+        $resourceables = $this->resourceableRepository->query()->all()
+            ->get()
+            ->filter(static function (Resourceable $resourceable) use ($requiredTrait): bool {
+                return in_array($requiredTrait, class_uses_recursive($resourceable), true);
+            });
+
+        DB::transaction(function () use ($resourceables): void {
             /** @var Contracts\Resourceable&GeneratesResourceHistory $resourceable */
-            foreach ($this->resourceable as $resourceable) {
-                $requiredTrait = GeneratesResourceHistory::class;
-                if (! in_array($requiredTrait, class_uses_recursive($resourceable))) {
-                    $this->outputToConsole('Ignoring: '
-                        . $resourceable->getName() . '=' . $resourceable->getKey()
-                    );
-                    continue;
-                }
-
+            foreach ($resourceables as $resourceable) {
                 $resourceable->generateResourceHistory();
                 $this->outputToConsole('Stored: ' . $resourceable->getName() . '=' . $resourceable->getKey());
             }
@@ -75,18 +74,6 @@ class StoreResourceHistory implements ShouldQueue, ShouldBeUnique
         }
 
         error_log($text);
-    }
-
-    /**
-     * Vérifie si la tâche doit être exécutée.
-     */
-    private function checkShouldRun(): void
-    {
-        if (! $this->shouldRun()) {
-            throw new \LogicException(
-                "La tâche d'historisation des ressources générées ne devrait pas être exécutée."
-            );
-        }
     }
 
     /**
