@@ -172,13 +172,13 @@ Eventy::action('display.beforeHeadClosingTag')
           <div class="controls">
             <select id="ch_vil_user" name="ch_vil_user">
               <?php do { ?>
-              <option value="<?php echo $row_list_users['ch_use_id'] ?>" <?php if (!(strcmp($_SESSION['user_ID'], $row_list_users['ch_use_id']))) {echo "selected=\"selected\"";} ?>><?php echo $row_list_users['ch_use_login'] ?></option>
+              <option value="<?php echo $row_list_users['ch_use_id'] ?>" <?php if (!(strcmp($_SESSION['user_ID'], $row_list_users['ch_use_id']))) {echo 'selected';} ?>><?php echo $row_list_users['ch_use_login'] ?></option>
               <?php } while ($row_list_users = mysql_fetch_assoc($list_users)); ?>
             </select>
           </div>
         </div>
         <?php } else { ?>
-        <input name="ch_vil_user" type="hidden" value="<?php echo $row_ville['ch_vil_user'] ?>" >
+        <input name="ch_vil_user" type="hidden" value="<?= e($row_ville['ch_vil_user']) ?>" >
         <?php } ?>
         <!-- Nom -->
         <div id="sprytextfield2" class="control-group">
@@ -193,22 +193,20 @@ Eventy::action('display.beforeHeadClosingTag')
           <div class="controls">
             <select id="ch_vil_type_jeu" name="ch_vil_type_jeu">
               <option value="CL">City Life</option>
-              <option value="CXL" selected>Cities (X)Xl</option>
-              <option value="SKY">Cities Skylines</option>
+              <option value="CXL">Cities (X)XL</option>
+              <option value="SKY" selected>Cities Skylines</option>
               <option value="SIM">Les Sims</option>
               <option value="SC5">Sim City 2013</option>
               <option value="SC4">Sim City 4</option>
               <option value="SC3">Sim City 3000</option>
               <option value="TAP">The Architect</option>
               <option value="MFT">Minecraft</option>
-              
-              
             </select>
           </div>
         </div>
         <!-- Armoiries -->
         <div id="sprytextfield28" class="control-group">
-          <label class="control-label" for="ch_vil_armoiries">Armoiries de la ville <a href="#" rel="clickover" title="Armoiries de la ville" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com). l'image des armoiries sera automatiquement redimensionn&eacute;e en 250 pixel de large et 250 pixels de haut."><i class="icon-info-sign"></i></a></label>
+          <label class="control-label" for="ch_vil_armoiries">Armoiries de la ville <a href="#" rel="clickover" title="Armoiries de la ville" data-content="Mettez-ici un lien vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com). l'image des armoiries sera automatiquement redimensionn&eacute;e en 250 pixel de large et 250 pixels de haut."><i class="icon-info-sign"></i></a></label>
           <div class="controls">
             <input class="span6" type="text" id="ch_vil_armoiries" name="ch_vil_armoiries" value="" placeholder="">
             <span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res minimum.</span><span class="textfieldInvalidFormatMsg">Format non valide.</span></div>

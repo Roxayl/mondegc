@@ -376,15 +376,15 @@ Eventy::action('display.beforeHeadClosingTag')
                   <label class="control-label" for="ch_vil_type_jeu">Type de jeu <a href="#" rel="clickover" title="Type de jeu" data-content="Indiquez le jeu dans lequel vous avez construit votre ville"><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
                     <select id="ch_vil_type_jeu" name="ch_vil_type_jeu">
-                      <option value="CL" <?php if (!(strcmp("CL", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>City Life</option>
-                      <option value="CXL" <?php if (!(strcmp("CXL", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Cities (X)Xl</option>
-                      <option value="SKY" <?php if (!(strcmp("SKY", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Cities Skylines</option>
-                      <option value="SIM" <?php if (!(strcmp("SIM", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Les Sims</option>
-                      <option value="SC5" <?php if (!(strcmp("SC5", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Sim City 2013</option>
-                      <option value="SC4" <?php if (!(strcmp("SC4", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Sim City 4</option>
-                      <option value="SC3" <?php if (!(strcmp("SC3", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Sim City 3000</option>
-                      <option value="TAP" <?php if (!(strcmp("TAP", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>The Architect</option>
-                      <option value="MFT" <?php if (!(strcmp("MIN", $row_ville['ch_vil_type_jeu']))) {echo "selected=\"selected\"";} ?>>Minecraft</option>
+                      <option value="CL" <?php if (!(strcmp("CL", $row_ville['ch_vil_type_jeu']))) {echo 'selected';} ?>>City Life</option>
+                      <option value="CXL" <?php if (!(strcmp("CXL", $row_ville['ch_vil_type_jeu']))) {echo 'selected';} ?>>Cities (X)Xl</option>
+                      <option value="SKY" <?php if (!(strcmp("SKY", $row_ville['ch_vil_type_jeu']))) {echo 'selected';} ?>>Cities Skylines</option>
+                      <option value="SIM" <?php if (!(strcmp("SIM", $row_ville['ch_vil_type_jeu']))) {echo 'selected';} ?>>Les Sims</option>
+                      <option value="SC5" <?php if (!(strcmp("SC5", $row_ville['ch_vil_type_jeu']))) {echo 'selected';} ?>>Sim City 2013</option>
+                      <option value="SC4" <?php if (!(strcmp("SC4", $row_ville['ch_vil_type_jeu']))) {echo 'selected';} ?>>Sim City 4</option>
+                      <option value="SC3" <?php if (!(strcmp("SC3", $row_ville['ch_vil_type_jeu']))) {echo 'selected';} ?>>Sim City 3000</option>
+                      <option value="TAP" <?php if (!(strcmp("TAP", $row_ville['ch_vil_type_jeu']))) {echo 'selected';} ?>>The Architect</option>
+                      <option value="MFT" <?php if (!(strcmp("MIN", $row_ville['ch_vil_type_jeu']))) {echo 'selected';} ?>>Minecraft</option>
                     </select>
                   </div>
                 </div>
@@ -401,16 +401,16 @@ Eventy::action('display.beforeHeadClosingTag')
                   <div class="control-label" >Statut de la ville <a href="#" rel="clickover" title="Statut de votre ville" data-content="Capitale : la ville sera la capitale de votre pays. Elle sera visible dans la liste de vos villes sur votre page pays (par défaut). Visible : la ville sera visible dans la liste de vos villes. Invisible : la ville ne sera pas visible dans la liste de vos villes."><i class="icon-info-sign"></i></a></div>
                   <div class="controls">
                     <label>
-                      <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"1"))) {echo "checked=\"checked\"";} ?> type="radio" name="ch_vil_capitale" value="1" id="ch_vil_capitale_0">
+                      <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"1"))) {echo 'checked';} ?> type="radio" name="ch_vil_capitale" value="1" id="ch_vil_capitale_0">
                       Capitale</label>
                     <label>
-                      <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"2"))) {echo "checked=\"checked\"";} ?> type="radio" name="ch_vil_capitale" value="2" id="ch_vil_capitale_1">
+                      <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"2"))) {echo 'checked';} ?> type="radio" name="ch_vil_capitale" value="2" id="ch_vil_capitale_1">
                       Ville ordinaire</label>
                     <label>
-                      <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"4"))) {echo "checked=\"checked\"";} ?> type="radio" name="ch_vil_capitale" value="4" id="ch_vil_capitale_4">
+                      <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"4"))) {echo 'checked';} ?> type="radio" name="ch_vil_capitale" value="4" id="ch_vil_capitale_4">
                       Entité extraterritoriale (Quartier diplomatique / Bourse)</label>
                     <label>
-                      <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"3"))) {echo "checked=\"checked\"";} ?> type="radio" name="ch_vil_capitale" value="3" id="ch_vil_capitale_2">
+                      <input <?php if (!(strcmp($row_ville['ch_vil_capitale'],"3"))) {echo 'checked';} ?> type="radio" name="ch_vil_capitale" value="3" id="ch_vil_capitale_2">
                       Brouillon</label>
                     <span class="radioRequiredMsg">Choisissez un statut pour votre ville</span></div>
                 </div>
