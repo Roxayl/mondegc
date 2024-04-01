@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Gate;
-use YlsIdeas\FeatureFlags\Facades\Features;
+use Roxayl\MondeGC\Services\StringBladeService;
 
 //Connexion et deconnexion
 include('php/log.php');
@@ -508,41 +508,12 @@ Eventy::action('display.beforeHeadClosingTag')
       <!-- Liste des villes
         ================================================== -->
       <?php if ($row_villes) { ?>
-      <section>
-        <div id="villes" class="titre-vert anchor">
-          <?php if(Features::accessible('subdivision') && $eloquentPays->use_subdivisions): ?>
-            <h1>Subdivisions et villes</h1>
-          <?php else: ?>
-            <h1>Villes</h1>
-          <?php endif; ?>
-        </div>
-        <div id="liste-villes">
-          <ul class="listes listes-two-columns">
-            <?php do { ?>
-              <li class="row-fluid">
-                <div class="span5 img-listes"> <a href="page-ville.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>&ch_ville_id=<?= e($row_villes['ch_vil_ID']) ?>">
-                  <?php if ($row_villes['ch_vil_lien_img1']) {?>
-                  <img src="<?php echo $row_villes['ch_vil_lien_img1']; ?>" alt="<?= e($row_villes['ch_vil_nom']) ?>">
-                  <?php } else { ?>
-                  <img src="assets/img/imagesdefaut/ville.jpg" alt="ville">
-                  <?php } ?>
-                  </a> </div>
-                <div class="span6 info-listes" style="text-justify: none;">
-                  <h4 class="mb-2"><?= e($row_villes['ch_vil_nom']) ?></h4>
-                  <p><strong>Population&nbsp;: </strong>
-                    <?= number_format($row_villes['ch_vil_population'], 0, ',', ' ') ?>
-                  </p>
-                  <?php if(! empty($row_villes['ch_vil_specialite'])): ?>
-                    <p><strong>Sp&eacute;cialit&eacute;&nbsp;: </strong> <?= e($row_villes['ch_vil_specialite']) ?></p>
-                  <?php endif; ?>
-                  <p>Ville créée par <strong><?= e($row_villes['ch_use_login']) ?></strong></p>
-                  <a href="page-ville.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>&ch_ville_id=<?= e($row_villes['ch_vil_ID']) ?>" class="btn btn-primary">Visiter</a> </div>
-              </li>
-              <?php } while ($row_villes = mysql_fetch_assoc($villes)); ?>
-          </ul>
-        </div>
-      </section>
+        <?php echo app(StringBladeService::class)->render(
+                '<x-pays.ville-front-section :pays="$pays" />',
+                ['pays' => $eloquentPays]
+        ) ?>
       <?php } ?>
+
       <!-- Géographie - Carte INTERACTIVE
     ================================================== -->
 

@@ -6,8 +6,10 @@ namespace Roxayl\MondeGC\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Roxayl\MondeGC\Models\Presenters\SubdivisionPresenter;
@@ -26,6 +28,7 @@ use Roxayl\MondeGC\Models\Presenters\SubdivisionPresenter;
  * @property SubdivisionType|null $subdivision_type
  * @property-read SubdivisionType|null $subdivisionType
  * @property-read Pays|null $pays
+ * @property-read Collection|Ville[] $villes
  *
  * @method static Builder|Subdivision newModelQuery()
  * @method static Builder|Subdivision newQuery()
@@ -83,5 +86,13 @@ class Subdivision extends Model
             'subdivision_type_id',
             'pays_id',
         );
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function villes(): HasMany
+    {
+        return $this->hasMany(Ville::class, 'subdivision_id');
     }
 }

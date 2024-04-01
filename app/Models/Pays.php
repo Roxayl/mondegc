@@ -432,7 +432,7 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
             SubdivisionType::class,
             'pays_id',
             'subdivision_type_id',
-            'id',
+            'ch_pay_id',
             'id',
         );
     }

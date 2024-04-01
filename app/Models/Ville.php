@@ -65,6 +65,7 @@ use Spatie\Searchable\SearchResult;
  * @property-read Pays|null $pays
  * @property-read Eloquent\Collection|ChapterResourceable[] $chapterResources
  * @property-read int|null $chapter_resources_count
+ * @property-read CustomUser|null $mayor
  * @property-read Eloquent\Collection|Infrastructure[] $infrastructures
  * @property-read int|null $infrastructures_count
  * @property-read Eloquent\Collection|Infrastructure[] $infrastructuresAll
@@ -231,6 +232,14 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
     public function subdivision(): BelongsTo
     {
         return $this->belongsTo(Subdivision::class, 'subdivision_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function mayor(): BelongsTo
+    {
+        return $this->belongsTo(CustomUser::class, 'ch_vil_user');
     }
 
     /**
