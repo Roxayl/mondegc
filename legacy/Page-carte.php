@@ -118,7 +118,7 @@ $nbhabitants_Aurinea = $nbhabitants_Aurinea + $nbhabitants_RFGC;
 
 $query_listePays = "SELECT ch_pay_id, ch_pay_continent, ch_pay_nom, ch_pay_lien_imgdrapeau, (SELECT COUNT(ch_vil_ID) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) AS nbville, (SELECT SUM(ch_vil_population) FROM villes WHERE ch_vil_paysID = ch_pay_id AND ch_vil_capitale != 3) + ch_pay_population_carte AS nbhabitant FROM pays WHERE ch_pay_publication = 1 Group By ch_pay_id ORDER BY ch_pay_nom ASC";
 
-$listePays = collect(DB::connection('mysql_legacy')->select(DB::raw($query_listePays)))->map(fn(object $row) => (array) $row)->toArray();
+$listePays = collect(DB::select(DB::raw($query_listePays)))->map(fn(object $row) => (array) $row)->toArray();
 $totalRows_listePays = count($listePays);
 
 // Fin de la temporisation de sortie

@@ -1,25 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Legacy;
+
+use Roxayl\MondeGC\Models\Pays;
+use Roxayl\MondeGC\Models\Ville;
 
 class VisitorAccessLegacyPageTest extends AccessLegacyPage
 {
-    /**
-     * @inheritDoc
-     */
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     /**
      * Tester l'accès à la page /index.php du site legacy.
      */
@@ -93,26 +82,58 @@ class VisitorAccessLegacyPageTest extends AccessLegacyPage
     }
 
     /**
+     * Tester l'accès à la page des dernières MAJs.
+     */
+    public function testAccessLastMAJPage(): void
+    {
+        $this->assertAccessLegacyPage('last_MAJ');
+    }
+
+    /**
+     * Tester l'accès à la page des dernières MAJ sous forme d'iframe.
+     */
+    public function testAccessLastMAJIframePage(): void
+    {
+        $this->assertAccessLegacyPage('last_MAJ_iframe');
+    }
+
+    /**
+     * Tester l'accès à la page d'un pays du site legacy.
+     */
+    public function testAccessPaysPage(): void
+    {
+        $pays = Pays::query()->first();
+
+        $this->assertNotNull($pays);
+
+        $this->assertAccessLegacyPage(page: 'page-pays', query: ['ch_pay_id' => $pays->getKey()]);
+    }
+
+    /**
+     * Tester l'accès à la page d'une ville du site legacy.
+     */
+    public function testAccessVillePage(): void
+    {
+        $ville = Ville::query()->first();
+
+        $this->assertNotNull($ville);
+
+        $this->assertAccessLegacyPage(page: 'page-ville', query: ['ch_ville_id' => $ville->getKey()]);
+    }
+
+    /**
+     * Tester l'accès à la page de la liste des infrastructures du site legacy.
+     */
+    public function testAccessListeInfrastructuresPage(): void
+    {
+        $this->assertAccessLegacyPage('liste infrastructures');
+    }
+
+    /**
      * Tester l'accès à une page non-existante, dont la requête doit être traitée par le controller legacy.
      */
-    public function testAccessNonExistingPage(): void
+    public function testAccessInexistentPage(): void
     {
-        $this->assertAccessLegacyPage('page-not-existing', 404);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function tearDown(): void
-    {
-        parent::tearDown();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function tearDownAfterClass(): void
-    {
-        parent::tearDownAfterClass();
+        $this->assertAccessLegacyPage('page-not-found', 404);
     }
 }

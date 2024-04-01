@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Roxayl\MondeGC\Models\CustomUser;
+use Roxayl\MondeGC\Models\Organisation;
 use Tests\TestCase;
 
 class UserVisitsPageTest extends TestCase
@@ -19,7 +22,6 @@ class UserVisitsPageTest extends TestCase
 
         $this->user = CustomUser::query()->first();
         $this->assertNotNull($this->user);
-        $this->actingAs($this->user);
     }
 
     /**
@@ -27,9 +29,21 @@ class UserVisitsPageTest extends TestCase
      */
     public function testAccessNotificationIndexPage(): void
     {
-        $this->assertAuthenticated();
-        $this->markTestIncomplete('Ce test ne fonctionne pas pour le moment.');
+        $this->markTestIncomplete('WIP');
+        /* $this->actingAs($this->user)
+            ->assertAuthenticated()
+            ->get(route('notification'))
+            ->assertStatus(200); */
+    }
 
-        // $this->get(route('notification'))->assertStatus(200);
+    public function testAccessOrganisationIndexPage(): void
+    {
+        $organisation = Organisation::query()->first();
+        $this->assertNotNull($organisation);
+
+        $this->actingAs($this->user)
+            ->assertAuthenticated()
+            ->get(route('organisation.showslug', $organisation->showRouteParameter()))
+            ->assertStatus(200);
     }
 }

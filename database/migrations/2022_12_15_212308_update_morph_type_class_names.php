@@ -80,7 +80,6 @@ class UpdateMorphTypeClassNames extends Migration
                     $query = "UPDATE `$table` SET $field = :newValue WHERE $field = :oldValue";
                     $query = str_replace(':newValue', DB::getPdo()->quote($updatedClassName), $query);
                     $query = str_replace(':oldValue', DB::getPdo()->quote($className), $query);
-                    echo $query . ';' . PHP_EOL;
                     DB::unprepared($query);
                 }
             }

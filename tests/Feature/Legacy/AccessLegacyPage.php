@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Legacy;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,14 +18,6 @@ class AccessLegacyPage extends TestCase
      * @var bool
      */
     protected bool $seed = true;
-
-    /**
-     * @inheritDoc
-     */
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-    }
 
     /**
      * @inheritDoc
@@ -70,27 +64,5 @@ class AccessLegacyPage extends TestCase
 
         // Accéder à la page legacy et vérifier la réponse.
         return $this->get($fullUri, $query);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        try {
-            mysql_query('COMMIT');
-            mysql_query('UNLOCK TABLES');
-        } catch (\Throwable) {
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function tearDownAfterClass(): void
-    {
-        parent::tearDownAfterClass();
     }
 }
