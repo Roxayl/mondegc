@@ -37,10 +37,7 @@ class UserAccessLegacyPageTest extends AccessLegacyPage
      */
     public function testAccessIndexPage(): void
     {
-        $this->assertAuthenticated();
-        $this->markTestIncomplete('Ce test ne fonctionne pas pour le moment.');
-
-        // $this->assertAccessLegacyPage('index');
+        $this->actingAs($this->user)->assertAuthenticated()->assertAccessLegacyPage('index');
     }
 
     /**
@@ -48,10 +45,7 @@ class UserAccessLegacyPageTest extends AccessLegacyPage
      */
     public function testAccessDashboardPage(): void
     {
-        $this->assertAuthenticated();
-        $this->markTestIncomplete('Ce test ne fonctionne pas pour le moment.');
-
-        // $this->assertAccessLegacyPage('dashboard');
+        $this->actingAs($this->user)->assertAuthenticated()->assertAccessLegacyPage('dashboard');
     }
 
     /**
@@ -59,10 +53,7 @@ class UserAccessLegacyPageTest extends AccessLegacyPage
      */
     public function testAccessOcgcProposalCreatePage(): void
     {
-        $this->assertAuthenticated();
-        $this->markTestIncomplete('Ce test ne fonctionne pas pour le moment.');
-
-        // $this->assertAccessLegacyPage('back.ocgc_proposal_create');
+        $this->actingAs($this->user)->assertAuthenticated()->assertAccessLegacyPage('back.ocgc_proposal_create');
     }
 
     /**
@@ -72,10 +63,9 @@ class UserAccessLegacyPageTest extends AccessLegacyPage
     {
         $pays = $this->user->pays->first();
 
-        $this->assertAuthenticated();
-        $this->markTestIncomplete('Ce test ne fonctionne pas pour le moment.');
+        $this->assertNotNull($pays);
 
-        /* $this->assertAccessLegacyPage(
+        $this->actingAs($this->user)->assertAuthenticated()->assertAccessLegacyPage(
             page: 'back.page_pays_back',
             query: ['paysID' => $pays->getKey()]
         );
