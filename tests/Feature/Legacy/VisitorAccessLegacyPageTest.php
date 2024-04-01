@@ -1,25 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Legacy;
 
 class VisitorAccessLegacyPageTest extends AccessLegacyPage
 {
-    /**
-     * @inheritDoc
-     */
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     /**
      * Tester l'accès à la page /index.php du site legacy.
      */

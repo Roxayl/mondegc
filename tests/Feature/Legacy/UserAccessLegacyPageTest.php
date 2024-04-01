@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Legacy;
 
 use Roxayl\MondeGC\Models\CustomUser;
@@ -8,14 +10,6 @@ use Roxayl\MondeGC\Services\AuthenticationService;
 class UserAccessLegacyPageTest extends AccessLegacyPage
 {
     private ?CustomUser $user = null;
-
-    /**
-     * @inheritDoc
-     */
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-    }
 
     /**
      * @inheritDoc
@@ -84,22 +78,6 @@ class UserAccessLegacyPageTest extends AccessLegacyPage
         /* $this->assertAccessLegacyPage(
             page: 'back.page_pays_back',
             query: ['paysID' => $pays->getKey()]
-        ); */
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function tearDown(): void
-    {
-        parent::tearDown();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function tearDownAfterClass(): void
-    {
-        parent::tearDownAfterClass();
+        );
     }
 }
