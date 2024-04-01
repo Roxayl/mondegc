@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Roxayl\MondeGC\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
-use Roxayl\MondeGC\Services\LegacyPageService;
+use Roxayl\MondeGC\Services\Legacy\LegacyPageService;
 
 class MapController extends Controller
 {

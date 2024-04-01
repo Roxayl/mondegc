@@ -18,7 +18,7 @@ use Roxayl\MondeGC\Models\Contracts\Roleplayable;
 use Roxayl\MondeGC\Models\Enums\Resource;
 use Roxayl\MondeGC\Models\Traits\DeletesInfluences;
 use Roxayl\MondeGC\Models\Traits\Influencable as GeneratesInfluence;
-use Roxayl\MondeGC\Services\EconomyService;
+use Roxayl\MondeGC\Services\Gameplay\EconomyService;
 
 /**
  * Class ChapterResourceable.

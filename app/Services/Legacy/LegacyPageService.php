@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Roxayl\MondeGC\Services;
+namespace Roxayl\MondeGC\Services\Legacy;
 
 use Roxayl\MondeGC\Http\Controllers\Legacy\LegacySiteController;
 

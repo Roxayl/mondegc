@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Roxayl\MondeGC\Services;
+namespace Roxayl\MondeGC\Services\Gameplay;
 
 use Illuminate\Database\Eloquent\Collection;
 use Roxayl\MondeGC\Models\Contracts\Influencable;

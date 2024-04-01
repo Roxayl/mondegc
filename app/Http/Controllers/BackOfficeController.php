@@ -7,8 +7,8 @@ namespace Roxayl\MondeGC\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Roxayl\MondeGC\Services\Gameplay\RegenerateInfluenceService;
 use Roxayl\MondeGC\Services\HelperService;
-use Roxayl\MondeGC\Services\RegenerateInfluenceService;
 use YlsIdeas\FeatureFlags\Manager;
 
 class BackOfficeController extends Controller

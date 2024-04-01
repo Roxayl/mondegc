@@ -1,4 +1,4 @@
-@inject('legacyPageService', 'Roxayl\MondeGC\Services\LegacyPageService')
+@inject('legacyPageService', 'Roxayl\MondeGC\Services\Legacy\LegacyPageService')
 @inject('helperService', 'Roxayl\MondeGC\Services\HelperService')
 
 @extends('layouts.legacy')

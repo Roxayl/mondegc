@@ -7,7 +7,7 @@ namespace Roxayl\MondeGC\View\Components\Blocks;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 use Roxayl\MondeGC\Models\Enums\Resource;
-use Roxayl\MondeGC\Services\EconomyService;
+use Roxayl\MondeGC\Services\Gameplay\EconomyService;
 
 class ResourceSelector extends Component
 {

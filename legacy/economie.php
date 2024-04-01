@@ -1,7 +1,7 @@
 <?php
 
 use Roxayl\MondeGC\Models\Enums\Resource;
-use Roxayl\MondeGC\Services\EconomyService;
+use Roxayl\MondeGC\Services\Gameplay\EconomyService;
 use Illuminate\Support\Facades\Gate;
 
 //Connexion et deconnexion

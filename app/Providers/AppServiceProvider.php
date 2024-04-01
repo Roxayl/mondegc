@@ -14,7 +14,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 use Reliese\Coders\CodersServiceProvider;
-use Roxayl\MondeGC\Services\DiscordWebhookService;
+use Roxayl\MondeGC\Services\Discord\DiscordWebhookService;
 use Roxayl\MondeGC\Services\FakerProviders;
 use Roxayl\MondeGC\Services\StringBladeService;
 use YlsIdeas\FeatureFlags\Facades\Features;

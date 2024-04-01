@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Roxayl\MondeGC\Models\ChapterResourceable;
 use Roxayl\MondeGC\Models\Pays;
-use Roxayl\MondeGC\Services\EconomyService;
+use Roxayl\MondeGC\Services\Gameplay\EconomyService;
 
 class ChapterResourceableFactory extends Factory
 {

@@ -127,7 +127,7 @@ if($_SERVER["REMOTE_ADDR"] === '127.0.0.1') {
 }
 
 // Ressources
-$paysResources = \Roxayl\MondeGC\Services\EconomyService::getPaysResources();
+$paysResources = \Roxayl\MondeGC\Services\Gameplay\EconomyService::getPaysResources();
 
 ?>
 <!DOCTYPE html>

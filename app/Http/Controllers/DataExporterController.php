@@ -7,7 +7,7 @@ namespace Roxayl\MondeGC\Http\Controllers;
 use Carbon\Carbon;
 use LogicException;
 use Roxayl\MondeGC\Models\Pays;
-use Roxayl\MondeGC\Services\EconomyService;
+use Roxayl\MondeGC\Services\Gameplay\EconomyService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 

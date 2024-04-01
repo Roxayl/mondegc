@@ -11,7 +11,7 @@ use Illuminate\View\View;
 use Reliese\Database\Eloquent\Model;
 use Roxayl\MondeGC\Models\Traits\Versionable;
 use Roxayl\MondeGC\Models\Version;
-use Roxayl\MondeGC\Services\VersionDiffService;
+use Roxayl\MondeGC\Services\Version\VersionDiffService;
 
 class VersionController extends Controller
 {

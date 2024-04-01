@@ -7,7 +7,7 @@ namespace Roxayl\MondeGC\Models\Traits;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\DB;
 use Roxayl\MondeGC\Models\ChapterResourceable;
-use Roxayl\MondeGC\Services\EconomyService;
+use Roxayl\MondeGC\Services\Gameplay\EconomyService;
 use YlsIdeas\FeatureFlags\Facades\Features;
 
 trait Roleplayable

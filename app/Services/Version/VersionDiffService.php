@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Roxayl\MondeGC\Services;
+namespace Roxayl\MondeGC\Services\Version;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;

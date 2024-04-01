@@ -24,7 +24,7 @@ use Roxayl\MondeGC\Models\Traits\Infrastructurable as HasInfrastructures;
 use Roxayl\MondeGC\Models\Traits\Resourceable as HasResources;
 use Roxayl\MondeGC\Models\Traits\Roleplayable as ParticipatesInRoleplay;
 use Roxayl\MondeGC\Models\Traits\Versionable;
-use Roxayl\MondeGC\Services\EconomyService;
+use Roxayl\MondeGC\Services\Gameplay\EconomyService;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 

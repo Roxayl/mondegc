@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Roxayl\MondeGC\Jobs\Contracts\NotifiesDiscord;
-use Roxayl\MondeGC\Services\DiscordWebhookService;
+use Roxayl\MondeGC\Services\Discord\DiscordWebhookService;
 
 /**
  * Class DiscordNotification.

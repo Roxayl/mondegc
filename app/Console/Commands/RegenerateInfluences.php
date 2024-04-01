@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Roxayl\MondeGC\Console\Commands;
 
 use Illuminate\Console\Command;
-use Roxayl\MondeGC\Services\RegenerateInfluenceService;
+use Roxayl\MondeGC\Services\Gameplay\RegenerateInfluenceService;
 
 class RegenerateInfluences extends Command
 {
