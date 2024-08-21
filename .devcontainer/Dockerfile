@@ -11,14 +11,13 @@ WORKDIR /var/www/html
 RUN     apt-get update -qq
 
 # Configure Node.js.
-# Cette étape supprime l'ancienne installation de Node 12 et installe Node 16. De même, npm passe de la v8 à la v9.
+# Cette étape supprime l'ancienne installation de Node 12 préinstallée dans l'image et installe Node 18.
 RUN     apt-get remove nodejs && \
         rm -rf /usr/local/bin/node* && \
         rm -rf /usr/local/bin/npm* &&  \
         rm -rf /etc/apt/sources.list.d/nodesource.list && \
-        curl -s https://deb.nodesource.com/setup_16.x | bash && \
-        apt-get install -qy nodejs npm && \
-        npm install -g npm@9
+        curl -s https://deb.nodesource.com/setup_18.x | bash && \
+        apt-get install -qy nodejs
 
 # Installe divers dépendances depuis le gestionnaire de paquets :
 # - git, zip, un client MariaDB, et sendmail pour la gestion des mails ;
