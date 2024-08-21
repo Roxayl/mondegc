@@ -114,12 +114,12 @@ Une fois que tout est installé, vous êtes prêt pour déployer l'application W
 2. Lancez les conteneurs Docker de l'application via la commande suivante, depuis le répertoire ``.devcontainer`` :
    ```bash
    cd .devcontainer
-   docker-compose -p mondegc_dev up -d
+   docker compose -p mondegc_dev up -d
    ```
 
 3. Accédez au conteneur de l'application via la commande à saisir dans un terminal.
    ```bash
-   docker-compose -p mondegc_dev exec app /bin/bash
+   docker compose -p mondegc_dev exec app /bin/bash
    ```
 
 4. Dans le conteneur de l'application, exécutez la commande permettant d'installer les dépendances et bibliothèques
@@ -182,7 +182,7 @@ Les sources du site sont gérées par Git, hébergées sur un certain nombre de 
 Pour accéder au répertoire de l'application au sein du **conteneur principal** ``mondegc_app``, vous pouvez taper les 
 commandes suivantes dans un terminal dans le répertoire ``.devcontainer`` :
 ```bash
-docker-compose -p mondegc_dev exec app /bin/bash
+docker compose -p mondegc_dev exec app /bin/bash
 ```
 
 À partir de là, vous pouvez accéder à l'interface en ligne de commande fournie par 
