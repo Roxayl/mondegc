@@ -70,10 +70,7 @@ class InfrastructureOfficielle extends Model
         'ch_inf_off_Recherche' => 'int',
         'ch_inf_off_Environnement' => 'int',
         'ch_inf_off_Education' => 'int',
-    ];
-
-    protected $dates = [
-        'ch_inf_off_date',
+        'ch_inf_off_date' => 'datetime',
     ];
 
     protected $fillable = [

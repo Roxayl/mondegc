@@ -57,11 +57,8 @@ class Geometry extends Model
         'ch_geo_user' => 'int',
         'ch_geo_maj_user' => 'int',
         'ch_geo_mesure' => 'float',
-    ];
-
-    protected $dates = [
-        'ch_geo_date',
-        'ch_geo_mis_jour',
+        'ch_geo_date' => 'datetime',
+        'ch_geo_mis_jour' => 'datetime',
     ];
 
     protected $fillable = [

@@ -79,11 +79,8 @@ class Chapter extends Model
         'roleplay_id' => 'int',
         'order' => 'int',
         'user_id' => 'int',
-    ];
-
-    protected $dates = [
-        'starting_date',
-        'ending_date',
+        'starting_date' => 'datetime',
+        'ending_date' => 'datetime',
     ];
 
     protected $hidden = [

@@ -42,10 +42,7 @@ class Log extends Model
     protected $casts = [
         'target_id' => 'int',
         'user_id' => 'int',
-    ];
-
-    protected $dates = [
-        'created',
+        'created' => 'datetime',
     ];
 
     protected $fillable = [

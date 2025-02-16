@@ -61,10 +61,7 @@ class Influence extends Model
         'industrie' => 'int',
         'recherche' => 'int',
         'tourisme' => 'int',
-    ];
-
-    protected $dates = [
-        'generates_influence_at',
+        'generates_influence_at' => 'datetime',
     ];
 
     protected $fillable = [

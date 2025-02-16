@@ -18,7 +18,7 @@ trait Roleplayable
     public function chapterResources(): MorphMany
     {
         return $this->morphMany(ChapterResourceable::class, 'resourceable')
-            ->select(DB::raw('DISTINCT chapter_resourceable.id'))
+            ->selectRaw(DB::raw('DISTINCT chapter_resourceable.id')->getValue(DB::connection()->getQueryGrammar()))
             ->join('chapters', 'chapters.id', '=', 'chapter_resourceable.chapter_id')
             ->join('roleplay', 'roleplay.id', '=', 'chapters.roleplay_id')
             ->where('roleplay.deleted_at', null)

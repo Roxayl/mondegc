@@ -190,11 +190,8 @@ class Pays extends Model implements Searchable, Infrastructurable, Resourceable,
         'ch_pay_education_carte' => 'int',
         'ch_pay_population_carte' => 'int',
         'ch_pay_emploi_carte' => 'int',
-    ];
-
-    protected $dates = [
-        'ch_pay_date',
-        'ch_pay_mis_jour',
+        'ch_pay_date' => 'datetime',
+        'ch_pay_mis_jour' => 'datetime',
     ];
 
     protected $fillable = [

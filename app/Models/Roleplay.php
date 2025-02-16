@@ -70,11 +70,8 @@ class Roleplay extends Model implements Searchable, Enable
 
     protected $casts = [
         'user_id' => 'int',
-    ];
-
-    protected $dates = [
-        'starting_date',
-        'ending_date',
+        'starting_date' => 'datetime',
+        'ending_date' => 'datetime',
     ];
 
     protected $fillable = [
