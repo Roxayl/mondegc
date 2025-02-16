@@ -41,10 +41,7 @@ class NotificationLegacy extends Model
         'recipient_id' => 'int',
         'element' => 'int',
         'unread' => 'bool',
-    ];
-
-    protected $dates = [
-        'created',
+        'created' => 'datetime',
     ];
 
     protected $fillable = [

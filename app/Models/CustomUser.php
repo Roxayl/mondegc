@@ -87,11 +87,8 @@ class CustomUser extends Authenticatable
         'ch_use_acces' => 'bool',
         'ch_use_paysID' => 'int',
         'ch_use_statut' => 'int',
-    ];
-
-    protected $dates = [
-        'ch_use_date',
-        'ch_use_last_log',
+        'ch_use_date' => 'datetime',
+        'ch_use_last_log' => 'datetime',
     ];
 
     protected $hidden = [

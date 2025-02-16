@@ -51,10 +51,10 @@ class Page extends Model
         'cover_image',
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'published_at',
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'published_at' => 'datetime',
     ];
 
     /**

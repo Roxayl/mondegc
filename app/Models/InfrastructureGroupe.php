@@ -39,10 +39,7 @@ class InfrastructureGroupe extends Model
 
     protected $casts = [
         'order' => 'int',
-    ];
-
-    protected $dates = [
-        'created',
+        'created' => 'datetime',
     ];
 
     protected $fillable = [

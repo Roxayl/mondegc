@@ -91,20 +91,17 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
 
     protected $table = 'organisation';
 
+    protected $casts = [
+        'allow_temperance' => 'boolean',
+        'type_changed_at' => 'datetime',
+    ];
+
     protected $fillable = [
         'name',
         'logo',
         'flag',
         'text',
         'allow_temperance',
-    ];
-
-    protected $casts = [
-        'allow_temperance' => 'boolean',
-    ];
-
-    protected $dates = [
-        'type_changed_at',
     ];
 
     protected $attributes = [

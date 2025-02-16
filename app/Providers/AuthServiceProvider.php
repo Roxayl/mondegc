@@ -28,12 +28,4 @@ class AuthServiceProvider extends ServiceProvider
         Models\Roleplay::class => Policies\RoleplayPolicy::class,
         Models\Ville::class => Policies\VillePolicy::class,
     ];
-
-    /**
-     * Register any authentication / authorization services.
-     */
-    public function boot(): void
-    {
-        $this->registerPolicies();
-    }
 }

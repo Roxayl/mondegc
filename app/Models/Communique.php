@@ -57,15 +57,12 @@ class Communique extends Model implements Searchable
         'ch_com_element_id' => 'int',
         'ch_com_user_id' => 'int',
         'ch_com_pays_id' => 'int',
+        'ch_com_date' => 'datetime',
+        'ch_com_date_mis_jour' => 'datetime',
     ];
 
     const CREATED_AT = 'ch_com_date';
     const UPDATED_AT = 'ch_com_date_mis_jour';
-
-    protected $dates = [
-        'ch_com_date',
-        'ch_com_date_mis_jour',
-    ];
 
     protected $fillable = [
         'ch_com_statut',

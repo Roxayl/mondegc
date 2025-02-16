@@ -95,11 +95,8 @@ class Infrastructure extends Model implements Influencable
         'ch_inf_statut' => 'int',
         'user_creator' => 'int',
         'ch_inf_juge' => 'int',
-    ];
-
-    protected $dates = [
-        'ch_inf_date',
-        'judged_at',
+        'ch_inf_date' => 'datetime',
+        'judged_at' => 'datetime',
     ];
 
     protected $fillable = [

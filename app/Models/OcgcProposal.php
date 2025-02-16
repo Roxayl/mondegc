@@ -83,13 +83,10 @@ class OcgcProposal extends Model
         'is_valid' => 'int',
         'res_year' => 'int',
         'res_id' => 'int',
-    ];
-
-    protected $dates = [
-        'debate_start',
-        'debate_end',
-        'created',
-        'updated',
+        'debate_start' => 'datetime',
+        'debate_end' => 'datetime',
+        'created' => 'datetime',
+        'updated' => 'datetime',
     ];
 
     protected $fillable = [

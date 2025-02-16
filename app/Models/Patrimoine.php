@@ -105,11 +105,8 @@ class Patrimoine extends Model implements Influencable, Searchable
         'ch_pat_coord_X' => 'float',
         'ch_pat_coord_Y' => 'float',
         'ch_pat_juge' => 'int',
-    ];
-
-    protected $dates = [
-        'ch_pat_date',
-        'ch_pat_mis_jour',
+        'ch_pat_date' => 'datetime',
+        'ch_pat_mis_jour' => 'datetime',
     ];
 
     protected $fillable = [

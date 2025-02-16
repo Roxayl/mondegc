@@ -132,11 +132,8 @@ class Ville extends Model implements Searchable, Infrastructurable, Resourceable
         'ch_vil_coord_Y' => 'float',
         'ch_vil_capitale' => 'bool',
         'ch_vil_population' => 'int',
-    ];
-
-    protected $dates = [
-        'ch_vil_date_enregistrement',
-        'ch_vil_mis_jour',
+        'ch_vil_date_enregistrement' => 'datetime',
+        'ch_vil_mis_jour' => 'datetime',
     ];
 
     protected $fillable = [

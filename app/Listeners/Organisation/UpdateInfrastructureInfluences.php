@@ -12,9 +12,9 @@ class UpdateInfrastructureInfluences
     /**
      * Handle the event.
      *
-     * @param  object&(MembershipChanged|TypeMigrated)  $event
+     * @param  MembershipChanged|TypeMigrated  $event
      */
-    public function handle(object $event): void
+    public function handle(MembershipChanged|TypeMigrated $event): void
     {
         $organisation = $event->organisation;
 

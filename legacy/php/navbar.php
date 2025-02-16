@@ -15,7 +15,7 @@ $loginFormAction = DEF_URI_PATH . 'index.php';
 // Tri des pays par continent pour le menu deroulant
 
 $query_menu = "SELECT ch_pay_id, ch_pay_nom, ch_pay_lien_imgdrapeau, ch_pay_continent FROM pays WHERE ch_pay_publication = 1 ORDER BY ch_pay_nom ASC";
-$menu = collect(DB::select(DB::raw($query_menu)))->map(fn(object $row) => (array) $row)->toArray();
+$menu = collect(DB::select(DB::raw($query_menu)->getValue(DB::connection()->getQueryGrammar())))->map(fn(object $row) => (array) $row)->toArray();
 $totalRows_menu = count($menu);
 
 $nav_userPays = array();
