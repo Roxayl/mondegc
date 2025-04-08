@@ -10,7 +10,7 @@ jobs:
 
   run-tests:
     name: "🧪 Run tests"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     services:
       mysql:
@@ -66,7 +66,7 @@ jobs:
 
   run-backups:
     name: "💾 Run backups"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: run-tests
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
@@ -86,7 +86,7 @@ jobs:
 
   deploy-to-prod:
     name: "🚀 Deploy to production"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: run-backups
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
