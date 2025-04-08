@@ -86,7 +86,7 @@ class OrganisationController extends Controller
      * @param  string|null  $slug
      * @return View|RedirectResponse
      */
-    public function show(int $id, string $slug = null): View|RedirectResponse
+    public function show(int $id, ?string $slug = null): View|RedirectResponse
     {
         /** @var Organisation $organisation */
         $organisation = Organisation::with(['members', 'membersPending'])

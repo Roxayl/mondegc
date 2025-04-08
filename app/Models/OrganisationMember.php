@@ -89,7 +89,7 @@ class OrganisationMember extends Model
     /**
      * @param  Model|null  $oldMember
      */
-    public function sendNotifications(Model $oldMember = null): void
+    public function sendNotifications(?Model $oldMember = null): void
     {
         $oldPermission = ! is_null($oldMember) ?
             (int) $oldMember->permissions : $this->permissions;
