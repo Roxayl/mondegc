@@ -25,7 +25,7 @@ class RoleplayableSelector extends Component
      * @param  Roleplayable|null  $roleplayable
      * @param  string|null  $endpointUrl
      */
-    public function __construct(?Roleplayable $roleplayable = null, string $endpointUrl = null)
+    public function __construct(?Roleplayable $roleplayable = null, ?string $endpointUrl = null)
     {
         $this->roleplayable = $roleplayable;
 

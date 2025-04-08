@@ -246,7 +246,7 @@ class Organisation extends Model implements Searchable, Infrastructurable, Resou
      * @param  ?scalar  $permission
      * @return Support\Collection
      */
-    public function getUsers(float|bool|int|string $permission = null): Support\Collection
+    public function getUsers(float|bool|int|string|null $permission = null): Support\Collection
     {
         if ($permission === null) {
             $permission = self::$permissions['administrator'];

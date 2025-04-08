@@ -17,7 +17,7 @@ class VersionDiffService
      * @param  array<string>  $fields
      * @return Collection<string, string>
      */
-    public function generate(Model $model1, Model $model2, array $fields = null): Collection
+    public function generate(Model $model1, Model $model2, ?array $fields = null): Collection
     {
         $diffs = collect();
 

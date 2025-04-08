@@ -73,7 +73,7 @@ trait Influencable
         return (int) round(array_sum($avgRate) / count($avgRate) * 100);
     }
 
-    public function removeOldInfluenceRows(\Closure $f = null): bool
+    public function removeOldInfluenceRows(?\Closure $f = null): bool
     {
         $delete = false;
 
