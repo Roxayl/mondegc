@@ -99,7 +99,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "phase-temperance"))
     <input name="ch_temp_statut" type="hidden" value="3">
     <input name="ch_temp_mis_jour" type="hidden" value="<?php echo $now; ?>">
     <input name="ch_temp_id" type="hidden" value="<?php echo $colname_temperance; ?>">
-    <input name="ch_temp_note" type="hidden" value="<?php echo $note; ?>">
+    <input name="ch_temp_note" type="hidden" value="<?php echo e($note); ?>">
     <input name="ch_temp_tendance" type="hidden" value="<?php echo $ch_temp_tendance; ?>">
     </p>
   </div>

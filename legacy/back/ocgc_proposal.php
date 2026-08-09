@@ -112,7 +112,7 @@ use GenCity\Monde\Pays;use GenCity\Proposal\Vote;
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<title>Monde GC - Proposition : <?= $formProposal->get('question') ?></title>
+<title>Monde GC - Proposition : <?= e($formProposal->get('question')) ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -228,7 +228,7 @@ require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
     <!-- ZONE DE DÉBATS -->
     <div class="cta-title pull-right-cta" style="margin-top: 6px">
     <?php if(isset($_SESSION['userObject'])): ?>
-        <a href="../php/modal/proposal_debate_edit.php?ID_proposal=<?= $formProposal->get('id') ?>"
+        <a href="../php/modal/proposal_debate_edit.php?ID_proposal=<?= e($formProposal->get('id')) ?>"
            data-toggle="modal" data-target="#Modal-Monument" class="btn btn-primary btn-cta">
             <i class="icon-white icon-edit"></i></a>
     <?php endif; ?>
@@ -280,16 +280,16 @@ require(DEF_LEGACYROOTPATH . 'php/navbar.php'); ?>
 
         <div class="well">
 
-            <form method="POST" action="<?= DEF_URI_PATH ?>back/ocgc_proposal.php?id=<?= $formProposal->get('id') ?>"
+            <form method="POST" action="<?= DEF_URI_PATH ?>back/ocgc_proposal.php?id=<?= e($formProposal->get('id')) ?>"
                   style="display: inline-block;">
-                <input type="hidden" name="proposalValidate[ID_proposal]" value="<?= $formProposal->get('id') ?>">
+                <input type="hidden" name="proposalValidate[ID_proposal]" value="<?= e($formProposal->get('id')) ?>">
                 <input type="hidden" name="proposalValidate[is_valid]" value="2">
                 <button type="submit" class="btn btn-success form-button-inline">Accepter</button>
             </form>
 
-            <form method="POST" action="<?= DEF_URI_PATH ?>back/ocgc_proposal.php?id=<?= $formProposal->get('id') ?>"
+            <form method="POST" action="<?= DEF_URI_PATH ?>back/ocgc_proposal.php?id=<?= e($formProposal->get('id')) ?>"
                   style="display: inline-block;">
-                <input type="hidden" name="proposalValidate[ID_proposal]" value="<?= $formProposal->get('id') ?>">
+                <input type="hidden" name="proposalValidate[ID_proposal]" value="<?= e($formProposal->get('id')) ?>">
                 <input type="hidden" name="proposalValidate[is_valid]" value="0">
                 <button type="submit" class="btn btn-danger form-button-inline">Refuser</button>
             </form>

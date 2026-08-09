@@ -404,7 +404,7 @@ $('#closemodal').click(function() {
         <!-- Image du monument -->
         <div class="span2 img-listes">
           <?php if ($row_new_fait['ch_his_lien_img1']) {?>
-          <img src="<?php echo $row_new_fait['ch_his_lien_img1']; ?>" alt="image <?= e($row_new_fait['ch_his_nom']) ?>">
+          <img src="<?php echo e($row_new_fait['ch_his_lien_img1']); ?>" alt="image <?= e($row_new_fait['ch_his_nom']) ?>">
           <?php } else { ?>
           <img src="../assets/img/imagesdefaut/ville.jpg" alt="monument">
           <?php } ?>
@@ -435,7 +435,7 @@ $('#closemodal').click(function() {
       <select name="fai_catID" id="fai_catID" onchange="this.form.submit()">
         <option value="" <?php if ($colname_classer_fait_his == NULL) {?>selected<?php } ?>>S&eacute;lectionnez une cat&eacute;gorie&nbsp;</option>
         <?php do { ?>
-        <option value="<?php echo $row_liste_fait_cat2['ch_fai_cat_ID']; ?>" <?php if ($colname_classer_fait_his == $row_liste_fait_cat2['ch_fai_cat_ID']) {?>selected<?php } ?>><?php echo $row_liste_fait_cat2['ch_fai_cat_nom']; ?></option>
+        <option value="<?php echo e($row_liste_fait_cat2['ch_fai_cat_ID']); ?>" <?php if ($colname_classer_fait_his == $row_liste_fait_cat2['ch_fai_cat_ID']) {?>selected<?php } ?>><?php echo e($row_liste_fait_cat2['ch_fai_cat_nom']); ?></option>
         <?php } while ($row_liste_fait_cat2 = mysql_fetch_assoc($liste_fait_cat2)); ?>
       </select>
     </form>
@@ -460,7 +460,7 @@ $totalRows_liste_fait_cat3 = mysql_num_rows($liste_fait_cat3);
       <!-- Image du fait hist -->
       <div class="span2 img-listes">
         <?php if ($row_classer_fait_his['ch_his_lien_img1']) {?>
-        <img src="<?php echo $row_classer_fait_his['ch_his_lien_img1']; ?>" alt="image <?= e($row_classer_fait_his['ch_his_nom']) ?>">
+        <img src="<?php echo e($row_classer_fait_his['ch_his_lien_img1']); ?>" alt="image <?= e($row_classer_fait_his['ch_his_nom']) ?>">
         <?php } else { ?>
         <img src="../assets/img/imagesdefaut/ville.jpg" alt="monument">
         <?php } ?>
@@ -481,7 +481,7 @@ $totalRows_liste_fait_cat3 = mysql_num_rows($liste_fait_cat3);
         <?php if ($row_liste_fait_cat3) {?>
         <?php do { ?>
           <!-- Icone et popover de la categorie -->
-          <div class="span2 icone-categorie"><a href="#" rel="clickover" title="<?php echo $row_liste_fait_cat3['ch_fai_cat_nom']; ?>" data-placement="left" data-content="<?php echo $row_liste_fait_cat3['ch_fai_cat_desc']; ?>"><img src="<?php echo $row_liste_fait_cat3['ch_fai_cat_icon']; ?>" alt="icone <?php echo $row_liste_fait_cat3['ch_fai_cat_nom']; ?>" style="background-color:<?php echo $row_liste_fait_cat3['ch_fai_cat_couleur']; ?>; <?php if ($row_liste_fait_cat3['ch_fai_cat_statut'] == 2 ) {?>opacity:0.5;<?php }?>"></a></div>
+          <div class="span2 icone-categorie"><a href="#" rel="clickover" title="<?php echo e($row_liste_fait_cat3['ch_fai_cat_nom']); ?>" data-placement="left" data-content="<?php echo e($row_liste_fait_cat3['ch_fai_cat_desc']); ?>"><img src="<?php echo e($row_liste_fait_cat3['ch_fai_cat_icon']); ?>" alt="icone <?php echo e($row_liste_fait_cat3['ch_fai_cat_nom']); ?>" style="background-color:<?php echo e($row_liste_fait_cat3['ch_fai_cat_couleur']); ?>; <?php if ($row_liste_fait_cat3['ch_fai_cat_statut'] == 2 ) {?>opacity:0.5;<?php }?>"></a></div>
           <?php } while ($row_liste_fait_cat3 = mysql_fetch_assoc($liste_fait_cat3)); ?>
         <?php } ?>
       </div>

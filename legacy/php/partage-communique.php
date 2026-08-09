@@ -152,13 +152,13 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut
           <p class="pull-center"><?= e($row_communique['ch_use_predicat_dirigeant']) ?> <?= e($row_communique['ch_use_prenom_dirigeant']) ?> <?= e($row_communique['ch_use_nom_dirigeant']) ?></p>
           <p class="pull-center"><em><?= e($row_communique['ch_use_titre_dirigeant']) ?></em></p>
           <?php if ( $cat == "pays") { ?>
-          <p class="pull-center">a &eacute;crit un communiqu&eacute; officiel au nom du pays <a href="http://www.generation-city.com/monde/page-pays.php?ch_pay_id=<?= e($row_pays['ch_pay_id']) ?>"><?php echo $row_pays['ch_pay_nom'] ?></a></p>
+          <p class="pull-center">a &eacute;crit un communiqu&eacute; officiel au nom du pays <a href="http://www.generation-city.com/monde/page-pays.php?ch_pay_id=<?= e($row_pays['ch_pay_id']) ?>"><?php echo e($row_pays['ch_pay_nom']) ?></a></p>
           <?php } elseif ( $cat == "villes") { ?>
-          <p class="pull-center">a &eacute;crit un communiqu&eacute; officiel au nom de la ville <a href="http://www.generation-city.com/monde/page-ville.php?ch_pay_id=<?= e($row_villes['ch_pay_id']) ?>&ch_ville_id=<?= e($row_villes['ch_vil_ID']) ?>"><?php echo $row_villes['ch_vil_nom'] ?></a></p>
+          <p class="pull-center">a &eacute;crit un communiqu&eacute; officiel au nom de la ville <a href="http://www.generation-city.com/monde/page-ville.php?ch_pay_id=<?= e($row_villes['ch_pay_id']) ?>&ch_ville_id=<?= e($row_villes['ch_vil_ID']) ?>"><?php echo e($row_villes['ch_vil_nom']) ?></a></p>
           <?php } elseif ( $cat == "institut") { ?>
-          <p class="pull-center">a &eacute;crit un communiqu&eacute; officiel au nom de l'<?php echo $row_institut['ch_ins_nom'] ?></p>
+          <p class="pull-center">a &eacute;crit un communiqu&eacute; officiel au nom de l'<?php echo e($row_institut['ch_ins_nom']) ?></p>
           <?php } ?>
-          <h4 class="pull-center"><?php echo $row_communique['ch_com_titre'] ?></h4>
+          <h4 class="pull-center"><?php echo e($row_communique['ch_com_titre']) ?></h4>
         </div>
         <p><?= htmlPurify($row_communique['ch_com_contenu']) ?></p>
         <div class="pull-center"><a href="http://www.generation-city.com/monde/page-communique.php?com_id=<?= e($row_communique['ch_com_ID']) ?>"><strong>Voir les r&eacute;actions</strong></a></div>
@@ -208,7 +208,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut
     <input type="hidden" name="ch_pay_id" id="ch_pay_id" value="<?= e($row_communique['ch_com_element_id']) ?>">
     <h4>Vous n'avez pas encore indiqu&eacute; le lien du sujet consacr&eacute; à votre pays sur le Forum de G&eacute;n&eacute;ration City </h4>
     <!-- Lien Forum -->
-    <input type="hidden" id="ch_pay_id" name="ch_pay_id" value="<?php echo $row_communique['ch_com_element_id'] ?>">
+    <input type="hidden" id="ch_pay_id" name="ch_pay_id" value="<?php echo e($row_communique['ch_com_element_id']) ?>">
     <div id="sprytextfield1" class="control-group">
       <label class="control-label" for="ch_pay_lien_forum">Lien sujet sur le forum <a href="#" rel="clickover" data-placement="bottom" title="Lien du sujet" data-content="250 caract&egrave;res maximum. Copiez/collez ici le lien vers le sujet consacré à votre pays sur le forum. Cette information sevira à poster des messages dans votre sujet directement depuis le site"><i class="icon-info-sign"></i></a></label>
       <div class="controls">

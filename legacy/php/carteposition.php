@@ -540,7 +540,7 @@ coordEmplacement($emplacement, $x, $y);
 		var urlicon ='<?= e($row_MarkerPays['ch_pay_lien_imgdrapeau']) ?>'
                 features.push(new OpenLayers.Feature.Vector(
                     new OpenLayers.Geometry.Point(x,y), features.attributes = {
-                name: "<?php echo $Nompays; ?>",
+                name: "<?php echo e($Nompays); ?>",
 				flag: "<?= e($row_MarkerPays['ch_pay_lien_imgdrapeau']) ?>"
             }));
 		<?php } while ($row_MarkerPays = mysql_fetch_assoc($MarkerPays)); ?>

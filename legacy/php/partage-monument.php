@@ -63,7 +63,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
         <h3>Message&nbsp;:</h3>
         <div class="pull-center"><img src="http://monde.generation-city.com/assets/img/IconesBDD/100/monument1.png">
           <h4><?= e($row_monument['ch_pat_nom']) ?></h4>
-          <img src="<?php echo $row_monument['ch_pat_lien_img1']; ?>"></div>
+          <img src="<?php echo e($row_monument['ch_pat_lien_img1']); ?>"></div>
         <p><?= e($row_monument['ch_pat_description']) ?></p>
         <div class="pull-center"><a href="http://www.generation-city.com/monde/page-monument.php?ch_pat_id=<?= e($row_monument['ch_pat_id']) ?>"><strong>Visiter</strong></a></div>
         <p>&nbsp;</p>

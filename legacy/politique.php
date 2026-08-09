@@ -219,7 +219,7 @@ Eventy::action('display.beforeHeadClosingTag')
               <select name="mon_cat_ID" id="mon_cat_ID" onchange="this.form.submit()">
                 <option value="" <?php if ($colname_classer_mon == NULL) {?>selected<?php } ?>>S&eacute;lectionnez un objectif des quêtes Entreprises</option>
                 <?php do { ?>
-                <option value="<?php echo $row_liste_mon_cat2['ch_mon_cat_ID']; ?>" <?php if ($colname_classer_mon == $row_liste_mon_cat2['ch_mon_cat_ID']) {?>selected<?php } ?>><?php echo $row_liste_mon_cat2['ch_mon_cat_nom']; ?></option>
+                <option value="<?php echo e($row_liste_mon_cat2['ch_mon_cat_ID']); ?>" <?php if ($colname_classer_mon == $row_liste_mon_cat2['ch_mon_cat_ID']) {?>selected<?php } ?>><?php echo e($row_liste_mon_cat2['ch_mon_cat_nom']); ?></option>
                 <?php } while ($row_liste_mon_cat2 = mysql_fetch_assoc($liste_mon_cat2)); ?>
               </select>
             </form>

@@ -33,7 +33,7 @@ $proposalList = $data['proposalList'];
             <small><?= $proposal->getProposalId() ?> -
                 <?= \GenCity\Proposal\Proposal::$typeDetail[$proposal->get('type')] ?>
                 (<?= __s($proposal->get('type')) ?>)</small><br>
-            <a href="back/ocgc_proposal.php?id=<?= $proposal->get('id') ?>"><h4>
+            <a href="back/ocgc_proposal.php?id=<?= e($proposal->get('id')) ?>"><h4>
                 <?= __s($proposal->get('question')) ?>
             </h4></a>
             <small><em> par
@@ -53,7 +53,7 @@ $proposalList = $data['proposalList'];
           <div class="span1">
             <div class="cta-title pull-right-cta">
                 <?php if(!empty($btn_text)): ?>
-                <a href="back/ocgc_proposal.php?id=<?= $proposal->get('id') ?>"
+                <a href="back/ocgc_proposal.php?id=<?= e($proposal->get('id')) ?>"
                    class="btn btn-primary btn-cta"><?= $btn_text ?></a>
                 <?php endif; ?>
             </div>

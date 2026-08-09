@@ -172,7 +172,7 @@ Eventy::action('display.beforeHeadClosingTag')
           <div class="controls">
             <select id="ch_vil_user" name="ch_vil_user">
               <?php do { ?>
-              <option value="<?php echo $row_list_users['ch_use_id'] ?>" <?php if (!(strcmp($_SESSION['user_ID'], $row_list_users['ch_use_id']))) {echo 'selected';} ?>><?php echo $row_list_users['ch_use_login'] ?></option>
+              <option value="<?php echo e($row_list_users['ch_use_id']) ?>" <?php if (!(strcmp($_SESSION['user_ID'], $row_list_users['ch_use_id']))) {echo 'selected';} ?>><?php echo e($row_list_users['ch_use_login']) ?></option>
               <?php } while ($row_list_users = mysql_fetch_assoc($list_users)); ?>
             </select>
           </div>

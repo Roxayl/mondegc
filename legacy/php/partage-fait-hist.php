@@ -63,7 +63,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
         <h3>Message&nbsp;:</h3>
         <div class="pull-center">
           <h4><?= e($row_fait_hist['ch_his_nom']) ?></h4>
-          <img src="<?php echo $row_fait_hist['ch_his_lien_img1']; ?>"></div>
+          <img src="<?php echo e($row_fait_hist['ch_his_lien_img1']); ?>"></div>
         <p><?= e($row_fait_hist['ch_his_description']) ?></p>
         <div class="pull-center"><a href="http://www.generation-city.com/monde/page-fait-historique.php?ch_his_id=<?= e($row_fait_hist['ch_his_id']) ?>"><strong>Consulter</strong></a></div>
         <p>&nbsp;</p>
@@ -114,7 +114,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
     <h4>Nous n'avons pas retrouv&eacute; votre sujet dans le lien que vous avez indiqu&eacute;</h4>
     <?php } ?>
     <!-- Lien Forum -->
-    <input type="hidden" id="ch_pay_id" name="ch_pay_id" value="<?php echo $row_fait_hist['ch_his_paysID'] ?>">
+    <input type="hidden" id="ch_pay_id" name="ch_pay_id" value="<?php echo e($row_fait_hist['ch_his_paysID']) ?>">
     <div id="sprytextfield1" class="control-group">
       <label class="control-label" for="ch_pay_lien_forum">Lien sujet sur le forum <a href="#" rel="clickover" data-placement="bottom" title="Lien du sujet" data-content="250 caract&egrave;res maximum. Copiez/collez ici le lien vers le sujet consacré à votre pays sur le forum. Cette information sevira à poster des messages dans votre sujet directement depuis le site"><i class="icon-info-sign"></i></a></label>
       <div class="controls">

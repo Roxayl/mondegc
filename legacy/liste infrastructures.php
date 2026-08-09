@@ -157,7 +157,7 @@ Eventy::action('display.beforeHeadClosingTag')
       foreach($infraGroupList as $key => $row): ?>
 
           <li class="span2">
-            <a href="liste%20infrastructures.php?group_id=<?= $row->get('id') ?>"
+            <a href="liste%20infrastructures.php?group_id=<?= e($row->get('id')) ?>"
                class="thumbnail <?= isset($_GET['group_id']) && $_GET['group_id'] == $row->get('id') ?
                                         'infra-selected' : '' ?>">
               <img src="<?= __s($row->get('url_image')) ?>" data-src="holder.js/300x200" alt="">
@@ -197,7 +197,7 @@ Eventy::action('display.beforeHeadClosingTag')
             method="GET" class="btn-margin-left">
 
         <?php if($thisGroup !== null): ?>
-          <input type="hidden" name="group_id" value="<?= $thisGroup->get('id') ?>">
+          <input type="hidden" name="group_id" value="<?= e($thisGroup->get('id')) ?>">
         <?php endif; ?>
 
         <select name="type_classement_inf" id="type_classement_inf" onchange="this.form.submit()" class="span3">

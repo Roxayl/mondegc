@@ -99,7 +99,7 @@ $totalRows_liste_mon_cat = mysql_num_rows($liste_mon_cat);
             <input name="ch_mon_cat_label" type="hidden" value="mon_cat">
             <input name="ch_mon_cat_date" type="hidden" value="<?= e($row_liste_mon_cat['ch_mon_cat_date']) ?>">
             <input name="ch_mon_cat_mis_jour" type="hidden" value="<?php echo $now; ?>">
-            <input name="ch_mon_cat_nb_update" type="hidden" value=<?php echo $nb_update; ?> >
+            <input name="ch_mon_cat_nb_update" type="hidden" value=<?php echo e($nb_update); ?> >
 
         <!-- Statut -->
         <div id="spryradio20" class="control-group">

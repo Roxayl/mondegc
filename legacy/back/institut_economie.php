@@ -407,10 +407,10 @@ require(DEF_LEGACYROOTPATH . 'php/communiques-back.php'); ?>
                   <?php endif; ?>
                   </ul>
               </div>
-              <a class="btn btn-primary" href="../php/infra_group_modal.php?group_id=<?= $row->get('id') ?>"
+              <a class="btn btn-primary" href="../php/infra_group_modal.php?group_id=<?= e($row->get('id')) ?>"
                  data-toggle="modal" data-target="#Modal-Monument" title="Modifier ce groupe d'infra"
                 ><i class="icon-edit icon-white"></i> Modifier</a>
-              <a class="btn btn-danger" href="../php/infra_group_modal_suppr.php?group_id=<?= $row->get('id') ?>"
+              <a class="btn btn-danger" href="../php/infra_group_modal_suppr.php?group_id=<?= e($row->get('id')) ?>"
                  data-toggle="modal" data-target="#Modal-Monument" title="Supprimer ce groupe d'infra"
                 ><i class="icon-trash icon-white"></i> Supprimer</a>
           </li>

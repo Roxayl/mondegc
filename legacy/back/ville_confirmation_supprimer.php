@@ -48,7 +48,7 @@ requirePaysPermission($row_ch_vil_confimation_suppression['ch_vil_paysID']);
 <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url('<?php echo $row_ch_vil_confimation_suppression['ch_vil_lien_img1']; ?>');
+	background-image: url('<?php echo e($row_ch_vil_confimation_suppression['ch_vil_lien_img1']); ?>');
 	background-position: center;
 }
 </style>

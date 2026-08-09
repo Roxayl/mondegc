@@ -219,37 +219,37 @@ Eventy::action('display.beforeHeadClosingTag')
     <section id="myCarousel" class="carousel slide">
       <div class="carousel-inner vertical-align-center">
         <?php if ($row_ville['ch_vil_lien_img1']) { ?>
-        <div class="item active" style="background-image:url(<?php echo $row_ville['ch_vil_lien_img1']; ?>)">
+        <div class="item active" style="background-image:url(<?php echo e($row_ville['ch_vil_lien_img1']); ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_ville['ch_vil_legende_img1']; ?></p>
+            <p><?php echo e($row_ville['ch_vil_legende_img1']); ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_ville['ch_vil_lien_img2']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_ville['ch_vil_lien_img2']; ?>)">
+        <div class="item" style="background-image: url(<?php echo e($row_ville['ch_vil_lien_img2']); ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_ville['ch_vil_legende_img2']; ?></p>
+            <p><?php echo e($row_ville['ch_vil_legende_img2']); ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_ville['ch_vil_lien_img3']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_ville['ch_vil_lien_img3']; ?>)">
+        <div class="item" style="background-image: url(<?php echo e($row_ville['ch_vil_lien_img3']); ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_ville['ch_vil_legende_img3']; ?></p>
+            <p><?php echo e($row_ville['ch_vil_legende_img3']); ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_ville['ch_vil_lien_img4']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_ville['ch_vil_lien_img4']; ?>)">
+        <div class="item" style="background-image: url(<?php echo e($row_ville['ch_vil_lien_img4']); ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_ville['ch_vil_legende_img4']; ?></p>
+            <p><?php echo e($row_ville['ch_vil_legende_img4']); ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_ville['ch_vil_lien_img5']) { ?>
-        <div class="item" style="background-image: url('[<?php echo $row_ville['ch_vil_lien_img5']; ?>]')">
+        <div class="item" style="background-image: url('[<?php echo e($row_ville['ch_vil_lien_img5']); ?>]')">
           <div class="carousel-caption">
-            <p><?php echo $row_ville['ch_vil_legende_img5']; ?></p>
+            <p><?php echo e($row_ville['ch_vil_legende_img5']); ?></p>
           </div>
         </div>
         <?php } ?>
@@ -340,7 +340,7 @@ Eventy::action('display.beforeHeadClosingTag')
           <?php $now = date("Y-m-d G:i:s");
 				  $nbupdate = $row_ville['ch_vil_nb_update']+1; ?>
           <input name="ch_vil_mis_jour" type="hidden" value="<?php echo $now; ?>" >
-          <input name="ch_vil_nb_update" type="hidden" value="<?php echo $nbupdate; ?>">
+          <input name="ch_vil_nb_update" type="hidden" value="<?php echo e($nbupdate); ?>">
 
           <!-- Informations générales
      ================================================== -->
@@ -356,13 +356,13 @@ Eventy::action('display.beforeHeadClosingTag')
                   <div class="controls">
                     <select id="ch_vil_user" name="ch_vil_user">
                       <?php do { ?>
-                      <option value="<?php echo $row_list_users['ch_use_id'] ?>" <?php if (!(strcmp($row_ville['ch_vil_user'], $row_list_users['ch_use_id']))) {echo "selected=\"selected\"";} ?>><?php echo $row_list_users['ch_use_login'] ?></option>
+                      <option value="<?php echo e($row_list_users['ch_use_id']) ?>" <?php if (!(strcmp($row_ville['ch_vil_user'], $row_list_users['ch_use_id']))) {echo "selected=\"selected\"";} ?>><?php echo e($row_list_users['ch_use_login']) ?></option>
                       <?php } while ($row_list_users = mysql_fetch_assoc($list_users)); ?>
                     </select>
                   </div>
                 </div>
                 <?php } else { ?>
-                <input name="ch_vil_user" type="hidden" value="<?php echo $row_ville['ch_vil_user'] ?>" >
+                <input name="ch_vil_user" type="hidden" value="<?php echo e($row_ville['ch_vil_user']) ?>" >
                 <?php } ?>
                 <!-- Nom -->
                 <div id="sprytextfield2" class="control-group">
@@ -545,61 +545,61 @@ Eventy::action('display.beforeHeadClosingTag')
                 <div id="sprytextfield5" class="control-group">
                   <label class="control-label" for="ch_vil_lien_img1">Lien image n&deg;1 <a href="#" rel="clickover" title="Lien image" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)"><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
-                    <input name="ch_vil_lien_img1" type="text" id="ch_vil_lien_img1" value="<?php echo $row_ville['ch_vil_lien_img1']; ?>" class="span11">
+                    <input name="ch_vil_lien_img1" type="text" id="ch_vil_lien_img1" value="<?php echo e($row_ville['ch_vil_lien_img1']); ?>" class="span11">
                     <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span></div>
                 </div>
                 <div id="sprytextfield6" class="control-group">
                   <label class="control-label" for="ch_vil_legende_img1">L&eacute;gende image n&deg;1 <a href="#" rel="clickover" title="L&eacute;gende image" data-content="Mettez-ici la l&eacute;gende qui correspond &agrave; l'image. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
-                    <input name="ch_vil_legende_img1" type="text" id="ch_vil_legende_img1" value="<?php echo $row_ville['ch_vil_legende_img1']; ?>">
+                    <input name="ch_vil_legende_img1" type="text" id="ch_vil_legende_img1" value="<?php echo e($row_ville['ch_vil_legende_img1']); ?>">
                     <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span></div>
                 </div>
                 <div id="sprytextfield7" class="control-group">
                   <label class="control-label" for="ch_vil_lien_img2">Lien image n&deg;2 <a href="#" rel="clickover" title="Lien image" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)"><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
-                    <input name="ch_vil_lien_img2" type="text" id="ch_vil_lien_img2" value="<?php echo $row_ville['ch_vil_lien_img2']; ?>" class="span11">
+                    <input name="ch_vil_lien_img2" type="text" id="ch_vil_lien_img2" value="<?php echo e($row_ville['ch_vil_lien_img2']); ?>" class="span11">
                     <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span></div>
                 </div>
                 <div id="sprytextfield8" class="control-group">
                   <label class="control-label" for="ch_vil_legende_img2">L&eacute;gende image n&deg;2 <a href="#" rel="clickover" title="L&eacute;gende image" data-content="Mettez-ici la l&eacute;gende qui correspond &agrave; l'image. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
-                    <input name="ch_vil_legende_img2" type="text" id="ch_vil_legende_img2" value="<?php echo $row_ville['ch_vil_legende_img2']; ?>">
+                    <input name="ch_vil_legende_img2" type="text" id="ch_vil_legende_img2" value="<?php echo e($row_ville['ch_vil_legende_img2']); ?>">
                     <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span></div>
                 </div>
                 <div id="sprytextfield9" class="control-group">
                   <label class="control-label" for="ch_vil_lien_img3">Lien image n&deg;3 <a href="#" rel="clickover" title="Lien image" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)"><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
-                    <input name="ch_vil_lien_img3" type="text" id="ch_vil_lien_img3" value="<?php echo $row_ville['ch_vil_lien_img3']; ?>" class="span11">
+                    <input name="ch_vil_lien_img3" type="text" id="ch_vil_lien_img3" value="<?php echo e($row_ville['ch_vil_lien_img3']); ?>" class="span11">
                     <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span></div>
                 </div>
                 <div id="sprytextfield10" class="control-group">
                   <label class="control-label" for="ch_vil_legende_img3">L&eacute;gende image n&deg;3 <a href="#" rel="clickover" title="L&eacute;gende image" data-content="Mettez-ici la l&eacute;gende qui correspond &agrave; l'image. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
-                    <input name="ch_vil_legende_img3" type="text" id="ch_vil_legende_img3" value="<?php echo $row_ville['ch_vil_legende_img3']; ?>">
+                    <input name="ch_vil_legende_img3" type="text" id="ch_vil_legende_img3" value="<?php echo e($row_ville['ch_vil_legende_img3']); ?>">
                     <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span></div>
                 </div>
                 <div id="sprytextfield11" class="control-group">
                   <label class="control-label" for="ch_vil_lien_img4">Lien image n&deg;4 <a href="#" rel="clickover" title="Lien image" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)"><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
-                    <input name="ch_vil_lien_img4" type="text" id="ch_vil_lien_img4" value="<?php echo $row_ville['ch_vil_lien_img4']; ?>" class="span11">
+                    <input name="ch_vil_lien_img4" type="text" id="ch_vil_lien_img4" value="<?php echo e($row_ville['ch_vil_lien_img4']); ?>" class="span11">
                     <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span></div>
                 </div>
                 <div id="sprytextfield12" class="control-group">
                   <label class="control-label" for="ch_vil_legende_img4">L&eacute;gende image n&deg;4 <a href="#" rel="clickover" title="L&eacute;gende image" data-content="Mettez-ici la l&eacute;gende qui correspond &agrave; l'image. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
-                    <input name="ch_vil_legende_img4" type="text" id="ch_vil_legende_img4" value="<?php echo $row_ville['ch_vil_legende_img4']; ?>">
+                    <input name="ch_vil_legende_img4" type="text" id="ch_vil_legende_img4" value="<?php echo e($row_ville['ch_vil_legende_img4']); ?>">
                     <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span></div>
                 </div>
                 <div id="sprytextfield13" class="control-group">
                   <label class="control-label" for="ch_vil_lien_img5">Lien image n&deg;5 <a href="#" rel="clickover" title="Lien image" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)"><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
-                    <input name="ch_vil_lien_img5" type="text" id="ch_vil_lien_img5" value="<?php echo $row_ville['ch_vil_lien_img5']; ?>" class="span11">
+                    <input name="ch_vil_lien_img5" type="text" id="ch_vil_lien_img5" value="<?php echo e($row_ville['ch_vil_lien_img5']); ?>" class="span11">
                     <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span></div>
                 </div>
                 <div id="sprytextfield14" class="control-group">
                   <label class="control-label" for="ch_vil_legende_img5">L&eacute;gende image n&deg;5 <a href="#" rel="clickover" title="L&eacute;gende image" data-placement="top" data-content="Mettez-ici la l&eacute;gende qui correspond &agrave; l'image. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
                   <div class="controls">
-                    <input name="ch_vil_legende_img5" type="text" id="ch_vil_legende_img5" value="<?php echo $row_ville['ch_vil_legende_img5']; ?>">
+                    <input name="ch_vil_legende_img5" type="text" id="ch_vil_legende_img5" value="<?php echo e($row_ville['ch_vil_legende_img5']); ?>">
                     <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span></div>
                 </div>
               </div>

@@ -221,7 +221,7 @@ $totalRows_VoiesPaysPetites = mysql_num_rows($VoiesPaysPetites);
         ?>
         pf = format.read("<?= e($row_ZonesTerres['ch_geo_wkt']) ?>");
         pf.attributes = {
-            couleur: "<?php echo $fillcolor; ?>", epaisseurTrait: "<?php echo $strokeWidth; ?>", opaciteCouleur: "<?php echo $fillOpacity; ?>", couleurTrait: "<?php echo $strokeColor; ?>", opaciteTrait: "<?php echo $strokeOpacity; ?>", Trait: "<?php echo $Trait; ?>", name: "<?php echo $Nomzone; ?>"
+            couleur: "<?php echo $fillcolor; ?>", epaisseurTrait: "<?php echo $strokeWidth; ?>", opaciteCouleur: "<?php echo $fillOpacity; ?>", couleurTrait: "<?php echo $strokeColor; ?>", opaciteTrait: "<?php echo $strokeOpacity; ?>", Trait: "<?php echo $Trait; ?>", name: "<?php echo e($Nomzone); ?>"
         }
         vTerres.addFeatures([pf]);
         <?php } ?>
@@ -268,7 +268,7 @@ $totalRows_VoiesPaysPetites = mysql_num_rows($VoiesPaysPetites);
         ?>
         pf = format.read("<?= e($row_ZonesAdministratives['ch_geo_wkt']) ?>");
         pf.attributes = {
-            couleur: "<?php echo $fillcolor; ?>", epaisseurTrait: "<?php echo $strokeWidth; ?>", opaciteCouleur: "<?php echo $fillOpacity; ?>", couleurTrait: "<?php echo $strokeColor; ?>", opaciteTrait: "<?php echo $strokeOpacity; ?>", Trait: "<?php echo $Trait; ?>", name: "<?php echo $Nomzone; ?>"
+            couleur: "<?php echo $fillcolor; ?>", epaisseurTrait: "<?php echo $strokeWidth; ?>", opaciteCouleur: "<?php echo $fillOpacity; ?>", couleurTrait: "<?php echo $strokeColor; ?>", opaciteTrait: "<?php echo $strokeOpacity; ?>", Trait: "<?php echo $Trait; ?>", name: "<?php echo e($Nomzone); ?>"
         }
         vAdministrations.addFeatures([pf]);
         <?php } while ($row_ZonesAdministratives = mysql_fetch_assoc($ZonesAdministratives)); ?>

@@ -47,7 +47,7 @@ if ((isset($_POST['communique-ID'])) && ($_POST['communique-ID'] != "")) {
 <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url("<?php echo $_SESSION['fond_ecran'] ?>");
+	background-image: url("<?php echo e($_SESSION['fond_ecran']) ?>");
 }
 </style>
 

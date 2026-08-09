@@ -149,7 +149,7 @@ Eventy::action('display.beforeHeadClosingTag')
       <?php } ?>
 
         <ul class="breadcrumb pull-left">
-          <li><a href="page_pays_back.php?paysID=<?= $thisPays->get('ch_pay_id') ?>&userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>">Gestion du pays : <?= __s($thisPays->get('ch_pay_nom')) ?></a> <span class="divider">/</span></li>
+          <li><a href="page_pays_back.php?paysID=<?= e($thisPays->get('ch_pay_id')) ?>&userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>">Gestion du pays : <?= __s($thisPays->get('ch_pay_nom')) ?></a> <span class="divider">/</span></li>
           <li class="active">Modifier un personnage historique</li>
         </ul>
 
@@ -168,7 +168,7 @@ Eventy::action('display.beforeHeadClosingTag')
 		$nb_update = $row_Fait_his['ch_his_nb_update'] + 1;?>
         <input name="ch_his_date" type="hidden" value="<?= e($row_Fait_his['ch_his_date']) ?>" >
         <input name="ch_his_mis_jour" type="hidden" value="<?php echo $now; ?>" >
-        <input name="ch_his_nb_update" type="hidden" value="<?php echo $nb_update; ?>">
+        <input name="ch_his_nb_update" type="hidden" value="<?php echo e($nb_update); ?>">
         <div class="row-fluid">
           <div class="span8"> 
         <!-- Statut -->
@@ -224,14 +224,14 @@ Eventy::action('display.beforeHeadClosingTag')
         <div id="sprytextfield5" class="control-group">
           <label class="control-label" for="ch_his_lien_img1">Lien portrait <a href="#" rel="clickover" title="Lien portrait" data-content="Mettez-ici un lien http:// vers une image d&eacute;ja stock&eacute;e sur un serveur d'image (du type servimg.com)"><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input type="text" name="ch_his_lien_img1" id="ch_his_lien_img1" value="<?php echo $row_Fait_his['ch_his_lien_img1']; ?>" class="span12">
+            <input type="text" name="ch_his_lien_img1" id="ch_his_lien_img1" value="<?php echo e($row_Fait_his['ch_his_lien_img1']); ?>" class="span12">
             <span class="textfieldInvalidFormatMsg">Format non valide.</span><span class="textfieldMaxCharsMsg">250 caract&egrave;res maximum.</span><span class="textfieldRequiredMsg">Une valeur est requise.</span></div>
         </div>
         <!-- Legende image -->
         <div id="sprytextfield6" class="control-group">
           <label class="control-label" for="ch_his_legende_img1">L&eacute;gende portrait <a href="#" rel="clickover" title="L&eacute;gende portrait" data-content="Mettez-ici la l&eacute;gende qui correspond &agrave; l'image. 50 caract&egrave;res maximum."><i class="icon-info-sign"></i></a></label>
           <div class="controls">
-            <input type="text" name="ch_his_legende_img1" id="ch_his_legende_img1" class="span12" value="<?php echo $row_Fait_his['ch_his_legende_img1']; ?>">
+            <input type="text" name="ch_his_legende_img1" id="ch_his_legende_img1" class="span12" value="<?php echo e($row_Fait_his['ch_his_legende_img1']); ?>">
             <span class="textfieldMaxCharsMsg">50 caract&egrave;res maximum.</span></div>
         </div>
         <!-- Description -->
@@ -244,7 +244,7 @@ Eventy::action('display.beforeHeadClosingTag')
         </div>
           <div class="span4 pull-center">
             <p>&nbsp;</p>
-            <img id="portrait" src="<?php echo $row_Fait_his['ch_his_lien_img1']; ?>" alt="Personnage" width="250" height="250" title="Personnage"></div>
+            <img id="portrait" src="<?php echo e($row_Fait_his['ch_his_lien_img1']); ?>" alt="Personnage" width="250" height="250" title="Personnage"></div>
         </div>
         <!-- Contenu -->
         <div class="control-group">
@@ -255,7 +255,7 @@ Eventy::action('display.beforeHeadClosingTag')
         </div>
         <div class="controls">
           <button type="submit" class="btn btn-primary">Envoyer</button>
-          &nbsp;&nbsp;<a class="btn btn-danger" href="page_pays_back.php?paysID=<?= $thisPays->get('ch_pay_id') ?>">Annuler</a> </div>
+          &nbsp;&nbsp;<a class="btn btn-danger" href="page_pays_back.php?paysID=<?= e($thisPays->get('ch_pay_id')) ?>">Annuler</a> </div>
         <input type="hidden" name="MM_update" value="ajout_fait_hist">
       </form>
       <p>&nbsp;</p>

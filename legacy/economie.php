@@ -149,7 +149,7 @@ Eventy::action('display.beforeHeadClosingTag')
                 <img alt="Icône de l'institut" class="pull-right" style="width: 35%; margin-left: 15px;"
                      src="<?= e($row_institut['ch_ins_img']) ?>">
               <?php endif; ?>
-              <?php echo $row_institut['ch_ins_desc'] ?>
+              <?php echo htmlPurify($row_institut['ch_ins_desc']) ?>
             </div>
           </div>
         </div>
