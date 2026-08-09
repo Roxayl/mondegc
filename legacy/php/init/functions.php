@@ -1377,6 +1377,59 @@ function requirePaysPermission(mixed $paysId, string $level = 'codirigeant'): vo
 }
 
 
+/**
+ * Donne l'identifiant du pays auquel une ville est rattachée.
+ *
+ * @param mixed $villeId Identifiant de la ville.
+ * @return int|null
+ */
+function villePaysId(mixed $villeId): ?int
+{
+    $ville = mysql_fetch_assoc(mysql_query(sprintf(
+        'SELECT ch_vil_paysID FROM villes WHERE ch_vil_ID = %s', escape_sql($villeId, 'int'))));
+
+    return $ville ? (int) $ville['ch_vil_paysID'] : null;
+}
+
+
+/**
+ * Interrompt la requête si le membre connecté ne peut pas gérer un communiqué. Sont autorisés son
+ * auteur, les dirigeants du pays auquel il est rattaché, et la modération.
+ *
+ * @param mixed $communiqueId Identifiant du communiqué.
+ * @return array Le communiqué concerné.
+ */
+function requireCommuniquePermission(mixed $communiqueId): array
+{
+    if(! isset($_SESSION['userObject'])) {
+        abort(403);
+    }
+
+    $communique = mysql_fetch_assoc(mysql_query(sprintf(
+        'SELECT * FROM communiques WHERE ch_com_ID = %s', escape_sql($communiqueId, 'int'))));
+
+    if(! $communique) {
+        abort(404);
+    }
+
+    $user = $_SESSION['userObject'];
+
+    if($user->minStatus('OCGC')
+       || (int) $communique['ch_com_user_id'] === (int) $user->get('ch_use_id')) {
+        return $communique;
+    }
+
+    if(! empty($communique['ch_com_pays_id'])) {
+        $pays = new \GenCity\Monde\Pays((int) $communique['ch_com_pays_id']);
+        if($pays->getUserPermission($user) >= \GenCity\Monde\Pays::$permissions['codirigeant']) {
+            return $communique;
+        }
+    }
+
+    abort(403);
+}
+
+
 function dateFormat($date, $getTime = false)
 {
     if(!is_numeric($date)) {

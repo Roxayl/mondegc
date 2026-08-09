@@ -12,6 +12,8 @@ if(!isset($_SESSION['userObject'])) {
 // suppression du communiqué
 
 if ((isset($_POST['communique-ID'])) && ($_POST['communique-ID'] != "")) {
+  requireCommuniquePermission($_POST['communique-ID']);
+
   $deleteSQL = sprintf("DELETE FROM communiques WHERE ch_com_ID=%s",
                        escape_sql($_POST['communique-ID'], "int"));
 

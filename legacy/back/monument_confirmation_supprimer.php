@@ -19,6 +19,11 @@ $ch_pat_confimation_suppression = mysql_query($query_ch_pat_confimation_suppress
 $row_ch_pat_confimation_suppression = mysql_fetch_assoc($ch_pat_confimation_suppression);
 $totalRows_ch_pat_confimation_suppression = mysql_num_rows($ch_pat_confimation_suppression);
 
+if(! $row_ch_pat_confimation_suppression) {
+    abort(404);
+}
+requirePaysPermission(villePaysId($row_ch_pat_confimation_suppression['ch_pat_villeID']));
+
 $_SESSION['ville_encours'] = $row_ch_pat_confimation_suppression['ch_pat_villeID'];
 ?><!DOCTYPE html>
 <html lang="fr">

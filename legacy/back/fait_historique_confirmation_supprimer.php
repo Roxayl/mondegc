@@ -18,6 +18,11 @@ $query_ch_his_confimation_suppression = sprintf("SELECT ch_his_id, ch_his_paysID
 $ch_his_confimation_suppression = mysql_query($query_ch_his_confimation_suppression, $maconnexion);
 $row_ch_his_confimation_suppression = mysql_fetch_assoc($ch_his_confimation_suppression);
 $totalRows_ch_his_confimation_suppression = mysql_num_rows($ch_his_confimation_suppression);
+
+if(! $row_ch_his_confimation_suppression) {
+    abort(404);
+}
+requirePaysPermission($row_ch_his_confimation_suppression['ch_his_paysID']);
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->

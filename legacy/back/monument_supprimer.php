@@ -24,6 +24,8 @@ $totalRows_ch_pat_confimation_suppression = mysql_num_rows($ch_pat_confimation_s
 if((isset($_POST['monument_ID'])) && ($_POST['monument_ID'] != "")) {
     $eloquentPatrimoine = \Roxayl\MondeGC\Models\Patrimoine::query()->findOrFail($_POST['monument_ID']);
 
+    requirePaysPermission($eloquentPatrimoine->ville->ch_vil_paysID);
+
     $eloquentPatrimoine->deleteInfluences();
 
     $deleteSQL = sprintf("DELETE FROM patrimoine WHERE ch_pat_id=%s",

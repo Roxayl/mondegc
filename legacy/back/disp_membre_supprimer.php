@@ -15,6 +15,8 @@ if ((isset($_POST['ch_disp_group_id'])) && ($_POST['ch_disp_group_id'] != "")) {
   }
 
 if ((isset($_POST['ch_disp_MG_id'])) && ($_POST['ch_disp_MG_id'] != "")) {
+  requireMinStatus('OCGC');
+
   $deleteSQL = sprintf("DELETE FROM dispatch_mem_group WHERE ch_disp_MG_id=%s",
                        escape_sql($_POST['ch_disp_MG_id'], "int"));
 

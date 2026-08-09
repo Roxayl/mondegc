@@ -16,6 +16,8 @@ if (isset($_POST['paysID'])) {
   unset($_POST['paysID']);
 }
 
+requirePaysPermission($colname_pays);
+
 $thisPays = new \GenCity\Monde\Pays($colname_pays);
 
 ?>
