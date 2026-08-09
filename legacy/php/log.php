@@ -5,11 +5,12 @@ use Illuminate\Session\TokenMismatchException;
 
 // *** Recherche de sessions.
 $clefSession = isset($_COOKIE['Session_mondeGC']) ? $_COOKIE['Session_mondeGC'] : null;
+$clefSessionHash = $clefSession ? hashToken($clefSession) : null;
 
 // Il existe une clé de session dans Session_mondeGC.
 if ($clefSession != null and $clefSession != "" and !isset($_SESSION['login_user'])) {
     $Session_user_query = sprintf("SELECT ch_users_session_dispatch_sessionID, ch_use_session_id, ch_use_session_connect, ch_use_id, ch_use_login, ch_use_paysID, ch_use_statut, ch_use_acces, ch_use_last_log, last_activity, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users_dispatch_session INNER JOIN users_session ON ch_users_session_dispatch_sessionID = ch_use_session_id INNER JOIN users ON ch_use_session_user_ID = ch_use_id WHERE ch_users_session_dispatch_Key =%s",
-        escape_sql($clefSession, "text"));
+        escape_sql($clefSessionHash, "text"));
     $Session_user = mysql_query($Session_user_query, $maconnexion);
     $row_Session_user = mysql_fetch_assoc($Session_user);
     $loginFoundUser = mysql_num_rows($Session_user);
@@ -19,7 +20,7 @@ if ($clefSession != null and $clefSession != "" and !isset($_SESSION['login_user
         // ** Effacement des session sur serveur. **
         if ($clefSession != null and $clefSession != "") {
             $deleteSQL = sprintf("DELETE FROM users_dispatch_session WHERE ch_users_session_dispatch_Key=%s",
-                escape_sql($clefSession, "text"));
+                escape_sql($clefSessionHash, "text"));
 
             $Result4 = mysql_query($deleteSQL, $maconnexion);
 
@@ -72,16 +73,7 @@ if (isset($_POST['identifiant'])) {
         $user_login = $row_LoginRS['ch_use_login'];
         $user_pays = $row_LoginRS['ch_use_paysID'];
 
-        ///fonction clef activation
-        $characts = 'abcdefghijklmnopqrstuvwxyz';
-        $characts .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $characts .= '1234567890';
-        $code_aleatoire = '';
-
-        for ($i = 0; $i < 20; $i++) {    //10 est le nombre de caractères
-            $code_aleatoire .= substr($characts, rand() % (strlen($characts)), 1);
-        }
-        $clef_session_kryptee = md5($code_aleatoire.$salt);
+        $code_aleatoire = generateToken();
 
         // *** Creation session BDD.
         $insertSQL = sprintf("INSERT INTO users_session (ch_use_session_login_user, ch_use_session_user_ID, ch_use_session_connect, ch_use_session_date) VALUES (%s, %s, %s, %s)",
@@ -94,14 +86,20 @@ if (isset($_POST['identifiant'])) {
 
         $Id_Session = mysql_insert_id();
         $insertSQL = sprintf("INSERT INTO users_dispatch_session (ch_users_session_dispatch_Key, ch_users_session_dispatch_sessionID) VALUES (%s, %s)",
-            escape_sql($code_aleatoire, "text"),
+            escape_sql(hashToken($code_aleatoire), "text"),
             escape_sql($Id_Session, "int"));
 
         $Result2 = mysql_query($insertSQL, $maconnexion);
 
         // *** Creation du cookie
         $dureeCookieJours = 30;
-        setcookie('Session_mondeGC', $code_aleatoire, time() + ($dureeCookieJours * 24 * 3600), '', '', false, true);
+        setcookie('Session_mondeGC', $code_aleatoire, [
+            'expires' => time() + ($dureeCookieJours * 24 * 3600),
+            'path' => '/',
+            'secure' => request()->isSecure(),
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
 
         $authService = new AuthenticationService();
         $authService->loginUsingId($row_LoginRS['ch_use_id']);
@@ -151,7 +149,7 @@ if (auth()->check() && isset($_GET['doLogout']) && ($_GET['doLogout'] === "true"
 // ** Effacement des session sur serveur. **
     if ($clefSession != null and $clefSession != "") {
         $deleteSQL = sprintf("DELETE FROM users_dispatch_session WHERE ch_users_session_dispatch_Key=%s",
-            escape_sql($clefSession, "text"));
+            escape_sql($clefSessionHash, "text"));
 
         $Result4 = mysql_query($deleteSQL, $maconnexion);
 

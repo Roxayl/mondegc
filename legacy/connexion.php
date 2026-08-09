@@ -21,16 +21,7 @@ $row_Compare_mail = mysql_fetch_assoc($Compare_mail);
 $totalRows_Compare_mail = mysql_num_rows($Compare_mail);
 
 if ( $row_Compare_mail ) {
-//fonction clef activation
-	$characts    = 'abcdefghijklmnopqrstuvwxyz';
-    $characts   .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';	
-	$characts   .= '1234567890'; 
-	$code_aleatoire      = ''; 
-
-	for($i=0;$i < 10;$i++)    //10 est le nombre de caract�res
-	{ 
-        $code_aleatoire .= substr($characts,rand()%(strlen($characts)),1); 
-	}
+$code_aleatoire = generateToken();
 
 
   $mail = $row_Compare_mail['ch_use_mail'] ; // D�claration de l'adresse de destination.
@@ -41,7 +32,7 @@ if ( $row_Compare_mail ) {
 
   $insertSQL = sprintf("INSERT INTO users_provisoire (ch_use_prov_login, ch_use_prov_clef, ch_use_prov_mail, ch_use_prov_paysID, ch_use_prov_statut) VALUES (%s, %s, %s, %s, %s)",
                        escape_sql($login, "text"),
-                       escape_sql($clef, "text"),
+                       escape_sql(hashToken($clef), "text"),
                        escape_sql($mail, "text"),
                        escape_sql($paysID, "int"),
                        escape_sql($statut, "int"));

@@ -1378,6 +1378,30 @@ function requirePaysPermission(mixed $paysId, string $level = 'codirigeant'): vo
 
 
 /**
+ * Génère un jeton imprévisible, adapté à un usage d'authentification.
+ *
+ * @param int $bytes Nombre d'octets d'entropie.
+ * @return string Jeton en representation hexadécimale.
+ */
+function generateToken(int $bytes = 32): string
+{
+    return bin2hex(random_bytes($bytes));
+}
+
+
+/**
+ * Empreinte d'un jeton, pour le stocker sans le conserver en clair.
+ *
+ * @param string $token
+ * @return string
+ */
+function hashToken(string $token): string
+{
+    return hash('sha256', $token);
+}
+
+
+/**
  * Donne l'identifiant du pays auquel une ville est rattachée.
  *
  * @param mixed $villeId Identifiant de la ville.

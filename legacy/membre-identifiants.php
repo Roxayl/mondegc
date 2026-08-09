@@ -6,7 +6,7 @@ include('php/log.php');
 $login = $_GET['login'] ?? '';
 $clef = $_GET['clef'] ?? '';
 
-$query_user_prov = sprintf("SELECT * FROM users_provisoire WHERE ch_use_prov_login = %s AND ch_use_prov_clef = %s", escape_sql($login, "text"), escape_sql($clef, "text"));
+$query_user_prov = sprintf("SELECT * FROM users_provisoire WHERE ch_use_prov_login = %s AND ch_use_prov_clef = %s", escape_sql($login, "text"), escape_sql(hashToken($clef), "text"));
 $user_prov = mysql_query($query_user_prov, $maconnexion);
 $row_user_prov = mysql_fetch_assoc($user_prov);
 $totalRows_user_prov = mysql_num_rows($user_prov);
