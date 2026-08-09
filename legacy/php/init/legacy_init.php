@@ -16,6 +16,13 @@ $mondegc_config['env'] = strtolower(app()->environment());
 $mondegc_config['version'] = config('app.version');
 $mondegc_config['hide_errors'] = config('legacy.hide_errors');
 $mondegc_config['enable_csrf_protection'] = config('legacy.enable_csrf_protection');
+
+if(empty(config('legacy.salt'))) {
+    throw new RuntimeException(
+        "LEGACY_SALT n'est pas défini : exécutez `php artisan monde:init-env`."
+    );
+}
+
 $mondegc_config['path'] = ! empty(config('app.directory_path'))
                         ? config('app.directory_path') . '/'
                         : '';

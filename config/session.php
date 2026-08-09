@@ -187,13 +187,13 @@ return [
     |--------------------------------------------------------------------------
     |
     | This option determines how your cookies behave when cross-site requests
-    | take place, and can be used to mitigate CSRF attacks. By default, we
-    | do not enable this as other CSRF protection services are in place.
+    | take place, and can be used to mitigate CSRF attacks. The "legacy"
+    | middleware group has no VerifyCsrfToken, so this must not be left null.
     |
     | Supported: "lax", "strict"
     |
     */
 
-    'same_site' => null,
+    'same_site' => 'lax',
 
 ];

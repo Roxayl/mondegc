@@ -26,12 +26,28 @@ class AuthenticationService
     }
 
     /**
+     * Renouvelle l'identifiant de la session PHP native en conservant son contenu.
+     */
+    private function regenerateSessionId(): void
+    {
+        if (session_status() === PHP_SESSION_ACTIVE && ! headers_sent()) {
+            session_regenerate_id(true);
+        }
+    }
+
+    /**
      * Connecte l'utilisateur sur le site legacy et l'application Laravel.
      *
      * @param  CustomUser  $user
      */
     public function login(CustomUser $user): void
     {
+        // Uniquement sur un changement d'utilisateur : cette méthode est aussi appelée à chaque
+        // page pour ré-hydrater la session depuis le cookie persistant.
+        if ((int) ($_SESSION['user_ID'] ?? 0) !== (int) $user->ch_use_id) {
+            $this->regenerateSessionId();
+        }
+
         // Mettre à jour la date de dernière connexion.
         $user->ch_use_last_log = now();
         $user->save();
@@ -94,5 +110,7 @@ class AuthenticationService
         auth()->logout();
         // Réinitialiser le jeton CSRF.
         session()->regenerateToken();
+
+        $this->regenerateSessionId();
     }
 }
