@@ -1365,13 +1365,12 @@ function requirePaysPermission(mixed $paysId, string $level = 'codirigeant'): vo
         return;
     }
 
-    $pays = \Roxayl\MondeGC\Models\Pays::query()->find((int) $paysId);
-    if(! $pays) {
+    if(! \Roxayl\MondeGC\Models\Pays::query()->whereKey((int) $paysId)->exists()) {
         abort(404);
     }
 
-    $legacyPays = new \GenCity\Monde\Pays((int) $paysId);
-    if($legacyPays->getUserPermission($user) < \GenCity\Monde\Pays::$permissions[$level]) {
+    $pays = new \GenCity\Monde\Pays((int) $paysId);
+    if($pays->getUserPermission($user) < \GenCity\Monde\Pays::$permissions[$level]) {
         abort(403);
     }
 }
@@ -1421,9 +1420,9 @@ function villePaysId(mixed $villeId): ?int
  * auteur, les dirigeants du pays auquel il est rattaché, et la modération.
  *
  * @param mixed $communiqueId Identifiant du communiqué.
- * @return array Le communiqué concerné.
+ * @return void
  */
-function requireCommuniquePermission(mixed $communiqueId): array
+function requireCommuniquePermission(mixed $communiqueId): void
 {
     if(! isset($_SESSION['userObject'])) {
         abort(403);
@@ -1440,13 +1439,13 @@ function requireCommuniquePermission(mixed $communiqueId): array
 
     if($user->minStatus('OCGC')
        || (int) $communique['ch_com_user_id'] === (int) $user->get('ch_use_id')) {
-        return $communique;
+        return;
     }
 
     if(! empty($communique['ch_com_pays_id'])) {
         $pays = new \GenCity\Monde\Pays((int) $communique['ch_com_pays_id']);
         if($pays->getUserPermission($user) >= \GenCity\Monde\Pays::$permissions['codirigeant']) {
-            return $communique;
+            return;
         }
     }
 
