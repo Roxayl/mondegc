@@ -3,16 +3,8 @@
 //Connexion et deconnexion
 include('php/log.php');
 
-$colname_Recordset1 = "-1";
-if (isset($_GET['login'])) {
-  $login = $_GET['login'];
-}
-
-$colname_Recordset1 = "-1";
-if (isset($_GET['clef'])) {
-  $clef = $_GET['clef'];
-}
-
+$login = $_GET['login'] ?? '';
+$clef = $_GET['clef'] ?? '';
 
 $query_user_prov = sprintf("SELECT * FROM users_provisoire WHERE ch_use_prov_login = %s AND ch_use_prov_clef = %s", escape_sql($login, "text"), escape_sql($clef, "text"));
 $user_prov = mysql_query($query_user_prov, $maconnexion);
@@ -33,18 +25,28 @@ $UserID = mysql_query($query_UserID, $maconnexion);
 $row_UserID = mysql_fetch_assoc($UserID);
 $totalRows_UserID = mysql_num_rows($UserID);
 
+if(! $row_UserID) {
+    abort(404);
+}
+
 $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php';
 appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
+  if (empty($_POST['ch_use_password'])) {
+      getErrorMessage('error', "Veuillez saisir un mot de passe.");
+      header(sprintf("Location: %s", $editFormAction));
+      exit;
+  }
+
   $salt = config('legacy.salt');
   $password = md5($_POST['ch_use_password'].$salt);
-  $updateSQL = sprintf("UPDATE users SET ch_use_login=%s, ch_use_password=%s WHERE ch_use_id=%s",
-                       escape_sql($_POST['ch_use_login'], "text"),
-                       escape_sql($password, "text"),
-                       escape_sql($_POST['ch_use_id'], "int"));
 
-  
+  // Le compte modifié est celui associé à la clef, jamais celui désigné par le formulaire.
+  $updateSQL = sprintf("UPDATE users SET ch_use_password=%s WHERE ch_use_id=%s",
+                       escape_sql($password, "text"),
+                       escape_sql($row_UserID['ch_use_id'], "int"));
+
   $Result1 = mysql_query($updateSQL, $maconnexion);
   
   // Effacement de la clef sur User_provisoire
@@ -116,7 +118,6 @@ Eventy::action('display.beforeHeadClosingTag')
         <p>Cher <?= e($row_user_prov['ch_use_prov_login']) ?>, entrez un nouveau mot de passe afin d'acc&eacute;der &agrave; votre compte.</p>
       </div>
       <form action="<?= e($editFormAction) ?>" name="InfoUser" method="POST" class="form-horizontal" id="InfoHeader">
-        <input name="ch_use_id" type="hidden" value="<?= e($row_UserID['ch_use_id']) ?>">
         <!-- Informations G�n�rales
         ================================================== -->
         <h3>Informations Profil</h3>
