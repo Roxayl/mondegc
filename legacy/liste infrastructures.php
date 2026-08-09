@@ -7,7 +7,13 @@ include('php/log.php');
 
 $type_classement = 'ch_inf_off_nom ASC';
 if (isset($_GET['type_classement_inf'])) {
-  $type_classement = $_GET['type_classement_inf'];
+  $type_classement = escape_sql($_GET['type_classement_inf'], 'order_by_columns', [
+        'ch_inf_off_nom ASC', 'ch_inf_off_date DESC', 'ch_inf_off_budget DESC',
+        'ch_inf_off_Industrie DESC', 'ch_inf_off_Commerce DESC',
+        'ch_inf_off_Agriculture DESC', 'ch_inf_off_Tourisme DESC',
+        'ch_inf_off_Recherche DESC', 'ch_inf_off_Environnement DESC',
+        'ch_inf_off_Education DESC',
+    ]);
 }
 
 $infraGroupList = \GenCity\Monde\Temperance\InfraGroup::getAll();
@@ -29,7 +35,7 @@ $startRow_liste_infra_officielles = $pageNum_liste_infra_officielles * $maxRows_
 if(is_null($thisGroup)) {
     $query_liste_infra_officielles = sprintf(
         "SELECT * FROM infrastructures_officielles ORDER BY %s",
-        mysql_real_escape_string($type_classement));
+        $type_classement);
 } else {
     $query_liste_infra_officielles = sprintf(
         "SELECT iof.* FROM infrastructures_officielles iof
@@ -37,7 +43,7 @@ if(is_null($thisGroup)) {
         WHERE ID_groupes = %s
         ORDER BY %s",
         escape_sql($thisGroup->get('id')),
-        mysql_real_escape_string($type_classement));
+        $type_classement);
 }
 $query_limit_liste_infra_officielles = sprintf("%s LIMIT %d, %d", $query_liste_infra_officielles, $startRow_liste_infra_officielles, $maxRows_liste_infra_officielles);
 $liste_infra_officielles = mysql_query($query_limit_liste_infra_officielles, $maconnexion);

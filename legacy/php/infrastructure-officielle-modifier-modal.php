@@ -33,7 +33,9 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout-inf_off")) {
     $newInfraOff = new \GenCity\Monde\Temperance\InfraOfficielle($_POST['ch_inf_off_id']);
 
     // Gestion des groupes d'infrastructures
-    $delete_group = mysql_query('DELETE FROM infrastructures_officielles_groupes WHERE ID_infra_officielle = ' . mysql_real_escape_string($_POST['ch_inf_off_id']));
+    $delete_group = mysql_query(sprintf(
+        'DELETE FROM infrastructures_officielles_groupes WHERE ID_infra_officielle = %s',
+        escape_sql($_POST['ch_inf_off_id'], 'int')));
     $insert_group = mysql_query(sprintf('INSERT INTO infrastructures_officielles_groupes(ID_groupes, ID_infra_officielle) VALUES(%s, %s)',
         escape_sql($_POST['groupe_infra']),
         escape_sql($_POST['ch_inf_off_id'])
@@ -79,8 +81,9 @@ $query_infra_group = 'SELECT * FROM infrastructures_groupes';
 $infra_group = mysql_query($query_infra_group, $maconnexion);
 
 // Voir si l'infra en question fait partie d'un groupe.
-$query_infra_officielles_group = 'SELECT * FROM infrastructures_officielles_groupes
-  WHERE ID_infra_officielle = ' . mysql_real_escape_string($colname_infra_officielles);
+$query_infra_officielles_group = sprintf(
+  'SELECT * FROM infrastructures_officielles_groupes WHERE ID_infra_officielle = %s',
+  escape_sql($colname_infra_officielles, 'int'));
 $infra_officielles_group = mysql_query($query_infra_officielles_group);
 $row_infra_officielles_group = mysql_fetch_assoc($infra_officielles_group);
 $selected_infra_group = 0;

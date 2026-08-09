@@ -21,7 +21,13 @@ $totalRows_institut = mysql_num_rows($institut);
 //requete liste temperances
 $type_classement = 'ch_inf_off_nom ASC';
 if (isset($_GET['type_classement_inf'])) {
-  $type_classement = $_GET['type_classement_inf'];
+  $type_classement = escape_sql($_GET['type_classement_inf'], 'order_by_columns', [
+      'ch_inf_off_nom ASC', 'ch_inf_off_date DESC', 'ch_inf_off_budget DESC',
+      'ch_inf_off_Industrie DESC', 'ch_inf_off_Commerce DESC',
+      'ch_inf_off_Agriculture DESC', 'ch_inf_off_Tourisme DESC',
+      'ch_inf_off_Recherche DESC', 'ch_inf_off_Environnement DESC',
+      'ch_inf_off_Education DESC',
+  ]);
 } 
 
 $maxRows_liste_temperance = 2;
@@ -68,7 +74,13 @@ $queryString_liste_temperance = sprintf("&totalRows_liste_temperance=%d%s", $tot
 
 $type_classement = 'ch_inf_off_nom ASC';
 if (isset($_GET['type_classement_inf'])) {
-  $type_classement = $_GET['type_classement_inf'];
+  $type_classement = escape_sql($_GET['type_classement_inf'], 'order_by_columns', [
+      'ch_inf_off_nom ASC', 'ch_inf_off_date DESC', 'ch_inf_off_budget DESC',
+      'ch_inf_off_Industrie DESC', 'ch_inf_off_Commerce DESC',
+      'ch_inf_off_Agriculture DESC', 'ch_inf_off_Tourisme DESC',
+      'ch_inf_off_Recherche DESC', 'ch_inf_off_Environnement DESC',
+      'ch_inf_off_Education DESC',
+  ]);
 } 
 
 
@@ -80,7 +92,7 @@ if (isset($_GET['pageNum_liste_infra_officielles'])) {
 $startRow_liste_infra_officielles = $pageNum_liste_infra_officielles * $maxRows_liste_infra_officielles;
 
 
-$query_liste_infra_officielles = sprintf("SELECT * FROM infrastructures_officielles ORDER BY $type_classement");
+$query_liste_infra_officielles = sprintf("SELECT * FROM infrastructures_officielles ORDER BY %s", $type_classement);
 $query_limit_liste_infra_officielles = sprintf("%s LIMIT %d, %d", $query_liste_infra_officielles, $startRow_liste_infra_officielles, $maxRows_liste_infra_officielles);
 $liste_infra_officielles = mysql_query($query_limit_liste_infra_officielles, $maconnexion);
 $row_liste_infra_officielles = mysql_fetch_assoc($liste_infra_officielles);
