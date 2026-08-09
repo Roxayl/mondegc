@@ -95,6 +95,8 @@ $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.
 appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien")) {
+  requirePaysPermission($_POST['ch_pay_id'] ?? 0);
+
   $updateSQL = sprintf("UPDATE pays SET ch_pay_lien_forum=%s WHERE ch_pay_id=%s",
                        escape_sql($_POST['ch_pay_lien_forum'], "text"),
                        escape_sql($_POST['ch_pay_id'], "int"));
@@ -114,6 +116,8 @@ $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.
 appendQueryString($editFormAction);
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ajout_lien_institut")) {
+  requireMinStatus('OCGC');
+
   $updateSQL = sprintf("UPDATE instituts SET ch_ins_lien_forum=%s WHERE ch_ins_ID=%s",
                        escape_sql($_POST['ch_ins_lien_forum'], "text"),
                        escape_sql($_POST['ch_ins_ID'], "int"));

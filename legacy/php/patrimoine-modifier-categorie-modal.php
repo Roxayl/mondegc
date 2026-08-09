@@ -3,6 +3,8 @@
 use Roxayl\MondeGC\Events\Patrimoine\PatrimoineCategorized;
 use Roxayl\MondeGC\Models\MonumentCategory;
 
+requireMinStatus('OCGC');
+
 header('Content-Type: text/html; charset=utf-8');
 
 

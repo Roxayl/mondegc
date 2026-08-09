@@ -1332,6 +1332,51 @@ function showErrorMessage(string $errorType, string $errorInfo): void
 }
 
 
+/**
+ * Interrompt la requête si le membre connecté n'a pas au moins le statut demandé.
+ *
+ * @param string|int $status Libellé ou valeur de statut, cf. {@see \GenCity\Monde\User::getUserPermission()}.
+ * @return void
+ */
+function requireMinStatus(string|int $status): void
+{
+    if(! isset($_SESSION['userObject']) || ! $_SESSION['userObject']->minStatus($status)) {
+        abort(403);
+    }
+}
+
+
+/**
+ * Interrompt la requête si le membre connecté n'a pas le niveau de permission demandé sur un pays.
+ * La modération est autorisée sur tous les pays.
+ *
+ * @param mixed $paysId Identifiant du pays.
+ * @param string $level Clé de {@see \GenCity\Monde\Pays::$permissions}.
+ * @return void
+ */
+function requirePaysPermission(mixed $paysId, string $level = 'codirigeant'): void
+{
+    if(! isset($_SESSION['userObject'])) {
+        abort(403);
+    }
+
+    $user = $_SESSION['userObject'];
+    if($user->minStatus('OCGC')) {
+        return;
+    }
+
+    $pays = \Roxayl\MondeGC\Models\Pays::query()->find((int) $paysId);
+    if(! $pays) {
+        abort(404);
+    }
+
+    $legacyPays = new \GenCity\Monde\Pays((int) $paysId);
+    if($legacyPays->getUserPermission($user) < \GenCity\Monde\Pays::$permissions[$level]) {
+        abort(403);
+    }
+}
+
+
 function dateFormat($date, $getTime = false)
 {
     if(!is_numeric($date)) {
