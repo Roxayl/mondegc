@@ -15,6 +15,8 @@ if (isset($_POST['communique_ID'])) {
   $colname_ch_communique_confimation_suppression = $_POST['communique_ID'];
 }
 
+requireCommuniquePermission($colname_ch_communique_confimation_suppression);
+
 $query_ch_communique_confimation_suppression = sprintf("SELECT ch_com_ID, ch_com_titre, ch_com_categorie, ch_com_element_id FROM communiques WHERE ch_com_ID = %s", escape_sql($colname_ch_communique_confimation_suppression, "int"));
 $ch_communique_confimation_suppression = mysql_query($query_ch_communique_confimation_suppression, $maconnexion);
 $row_ch_communique_confimation_suppression = mysql_fetch_assoc($ch_communique_confimation_suppression);
@@ -42,7 +44,7 @@ $totalRows_ch_communique_confimation_suppression = mysql_num_rows($ch_communique
 <style>
 <?php if (($row_ch_communique_confimation_suppression['ch_com_categorie'] == "pays") || ($row_ch_communique_confimation_suppression['ch_com_categorie'] == "ville") AND ($_SESSION['fond_ecran']) ) {
 ?> .jumbotron {
- background-image: url("<?php echo $_SESSION['fond_ecran'] ?>");
+ background-image: url("<?php echo e($_SESSION['fond_ecran']) ?>");
 }
 <?php
 } elseif ($row_ch_communique_confimation_suppression['ch_com_categorie'] == "institut") { ?> 

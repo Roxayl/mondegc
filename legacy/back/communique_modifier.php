@@ -190,11 +190,11 @@ Eventy::action('display.beforeHeadClosingTag')
     <section> 
       <?php if(isset($personnage)): ?>
       <!-- EN-tête Personnage pour communiquées officiels et commentaire-->
-      <div class="span3 thumb"> <img src="<?= $personnage->get('lien_img') ?>" alt="photo <?= $personnage->get('nom_personnage') ?>">
+      <div class="span3 thumb"> <img src="<?= e($personnage->get('lien_img')) ?>" alt="photo <?= e($personnage->get('nom_personnage')) ?>">
         <div class="titre-gris">
-          <p><?= $personnage->get('predicat') ?></p>
-          <h3><?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?></h3>
-          <p><small><?= $personnage->get('titre_personnage') ?></small></p></div>
+          <p><?= e($personnage->get('predicat')) ?></p>
+          <h3><?= e($personnage->get('prenom_personnage')) ?> <?= e($personnage->get('nom_personnage')) ?></h3>
+          <p><small><?= e($personnage->get('titre_personnage')) ?></small></p></div>
       </div>
     <?php endif; ?>
       <div class="offset6 span3 thumb">
@@ -205,26 +205,26 @@ Eventy::action('display.beforeHeadClosingTag')
         <?php if ($insigne == NULL) {?>
         <img src="../assets/img/imagesdefaut/blason.jpg" alt="armoirie">
         <?php } else { ?>
-        <img src="<?php echo $insigne; ?>" alt="armoirie">
+        <img src="<?php echo e($insigne); ?>" alt="armoirie">
         <?php } ?>
         <?php } elseif ( $cat == "pays") {?>
         <?php if ($insigne == NULL) {?>
         <img src="../assets/img/imagesdefaut/drapeau.jpg" alt="drapeau">
         <?php } else { ?>
-        <img src="<?php echo $insigne; ?>" alt="drapeau">
+        <img src="<?php echo e($insigne); ?>" alt="drapeau">
         <?php } ?>
         <?php } elseif ( $cat == "institut" || $cat == 'organisation') {?>
         <?php if ($insigne == NULL) {?>
         <img src="../assets/img/imagesdefaut/blason.jpg" alt="logo">
         <?php } else { ?>
-        <img src="<?php echo $insigne; ?>" alt="logo">
+        <img src="<?php echo e($insigne); ?>" alt="logo">
         <?php }
 		 } else {?>
-                <img src="<?php echo $insigne; ?>">
+                <img src="<?php echo e($insigne); ?>">
                 <?php } ?>
         <div class="titre-gris">
-          <h3><?php echo $nom_organisation; ?></h3>
-            <p><small><?php echo $soustitre; ?></small></p></div>
+          <h3><?php echo e($nom_organisation); ?></h3>
+            <p><small><?php echo e($soustitre); ?></small></p></div>
         <?php } ?>
       </div>
     </section>
@@ -249,7 +249,7 @@ Eventy::action('display.beforeHeadClosingTag')
       <!-- Bouton cachés -->
       <?php $now= date("Y-m-d G:i:s");?>
       <input name="ch_com_ID" type="hidden" value="<?= e($row_communique['ch_com_ID']) ?>">
-      <input name="ch_com_pays_id" type="hidden" value="<?php echo $row_communique['ch_com_pays_id'] ?>">
+      <input name="ch_com_pays_id" type="hidden" value="<?php echo e($row_communique['ch_com_pays_id']) ?>">
       <input name="ch_com_label" type="hidden" value="<?= e($row_communique['ch_com_label']) ?>">
       <input name="ch_com_categorie" type="hidden" value="<?= e($row_communique['ch_com_categorie']) ?>">
       <input name="ch_com_element_id" type="hidden" value="<?= e($row_communique['ch_com_element_id']) ?>">

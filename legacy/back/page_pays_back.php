@@ -524,7 +524,7 @@ Eventy::action('display.beforeHeadClosingTag')
                   $nbupdate = $row_InfoGenerale['ch_pay_nb_update']+1; ?>
             <input name="ch_pay_date" type="hidden" value="<?= e($row_InfoGenerale['ch_pay_date']) ?>">
             <input name="ch_pay_mis_jour" type="hidden" value="<?php echo $now; ?>">
-            <input name="ch_pay_nb_update" type="hidden" value="<?php echo $nbupdate; ?>">
+            <input name="ch_pay_nb_update" type="hidden" value="<?php echo e($nbupdate); ?>">
             <input name="ch_pay_id" type="hidden" value="<?= e($row_InfoGenerale['ch_pay_id']) ?>">
             <input name="ch_pay_label" type="hidden" value="<?= e($row_InfoGenerale['ch_pay_label']) ?>">
             <!-- Si l'ID du pays a ete trouve
@@ -898,7 +898,7 @@ Eventy::action('display.beforeHeadClosingTag')
               <tr>
                 <td><img src="../assets/img/statutvil_<?= e($row_mesvilles['ch_vil_capitale']) ?>.png" alt="Statut"></td>
                 <td><?php if ($row_mesvilles['ch_vil_paysID'] != $row_mesvilles['ch_use_paysID']) { ?>
-                  <img src="<?= e($row_mesvilles['ch_pay_lien_imgdrapeau']) ?>" alt="drapeau" width="50px" title="ville appartenant au pays <?php echo $row_mesvilles['ch_pay_nom'] ?>">
+                  <img src="<?= e($row_mesvilles['ch_pay_lien_imgdrapeau']) ?>" alt="drapeau" width="50px" title="ville appartenant au pays <?php echo e($row_mesvilles['ch_pay_nom']) ?>">
                   <?php } ?>
                   <?= e($row_mesvilles['ch_vil_nom']) ?></td>
                 <td><?php echo formatNum($row_mesvilles['ch_vil_population']); ?></td>

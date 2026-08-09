@@ -398,7 +398,7 @@ $('#closemodal').click(function() {
       <!-- Image du monument -->
       <div class="span2 img-listes">
         <?php if ($row_new_mon['ch_pat_lien_img1']) {?>
-        <img src="<?php echo $row_new_mon['ch_pat_lien_img1']; ?>" alt="image <?= e($row_new_mon['ch_pat_nom']) ?>">
+        <img src="<?php echo e($row_new_mon['ch_pat_lien_img1']); ?>" alt="image <?= e($row_new_mon['ch_pat_nom']) ?>">
         <?php } else { ?>
         <img src="../assets/img/imagesdefaut/ville.jpg" alt="monument">
         <?php } ?>
@@ -442,7 +442,7 @@ $('#closemodal').click(function() {
       <select name="mon_cat_ID" id="mon_cat_ID" onchange="this.form.submit()">
         <option value="" <?php if ($colname_classer_mon == NULL) {?>selected<?php } ?>>S&eacute;lectionnez une cat&eacute;gorie&nbsp;</option>
         <?php do { ?>
-        <option value="<?php echo $row_liste_mon_cat2['ch_mon_cat_ID']; ?>" <?php if ($colname_classer_mon == $row_liste_mon_cat2['ch_mon_cat_ID']) {?>selected<?php } ?>><?php echo $row_liste_mon_cat2['ch_mon_cat_nom']; ?></option>
+        <option value="<?php echo e($row_liste_mon_cat2['ch_mon_cat_ID']); ?>" <?php if ($colname_classer_mon == $row_liste_mon_cat2['ch_mon_cat_ID']) {?>selected<?php } ?>><?php echo e($row_liste_mon_cat2['ch_mon_cat_nom']); ?></option>
         <?php } while ($row_liste_mon_cat2 = mysql_fetch_assoc($liste_mon_cat2)); ?>
       </select>
     </form>
@@ -467,7 +467,7 @@ $totalRows_liste_mon_cat3 = mysql_num_rows($liste_mon_cat3);
       <!-- Image du monument -->
       <div class="span2 img-listes">
         <?php if ($row_classer_mon['ch_pat_lien_img1']) {?>
-        <img src="<?php echo $row_classer_mon['ch_pat_lien_img1']; ?>" alt="image <?= e($row_classer_mon['ch_pat_nom']) ?>">
+        <img src="<?php echo e($row_classer_mon['ch_pat_lien_img1']); ?>" alt="image <?= e($row_classer_mon['ch_pat_nom']) ?>">
         <?php } else { ?>
         <img src="../assets/img/imagesdefaut/ville.jpg" alt="monument">
         <?php } ?>

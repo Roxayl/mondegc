@@ -8,10 +8,11 @@ appendQueryString($editFormAction);
 
 // *** Recherche de sessions.
 $clefSession = isset($_COOKIE['Session_mondeGC']) ? $_COOKIE['Session_mondeGC'] : null;
+$clefSessionHash = $clefSession ? hashToken($clefSession) : null;
 
 if ($clefSession != null and $clefSession != "") {
     $Session_user_query = sprintf("SELECT ch_users_session_dispatch_sessionID, ch_use_acces, ch_use_session_id, ch_use_session_connect, ch_use_id, ch_use_login, ch_use_paysID, ch_use_statut, ch_use_last_log, last_activity, ch_use_lien_imgpersonnage, ch_use_predicat_dirigeant, ch_use_titre_dirigeant, ch_use_nom_dirigeant, ch_use_prenom_dirigeant FROM users_dispatch_session INNER JOIN users_session ON ch_users_session_dispatch_sessionID = ch_use_session_id INNER JOIN users ON ch_use_session_user_ID = ch_use_id WHERE ch_users_session_dispatch_Key =%s",
-        escape_sql($clefSession, "text"));
+        escape_sql($clefSessionHash, "text"));
     $Session_user = mysql_query($Session_user_query, $maconnexion);
     $row_Session_user = mysql_fetch_assoc($Session_user);
     $loginFoundUser = mysql_num_rows($Session_user);
@@ -21,7 +22,7 @@ if ($clefSession != null and $clefSession != "") {
 // ** Effacement des session sur serveur. **
         if ($clefSession != null and $clefSession != "") {
             $deleteSQL = sprintf("DELETE FROM users_dispatch_session WHERE ch_users_session_dispatch_Key=%s",
-                escape_sql($clefSession, "text"));
+                escape_sql($clefSessionHash, "text"));
 
             $Result4 = mysql_query($deleteSQL, $maconnexion);
 
@@ -60,16 +61,17 @@ if (auth()->check() && isset($_GET['doLogout']) && ($_GET['doLogout'] === "true"
 
 // *** Recherche de sessions.
     $clefSession = $_COOKIE['Session_mondeGC'];
+    $clefSessionHash = hashToken($clefSession);
 
 
     $Session_user_query = sprintf("SELECT ch_use_session_id FROM users_dispatch_session INNER JOIN users_session ON ch_users_session_dispatch_sessionID = ch_use_session_id INNER JOIN users ON ch_use_session_user_ID = ch_use_id WHERE ch_users_session_dispatch_Key =%s",
-        escape_sql($clefSession, "text"));
+        escape_sql($clefSessionHash, "text"));
     $Session_user = mysql_query($Session_user_query, $maconnexion);
     $row_Session_user = mysql_fetch_assoc($Session_user);
 
 // ** Effacement des session sur serveur. **
     $deleteSQL = sprintf("DELETE FROM users_dispatch_session WHERE ch_users_session_dispatch_Key=%s",
-        escape_sql($clefSession, "text"));
+        escape_sql($clefSessionHash, "text"));
 
     $Result4 = mysql_query($deleteSQL, $maconnexion);
 

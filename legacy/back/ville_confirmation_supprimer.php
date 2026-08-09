@@ -21,6 +21,11 @@ $query_ch_vil_confimation_suppression = sprintf("SELECT ch_vil_ID, ch_vil_paysID
 $ch_vil_confimation_suppression = mysql_query($query_ch_vil_confimation_suppression, $maconnexion);
 $row_ch_vil_confimation_suppression = mysql_fetch_assoc($ch_vil_confimation_suppression);
 $totalRows_ch_vil_confimation_suppression = mysql_num_rows($ch_vil_confimation_suppression);
+
+if(! $row_ch_vil_confimation_suppression) {
+    abort(404);
+}
+requirePaysPermission($row_ch_vil_confimation_suppression['ch_vil_paysID']);
 ?><!DOCTYPE html>
 <html lang="fr">
 <!-- head Html -->
@@ -43,7 +48,7 @@ $totalRows_ch_vil_confimation_suppression = mysql_num_rows($ch_vil_confimation_s
 <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .jumbotron {
-	background-image: url('<?php echo $row_ch_vil_confimation_suppression['ch_vil_lien_img1']; ?>');
+	background-image: url('<?php echo e($row_ch_vil_confimation_suppression['ch_vil_lien_img1']); ?>');
 	background-position: center;
 }
 </style>

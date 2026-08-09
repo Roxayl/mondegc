@@ -77,7 +77,7 @@ Eventy::action('display.beforeHeadClosingTag')
     </div>
 
       <ul class="breadcrumb">
-          <li><a href="page_pays_back.php?paysID=<?= $thisPays->get('ch_pay_id') ?>&userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>">Gestion du pays : <?= __s($thisPays->get('ch_pay_nom')) ?></a> <span class="divider">/</span></li>
+          <li><a href="page_pays_back.php?paysID=<?= e($thisPays->get('ch_pay_id')) ?>&userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>">Gestion du pays : <?= __s($thisPays->get('ch_pay_nom')) ?></a> <span class="divider">/</span></li>
           <li class="active">Modifier l'avatar du personnage</li>
       </ul>
     <p>&nbsp;</p>

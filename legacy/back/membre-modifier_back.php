@@ -12,12 +12,28 @@ if(!isset($_SESSION['userObject'])) {
 
 $_SESSION['last_work'] = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.php' . '?' . $_SERVER['QUERY_STRING'];
 
+$currentUser = $_SESSION['userObject'];
+$currentUserId = (int) $currentUser->get('ch_use_id');
+$currentUserStatut = (int) $currentUser->get('ch_use_statut');
+$isModerator = (bool) $currentUser->minStatus('OCGC');
+
 //Recuperation variables
-$colname_User = $_SESSION['Temp_userID'];
+$colname_User = $_SESSION['Temp_userID'] ?? null;
 if(isset($_REQUEST['userID'])) {
     $_SESSION['Temp_userID'] = $_REQUEST['userID'];
     $colname_User = $_SESSION['Temp_userID'];
     unset($_REQUEST['userID']);
+}
+
+// À défaut de profil demandé, on affiche celui du membre connecté.
+if($colname_User === null || $colname_User === '') {
+    $colname_User = $currentUserId;
+    $_SESSION['Temp_userID'] = $currentUserId;
+}
+
+// Seule la modération peut consulter le profil d'un autre membre.
+if(! $isModerator && (int) $colname_User !== $currentUserId) {
+    abort(403);
 }
 
 $query_User = sprintf("SELECT * FROM users WHERE ch_use_id = %s", escape_sql($colname_User, "int"));
@@ -30,28 +46,58 @@ $editFormAction = DEF_URI_PATH . $mondegc_config['front-controller']['uri'] . '.
 appendQueryString($editFormAction);
 
 if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
+    // La cible vient du formulaire : les droits sont revérifiés sur elle, pas sur le profil affiché.
+    $query_targetUser = sprintf("SELECT * FROM users WHERE ch_use_id = %s",
+        escape_sql($_POST['ch_use_id'] ?? 0, "int"));
+    $row_targetUser = mysql_fetch_assoc(mysql_query($query_targetUser, $maconnexion));
+
+    if(! $row_targetUser) {
+        abort(404);
+    }
+
+    $isSelf = (int) $row_targetUser['ch_use_id'] === $currentUserId;
+    if(! $isModerator && ! $isSelf) {
+        abort(403);
+    }
+
     $salt = config('legacy.salt');
-    if(isset ($_POST['ch-use_password'])) {
+
+    // Sans le test sur une valeur vide, valider le formulaire remplaçait le mot de passe par
+    // md5($salt), identique pour tous les comptes.
+    if($isSelf && ! empty($_POST['ch-use_password'])) {
         $hashed_password = md5($_POST['ch-use_password'] . $salt);
         unset($_POST['ch-use_password']);
     } else {
-        $hashed_password = $row_User['ch_use_password'];
+        $hashed_password = $row_targetUser['ch_use_password'];
     }
 
-    if($_POST['ch_use_acces_Checkbox'] == 1) {
-        $banni = "";
+    // Les champs de modération sont ignorés pour un membre standard : le formulaire ne les affiche
+    // pas, mais rien n'empêche de les poster.
+    if($isModerator) {
+        $banni = (($_POST['ch_use_acces_Checkbox'] ?? null) == 1) ? "" : 1;
+        $statut = (int) $_POST['ch_use_statut'];
+        $paysID = $_POST['ch_use_paysID'];
+        $login = $_POST['ch_use_login'];
+
+        // Un modérateur ne peut pas attribuer un statut supérieur au sien.
+        if($statut > $currentUserStatut) {
+            abort(403);
+        }
     } else {
-        $banni = 1;
+        $banni = $row_targetUser['ch_use_acces'];
+        $statut = $row_targetUser['ch_use_statut'];
+        $paysID = $row_targetUser['ch_use_paysID'];
+        $login = $row_targetUser['ch_use_login'];
     }
 
     $updateSQL = sprintf("UPDATE users SET ch_use_acces=%s, ch_use_statut=%s, ch_use_paysID=%s, ch_use_login=%s, ch_use_password=%s, ch_use_mail=%s WHERE ch_use_id=%s",
         escape_sql($banni, "int"),
-        escape_sql($_POST['ch_use_statut'], "int"),
-        escape_sql($_POST['ch_use_paysID'], "int"),
-        escape_sql($_POST['ch_use_login'], "text"),
+        escape_sql($statut, "int"),
+        escape_sql($paysID, "int"),
+        escape_sql($login, "text"),
         escape_sql($hashed_password, "text"),
         escape_sql($_POST['ch_use_mail'], "text"),
-        escape_sql($_POST['ch_use_id'], "int"));
+        escape_sql($row_targetUser['ch_use_id'], "int"));
 
     $Result1 = mysql_query($updateSQL, $maconnexion);
 
@@ -64,6 +110,21 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "ProfilUser")) {
 //Mise a jour profil infos personnage
 if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
 
+    $selectSQL = mysql_query(sprintf('SELECT entity, entity_id FROM personnage WHERE id = %s',
+        escape_sql($_POST['personnage_id'] ?? 0, 'int')));
+    $personnageData = mysql_fetch_assoc($selectSQL);
+
+    if(! $personnageData || $personnageData['entity'] !== 'pays') {
+        abort(404);
+    }
+
+    $thisPays = new \GenCity\Monde\Pays($personnageData['entity_id']);
+
+    if(! $isModerator
+       && $thisPays->getUserPermission($currentUser) < \GenCity\Monde\Pays::$permissions['codirigeant']) {
+        abort(403);
+    }
+
     $updateSQL = sprintf("UPDATE personnage SET nom_personnage = %s, predicat = %s,
                       prenom_personnage = %s, biographie = %s, titre_personnage = %s
                       WHERE id = %s",
@@ -73,11 +134,6 @@ if((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "InfoUser")) {
         escape_sql($_POST['ch_use_biographie_dirigeant'], "text"),
         escape_sql($_POST['ch_use_titre_dirigeant'], "text"),
         escape_sql($_POST['personnage_id'], "int"));
-
-    $selectSQL = mysql_query(sprintf('SELECT entity_id FROM personnage WHERE id = %s',
-        escape_sql($_POST['personnage_id'], 'int')));
-    $personnageData = mysql_fetch_assoc($selectSQL);
-    $thisPays = new \GenCity\Monde\Pays($personnageData['entity_id']);
 
     $Result1 = mysql_query($updateSQL, $maconnexion);
 

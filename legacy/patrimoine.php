@@ -193,7 +193,7 @@ Eventy::action('display.beforeHeadClosingTag')
                 <img alt="Icône de l'institut" class="pull-right" style="width: 35%; margin-left: 15px;"
                      src="<?= __s($row_institut['ch_ins_img']) ?>">
               <?php endif; ?>
-              <?php echo $row_institut['ch_ins_desc'] ?>
+              <?php echo htmlPurify($row_institut['ch_ins_desc']) ?>
             </div>
           </div>
         </div>
@@ -211,7 +211,7 @@ Eventy::action('display.beforeHeadClosingTag')
               <select name="mon_cat_ID" id="mon_cat_ID" onchange="this.form.submit()">
                 <option value="" <?php if ($colname_classer_mon == NULL) {?>selected<?php } ?>>S&eacute;lectionnez une cat&eacute;gorie&nbsp;</option>
                 <?php do { ?>
-                <option value="<?php echo $row_liste_mon_cat2['ch_mon_cat_ID']; ?>" <?php if ($colname_classer_mon == $row_liste_mon_cat2['ch_mon_cat_ID']) {?>selected<?php } ?>><?php echo $row_liste_mon_cat2['ch_mon_cat_nom']; ?></option>
+                <option value="<?php echo e($row_liste_mon_cat2['ch_mon_cat_ID']); ?>" <?php if ($colname_classer_mon == $row_liste_mon_cat2['ch_mon_cat_ID']) {?>selected<?php } ?>><?php echo e($row_liste_mon_cat2['ch_mon_cat_nom']); ?></option>
                 <?php } while ($row_liste_mon_cat2 = mysql_fetch_assoc($liste_mon_cat2)); ?>
               </select>
             </form>

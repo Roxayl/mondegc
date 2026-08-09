@@ -7,7 +7,13 @@ include('php/log.php');
 
 $type_classement = 'ch_inf_off_nom ASC';
 if (isset($_GET['type_classement_inf'])) {
-  $type_classement = $_GET['type_classement_inf'];
+  $type_classement = escape_sql($_GET['type_classement_inf'], 'order_by_columns', [
+        'ch_inf_off_nom ASC', 'ch_inf_off_date DESC', 'ch_inf_off_budget DESC',
+        'ch_inf_off_Industrie DESC', 'ch_inf_off_Commerce DESC',
+        'ch_inf_off_Agriculture DESC', 'ch_inf_off_Tourisme DESC',
+        'ch_inf_off_Recherche DESC', 'ch_inf_off_Environnement DESC',
+        'ch_inf_off_Education DESC',
+    ]);
 }
 
 $infraGroupList = \GenCity\Monde\Temperance\InfraGroup::getAll();
@@ -29,7 +35,7 @@ $startRow_liste_infra_officielles = $pageNum_liste_infra_officielles * $maxRows_
 if(is_null($thisGroup)) {
     $query_liste_infra_officielles = sprintf(
         "SELECT * FROM infrastructures_officielles ORDER BY %s",
-        mysql_real_escape_string($type_classement));
+        $type_classement);
 } else {
     $query_liste_infra_officielles = sprintf(
         "SELECT iof.* FROM infrastructures_officielles iof
@@ -37,7 +43,7 @@ if(is_null($thisGroup)) {
         WHERE ID_groupes = %s
         ORDER BY %s",
         escape_sql($thisGroup->get('id')),
-        mysql_real_escape_string($type_classement));
+        $type_classement);
 }
 $query_limit_liste_infra_officielles = sprintf("%s LIMIT %d, %d", $query_liste_infra_officielles, $startRow_liste_infra_officielles, $maxRows_liste_infra_officielles);
 $liste_infra_officielles = mysql_query($query_limit_liste_infra_officielles, $maconnexion);
@@ -151,7 +157,7 @@ Eventy::action('display.beforeHeadClosingTag')
       foreach($infraGroupList as $key => $row): ?>
 
           <li class="span2">
-            <a href="liste%20infrastructures.php?group_id=<?= $row->get('id') ?>"
+            <a href="liste%20infrastructures.php?group_id=<?= e($row->get('id')) ?>"
                class="thumbnail <?= isset($_GET['group_id']) && $_GET['group_id'] == $row->get('id') ?
                                         'infra-selected' : '' ?>">
               <img src="<?= __s($row->get('url_image')) ?>" data-src="holder.js/300x200" alt="">
@@ -191,7 +197,7 @@ Eventy::action('display.beforeHeadClosingTag')
             method="GET" class="btn-margin-left">
 
         <?php if($thisGroup !== null): ?>
-          <input type="hidden" name="group_id" value="<?= $thisGroup->get('id') ?>">
+          <input type="hidden" name="group_id" value="<?= e($thisGroup->get('id')) ?>">
         <?php endif; ?>
 
         <select name="type_classement_inf" id="type_classement_inf" onchange="this.form.submit()" class="span3">

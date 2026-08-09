@@ -522,7 +522,7 @@ Eventy::action('display.beforeHeadClosingTag')
               <li class="row-fluid">
                 <div class="span5 img-listes"> <a href="page-ville.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>&ch_ville_id=<?= e($row_villes['ch_vil_ID']) ?>">
                   <?php if ($row_villes['ch_vil_lien_img1']) {?>
-                  <img src="<?php echo $row_villes['ch_vil_lien_img1']; ?>" alt="<?= e($row_villes['ch_vil_nom']) ?>">
+                  <img src="<?php echo e($row_villes['ch_vil_lien_img1']); ?>" alt="<?= e($row_villes['ch_vil_nom']) ?>">
                   <?php } else { ?>
                   <img src="assets/img/imagesdefaut/ville.jpg" alt="ville">
                   <?php } ?>
@@ -595,7 +595,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
             <li class="row-fluid">
               <div class="span5 img-listes">
                 <?php if ($row_fait_his['ch_his_lien_img1']) {?>
-                <img src="<?php echo $row_fait_his['ch_his_lien_img1']; ?>" alt="illustration <?= e($row_fait_his['ch_his_nom']) ?>">
+                <img src="<?php echo e($row_fait_his['ch_his_lien_img1']); ?>" alt="illustration <?= e($row_fait_his['ch_his_nom']) ?>">
                 <?php } else { ?>
                 <img src="assets/img/imagesdefaut/ville.jpg" alt="illustration">
                 <?php } ?>
@@ -634,7 +634,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
                 <div class="row-fluid icone-categorie">
                   <?php do { ?>
                     <!-- Icone et popover de la categorie -->
-                    <div class=""><a href="#" rel="clickover" title="<?php echo $row_liste_fai_cat3['ch_fai_cat_nom']; ?>" data-placement="top" data-content="<?php echo $row_liste_fai_cat3['ch_fai_cat_desc']; ?>"><img src="<?php echo $row_liste_fai_cat3['ch_fai_cat_icon']; ?>" alt="icone <?php echo $row_liste_fai_cat3['ch_fai_cat_nom']; ?>" style="background-color:<?php echo $row_liste_fai_cat3['ch_fai_cat_couleur']; ?>;"></a></div>
+                    <div class=""><a href="#" rel="clickover" title="<?php echo e($row_liste_fai_cat3['ch_fai_cat_nom']); ?>" data-placement="top" data-content="<?php echo e($row_liste_fai_cat3['ch_fai_cat_desc']); ?>"><img src="<?php echo e($row_liste_fai_cat3['ch_fai_cat_icon']); ?>" alt="icone <?php echo e($row_liste_fai_cat3['ch_fai_cat_nom']); ?>" style="background-color:<?php echo e($row_liste_fai_cat3['ch_fai_cat_couleur']); ?>;"></a></div>
                     <?php } while ($row_liste_fai_cat3 = mysql_fetch_assoc($liste_fai_cat3)); ?>
                   <?php mysql_free_result($liste_fai_cat3); ?>
                 </div>
@@ -806,7 +806,7 @@ $totalRows_liste_fai_cat3 = mysql_num_rows($liste_fai_cat3);
               <li class="row-fluid">
                 <div class="span5 img-listes" style="width: 15%;"> <a href="page-ville.php?ch_pay_id=<?= e($row_Pays['ch_pay_id']) ?>&ch_ville_id=<?= e($row_villes_extratrtr['ch_vil_ID']) ?>">
                   <?php if ($row_villes_extratrtr['ch_vil_lien_img1']) {?>
-                  <img src="<?php echo $row_villes_extratrtr['ch_vil_lien_img1']; ?>" alt="<?= e($row_villes_extratrtr['ch_vil_nom']) ?>">
+                  <img src="<?php echo e($row_villes_extratrtr['ch_vil_lien_img1']); ?>" alt="<?= e($row_villes_extratrtr['ch_vil_nom']) ?>">
                   <?php } else { ?>
                   <img src="<?= e($row_Pays['ch_pay_lien_imgdrapeau']) ?>" alt="ville">
                   <?php } ?>

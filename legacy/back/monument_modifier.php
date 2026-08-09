@@ -228,7 +228,7 @@ Eventy::action('display.beforeHeadClosingTag')
         ?>
         <input name="ch_pat_date" type="hidden" value="<?= e($row_monument['ch_pat_date']) ?>" >
         <input name="ch_pat_mis_jour" type="hidden" value="<?php echo $now; ?>" >
-        <input name="ch_pat_nb_update" type="hidden" value="<?php echo $nb_update; ?>">
+        <input name="ch_pat_nb_update" type="hidden" value="<?php echo e($nb_update); ?>">
         <input name="ch_pat_statut" type="hidden" value="<?= e($row_monument['ch_pat_statut']) ?>" >
         <input name="form_coord_X" type="hidden" value="<?= e($row_monument['form_coord_X']) ?>" >
         <input name="form_coord_Y" type="hidden" value="<?= e($row_monument['form_coord_Y']) ?>" >
@@ -324,14 +324,14 @@ Eventy::action('display.beforeHeadClosingTag')
               </div>
 
       <?php if($row_mon_cat_a['ch_mon_cat_ID'] = $row_liste_mon_cat3['ch_mon_cat_ID']) { ?>
-         <h4 style="text-align: center; color: #1a2638;"> <?php echo $row_monument['ch_pat_nom']; ?> a déjà atteint <?php echo $nb_cat_ok ?> objectifs !<br><small>Cliquez sur les icones pour avoir plus de détail.</small></h4>
+         <h4 style="text-align: center; color: #1a2638;"> <?php echo e($row_monument['ch_pat_nom']); ?> a déjà atteint <?php echo $nb_cat_ok ?> objectifs !<br><small>Cliquez sur les icones pour avoir plus de détail.</small></h4>
             <ul class="listes" style="text-align: center;">
                <?php do { ?> <a href="#" rel="clickover" title="<?= __s($row_liste_mon_cat3['ch_mon_cat_nom']) ?>" data-content="<?= __s($row_liste_mon_cat3['ch_mon_cat_desc']) ?>"><img style="max-width: 50px;" src="<?= __s($row_liste_mon_cat3['ch_mon_cat_icon']) ?>"></i></a>
             <?php } while ($row_liste_mon_cat3 = mysql_fetch_assoc($liste_mon_cat3)) ?>
             </ul>
            <?php mysql_free_result($liste_mon_cat3); ?>
          <?php } else { ?>
-         <h4 style="text-align: center">Jusqu'à présent, <?php echo $row_monument['ch_pat_nom']; ?> ne s'est rien fait valider...</h4>
+         <h4 style="text-align: center">Jusqu'à présent, <?php echo e($row_monument['ch_pat_nom']); ?> ne s'est rien fait valider...</h4>
       <?php }?>
                 <div class="clearfix"></div>
         <?php if($row_monument['ch_pat_statut'] == $row_liste_mon_cat_nope['ch_mon_cat_statut']) { ?>

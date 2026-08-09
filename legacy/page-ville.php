@@ -241,37 +241,37 @@ Eventy::action('display.beforeHeadClosingTag')
     <section id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
         <?php if ($row_infoVille['ch_vil_lien_img1']) { ?>
-        <div class="item active" style="background-image: url(<?php echo $row_infoVille['ch_vil_lien_img1']; ?>)">
+        <div class="item active" style="background-image: url(<?php echo e($row_infoVille['ch_vil_lien_img1']); ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_infoVille['ch_vil_legende_img1']; ?></p>
+            <p><?php echo e($row_infoVille['ch_vil_legende_img1']); ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_infoVille['ch_vil_lien_img2']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_infoVille['ch_vil_lien_img2']; ?>)">
+        <div class="item" style="background-image: url(<?php echo e($row_infoVille['ch_vil_lien_img2']); ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_infoVille['ch_vil_legende_img2']; ?></p>
+            <p><?php echo e($row_infoVille['ch_vil_legende_img2']); ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_infoVille['ch_vil_lien_img3']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_infoVille['ch_vil_lien_img3']; ?>)">
+        <div class="item" style="background-image: url(<?php echo e($row_infoVille['ch_vil_lien_img3']); ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_infoVille['ch_vil_legende_img3']; ?></p>
+            <p><?php echo e($row_infoVille['ch_vil_legende_img3']); ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_infoVille['ch_vil_lien_img4']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_infoVille['ch_vil_lien_img4']; ?>)">
+        <div class="item" style="background-image: url(<?php echo e($row_infoVille['ch_vil_lien_img4']); ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_infoVille['ch_vil_legende_img4']; ?></p>
+            <p><?php echo e($row_infoVille['ch_vil_legende_img4']); ?></p>
           </div>
         </div>
         <?php } ?>
         <?php if ($row_infoVille['ch_vil_lien_img5']) { ?>
-        <div class="item" style="background-image: url(<?php echo $row_infoVille['ch_vil_lien_img5']; ?>)">
+        <div class="item" style="background-image: url(<?php echo e($row_infoVille['ch_vil_lien_img5']); ?>)">
           <div class="carousel-caption">
-            <p><?php echo $row_infoVille['ch_vil_legende_img5']; ?></p>
+            <p><?php echo e($row_infoVille['ch_vil_legende_img5']); ?></p>
           </div>
         </div>
         <?php } ?>

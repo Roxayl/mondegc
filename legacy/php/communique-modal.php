@@ -116,11 +116,11 @@ $eloquentCommunique = \Roxayl\MondeGC\Models\Communique::query()->findOrFail($co
     <!-- EN-tête Auteur-->
     <?php if(isset($personnage)): ?>
       <!-- EN-tête Personnage pour communiquées officiels et commentaire-->
-      <div class="span2 thumb"> <img src="<?= $personnage->get('lien_img') ?>" alt="photo <?= $personnage->get('nom_personnage') ?>">
+      <div class="span2 thumb"> <img src="<?= e($personnage->get('lien_img')) ?>" alt="photo <?= e($personnage->get('nom_personnage')) ?>">
         <div class="titre-gris">
-          <p><?= $personnage->get('predicat') ?></p>
-          <h3><?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?></h3>
-          <small><?= $personnage->get('titre_personnage') ?></small> </div>
+          <p><?= e($personnage->get('predicat')) ?></p>
+          <h3><?= e($personnage->get('prenom_personnage')) ?> <?= e($personnage->get('nom_personnage')) ?></h3>
+          <small><?= e($personnage->get('titre_personnage')) ?></small> </div>
       </div>
     <?php endif; ?>
     <!-- EN-tête Institution-->

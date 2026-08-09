@@ -58,11 +58,11 @@ Eventy::action('display.beforeHeadClosingTag')
      <h5>Les membres du Conseil de l'OCGC sont&nbsp;:</h5>
 	 <?php do { ?>
      <?php if ($row_HautConseil['ch_use_statut']==30) { ?>
-     <span><em style="color: #FF4F4F"><?php echo $row_HautConseil['ch_use_login'] ?></em> -</span>
+     <span><em style="color: #FF4F4F"><?php echo e($row_HautConseil['ch_use_login']) ?></em> -</span>
      <?php } elseif ($row_HautConseil['ch_use_statut']==20) { ?>
-     <span><em style="color: #FF9900"><?php echo $row_HautConseil['ch_use_login'] ?></em> -</span>
+     <span><em style="color: #FF9900"><?php echo e($row_HautConseil['ch_use_login']) ?></em> -</span>
 		<?php } else { ?>
-     <span><em><?php echo $row_HautConseil['ch_use_login'] ?></em> -</span>
+     <span><em><?php echo e($row_HautConseil['ch_use_login']) ?></em> -</span>
         <?php } ?>
 		<?php } while ($row_HautConseil = mysql_fetch_assoc($HautConseil)); ?>
     </div>

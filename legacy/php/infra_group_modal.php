@@ -63,7 +63,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "infra_group_modal")
   <div class="modal-body">
     <!-- Boutons cachés -->
     <?php if($action === 'edit'): ?>
-        <input type="hidden" id="form[id]" name="form[id]" value="<?= $infraGroup->get('id') ?>">
+        <input type="hidden" id="form[id]" name="form[id]" value="<?= e($infraGroup->get('id')) ?>">
     <?php endif; ?>
 
     <!-- Nom -->
@@ -71,7 +71,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "infra_group_modal")
       <label class="control-label" for="form[nom_groupe]">Nom du groupe </label>
       <div class="controls">
         <input class="input-xxlarge" type="text" id="form[nom_groupe]" name="form[nom_groupe]"
-               value="<?= $infraGroup->get('nom_groupe') ?>" maxlength="50" />
+               value="<?= e($infraGroup->get('nom_groupe')) ?>" maxlength="50" />
         <br />
         <span class="textfieldMaxCharsMsg">50 caract&egrave;res max.</span>
       <span class="textfieldRequiredMsg">Une valeur est requise.</span><span class="textfieldMinCharsMsg">2 caract&egrave;res min.</span></div>
@@ -82,7 +82,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "infra_group_modal")
       <label class="control-label" for="form[url_image]">Image de fond</label>
       <div class="controls">
         <input class="input-xxlarge" type="text" id="form[url_image]" name="form[url_image]"
-               value="<?= $infraGroup->get('url_image') ?>">
+               value="<?= e($infraGroup->get('url_image')) ?>">
         <br />
       <span class="textfieldInvalidFormatMsg">Format non valide.</span></div>
     </div>
@@ -92,7 +92,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "infra_group_modal")
       <label class="control-label" for="form[order]">Ordre</label>
       <div class="controls">
         <input class="input-medium" type="text" id="form[order]" name="form[order]"
-               value="<?= $infraGroup->get('order') ?>">
+               value="<?= e($infraGroup->get('order')) ?>">
           <small><i class="icon-asterisk"></i> Les groupes sont triés par ordre croissant.</small>
         <br />
       <span class="textfieldInvalidFormatMsg">Format non valide.</span></div>

@@ -15,6 +15,12 @@ if(!isset($_SESSION['userObject'])) {
 $getHistory = mysql_query(sprintf('SELECT ch_his_paysID FROM histoire WHERE ch_his_id = %s',
     escape_sql($_POST['ch_his_id'])));
 $getHistory = mysql_fetch_assoc($getHistory);
+
+if(! $getHistory) {
+    abort(404);
+}
+requirePaysPermission($getHistory['ch_his_paysID']);
+
 $thisPays = new \GenCity\Monde\Pays($getHistory['ch_his_paysID']);
 
 if ((isset($_POST['ch_his_id'])) && ($_POST['ch_his_id'] != "")) {

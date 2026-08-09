@@ -46,7 +46,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "infra_group_modal_s
 
   <div class="modal-body">
     <!-- Boutons cachés -->
-    <input type="hidden" id="form[id]" name="form[id]" value="<?= $infraGroup->get('id') ?>">
+    <input type="hidden" id="form[id]" name="form[id]" value="<?= e($infraGroup->get('id')) ?>">
 
     <p>Voulez-vous vraiment supprimer le groupe <strong><?= __s($infraGroup->get('nom_groupe')) ?></strong> ?</p>
   </div>

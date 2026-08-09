@@ -150,7 +150,7 @@ Eventy::action('display.beforeHeadClosingTag')
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                    <li class="dropdown-li-force"><a tabindex="-1" href="back/communique_ajouter.php?userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>&cat=institut&com_element_id=<?= $thisInstitut->get('ch_ins_ID') ?>">
+                    <li class="dropdown-li-force"><a tabindex="-1" href="back/communique_ajouter.php?userID=<?= $_SESSION['userObject']->get('ch_use_id') ?>&cat=institut&com_element_id=<?= e($thisInstitut->get('ch_ins_ID')) ?>">
                             <i class="icon-file"></i> Publier un communiqué</a></li>
                 </ul>
                 </div>

@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Str;
-
 return [
 
     /*
@@ -15,8 +13,10 @@ return [
     'enable_csrf_protection' => env('LEGACY_CSRF', true),
 
     /*
-     * Sel de hachage des mots de passe.
+     * Sel de hachage des mots de passe. Sans valeur par défaut : une valeur aléatoire changerait à
+     * chaque reconstruction du cache de configuration et invaliderait tous les mots de passe.
+     * L'absence de sel est signalée au démarrage du site legacy.
      */
-    'salt' => env('LEGACY_SALT', Str::random(32)),
+    'salt' => env('LEGACY_SALT'),
 
 ];

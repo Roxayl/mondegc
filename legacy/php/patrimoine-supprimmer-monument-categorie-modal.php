@@ -28,7 +28,7 @@ $totalRows_mon = mysql_num_rows($mon);
     </div>
     <div class="span3 icone-categorie"> 
           <img src="<?= e($row_mon['ch_mon_cat_icon']) ?>" alt="icone cat&eacute;gorie" style="background-color:<?= e($row_mon['ch_mon_cat_couleur']) ?>;">
-          <img src="<?php echo $row_mon['ch_pat_lien_img1']; ?>" alt="image monument"></div>
+          <img src="<?php echo e($row_mon['ch_pat_lien_img1']); ?>" alt="image monument"></div>
     </div>
           </div>
           <div class="modal-footer">

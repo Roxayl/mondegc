@@ -104,8 +104,8 @@ Eventy::action('display.beforeHeadClosingTag')
   <div class="well">
     <p class="pull-right">Histoire du pays <a class="" href="page-pays.php?ch_pay_id=<?= e($row_fait_his['ch_his_paysID']) ?>#histoire"><?= e($row_fait_his['ch_pay_nom']) ?></a></p>
     <div class="row-fluid">
-      <div class="span4"> <img src="<?php echo $row_fait_his['ch_his_lien_img1']; ?>" alt="illustration">
-        <p><em><?php echo $row_fait_his['ch_his_legende_img1']; ?></em></p>
+      <div class="span4"> <img src="<?php echo e($row_fait_his['ch_his_lien_img1']); ?>" alt="illustration">
+        <p><em><?php echo e($row_fait_his['ch_his_legende_img1']); ?></em></p>
       </div>
       <div class="span8">
         <?php if (($row_fait_his['ch_his_date_fait2'] != NULL) AND ($row_fait_his['ch_his_personnage'] == 1)) { ?>
@@ -151,9 +151,9 @@ Eventy::action('display.beforeHeadClosingTag')
           <ul class="listes">
             <?php do { ?>
               <li class="row-fluid">
-                <div class="span1 icone-categorie"><img src="<?php echo $row_liste_fai_cat3['ch_fai_cat_icon']; ?>" alt="icone <?php echo $row_liste_fai_cat3['ch_fai_cat_nom']; ?>" style="background-color:<?php echo $row_liste_fai_cat3['ch_fai_cat_couleur']; ?>;"></div>
+                <div class="span1 icone-categorie"><img src="<?php echo e($row_liste_fai_cat3['ch_fai_cat_icon']); ?>" alt="icone <?php echo e($row_liste_fai_cat3['ch_fai_cat_nom']); ?>" style="background-color:<?php echo e($row_liste_fai_cat3['ch_fai_cat_couleur']); ?>;"></div>
                 <div class="span8">
-                  <p><strong><a href="histoire.php?fai_catID=<?php echo $row_liste_fai_cat3['ch_fai_cat_ID']; ?>#fait_hist"><?php echo $row_liste_fai_cat3['ch_fai_cat_nom']; ?></a></strong></p>
+                  <p><strong><a href="histoire.php?fai_catID=<?php echo e($row_liste_fai_cat3['ch_fai_cat_ID']); ?>#fait_hist"><?php echo e($row_liste_fai_cat3['ch_fai_cat_nom']); ?></a></strong></p>
                 </div>
               </li>
               <?php } while ($row_liste_fai_cat3 = mysql_fetch_assoc($liste_fai_cat3)); ?>

@@ -14,13 +14,13 @@ foreach($userVotes as $thisVote):
     $thisPays = new Pays($thisVote->get('ID_pays'));
     ?>
 
-    <form method="POST" action="ocgc_proposal.php?id=<?= $formProposal->get('id') ?>">
-        <input type="hidden" name="voteCast[ID_proposal]" value="<?= $formProposal->get('id') ?>">
+    <form method="POST" action="ocgc_proposal.php?id=<?= e($formProposal->get('id')) ?>">
+        <input type="hidden" name="voteCast[ID_proposal]" value="<?= e($formProposal->get('id')) ?>">
 
-        <input type="hidden" name="voteCast[id]" value="<?= $thisVote->get('id') ?>">
+        <input type="hidden" name="voteCast[id]" value="<?= e($thisVote->get('id')) ?>">
 
-        <h4><img class="img-menu-drapeau" src="<?= $thisPays->get('ch_pay_lien_imgdrapeau') ?>">
-            <?= $thisPays->get('ch_pay_nom') ?></h4>
+        <h4><img class="img-menu-drapeau" src="<?= e($thisPays->get('ch_pay_lien_imgdrapeau')) ?>">
+            <?= e($thisPays->get('ch_pay_nom')) ?></h4>
 
         <!-- Réponses -->
         <ul class="proposal-responses">

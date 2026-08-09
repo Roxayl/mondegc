@@ -26,12 +26,28 @@ class AuthenticationService
     }
 
     /**
+     * Renouvelle l'identifiant de la session PHP native en conservant son contenu.
+     */
+    private function regenerateSessionId(): void
+    {
+        if (session_status() === PHP_SESSION_ACTIVE && ! headers_sent()) {
+            session_regenerate_id(true);
+        }
+    }
+
+    /**
      * Connecte l'utilisateur sur le site legacy et l'application Laravel.
      *
      * @param  CustomUser  $user
      */
     public function login(CustomUser $user): void
     {
+        // Uniquement sur un changement d'utilisateur : cette méthode est aussi appelée à chaque
+        // page pour ré-hydrater la session depuis le cookie persistant.
+        if ((int) ($_SESSION['user_ID'] ?? 0) !== (int) $user->ch_use_id) {
+            $this->regenerateSessionId();
+        }
+
         // Mettre à jour la date de dernière connexion.
         $user->ch_use_last_log = now();
         $user->save();
@@ -74,8 +90,15 @@ class AuthenticationService
      */
     public function logout(): void
     {
-        // Effacement du cookie de session.
-        setcookie('Session_mondeGC', '', time() - 7200, '', '', false, true);
+        // Effacement du cookie de session. Les attributs doivent correspondre à ceux utilisés lors
+        // de la création, sans quoi le navigateur conserve le cookie d'origine.
+        setcookie('Session_mondeGC', '', [
+            'expires' => time() - 7200,
+            'path' => '/',
+            'secure' => request()->isSecure(),
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
         unset($_COOKIE['Session_mondeGC']);
 
         // Supprime les variables de session stockant les informations sur l'utilisateur.
@@ -94,5 +117,7 @@ class AuthenticationService
         auth()->logout();
         // Réinitialiser le jeton CSRF.
         session()->regenerateToken();
+
+        $this->regenerateSessionId();
     }
 }

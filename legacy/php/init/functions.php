@@ -1332,6 +1332,127 @@ function showErrorMessage(string $errorType, string $errorInfo): void
 }
 
 
+/**
+ * Interrompt la requête si le membre connecté n'a pas au moins le statut demandé.
+ *
+ * @param string|int $status Libellé ou valeur de statut, cf. {@see \GenCity\Monde\User::getUserPermission()}.
+ * @return void
+ */
+function requireMinStatus(string|int $status): void
+{
+    if(! isset($_SESSION['userObject']) || ! $_SESSION['userObject']->minStatus($status)) {
+        abort(403);
+    }
+}
+
+
+/**
+ * Interrompt la requête si le membre connecté n'a pas le niveau de permission demandé sur un pays.
+ * La modération est autorisée sur tous les pays.
+ *
+ * @param mixed $paysId Identifiant du pays.
+ * @param string $level Clé de {@see \GenCity\Monde\Pays::$permissions}.
+ * @return void
+ */
+function requirePaysPermission(mixed $paysId, string $level = 'codirigeant'): void
+{
+    if(! isset($_SESSION['userObject'])) {
+        abort(403);
+    }
+
+    $user = $_SESSION['userObject'];
+    if($user->minStatus('OCGC')) {
+        return;
+    }
+
+    if(! \Roxayl\MondeGC\Models\Pays::query()->whereKey((int) $paysId)->exists()) {
+        abort(404);
+    }
+
+    $pays = new \GenCity\Monde\Pays((int) $paysId);
+    if($pays->getUserPermission($user) < \GenCity\Monde\Pays::$permissions[$level]) {
+        abort(403);
+    }
+}
+
+
+/**
+ * Génère un jeton imprévisible, adapté à un usage d'authentification.
+ *
+ * @param int $bytes Nombre d'octets d'entropie.
+ * @return string Jeton en representation hexadécimale.
+ */
+function generateToken(int $bytes = 32): string
+{
+    return bin2hex(random_bytes($bytes));
+}
+
+
+/**
+ * Empreinte d'un jeton, pour le stocker sans le conserver en clair.
+ *
+ * @param string $token
+ * @return string
+ */
+function hashToken(string $token): string
+{
+    return hash('sha256', $token);
+}
+
+
+/**
+ * Donne l'identifiant du pays auquel une ville est rattachée.
+ *
+ * @param mixed $villeId Identifiant de la ville.
+ * @return int|null
+ */
+function villePaysId(mixed $villeId): ?int
+{
+    $ville = mysql_fetch_assoc(mysql_query(sprintf(
+        'SELECT ch_vil_paysID FROM villes WHERE ch_vil_ID = %s', escape_sql($villeId, 'int'))));
+
+    return $ville ? (int) $ville['ch_vil_paysID'] : null;
+}
+
+
+/**
+ * Interrompt la requête si le membre connecté ne peut pas gérer un communiqué. Sont autorisés son
+ * auteur, les dirigeants du pays auquel il est rattaché, et la modération.
+ *
+ * @param mixed $communiqueId Identifiant du communiqué.
+ * @return void
+ */
+function requireCommuniquePermission(mixed $communiqueId): void
+{
+    if(! isset($_SESSION['userObject'])) {
+        abort(403);
+    }
+
+    $communique = mysql_fetch_assoc(mysql_query(sprintf(
+        'SELECT * FROM communiques WHERE ch_com_ID = %s', escape_sql($communiqueId, 'int'))));
+
+    if(! $communique) {
+        abort(404);
+    }
+
+    $user = $_SESSION['userObject'];
+
+    if($user->minStatus('OCGC')
+       || (int) $communique['ch_com_user_id'] === (int) $user->get('ch_use_id')) {
+        return;
+    }
+
+    if(! empty($communique['ch_com_pays_id'])) {
+        $pays = new \GenCity\Monde\Pays((int) $communique['ch_com_pays_id']);
+        if($pays->getUserPermission($user) >= \GenCity\Monde\Pays::$permissions['codirigeant']) {
+            return;
+        }
+    }
+
+    abort(403);
+}
+
+
 function dateFormat($date, $getTime = false)
 {
     if(!is_numeric($date)) {

@@ -10,6 +10,8 @@ if(!isset($_SESSION['userObject'])) {
 }
 
 if ((isset($_POST['ch_temp_id'])) && ($_POST['ch_temp_id'] != "")) {
+  requireMinStatus('OCGC');
+
   $deleteSQL = sprintf("DELETE FROM temperance WHERE ch_temp_id=%s",
                        escape_sql($_POST['ch_temp_id'], "int"));
 

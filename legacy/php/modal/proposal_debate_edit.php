@@ -39,7 +39,7 @@ if(isset($_POST['proposal_debate_edit'])) {
       <?php if($mondegc_config['enable_csrf_protection']): ?>
       <input type="hidden" name="<?= $GLOBALS['csrf']['input-name'] ?>" value="<?= __s(csrf_get_tokens()) ?>">
       <?php endif; ?>
-      <input name="proposal_debate_edit[ID_proposal]" type="hidden" value="<?= $formProposal->get('id') ?>">
+      <input name="proposal_debate_edit[ID_proposal]" type="hidden" value="<?= e($formProposal->get('id')) ?>">
 
       <div class="control-group">
       <div class="control-label">Lien 1</div>
@@ -47,12 +47,12 @@ if(isset($_POST['proposal_debate_edit'])) {
           <label>
               URL :
               <input type="text" name="proposal_debate_edit[link_debate]"
-                     value="<?= $formProposal->get('link_debate') ?>">
+                     value="<?= e($formProposal->get('link_debate')) ?>">
           </label>
           <label>
               Intitulé :
               <input type="text" name="proposal_debate_edit[link_debate_name]"
-                     value="<?= $formProposal->get('link_debate_name') ?>">
+                     value="<?= e($formProposal->get('link_debate_name')) ?>">
           </label>
       </div>
       </div>
@@ -63,12 +63,12 @@ if(isset($_POST['proposal_debate_edit'])) {
           <label>
               URL :
               <input type="text" name="proposal_debate_edit[link_wiki]"
-                     value="<?= $formProposal->get('link_wiki') ?>">
+                     value="<?= e($formProposal->get('link_wiki')) ?>">
           </label>
           <label>
               Intitulé :
               <input type="text" name="proposal_debate_edit[link_wiki_name]"
-                     value="<?= $formProposal->get('link_wiki_name') ?>">
+                     value="<?= e($formProposal->get('link_wiki_name')) ?>">
           </label>
       </div>
       </div>

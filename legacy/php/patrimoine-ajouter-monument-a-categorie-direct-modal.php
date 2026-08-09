@@ -177,7 +177,7 @@ while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)
             <li class="row-fluid" style="display: flex; margin-top: 0px; background-size: cover; background-image: url('<?= __s($row_mon_cat['bg_image_url']) ?>');">
             <label for="ch_disp_cat_id_<?= e($row_mon_cat['ch_mon_cat_ID']) ?>"
                style="display: inline-block; text-decoration: <?php if ($row_mon_cat['ch_mon_cat_ID'] == in_array($row_mon_cat['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ) { ?>line-through<?php } else { ?><?php }?>;">
-            <img src="<?php echo $row_mon_cat['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_mon_cat['ch_mon_cat_nom']; ?>" style="height: 15px;"> <strong><?= e($row_mon_cat['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat['ch_mon_cat_desc']) ?></label>
+            <img src="<?php echo e($row_mon_cat['ch_mon_cat_icon']); ?>" alt="icone <?php echo e($row_mon_cat['ch_mon_cat_nom']); ?>" style="height: 15px;"> <strong><?= e($row_mon_cat['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat['ch_mon_cat_desc']) ?></label>
             <input type="checkbox" id="ch_disp_cat_id_<?= e($row_mon_cat['ch_mon_cat_ID']) ?>"
                    name="ch_disp_cat_id[]" value="<?= e($row_mon_cat['ch_mon_cat_ID']) ?>"
                    <?= in_array($row_mon_cat['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ?> />
@@ -205,7 +205,7 @@ while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)
             <li class="row-fluid" style="display: flex; margin-top: 0px; background-size: cover; background-image: url('<?= __s($row_mon_cat_a['bg_image_url']) ?>');">
             <label for="ch_disp_cat_id_<?= e($row_mon_cat_a['ch_mon_cat_ID']) ?>"
                style="display: inline-block; text-decoration: <?php if ($row_mon_cat_a['ch_mon_cat_ID'] == in_array($row_mon_cat_a['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ) { ?>line-through<?php } else { ?><?php }?>;">
-            <img src="<?php echo $row_mon_cat_a['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_mon_cat_a['ch_mon_cat_nom']; ?>" style="height: 15px;"> <strong><?= e($row_mon_cat_a['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat_a['ch_mon_cat_desc']) ?></label>
+            <img src="<?php echo e($row_mon_cat_a['ch_mon_cat_icon']); ?>" alt="icone <?php echo e($row_mon_cat_a['ch_mon_cat_nom']); ?>" style="height: 15px;"> <strong><?= e($row_mon_cat_a['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat_a['ch_mon_cat_desc']) ?></label>
             <input type="checkbox" id="ch_disp_cat_id_<?= e($row_mon_cat_a['ch_mon_cat_ID']) ?>"
                    name="ch_disp_cat_id[]" value="<?= e($row_mon_cat_a['ch_mon_cat_ID']) ?>"
                    <?= in_array($row_mon_cat_a['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ?> />
@@ -232,7 +232,7 @@ while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)
             <li class="row-fluid" style="margin-top: 0px; background-size: cover; background-image: url('<?= __s($row_mon_cat_b['bg_image_url']) ?>');">
             <label for="ch_disp_cat_id_<?= e($row_mon_cat_b['ch_mon_cat_ID']) ?>"
                style="display: inline-block; text-decoration: <?php if ($row_mon_cat_b['ch_mon_cat_ID'] == in_array($row_mon_cat_b['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ) { ?>line-through<?php } else { ?><?php }?>;">
-            <img src="<?php echo $row_mon_cat_b['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_mon_cat_b['ch_mon_cat_nom']; ?>" style="height: 15px;"> <strong><?= e($row_mon_cat_b['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat_b['ch_mon_cat_desc']) ?></label>
+            <img src="<?php echo e($row_mon_cat_b['ch_mon_cat_icon']); ?>" alt="icone <?php echo e($row_mon_cat_b['ch_mon_cat_nom']); ?>" style="height: 15px;"> <strong><?= e($row_mon_cat_b['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat_b['ch_mon_cat_desc']) ?></label>
             <input type="checkbox" id="ch_disp_cat_id_<?= e($row_mon_cat_b['ch_mon_cat_ID']) ?>"
                    name="ch_disp_cat_id[]" value="<?= e($row_mon_cat_b['ch_mon_cat_ID']) ?>"
                    <?= in_array($row_mon_cat_b['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ?> />
@@ -259,7 +259,7 @@ while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)
             <li class="row-fluid" style="margin-top: 0px; background-size: cover; background-image: url('<?= __s($row_mon_cat_c['bg_image_url']) ?>');">
             <label for="ch_disp_cat_id_<?= e($row_mon_cat_c['ch_mon_cat_ID']) ?>"
                style="display: inline-block; text-decoration: <?php if ($row_mon_cat_c['ch_mon_cat_ID'] == in_array($row_mon_cat_c['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ) { ?>line-through<?php } else { ?><?php }?>;">
-            <img src="<?php echo $row_mon_cat_c['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_mon_cat_c['ch_mon_cat_nom']; ?>" style="height: 15px;"> <strong><?= e($row_mon_cat_c['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat_c['ch_mon_cat_desc']) ?></label>
+            <img src="<?php echo e($row_mon_cat_c['ch_mon_cat_icon']); ?>" alt="icone <?php echo e($row_mon_cat_c['ch_mon_cat_nom']); ?>" style="height: 15px;"> <strong><?= e($row_mon_cat_c['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat_c['ch_mon_cat_desc']) ?></label>
             <input type="checkbox" id="ch_disp_cat_id_<?= e($row_mon_cat_c['ch_mon_cat_ID']) ?>"
                    name="ch_disp_cat_id[]" value="<?= e($row_mon_cat_c['ch_mon_cat_ID']) ?>"
                    <?= in_array($row_mon_cat_c['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ?> />
@@ -286,7 +286,7 @@ while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)
                 <li class="row-fluid" style="margin-top: 0px; background-size: cover; background-image: url('<?= __s($row_mon_cat_d['bg_image_url']) ?>');">
                    <label for="ch_disp_cat_id_<?= e($row_mon_cat_d['ch_mon_cat_ID']) ?>"
                     style="display: inline-block; text-decoration: <?php if ($row_mon_cat_d['ch_mon_cat_ID'] == in_array($row_mon_cat_d['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ) { ?>line-through<?php } else { ?><?php }?>;">
-                   <img src="<?php echo $row_mon_cat_d['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_mon_cat_d['ch_mon_cat_nom']; ?>" style="height: 15px;"> <strong><?= e($row_mon_cat_d['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat_d['ch_mon_cat_desc']) ?></label>
+                   <img src="<?php echo e($row_mon_cat_d['ch_mon_cat_icon']); ?>" alt="icone <?php echo e($row_mon_cat_d['ch_mon_cat_nom']); ?>" style="height: 15px;"> <strong><?= e($row_mon_cat_d['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat_d['ch_mon_cat_desc']) ?></label>
                    <input type="checkbox" id="ch_disp_cat_id_<?= e($row_mon_cat_d['ch_mon_cat_ID']) ?>"
                    name="ch_disp_cat_id[]" value="<?= e($row_mon_cat_d['ch_mon_cat_ID']) ?>"
                    <?= in_array($row_mon_cat_d['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ?> />
@@ -313,7 +313,7 @@ while($row_monument_dispatch = mysql_fetch_assoc($sql_current_monument_dispatch)
                 <li class="row-fluid" style="margin-top: 0px; background-size: cover; background-image: url('<?= __s($row_mon_cat_e['bg_image_url']) ?>');">
                    <label for="ch_disp_cat_id_<?= e($row_mon_cat_e['ch_mon_cat_ID']) ?>"
                     style="display: inline-block; text-decoration: <?php if ($row_mon_cat_e['ch_mon_cat_ID'] == in_array($row_mon_cat_e['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ) { ?>line-through<?php } else { ?><?php }?>;">
-                   <img src="<?php echo $row_mon_cat_e['ch_mon_cat_icon']; ?>" alt="icone <?php echo $row_mon_cat_e['ch_mon_cat_nom']; ?>" style="height: 15px;"> <strong><?= e($row_mon_cat_e['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat_e['ch_mon_cat_desc']) ?></label>
+                   <img src="<?php echo e($row_mon_cat_e['ch_mon_cat_icon']); ?>" alt="icone <?php echo e($row_mon_cat_e['ch_mon_cat_nom']); ?>" style="height: 15px;"> <strong><?= e($row_mon_cat_e['ch_mon_cat_nom']) ?></strong>, <?= e($row_mon_cat_e['ch_mon_cat_desc']) ?></label>
                    <input type="checkbox" id="ch_disp_cat_id_<?= e($row_mon_cat_e['ch_mon_cat_ID']) ?>"
                    name="ch_disp_cat_id[]" value="<?= e($row_mon_cat_e['ch_mon_cat_ID']) ?>"
                    <?= in_array($row_mon_cat_e['ch_mon_cat_ID'], $current_cat_list) ? 'checked' : '' ?> />

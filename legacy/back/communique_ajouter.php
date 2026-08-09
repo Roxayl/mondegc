@@ -239,11 +239,11 @@ Eventy::action('display.beforeHeadClosingTag')
       <!-- EN-tête Personnage pour communiquées officiels et commentaire-->
       <div class="span3 thumb">
       <?php if(isset($personnage)): ?>
-          <img src="<?= $personnage->get('lien_img') ?>" alt="photo <?= $personnage->get('nom_personnage') ?>">
+          <img src="<?= e($personnage->get('lien_img')) ?>" alt="photo <?= e($personnage->get('nom_personnage')) ?>">
         <div class="titre-gris">
-          <p><?= $personnage->get('predicat') ?></p>
-          <h3><?= $personnage->get('prenom_personnage') ?> <?= $personnage->get('nom_personnage') ?></h3>
-          <p><small><?= $personnage->get('titre_personnage') ?></small></p></div>
+          <p><?= e($personnage->get('predicat')) ?></p>
+          <h3><?= e($personnage->get('prenom_personnage')) ?> <?= e($personnage->get('nom_personnage')) ?></h3>
+          <p><small><?= e($personnage->get('titre_personnage')) ?></small></p></div>
       <?php endif; ?>
       </div>
 
@@ -257,32 +257,32 @@ Eventy::action('display.beforeHeadClosingTag')
         <?php if ($insigne == NULL) {?>
         <img src="../assets/img/imagesdefaut/blason.jpg" alt="armoirie">
         <?php } else { ?>
-        <img src="<?php echo $insigne; ?>" alt="armoirie">
+        <img src="<?php echo e($insigne); ?>" alt="armoirie">
         <?php } ?>
         <?php } elseif ( $cat == "pays") {?>
         <?php if ($insigne == NULL) {?>
         <img src="../assets/img/imagesdefaut/drapeau.jpg" alt="drapeau">
         <?php } else { ?>
-        <img src="<?php echo $insigne; ?>" alt="drapeau">
+        <img src="<?php echo e($insigne); ?>" alt="drapeau">
         <?php } ?>
         <?php } elseif ( $cat == "institut") {?>
         <?php if ($insigne == NULL) {?>
         <img src="../assets/img/imagesdefaut/blason.jpg" alt="logo">
         <?php } else { ?>
-        <img src="<?php echo $insigne; ?>" alt="logo">
+        <img src="<?php echo e($insigne); ?>" alt="logo">
         <?php }
 		 } elseif ( $cat == "organisation") {?>
         <?php if ($insigne == NULL) {?>
         <img src="../assets/img/imagesdefaut/blason.jpg" alt="logo">
         <?php } else { ?>
-        <img src="<?php echo $insigne; ?>" alt="logo">
+        <img src="<?php echo e($insigne); ?>" alt="logo">
         <?php }
 		 } else { ?>
-                <img src="<?php echo $insigne; ?>">
+                <img src="<?php echo e($insigne); ?>">
                 <?php } ?>
         <div class="titre-gris">
-          <h3><?php echo $nom_organisation; ?></h3>
-          <p><small><?php echo $soustitre; ?></small></p> </div>
+          <h3><?php echo e($nom_organisation); ?></h3>
+          <p><small><?php echo e($soustitre); ?></small></p> </div>
         <?php } ?>
       </div>
     </section>
